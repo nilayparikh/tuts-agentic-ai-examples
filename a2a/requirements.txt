@@ -1,0 +1,20 @@
+# A2A Examples — Python dependencies
+# Install with:  pip install -r requirements.txt
+# Or via uv:     uv pip install -r requirements.txt
+
+# ── Core LLM client ───────────────────────────────────────────
+openai>=1.30.0
+
+# ── A2A Protocol SDK (includes Starlette + uvicorn) ───────────
+a2a-sdk[http-server]>=0.3.24
+
+# ── HTTP client (used directly in Lesson 07 client) ───────────
+httpx>=0.27.0
+
+# ── Environment / secrets ─────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Notebooks ─────────────────────────────────────────────────
+jupyter>=1.0.0
+ipykernel>=6.0.0
+nbconvert>=7.0.0

@@ -1,0 +1,64 @@
+ACME Insurance — Standard Policy Document
+==========================================
+
+Policy Number: ACME-STD-2025-001
+Effective Date: January 1, 2025
+Expiration Date: December 31, 2025
+
+COVERAGE SUMMARY
+----------------
+
+Plan: Standard
+Monthly Premium: $150
+Annual Premium: $1,800
+
+DEDUCTIBLES
+-----------
+
+- Standard Plan Deductible: $500 per incident
+- Emergency Room Deductible: $250 per visit
+- Prescription Drug Deductible: $100 per year
+
+COVERAGE LIMITS
+---------------
+
+- Per Incident Maximum: $50,000
+- Annual Maximum: $200,000
+- Lifetime Maximum: $1,000,000
+
+COVERED SERVICES
+----------------
+
+1. Primary Care Visits: Covered after deductible, 80/20 co-insurance
+2. Specialist Visits: Covered after deductible, 70/30 co-insurance
+3. Emergency Room: Covered after ER deductible, 90/10 co-insurance
+4. Prescription Drugs:
+   - Generic: $10 co-pay
+   - Brand Name: $30 co-pay
+   - Specialty: 20% co-insurance after drug deductible
+5. Preventive Care: Covered at 100%, no deductible
+6. Mental Health: Covered after deductible, 80/20 co-insurance
+7. Physical Therapy: Up to 30 visits per year, $25 co-pay per visit
+
+EXCLUSIONS
+----------
+
+- Cosmetic procedures (unless medically necessary)
+- Experimental treatments not FDA-approved
+- Services outside the provider network (except emergencies)
+- Pre-existing conditions during the first 90-day waiting period
+
+CLAIMS PROCESS
+--------------
+
+1. Submit claims within 90 days of service
+2. Include itemized bill and provider information
+3. Claims processed within 30 business days
+4. Appeals must be filed within 60 days of denial
+
+CONTACT INFORMATION
+-------------------
+
+- Claims: claims@acme-insurance.example.com
+- Customer Service: 1-800-555-ACME
+- Online Portal: https://portal.acme-insurance.example.com
