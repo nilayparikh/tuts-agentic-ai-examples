@@ -1,158 +1,141 @@
 # Scripts
 
-Automation scripts for running A2A example lessons.
-All scripts run from the `a2a/` directory (one level above this folder).
+Interactive scenario scripts — one per lesson.
+**Cross-platform** — works on Windows, macOS, and Linux with Python 3.10+.
+Run everything from the `a2a/` directory (one level above this folder).
 
 ## Quick Reference
 
-| Script                     | OS         | Purpose                                              |
-| -------------------------- | ---------- | ---------------------------------------------------- |
-| `setup.ps1` / `setup.sh`   | Win / Unix | One-time: create venv, install deps, register kernel |
-| `run_lesson05.ps1` / `.sh` | Win / Unix | Run Lesson 05 standalone agent                       |
-| `run_server.ps1` / `.sh`   | Win / Unix | Start A2A server (blocks until Ctrl+C)               |
-| `run_client.ps1` / `.sh`   | Win / Unix | Test running server with 4 questions                 |
-| `run_notebooks.ps1`        | Win        | Execute all notebooks via nbconvert                  |
-| `run_all.ps1` / `.sh`      | Win / Unix | Full end-to-end: 05 → start server → 07 client       |
+| Script         | Lesson | What It Does                                  |
+| -------------- | ------ | --------------------------------------------- |
+| `lesson_05.py` | 05     | Standalone QA agent — runs demo, then prompts |
+| `lesson_06.py` | 06     | A2A server — walks through components, starts |
+| `lesson_07.py` | 07     | A2A client — discovery, blocking, streaming, prompts |
+
+## Requirements
+
+- Python 3.10+ in the `.venv` (`uv venv .venv --python 3.11`)
+- Dependencies installed (`uv pip install -r requirements.txt`)
+- `_examples/.env` with `GITHUB_TOKEN=ghp_your_token_here`
+  ([get a free PAT](https://github.com/settings/tokens) — no special scopes)
 
 ## Usage
 
-```powershell
-# Windows PowerShell — run from a2a/ directory
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a
-
-.\scripts\setup.ps1           # First time only
-.\scripts\run_lesson05.ps1    # Lesson 05 standalone
-.\scripts\run_server.ps1      # Start server (keep this terminal open)
-.\scripts\run_client.ps1      # In a NEW terminal — test the server
-.\scripts\run_all.ps1         # Full automated run
-```
-
 ```bash
-# Linux / macOS — run from a2a/ directory
-cd /path/to/_examples/a2a
+# All three commands use the same syntax on Windows / macOS / Linux
+# Run from _examples/a2a/
 
-bash scripts/setup.sh
-bash scripts/run_lesson05.sh
-bash scripts/run_server.sh     # keep terminal open
-bash scripts/run_client.sh     # in a new terminal
-bash scripts/run_all.sh
+python scripts/lesson_05.py   # Standalone QA agent (no server needed)
+
+# In terminal 1:
+python scripts/lesson_06.py   # Start A2A server on :10001
+
+# In terminal 2 (while server is running):
+python scripts/lesson_07.py   # Connect, query, stream, interact
 ```
 
-## Workflows
+## Lesson Scenarios
 
-### Workflow 1 — Quick Smoke Test (Lesson 05 only)
+### Lesson 05 — Standalone QA Agent
 
-No server needed. Just verifies GitHub Models connectivity and the QAAgent class.
+No server required. Verifies GitHub Models connectivity and the QAAgent class.
 
-```powershell
-.\scripts\run_lesson05.ps1
 ```
+━━━  Lesson 05 — Building Your First A2A Agent  ━━━
+     Standalone QA Agent · GitHub Phi-4
 
-Expected output: 3 questions answered from the insurance policy document.
+Step 1 — Environment
+  ✅ GITHUB_TOKEN set (github_p...)
 
----
+Step 2 — Configuring GitHub Models client (Phi-4)
+  ✅ Client ready → https://models.inference.ai.azure.com
 
-### Workflow 2 — Interactive Server + Manual Client
+Step 3 — Loading domain knowledge
+  ✅ Loaded 1,763 chars from insurance_policy.txt
 
-Best for learning — you see server logs in one terminal and client output in another.
+Step 4 — Creating QAAgent
+  ✅ QAAgent ready
 
-**Terminal 1** (server):
+Step 5 — Running demo questions
+  ❓ What is the deductible for the Standard plan?
+     The deductible for the Standard plan is $500 per incident ...
 
-```powershell
-.\scripts\run_server.ps1
-```
-
-**Terminal 2** (client):
-
-```powershell
-.\scripts\run_client.ps1
-```
-
-Or test manually with curl:
-
-```bash
-# Fetch Agent Card
-curl http://localhost:10001/.well-known/agent.json | python -m json.tool
-
-# Ask a question
-curl -X POST http://localhost:10001 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "jsonrpc": "2.0",
-    "id": "1",
-    "method": "message/send",
-    "params": {
-      "message": {
-        "role": "user",
-        "parts": [{"kind": "text", "text": "What is the deductible?"}],
-        "messageId": "msg-001"
-      }
-    }
-  }'
+Step 6 — Interactive mode
+  ❓ Your question: _
 ```
 
 ---
 
-### Workflow 3 — Full Automated Run (CI-friendly)
+### Lesson 06 — A2A Server
 
-Starts the server as a background process, runs all client tests, then stops the server.
-
-```powershell
-.\scripts\run_all.ps1
-```
-
-Expected output:
+Walks through the server components, then starts the server on port 10001.
+Keep this terminal open while running Lesson 07.
 
 ```
-✅ Lesson 05 complete
-✅ Server ready at http://localhost:10001
-Q: What is the annual deductible?
-A: The annual deductible for the ACME Standard Plan is $500...
-...
-Passed: 5 / 5
-✅ Server stopped
+━━━  Lesson 06 — A2A Server  ━━━
+     QAAgent wrapped as a fully A2A-compliant API
+
+Step 1 — Environment        ✅ GITHUB_TOKEN set
+Step 2 — Agent Card         (explains discovery endpoint)
+Step 3 — AgentExecutor      (explains QAAgent →  A2A bridge)
+Step 4 — Server Stack       (explains uvicorn / ASGI stack)
+Step 5 — Starting Server
+
+  🚀 QAAgent A2A Server
+     Listening on:  http://localhost:10001
+     Agent Card:    http://localhost:10001/.well-known/agent.json
+     Press Ctrl+C to stop.
 ```
 
 ---
 
-### Workflow 4 — Notebook Execution
+### Lesson 07 — A2A Client
 
-Execute all notebook cells headlessly and save outputs:
+Connects to the running server, walks through discovery, blocking calls,
+streaming, error handling, then enters an interactive Q&A loop.
 
-```powershell
-.\scripts\run_notebooks.ps1           # all notebooks
-.\scripts\run_notebooks.ps1 -Lesson 05  # single lesson
 ```
+━━━  Lesson 07 — A2A Client Fundamentals  ━━━
+     Discover · Request · Stream · Handle Errors
 
-> **Note:** Lesson 07 notebook requires the server running.
-> Start it with `run_server.ps1` before running notebooks for lesson 07.
+Step 1 — Discover the Agent Card
+  ✅ Agent Card received
+     Name:    QAAgent  |  Streaming: True
+
+Step 2 — Blocking request (message/send)
+  ❓ What is the annual deductible?
+     The annual deductible is $500 ...
+
+Step 3 — Multiple blocking questions   (4 demo questions)
+Step 4 — Streaming request             (SSE events printed live)
+Step 5 — Error handling                (JSON-RPC + connection)
+
+Step 6 — Interactive mode
+  ❓ Your question: _
+```
 
 ---
 
 ## Environment Setup
 
-All scripts load `.env` from `_examples/.env` automatically.
-The `.env` file must contain:
-
 ```dotenv
+# _examples/.env
 GITHUB_TOKEN=ghp_your_token_here
 ```
 
-Get a GitHub PAT (no special scopes needed) at:
-https://github.com/settings/tokens
+All scripts auto-load `.env` from `_examples/` — no manual export needed.
 
 ## Port Reference
 
-| Port  | Agent   | Script           |
-| ----- | ------- | ---------------- |
-| 10001 | QAAgent | `run_server.ps1` |
+| Port  | Agent   | Started by     |
+| ----- | ------- | -------------- |
+| 10001 | QAAgent | `lesson_06.py` |
 
 ## Troubleshooting
 
-| Problem                 | Fix                                                           |
-| ----------------------- | ------------------------------------------------------------- |
-| `GITHUB_TOKEN not set`  | Edit `_examples/.env`                                         |
-| `Server not reachable`  | Run `run_server.ps1` in a separate terminal first             |
-| `ModuleNotFoundError`   | Run `setup.ps1` to install deps                               |
-| `kernel not found`      | Run `setup.ps1` to register the `a2a-examples` kernel         |
-| `uv: command not found` | Install uv: `pip install uv` or `winget install astral-sh.uv` |
+| Problem                       | Fix                                                         |
+| ----------------------------- | ----------------------------------------------------------- |
+| `GITHUB_TOKEN not set`        | Edit `_examples/.env`                                       |
+| `Cannot reach localhost:10001` | Start the server first: `python scripts/lesson_06.py`      |
+| `ModuleNotFoundError`         | Activate the venv or install deps: `uv pip install -r requirements.txt` |
+| `kernel not found`            | Register kernel: `.venv/bin/python -m ipykernel install --user --name a2a-examples` |
