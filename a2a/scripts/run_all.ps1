@@ -14,7 +14,7 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Root = Split-Path -Parent $ScriptDir
 $Python = Join-Path $Root ".venv\Scripts\python.exe"
 $ServerPort = 10001
-$ServerJob = $null
+$ServerProc = $null
 
 # ── Banner ─────────────────────────────────────────────────────
 Write-Host ""
@@ -66,42 +66,56 @@ Write-Host ""
 Write-Host "━━━ LESSON 06 — Starting A2A Server ━━━" -ForegroundColor Magenta
 Write-Host ""
 
-$ServerSrc = Join-Path $Root "lessons\06-a2a-server\src"
+$ServerSrc    = Join-Path $Root "lessons\06-a2a-server\src"
+$ServerLogOut = Join-Path $env:TEMP "a2a_server_stdout.txt"
+$ServerLogErr = Join-Path $env:TEMP "a2a_server_stderr.txt"
 
-# Start server as background job
-$ServerJob = Start-Job -ScriptBlock {
-    param($Python, $Src, $Token)
-    $env:GITHUB_TOKEN = $Token
-    Set-Location $Src
-    & $Python server.py
-} -ArgumentList $Python, $ServerSrc, $env:GITHUB_TOKEN
+# Start server as a child process.
+# -NoNewWindow keeps it as a console child process so redirects work;
+# -WindowStyle Hidden creates a GUI-subsystem process which silently fails.
+$ServerProc = Start-Process -FilePath $Python `
+    -ArgumentList "server.py" `
+    -WorkingDirectory $ServerSrc `
+    -RedirectStandardOutput $ServerLogOut `
+    -RedirectStandardError  $ServerLogErr `
+    -NoNewWindow `
+    -PassThru
 
-Write-Host "Server starting (job #$($ServerJob.Id))..." -ForegroundColor Gray
+Write-Host "Server starting (PID $($ServerProc.Id))..." -ForegroundColor Gray
 
-# Wait for server to become ready
-$MaxWait = 20
+# ── Wait for server ready ──────────────────────────────────────
+$MaxWait = 30
 $Ready = $false
 for ($i = 1; $i -le $MaxWait; $i++) {
     Start-Sleep -Seconds 1
-    try {
-        $null = Invoke-RestMethod -Uri "http://localhost:${ServerPort}/.well-known/agent.json" -TimeoutSec 2
+    if ($ServerProc.HasExited) {
+        Write-Host "❌ Server process exited early (exit code $($ServerProc.ExitCode))" -ForegroundColor Red
+        Write-Host "   stderr:" -ForegroundColor Gray
+        Get-Content $ServerLogErr -ErrorAction SilentlyContinue | Select-Object -Last 20 | ForEach-Object { Write-Host "   $_" -ForegroundColor Gray }
+        exit 1
+    }
+    # Use TCP port test first (avoids HTTP client timeout issues)
+    $tcn = Test-NetConnection -ComputerName localhost -Port $ServerPort -WarningAction SilentlyContinue -ErrorAction SilentlyContinue
+    if ($tcn.TcpTestSucceeded) {
         $Ready = $true
         break
-    } catch { }
+    }
     Write-Host "  Waiting for server... ($i/${MaxWait}s)" -ForegroundColor Gray
 }
 
 if (-not $Ready) {
     Write-Host "❌ Server did not start within ${MaxWait}s" -ForegroundColor Red
-    Stop-Job $ServerJob -ErrorAction SilentlyContinue
-    Remove-Job $ServerJob -ErrorAction SilentlyContinue
+    Write-Host "   Server log (stderr):" -ForegroundColor Gray
+    Get-Content $ServerLogErr -ErrorAction SilentlyContinue | Select-Object -Last 20 | ForEach-Object { Write-Host "   $_" -ForegroundColor Gray }
+    if ($ServerProc -and !$ServerProc.HasExited) { Stop-Process -Id $ServerProc.Id -Force }
     exit 1
 }
 
 Write-Host "✅ Server ready at http://localhost:${ServerPort}" -ForegroundColor Green
+Start-Sleep -Seconds 2   # allow app to fully initialize after port binds
 
 # Verify Agent Card
-$Card = Invoke-RestMethod -Uri "http://localhost:${ServerPort}/.well-known/agent.json"
+$Card = Invoke-RestMethod -Uri "http://localhost:${ServerPort}/.well-known/agent.json" -TimeoutSec 15
 Write-Host "   Agent: $($Card.name) v$($Card.version)"
 Write-Host "   Skills: $($Card.skills | ForEach-Object { $_.name } | Join-String -Separator ', ')"
 Write-Host ""
@@ -148,7 +162,7 @@ foreach ($Question in $Questions) {
             -Body $Body `
             -TimeoutSec 60
 
-        $Text = $Response.result.status.message.parts[0].text
+        $Text = $Response.result.parts[0].text
         Write-Host "Q: $Question" -ForegroundColor Yellow
         if ($Text) {
             $Short = $Text.Substring(0, [Math]::Min(180, $Text.Length))
@@ -176,10 +190,9 @@ if ($Failed -gt 0) {
 # ── Cleanup ────────────────────────────────────────────────────
 Write-Host ""
 Write-Host "Stopping server..." -ForegroundColor Gray
-if ($ServerJob) {
-    Stop-Job $ServerJob -ErrorAction SilentlyContinue
-    Remove-Job $ServerJob -ErrorAction SilentlyContinue
-    Write-Host "✅ Server stopped" -ForegroundColor Green
+if ($ServerProc -and !$ServerProc.HasExited) {
+    Stop-Process -Id $ServerProc.Id -Force -ErrorAction SilentlyContinue
+    Write-Host "✅ Server stopped (PID $($ServerProc.Id))" -ForegroundColor Green
 }
 
 Write-Host ""

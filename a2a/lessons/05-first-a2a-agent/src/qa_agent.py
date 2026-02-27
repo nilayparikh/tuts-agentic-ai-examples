@@ -95,6 +95,9 @@ class QAAgent:
 
 if __name__ == "__main__":
     import asyncio
+    import sys
+
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # Windows safe
 
     async def main():
         agent = QAAgent("data/insurance_policy.txt")

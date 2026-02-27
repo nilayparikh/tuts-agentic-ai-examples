@@ -8,6 +8,9 @@ Endpoints:
     POST /                        — JSON-RPC message handling
 """
 
+import sys
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # Windows safe
+
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
 
