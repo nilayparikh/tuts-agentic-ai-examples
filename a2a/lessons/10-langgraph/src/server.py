@@ -1,16 +1,16 @@
 """
-Lesson 08 — A2A server wrapping the OrchestratorAgent.
+Lesson 10 — A2A server wrapping the LangGraph OrchestratorAgent.
 
-Exposes the loan validator as a standards-compliant A2A server on port 10008.
-Other agents (e.g. LangGraph, CrewAI, Google ADK) can discover and call it via
-the A2A protocol — demonstrating cross-framework interoperability.
+Exposes the loan validator as a standards-compliant A2A server on port 10003.
+Uses the same loan validation problem as Lesson 08 to demonstrate how
+LangGraph's ReAct pattern integrates with A2A.
 
-Usage (from lessons/08-microsoft-agent-framework/src/):
+Usage (from lessons/10-langgraph/src/):
     python server.py
 
 Endpoints:
-    GET  http://localhost:10008/.well-known/agent.json   → Agent Card
-    POST http://localhost:10008/                         → JSON-RPC (message/send)
+    GET  http://localhost:10003/.well-known/agent.json   → Agent Card
+    POST http://localhost:10003/                         → JSON-RPC
 """
 
 # pylint: disable=wrong-import-position,wrong-import-order
@@ -42,24 +42,18 @@ from a2a.utils import new_agent_text_message  # noqa: E402
 from loan_data import APPLICANT_INDEX  # noqa: E402
 from orchestrator import OrchestratorAgent, ValidationReport  # noqa: E402
 
-SERVER_PORT = 10008
+SERVER_PORT = 10003
 
 
 class LoanValidatorExecutor(AgentExecutor):
-    """Bridges the A2A protocol to OrchestratorAgent.validate()."""
+    """Bridges the A2A protocol to LangGraph OrchestratorAgent."""
 
     def __init__(self) -> None:
         self._agent = OrchestratorAgent()
 
-    async def execute(
-        self,
-        context: RequestContext,
-        event_queue: EventQueue,
-    ) -> None:
-        """Handle an incoming A2A message/send request."""
+    async def execute(self, context: RequestContext, event_queue: EventQueue) -> None:
         user_text = context.get_user_input().strip()
 
-        # Accept an applicant_id token anywhere in the input text
         app_id: str | None = None
         for token in user_text.split():
             if token in APPLICANT_INDEX:
@@ -69,8 +63,7 @@ class LoanValidatorExecutor(AgentExecutor):
         if app_id is None:
             await event_queue.enqueue_event(
                 new_agent_text_message(
-                    f"Please provide an applicant ID.  "
-                    f"Supported: {list(APPLICANT_INDEX.keys())}"
+                    f"Please provide an applicant ID. Supported: {list(APPLICANT_INDEX.keys())}"
                 )
             )
             return
@@ -79,23 +72,17 @@ class LoanValidatorExecutor(AgentExecutor):
         report: ValidationReport = await self._agent.validate(app)
         await event_queue.enqueue_event(new_agent_text_message(str(report)))
 
-    async def cancel(
-        self,
-        context: RequestContext,
-        event_queue: EventQueue,
-    ) -> None:
-        """Cancellation is not supported for this synchronous validator."""
+    async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
         raise NotImplementedError("cancel not supported")
 
 
 # ─── Agent Card ───────────────────────────────────────────────────────────────
 
 agent_card = AgentCard(
-    name="LoanValidatorOrchestrator",
+    name="LoanValidatorLangGraph",
     description=(
-        "Pre-screens residential mortgage applications using deterministic "
-        "business rules and Kimi-K2-Thinking reasoning to produce APPROVED / "
-        "NEEDS_REVIEW / DECLINED verdicts with full justification."
+        "Pre-screens residential mortgage applications using LangGraph ReAct "
+        "pattern with deterministic business rules and Kimi-K2 reasoning."
     ),
     url=f"http://localhost:{SERVER_PORT}/",
     version="1.0.0",
@@ -106,15 +93,9 @@ agent_card = AgentCard(
         AgentSkill(
             id="validate_loan",
             name="Validate Loan Application",
-            description=(
-                "Run hard/soft business-rule checks and LLM reasoning "
-                "on a loan application."
-            ),
-            tags=["loan", "validation", "underwriting", "mortgage", "fha"],
-            examples=[
-                "APP-2024-001",
-                "APP-2024-003",
-            ],
+            description="Run hard/soft business-rule checks and LLM reasoning on a loan application.",
+            tags=["loan", "validation", "underwriting", "mortgage", "langgraph"],
+            examples=["APP-2024-001", "APP-2024-003"],
         )
     ],
 )
@@ -132,7 +113,7 @@ server = A2AStarletteApplication(
 )
 
 if __name__ == "__main__":
-    print(f"Starting LoanValidatorOrchestrator A2A server on port {SERVER_PORT} …")
+    print(f"Starting LoanValidatorLangGraph A2A server on port {SERVER_PORT} ...")
     print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent.json")
     print(f"  JSON-RPC   : POST http://localhost:{SERVER_PORT}/")
     print()

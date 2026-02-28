@@ -1,10 +1,10 @@
-# Lesson 09 — A2A with Google Agent Development Kit (ADK)
+# Lesson 11 — A2A with CrewAI
 
-This folder contains the working example for Lesson 09 of the A2A tutorial.
+This folder contains the working example for Lesson 11 of the A2A tutorial.
 
 ## What It Does
 
-An `OrchestratorAgent` built with Google ADK uses **Kimi-K2** (Azure AI Foundry)
+An `OrchestratorAgent` built with CrewAI uses **Kimi-K2** (Azure AI Foundry)
 to pre-screen residential mortgage loan applications — the same validation
 problem from Lesson 08, reimplemented with a different framework.
 
@@ -13,9 +13,9 @@ problem from Lesson 08, reimplemented with a different framework.
 ```mermaid
 flowchart TD
     Input["LoanApplication\nstructured data"]
-    Input --> Hard["run_hard_checks()\nFunctionTool — deterministic rules"]
-    Hard  --> Soft["run_soft_checks()\nFunctionTool — advisory factors"]
-    Soft  --> LLM["LlmAgent + LiteLlm\nKimi-K2 via Azure"]
+    Input --> Hard["run_hard_checks()\nCrewBaseTool — deterministic rules"]
+    Hard  --> Soft["run_soft_checks()\nCrewBaseTool — advisory factors"]
+    Soft  --> LLM["CrewAI Crew\nSequential Process → Kimi-K2 via LiteLLM"]
     LLM   --> Out["ValidationReport\nAPPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
@@ -31,8 +31,8 @@ flowchart TD
 
 ```
 src/
-  orchestrator.py       OrchestratorAgent (ADK LlmAgent + LiteLlm → Kimi-K2)
-  server.py             A2A server using ADK's to_a2a() one-liner (port 10002)
+  orchestrator.py       OrchestratorAgent (CrewAI Crew with role-based agents → Kimi-K2)
+  server.py             A2A server with manual AgentExecutor wiring (port 10004)
   client.py             A2A client that discovers and calls the server via A2A protocol
 ```
 
@@ -43,30 +43,25 @@ src/
 
 ```bash
 # Terminal 1 — start A2A server
-cd lessons/09-google-adk/src
+cd lessons/11-crewai/src
 python server.py
 
 # Terminal 2 — run A2A client
-cd lessons/09-google-adk/src
+cd lessons/11-crewai/src
 python client.py
-```
-
-Or use the interactive lesson script:
-
-```bash
-cd _examples/a2a
-python scripts/lesson_09.py
 ```
 
 ## Key Concepts Demonstrated
 
-1. **ADK `to_a2a()` One-Liner** — the simplest A2A server integration of any
-   framework (compare to Lesson 08's manual `A2AStarletteApplication` wiring)
-2. **LiteLlm Model Adapter** — run Azure-hosted Kimi-K2 without any
-   Google Cloud / Vertex AI dependency
-3. **FunctionTool** — wrap plain Python functions as agent tools with
-   automatic parameter discovery from type hints and docstrings
-4. **Same Problem, Different Framework** — identical loan validation domain
+1. **Role-Based Agents** — CrewAI's `Agent` class with role/goal/backstory
+   pattern for separating concerns (Compliance Analyst vs. Senior Underwriter)
+2. **Sequential Crew Process** — tasks flow in order from compliance
+   analysis to final underwriting verdict
+3. **`CrewBaseTool`** — class-based tool wrappers (contrast with decorator
+   approaches in other frameworks)
+4. **Azure via LiteLLM** — CrewAI uses LiteLLM under the hood; the
+   `azure/{deployment}` model string routes to Azure AI Foundry
+5. **Same Problem, Different Framework** — identical loan validation domain
    proves that the framework is just the orchestration layer
 
 ## Environment Variables
@@ -82,6 +77,5 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2
 ## Dependencies
 
 ```
-google-adk[a2a]>=1.3.0
-litellm>=1.50.0
+crewai>=0.100.0
 ```

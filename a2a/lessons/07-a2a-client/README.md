@@ -12,19 +12,10 @@ Build an A2A client that **discovers**, **calls**, and **streams** from the QAAg
 
 ## Quick Start
 
-1. **Start the Lesson 06 server** (separate terminal):
+1. **Start the Lesson 06 server** — open `../06-a2a-server/src/a2a_server.ipynb`
+   and run all cells through the server cell (Step 6).
 
-   ```bash
-   cd ../06-a2a-server/src
-   python server.py
-   ```
-
-2. **Open the client notebook**:
-
-   ```bash
-   cd src
-   jupyter notebook a2a_client.ipynb
-   ```
+2. **Open `src/a2a_client.ipynb`** in VS Code or Jupyter.
 
 3. **Run cells sequentially** — each builds on the previous.
 

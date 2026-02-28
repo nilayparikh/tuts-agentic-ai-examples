@@ -25,7 +25,7 @@ An A2A server that:
 | **GitHub Models** (default) | `GITHUB_TOKEN` in `.env`                     |
 | **AI Toolkit LocalFoundry** | Model running on port 5272 — no token needed |
 
-Change `PROVIDER` in the notebook setup cell (or top of `server.py`) to switch providers.
+Change `PROVIDER` in the notebook setup cell to switch providers.
 
 ## Setup
 
@@ -36,20 +36,14 @@ pip install "a2a-sdk[http-server]" openai python-dotenv
 
 ## Run
 
-**Start the server:**
+Open `a2a_server.ipynb` in Jupyter or VS Code and **run all cells** through the
+server cell. The server starts on `localhost:10001` inside the notebook kernel.
 
-```bash
-cd src
-python server.py
-# Server running at http://localhost:10001
-# Agent Card at http://localhost:10001/.well-known/agent.json
-```
-
-**Test with curl:**
+**Test with curl** (while the server is running):
 
 ```bash
 # Fetch Agent Card
-curl http://localhost:10001/.well-known/agent-card.json | python -m json.tool
+curl http://localhost:10001/.well-known/agent.json | python -m json.tool
 
 # Send a question
 curl -X POST http://localhost:10001 \
@@ -68,23 +62,19 @@ curl -X POST http://localhost:10001 \
   }'
 ```
 
-**Notebook:** Open `a2a_server.ipynb` for an interactive walkthrough of each component.
-
 ## Files
 
-| File                            | Description                                  |
-| ------------------------------- | -------------------------------------------- |
-| `src/a2a_server.ipynb`          | Interactive notebook walkthrough             |
-| `src/server.py`                 | Runnable server script (start with `python`) |
-| `src/agent_executor.py`         | AgentExecutor wrapping QAAgent               |
-| `src/data/insurance_policy.txt` | Knowledge base (copied from Lesson 5)        |
+| File                            | Description                           |
+| ------------------------------- | ------------------------------------- |
+| `src/a2a_server.ipynb`          | Self-contained server notebook        |
+| `src/data/insurance_policy.txt` | Knowledge base (copied from Lesson 5) |
 
 ## Key Concepts
 
 - **AgentExecutor** — A2A SDK's abstract interface between protocol and agent logic
 - **Agent Card** — JSON manifest describing agent skills and capabilities
 - **EventQueue** — Bridges agent output to A2A protocol events
-- **`new_agent_text_message()`** — Helper that creates properly formatted text responses
+- **TaskStatusUpdateEvent** — Emits state transitions (working, completed, input_required)
 - **A2AStarletteApplication** — Pre-built ASGI server from the A2A SDK
 
 ## A2A SDK Imports Reference
@@ -92,7 +82,6 @@ curl -X POST http://localhost:10001 \
 ```python
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import EventQueue
-from a2a.utils import new_agent_text_message
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
 from a2a.server.tasks import InMemoryTaskStore

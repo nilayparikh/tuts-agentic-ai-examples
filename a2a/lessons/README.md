@@ -1,8 +1,10 @@
 # Lessons — A2A Protocol Examples
 
-Five progressive lessons building from a standalone LLM agent to a
-multi-framework A2A deployment. Each lesson compiles, runs, and builds
-directly on the previous.
+Progressive lessons building from a standalone LLM agent to a
+multi-framework A2A deployment. Each lesson compiles and runs
+independently. Lessons 08–13 all solve the **same loan validation
+problem** using different agent frameworks — shared data and rules
+live in `_common/src/`.
 
 ---
 
@@ -80,13 +82,17 @@ graph TD
 
 ## Lessons at a Glance
 
-| Lesson | Folder                          | What It Builds                                     | Port      | Model                  |
-| ------ | ------------------------------- | -------------------------------------------------- | --------- | ---------------------- |
-| **05** | `05-first-a2a-agent/`           | Standalone QA agent — insurance policy Q&A         | —         | GitHub Phi-4           |
-| **06** | `06-a2a-server/`                | A2A server wrapping the QA agent                   | **10001** | GitHub Phi-4           |
-| **07** | `07-a2a-client/`                | A2A client — discover, query, stream               | —         | _(client only)_        |
-| **08** | `08-microsoft-agent-framework/` | Loan validator orchestrator via MS Agent Framework | **10008** | Azure Kimi-K2-Thinking |
-| **09** | `09-google-adk/`                | Threat-intel agent via Google ADK `to_a2a()`       | **10002** | Azure Kimi-K2          |
+| Lesson | Folder                          | What It Builds                                 | Port      | Model                  |
+| ------ | ------------------------------- | ---------------------------------------------- | --------- | ---------------------- |
+| **05** | `05-first-a2a-agent/`           | Standalone QA agent — insurance policy Q&A     | —         | GitHub Phi-4           |
+| **06** | `06-a2a-server/`                | A2A server wrapping the QA agent               | **10001** | GitHub Phi-4           |
+| **07** | `07-a2a-client/`                | A2A client — discover, query, stream           | —         | _(client only)_        |
+| **08** | `08-microsoft-agent-framework/` | Loan validator via MS Agent Framework          | **10008** | Azure Kimi-K2-Thinking |
+| **09** | `09-google-adk/`                | Loan validator via Google ADK `to_a2a()`       | **10002** | Azure Kimi-K2-Thinking |
+| **10** | `10-langgraph/`                 | Loan validator via LangGraph ReAct agent       | **10003** | Azure Kimi-K2-Thinking |
+| **11** | `11-crewai/`                    | Loan validator via CrewAI role-based crew      | **10004** | Azure Kimi-K2-Thinking |
+| **12** | `12-openai-agents-sdk/`         | Loan validator via OpenAI Agents SDK           | **10005** | Azure Kimi-K2-Thinking |
+| **13** | `13-claude-agent-sdk/`          | Loan validator via Claude-style agent patterns | **10006** | Azure Kimi-K2-Thinking |
 
 ---
 
@@ -117,11 +123,15 @@ The framework used to build the server is invisible to the client — that is A2
 
 ## Port Reference
 
-| Port    | Owner     | Agent                     | Notes                                          |
-| ------- | --------- | ------------------------- | ---------------------------------------------- |
-| `10001` | Lesson 06 | QAAgent                   | Insurance policy Q&A, GitHub Phi-4             |
-| `10002` | Lesson 09 | ThreatBriefingAgent       | CVE threat intel, Azure Kimi-K2                |
-| `10008` | Lesson 08 | LoanValidatorOrchestrator | Mortgage pre-screening, Azure Kimi-K2-Thinking |
+| Port    | Lesson | Agent                     | Notes                                         |
+| ------- | ------ | ------------------------- | --------------------------------------------- |
+| `10001` | 06     | QAAgent                   | Insurance policy Q&A, GitHub Phi-4            |
+| `10002` | 09     | LoanValidatorADK          | Google ADK, Azure Kimi-K2-Thinking            |
+| `10003` | 10     | LoanValidatorLangGraph    | LangGraph ReAct, Azure Kimi-K2-Thinking       |
+| `10004` | 11     | LoanValidatorCrewAI       | CrewAI crew, Azure Kimi-K2-Thinking           |
+| `10005` | 12     | LoanValidatorOpenAIAgents | OpenAI Agents SDK, Azure Kimi-K2-Thinking     |
+| `10006` | 13     | LoanValidatorClaudeStyle  | Claude-style patterns, Azure Kimi-K2-Thinking |
+| `10008` | 08     | LoanValidatorOrchestrator | MS Agent Framework, Azure Kimi-K2-Thinking    |
 
 ---
 
@@ -130,7 +140,7 @@ The framework used to build the server is invisible to the client — that is A2
 | Lessons                    | Provider                              | Model                                           | Auth                                     |
 | -------------------------- | ------------------------------------- | ----------------------------------------------- | ---------------------------------------- |
 | 05, 06, 07 + all notebooks | **GitHub Models** or **LocalFoundry** | `Phi-4` / `qwen2.5-0.5b-instruct-generic-gpu:4` | `GITHUB_TOKEN` **or** VS Code AI Toolkit |
-| 08, 09 _(full scripts)_    | **Azure AI Foundry**                  | `Kimi-K2-Thinking` / `Kimi-K2`                  | `AZURE_AI_API_KEY`                       |
+| 08–13 _(full scripts)_     | **Azure AI Foundry**                  | `Kimi-K2-Thinking`                              | `AZURE_AI_API_KEY`                       |
 
 ---
 
@@ -156,7 +166,7 @@ Minimum for Lessons 05–07 and notebooks:
 GITHUB_TOKEN=ghp_your_token_here
 ```
 
-Additional for full Lessons 08–09 scripts:
+Additional for Lessons 08–13 scripts:
 
 ```dotenv
 AZURE_OPENAI_ENDPOINT=https://<name>.openai.azure.com
@@ -226,18 +236,19 @@ graph LR
 ```
 lessons/
   README.md                                         ← This file
+  _common/
+    src/
+      loan_data.py                                  ← LoanApplication + 8 test fixtures
+      validation_rules.py                           ← Hard/soft check tools + policy lookup
   05-first-a2a-agent/
     README.md
     src/
-      qa_agent.py                                   ← Standalone QA agent class
-      qa_agent.ipynb                                ← Interactive walkthrough
+      qa_agent.ipynb                                ← Self-contained agent notebook
       data/insurance_policy.txt
   06-a2a-server/
     README.md
     src/
-      server.py                                     ← A2A server (port 10001)
-      agent_executor.py                             ← AgentExecutor adapter
-      a2a_server.ipynb                              ← Interactive walkthrough
+      a2a_server.ipynb                              ← Self-contained server notebook (port 10001)
       data/insurance_policy.txt
   07-a2a-client/
     README.md
@@ -246,18 +257,39 @@ lessons/
   08-microsoft-agent-framework/
     README.md
     src/
-      server.py                                     ← Full A2A server (port 10008, Kimi-K2)
+      server.py                                     ← A2A server (port 10008)
       client.py                                     ← A2A client
       orchestrator.py                               ← OrchestratorAgent (MS AF)
-      loan_data.py                                  ← Test applicants
-      validation_rules.py                           ← Hard/soft check tools
   09-google-adk/
     README.md
     src/
-      server.py                                     ← Full A2A server (port 10002, Kimi-K2)
+      server.py                                     ← A2A server (port 10002)
       client.py                                     ← A2A client
-      research_agent.py                             ← LlmAgent + tools
-      knowledge_base.py                             ← CVE knowledge base
+      orchestrator.py                               ← OrchestratorAgent (ADK LlmAgent)
+  10-langgraph/
+    README.md
+    src/
+      server.py                                     ← A2A server (port 10003)
+      client.py                                     ← A2A client
+      orchestrator.py                               ← OrchestratorAgent (LangGraph ReAct)
+  11-crewai/
+    README.md
+    src/
+      server.py                                     ← A2A server (port 10004)
+      client.py                                     ← A2A client
+      orchestrator.py                               ← OrchestratorAgent (CrewAI crew)
+  12-openai-agents-sdk/
+    README.md
+    src/
+      server.py                                     ← A2A server (port 10005)
+      client.py                                     ← A2A client
+      orchestrator.py                               ← OrchestratorAgent (OpenAI Agents)
+  13-claude-agent-sdk/
+    README.md
+    src/
+      server.py                                     ← A2A server (port 10006)
+      client.py                                     ← A2A client
+      orchestrator.py                               ← OrchestratorAgent (Claude-style)
 ```
 
 ---
