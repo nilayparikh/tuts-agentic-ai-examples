@@ -18,7 +18,14 @@ An A2A server that:
    ```bash
    pip install "a2a-sdk[http-server]"
    ```
-3. `GITHUB_TOKEN` environment variable set
+3. Choose a model provider:
+
+| Provider                    | Credential                                   |
+| --------------------------- | -------------------------------------------- |
+| **GitHub Models** (default) | `GITHUB_TOKEN` in `.env`                     |
+| **AI Toolkit LocalFoundry** | Model running on port 5272 — no token needed |
+
+Change `PROVIDER` in the notebook setup cell (or top of `server.py`) to switch providers.
 
 ## Setup
 

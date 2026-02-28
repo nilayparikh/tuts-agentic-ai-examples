@@ -26,6 +26,7 @@ from a2a.server.tasks import InMemoryTaskStore  # noqa: E402
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill  # noqa: E402
 
 from agent_executor import QAAgentExecutor  # noqa: E402
+from qa_agent import PROVIDER, _MODEL  # noqa: E402  # pylint: disable=import-error
 
 # ---------------------------------------------------------------------------
 # Agent Card — describes what this agent can do
@@ -33,7 +34,7 @@ from agent_executor import QAAgentExecutor  # noqa: E402
 
 agent_card = AgentCard(
     name="QAAgent",
-    description="Answers questions about insurance policies using GitHub Phi-4",
+    description=f"Answers questions about insurance policies using {_MODEL} via {PROVIDER}",
     url="http://localhost:10001/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=True),
@@ -73,6 +74,8 @@ server = A2AStarletteApplication(
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    print("🚀 Starting QAAgent A2A Server on http://localhost:10001")
-    print("📋 Agent Card: http://localhost:10001/.well-known/agent.json")
+    print(f"Provider   : {PROVIDER}")
+    print(f"Model      : {_MODEL}")
+    print("Starting QAAgent A2A Server on http://localhost:10001")
+    print("Agent Card : http://localhost:10001/.well-known/agent.json")
     uvicorn.run(server.build(), host="0.0.0.0", port=10001)

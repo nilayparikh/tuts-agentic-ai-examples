@@ -39,40 +39,12 @@ threat briefings using Kimi-K2 via Azure AI Foundry.
 
 ## Source Files
 
-| File                    | Purpose                                                                     |
-| ----------------------- | --------------------------------------------------------------------------- |
-| `src/knowledge_base.py` | Synthetic CVE / threat data + search and lookup tools                       |
-| `src/research_agent.py` | ADK `LlmAgent` with `FunctionTool` wrappers + `LiteLlm` Azure config        |
-| `src/server.py`         | `to_a2a()` one-liner → A2A Starlette server on port 10002                   |
-| `src/client.py`         | A2A client — discovers agent, sends query, displays briefing                |
-| `src/server.ipynb`      | Simplified ADK server demo — GitHub Phi-4 / LocalFoundry, no Azure required |
-| `src/client.ipynb`      | Simplified A2A client demo                                                  |
-
-## Notebooks (Simple)
-
-The two notebooks demonstrate the **Google ADK `to_a2a()` pattern** with
-your choice of **free** model provider — no Azure account required.
-
-| Notebook           | Port  | What it shows                                          |
-| ------------------ | ----- | ------------------------------------------------------ |
-| `src/server.ipynb` | 10091 | Build an ADK LlmAgent + `to_a2a()` server step-by-step |
-| `src/client.ipynb` | —     | Discover and query the ADK A2A server                  |
-
-Open both notebooks and run `server.ipynb` first, then `client.ipynb`.
-
-### Provider options
-
-| Provider                    | Set `PROVIDER =` | Credential                                     |
-| --------------------------- | ---------------- | ---------------------------------------------- |
-| **GitHub Models** (default) | `"github"`       | `GITHUB_TOKEN` in `.env`                       |
-| **AI Toolkit LocalFoundry** | `"localfoundry"` | VS Code AI Toolkit + model loaded on port 5272 |
-
-Change `PROVIDER` in cell 2 of `server.ipynb` before running.
-
-> **Jupyter note:** All async calls in the notebooks use `await` directly rather
-> than `asyncio.run()`. Jupyter already runs inside a live event loop, so
-> `asyncio.run()` raises `RuntimeError: cannot be called from a running event loop`.
-> Top-level `await` in cells works correctly with IPython ≥ 7.
+| File                    | Purpose                                                              |
+| ----------------------- | -------------------------------------------------------------------- |
+| `src/knowledge_base.py` | Synthetic CVE / threat data + search and lookup tools                |
+| `src/research_agent.py` | ADK `LlmAgent` with `FunctionTool` wrappers + `LiteLlm` Azure config |
+| `src/server.py`         | `to_a2a()` one-liner → A2A Starlette server on port 10002            |
+| `src/client.py`         | A2A client — discovers agent, sends query, displays briefing         |
 
 ## Running the Example
 

@@ -13,17 +13,16 @@ A `QAAgent` class that:
 
 ## Prerequisites
 
-1. **GitHub Account** with a Personal Access Token (PAT)
-   - Go to [github.com/settings/tokens](https://github.com/settings/tokens)
-   - Create a PAT (classic) — no special scopes required
-   - See [GitHub Models docs](https://docs.github.com/en/github-models) for details
+**Python 3.10+** with a virtual environment.
 
-2. **Python 3.10+** with a virtual environment
+Choose a model provider:
 
-3. **Environment variable:**
-   ```bash
-   export GITHUB_TOKEN=ghp_your_token_here
-   ```
+| Provider                    | Setup                                                                                                                                                            | Credential                 |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **GitHub Models** (default) | No Azure required. [Create a free PAT](https://github.com/settings/tokens) — no scopes needed.                                                                   | `GITHUB_TOKEN` in `.env`   |
+| **AI Toolkit LocalFoundry** | No token needed. Install [VS Code AI Toolkit](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio), load a model, run it. | Model running on port 5272 |
+
+Change `PROVIDER` in the notebook setup cell (or top of `qa_agent.py`) to switch providers.
 
 ## Setup
 
@@ -52,7 +51,8 @@ python qa_agent.py
 
 ## Key Concepts
 
-- **OpenAI-compatible API** — GitHub Models uses the same API as OpenAI, just a different base URL
+- **OpenAI-compatible API** — both GitHub Models and LocalFoundry use the same API; only `base_url` and `api_key` differ
+- **PROVIDER pattern** — single variable switches between GitHub Models and LocalFoundry
 - **Async pattern** — `async def query()` prepares for A2A server wrapping in Lesson 6
 - **Knowledge injection** — System prompt template with domain document
 - **Standalone testing** — Always verify agent logic before adding protocol layers

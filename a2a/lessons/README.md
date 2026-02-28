@@ -80,13 +80,13 @@ graph TD
 
 ## Lessons at a Glance
 
-| Lesson | Folder | What It Builds | Port | Model |
-|--------|--------|---------------|------|-------|
-| **05** | `05-first-a2a-agent/` | Standalone QA agent — insurance policy Q&A | — | GitHub Phi-4 |
-| **06** | `06-a2a-server/` | A2A server wrapping the QA agent | **10001** | GitHub Phi-4 |
-| **07** | `07-a2a-client/` | A2A client — discover, query, stream | — | _(client only)_ |
+| Lesson | Folder                          | What It Builds                                     | Port      | Model                  |
+| ------ | ------------------------------- | -------------------------------------------------- | --------- | ---------------------- |
+| **05** | `05-first-a2a-agent/`           | Standalone QA agent — insurance policy Q&A         | —         | GitHub Phi-4           |
+| **06** | `06-a2a-server/`                | A2A server wrapping the QA agent                   | **10001** | GitHub Phi-4           |
+| **07** | `07-a2a-client/`                | A2A client — discover, query, stream               | —         | _(client only)_        |
 | **08** | `08-microsoft-agent-framework/` | Loan validator orchestrator via MS Agent Framework | **10008** | Azure Kimi-K2-Thinking |
-| **09** | `09-google-adk/` | Threat-intel agent via Google ADK `to_a2a()` | **10002** | Azure Kimi-K2 |
+| **09** | `09-google-adk/`                | Threat-intel agent via Google ADK `to_a2a()`       | **10002** | Azure Kimi-K2          |
 
 ---
 
@@ -117,24 +117,20 @@ The framework used to build the server is invisible to the client — that is A2
 
 ## Port Reference
 
-| Port | Owner | Agent | Notes |
-|------|-------|-------|-------|
-| `10001` | Lesson 06 | QAAgent | Insurance policy Q&A, GitHub Phi-4 |
-| `10002` | Lesson 09 | ThreatBriefingAgent | CVE threat intel, Azure Kimi-K2 |
+| Port    | Owner     | Agent                     | Notes                                          |
+| ------- | --------- | ------------------------- | ---------------------------------------------- |
+| `10001` | Lesson 06 | QAAgent                   | Insurance policy Q&A, GitHub Phi-4             |
+| `10002` | Lesson 09 | ThreatBriefingAgent       | CVE threat intel, Azure Kimi-K2                |
 | `10008` | Lesson 08 | LoanValidatorOrchestrator | Mortgage pre-screening, Azure Kimi-K2-Thinking |
 
 ---
 
 ## Model Providers
 
-| Lessons | Provider | Model | Auth |
-|---------|----------|-------|------|
-| 05, 06, 07 | **GitHub Models** | `Phi-4` | `GITHUB_TOKEN` (PAT, free) |
-| 08, 09 _(scripts)_ | **Azure AI Foundry** | `Kimi-K2-Thinking` / `Kimi-K2` | `AZURE_AI_API_KEY` |
-| 08, 09 _(notebooks)_ | **GitHub Models** | `Phi-4` | `GITHUB_TOKEN` (PAT, free) |
-
-The `server.ipynb` and `client.ipynb` notebooks in Lessons 08 and 09 use
-**GitHub Phi-4** so you can run the framework demonstrations without an Azure account.
+| Lessons                    | Provider                              | Model                                           | Auth                                     |
+| -------------------------- | ------------------------------------- | ----------------------------------------------- | ---------------------------------------- |
+| 05, 06, 07 + all notebooks | **GitHub Models** or **LocalFoundry** | `Phi-4` / `qwen2.5-0.5b-instruct-generic-gpu:4` | `GITHUB_TOKEN` **or** VS Code AI Toolkit |
+| 08, 09 _(full scripts)_    | **Azure AI Foundry**                  | `Kimi-K2-Thinking` / `Kimi-K2`                  | `AZURE_AI_API_KEY`                       |
 
 ---
 
@@ -154,7 +150,7 @@ uv venv .venv && uv pip install -r requirements.txt
 cp .env.example .env   # then fill in values
 ```
 
-Minimum for Lessons 05–07 and notebook mode (08/09):
+Minimum for Lessons 05–07 and notebooks:
 
 ```dotenv
 GITHUB_TOKEN=ghp_your_token_here
@@ -179,19 +175,16 @@ python lesson_08.py   # MAF orchestrator + live A2A demo
 python lesson_09.py   # ADK one-liner + live A2A demo
 ```
 
-### Notebooks (simpler, GitHub Phi-4 only)
+### Notebooks (GitHub Models or LocalFoundry — no Azure needed)
 
-Open in VS Code or Jupyter. No Azure account needed.
+Open in VS Code or Jupyter. Change `PROVIDER` in the setup cell to switch between
+**GitHub Models** (`"github"`, default) and **AI Toolkit LocalFoundry** (`"localfoundry"`).
 
-| Notebook | What it shows |
-|----------|--------------|
-| `05-first-a2a-agent/src/qa_agent.ipynb` | Build and test a standalone agent |
-| `06-a2a-server/src/a2a_server.ipynb` | Wrap an agent as an A2A server |
-| `07-a2a-client/src/a2a_client.ipynb` | Discover, query, and stream from a server |
-| `08-microsoft-agent-framework/src/server.ipynb` | Simple MAF agent → A2A server with Phi-4 |
-| `08-microsoft-agent-framework/src/client.ipynb` | Query the MAF A2A server |
-| `09-google-adk/src/server.ipynb` | Simple ADK `to_a2a()` server with Phi-4 |
-| `09-google-adk/src/client.ipynb` | Query the ADK A2A server |
+| Notebook                                | What it shows                             |
+| --------------------------------------- | ----------------------------------------- |
+| `05-first-a2a-agent/src/qa_agent.ipynb` | Build and test a standalone agent         |
+| `06-a2a-server/src/a2a_server.ipynb`    | Wrap an agent as an A2A server            |
+| `07-a2a-client/src/a2a_client.ipynb`    | Discover, query, and stream from a server |
 
 ---
 
@@ -217,14 +210,14 @@ graph LR
     end
 ```
 
-| Aspect | MS Agent Framework (L08) | Google ADK (L09) |
-|--------|--------------------------|------------------|
-| Agent type | `Agent(tools, client)` | `LlmAgent(tools, model)` |
-| LLM adapter | `AzureOpenAIChatClient` | `LiteLlm` (any provider) |
-| A2A wiring | Manual `AgentExecutor` + `A2AStarletteApplication` | `to_a2a(agent)` |
-| Lines to serve | ~50 | ~5 |
-| Control | High — full executor control | Low — framework handles all |
-| Best for | Complex orchestration | Rapid prototyping |
+| Aspect         | MS Agent Framework (L08)                           | Google ADK (L09)            |
+| -------------- | -------------------------------------------------- | --------------------------- |
+| Agent type     | `Agent(tools, client)`                             | `LlmAgent(tools, model)`    |
+| LLM adapter    | `AzureOpenAIChatClient`                            | `LiteLlm` (any provider)    |
+| A2A wiring     | Manual `AgentExecutor` + `A2AStarletteApplication` | `to_a2a(agent)`             |
+| Lines to serve | ~50                                                | ~5                          |
+| Control        | High — full executor control                       | Low — framework handles all |
+| Best for       | Complex orchestration                              | Rapid prototyping           |
 
 ---
 
@@ -258,8 +251,6 @@ lessons/
       orchestrator.py                               ← OrchestratorAgent (MS AF)
       loan_data.py                                  ← Test applicants
       validation_rules.py                           ← Hard/soft check tools
-      server.ipynb                                  ← Simple MAF server (GitHub Phi-4)
-      client.ipynb                                  ← Simple MAF client
   09-google-adk/
     README.md
     src/
@@ -267,8 +258,6 @@ lessons/
       client.py                                     ← A2A client
       research_agent.py                             ← LlmAgent + tools
       knowledge_base.py                             ← CVE knowledge base
-      server.ipynb                                  ← Simple ADK server (GitHub Phi-4)
-      client.ipynb                                  ← Simple ADK client
 ```
 
 ---

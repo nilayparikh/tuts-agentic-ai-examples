@@ -27,7 +27,7 @@ graph LR
 ### AI Toolkit LocalFoundry
 
 - Install the [VS Code AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio)
-- Load any compatible model (e.g. `Phi-4-mini-instruct`) — server starts on port 5272
+- Load any compatible model (e.g. `qwen2.5-0.5b-instruct-generic-gpu:4`) — server starts on port 5272
 
 ```python
 # LocalFoundry is OpenAI-API-compatible — no key required

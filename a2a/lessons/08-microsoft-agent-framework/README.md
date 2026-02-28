@@ -40,36 +40,7 @@ src/
   orchestrator.py       OrchestratorAgent (Microsoft AF + Kimi-K2-Thinking)
   server.py             A2A server wrapping the OrchestratorAgent (port 10008)
   client.py             A2A client that discovers and calls the server via A2A protocol
-  server.ipynb          Simplified MAF server demo — GitHub Phi-4 or LocalFoundry, no Azure required
-  client.ipynb          Simplified A2A client demo
 ```
-
-## Notebooks (Simple)
-
-The two notebooks demonstrate the **Microsoft Agent Framework pattern** with
-your choice of **free** model provider — no Azure account required.
-
-| Notebook           | Port  | What it shows                                |
-| ------------------ | ----- | -------------------------------------------- |
-| `src/server.ipynb` | 10081 | Build an MAF agent + A2A server step-by-step |
-| `src/client.ipynb` | —     | Discover and query the MAF A2A server        |
-
-Open both notebooks and run `server.ipynb` first (it starts the server),
-then run `client.ipynb` in parallel.
-
-### Provider options
-
-| Provider                    | Set `PROVIDER =` | Credential                                     |
-| --------------------------- | ---------------- | ---------------------------------------------- |
-| **GitHub Models** (default) | `"github"`       | `GITHUB_TOKEN` in `.env`                       |
-| **AI Toolkit LocalFoundry** | `"localfoundry"` | VS Code AI Toolkit + model loaded on port 5272 |
-
-Change `PROVIDER` in cell 2 of `server.ipynb` before running.
-
-> **Jupyter note:** All async calls in the notebooks use `await` directly rather
-> than `asyncio.run()`. Jupyter already runs inside a live event loop, so
-> `asyncio.run()` raises `RuntimeError: cannot be called from a running event loop`.
-> Top-level `await` in cells works correctly with IPython ≥ 7.
 
 ## Running
 

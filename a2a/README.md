@@ -60,7 +60,7 @@ graph TD
 ### AI Toolkit LocalFoundry
 
 1. Install the [VS Code AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio)
-2. Open AI Toolkit → **Models** → choose a model (e.g. `Phi-4-mini-instruct`) → **Load**
+2. Open AI Toolkit → **Models** → choose a model (e.g. `qwen2.5-0.5b-instruct-generic-gpu:4`) → **Load**
 3. The server starts on `http://localhost:5272/v1/` — no token needed
 4. In the notebook, change `PROVIDER = "localfoundry"` in cell 2
 
@@ -73,46 +73,6 @@ client = OpenAI(
     api_key="unused",   # required by the client but ignored by LocalFoundry
 )
 ```
-
----
-
-## Quick Start — Notebooks (lessons 08 & 09)
-
-The simplest way to explore MAF and Google ADK is via the Jupyter notebooks.
-They use a shared **insurance policy Q&A** use case (same as lessons 05–07)
-and need only `GITHUB_TOKEN` (or LocalFoundry — no Azure/Google credentials).
-
-```mermaid
-sequenceDiagram
-    participant You
-    participant SN as server.ipynb
-    participant CN as client.ipynb
-    participant LLM as GitHub Phi-4 / LocalFoundry
-
-    You->>SN: Run all cells
-    SN->>LLM: Build agent + start A2A server
-    LLM-->>SN: Server ready on 10081 / 10091
-    You->>CN: Run all cells
-    CN->>SN: Discover agent card
-    CN->>SN: Send insurance question
-    SN->>LLM: agent.run(question)
-    LLM-->>SN: Answer
-    SN-->>CN: A2A response
-    CN-->>You: Display answer
-```
-
-| Notebook                                                | Lesson | Port  | Framework                 |
-| ------------------------------------------------------- | ------ | ----- | ------------------------- |
-| `lessons/08-microsoft-agent-framework/src/server.ipynb` | 08     | 10081 | Microsoft Agent Framework |
-| `lessons/08-microsoft-agent-framework/src/client.ipynb` | 08     | —     | A2A SDK                   |
-| `lessons/09-google-adk/src/server.ipynb`                | 09     | 10091 | Google ADK                |
-| `lessons/09-google-adk/src/client.ipynb`                | 09     | —     | A2A SDK                   |
-
-Run `server.ipynb` first in one notebook tab, then `client.ipynb` alongside it.
-
-> **Jupyter note:** The notebooks use top-level `await` for all async calls.
-> `asyncio.run()` raises `RuntimeError` inside Jupyter because it already has a
-> running event loop. IPython ≥ 7 supports `await` directly in cells.
 
 ---
 
@@ -198,13 +158,11 @@ The `.env` file is **git-ignored** — never commit real credentials.
 
 ## Port Reference
 
-| Port  | Agent                        | Lesson           |
-| ----- | ---------------------------- | ---------------- |
-| 10001 | QAAgent                      | 06 · 07          |
-| 10002 | ThreatBriefingAgent          | 09 (full script) |
-| 10008 | LoanValidatorOrchestrator    | 08 (full script) |
-| 10081 | PolicyQAAgent (MAF notebook) | 08               |
-| 10091 | PolicyQAAgent (ADK notebook) | 09               |
+| Port  | Agent                     | Lesson           |
+| ----- | ------------------------- | ---------------- |
+| 10001 | QAAgent                   | 06 · 07          |
+| 10002 | ThreatBriefingAgent       | 09 (full script) |
+| 10008 | LoanValidatorOrchestrator | 08 (full script) |
 
 ---
 
@@ -217,8 +175,8 @@ a2a/
     05-first-a2a-agent/src/             ← QAAgent class
     06-a2a-server/src/                  ← AgentExecutor + server
     07-a2a-client/src/                  ← ClientFactory + client
-    08-microsoft-agent-framework/src/   ← OrchestratorAgent + server/client + notebooks
-    09-google-adk/src/                  ← LlmAgent + to_a2a() + server/client + notebooks
+    08-microsoft-agent-framework/src/   ← OrchestratorAgent + server/client scripts
+    09-google-adk/src/                  ← LlmAgent + to_a2a() + server/client scripts
   scripts/
     lesson_05.py … lesson_09.py        ← interactive lesson runner scripts
     README.md
