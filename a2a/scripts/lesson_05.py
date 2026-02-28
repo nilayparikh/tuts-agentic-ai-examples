@@ -35,22 +35,50 @@ def _c(code: str, text: str) -> str:
     return f"\033[{code}m{text}\033[0m"
 
 
-cyan = lambda t: _c("36", t)
-green = lambda t: _c("32", t)
-yellow = lambda t: _c("33", t)
-red = lambda t: _c("31", t)
-magenta = lambda t: _c("35", t)
-bold = lambda t: _c("1", t)
-dim = lambda t: _c("2", t)
+def cyan(t):
+    """Wrap text in cyan ANSI colour."""
+    return _c("36", t)
+
+
+def green(t):
+    """Wrap text in green ANSI colour."""
+    return _c("32", t)
+
+
+def yellow(t):
+    """Wrap text in yellow ANSI colour."""
+    return _c("33", t)
+
+
+def red(t):
+    """Wrap text in red ANSI colour."""
+    return _c("31", t)
+
+
+def magenta(t):
+    """Wrap text in magenta ANSI colour."""
+    return _c("35", t)
+
+
+def bold(t):
+    """Wrap text in bold ANSI style."""
+    return _c("1", t)
+
+
+def dim(t):
+    """Wrap text in dim ANSI style."""
+    return _c("2", t)
+
 
 HR = dim("─" * 60)
 
 # ── Reconfigure stdout for Windows ───────────────────────────────
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
 
 
 # ── Load .env ────────────────────────────────────────────────────
 def _load_env() -> None:
+    """Load .env variables from the _examples/ root, if present."""
     env_file = EXAMPLES / ".env"
     if env_file.exists():
         for line in env_file.read_text(encoding="utf-8").splitlines():
@@ -83,7 +111,7 @@ async def main() -> None:
     # ── Step 2: Import and configure client ──────────────────────
     print(magenta("Step 2 — Configuring GitHub Models client (Phi-4)"))
     try:
-        from openai import AsyncOpenAI
+        from openai import AsyncOpenAI  # pylint: disable=import-outside-toplevel
 
         client = AsyncOpenAI(
             base_url="https://models.inference.ai.azure.com",
@@ -97,7 +125,7 @@ async def main() -> None:
 
     # ── Step 3: Load domain knowledge ────────────────────────────
     print(magenta("Step 3 — Loading domain knowledge"))
-    from qa_agent import QAAgent, load_knowledge
+    from qa_agent import QAAgent, load_knowledge  # type: ignore[import-not-found]  # pylint: disable=import-error,import-outside-toplevel
 
     knowledge_path = str(LESSON_SRC / "data" / "insurance_policy.txt")
     knowledge = load_knowledge(knowledge_path)
@@ -157,7 +185,7 @@ async def main() -> None:
             answer = await agent.query(question)
             for line in answer.strip().splitlines():
                 print(f"  {line}")
-        except Exception as exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             print(red(f"  ❌ Error: {exc}"))
         print()
 

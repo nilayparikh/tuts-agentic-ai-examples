@@ -1,79 +1,277 @@
-# A2A Tutorial Examples
+# Lessons — A2A Protocol Examples
 
-Working code examples for the [A2A — Agent-to-Agent Protocol](https://a2a-protocol.org/) tutorial course.
+Five progressive lessons building from a standalone LLM agent to a
+multi-framework A2A deployment. Each lesson compiles, runs, and builds
+directly on the previous.
 
-## Structure
+---
 
+## Lesson Progression
+
+```mermaid
+graph LR
+    L05["<b>Lesson 05</b><br/>QA Agent<br/><i>Standalone · Phi-4</i>"]
+    L06["<b>Lesson 06</b><br/>A2A Server<br/><i>AgentExecutor · port 10001</i>"]
+    L07["<b>Lesson 07</b><br/>A2A Client<br/><i>Discover · Query · Stream</i>"]
+    L08["<b>Lesson 08</b><br/>Microsoft Agent Framework<br/><i>Orchestration · port 10008</i>"]
+    L09["<b>Lesson 09</b><br/>Google ADK<br/><i>to_a2a() one-liner · port 10002</i>"]
+
+    L05 -->|"wrapped by"| L06
+    L06 -->|"called by"| L07
+    L05 -.->|"same pattern"| L08
+    L05 -.->|"same pattern"| L09
+
+    style L05 fill:#dbeafe,stroke:#3b82f6
+    style L06 fill:#dcfce7,stroke:#22c55e
+    style L07 fill:#dcfce7,stroke:#22c55e
+    style L08 fill:#fef3c7,stroke:#f59e0b
+    style L09 fill:#fce7f3,stroke:#ec4899
 ```
-a2a/
-  .venv/                        # uv-managed Python 3.11 venv (git-ignored)
-  pyproject.toml                # uv project config
-  requirements.txt              # pip-installable deps list
-  scripts/                      # automation scripts (setup, run, test)
-  lessons/
-    05-first-a2a-agent/         # Lesson 5: Build a standalone QA agent
-    06-a2a-server/              # Lesson 6: Wrap agent as A2A server
-    07-a2a-client/              # Lesson 7: Build an A2A client
+
+---
+
+## Full System Architecture
+
+```mermaid
+graph TD
+    subgraph "Lesson 05 — Standalone Agent"
+        QA["QAAgent\n+ Phi-4 (GitHub Models)"]
+    end
+
+    subgraph "Lesson 06 — A2A Server (port 10001)"
+        EX06["QAAgentExecutor\n(AgentExecutor)"]
+        SRV06["A2AStarletteApplication\nAgent Card · JSON-RPC"]
+        EX06 --> QA
+        SRV06 --> EX06
+    end
+
+    subgraph "Lesson 07 — A2A Client"
+        RES["ClientFactory\nDiscover Agent Card"]
+        CLI07["Client\nsend_message()"]
+        RES --> SRV06
+        CLI07 --> SRV06
+    end
+
+    subgraph "Lesson 08 — MS Agent Framework (port 10008)"
+        ORCH["OrchestratorAgent\n(MS AF + Kimi-K2-Thinking)"]
+        EX08["LoanValidatorExecutor\n(AgentExecutor)"]
+        SRV08["A2AStarletteApplication\nAgent Card · JSON-RPC"]
+        EX08 --> ORCH
+        SRV08 --> EX08
+        CLI08["A2A Client\n(same protocol as L07)"]
+        CLI08 --> SRV08
+    end
+
+    subgraph "Lesson 09 — Google ADK (port 10002)"
+        LLMA["LlmAgent + FunctionTools\n(ADK + Kimi-K2)"]
+        SRV09["to_a2a()\nAgent Card · JSON-RPC"]
+        SRV09 --> LLMA
+        CLI09["A2A Client\n(same protocol as L07)"]
+        CLI09 --> SRV09
+    end
+
+    style QA fill:#dbeafe,stroke:#3b82f6
+    style SRV06 fill:#dcfce7,stroke:#22c55e
+    style SRV08 fill:#fef3c7,stroke:#f59e0b
+    style SRV09 fill:#fce7f3,stroke:#ec4899
 ```
 
-## Prerequisites
+---
 
-- Python 3.10+
-- [uv](https://docs.astral.sh/uv/) — fast Python package manager (`pip install uv`)
-- GitHub account with a [Personal Access Token](https://github.com/settings/tokens) (no special scopes)
+## Lessons at a Glance
+
+| Lesson | Folder | What It Builds | Port | Model |
+|--------|--------|---------------|------|-------|
+| **05** | `05-first-a2a-agent/` | Standalone QA agent — insurance policy Q&A | — | GitHub Phi-4 |
+| **06** | `06-a2a-server/` | A2A server wrapping the QA agent | **10001** | GitHub Phi-4 |
+| **07** | `07-a2a-client/` | A2A client — discover, query, stream | — | _(client only)_ |
+| **08** | `08-microsoft-agent-framework/` | Loan validator orchestrator via MS Agent Framework | **10008** | Azure Kimi-K2-Thinking |
+| **09** | `09-google-adk/` | Threat-intel agent via Google ADK `to_a2a()` | **10002** | Azure Kimi-K2 |
+
+---
+
+## A2A Protocol Round-Trip
+
+```mermaid
+sequenceDiagram
+    participant C as A2A Client
+    participant S as A2A Server
+    participant E as AgentExecutor
+    participant A as Agent (LLM)
+
+    C->>S: GET /.well-known/agent-card.json
+    S-->>C: AgentCard (name, skills, capabilities)
+
+    C->>S: POST / (JSON-RPC message/send)
+    S->>E: execute(context, event_queue)
+    E->>A: query / run / validate
+    A-->>E: LLM response
+    E-->>S: enqueue_agent_message()
+    S-->>C: Task + Message (JSON-RPC response)
+```
+
+The **same client pattern** (Lesson 07) calls all three servers (Lessons 06, 08, 09).
+The framework used to build the server is invisible to the client — that is A2A interoperability.
+
+---
+
+## Port Reference
+
+| Port | Owner | Agent | Notes |
+|------|-------|-------|-------|
+| `10001` | Lesson 06 | QAAgent | Insurance policy Q&A, GitHub Phi-4 |
+| `10002` | Lesson 09 | ThreatBriefingAgent | CVE threat intel, Azure Kimi-K2 |
+| `10008` | Lesson 08 | LoanValidatorOrchestrator | Mortgage pre-screening, Azure Kimi-K2-Thinking |
+
+---
+
+## Model Providers
+
+| Lessons | Provider | Model | Auth |
+|---------|----------|-------|------|
+| 05, 06, 07 | **GitHub Models** | `Phi-4` | `GITHUB_TOKEN` (PAT, free) |
+| 08, 09 _(scripts)_ | **Azure AI Foundry** | `Kimi-K2-Thinking` / `Kimi-K2` | `AZURE_AI_API_KEY` |
+| 08, 09 _(notebooks)_ | **GitHub Models** | `Phi-4` | `GITHUB_TOKEN` (PAT, free) |
+
+The `server.ipynb` and `client.ipynb` notebooks in Lessons 08 and 09 use
+**GitHub Phi-4** so you can run the framework demonstrations without an Azure account.
+
+---
 
 ## Quick Start
 
-### 1. Set up your token
+### Prerequisites
 
 ```bash
-# From _examples/ directory
-cp .env.example .env
-# Edit .env and set GITHUB_TOKEN=ghp_your_token_here
+# From the a2a/ directory
+uv venv .venv && uv pip install -r requirements.txt
+# or: pip install -r requirements.txt
 ```
 
-### 2. Create the venv and install dependencies
-
-```powershell
-# Windows PowerShell — from a2a/ directory
-cd a2a
-.\scripts\setup.ps1
-```
+### Environment
 
 ```bash
-# Linux / macOS — from a2a/ directory
-cd a2a
-bash scripts/setup.sh
+cp .env.example .env   # then fill in values
 ```
 
-This creates `.venv/`, installs all deps via uv, and registers the `a2a-examples` Jupyter kernel.
+Minimum for Lessons 05–07 and notebook mode (08/09):
 
-### 3. Run
-
-```powershell
-.\scripts\run_all.ps1        # full end-to-end scenario
-.\scripts\run_lesson05.ps1   # lesson 05 only (standalone agent)
-.\scripts\run_server.ps1     # start A2A server (port 10001)
-.\scripts\run_client.ps1     # test running server
+```dotenv
+GITHUB_TOKEN=ghp_your_token_here
 ```
 
-See [scripts/README.md](../scripts/README.md) for all workflows.
+Additional for full Lessons 08–09 scripts:
 
-### 4. Open notebooks
+```dotenv
+AZURE_OPENAI_ENDPOINT=https://<name>.openai.azure.com
+AZURE_AI_API_KEY=<your-key>
+AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
+```
 
-Select kernel **"A2A Examples (Python 3.11)"** in VS Code or Jupyter.
+### Interactive lesson scripts
 
-## Model Provider
+```bash
+# From a2a/scripts/
+python lesson_05.py   # QA agent walkthrough
+python lesson_06.py   # A2A server walkthrough
+python lesson_07.py   # A2A client walkthrough
+python lesson_08.py   # MAF orchestrator + live A2A demo
+python lesson_09.py   # ADK one-liner + live A2A demo
+```
 
-All examples use **GitHub Models** with **Phi-4** — free, no billing required.
+### Notebooks (simpler, GitHub Phi-4 only)
 
-| Setting  | Value                                                                        |
-| -------- | ---------------------------------------------------------------------------- |
-| Endpoint | `https://models.inference.ai.azure.com`                                      |
-| Model    | `Phi-4`                                                                      |
-| Auth     | `GITHUB_TOKEN` (PAT, no special scopes)                                      |
-| SDK      | `openai` (OpenAI-compatible API)                                             |
-| Docs     | [docs.github.com/en/github-models](https://docs.github.com/en/github-models) |
+Open in VS Code or Jupyter. No Azure account needed.
+
+| Notebook | What it shows |
+|----------|--------------|
+| `05-first-a2a-agent/src/qa_agent.ipynb` | Build and test a standalone agent |
+| `06-a2a-server/src/a2a_server.ipynb` | Wrap an agent as an A2A server |
+| `07-a2a-client/src/a2a_client.ipynb` | Discover, query, and stream from a server |
+| `08-microsoft-agent-framework/src/server.ipynb` | Simple MAF agent → A2A server with Phi-4 |
+| `08-microsoft-agent-framework/src/client.ipynb` | Query the MAF A2A server |
+| `09-google-adk/src/server.ipynb` | Simple ADK `to_a2a()` server with Phi-4 |
+| `09-google-adk/src/client.ipynb` | Query the ADK A2A server |
+
+---
+
+## Framework Comparison (Lessons 08 vs 09)
+
+```mermaid
+graph LR
+    subgraph "Lesson 08 — Microsoft Agent Framework"
+        direction TB
+        B1["1. Define tools\n(@tool decorator)"]
+        B2["2. Create Agent\nAgent(tools=[...])"]
+        B3["3. Implement AgentExecutor\n(30 lines)"]
+        B4["4. Wire A2AStarletteApplication\n(20 lines)"]
+        B1 --> B2 --> B3 --> B4
+    end
+
+    subgraph "Lesson 09 — Google ADK"
+        direction TB
+        A1["1. Define tools\n(plain functions)"]
+        A2["2. Create LlmAgent\nLlmAgent(tools=[...])"]
+        A3["3. One-liner server\nto_a2a(agent, port=X)"]
+        A1 --> A2 --> A3
+    end
+```
+
+| Aspect | MS Agent Framework (L08) | Google ADK (L09) |
+|--------|--------------------------|------------------|
+| Agent type | `Agent(tools, client)` | `LlmAgent(tools, model)` |
+| LLM adapter | `AzureOpenAIChatClient` | `LiteLlm` (any provider) |
+| A2A wiring | Manual `AgentExecutor` + `A2AStarletteApplication` | `to_a2a(agent)` |
+| Lines to serve | ~50 | ~5 |
+| Control | High — full executor control | Low — framework handles all |
+| Best for | Complex orchestration | Rapid prototyping |
+
+---
+
+## File Map
+
+```
+lessons/
+  README.md                                         ← This file
+  05-first-a2a-agent/
+    README.md
+    src/
+      qa_agent.py                                   ← Standalone QA agent class
+      qa_agent.ipynb                                ← Interactive walkthrough
+      data/insurance_policy.txt
+  06-a2a-server/
+    README.md
+    src/
+      server.py                                     ← A2A server (port 10001)
+      agent_executor.py                             ← AgentExecutor adapter
+      a2a_server.ipynb                              ← Interactive walkthrough
+      data/insurance_policy.txt
+  07-a2a-client/
+    README.md
+    src/
+      a2a_client.ipynb                              ← Discover + query + stream
+  08-microsoft-agent-framework/
+    README.md
+    src/
+      server.py                                     ← Full A2A server (port 10008, Kimi-K2)
+      client.py                                     ← A2A client
+      orchestrator.py                               ← OrchestratorAgent (MS AF)
+      loan_data.py                                  ← Test applicants
+      validation_rules.py                           ← Hard/soft check tools
+      server.ipynb                                  ← Simple MAF server (GitHub Phi-4)
+      client.ipynb                                  ← Simple MAF client
+  09-google-adk/
+    README.md
+    src/
+      server.py                                     ← Full A2A server (port 10002, Kimi-K2)
+      client.py                                     ← A2A client
+      research_agent.py                             ← LlmAgent + tools
+      knowledge_base.py                             ← CVE knowledge base
+      server.ipynb                                  ← Simple ADK server (GitHub Phi-4)
+      client.ipynb                                  ← Simple ADK client
+```
+
+---
 
 ## License
 

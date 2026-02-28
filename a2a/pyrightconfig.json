@@ -1,0 +1,11 @@
+{
+  "pythonVersion": "3.11",
+  "venvPath": ".",
+  "venv": ".venv",
+  "extraPaths": [
+    "lessons/05-first-a2a-agent/src",
+    "lessons/06-a2a-server/src"
+  ],
+  "reportMissingModuleSource": "none",
+  "reportMissingImports": "none"
+}

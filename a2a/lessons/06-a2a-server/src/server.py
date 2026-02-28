@@ -8,21 +8,24 @@ Endpoints:
     POST /                        — JSON-RPC message handling
 """
 
-import sys
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # Windows safe
+# pylint: disable=wrong-import-position,wrong-import-order
 
-import uvicorn
-from dotenv import find_dotenv, load_dotenv
+import sys
+
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+
+import uvicorn  # noqa: E402
+from dotenv import find_dotenv, load_dotenv  # noqa: E402
 
 # Load .env from nearest parent directory (searches up to _examples/.env)
 load_dotenv(find_dotenv(raise_error_if_not_found=False))
 
-from a2a.server.apps import A2AStarletteApplication
-from a2a.server.request_handlers import DefaultRequestHandler
-from a2a.server.tasks import InMemoryTaskStore
-from a2a.types import AgentCapabilities, AgentCard, AgentSkill
+from a2a.server.apps import A2AStarletteApplication  # noqa: E402
+from a2a.server.request_handlers import DefaultRequestHandler  # noqa: E402
+from a2a.server.tasks import InMemoryTaskStore  # noqa: E402
+from a2a.types import AgentCapabilities, AgentCard, AgentSkill  # noqa: E402
 
-from agent_executor import QAAgentExecutor
+from agent_executor import QAAgentExecutor  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Agent Card — describes what this agent can do

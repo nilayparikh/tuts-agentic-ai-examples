@@ -7,7 +7,7 @@ Transform the standalone QAAgent from Lesson 5 into a fully **A2A-compliant serv
 An A2A server that:
 
 - Wraps `QAAgent` with the `AgentExecutor` interface
-- Serves an Agent Card at `/.well-known/agent.json`
+- Serves an Agent Card at `/.well-known/agent-card.json`
 - Handles JSON-RPC requests via `A2AStarletteApplication`
 - Runs on `localhost:10001`
 
@@ -42,7 +42,7 @@ python server.py
 
 ```bash
 # Fetch Agent Card
-curl http://localhost:10001/.well-known/agent.json | python -m json.tool
+curl http://localhost:10001/.well-known/agent-card.json | python -m json.tool
 
 # Send a question
 curl -X POST http://localhost:10001 \

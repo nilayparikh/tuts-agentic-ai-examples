@@ -4,7 +4,8 @@ Wraps the standalone QAAgent with the A2A SDK's AgentExecutor interface,
 bridging agent logic to the A2A protocol via EventQueue.
 """
 
-import os
+# pylint: disable=wrong-import-position,wrong-import-order
+
 import sys
 from pathlib import Path
 
@@ -13,17 +14,19 @@ from dotenv import find_dotenv, load_dotenv
 # Load .env from nearest parent directory (searches up to _examples/.env)
 load_dotenv(find_dotenv(raise_error_if_not_found=False))
 
-from a2a.server.agent_execution import AgentExecutor, RequestContext
-from a2a.server.events import EventQueue
-from a2a.utils import new_agent_text_message
+from a2a.server.agent_execution import AgentExecutor, RequestContext  # noqa: E402
+from a2a.server.events import EventQueue  # noqa: E402
+from a2a.utils import new_agent_text_message  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Add lesson 05 to path so we can import QAAgent
 # ---------------------------------------------------------------------------
-LESSON_05_DIR = Path(__file__).resolve().parent.parent.parent / "05-first-a2a-agent" / "src"
+LESSON_05_DIR = (
+    Path(__file__).resolve().parent.parent.parent / "05-first-a2a-agent" / "src"
+)
 sys.path.insert(0, str(LESSON_05_DIR))
 
-from qa_agent import QAAgent  # noqa: E402
+from qa_agent import QAAgent  # type: ignore[import-untyped,import-not-found]  # pyright: ignore[reportMissingImports]  # pylint: disable=import-error  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
@@ -64,4 +67,6 @@ class QAAgentExecutor(AgentExecutor):
         event_queue: EventQueue,
     ) -> None:
         """Handle task cancellation."""
-        raise Exception("cancel not supported")
+        raise NotImplementedError(
+            "cancel not supported"
+        )  # pylint: disable=broad-exception-raised

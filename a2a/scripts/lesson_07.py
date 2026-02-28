@@ -35,18 +35,49 @@ def _c(code: str, text: str) -> str:
     return f"\033[{code}m{text}\033[0m"
 
 
-cyan = lambda t: _c("36", t)
-green = lambda t: _c("32", t)
-yellow = lambda t: _c("33", t)
-red = lambda t: _c("31", t)
-magenta = lambda t: _c("35", t)
-bold = lambda t: _c("1", t)
-dim = lambda t: _c("2", t)
-white = lambda t: _c("97", t)
+def cyan(t):
+    """Wrap text in cyan ANSI colour."""
+    return _c("36", t)
+
+
+def green(t):
+    """Wrap text in green ANSI colour."""
+    return _c("32", t)
+
+
+def yellow(t):
+    """Wrap text in yellow ANSI colour."""
+    return _c("33", t)
+
+
+def red(t):
+    """Wrap text in red ANSI colour."""
+    return _c("31", t)
+
+
+def magenta(t):
+    """Wrap text in magenta ANSI colour."""
+    return _c("35", t)
+
+
+def bold(t):
+    """Wrap text in bold ANSI style."""
+    return _c("1", t)
+
+
+def dim(t):
+    """Wrap text in dim ANSI style."""
+    return _c("2", t)
+
+
+def white(t):
+    """Wrap text in white ANSI colour."""
+    return _c("97", t)
+
 
 HR = dim("─" * 60)
 
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
 
 
 # ── Load .env ────────────────────────────────────────────────────
@@ -63,9 +94,9 @@ def _load_env() -> None:
 def _pause(prompt: str = "  Press Enter to continue...") -> None:
     try:
         input(dim(prompt))
-    except (EOFError, KeyboardInterrupt):
+    except (EOFError, KeyboardInterrupt) as exc:
         print()
-        raise SystemExit(0)
+        raise SystemExit(0) from exc
 
 
 # ── Response helpers (a2a-sdk v0.3.x) ────────────────────────────
@@ -90,7 +121,7 @@ def _extract_text(response) -> str:
 
 async def _safe_query(client, question: str, build_request_fn) -> str:
     """Send a question and return answer text or a structured error string."""
-    import httpx
+    import httpx  # pylint: disable=import-outside-toplevel
 
     try:
         req = build_request_fn(question)
@@ -104,12 +135,13 @@ async def _safe_query(client, question: str, build_request_fn) -> str:
         return _extract_text(resp)
     except httpx.ConnectError:
         return "[Connection Error] Is the server running? → python scripts/lesson_06.py"
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         return f"[{type(exc).__name__}] {exc}"
 
 
 # ── Main scenario ────────────────────────────────────────────────
 async def main() -> None:
+    """Run the Lesson 07 interactive A2A client scenario."""
     _load_env()
 
     print()
@@ -119,14 +151,17 @@ async def main() -> None:
 
     # Check SDK deps
     try:
-        import httpx
-        from a2a.client import A2ACardResolver, A2AClient
-        from a2a.types import (
+        import httpx  # pylint: disable=import-outside-toplevel
+        from a2a.client import (  # pylint: disable=import-outside-toplevel
+            A2ACardResolver,
+            A2AClient,
+        )
+        from a2a.types import (  # pylint: disable=import-outside-toplevel
             MessageSendParams,
             SendMessageRequest,
             SendStreamingMessageRequest,
         )
-        from uuid import uuid4
+        from uuid import uuid4  # pylint: disable=import-outside-toplevel
     except ImportError as exc:
         print(red(f"  ❌ Missing package: {exc}"))
         print('     Run: pip install "a2a-sdk[http-server]" httpx')
@@ -134,14 +169,14 @@ async def main() -> None:
 
     warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-    BASE_URL = "http://localhost:10001"
+    BASE_URL = "http://localhost:10001"  # pylint: disable=invalid-name
 
     # ── Helper to build requests ──────────────────────────────────
     def build_request(question: str) -> SendMessageRequest:
         return SendMessageRequest(
             id=str(uuid4()),
             params=MessageSendParams(
-                **{
+                **{  # type: ignore[arg-type]
                     "message": {
                         "role": "user",
                         "parts": [{"kind": "text", "text": question}],
@@ -155,7 +190,7 @@ async def main() -> None:
         return SendStreamingMessageRequest(
             id=str(uuid4()),
             params=MessageSendParams(
-                **{
+                **{  # type: ignore[arg-type]
                     "message": {
                         "role": "user",
                         "parts": [{"kind": "text", "text": question}],
@@ -203,13 +238,13 @@ async def main() -> None:
         print(f"  {yellow('❓')} {q}")
         response = await client.send_message(build_request(q))
 
-        msg = response.root.result
-        print(green(f"  ✅ Message ID: {msg.message_id}"))
-        print(f"     Role: {msg.role.value}  |  Kind: {msg.kind}")
+        msg = response.root.result  # type: ignore[union-attr]
+        print(green(f"  ✅ Message ID: {msg.message_id}"))  # type: ignore[union-attr]
+        print(f"     Role: {msg.role.value}  |  Kind: {msg.kind}")  # type: ignore[union-attr]
         print()
-        for part in msg.parts:
+        for part in msg.parts:  # type: ignore[union-attr]
             if part.root.kind == "text":
-                for line in part.root.text.strip().splitlines():
+                for line in part.root.text.strip().splitlines():  # type: ignore[union-attr]
                     print(f"     {line}")
         print()
         _pause()

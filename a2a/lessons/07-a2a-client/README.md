@@ -45,20 +45,20 @@ Build an A2A client that **discovers**, **calls**, and **streams** from the QAAg
 
 ## Key Classes
 
-| Class                         | Import       | Purpose                                       |
-| ----------------------------- | ------------ | --------------------------------------------- |
-| `A2ACardResolver`             | `a2a.client` | Discovers agent via `/.well-known/agent.json` |
-| `A2AClient`                   | `a2a.client` | Sends messages and receives responses         |
-| `SendMessageRequest`          | `a2a.types`  | Blocking message request                      |
-| `SendStreamingMessageRequest` | `a2a.types`  | Streaming message request                     |
-| `MessageSendParams`           | `a2a.types`  | Message payload wrapper                       |
+| Class                         | Import       | Purpose                                            |
+| ----------------------------- | ------------ | -------------------------------------------------- |
+| `A2ACardResolver`             | `a2a.client` | Discovers agent via `/.well-known/agent-card.json` |
+| `A2AClient`                   | `a2a.client` | Sends messages and receives responses              |
+| `SendMessageRequest`          | `a2a.types`  | Blocking message request                           |
+| `SendStreamingMessageRequest` | `a2a.types`  | Streaming message request                          |
+| `MessageSendParams`           | `a2a.types`  | Message payload wrapper                            |
 
 ## Architecture
 
 ```
 Client Notebook
     │
-    ├─ A2ACardResolver → GET /.well-known/agent.json
+    ├─ A2ACardResolver → GET /.well-known/agent-card.json
     │                    └─ Returns AgentCard
     ├─ A2AClient
     │   ├─ send_message()    → POST / (message/send)

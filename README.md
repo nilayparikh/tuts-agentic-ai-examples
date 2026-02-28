@@ -1,79 +1,54 @@
-# A2A Examples
+# LocalM Tutorial Examples
 
-Code examples for the A2A tutorial course. Each example demonstrates a concept
-from the structured lessons using the course's model provider stack.
+Code examples for LocalM tutorial courses. Each sub-folder maps to one published course.
 
-## Example Index
+## Courses
 
-| Example                    | Lesson | Concept                                | Model                      |
-| -------------------------- | ------ | -------------------------------------- | -------------------------- |
-| `01-qa-agent/`             | 05     | Standalone agent class                 | Phi-4 (GitHub Models)      |
-| `02-a2a-server/`           | 06     | AgentExecutor + Agent Card             | Phi-4 (GitHub Models)      |
-| `03-a2a-client/`           | 07     | A2ACardResolver + send/stream          | Phi-4 (GitHub Models)      |
-| `04-msft-agent-framework/` | 08     | A2AAgent proxy + OrchestratorAgent     | Kimi-K2-Thinking (Foundry) |
-| `05-google-adk/`           | 09     | LlmAgent + to_a2a() + RemoteA2aAgent   | Kimi-K2 (Foundry)          |
-| `06-langgraph-mcp/`        | 10     | FastMCP + create_react_agent + bridge  | Qwen2.5 Coder (Local)      |
-| `07-crewai/`               | 11     | Agent/Task/Crew + CrewAIExecutor       | Kimi-K2-Thinking (Foundry) |
-| `08-openai-agents-sdk/`    | 12     | @tool + Agent + Runner + handoffs      | Phi-4 (GitHub Models)      |
-| `09-claude-agent-sdk/`     | 13     | Structured tools + conversation memory | Kimi-K2 (Foundry)          |
-| `10-github-copilot-sdk/`   | 14     | GitHub API + PR analysis + dual-token  | Phi-4 (GitHub Models)      |
-| `11-multi-agent-system/`   | 15     | MasterOrchestrator + 8-agent startup   | All models                 |
+| Folder                  | Course                        | Status                           |
+| ----------------------- | ----------------------------- | -------------------------------- |
+| [`a2a/`](a2a/README.md) | Agent-to-Agent (A2A) Protocol | Active — lessons 05–09 available |
 
-## Port Assignments
+## Model Providers
 
-All examples use a consistent port scheme:
+All examples in this repository support at least one **free** model provider so
+you can run every lesson without a paid cloud subscription.
 
-| Port  | Agent             | Example                         |
-| ----- | ----------------- | ------------------------------- |
-| 10001 | QAAgent           | `01-qa-agent` → `02-a2a-server` |
-| 10002 | ResearchAgent     | `05-google-adk`                 |
-| 10003 | CodeAgent         | `06-langgraph-mcp`              |
-| 10004 | PlannerAgent      | `07-crewai`                     |
-| 10005 | TaskAgent         | `08-openai-agents-sdk`          |
-| 10006 | AssistantAgent    | `09-claude-agent-sdk`           |
-| 10007 | CopilotAgent      | `10-github-copilot-sdk`         |
-| 10008 | OrchestratorAgent | `04-msft-agent-framework`       |
-
-## Setup (Lessons 05–07)
-
-```powershell
-# Windows — run from a2a/ directory
-cd a2a
-.\scripts\setup.ps1       # one-time: creates .venv, installs deps, registers kernel
-.\scripts\run_all.ps1     # full run: lesson 05 → server → client
+```mermaid
+graph LR
+    GH["GitHub Models\nfree · GITHUB_TOKEN only\nhttps://models.inference.ai.azure.com"]
+    LF["AI Toolkit LocalFoundry\nfree · runs fully offline\nhttp://localhost:5272/v1/"]
 ```
 
-```bash
-# Linux / macOS — run from a2a/ directory
-cd a2a
-bash scripts/setup.sh
-bash scripts/run_all.sh
+### GitHub Models
+
+- Get a free token at [github.com/settings/tokens](https://github.com/settings/tokens) (no scopes needed)
+- Add `GITHUB_TOKEN=ghp_...` to `.env`
+
+### AI Toolkit LocalFoundry
+
+- Install the [VS Code AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio)
+- Load any compatible model (e.g. `Phi-4-mini-instruct`) — server starts on port 5272
+
+```python
+# LocalFoundry is OpenAI-API-compatible — no key required
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:5272/v1/",
+    api_key="unused",   # required field, ignored by LocalFoundry
+)
 ```
 
-### Environment Variables
+## Environment Setup
 
-Copy `.env.example` → `.env` and fill in your token:
+Copy `.env.example` → `.env` and set your credentials:
 
 ```bash
 cp .env.example .env
-# edit .env and set:
-GITHUB_TOKEN=ghp_your_token_here   # https://github.com/settings/tokens
+# edit .env — at minimum set GITHUB_TOKEN
 ```
 
-The `.env` file is **git-ignored**. Never commit real tokens.
-
-| Variable               | Required for          | Where to get                                                     |
-| ---------------------- | --------------------- | ---------------------------------------------------------------- |
-| `GITHUB_TOKEN`         | Lessons 05–07 (Phi-4) | [github.com/settings/tokens](https://github.com/settings/tokens) |
-| `AZURE_AI_FOUNDRY_URL` | Lessons 08+           | Azure AI Foundry portal                                          |
-| `AZURE_AI_FOUNDRY_KEY` | Lessons 08+           | Azure AI Foundry portal                                          |
-
-### Scripts
-
-All automation is in [a2a/scripts/](a2a/scripts/). See [a2a/scripts/README.md](a2a/scripts/README.md).
-
-> **Note**: Example folders listed above beyond lesson 07 are planned. They will be created
-> as lesson content is finalized and video-recorded.
+The `.env` file is **git-ignored**. Never commit real credentials.
 
 ## License
 

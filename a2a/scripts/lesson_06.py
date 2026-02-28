@@ -42,21 +42,49 @@ def _c(code: str, text: str) -> str:
     return f"\033[{code}m{text}\033[0m"
 
 
-cyan = lambda t: _c("36", t)
-green = lambda t: _c("32", t)
-yellow = lambda t: _c("33", t)
-red = lambda t: _c("31", t)
-magenta = lambda t: _c("35", t)
-bold = lambda t: _c("1", t)
-dim = lambda t: _c("2", t)
+def cyan(t):
+    """Wrap text in cyan ANSI colour."""
+    return _c("36", t)
+
+
+def green(t):
+    """Wrap text in green ANSI colour."""
+    return _c("32", t)
+
+
+def yellow(t):
+    """Wrap text in yellow ANSI colour."""
+    return _c("33", t)
+
+
+def red(t):
+    """Wrap text in red ANSI colour."""
+    return _c("31", t)
+
+
+def magenta(t):
+    """Wrap text in magenta ANSI colour."""
+    return _c("35", t)
+
+
+def bold(t):
+    """Wrap text in bold ANSI style."""
+    return _c("1", t)
+
+
+def dim(t):
+    """Wrap text in dim ANSI style."""
+    return _c("2", t)
+
 
 HR = dim("─" * 60)
 
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
 
 
 # ── Load .env ────────────────────────────────────────────────────
 def _load_env() -> None:
+    """Load key=value pairs from _examples/.env into os.environ."""
     env_file = EXAMPLES / ".env"
     if env_file.exists():
         for line in env_file.read_text(encoding="utf-8").splitlines():
@@ -137,7 +165,7 @@ def main() -> None:
     # ── Step 5: Start server ──────────────────────────────────────
     print(magenta("Step 5 — Starting Server"))
     print()
-    print(green(f"  🚀 QAAgent A2A Server"))
+    print(green("  🚀 QAAgent A2A Server"))
     print(f"     Listening on:  {bold(f'http://localhost:{SERVER_PORT}')}")
     print(
         f"     Agent Card:    {bold(f'http://localhost:{SERVER_PORT}/.well-known/agent.json')}"
@@ -163,6 +191,7 @@ def main() -> None:
         result = subprocess.run(
             [python_exe, "server.py"],
             cwd=SERVER_SRC,
+            check=False,  # propagate returncode via sys.exit below; pylint: disable=subprocess-run-check
         )
         sys.exit(result.returncode)
     except KeyboardInterrupt:
