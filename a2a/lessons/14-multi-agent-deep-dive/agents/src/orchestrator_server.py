@@ -3,6 +3,8 @@ MasterOrchestrator A2A Server — port 10100.
 
 Wraps MasterOrchestrator as a standards-compliant A2A server. Accepts
 loan application JSON and routes through the full agent pipeline.
+After each run it pushes a summary record to the Escalation REST API
+so the React dashboard can display all processed loans.
 
 Usage:
     python orchestrator_server.py
@@ -11,6 +13,7 @@ Usage:
 # pylint: disable=wrong-import-position,wrong-import-order
 
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -19,8 +22,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union
 _SRC = Path(__file__).parent.resolve()
 sys.path.insert(0, str(_SRC))
 
-import logging  # noqa: E402
-
+import httpx  # noqa: E402
 import uvicorn  # noqa: E402
 from dotenv import find_dotenv, load_dotenv  # noqa: E402
 
@@ -43,6 +45,10 @@ from a2a.utils import new_agent_text_message  # noqa: E402
 from orchestrator import MasterOrchestrator  # noqa: E402
 
 SERVER_PORT = 10100
+
+
+REST_API_URL = "http://localhost:8080/api/loans"
+logger = logging.getLogger("orchestrator_server")
 
 
 class OrchestratorExecutor(AgentExecutor):
@@ -76,6 +82,10 @@ class OrchestratorExecutor(AgentExecutor):
             return
 
         result = await self._orchestrator.process_application(application)
+
+        # Push processed loan to dashboard REST API (best-effort, non-blocking)
+        await _push_loan_record(application, result)
+
         await event_queue.enqueue_event(
             new_agent_text_message(json.dumps(result, indent=2))
         )
@@ -87,6 +97,36 @@ class OrchestratorExecutor(AgentExecutor):
     ) -> None:
         """Cancellation is not supported."""
         raise NotImplementedError("cancel not supported")
+
+
+async def _push_loan_record(application: dict, result: dict) -> None:
+    """Best-effort POST of pipeline result to the Escalation REST API."""
+    escalation_info = result.get("escalation", {})
+    payload = {
+        "applicant_id": result.get("applicant_id", application.get("applicant_id", "")),
+        "full_name": application.get("full_name", "Unknown"),
+        "decision": result.get("decision", "UNKNOWN"),
+        "action": result.get("action", "UNKNOWN"),
+        "reason": result.get("reason", ""),
+        "score": result.get("score", 0),
+        "compliant": result.get("compliant", True),
+        "risk_factors": result.get("risk_factors", []),
+        "compensating_factors": result.get("compensating_factors", []),
+        "flags": result.get("flags", []),
+        "conditions": result.get("conditions", []),
+        "reasoning": result.get("reasoning", ""),
+        "application_data": application,
+        "thresholds": result.get("thresholds", {}),
+        "escalation_id": escalation_info.get("escalation_id"),
+        "decided_at": result.get("decided_at"),
+    }
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.post(REST_API_URL, json=payload)
+            if resp.status_code not in (200, 201):
+                logger.warning("Loan history push failed: HTTP %d", resp.status_code)
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.warning("Loan history push error (REST API may not be ready): %s", exc)
 
 
 agent_card = AgentCard(

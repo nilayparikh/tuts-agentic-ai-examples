@@ -47,7 +47,7 @@ openai-agents>=0.1.0
 # The lesson demonstrates Claude-style agent patterns (JSON schema tools,
 # manual tool dispatch, conversation memory) atop the openai async client.
 
-# ── Lesson 15 — Multi-Agent Deep Dive (Capstone) ──────────────
+# ── Lesson 14 — Multi-Agent Deep Dive (Capstone) ──────────────
 # OpenTelemetry (tracing + OTLP export)
 opentelemetry-api>=1.25.0
 opentelemetry-sdk>=1.25.0

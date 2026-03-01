@@ -107,8 +107,8 @@ export function TraceWaterfall({ applications }: Props) {
             const steps = simulateSteps(app.risk_score);
             const totalMs =
               steps.length > 0
-                ? steps[steps.length - 1].startMs +
-                  steps[steps.length - 1].durationMs
+                ? (steps[steps.length - 1]?.startMs ?? 0) +
+                  (steps[steps.length - 1]?.durationMs ?? 0)
                 : 0;
             const maxMs = Math.max(totalMs, 1);
 

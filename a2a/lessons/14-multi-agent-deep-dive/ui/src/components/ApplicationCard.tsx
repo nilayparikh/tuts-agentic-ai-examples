@@ -22,7 +22,8 @@ export function ApplicationCard({ application, onDecision }: Props) {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const status = STATUS_STYLES[application.status] ?? STATUS_STYLES.PENDING;
+  const status = STATUS_STYLES[application.status] ?? STATUS_STYLES["PENDING"];
+  const safeStatus = status!;
 
   const handleAction = async (decision: Decision) => {
     setSubmitting(true);
@@ -77,8 +78,8 @@ export function ApplicationCard({ application, onDecision }: Props) {
               borderRadius: "9999px",
               fontSize: "0.75rem",
               fontWeight: 600,
-              background: status.bg,
-              color: status.color,
+              background: safeStatus.bg,
+              color: safeStatus.color,
             }}
           >
             {application.status}

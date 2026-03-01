@@ -1,4 +1,4 @@
-# Lesson 15 — Multi-Agent Loan Approval System (Capstone)
+# Lesson 14 — Multi-Agent Loan Approval System (Capstone)
 
 A production-grade multi-agent loan approval pipeline built with the A2A protocol,
 featuring AI-driven decisioning (80%), human-in-the-loop escalation (20%),
@@ -31,7 +31,7 @@ a React approval dashboard, and OpenTelemetry observability.
 ## Project Structure
 
 ```
-15-multi-agent-deep-dive/
+14-multi-agent-deep-dive/
 ├── agents/
 │   ├── .env.example          ← Environment template (references shared .env)
 │   └── src/
@@ -108,11 +108,11 @@ PROVIDER=github          # ← switches the LLM provider
 # From repo root:
 cd _examples\a2a
 .venv\Scripts\activate       # activates the shared venv
-pip install -r requirements.txt   # lesson 15 deps are already listed
+pip install -r requirements.txt   # lesson 14 deps are already listed
 ```
 
 > **Note:** The shared `requirements.txt` includes OpenTelemetry, FastAPI, and
-> all other lesson 15 dependencies. No separate `requirements.txt` exists here.
+> all other lesson 14 dependencies. No separate `requirements.txt` exists here.
 
 ---
 
@@ -159,7 +159,7 @@ cd Y:\.sources\localm-tuts\a2a\_examples\a2a
 ### Step 2 — Start all 6 A2A agent servers
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\15-multi-agent-deep-dive\agents\src
+cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\agents\src
 python start_all.py
 ```
 
@@ -195,7 +195,7 @@ Waiting for agents to become ready…
 ### Step 3 — Start the React UI (separate terminal)
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\15-multi-agent-deep-dive\ui
+cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\ui
 npm install
 npm run dev
 # Opens at http://localhost:3000
@@ -204,7 +204,7 @@ npm run dev
 ### Step 4 — Submit test applications
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\15-multi-agent-deep-dive\agents\src
+cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\agents\src
 python submit_test_batch.py
 ```
 

@@ -4,7 +4,8 @@ Progressive lessons building from a standalone LLM agent to a
 multi-framework A2A deployment. Each lesson compiles and runs
 independently. Lessons 08–13 all solve the **same loan validation
 problem** using different agent frameworks — shared data and rules
-live in `_common/src/`.
+live in `_common/src/`. Lesson 14 is a capstone that builds a full
+multi-agent loan approval pipeline with a React dashboard.
 
 ---
 
@@ -82,17 +83,18 @@ graph TD
 
 ## Lessons at a Glance
 
-| Lesson | Folder                          | What It Builds                                 | Port      | Model                  |
-| ------ | ------------------------------- | ---------------------------------------------- | --------- | ---------------------- |
-| **05** | `05-first-a2a-agent/`           | Standalone QA agent — insurance policy Q&A     | —         | GitHub Phi-4           |
-| **06** | `06-a2a-server/`                | A2A server wrapping the QA agent               | **10001** | GitHub Phi-4           |
-| **07** | `07-a2a-client/`                | A2A client — discover, query, stream           | —         | _(client only)_        |
-| **08** | `08-microsoft-agent-framework/` | Loan validator via MS Agent Framework          | **10008** | Azure Kimi-K2-Thinking |
-| **09** | `09-google-adk/`                | Loan validator via Google ADK `to_a2a()`       | **10002** | Azure Kimi-K2-Thinking |
-| **10** | `10-langgraph/`                 | Loan validator via LangGraph ReAct agent       | **10003** | Azure Kimi-K2-Thinking |
-| **11** | `11-crewai/`                    | Loan validator via CrewAI role-based crew      | **10004** | Azure Kimi-K2-Thinking |
-| **12** | `12-openai-agents-sdk/`         | Loan validator via OpenAI Agents SDK           | **10005** | Azure Kimi-K2-Thinking |
-| **13** | `13-claude-agent-sdk/`          | Loan validator via Claude-style agent patterns | **10006** | Azure Kimi-K2-Thinking |
+| Lesson | Folder                          | What It Builds                                    | Port            | Model                  |
+| ------ | ------------------------------- | ------------------------------------------------- | --------------- | ---------------------- |
+| **05** | `05-first-a2a-agent/`           | Standalone QA agent — insurance policy Q&A        | —               | GitHub Phi-4           |
+| **06** | `06-a2a-server/`                | A2A server wrapping the QA agent                  | **10001**       | GitHub Phi-4           |
+| **07** | `07-a2a-client/`                | A2A client — discover, query, stream              | —               | _(client only)_        |
+| **08** | `08-microsoft-agent-framework/` | Loan validator via MS Agent Framework             | **10008**       | Azure Kimi-K2-Thinking |
+| **09** | `09-google-adk/`                | Loan validator via Google ADK `to_a2a()`          | **10002**       | Azure Kimi-K2-Thinking |
+| **10** | `10-langgraph/`                 | Loan validator via LangGraph ReAct agent          | **10003**       | Azure Kimi-K2-Thinking |
+| **11** | `11-crewai/`                    | Loan validator via CrewAI role-based crew         | **10004**       | Azure Kimi-K2-Thinking |
+| **12** | `12-openai-agents-sdk/`         | Loan validator via OpenAI Agents SDK              | **10005**       | Azure Kimi-K2-Thinking |
+| **13** | `13-claude-agent-sdk/`          | Loan validator via Claude-style agent patterns    | **10006**       | Azure Kimi-K2-Thinking |
+| **14** | `14-multi-agent-deep-dive/`     | Full loan approval pipeline — 6 agents + React UI | **10100–10105** | GitHub gpt-4o-mini     |
 
 ---
 
@@ -132,6 +134,13 @@ The framework used to build the server is invisible to the client — that is A2
 | `10005` | 12     | LoanValidatorOpenAIAgents | OpenAI Agents SDK, Azure Kimi-K2-Thinking     |
 | `10006` | 13     | LoanValidatorClaudeStyle  | Claude-style patterns, Azure Kimi-K2-Thinking |
 | `10008` | 08     | LoanValidatorOrchestrator | MS Agent Framework, Azure Kimi-K2-Thinking    |
+| `10100` | 14     | LoanApprovalOrchestrator  | Capstone orchestrator, GitHub gpt-4o-mini     |
+| `10101` | 14     | IntakeAgent               | Capstone — loan intake parsing                |
+| `10102` | 14     | RiskScorerAgent           | Capstone — risk scoring                       |
+| `10103` | 14     | ComplianceAgent           | Capstone — compliance checks                  |
+| `10104` | 14     | DecisionAgent             | Capstone — approval/decline routing           |
+| `10105` | 14     | EscalationAgent           | Capstone — human escalation + REST (8080)     |
+| `3000`  | 14     | React UI                  | Capstone — approval dashboard                 |
 
 ---
 
@@ -141,6 +150,7 @@ The framework used to build the server is invisible to the client — that is A2
 | -------------------------- | ------------------------------------- | ----------------------------------------------- | ---------------------------------------- |
 | 05, 06, 07 + all notebooks | **GitHub Models** or **LocalFoundry** | `Phi-4` / `qwen2.5-0.5b-instruct-generic-gpu:4` | `GITHUB_TOKEN` **or** VS Code AI Toolkit |
 | 08–13 _(full scripts)_     | **Azure AI Foundry**                  | `Kimi-K2-Thinking`                              | `AZURE_AI_API_KEY`                       |
+| 14 _(capstone)_            | **GitHub Models**                     | `gpt-4o-mini`                                   | `GITHUB_TOKEN`                           |
 
 ---
 
@@ -290,6 +300,23 @@ lessons/
       server.py                                     ← A2A server (port 10006)
       client.py                                     ← A2A client
       orchestrator.py                               ← OrchestratorAgent (Claude-style)
+  14-multi-agent-deep-dive/
+    README.md
+    WALKTHROUGH.md
+    agents/
+      src/
+        model_provider.py                           ← Unified LLM provider abstraction
+        telemetry.py                                ← OpenTelemetry setup
+        intake_agent.py + intake_server.py          ← IntakeAgent (port 10101)
+        risk_scorer.py + risk_scorer_server.py      ← RiskScorerAgent (port 10102)
+        compliance_agent.py + compliance_server.py  ← ComplianceAgent (port 10103)
+        decision_agent.py + decision_server.py      ← DecisionAgent (port 10104)
+        escalation_agent.py + escalation_server.py  ← EscalationAgent (port 10105 + REST 8080)
+        orchestrator.py + orchestrator_server.py    ← MasterOrchestrator (port 10100)
+        start_all.py                                ← Launch all agents
+        submit_test_batch.py                        ← Submit 8 test applications
+    ui/
+      src/                                          ← React approval dashboard (port 3000)
 ```
 
 ---

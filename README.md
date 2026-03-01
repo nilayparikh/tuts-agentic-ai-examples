@@ -6,7 +6,7 @@ Code examples for LocalM tutorial courses. Each sub-folder maps to one published
 
 | Folder                  | Course                        | Status                           |
 | ----------------------- | ----------------------------- | -------------------------------- |
-| [`a2a/`](a2a/README.md) | Agent-to-Agent (A2A) Protocol | Active — lessons 05–09 available |
+| [`a2a/`](a2a/README.md) | Agent-to-Agent (A2A) Protocol | Active — lessons 05–14 available |
 
 ## Model Providers
 
