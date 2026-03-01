@@ -46,3 +46,12 @@ openai-agents>=0.1.0
 # No extra dependencies — uses openai + a2a-sdk already listed above.
 # The lesson demonstrates Claude-style agent patterns (JSON schema tools,
 # manual tool dispatch, conversation memory) atop the openai async client.
+
+# ── Lesson 15 — Multi-Agent Deep Dive (Capstone) ──────────────
+# OpenTelemetry (tracing + OTLP export)
+opentelemetry-api>=1.25.0
+opentelemetry-sdk>=1.25.0
+opentelemetry-exporter-otlp-proto-http>=1.25.0
+opentelemetry-instrumentation-httpx>=0.46b0
+# REST API for escalation queue
+fastapi>=0.111.0
