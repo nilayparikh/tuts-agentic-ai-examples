@@ -220,8 +220,9 @@ Submits 8 applications with varying risk profiles (low, medium, high, edge-cases
 
 ## UI Screenshots (Playwright)
 
-Captured on 2026-03-02 from `http://localhost:3000` using Playwright while the UI
-was running in dev mode.
+Captured on 2026-03-02 from `http://localhost:3000` using Playwright after
+running a full end-to-end validation: all 6 agents active, 8 test applications
+submitted via `submit_test_batch.py`.
 
 ### Dashboard
 
@@ -235,17 +236,26 @@ was running in dev mode.
 
 ![Telemetry Dashboard](./dashboard-telemetry.png)
 
-> Note: Screenshots show the empty-state UI because backend agent APIs were not
-> all active during capture (`/api/*` returned server errors).
+> Screenshots reflect live pipeline results: 4 auto-approved, 2 auto-declined,
+> 2 escalated to human review (Carol Martinez score 54, Hassan Ali score 55).
 
 ---
 
 ## Validation Logs
 
-End-to-end example run logs for Lessons 08-13 (server/client commands and outputs)
-are documented in:
+End-to-end example run logs for Lessons 08-14:
 
-- `../_runlogs/README.md`
+| Lesson | Log file                        | Result                              |
+| ------ | ------------------------------- | ----------------------------------- |
+| 08     | `_runlogs/08-client-verify.log` | MAF agent + client verified         |
+| 09     | `_runlogs/09-client-verify.log` | Google ADK agent + client verified  |
+| 10     | `_runlogs/10-client-verify.log` | LangGraph agent + client verified   |
+| 11     | `_runlogs/11-client-verify.log` | CrewAI agent + client verified      |
+| 12     | `_runlogs/12-client-verify.log` | OpenAI Agents SDK + client verified |
+| 13     | `_runlogs/13-client-verify.log` | Claude Agent SDK + client verified  |
+| 14     | `_runlogs/14-client-verify.log` | Multi-agent pipeline: 8/8 processed |
+
+Full batch result (2026-03-02): 4 APPROVED · 2 DECLINED · 2 PENDING_REVIEW
 
 Raw logs are in `../_runlogs/*.log`.
 

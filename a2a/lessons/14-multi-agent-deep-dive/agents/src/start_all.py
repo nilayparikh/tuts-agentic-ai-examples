@@ -11,11 +11,18 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import io
 import os
 import subprocess
 import sys
 import time
 from pathlib import Path
+
+# Ensure stdout/stderr use UTF-8 on Windows (avoids cp1252 UnicodeEncodeError)
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+if sys.stderr.encoding and sys.stderr.encoding.lower() != "utf-8":
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import httpx
 from dotenv import find_dotenv, load_dotenv
@@ -45,12 +52,12 @@ async def _wait_for_agent(name: str, port: int, timeout: float = 30.0) -> bool:
             try:
                 resp = await client.get(url, timeout=2.0)
                 if resp.status_code == 200:
-                    print(f"  ✅ {name} ready on port {port}")
+                    print(f"  [OK] {name} ready on port {port}")
                     return True
             except (httpx.ConnectError, httpx.ReadTimeout):
                 pass
             await asyncio.sleep(0.5)
-    print(f"  ❌ {name} failed to start on port {port}")
+    print(f"  [FAIL] {name} failed to start on port {port}")
     return False
 
 
@@ -89,7 +96,9 @@ async def main() -> None:
         log_file = open(
             log_path, "w", encoding="utf-8"
         )  # pylint: disable=consider-using-with
-        print(f"Starting {agent['name']} ({agent['script']}) on port {agent['port']}…")
+        print(
+            f"Starting {agent['name']} ({agent['script']}) on port {agent['port']}..."
+        )
         print(f"  Log: {log_path}")
         proc = subprocess.Popen(  # pylint: disable=consider-using-with
             [sys.executable, str(script_path)],
@@ -100,7 +109,7 @@ async def main() -> None:
         procs.append(proc)
 
     print()
-    print("Waiting for agents to become ready…")
+    print("Waiting for agents to become ready...")
     print()
 
     results = await asyncio.gather(
@@ -113,10 +122,10 @@ async def main() -> None:
     print(f"{ready}/{total} agents ready.")
 
     if ready < total:
-        print(f"⚠️  Some agents failed to start. Check logs in: {_LOGS}")
+        print(f"[WARN] Some agents failed to start. Check logs in: {_LOGS}")
     else:
         print()
-        print("🚀 All agents running! Pipeline is ready.")
+        print("[READY] All agents running! Pipeline is ready.")
         print()
         print("  Orchestrator : http://localhost:10100/")
         print("  REST API     : http://localhost:8080/api/escalations/pending")
@@ -134,7 +143,9 @@ async def main() -> None:
             # Check if any process has died
             for i, proc in enumerate(procs):
                 if proc.poll() is not None:
-                    print(f"⚠️  {AGENTS[i]['name']} exited with code {proc.returncode}")
+                    print(
+                        f"[WARN] {AGENTS[i]['name']} exited with code {proc.returncode}"
+                    )
     except KeyboardInterrupt:
         print()
         print("Shutting down all agents…")
