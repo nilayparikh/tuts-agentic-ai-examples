@@ -23,12 +23,6 @@ graph LR
     L06 -->|"called by"| L07
     L05 -.->|"same pattern"| L08
     L05 -.->|"same pattern"| L09
-
-    style L05 fill:#dbeafe,stroke:#3b82f6
-    style L06 fill:#dcfce7,stroke:#22c55e
-    style L07 fill:#dcfce7,stroke:#22c55e
-    style L08 fill:#fef3c7,stroke:#f59e0b
-    style L09 fill:#fce7f3,stroke:#ec4899
 ```
 
 ---
