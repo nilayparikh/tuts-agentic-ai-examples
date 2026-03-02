@@ -6,26 +6,23 @@ a React approval dashboard, and OpenTelemetry observability.
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  MasterOrchestrator (10100)              │
-│           Discovers & routes via A2A Agent Cards         │
-└────────┬────────┬────────┬────────┬────────┬────────────┘
-         │        │        │        │        │
-    ┌────▼──┐ ┌───▼───┐ ┌─▼────┐ ┌▼─────┐ ┌▼──────────┐
-    │Intake │ │ Risk  │ │Compl.│ │Decis.│ │Escalation │
-    │ 10101 │ │ 10102 │ │10103 │ │10104 │ │  10105    │
-    └───────┘ └───────┘ └──────┘ └──┬───┘ └─────┬─────┘
-                                    │            │
-                          ┌─────────▼─┐   ┌─────▼──────┐
-                          │Auto-Decide│   │Human Queue │
-                          │ ≤40 / ≥80 │   │  40 < x <80│
-                          └───────────┘   └─────┬──────┘
-                                                │
-                                         ┌──────▼──────┐
-                                         │ React App   │
-                                         │ :3000       │
-                                         └─────────────┘
+```mermaid
+graph TD
+    Client["A2A Client"] -->|A2A| Orch
+
+    subgraph Pipeline["Multi-Agent Pipeline"]
+        Orch["MasterOrchestrator\nport 10100\nDiscovers and routes via Agent Cards"]
+        Intake["IntakeAgent\nport 10101"]
+        Risk["RiskScorerAgent\nport 10102"]
+        Comp["ComplianceAgent\nport 10103"]
+        Dec["DecisionAgent\nport 10104"]
+        Esc["EscalationAgent\nport 10105"]
+    end
+
+    Orch --> Intake --> Risk --> Comp --> Dec
+    Dec -->|"score le40 or ge80 — Auto-Decide"| Auto["Auto Approved / Declined"]
+    Dec -->|"40 lt score lt 80 — Escalate"| Esc
+    Esc --> UI["React App\nport 3000"]
 ```
 
 ## Project Structure
