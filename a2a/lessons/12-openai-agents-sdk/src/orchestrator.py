@@ -3,7 +3,7 @@ Lesson 12 — OrchestratorAgent using the OpenAI Agents SDK.
 
 The OrchestratorAgent wraps the three validation tool functions as
 ``@function_tool`` callables and hands them to an ``Agent`` that runs
-with Kimi-K2 via Azure AI Foundry (using the OpenAI-compatible endpoint).
+with Kimi-K2-Thinking via Azure AI Foundry (using the OpenAI-compatible endpoint).
 
 Reuses ``loan_data.py`` and ``validation_rules.py`` from Lesson 08 —
 same problem, different framework.
@@ -11,7 +11,7 @@ same problem, different framework.
 Environment variables required (loaded from ``_examples/.env``):
     AZURE_OPENAI_ENDPOINT
     AZURE_AI_API_KEY
-    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2)
+    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2-Thinking)
 """
 
 from __future__ import annotations
@@ -121,7 +121,7 @@ def oai_lookup_policy_notes(question: str) -> str:
 
 
 class OrchestratorAgent:
-    """Wraps the OpenAI Agents SDK Agent + Kimi-K2 for loan validation."""
+    """Wraps the OpenAI Agents SDK Agent + Kimi-K2-Thinking for loan validation."""
 
     def __init__(self) -> None:
         deployment = os.environ.get(

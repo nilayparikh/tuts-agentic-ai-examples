@@ -2,13 +2,13 @@
 Lesson 09 — OrchestratorAgent using Google Agent Development Kit (ADK).
 
 The OrchestratorAgent wraps the three validation tool functions using ADK's
-FunctionTool and LlmAgent.  Kimi-K2 (Azure AI Foundry) is accessed via the
+FunctionTool and LlmAgent.  Kimi-K2-Thinking (Azure AI Foundry) is accessed via the
 LiteLlm adapter — no Vertex AI or Google Cloud dependency.
 
 Environment variables required (loaded from ``_examples/.env``):
     AZURE_OPENAI_ENDPOINT
     AZURE_AI_API_KEY
-    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2)
+    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2-Thinking)
 """
 
 from __future__ import annotations
@@ -186,7 +186,7 @@ def _build_agent() -> LlmAgent:
 
 
 class OrchestratorAgent:
-    """Wraps Google ADK LlmAgent + Kimi-K2 for loan validation."""
+    """Wraps Google ADK LlmAgent + Kimi-K2-Thinking for loan validation."""
 
     def __init__(self) -> None:
         self._agent = _build_agent()
@@ -208,7 +208,7 @@ class OrchestratorAgent:
         Steps:
         1. Run deterministic hard checks (no LLM)
         2. Run deterministic soft checks (no LLM)
-        3. Ask Kimi-K2 via ADK Runner to synthesise a verdict
+        3. Ask Kimi-K2-Thinking via ADK Runner to synthesise a verdict
         4. Parse the JSON verdict and build a ValidationReport
         """
         app_json = json.dumps(application.to_dict())

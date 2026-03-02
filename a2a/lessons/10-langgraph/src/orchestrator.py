@@ -2,7 +2,7 @@
 Lesson 10 — OrchestratorAgent using LangGraph ReAct pattern.
 
 The OrchestratorAgent uses LangGraph's ``create_react_agent`` to wrap the
-three validation tool functions.  Kimi-K2 (Azure AI Foundry) is accessed
+three validation tool functions.  Kimi-K2-Thinking (Azure AI Foundry) is accessed
 via ``langchain-openai``'s ``AzureChatOpenAI``.
 
 Reuses ``loan_data.py`` and ``validation_rules.py`` from Lesson 08 —
@@ -11,7 +11,7 @@ same problem, different framework.
 Environment variables required (loaded from ``_examples/.env``):
     AZURE_OPENAI_ENDPOINT
     AZURE_AI_API_KEY
-    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2)
+    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2-Thinking)
 """
 
 from __future__ import annotations
@@ -155,7 +155,7 @@ def _build_llm() -> AzureChatOpenAI:
 
 
 class OrchestratorAgent:
-    """Wraps LangGraph ReAct agent + Kimi-K2 for loan validation."""
+    """Wraps LangGraph ReAct agent + Kimi-K2-Thinking for loan validation."""
 
     def __init__(self) -> None:
         self._llm = _build_llm()

@@ -5,7 +5,7 @@ This folder contains the working example for Lesson 10 of the A2A tutorial.
 ## What It Does
 
 An `OrchestratorAgent` built with LangGraph's `create_react_agent` uses
-**Kimi-K2** (Azure AI Foundry) to pre-screen residential mortgage loan
+**Kimi-K2-Thinking** (Azure AI Foundry) to pre-screen residential mortgage loan
 applications — the same validation problem from Lesson 08, reimplemented
 with a different framework.
 
@@ -16,7 +16,7 @@ flowchart TD
     Input["LoanApplication<br/>structured data"]
     Input --> Hard["run_hard_checks()<br/>@langchain_tool — deterministic rules"]
     Hard  --> Soft["run_soft_checks()<br/>@langchain_tool — advisory factors"]
-    Soft  --> LLM["create_react_agent<br/>AzureChatOpenAI → Kimi-K2"]
+    Soft  --> LLM["create_react_agent<br/>AzureChatOpenAI → Kimi-K2-Thinking"]
     LLM   --> Out["ValidationReport<br/>APPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
@@ -32,22 +32,45 @@ flowchart TD
 
 ```
 src/
-  orchestrator.py       OrchestratorAgent (LangGraph ReAct + AzureChatOpenAI → Kimi-K2)
+  orchestrator.py       OrchestratorAgent (LangGraph ReAct + AzureChatOpenAI → Kimi-K2-Thinking)
   server.py             A2A server with manual AgentExecutor wiring (port 10003)
   client.py             A2A client that discovers and calls the server via A2A protocol
 ```
 
 > **Shared data** — `loan_data.py` and `validation_rules.py` are imported from
-> `lessons/08-microsoft-agent-framework/src/` via sys.path (no duplication).
+> `lessons/_common/src/` via sys.path (no duplication).
 
 ## Running
 
+### 1. Install dependencies
+
 ```bash
-# Terminal 1 — start A2A server
+cd _examples/a2a
+pip install -r requirements.txt
+```
+
+### 2. Configure environment
+
+Create `_examples/.env` with:
+
+```dotenv
+AZURE_OPENAI_ENDPOINT=https://<resource>.openai.azure.com
+AZURE_AI_API_KEY=<your-key>
+AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
+```
+
+### 3. Start the A2A server
+
+```bash
 cd lessons/10-langgraph/src
 python server.py
+```
 
-# Terminal 2 — run A2A client
+The server starts on `http://localhost:10003`.
+
+### 4. Run the A2A client (in a second terminal)
+
+```bash
 cd lessons/10-langgraph/src
 python client.py
 ```
@@ -71,7 +94,7 @@ Set in `_examples/.env`:
 ```dotenv
 AZURE_OPENAI_ENDPOINT=https://<resource>.openai.azure.com
 AZURE_AI_API_KEY=<your-key>
-AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2
+AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 ```
 
 ## Dependencies

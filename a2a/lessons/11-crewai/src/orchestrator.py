@@ -3,7 +3,7 @@ Lesson 11 — OrchestratorAgent using CrewAI.
 
 The OrchestratorAgent wraps the three validation tool functions as CrewAI
 tools, assigns them to role-based agents, and runs a sequential crew.
-Kimi-K2 (Azure AI Foundry) is accessed via LiteLLM's AzureOpenAI wrapper.
+Kimi-K2-Thinking (Azure AI Foundry) is accessed via LiteLLM's AzureOpenAI wrapper.
 
 Reuses ``loan_data.py`` and ``validation_rules.py`` from Lesson 08 —
 same problem, different framework.
@@ -11,7 +11,7 @@ same problem, different framework.
 Environment variables required (loaded from ``_examples/.env``):
     AZURE_OPENAI_ENDPOINT
     AZURE_AI_API_KEY
-    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2)
+    AZURE_AI_MODEL_DEPLOYMENT_NAME   (default: Kimi-K2-Thinking)
 """
 
 from __future__ import annotations
@@ -142,7 +142,7 @@ def _get_llm_config() -> dict:
 
 
 class OrchestratorAgent:
-    """Wraps CrewAI crew + Kimi-K2 for loan validation."""
+    """Wraps CrewAI crew + Kimi-K2-Thinking for loan validation."""
 
     def __init__(self) -> None:
         llm_config = _get_llm_config()
