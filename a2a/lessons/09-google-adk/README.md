@@ -12,11 +12,11 @@ problem from Lesson 08, reimplemented with a different framework.
 
 ```mermaid
 flowchart TD
-    Input["LoanApplication\nstructured data"]
-    Input --> Hard["run_hard_checks()\nFunctionTool — deterministic rules"]
-    Hard  --> Soft["run_soft_checks()\nFunctionTool — advisory factors"]
-    Soft  --> LLM["LlmAgent + LiteLlm\nKimi-K2 via Azure"]
-    LLM   --> Out["ValidationReport\nAPPROVED / NEEDS_REVIEW / DECLINED"]
+    Input["LoanApplication<br/>structured data"]
+    Input --> Hard["run_hard_checks()<br/>FunctionTool — deterministic rules"]
+    Hard  --> Soft["run_soft_checks()<br/>FunctionTool — advisory factors"]
+    Soft  --> LLM["LlmAgent + LiteLlm<br/>Kimi-K2 via Azure"]
+    LLM   --> Out["ValidationReport<br/>APPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
 ### The three test applicants

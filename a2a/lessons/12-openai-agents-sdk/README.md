@@ -13,11 +13,11 @@ framework.
 
 ```mermaid
 flowchart TD
-    Input["LoanApplication\nstructured data"]
-    Input --> Hard["run_hard_checks()\n@function_tool — deterministic rules"]
-    Hard  --> Soft["run_soft_checks()\n@function_tool — advisory factors"]
-    Soft  --> LLM["Agent + Runner.run()\nAsyncAzureOpenAI → Kimi-K2"]
-    LLM   --> Out["ValidationReport\nAPPROVED / NEEDS_REVIEW / DECLINED"]
+    Input["LoanApplication<br/>structured data"]
+    Input --> Hard["run_hard_checks()<br/>@function_tool — deterministic rules"]
+    Hard  --> Soft["run_soft_checks()<br/>@function_tool — advisory factors"]
+    Soft  --> LLM["Agent + Runner.run()<br/>AsyncAzureOpenAI → Kimi-K2"]
+    LLM   --> Out["ValidationReport<br/>APPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
 ### The three test applicants

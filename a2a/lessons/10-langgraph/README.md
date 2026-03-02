@@ -13,11 +13,11 @@ with a different framework.
 
 ```mermaid
 flowchart TD
-    Input["LoanApplication\nstructured data"]
-    Input --> Hard["run_hard_checks()\n@langchain_tool — deterministic rules"]
-    Hard  --> Soft["run_soft_checks()\n@langchain_tool — advisory factors"]
-    Soft  --> LLM["create_react_agent\nAzureChatOpenAI → Kimi-K2"]
-    LLM   --> Out["ValidationReport\nAPPROVED / NEEDS_REVIEW / DECLINED"]
+    Input["LoanApplication<br/>structured data"]
+    Input --> Hard["run_hard_checks()<br/>@langchain_tool — deterministic rules"]
+    Hard  --> Soft["run_soft_checks()<br/>@langchain_tool — advisory factors"]
+    Soft  --> LLM["create_react_agent<br/>AzureChatOpenAI → Kimi-K2"]
+    LLM   --> Out["ValidationReport<br/>APPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
 ### The three test applicants

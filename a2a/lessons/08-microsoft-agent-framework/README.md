@@ -12,11 +12,11 @@ loan applications.
 
 ```mermaid
 flowchart TD
-    Input["LoanApplication\nstructured data"]
-    Input --> Hard["run_hard_checks()\ntool call — deterministic rules"]
-    Hard  --> Soft["run_soft_checks()\ntool call — advisory factors"]
-    Soft  --> LLM["Kimi-K2-Thinking\nmulti-step reasoning synthesis"]
-    LLM   --> Out["ValidationReport\nAPPROVED / NEEDS_REVIEW / DECLINED"]
+    Input["LoanApplication<br/>structured data"]
+    Input --> Hard["run_hard_checks()<br/>tool call — deterministic rules"]
+    Hard  --> Soft["run_soft_checks()<br/>tool call — advisory factors"]
+    Soft  --> LLM["Kimi-K2-Thinking<br/>multi-step reasoning synthesis"]
+    LLM   --> Out["ValidationReport<br/>APPROVED / NEEDS_REVIEW / DECLINED"]
 ```
 
 ### The three test applicants

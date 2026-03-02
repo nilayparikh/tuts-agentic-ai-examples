@@ -15,8 +15,8 @@ you can run every lesson without a paid cloud subscription.
 
 ```mermaid
 graph LR
-    GH["GitHub Models\nfree · GITHUB_TOKEN only\nhttps://models.inference.ai.azure.com"]
-    LF["AI Toolkit LocalFoundry\nfree · runs fully offline\nhttp://localhost:5272/v1/"]
+    GH["GitHub Models<br/>free · GITHUB_TOKEN only<br/>https://models.inference.ai.azure.com"]
+    LF["AI Toolkit LocalFoundry<br/>free · runs fully offline<br/>http://localhost:5272/v1/"]
 ```
 
 ### GitHub Models

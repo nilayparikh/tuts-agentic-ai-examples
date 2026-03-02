@@ -9,16 +9,16 @@ and a React dashboard.
 
 ```mermaid
 graph LR
-    L05["Lesson 05\nQA Agent\nStandalone · Phi-4"]
-    L06["Lesson 06\nA2A Server\nAgentExecutor · port 10001"]
-    L07["Lesson 07\nA2A Client\nDiscover · Query · Stream"]
-    L08["Lesson 08\nMS Agent Framework\nOrchestration · port 10008"]
-    L09["Lesson 09\nGoogle ADK\nto_a2a() · port 10002"]
-    L10["Lesson 10\nLangGraph\nReAct · port 10003"]
-    L11["Lesson 11\nCrewAI\nCrew · port 10004"]
-    L12["Lesson 12\nOpenAI Agents\nSDK · port 10005"]
-    L13["Lesson 13\nClaude Agent\nStyle · port 10006"]
-    L14["Lesson 14\nCapstone\n6 agents · React UI"]
+    L05["Lesson 05<br/>QA Agent<br/>Standalone · Phi-4"]
+    L06["Lesson 06<br/>A2A Server<br/>AgentExecutor · port 10001"]
+    L07["Lesson 07<br/>A2A Client<br/>Discover · Query · Stream"]
+    L08["Lesson 08<br/>MS Agent Framework<br/>Orchestration · port 10008"]
+    L09["Lesson 09<br/>Google ADK<br/>to_a2a() · port 10002"]
+    L10["Lesson 10<br/>LangGraph<br/>ReAct · port 10003"]
+    L11["Lesson 11<br/>CrewAI<br/>Crew · port 10004"]
+    L12["Lesson 12<br/>OpenAI Agents<br/>SDK · port 10005"]
+    L13["Lesson 13<br/>Claude Agent<br/>Style · port 10006"]
+    L14["Lesson 14<br/>Capstone<br/>6 agents · React UI"]
 
     L05 -->|wrapped by| L06
     L06 -->|called by| L07
@@ -51,8 +51,8 @@ account is required if you use either of these free options.
 ```mermaid
 graph TD
     NB["Notebook / Script"]
-    NB -->|"PROVIDER = 'github'"| GH["GitHub Models\nhttps://models.inference.ai.azure.com\nRequires: GITHUB_TOKEN"]
-    NB -->|"PROVIDER = 'localfoundry'"| LF["AI Toolkit LocalFoundry\nhttp://localhost:5272/v1/\nRequires: VS Code AI Toolkit + loaded model"]
+    NB -->|"PROVIDER = 'github'"| GH["GitHub Models<br/>https://models.inference.ai.azure.com<br/>Requires: GITHUB_TOKEN"]
+    NB -->|"PROVIDER = 'localfoundry'"| LF["AI Toolkit LocalFoundry<br/>http://localhost:5272/v1/<br/>Requires: VS Code AI Toolkit + loaded model"]
 ```
 
 ### GitHub Models (default)

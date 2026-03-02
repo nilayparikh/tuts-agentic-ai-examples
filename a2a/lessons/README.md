@@ -32,38 +32,38 @@ graph LR
 ```mermaid
 graph TD
     subgraph "Lesson 05 — Standalone Agent"
-        QA["QAAgent\n+ Phi-4 (GitHub Models)"]
+        QA["QAAgent<br/>+ Phi-4 (GitHub Models)"]
     end
 
     subgraph "Lesson 06 — A2A Server (port 10001)"
-        EX06["QAAgentExecutor\n(AgentExecutor)"]
-        SRV06["A2AStarletteApplication\nAgent Card · JSON-RPC"]
+        EX06["QAAgentExecutor<br/>(AgentExecutor)"]
+        SRV06["A2AStarletteApplication<br/>Agent Card · JSON-RPC"]
         EX06 --> QA
         SRV06 --> EX06
     end
 
     subgraph "Lesson 07 — A2A Client"
-        RES["ClientFactory\nDiscover Agent Card"]
-        CLI07["Client\nsend_message()"]
+        RES["ClientFactory<br/>Discover Agent Card"]
+        CLI07["Client<br/>send_message()"]
         RES --> SRV06
         CLI07 --> SRV06
     end
 
     subgraph "Lesson 08 — MS Agent Framework (port 10008)"
-        ORCH["OrchestratorAgent\n(MS AF + Kimi-K2-Thinking)"]
-        EX08["LoanValidatorExecutor\n(AgentExecutor)"]
-        SRV08["A2AStarletteApplication\nAgent Card · JSON-RPC"]
+        ORCH["OrchestratorAgent<br/>(MS AF + Kimi-K2-Thinking)"]
+        EX08["LoanValidatorExecutor<br/>(AgentExecutor)"]
+        SRV08["A2AStarletteApplication<br/>Agent Card · JSON-RPC"]
         EX08 --> ORCH
         SRV08 --> EX08
-        CLI08["A2A Client\n(same protocol as L07)"]
+        CLI08["A2A Client<br/>(same protocol as L07)"]
         CLI08 --> SRV08
     end
 
     subgraph "Lesson 09 — Google ADK (port 10002)"
-        LLMA["LlmAgent + FunctionTools\n(ADK + Kimi-K2)"]
-        SRV09["to_a2a()\nAgent Card · JSON-RPC"]
+        LLMA["LlmAgent + FunctionTools<br/>(ADK + Kimi-K2)"]
+        SRV09["to_a2a()<br/>Agent Card · JSON-RPC"]
         SRV09 --> LLMA
-        CLI09["A2A Client\n(same protocol as L07)"]
+        CLI09["A2A Client<br/>(same protocol as L07)"]
         CLI09 --> SRV09
     end
 
@@ -208,18 +208,18 @@ Open in VS Code or Jupyter. Change `PROVIDER` in the setup cell to switch betwee
 graph LR
     subgraph "Lesson 08 — Microsoft Agent Framework"
         direction TB
-        B1["1. Define tools\n(@tool decorator)"]
-        B2["2. Create Agent\nAgent(tools=[...])"]
-        B3["3. Implement AgentExecutor\n(30 lines)"]
-        B4["4. Wire A2AStarletteApplication\n(20 lines)"]
+        B1["1. Define tools<br/>(@tool decorator)"]
+        B2["2. Create Agent<br/>Agent(tools=[...])"]
+        B3["3. Implement AgentExecutor<br/>(30 lines)"]
+        B4["4. Wire A2AStarletteApplication<br/>(20 lines)"]
         B1 --> B2 --> B3 --> B4
     end
 
     subgraph "Lesson 09 — Google ADK"
         direction TB
-        A1["1. Define tools\n(plain functions)"]
-        A2["2. Create LlmAgent\nLlmAgent(tools=[...])"]
-        A3["3. One-liner server\nto_a2a(agent, port=X)"]
+        A1["1. Define tools<br/>(plain functions)"]
+        A2["2. Create LlmAgent<br/>LlmAgent(tools=[...])"]
+        A3["3. One-liner server<br/>to_a2a(agent, port=X)"]
         A1 --> A2 --> A3
     end
 ```

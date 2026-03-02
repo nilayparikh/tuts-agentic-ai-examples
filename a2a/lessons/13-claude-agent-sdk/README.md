@@ -13,7 +13,7 @@ graph LR
     Executor --> Agent[OrchestratorAgent]
     Agent --> Hard["run_hard_checks()"]
     Agent --> Soft["run_soft_checks()"]
-    Hard  --> LLM["AsyncAzureOpenAI\nJSON-schema tools → Kimi-K2-Thinking"]
+    Hard  --> LLM["AsyncAzureOpenAI<br/>JSON-schema tools → Kimi-K2-Thinking"]
     Soft  --> LLM
     LLM   --> Report[ValidationReport]
 ```
