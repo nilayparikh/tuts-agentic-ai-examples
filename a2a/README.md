@@ -26,17 +26,6 @@ graph LR
     L05 -.->|same pattern| L09
     L08 -.->|same problem| L10 & L11 & L12 & L13
     L10 & L11 & L12 & L13 -.->|capstone| L14
-
-    style L05 fill:#dbeafe,stroke:#3b82f6
-    style L06 fill:#dcfce7,stroke:#22c55e
-    style L07 fill:#dcfce7,stroke:#22c55e
-    style L08 fill:#fef3c7,stroke:#f59e0b
-    style L09 fill:#fce7f3,stroke:#ec4899
-    style L10 fill:#ede9fe,stroke:#8b5cf6
-    style L11 fill:#ede9fe,stroke:#8b5cf6
-    style L12 fill:#ede9fe,stroke:#8b5cf6
-    style L13 fill:#ede9fe,stroke:#8b5cf6
-    style L14 fill:#fef9c3,stroke:#eab308
 ```
 
 | Lesson | Folder                                  | What you build                                    | Port        |
