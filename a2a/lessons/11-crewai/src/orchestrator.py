@@ -16,16 +16,26 @@ Environment variables required (loaded from ``_examples/.env``):
 
 from __future__ import annotations
 
+# pylint: disable=arguments-differ
+
 import json
 import os
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
+
+os.environ.setdefault("CREWAI_TRACING_ENABLED", "false")
+os.environ.setdefault("CREWAI_DISABLE_TELEMETRY", "true")
+os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 
 from crewai import Agent as CrewAgent, Crew, Process, Task as CrewTask
 from crewai.tools import BaseTool as CrewBaseTool
 
-from loan_data import LoanApplication
-from validation_rules import lookup_policy_notes, run_hard_checks, run_soft_checks
+from loan_data import LoanApplication  # type: ignore[import-not-found]  # pylint: disable=import-error
+from validation_rules import (  # type: ignore[import-not-found]  # pylint: disable=import-error
+    lookup_policy_notes,
+    run_hard_checks,
+    run_soft_checks,
+)
 
 
 # ─── Output Model ─────────────────────────────────────────────────────────────
@@ -46,32 +56,31 @@ class ValidationReport:  # pylint: disable=too-many-instance-attributes
     compensating_factors: list[str] = field(default_factory=list)
 
     def __str__(self) -> str:
-        v_sym = {"APPROVED": "✅", "NEEDS_REVIEW": "⚠️", "DECLINED": "❌"}[self.verdict]
         lines = [
-            f"{'─'*60}",
-            f"VALIDATION REPORT  {v_sym} {self.verdict}",
-            f"Applicant  : {self.full_name} ({self.applicant_id})",
-            f"{'─'*60}",
+            "=" * 60,
+            f"VALIDATION REPORT: {self.verdict}",
+            f"Applicant: {self.full_name} ({self.applicant_id})",
+            "=" * 60,
             "",
-            "■ REASONING",
+            "REASONING:",
             self.reasoning_summary,
             "",
         ]
         if self.compensating_factors:
             lines += (
-                ["■ COMPENSATING FACTORS"]
+                ["COMPENSATING FACTORS:"]
                 + [f"  + {f}" for f in self.compensating_factors]
                 + [""]
             )
         if self.risk_flags:
-            lines += ["■ RISK FLAGS"] + [f"  ⚑ {f}" for f in self.risk_flags] + [""]
+            lines += ["RISK FLAGS:"] + [f"  - {f}" for f in self.risk_flags] + [""]
         if self.conditions:
             lines += (
-                ["■ UNDERWRITER CONDITIONS"]
+                ["UNDERWRITER CONDITIONS:"]
                 + [f"  {i+1}. {c}" for i, c in enumerate(self.conditions)]
                 + [""]
             )
-        lines.append(f"{'─'*60}")
+        lines.append("=" * 60)
         return "\n".join(lines)
 
 
@@ -88,7 +97,13 @@ class HardCheckTool(CrewBaseTool):
         "Returns JSON list of rule results."
     )
 
-    def _run(self, application_json: str) -> str:
+    def _run(self, *args: Any, **kwargs: Any) -> str:  # type: ignore[override]
+        """Execute hard-fail business rules."""
+        application_json = kwargs.get("application_json")
+        if application_json is None and args:
+            application_json = args[0]
+        if not isinstance(application_json, str):
+            raise ValueError("application_json is required")
         return run_hard_checks(application_json)
 
 
@@ -102,7 +117,13 @@ class SoftCheckTool(CrewBaseTool):
         "Returns JSON list of advisory rule results."
     )
 
-    def _run(self, application_json: str) -> str:
+    def _run(self, *args: Any, **kwargs: Any) -> str:  # type: ignore[override]
+        """Execute soft advisory checks."""
+        application_json = kwargs.get("application_json")
+        if application_json is None and args:
+            application_json = args[0]
+        if not isinstance(application_json, str):
+            raise ValueError("application_json is required")
         return run_soft_checks(application_json)
 
 
@@ -115,7 +136,13 @@ class PolicyLookupTool(CrewBaseTool):
         "Returns policy memo text."
     )
 
-    def _run(self, question: str) -> str:
+    def _run(self, *args: Any, **kwargs: Any) -> str:  # type: ignore[override]
+        """Look up policy guidance for the given question."""
+        question = kwargs.get("question")
+        if question is None and args:
+            question = args[0]
+        if not isinstance(question, str):
+            raise ValueError("question is required")
         return lookup_policy_notes(question)
 
 
@@ -249,8 +276,8 @@ def _build_prompt(app: LoanApplication, hard: list[dict], soft: list[dict]) -> s
         f"Mark notes : {app.derogatory_mark_notes}\n"
         f"First-time homebuyer: {app.first_time_homebuyer}\n"
         f"Has LOE    : {app.has_letter_of_explanation}\n\n"
-        f"HARD CHECK RESULTS\n{'─'*50}\n{hard_summary}\n\n"
-        f"SOFT CHECK RESULTS\n{'─'*50}\n{soft_summary}\n\n"
+        f"HARD CHECK RESULTS\n{'-'*50}\n{hard_summary}\n\n"
+        f"SOFT CHECK RESULTS\n{'-'*50}\n{soft_summary}\n\n"
         f"Produce the final pre-screening verdict.\n"
     )
 
@@ -258,9 +285,9 @@ def _build_prompt(app: LoanApplication, hard: list[dict], soft: list[dict]) -> s
 def _format_results(results: list[dict]) -> str:
     lines = []
     for r in results:
-        status = "PASS ✓" if r["passed"] else f"FAIL ✗ [{r['severity'].upper()}]"
+        status = "PASS" if r["passed"] else f"FAIL [{r['severity'].upper()}]"
         lines.append(f"  {r['rule']:30s}  {status}")
-        lines.append(f"    → {r['message']}")
+        lines.append(f"    {r['message']}")
     return "\n".join(lines)
 
 
@@ -278,7 +305,7 @@ def _parse_verdict(raw: str) -> dict:
         return {
             "verdict": "NEEDS_REVIEW",
             "reasoning_summary": text[:800],
-            "conditions": ["Manual review required — parsing failed."],
+            "conditions": ["Manual review required - parsing failed."],
             "risk_flags": [],
             "compensating_factors": [],
         }

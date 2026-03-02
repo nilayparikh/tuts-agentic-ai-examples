@@ -3,8 +3,16 @@
   "venvPath": ".",
   "venv": ".venv",
   "extraPaths": [
+    "lessons/_common/src",
     "lessons/05-first-a2a-agent/src",
-    "lessons/06-a2a-server/src"
+    "lessons/06-a2a-server/src",
+    "lessons/08-microsoft-agent-framework/src",
+    "lessons/09-google-adk/src",
+    "lessons/10-langgraph/src",
+    "lessons/11-crewai/src",
+    "lessons/12-openai-agents-sdk/src",
+    "lessons/13-claude-agent-sdk/src",
+    "lessons/14-multi-agent-deep-dive/agents/src"
   ],
   "reportMissingModuleSource": "none",
   "reportMissingImports": "none"

@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 
 from model_provider import get_model_config
 from telemetry import tracer
@@ -170,7 +169,6 @@ class RiskScorerAgent:
         thresholds = _RULE_THRESHOLDS.get(loan_type, _RULE_THRESHOLDS["conventional"])
 
         score = 0
-        total_checks = 5
 
         # Credit score check
         cs = app.get("credit_score", 0)

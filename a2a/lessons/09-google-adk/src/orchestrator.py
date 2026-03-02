@@ -24,8 +24,12 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.adk.tools import FunctionTool
 
-from loan_data import LoanApplication
-from validation_rules import lookup_policy_notes, run_hard_checks, run_soft_checks
+from loan_data import LoanApplication  # type: ignore[import-not-found]  # pylint: disable=import-error
+from validation_rules import (  # type: ignore[import-not-found]  # pylint: disable=import-error
+    lookup_policy_notes,
+    run_hard_checks,
+    run_soft_checks,
+)
 
 
 # ─── Output Model ─────────────────────────────────────────────────────────────
@@ -50,33 +54,32 @@ class ValidationReport:  # pylint: disable=too-many-instance-attributes
     compensating_factors: list[str] = field(default_factory=list)
 
     def __str__(self) -> str:
-        """Human-readable report card."""
-        v_sym = {"APPROVED": "✅", "NEEDS_REVIEW": "⚠️", "DECLINED": "❌"}[self.verdict]
+        """Human-readable report card (ASCII only)."""
         lines = [
-            f"{'─'*60}",
-            f"VALIDATION REPORT  {v_sym} {self.verdict}",
-            f"Applicant  : {self.full_name} ({self.applicant_id})",
-            f"{'─'*60}",
+            "=" * 60,
+            f"VALIDATION REPORT: {self.verdict}",
+            f"Applicant: {self.full_name} ({self.applicant_id})",
+            "=" * 60,
             "",
-            "■ REASONING",
+            "REASONING:",
             self.reasoning_summary,
             "",
         ]
         if self.compensating_factors:
             lines += (
-                ["■ COMPENSATING FACTORS"]
+                ["COMPENSATING FACTORS:"]
                 + [f"  + {f}" for f in self.compensating_factors]
                 + [""]
             )
         if self.risk_flags:
-            lines += ["■ RISK FLAGS"] + [f"  ⚑ {f}" for f in self.risk_flags] + [""]
+            lines += ["RISK FLAGS:"] + [f"  - {f}" for f in self.risk_flags] + [""]
         if self.conditions:
             lines += (
-                ["■ UNDERWRITER CONDITIONS"]
+                ["UNDERWRITER CONDITIONS:"]
                 + [f"  {i+1}. {c}" for i, c in enumerate(self.conditions)]
                 + [""]
             )
-        lines.append(f"{'─'*60}")
+        lines.append("=" * 60)
         return "\n".join(lines)
 
 
@@ -223,7 +226,9 @@ class OrchestratorAgent:
             app_name="loan_validator_adk",
             user_id="system",
         )
-        from google.genai import types as genai_types
+        from google.genai import (
+            types as genai_types,
+        )  # pylint: disable=import-outside-toplevel
 
         content = genai_types.Content(
             role="user",
@@ -284,11 +289,11 @@ def _build_prompt(
         f"Has LOE    : {app.has_letter_of_explanation}\n"
         f"\n"
         f"HARD CHECK RESULTS\n"
-        f"{'─'*50}\n"
+        f"{'-'*50}\n"
         f"{hard_summary}\n"
         f"\n"
         f"SOFT CHECK RESULTS\n"
-        f"{'─'*50}\n"
+        f"{'-'*50}\n"
         f"{soft_summary}\n"
         f"\n"
         f"Based on the above, produce the final pre-screening verdict.\n"
@@ -301,9 +306,9 @@ def _format_results(results: list[dict]) -> str:
     """Format rule results for the prompt."""
     lines = []
     for r in results:
-        status = "PASS ✓" if r["passed"] else f"FAIL ✗ [{r['severity'].upper()}]"
+        status = "PASS" if r["passed"] else f"FAIL [{r['severity'].upper()}]"
         lines.append(f"  {r['rule']:30s}  {status}")
-        lines.append(f"    → {r['message']}")
+        lines.append(f"    {r['message']}")
     return "\n".join(lines)
 
 
@@ -323,7 +328,7 @@ def _parse_verdict(raw: str) -> dict:
             "verdict": "NEEDS_REVIEW",
             "reasoning_summary": text[:800],
             "conditions": [
-                "Manual underwriter review required — structured output parsing failed."
+                "Manual underwriter review required - structured output parsing failed."
             ],
             "risk_flags": [],
             "compensating_factors": [],

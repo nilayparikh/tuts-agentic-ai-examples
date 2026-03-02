@@ -13,6 +13,8 @@ Endpoints:
     POST http://localhost:10003/                         → JSON-RPC
 """
 
+# mypy: disable-error-code=import-not-found
+
 # pylint: disable=wrong-import-position,wrong-import-order
 
 import sys
@@ -22,9 +24,11 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union
 
 # ── Ensure src/ and _common/src/ are on the path ─────────────────
 _SRC = Path(__file__).parent.resolve()
-_COMMON = (_SRC / "../../_common/src").resolve()
+_COMMON = Path(__file__).resolve().parents[2] / "_common" / "src"
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(_SRC))
 sys.path.insert(0, str(_COMMON))
+sys.path.insert(0, str(_PROJECT_ROOT))
 
 import uvicorn  # noqa: E402
 from dotenv import find_dotenv, load_dotenv  # noqa: E402
@@ -93,7 +97,10 @@ agent_card = AgentCard(
         AgentSkill(
             id="validate_loan",
             name="Validate Loan Application",
-            description="Run hard/soft business-rule checks and LLM reasoning on a loan application.",
+            description=(
+                "Run hard/soft business-rule checks and LLM reasoning "
+                "on a loan application."
+            ),
             tags=["loan", "validation", "underwriting", "mortgage", "langgraph"],
             examples=["APP-2024-001", "APP-2024-003"],
         )

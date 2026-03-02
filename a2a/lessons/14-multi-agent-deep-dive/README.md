@@ -218,6 +218,39 @@ Submits 8 applications with varying risk profiles (low, medium, high, edge-cases
 
 ---
 
+## UI Screenshots (Playwright)
+
+Captured on 2026-03-02 from `http://localhost:3000` using Playwright while the UI
+was running in dev mode.
+
+### Dashboard
+
+![Loan Dashboard](./dashboard-overview.png)
+
+### Escalation Queue
+
+![Escalation Queue](./dashboard-escalation.png)
+
+### Telemetry
+
+![Telemetry Dashboard](./dashboard-telemetry.png)
+
+> Note: Screenshots show the empty-state UI because backend agent APIs were not
+> all active during capture (`/api/*` returned server errors).
+
+---
+
+## Validation Logs
+
+End-to-end example run logs for Lessons 08-13 (server/client commands and outputs)
+are documented in:
+
+- `../_runlogs/README.md`
+
+Raw logs are in `../_runlogs/*.log`.
+
+---
+
 ## Servers & Port Map
 
 | Port  | Service               | Process                  | Health Check Endpoint                           |

@@ -78,3 +78,68 @@ AZURE_OPENAI_ENDPOINT=https://<your-endpoint>.openai.azure.com/
 AZURE_AI_API_KEY=<your-key>
 AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 ```
+
+## Dependencies
+
+```
+openai>=1.30.0
+a2a-sdk>=0.3.0
+```
+
+## Sample Output
+
+Running `python client.py` produces:
+
+```text
+Connected to A2A agent at http://localhost:10006
+   Agent: LoanValidatorClaudeStyle
+   Skills: ['Loan Application Pre-Screening']
+
+--- Validating Alice Chen (APP-2024-001) ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Alice Chen (APP-2024-001)
+============================================================
+
+REASONING:
+All hard business rules passed with significant margin: credit score 730
+(min 620), DTI 28.0% (max 43.0%), LTV 80.0% (max 95.0%), employment 48
+months (min 24), and zero derogatory marks. All soft advisory checks also
+passed, indicating strong credit profile, adequate income, stable employment,
+and sufficient down payment.
+
+COMPENSATING FACTORS:
+  + Long employment history (48 months) demonstrates stability
+  + 20% down payment provides strong equity buffer
+  + Credit score 730 qualifies for competitive pricing
+  + Zero derogatory marks indicate clean credit history
+
+============================================================
+
+--- Validating Bob Kwan (APP-2024-002) ---
+============================================================
+VALIDATION REPORT: DECLINED
+Applicant: Bob Kwan (APP-2024-002)
+============================================================
+
+(four hard-check failures: CS 545 < 620, DTI 80% > 43%, 8m employment, 4 derogatory marks)
+
+--- Validating Carol Martinez (APP-2024-003) ---
+============================================================
+VALIDATION REPORT: NEEDS_REVIEW
+Applicant: Carol Martinez (APP-2024-003)
+============================================================
+
+(LOE exception applied; manual underwriting required)
+
+UNDERWRITER CONDITIONS:
+  1. Underwriter must verify LOE credibility
+  2. Confirm Down Payment Assistance program enrollment
+  3. Validate medical collection is paid and discharged
+  4. Verify income stability and employment continuity
+  5. Ensure FHA Mortgage Insurance Premium (MIP) is established
+
+============================================================
+
+--- Done ---
+```

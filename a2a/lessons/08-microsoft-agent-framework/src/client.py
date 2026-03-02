@@ -161,7 +161,7 @@ async def main(applicant_ids: list[str] | None = None) -> None:
     target_ids = applicant_ids or DEFAULT_APPLICANTS
 
     # Step 1: Discover
-    print("\n── Agent Discovery ──────────────────────────────")
+    print("\n--- Agent Discovery ---")
     try:
         info = await discover_agent()
     except httpx.ConnectError:
@@ -177,15 +177,15 @@ async def main(applicant_ids: list[str] | None = None) -> None:
     print(f"  URL     : {info['url']}")
     print(f"  Skills  : {len(info['skills'])}")
     for skill in info["skills"]:
-        print(f"    • {skill['name']}: {skill['description']}")
+        print(f"    - {skill['name']}: {skill['description']}")
 
     # Step 2: Validate each applicant via A2A
     for app_id in target_ids:
-        print(f"\n── Validating {app_id} via A2A ─────────────────")
+        print(f"\n--- Validating {app_id} ---")
         result = await validate_applicant(app_id)
         print(result)
 
-    print("\n── Done ────────────────────────────────────────\n")
+    print("\n--- Done ---\n")
 
 
 if __name__ == "__main__":

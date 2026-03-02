@@ -10,7 +10,6 @@ Usage:
 
 # pylint: disable=wrong-import-position,wrong-import-order
 
-import asyncio
 import os
 import sys
 import threading

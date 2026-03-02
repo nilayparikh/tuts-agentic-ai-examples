@@ -104,3 +104,51 @@ langgraph>=0.4.0
 langchain-openai>=0.3.0
 langchain-core>=0.3.0
 ```
+
+## Sample Output
+
+Running `python client.py` produces:
+
+```text
+--- Agent Discovery (LangGraph) ---
+  Name: LoanValidatorLangGraph  Version: 1.0.0
+    - Validate Loan Application
+
+--- Validating APP-2024-001 ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Alice Chen (APP-2024-001)
+============================================================
+
+REASONING:
+All hard and soft checks passed with strong margins. Applicant presents excellent
+creditworthiness (730 score, zero derogatory marks), stable 48-month employment
+history, and conservative financial ratios (28% DTI, 80% LTV with 20% down
+payment). No risk flags or manual review conditions identified.
+
+COMPENSATING FACTORS:
+  + Long employment tenure (48 months) demonstrates stability
+  + 20% down payment provides substantial equity cushion
+  + Credit score of 730 qualifies for most competitive rate tiers
+  + DTI of 28% indicates comfortable debt service capacity
+
+============================================================
+
+--- Validating APP-2024-002 ---
+============================================================
+VALIDATION REPORT: DECLINED
+Applicant: Bob Kwan (APP-2024-002)
+============================================================
+
+(hard-fail criteria not met: CS 545 < 620, DTI 80% > 43%, 8m employment, 4 derogatory marks)
+
+--- Validating APP-2024-003 ---
+============================================================
+VALIDATION REPORT: NEEDS_REVIEW
+Applicant: Carol Martinez (APP-2024-003)
+============================================================
+
+(FHA exceptions applied; manual underwriter verification required)
+
+--- Done ---
+```

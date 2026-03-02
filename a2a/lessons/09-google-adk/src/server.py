@@ -23,7 +23,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union
 
 # ── Ensure src/ and _common/src/ are on the path ─────────────────
 _SRC = Path(__file__).parent.resolve()
-_COMMON = (_SRC / "../../_common/src").resolve()
+_COMMON = Path(__file__).resolve().parents[2] / "_common" / "src"
 sys.path.insert(0, str(_SRC))
 sys.path.insert(0, str(_COMMON))
 

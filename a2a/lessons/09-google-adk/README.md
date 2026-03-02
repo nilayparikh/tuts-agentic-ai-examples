@@ -101,3 +101,38 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 google-adk[a2a]>=1.3.0
 litellm>=1.50.0
 ```
+
+## Sample Output
+
+Running `python client.py` produces:
+
+```text
+--- Agent Discovery (Google ADK) ---
+  Name    : LoanValidatorADK
+  Version : 0.0.1
+  URL     : http://localhost:10002
+    - model: Pre-screens residential mortgage applications using deterministic
+      business rules and LLM reasoning to produce APPROVED / NEEDS_REVIEW /
+      DECLINED verdicts with full justification.
+    - adk_run_hard_checks: Execute hard-fail business rules against a loan application.
+    - adk_run_soft_checks: Execute soft advisory checks against a loan application.
+    - adk_lookup_policy_notes: Look up policy guidance for a specific underwriting question.
+
+--- Validating APP-2024-001 ---
+```json
+{
+  "verdict": "APPROVED",
+  "reasoning_summary": "All hard and soft checks passed ...",
+  "compensating_factors": [...],
+  "risk_flags": [],
+  "conditions": []
+}
+```
+
+--- Done ---
+```
+
+> **Note:** The Google ADK `to_a2a()` integration wraps the `LlmAgent` directly.
+> The agent receives the applicant ID via the A2A message and uses `adk_run_hard_checks`
+> and `adk_run_soft_checks` tools to fetch validation data before synthesising a verdict.
+> Actual LLM-generated reasoning content will vary between runs.

@@ -447,7 +447,12 @@ def lookup_policy_notes(
     import asyncio  # pylint: disable=import-outside-toplevel
 
     try:
-        return asyncio.get_event_loop().run_until_complete(_query_qa_agent(question))
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            # Called from an async context (e.g. LangGraph/CrewAI tool call).
+            # Cannot nest run_until_complete — fall through to policy memo.
+            raise RuntimeError("event loop already running")
+        return loop.run_until_complete(_query_qa_agent(question))
     except Exception:  # pylint: disable=broad-exception-caught
         # QAAgent not running — return canonical policy memo
         return _POLICY_MEMO.get(

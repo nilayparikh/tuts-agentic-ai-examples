@@ -89,7 +89,7 @@ python client.py APP-2024-003        # validate a specific applicant
 
 ```bash
 # Fetch Agent Card
-curl http://localhost:10008/.well-known/agent.json | python -m json.tool
+curl http://localhost:10008/.well-known/agent-card.json | python -m json.tool
 
 # Send a validation request
 curl -X POST http://localhost:10008 \
@@ -97,7 +97,96 @@ curl -X POST http://localhost:10008 \
   -d '{"jsonrpc":"2.0","id":"test-1","method":"message/send","params":{"message":{"role":"user","parts":[{"kind":"text","text":"Validate APP-2024-003"}],"messageId":"msg-001"}}}'
 ```
 
-## A2A Protocol Round-Trip
+## Sample Output
+
+Running `python client.py` produces:
+
+```text
+--- Agent Discovery ---
+  Name    : LoanValidatorOrchestrator
+  Version : 1.0.0
+  URL     : http://localhost:10008/
+  Skills  : 1
+    - Validate Loan Application: Run hard/soft business-rule checks and LLM reasoning on a loan application.
+--- Validating APP-2024-001 ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Alice Chen (APP-2024-001)
+============================================================
+
+REASONING:
+Applicant demonstrates strong credit profile with score of 730, DTI of 28% well
+below threshold, and stable 48-month employment history. 20% down payment
+provides adequate equity. All hard and soft checks passed without exceptions.
+
+COMPENSATING FACTORS:
+  + Long employment history (48 months) indicates stability
+  + 20% down payment provides strong equity position
+  + DTI of 28% provides comfortable debt service buffer
+
+============================================================
+
+--- Validating APP-2024-002 ---
+============================================================
+VALIDATION REPORT: DECLINED
+Applicant: Bob Kwan (APP-2024-002)
+============================================================
+
+REASONING:
+Multiple non-remediable hard fails for conventional loan: credit score of 545 is
+below 620 minimum, DTI of 80% far exceeds 43% limit, employment history of 8
+months is insufficient with no LOE exception available, and 4 derogatory marks
+exceed policy limit.
+
+COMPENSATING FACTORS:
+  + Eligible for Down Payment Assistance programme
+  + LTV ratio of 91.2% is within conventional limits
+
+RISK FLAGS:
+  - Credit score 545 is below conventional minimum of 620
+  - DTI ratio 80.0% exceeds maximum 43% threshold
+  - Employment history 8 months is below 24 month requirement; no LOE available
+  - Derogatory marks (4) exceed policy limit of 2
+  - Unresolved medical collection and judgment present
+  - Loan-to-income ratio 7.38x exceeds advisory limit of 4.5x
+
+============================================================
+
+--- Validating APP-2024-003 ---
+============================================================
+VALIDATION REPORT: NEEDS_REVIEW
+Applicant: Carol Martinez (APP-2024-003)
+============================================================
+
+REASONING:
+All hard disqualification rules pass with FHA-specific exceptions for employment
+history and credit score. Applicant meets minimum credit and debt ratios, but
+short employment tenure requires underwriter verification of the Letter of
+Explanation.
+
+COMPENSATING FACTORS:
+  + DTI ratio 34.2% is comfortably below 44% FHA limit
+  + Medical collection fully paid/discharged in 2022
+  + First-time homebuyer status with LOE provided
+  + DTA eligibility provides additional program flexibility
+
+RISK FLAGS:
+  - Employment history limited to 18 months (below 24-month standard)
+  - Minimal 3.5% down payment creates maximum LTV and PMI requirement
+  - Credit score 612 is marginal and below conventional thresholds
+
+UNDERWRITER CONDITIONS:
+  1. Verify and approve Letter of Explanation for employment history exception
+  2. Confirm Down Payment Assistance program enrollment
+  3. Document PMI requirement and premium in loan terms
+  4. Obtain evidence medical collection account was paid and discharged
+
+============================================================
+
+--- Done ---
+```
+
+
 
 1. **Server start** — OrchestratorAgent is wrapped in `A2AStarletteApplication` on port 10008
 2. **Agent discovery** — Client fetches `GET /.well-known/agent-card.json` to discover capabilities

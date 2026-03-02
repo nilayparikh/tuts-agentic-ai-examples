@@ -24,8 +24,12 @@ from typing import Literal
 from agents import Agent, Runner, function_tool, ModelSettings
 from openai import AsyncAzureOpenAI
 
-from loan_data import LoanApplication
-from validation_rules import lookup_policy_notes, run_hard_checks, run_soft_checks
+from loan_data import LoanApplication  # type: ignore[import-not-found]  # pylint: disable=import-error
+from validation_rules import (  # type: ignore[import-not-found]  # pylint: disable=import-error
+    lookup_policy_notes,
+    run_hard_checks,
+    run_soft_checks,
+)
 
 
 # ─── Output Model ─────────────────────────────────────────────────────────────
@@ -46,32 +50,31 @@ class ValidationReport:
     compensating_factors: list[str] = field(default_factory=list)
 
     def __str__(self) -> str:
-        v_sym = {"APPROVED": "✅", "NEEDS_REVIEW": "⚠️", "DECLINED": "❌"}[self.verdict]
         lines = [
-            f"{'─'*60}",
-            f"VALIDATION REPORT  {v_sym} {self.verdict}",
-            f"Applicant  : {self.full_name} ({self.applicant_id})",
-            f"{'─'*60}",
+            "=" * 60,
+            f"VALIDATION REPORT: {self.verdict}",
+            f"Applicant: {self.full_name} ({self.applicant_id})",
+            "=" * 60,
             "",
-            "■ REASONING",
+            "REASONING:",
             self.reasoning_summary,
             "",
         ]
         if self.compensating_factors:
             lines += (
-                ["■ COMPENSATING FACTORS"]
+                ["COMPENSATING FACTORS:"]
                 + [f"  + {f}" for f in self.compensating_factors]
                 + [""]
             )
         if self.risk_flags:
-            lines += ["■ RISK FLAGS"] + [f"  ⚑ {f}" for f in self.risk_flags] + [""]
+            lines += ["RISK FLAGS:"] + [f"  - {f}" for f in self.risk_flags] + [""]
         if self.conditions:
             lines += (
-                ["■ UNDERWRITER CONDITIONS"]
+                ["UNDERWRITER CONDITIONS:"]
                 + [f"  {i+1}. {c}" for i, c in enumerate(self.conditions)]
                 + [""]
             )
-        lines.append(f"{'─'*60}")
+        lines.append("=" * 60)
         return "\n".join(lines)
 
 
@@ -208,8 +211,8 @@ def _build_prompt(app: LoanApplication, hard: list[dict], soft: list[dict]) -> s
         f"Mark notes : {app.derogatory_mark_notes}\n"
         f"First-time homebuyer: {app.first_time_homebuyer}\n"
         f"Has LOE    : {app.has_letter_of_explanation}\n\n"
-        f"HARD CHECK RESULTS\n{'─'*50}\n{hard_summary}\n\n"
-        f"SOFT CHECK RESULTS\n{'─'*50}\n{soft_summary}\n\n"
+        f"HARD CHECK RESULTS\n{'-'*50}\n{hard_summary}\n\n"
+        f"SOFT CHECK RESULTS\n{'-'*50}\n{soft_summary}\n\n"
         f"Produce the final pre-screening verdict as JSON.\n"
     )
 
@@ -217,9 +220,9 @@ def _build_prompt(app: LoanApplication, hard: list[dict], soft: list[dict]) -> s
 def _format_results(results: list[dict]) -> str:
     lines = []
     for r in results:
-        status = "PASS ✓" if r["passed"] else f"FAIL ✗ [{r['severity'].upper()}]"
+        status = "PASS" if r["passed"] else f"FAIL [{r['severity'].upper()}]"
         lines.append(f"  {r['rule']:30s}  {status}")
-        lines.append(f"    → {r['message']}")
+        lines.append(f"    {r['message']}")
     return "\n".join(lines)
 
 
@@ -237,7 +240,7 @@ def _parse_verdict(raw: str) -> dict:
         return {
             "verdict": "NEEDS_REVIEW",
             "reasoning_summary": text[:800],
-            "conditions": ["Manual review required — parsing failed."],
+            "conditions": ["Manual review required - parsing failed."],
             "risk_flags": [],
             "compensating_factors": [],
         }

@@ -104,3 +104,58 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 openai-agents>=0.1.0
 openai>=1.30.0
 ```
+
+## Sample Output
+
+Running `python client.py` produces:
+
+```text
+Connected to A2A agent at http://localhost:10005
+   Agent: LoanValidatorOpenAIAgents
+   Skills: ['Loan Application Pre-Screening']
+
+--- Validating Alice Chen (APP-2024-001) ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Alice Chen (APP-2024-001)
+============================================================
+
+REASONING:
+Applicant meets all hard-fail underwriting criteria with strong credit profile
+(730 score, zero derogatory marks), stable 48-month employment history, low DTI
+ratio of 28% (well below 43% threshold), and adequate 20% down payment
+resulting in 80% LTV.
+
+COMPENSATING FACTORS:
+  + Strong credit score of 730 with no derogatory marks
+  + Stable employment history of 48 months
+  + Low DTI ratio at 28% provides significant payment capacity cushion
+  + 20% down payment demonstrates borrower financial commitment
+
+UNDERWRITER CONDITIONS:
+  1. Standard verification of employment and income
+  2. Satisfactory property appraisal
+  3. Clear title search and insurance
+
+============================================================
+
+--- Validating Bob Kwan (APP-2024-002) ---
+============================================================
+VALIDATION REPORT: DECLINED
+Applicant: Bob Kwan (APP-2024-002)
+============================================================
+
+(CS 545 < 620, DTI 80% > 43%, 8m employment, 4 derogatory marks)
+
+--- Validating Carol Martinez (APP-2024-003) ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Carol Martinez (APP-2024-003)
+============================================================
+
+(all FHA requirements met; minor conditions for MIP and LOE verification)
+
+============================================================
+
+--- Done ---
+```

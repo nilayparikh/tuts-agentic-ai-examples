@@ -115,7 +115,7 @@ async def validate_applicant(applicant_id: str) -> str:
 async def main(applicant_ids: list[str] | None = None) -> None:
     target_ids = applicant_ids or DEFAULT_APPLICANTS
 
-    print("\n── Agent Discovery (Google ADK) ─────────────────")
+    print("\n--- Agent Discovery (Google ADK) ---")
     try:
         info = await discover_agent()
     except httpx.ConnectError:
@@ -127,14 +127,14 @@ async def main(applicant_ids: list[str] | None = None) -> None:
     print(f"  Version : {info['version']}")
     print(f"  URL     : {info['url']}")
     for skill in info["skills"]:
-        print(f"    • {skill['name']}: {skill['description']}")
+        print(f"    - {skill['name']}: {skill['description']}")
 
     for app_id in target_ids:
-        print(f"\n── Validating {app_id} via A2A ─────────────────")
+        print(f"\n--- Validating {app_id} ---")
         result = await validate_applicant(app_id)
         print(result)
 
-    print("\n── Done ────────────────────────────────────────\n")
+    print("\n--- Done ---\n")
 
 
 if __name__ == "__main__":

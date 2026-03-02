@@ -102,3 +102,52 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 ```
 crewai>=0.100.0
 ```
+## Sample Output
+
+Running `python client.py` produces (requires active Azure AI Foundry endpoint):
+
+```text
+Connected to A2A agent at http://localhost:10004
+   Agent: LoanValidatorCrewAI
+   Skills: ['Loan Application Pre-Screening']
+
+--- Validating Alice Chen (APP-2024-001) ---
+============================================================
+VALIDATION REPORT: APPROVED
+Applicant: Alice Chen (APP-2024-001)
+============================================================
+
+REASONING:
+All hard and soft checks passed. Strong credit score (730), 48-month employment
+history, 20% down payment, and low DTI (28%) confirm eligibility. No risk
+flags or compensating factor exceptions required.
+
+COMPENSATING FACTORS:
+  + Long employment history demonstrates stability
+  + 20% down payment provides strong equity position
+  + DTI well below threshold
+
+============================================================
+
+--- Validating Bob Kwan (APP-2024-002) ---
+============================================================
+VALIDATION REPORT: DECLINED
+Applicant: Bob Kwan (APP-2024-002)
+============================================================
+
+(fails CS, DTI, employment, and derogatory mark hard checks)
+
+--- Validating Carol Martinez (APP-2024-003) ---
+============================================================
+VALIDATION REPORT: NEEDS_REVIEW
+Applicant: Carol Martinez (APP-2024-003)
+============================================================
+
+(FHA exceptions; underwriter must verify LOE and DPA enrollment)
+
+============================================================
+```
+
+> **Note:** Requires the Kimi-K2-Thinking deployment on Azure AI Foundry to be available
+> with sufficient quota. The CrewAI agent runs two sequential crew tasks (compliance analyst
+> + senior underwriter) per applicant.

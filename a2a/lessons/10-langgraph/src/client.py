@@ -99,7 +99,7 @@ async def validate_applicant(applicant_id: str) -> str:
 
 async def main(applicant_ids: list[str] | None = None) -> None:
     target_ids = applicant_ids or DEFAULT_APPLICANTS
-    print("\n── Agent Discovery (LangGraph) ─────────────────")
+    print("\n--- Agent Discovery (LangGraph) ---")
     try:
         info = await discover_agent()
     except httpx.ConnectError:
@@ -107,13 +107,13 @@ async def main(applicant_ids: list[str] | None = None) -> None:
         sys.exit(1)
     print(f"  Name: {info['name']}  Version: {info['version']}")
     for skill in info["skills"]:
-        print(f"    • {skill['name']}")
+        print(f"    - {skill['name']}")
 
     for app_id in target_ids:
-        print(f"\n── Validating {app_id} via A2A ─────────────────")
+        print(f"\n--- Validating {app_id} ---")
         print(await validate_applicant(app_id))
 
-    print("\n── Done ────────────────────────────────────────\n")
+    print("\n--- Done ---\n")
 
 
 if __name__ == "__main__":
