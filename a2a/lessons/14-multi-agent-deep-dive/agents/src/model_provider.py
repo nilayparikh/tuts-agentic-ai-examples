@@ -3,7 +3,7 @@ Model Provider — Unified LLM client for GitHub Models, Azure (MicrosoftFoundry
 and Foundry Local (LocalFoundry).
 
 Select the provider via the ``PROVIDER`` environment variable:
-  - ``github``            → GitHub Models (Phi-4) — DEFAULT
+    - ``github``            → GitHub Models (openai/gpt-4o-mini) — DEFAULT
   - ``MicrosoftFoundry``  → Azure AI Foundry (Kimi-K2-Thinking)
   - ``LocalFoundry``      → Foundry Local / Ollama (Qwen2.5, etc.)
 

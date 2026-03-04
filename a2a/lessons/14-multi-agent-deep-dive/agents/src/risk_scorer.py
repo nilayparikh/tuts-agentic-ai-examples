@@ -5,7 +5,7 @@ Combines deterministic rule scoring (40% weight) with LLM-based reasoning
 (60% weight) for a composite risk score.
 
 The LLM provider is selected via the PROVIDER env var (see model_provider.py):
-  - github           →  GitHub Models (Phi-4) — DEFAULT
+    - github           →  GitHub Models (openai/gpt-4o-mini) — DEFAULT
   - MicrosoftFoundry →  Azure AI Foundry (Kimi-K2-Thinking)
   - LocalFoundry     →  Foundry Local (Qwen2.5, etc.)
 """
