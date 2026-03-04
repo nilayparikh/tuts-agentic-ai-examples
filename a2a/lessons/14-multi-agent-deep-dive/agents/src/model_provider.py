@@ -55,7 +55,10 @@ def get_model_config(override_provider: str | None = None) -> ModelConfig:
     ModelConfig
         A frozen dataclass with ``client``, ``model`` name, and metadata.
     """
-    provider = (override_provider or os.getenv("PROVIDER", "github")).strip().lower()
+    raw_provider = override_provider
+    if raw_provider is None:
+        raw_provider = os.getenv("PROVIDER", "github")
+    provider = (raw_provider or "github").strip().lower()
 
     if provider in ("github", "gh"):
         return _github_config()
