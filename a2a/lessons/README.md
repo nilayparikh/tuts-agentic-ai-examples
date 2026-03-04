@@ -60,7 +60,7 @@ graph TD
     end
 
     subgraph "Lesson 09 — Google ADK (port 10002)"
-        LLMA["LlmAgent + FunctionTools<br/>(ADK + Kimi-K2)"]
+        LLMA["LlmAgent + FunctionTools<br/>(ADK + Kimi-K2-Thinking)"]
         SRV09["to_a2a()<br/>Agent Card · JSON-RPC"]
         SRV09 --> LLMA
         CLI09["A2A Client<br/>(same protocol as L07)"]

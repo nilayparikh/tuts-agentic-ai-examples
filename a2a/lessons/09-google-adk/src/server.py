@@ -10,7 +10,7 @@ Usage (from lessons/09-google-adk/src/):
     python server.py
 
 Endpoints:
-    GET  http://localhost:10002/.well-known/agent.json  → Agent Card
+    GET  http://localhost:10002/.well-known/agent-card.json  → Agent Card
     POST http://localhost:10002/                        → JSON-RPC
 """
 
@@ -55,7 +55,7 @@ app = to_a2a(
 
 if __name__ == "__main__":
     print(f"Starting LoanValidatorADK A2A server on port {SERVER_PORT} ...")
-    print(f"  Agent Card : http://{SERVER_HOST}:{SERVER_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://{SERVER_HOST}:{SERVER_PORT}/.well-known/agent-card.json")
     print(f"  JSON-RPC   : POST http://{SERVER_HOST}:{SERVER_PORT}/")
     print()
     uvicorn.run(app, host="0.0.0.0", port=SERVER_PORT)

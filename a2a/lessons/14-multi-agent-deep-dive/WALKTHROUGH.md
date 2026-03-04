@@ -46,14 +46,14 @@ but edge cases need human judgment**.
 
 ### Technology Stack
 
-| Layer         | Technology                          |
-| ------------- | ----------------------------------- |
-| Agent runtime | Python 3.10+, A2A SDK 0.3.24+       |
-| LLM provider  | Azure AI Foundry (Kimi-K2-Thinking) |
-| Tracing       | OpenTelemetry (OTLP + Console)      |
-| REST API      | FastAPI + Uvicorn                   |
-| Frontend      | React 19, Vite 6, Recharts          |
-| Transport     | HTTP (A2A JSON-RPC, REST)           |
+| Layer         | Technology                                   |
+| ------------- | -------------------------------------------- |
+| Agent runtime | Python 3.10+, A2A SDK 0.3.24+                |
+| LLM provider  | GitHub Models (openai/gpt-4o-mini) — default |
+| Tracing       | OpenTelemetry (OTLP + Console)               |
+| REST API      | FastAPI + Uvicorn                            |
+| Frontend      | React 19, Vite 6, Recharts                   |
+| Transport     | HTTP (A2A JSON-RPC, REST)                    |
 
 ---
 
@@ -288,13 +288,13 @@ The orchestrator is the system's control plane. It manages the full pipeline:
 ### Agent Discovery
 
 On startup, the orchestrator fetches Agent Cards from each agent's
-`/.well-known/agent.json` endpoint. This is a core A2A capability —
+`/.well-known/agent-card.json` endpoint. This is a core A2A capability —
 agents are discovered dynamically, not hardcoded.
 
 ```python
 async def discover_agents(self):
     for name, url in self.agent_urls.items():
-        card_url = f"{url}/.well-known/agent.json"
+        card_url = f"{url}/.well-known/agent-card.json"
         resp = await self._client.get(card_url)
         self.agents[name] = resp.json()
 ```
@@ -490,16 +490,16 @@ Escalation Agent's REST API), so no CORS issues during development.
 Eight test applicants are defined in `_common/src/loan_data.py` and shared
 across lessons. They cover a range of risk profiles:
 
-| Applicant         | Credit | Income   | Loan     | Expected Outcome |
-| ----------------- | ------ | -------- | -------- | ---------------- |
-| Sarah Chen        | 780    | $125,000 | $350,000 | Auto-Approve     |
-| Marcus Williams   | 680    | $75,000  | $280,000 | Escalate         |
-| Emily Johnson     | 580    | $45,000  | $200,000 | Auto-Decline     |
-| David Kim         | 720    | $95,000  | $400,000 | Escalate         |
-| Jennifer Martinez | 810    | $200,000 | $500,000 | Auto-Approve     |
-| Robert Taylor     | 640    | $55,000  | $180,000 | Escalate         |
-| Amanda Foster     | 750    | $110,000 | $320,000 | Auto-Approve     |
-| James Cooper      | 590    | $40,000  | $150,000 | Auto-Decline     |
+| Applicant      | Credit | Income   | Loan     | Expected Outcome |
+| -------------- | ------ | -------- | -------- | ---------------- |
+| Alice Chen     | 730    | $95,000  | $380,000 | Auto-Approve     |
+| Bob Kwan       | 545    | $42,000  | $310,000 | Auto-Decline     |
+| Carol Martinez | 612    | $68,000  | $255,000 | Escalate         |
+| David Park     | 780    | $110,000 | $420,000 | Auto-Approve     |
+| Elena Volkov   | 595    | $54,000  | $270,000 | Auto-Decline     |
+| Frank Osei     | 655    | $72,000  | $290,000 | Escalate         |
+| Grace Tanaka   | 710    | $145,000 | $490,000 | Auto-Approve     |
+| Hassan Ali     | 560    | $62,000  | $222,500 | Escalate         |
 
 ### EscalationRecord
 
@@ -528,16 +528,16 @@ class EscalationRecord(BaseModel):
 
 All configuration is via environment variables (see `.env.example`):
 
-| Variable                      | Default                           | Description                     |
-| ----------------------------- | --------------------------------- | ------------------------------- |
-| `GITHUB_TOKEN`                | (required)                        | GitHub Models API key for Phi-4 |
-| `AZURE_AI_FOUNDRY_ENDPOINT`   | (required)                        | Azure AI Foundry base URL       |
-| `AZURE_AI_FOUNDRY_KEY`        | (required)                        | Azure AI Foundry API key        |
-| `AZURE_AI_FOUNDRY_MODEL`      | `Kimi-K2-Thinking`                | Model for risk scoring LLM      |
-| `AUTO_APPROVE_THRESHOLD`      | `40`                              | Score ≤ this → auto-approve     |
-| `AUTO_DECLINE_THRESHOLD`      | `80`                              | Score ≥ this → auto-decline     |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | `http://localhost:4318/v1/traces` | OTLP HTTP endpoint              |
-| `ESCALATION_API_PORT`         | `8080`                            | REST API port for React UI      |
+| Variable                         | Default                           | Description                    |
+| -------------------------------- | --------------------------------- | ------------------------------ |
+| `GITHUB_TOKEN`                   | (required)                        | GitHub Models API key          |
+| `AZURE_OPENAI_ENDPOINT`          | (required)                        | Azure OpenAI resource endpoint |
+| `AZURE_AI_API_KEY`               | (required)                        | Azure OpenAI API key           |
+| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | `Kimi-K2-Thinking`                | Azure deployment name          |
+| `AUTO_APPROVE_THRESHOLD`         | `40`                              | Score ≤ this → auto-approve    |
+| `AUTO_DECLINE_THRESHOLD`         | `80`                              | Score ≥ this → auto-decline    |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`    | `http://localhost:4318/v1/traces` | OTLP HTTP endpoint             |
+| `ESCALATION_API_PORT`            | `8080`                            | REST API port for React UI     |
 
 ---
 
@@ -591,11 +591,11 @@ AUTO_DECLINE_THRESHOLD=90
 
 ## Appendix: A2A Protocol Quick Reference
 
-| Concept     | Description                                                 |
-| ----------- | ----------------------------------------------------------- |
-| Agent Card  | JSON metadata at `/.well-known/agent.json` describing agent |
-| JSON-RPC    | Transport protocol — `message/send` to invoke agents        |
-| Task        | A unit of work tracked by the A2A runtime                   |
-| Artifact    | Structured data returned by an agent (text, file, etc.)     |
-| Skill       | A capability advertised in the Agent Card                   |
-| Event Queue | Async queue for streaming agent responses                   |
+| Concept     | Description                                                      |
+| ----------- | ---------------------------------------------------------------- |
+| Agent Card  | JSON metadata at `/.well-known/agent-card.json` describing agent |
+| JSON-RPC    | Transport protocol — `message/send` to invoke agents             |
+| Task        | A unit of work tracked by the A2A runtime                        |
+| Artifact    | Structured data returned by an agent (text, file, etc.)          |
+| Skill       | A capability advertised in the Agent Card                        |
+| Event Queue | Async queue for streaming agent responses                        |

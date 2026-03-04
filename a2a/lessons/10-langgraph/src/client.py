@@ -6,10 +6,13 @@ Usage (server on port 10003 must be running first):
     python client.py APP-2024-003        # validate a specific applicant
 """
 
+# pylint: disable=wrong-import-position,wrong-import-order
+
 from __future__ import annotations
 
 import asyncio
 import sys
+from typing import Any
 from uuid import uuid4
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
@@ -20,8 +23,8 @@ load_dotenv(find_dotenv(raise_error_if_not_found=False))
 
 try:
     import httpx
-    from a2a.client import ClientConfig, ClientFactory
-    from a2a.types import Message, Part, Role, TextPart
+    from a2a.client import A2ACardResolver, A2AClient
+    from a2a.types import MessageSendParams, SendMessageRequest
 except ImportError as _imp_err:
     print(
         f'ERROR: {_imp_err}\n\npip install "a2a-sdk[http-server]" httpx python-dotenv'
@@ -33,71 +36,79 @@ SERVER_URL = "http://localhost:10003"
 DEFAULT_APPLICANTS = ["APP-2024-001", "APP-2024-002", "APP-2024-003"]
 
 
-def _get_client_config() -> ClientConfig:
-    return ClientConfig(httpx_client=httpx.AsyncClient(timeout=120.0), streaming=False)
-
-
-def _build_message(applicant_id: str) -> Message:
-    return Message(
-        message_id=uuid4().hex,
-        role=Role.user,
-        parts=[Part(root=TextPart(kind="text", text=f"Validate {applicant_id}"))],
+def _build_request(text: str) -> SendMessageRequest:
+    """Build a SendMessageRequest payload using A2A message schema."""
+    payload = {
+        "message": {
+            "role": "user",
+            "parts": [{"kind": "text", "text": text}],
+            "messageId": uuid4().hex,
+        }
+    }
+    return SendMessageRequest(
+        id=str(uuid4()),
+        params=MessageSendParams(**payload),  # type: ignore[arg-type]
     )
 
 
-def _extract_text(item: object) -> str:
-    if isinstance(item, Message):
-        texts = [p.root.text for p in item.parts if hasattr(p.root, "text")]
-        return "\n".join(texts) if texts else "(no text)"
-    if isinstance(item, tuple):
-        task = item[0]
-        if hasattr(task, "history") and task.history:
-            for msg in reversed(task.history):
-                if getattr(msg, "role", None) != Role.agent:
-                    continue
-                texts = [
-                    p.root.text
-                    for p in msg.parts
-                    if hasattr(p, "root") and hasattr(p.root, "text")
-                ]
-                if texts:
-                    return "\n".join(texts)
-        status = getattr(task, "status", None)
-        if status and hasattr(status, "message") and status.message:
-            texts = [
-                p.root.text
-                for p in status.message.parts
-                if hasattr(p, "root") and hasattr(p.root, "text")
-            ]
-            if texts:
-                return "\n".join(texts)
-    return f"(unexpected type: {type(item).__name__})"
+def _extract_text(response: object) -> str:
+    """Extract text from a SendMessageResponse object."""
+    root = getattr(response, "root", None)
+    result = getattr(root, "result", None)
+    parts = getattr(result, "parts", None)
+    if parts:
+        texts = [getattr(getattr(part, "root", None), "text", None) for part in parts]
+        clean = [text for text in texts if isinstance(text, str) and text]
+        if clean:
+            return "\n".join(clean)
+
+    if hasattr(response, "model_dump"):
+        dump = response.model_dump(mode="json", exclude_none=True)
+        task = dump.get("result", {})
+        task_message = task.get("status", {}).get("message", {})
+        task_parts = task_message.get("parts", [])
+        texts = [
+            part.get("text")
+            for part in task_parts
+            if isinstance(part, dict) and part.get("kind") == "text"
+        ]
+        clean = [text for text in texts if isinstance(text, str) and text]
+        if clean:
+            return "\n".join(clean)
+
+    return "(no text in response)"
+
+
+async def _create_client(httpx_client: httpx.AsyncClient) -> tuple[A2AClient, Any]:
+    """Resolve agent card and construct an A2AClient."""
+    resolver = A2ACardResolver(httpx_client=httpx_client, base_url=SERVER_URL)
+    card = await resolver.get_agent_card()
+    return A2AClient(httpx_client=httpx_client, agent_card=card), card
 
 
 async def discover_agent() -> dict:
-    client = await ClientFactory.connect(
-        agent=SERVER_URL, client_config=_get_client_config()
-    )
-    card = await client.get_card()
-    return {
-        "name": card.name,
-        "description": card.description,
-        "url": card.url,
-        "version": getattr(card, "version", "n/a"),
-        "skills": [{"id": s.id, "name": s.name} for s in (card.skills or [])],
-    }
+    """Discover the LangGraph-backed agent via A2A Agent Card."""
+    async with httpx.AsyncClient(timeout=120.0) as httpx_client:
+        _, card = await _create_client(httpx_client)
+        return {
+            "name": card.name,
+            "description": card.description,
+            "url": card.url,
+            "version": getattr(card, "version", "n/a"),
+            "skills": [{"id": s.id, "name": s.name} for s in (card.skills or [])],
+        }
 
 
 async def validate_applicant(applicant_id: str) -> str:
-    client = await ClientFactory.connect(
-        agent=SERVER_URL, client_config=_get_client_config()
-    )
-    async for item in client.send_message(_build_message(applicant_id)):
-        return _extract_text(item)
-    return "(no response)"
+    """Send one validation request and return extracted response text."""
+    async with httpx.AsyncClient(timeout=120.0) as httpx_client:
+        client, _ = await _create_client(httpx_client)
+        response = await client.send_message(_build_request(f"Validate {applicant_id}"))
+        return _extract_text(response)
 
 
 async def main(applicant_ids: list[str] | None = None) -> None:
+    """Run discovery and validation flow for one or more applicant IDs."""
     target_ids = applicant_ids or DEFAULT_APPLICANTS
     print("\n--- Agent Discovery (LangGraph) ---")
     try:

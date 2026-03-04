@@ -120,7 +120,7 @@ AI assessment. All other agents are rule-based (no LLM).
 
 | `PROVIDER` value                    | Model                 | Endpoint                                    |
 | ----------------------------------- | --------------------- | ------------------------------------------- |
-| `github` (default)                  | Phi-4 (GitHub Models) | `https://models.github.ai/inference`        |
+| `github` (default)                  | openai/gpt-4o-mini    | `https://models.github.ai/inference`        |
 | `microsoftfoundry` / `azure`        | Kimi-K2-Thinking      | Azure OpenAI (from `AZURE_OPENAI_ENDPOINT`) |
 | `localfoundry` / `local` / `ollama` | Qwen 2.5 (AI Toolkit) | `http://localhost:5272/v1/` (configurable)  |
 
@@ -128,7 +128,7 @@ AI assessment. All other agents are rule-based (no LLM).
 
 ```dotenv
 # In _examples/.env — change this one line:
-PROVIDER=github              # ← default: free-tier Phi-4
+PROVIDER=github              # ← default: openai/gpt-4o-mini
 # PROVIDER=microsoftfoundry  # ← Azure AI Foundry
 # PROVIDER=localfoundry      # ← VS Code AI Toolkit / Ollama
 ```
@@ -233,8 +233,8 @@ submitted via `submit_test_batch.py`.
 
 ![Telemetry Dashboard](./dashboard-telemetry.png)
 
-> Screenshots reflect live pipeline results: 4 auto-approved, 2 auto-declined,
-> 2 escalated to human review (Carol Martinez score 54, Hassan Ali score 55).
+> Screenshots reflect live pipeline results: 3 auto-approved, 2 auto-declined,
+> 3 escalated to human review (Carol Martinez, Frank Osei, Hassan Ali).
 
 ---
 
@@ -252,7 +252,7 @@ End-to-end example run logs for Lessons 08-14:
 | 13     | `_runlogs/13-client-verify.log` | Claude Agent SDK + client verified  |
 | 14     | `_runlogs/14-client-verify.log` | Multi-agent pipeline: 8/8 processed |
 
-Full batch result (2026-03-02): 4 APPROVED · 2 DECLINED · 2 PENDING_REVIEW
+Full batch result (2026-03-02): 3 APPROVED · 2 DECLINED · 3 PENDING_REVIEW
 
 Raw logs are in `../_runlogs/*.log`.
 
@@ -260,16 +260,16 @@ Raw logs are in `../_runlogs/*.log`.
 
 ## Servers & Port Map
 
-| Port  | Service               | Process                  | Health Check Endpoint                           |
-| ----- | --------------------- | ------------------------ | ----------------------------------------------- |
-| 10100 | MasterOrchestrator    | `orchestrator_server.py` | `http://localhost:10100/.well-known/agent.json` |
-| 10101 | IntakeAgent           | `intake_server.py`       | `http://localhost:10101/.well-known/agent.json` |
-| 10102 | RiskScorerAgent       | `risk_scorer_server.py`  | `http://localhost:10102/.well-known/agent.json` |
-| 10103 | ComplianceAgent       | `compliance_server.py`   | `http://localhost:10103/.well-known/agent.json` |
-| 10104 | DecisionAgent         | `decision_server.py`     | `http://localhost:10104/.well-known/agent.json` |
-| 10105 | EscalationAgent (A2A) | `escalation_server.py`   | `http://localhost:10105/.well-known/agent.json` |
-| 8080  | Escalation REST API   | (same process as 10105)  | `http://localhost:8080/api/escalations/pending` |
-| 3000  | React UI              | `npm run dev` (Vite)     | `http://localhost:3000`                         |
+| Port  | Service               | Process                  | Health Check Endpoint                                |
+| ----- | --------------------- | ------------------------ | ---------------------------------------------------- |
+| 10100 | MasterOrchestrator    | `orchestrator_server.py` | `http://localhost:10100/.well-known/agent-card.json` |
+| 10101 | IntakeAgent           | `intake_server.py`       | `http://localhost:10101/.well-known/agent-card.json` |
+| 10102 | RiskScorerAgent       | `risk_scorer_server.py`  | `http://localhost:10102/.well-known/agent-card.json` |
+| 10103 | ComplianceAgent       | `compliance_server.py`   | `http://localhost:10103/.well-known/agent-card.json` |
+| 10104 | DecisionAgent         | `decision_server.py`     | `http://localhost:10104/.well-known/agent-card.json` |
+| 10105 | EscalationAgent (A2A) | `escalation_server.py`   | `http://localhost:10105/.well-known/agent-card.json` |
+| 8080  | Escalation REST API   | (same process as 10105)  | `http://localhost:8080/api/escalations/pending`      |
+| 3000  | React UI              | `npm run dev` (Vite)     | `http://localhost:3000`                              |
 
 ### Running servers individually
 
@@ -306,12 +306,12 @@ python orchestrator_server.py
 
 ```powershell
 # Quick check — each should return the Agent Card JSON
-Invoke-WebRequest http://localhost:10101/.well-known/agent.json | Select-Object StatusCode
-Invoke-WebRequest http://localhost:10102/.well-known/agent.json | Select-Object StatusCode
-Invoke-WebRequest http://localhost:10103/.well-known/agent.json | Select-Object StatusCode
-Invoke-WebRequest http://localhost:10104/.well-known/agent.json | Select-Object StatusCode
-Invoke-WebRequest http://localhost:10105/.well-known/agent.json | Select-Object StatusCode
-Invoke-WebRequest http://localhost:10100/.well-known/agent.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10101/.well-known/agent-card.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10102/.well-known/agent-card.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10103/.well-known/agent-card.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10104/.well-known/agent-card.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10105/.well-known/agent-card.json | Select-Object StatusCode
+Invoke-WebRequest http://localhost:10100/.well-known/agent-card.json | Select-Object StatusCode
 ```
 
 ### Submit a single application manually
@@ -358,7 +358,7 @@ timestamps and timing. Example:
 14:32:01 orchestrator       INFO    [APP-abc123] Step 1/5: IntakeAgent done (45ms)
 14:32:01 orchestrator       INFO    [APP-abc123] Step 2/5: RiskScorerAgent ─ scoring…
 14:32:01 risk_scorer        INFO    === RiskScorer — Score Pipeline ===
-14:32:01 risk_scorer        INFO    Provider: GitHub Models (Phi-4)
+14:32:01 risk_scorer        INFO    Provider: GitHub Models (openai/gpt-4o-mini)
 14:32:02 risk_scorer        INFO    Rule-based score: 35 | LLM adjustment: -3
 14:32:02 risk_scorer        INFO    Final composite score: 32 (LOW risk)
 14:32:02 orchestrator       INFO    [APP-abc123] Step 2/5: RiskScorerAgent done (980ms)

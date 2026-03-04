@@ -45,7 +45,7 @@ AGENTS = [
 
 async def _wait_for_agent(name: str, port: int, timeout: float = 30.0) -> bool:
     """Poll an agent's Agent Card endpoint until it responds."""
-    url = f"http://localhost:{port}/.well-known/agent.json"
+    url = f"http://localhost:{port}/.well-known/agent-card.json"
     deadline = time.monotonic() + timeout
     async with httpx.AsyncClient() as client:
         while time.monotonic() < deadline:

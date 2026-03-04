@@ -43,7 +43,7 @@ server cell. The server starts on `localhost:10001` inside the notebook kernel.
 
 ```bash
 # Fetch Agent Card
-curl http://localhost:10001/.well-known/agent.json | python -m json.tool
+curl http://localhost:10001/.well-known/agent-card.json | python -m json.tool
 
 # Send a question
 curl -X POST http://localhost:10001 \

@@ -9,7 +9,7 @@ Usage (from lessons/10-langgraph/src/):
     python server.py
 
 Endpoints:
-    GET  http://localhost:10003/.well-known/agent.json   → Agent Card
+    GET  http://localhost:10003/.well-known/agent-card.json   → Agent Card
     POST http://localhost:10003/                         → JSON-RPC
 """
 
@@ -121,7 +121,7 @@ server = A2AStarletteApplication(
 
 if __name__ == "__main__":
     print(f"Starting LoanValidatorLangGraph A2A server on port {SERVER_PORT} ...")
-    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent-card.json")
     print(f"  JSON-RPC   : POST http://localhost:{SERVER_PORT}/")
     print()
     uvicorn.run(server.build(), host="0.0.0.0", port=SERVER_PORT)

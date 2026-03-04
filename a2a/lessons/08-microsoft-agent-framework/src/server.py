@@ -9,7 +9,7 @@ Usage (from lessons/08-microsoft-agent-framework/src/):
     python server.py
 
 Endpoints:
-    GET  http://localhost:10008/.well-known/agent.json   → Agent Card
+    GET  http://localhost:10008/.well-known/agent-card.json   → Agent Card
     POST http://localhost:10008/                         → JSON-RPC (message/send)
 """
 
@@ -137,7 +137,7 @@ server = A2AStarletteApplication(
 
 if __name__ == "__main__":
     print(f"Starting LoanValidatorOrchestrator A2A server on port {SERVER_PORT} ...")
-    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent-card.json")
     print(f"  JSON-RPC   : POST http://localhost:{SERVER_PORT}/")
     print()
     uvicorn.run(server.build(), host="0.0.0.0", port=SERVER_PORT)

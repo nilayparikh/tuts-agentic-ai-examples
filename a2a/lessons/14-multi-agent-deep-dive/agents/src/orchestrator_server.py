@@ -167,7 +167,7 @@ server = A2AStarletteApplication(
 
 if __name__ == "__main__":
     print(f"Starting LoanApprovalOrchestrator A2A server on port {SERVER_PORT} …")
-    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent-card.json")
     print()
     print("Pipeline agents expected on:")
     print("  IntakeAgent       : http://localhost:10101/")

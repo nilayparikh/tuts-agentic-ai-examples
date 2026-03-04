@@ -47,7 +47,7 @@ class MasterOrchestrator:
             async with httpx.AsyncClient(timeout=10.0) as client:
                 for name, port in AGENT_PORTS.items():
                     try:
-                        url = f"http://localhost:{port}/.well-known/agent.json"
+                        url = f"http://localhost:{port}/.well-known/agent-card.json"
                         resp = await client.get(url)
                         resp.raise_for_status()
                         self._agent_cards[name] = resp.json()

@@ -19,6 +19,7 @@ from __future__ import annotations
 import asyncio
 import sys
 from pathlib import Path
+from typing import Any
 from uuid import uuid4
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
@@ -31,88 +32,83 @@ if _COMMON not in sys.path:
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from loan_data import APPLICANTS  # noqa: E402
+from loan_data import APPLICANTS  # noqa: E402  # pylint: disable=import-error
+
 DEMO_APPLICANTS = APPLICANTS[:3]
 
 import httpx  # noqa: E402
-from a2a.client import ClientConfig, ClientFactory  # noqa: E402
-from a2a.types import Message, Part, Role, TextPart  # noqa: E402
+from a2a.client import A2ACardResolver, A2AClient  # noqa: E402
+from a2a.types import MessageSendParams, SendMessageRequest  # noqa: E402
 
 
 SERVER_URL = "http://localhost:10006"
 
 
-def _get_client_config() -> ClientConfig:
-    """Create a fresh ClientConfig with an httpx client."""
-    return ClientConfig(
-        httpx_client=httpx.AsyncClient(timeout=300.0),
-        streaming=False,
+def _build_request(text: str) -> SendMessageRequest:
+    """Build a SendMessageRequest payload using A2A message schema."""
+    payload = {
+        "message": {
+            "role": "user",
+            "parts": [{"kind": "text", "text": text}],
+            "messageId": uuid4().hex,
+        }
+    }
+    return SendMessageRequest(
+        id=str(uuid4()),
+        params=MessageSendParams(**payload),  # type: ignore[arg-type]
     )
 
 
-def _build_message(applicant_id: str) -> Message:
-    """Build an A2A Message for the given applicant ID."""
-    return Message(
-        message_id=uuid4().hex,
-        role=Role.user,
-        parts=[
-            Part(root=TextPart(kind="text", text=f"Validate {applicant_id}")),
-        ],
-    )
+def _extract_text(response: object) -> str:
+    """Extract text from a SendMessageResponse object."""
+    root = getattr(response, "root", None)
+    result = getattr(root, "result", None)
+    parts = getattr(result, "parts", None)
+    if parts:
+        texts = [getattr(getattr(part, "root", None), "text", None) for part in parts]
+        clean = [text for text in texts if isinstance(text, str) and text]
+        if clean:
+            return "\n".join(clean)
+
+    if hasattr(response, "model_dump"):
+        dump = response.model_dump(mode="json", exclude_none=True)
+        task = dump.get("result", {})
+        task_message = task.get("status", {}).get("message", {})
+        task_parts = task_message.get("parts", [])
+        texts = [
+            part.get("text")
+            for part in task_parts
+            if isinstance(part, dict) and part.get("kind") == "text"
+        ]
+        clean = [text for text in texts if isinstance(text, str) and text]
+        if clean:
+            return "\n".join(clean)
+
+    return "(no text in response)"
 
 
-def _extract_text(item: object) -> str:
-    """Extract text from a response item (Message or Task tuple)."""
-    if isinstance(item, Message):
-        texts = [p.root.text for p in item.parts if hasattr(p.root, "text")]
-        return "\n".join(texts) if texts else "(no text in response)"
-
-    # Handle (Task, Event) tuple
-    if isinstance(item, tuple):
-        task = item[0]
-        if hasattr(task, "history") and task.history:
-            for msg in reversed(task.history):
-                if getattr(msg, "role", None) != Role.agent:
-                    continue
-                texts = [
-                    p.root.text
-                    for p in msg.parts
-                    if hasattr(p, "root") and hasattr(p.root, "text")
-                ]
-                if texts:
-                    return "\n".join(texts)
-        status = getattr(task, "status", None)
-        if status and hasattr(status, "message") and status.message:
-            msg = status.message
-            texts = [
-                p.root.text
-                for p in msg.parts
-                if hasattr(p, "root") and hasattr(p.root, "text")
-            ]
-            if texts:
-                return "\n".join(texts)
-
-    return f"(unexpected type: {type(item).__name__})"
+async def _create_client(httpx_client: httpx.AsyncClient) -> tuple[A2AClient, Any]:
+    """Resolve agent card and construct an A2AClient."""
+    resolver = A2ACardResolver(httpx_client=httpx_client, base_url=SERVER_URL)
+    card = await resolver.get_agent_card()
+    return A2AClient(httpx_client=httpx_client, agent_card=card), card
 
 
 async def _run() -> None:
     """Connect to the Claude-style agent and validate all test applicants."""
-    client = await ClientFactory.connect(
-        agent=SERVER_URL,
-        client_config=_get_client_config(),
-    )
-    card = await client.get_card()
+    async with httpx.AsyncClient(timeout=300.0) as httpx_client:
+        client, card = await _create_client(httpx_client)
+        print(f"Connected to A2A agent at {SERVER_URL}")
+        print(f"   Agent: {card.name}")
+        print(f"   Skills: {[s.name for s in (card.skills or [])]}\n")
 
-    print(f"Connected to A2A agent at {SERVER_URL}")
-    print(f"   Agent: {card.name}")
-    print(f"   Skills: {[s.name for s in (card.skills or [])]}\n")
-
-    for app in DEMO_APPLICANTS:
-        print(f"--- Validating {app.full_name} " f"({app.applicant_id}) ---")
-        msg = _build_message(app.applicant_id)
-        async for item in client.send_message(msg):
-            print(_extract_text(item))
-        print()
+        for app in DEMO_APPLICANTS:
+            print(f"--- Validating {app.full_name} " f"({app.applicant_id}) ---")
+            response = await client.send_message(
+                _build_request(f"Validate {app.applicant_id}")
+            )
+            print(_extract_text(response))
+            print()
 
 
 def main() -> None:

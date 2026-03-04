@@ -6,7 +6,7 @@
 openai>=1.30.0
 
 # ── A2A Protocol SDK (includes Starlette + uvicorn) ───────────
-a2a-sdk[http-server]>=0.3.24
+a2a-sdk[http-server]==0.3.24
 
 # uvicorn not bundled with a2a-sdk[http-server] — add explicitly
 uvicorn[standard]>=0.27.0

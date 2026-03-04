@@ -113,7 +113,7 @@ def _run_rest_api() -> None:
 
 if __name__ == "__main__":
     print(f"Starting EscalationAgent A2A server on port {A2A_PORT} …")
-    print(f"  Agent Card : http://localhost:{A2A_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://localhost:{A2A_PORT}/.well-known/agent-card.json")
     print(f"Starting Escalation REST API on port {REST_PORT} …")
     print(f"  Pending    : GET  http://localhost:{REST_PORT}/api/escalations/pending")
     print(

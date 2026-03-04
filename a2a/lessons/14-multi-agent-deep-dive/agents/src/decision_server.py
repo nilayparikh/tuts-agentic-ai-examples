@@ -102,5 +102,5 @@ server = A2AStarletteApplication(
 
 if __name__ == "__main__":
     print(f"Starting DecisionAgent A2A server on port {SERVER_PORT} …")
-    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent.json")
+    print(f"  Agent Card : http://localhost:{SERVER_PORT}/.well-known/agent-card.json")
     uvicorn.run(server.build(), host="0.0.0.0", port=SERVER_PORT)
