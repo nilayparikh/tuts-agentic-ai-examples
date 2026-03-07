@@ -6,7 +6,7 @@ Usage:
 
 Reuses ``loan_data.py`` and ``validation_rules.py`` from ``_common/src``.
 
-Environment variables required (loaded from ``_examples/.env``):
+Environment variables required (loaded from ``_examples/a2a/.env``):
     AZURE_OPENAI_ENDPOINT
     AZURE_AI_API_KEY
     AZURE_AI_MODEL_DEPLOYMENT_NAME
@@ -37,15 +37,49 @@ if _THIS_SRC not in sys.path:
 # ─── load .env ────────────────────────────────────────────────────────────────
 from dotenv import load_dotenv  # noqa: E402
 
-load_dotenv(Path(__file__).resolve().parents[4] / ".env")
+
+def _load_env_file() -> None:
+    """Load environment values from the lesson-level .env file if present."""
+    # Preferred location in this repo: _examples/a2a/.env
+    candidate_paths = [
+        Path(__file__).resolve().parents[3] / ".env",
+        # Backward-compatible fallback for older docs/scripts.
+        Path(__file__).resolve().parents[4] / ".env",
+    ]
+    for env_path in candidate_paths:
+        if env_path.exists():
+            load_dotenv(env_path)
+            return
+
+    # Keep startup working when vars are provided by shell/CI environment.
+    load_dotenv()
+
+
+def _require_env(name: str) -> str:
+    """Return a required environment variable or raise a helpful error."""
+    value = os.environ.get(name)
+    if value:
+        return value
+    raise RuntimeError(
+        "Missing required environment variable: "
+        f"{name}. Configure _examples/a2a/.env (copy from .env.example) "
+        "or export the variable in your shell before running server.py."
+    )
+
+
+_load_env_file()
 
 # ─── configure OpenAI Agents SDK for Azure ────────────────────────────────────────
-from agents import set_default_openai_api, set_default_openai_client, set_tracing_disabled  # noqa: E402
+from agents import (
+    set_default_openai_api,
+    set_default_openai_client,
+    set_tracing_disabled,
+)  # noqa: E402
 from openai import AsyncAzureOpenAI  # noqa: E402
 
 _azure_client = AsyncAzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    api_key=os.environ["AZURE_AI_API_KEY"],
+    azure_endpoint=_require_env("AZURE_OPENAI_ENDPOINT"),
+    api_key=_require_env("AZURE_AI_API_KEY"),
     api_version="2025-04-01-preview",
 )
 set_default_openai_client(_azure_client)
