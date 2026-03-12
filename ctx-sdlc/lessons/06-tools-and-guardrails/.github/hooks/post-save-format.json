@@ -1,0 +1,12 @@
+{
+  "event": "postSave",
+  "description": "Auto-format TypeScript files after save using Prettier.",
+  "pattern": "**/*.ts",
+  "command": "npx",
+  "args": [
+    "prettier",
+    "--write",
+    "${file}"
+  ],
+  "blocking": false
+}

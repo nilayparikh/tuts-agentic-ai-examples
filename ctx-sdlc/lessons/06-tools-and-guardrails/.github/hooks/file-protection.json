@@ -1,0 +1,12 @@
+{
+  "event": "preFileEdit",
+  "description": "Block edits to sensitive configuration and environment files.",
+  "protectedPaths": [
+    ".env",
+    ".env.*",
+    "src/config/feature-flags.ts",
+    "src/store/memory-store.ts"
+  ],
+  "blocking": true,
+  "failureMessage": "Edit blocked: This file is protected by security policy. See docs/security-policy.md for the change approval process."
+}

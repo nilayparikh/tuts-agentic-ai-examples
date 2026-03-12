@@ -1,0 +1,21 @@
+{
+  "hooks": {
+    "preCommit": [
+      {
+        "description": "Block commits with TODO or FIXME comments",
+        "command": "python -c \"import subprocess,sys; files=subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines(); bad=[f for f in files if any(kw in open(f).read() for kw in ['TODO','FIXME']) if f.endswith(('.ts','.tsx'))]; sys.exit(1) if bad and print(f'ERROR: TODO/FIXME found in: {bad}') else None\""
+      },
+      {
+        "description": "Block commits with console.log statements",
+        "command": "python -c \"import subprocess,sys; files=[f for f in subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines() if f.endswith(('.ts','.tsx'))]; bad=[f for f in files if 'console.log' in open(f).read()]; sys.exit(1) if bad and print(f'ERROR: console.log found in: {bad}') else None\""
+      }
+    ],
+    "postSave": [
+      {
+        "description": "Run Vitest on the saved file if it's a test",
+        "command": "npx vitest run ${file} --reporter=verbose",
+        "filePattern": "**/*.test.ts"
+      }
+    ]
+  }
+}

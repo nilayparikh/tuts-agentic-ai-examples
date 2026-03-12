@@ -1,0 +1,18 @@
+# ── App source copied by default.py ──
+# Each lesson's src/ is populated from apps/complex or apps/simple.
+# Run `python default.py` in each lesson to recreate.
+lessons/*/src/
+
+# ── Runtime / build artifacts ──
+node_modules/
+dist/
+.venv/
+*.db
+data/
+
+# ── Python bytecode ──
+__pycache__/
+*.pyc
+
+# ── Environment ──
+.env

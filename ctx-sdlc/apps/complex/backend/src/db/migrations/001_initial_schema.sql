@@ -1,0 +1,11 @@
+-- Migration 001: Initial schema
+-- Applied by: seed.ts on first run
+-- This migration creates the base tables for the Loan Workbench.
+-- See schema.sql for the full current DDL.
+
+-- This migration is a no-op — schema.sql handles initial creation.
+-- Future migrations go here as incremental ALTER TABLE / CREATE TABLE statements.
+--
+-- Example future migration (002_add_collateral_type.sql):
+--   ALTER TABLE loan_applications ADD COLUMN collateral_type TEXT;
+--   ALTER TABLE loan_applications ADD COLUMN collateral_value REAL;

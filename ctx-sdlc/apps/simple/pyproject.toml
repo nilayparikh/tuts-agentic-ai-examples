@@ -1,0 +1,9 @@
+[project]
+name = "task-tracker"
+version = "1.0.0"
+description = "Task Tracker — a simple Python project management API with SQLite, role-based access, and status workflows."
+requires-python = ">=3.11"
+dependencies = ["flask>=3.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0"]

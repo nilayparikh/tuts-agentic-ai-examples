@@ -1,0 +1,33 @@
+{
+  "servers": {
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/mcp-server-sqlite",
+        "${workspaceFolder}/src/data/loan-workbench.db"
+      ],
+      "description": "Read-only access to the Loan Workbench SQLite database for querying application state, audit logs, and notification preferences.",
+      "permissions": {
+        "read": true,
+        "write": false
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}/src/backend/src",
+        "${workspaceFolder}/src/backend/tests",
+        "${workspaceFolder}/src/frontend/src",
+        "${workspaceFolder}/docs"
+      ],
+      "description": "Scoped filesystem access for reading source code, tests, and documentation. Excludes .env, node_modules, and config secrets.",
+      "permissions": {
+        "read": true,
+        "write": false
+      }
+    }
+  }
+}

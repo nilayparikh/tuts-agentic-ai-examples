@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres"
+      ],
+      "env": {
+        "DATABASE_URL": "${input:database_url}"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${input:github_token}"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "database_url",
+      "type": "promptString",
+      "description": "PostgreSQL connection string for MCP server",
+      "password": true
+    },
+    {
+      "id": "github_token",
+      "type": "promptString",
+      "description": "GitHub personal access token for issue/PR access",
+      "password": true
+    }
+  ]
+}
