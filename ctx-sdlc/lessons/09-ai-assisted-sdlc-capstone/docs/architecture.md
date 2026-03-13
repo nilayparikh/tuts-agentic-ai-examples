@@ -1,98 +1,49 @@
-# TaskFlow — System Architecture
+# Loan Workbench — System Architecture (Capstone)
 
-## Overview
+## Product Scope
 
-TaskFlow is a monorepo (pnpm workspaces) with three packages:
+Loan Workbench supports intake, underwriting review, document collection, and
+final decision workflows for commercial loan applications. This is the same
+codebase used throughout Lessons 01–08; the capstone applies all context-
+engineering surfaces learned so far.
 
-```
-┌──────────────────────────────────────────────┐
-│                   Browser                     │
-│  React 19 + Vite + Tailwind + Zustand         │
-├──────────────────────────────────────────────┤
-│              HTTP / WebSocket                  │
-├──────────────────────────────────────────────┤
-│               Express 5 API                    │
-│  Routes → Controllers → Services → Prisma     │
-├──────────────────────────────────────────────┤
-│              PostgreSQL 16                     │
-└──────────────────────────────────────────────┘
-```
-
-## Frontend Architecture
+## System Shape
 
 ```
-packages/web/src/
-  components/     ← Presentational components (no state logic)
-  pages/          ← Route pages (React Router v7)
-  stores/         ← Zustand stores (global state)
-  hooks/          ← Custom hooks (data fetching, subscriptions)
-  lib/            ← API client, WebSocket client, utilities
+app/
+  backend/
+    src/
+      app.ts                  ← Express entry point, middleware chain
+      config/                 ← Environment config, feature flags
+      db/                     ← SQLite connection, schema, seed, migrations
+      middleware/             ← Auth, audit logger, error handler, rate limiter
+      queue/                  ← In-process event broker + handlers
+      models/                 ← Domain types + DB repository classes
+      routes/                 ← HTTP route handlers
+      rules/                  ← State machine, business rules, role permissions
+      services/               ← Business logic orchestration
+    tests/
+  frontend/
+    src/
+      api/                    ← Typed HTTP client matching backend routes
+      pages/                  ← Dashboard, application detail, preferences
+      components/             ← Reusable UI components
+    styles/
 ```
 
-**Data flow**: Component → Hook → Store → API Client → Express Route
+## Key Architectural Rules
 
-**State strategy**:
+1. Loan lifecycle states: `submitted → under_review → approved/denied → funded/closed`.
+2. State transitions validated by `app/backend/src/rules/state-machine.ts`.
+3. California loans have jurisdiction-specific rules in `app/backend/src/rules/business-rules.ts`.
+4. Role-based permissions are defined in `app/backend/src/rules/role-permissions.ts`.
+5. Audit logging is mandatory for all writes — either via queue broker or direct DB insert.
+6. Notification delivery supports SMS → email fallback based on provider health.
+7. Message contracts in `app/backend/src/queue/contracts.ts` are a breaking-change surface.
 
-- Local UI state: `useState` / `useReducer`
-- Global app state: Zustand stores
-- Server state: Fetched via API client, cached in stores
-- Real-time state: WebSocket events update stores
+## API Conventions
 
-## Backend Architecture
-
-```
-packages/api/src/
-  routes/         ← Express route definitions
-  controllers/    ← Request handling, response formatting
-  services/       ← Business logic, Prisma queries
-  middleware/     ← Auth, validation, error handling
-  websocket/      ← WebSocket event emitters
-```
-
-**Request flow**: Route → Middleware (auth, validation) → Controller → Service → Prisma → Response
-
-**Key patterns**:
-
-- Controllers never access Prisma directly
-- Services are the only layer that touches the database
-- WebSocket events are emitted AFTER successful database writes
-- All mutations are wrapped in Prisma transactions
-
-## Data Model
-
-```
-User
-  id          String   @id @default(uuid())
-  email       String   @unique
-  name        String
-  role        Role     @default(MEMBER)
-  teams       TeamMember[]
-  tasks       Task[]   @relation("assignee")
-
-Team
-  id          String   @id @default(uuid())
-  name        String
-  members     TeamMember[]
-  projects    Project[]
-
-Project
-  id          String   @id @default(uuid())
-  name        String
-  teamId      String
-  tasks       Task[]
-
-Task
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  status      TaskStatus  @default(TODO)
-  priority    Priority    @default(MEDIUM)
-  assigneeId  String?
-  projectId   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-enum Role     { ADMIN, MEMBER, VIEWER }
-enum TaskStatus { TODO, IN_PROGRESS, IN_REVIEW, DONE }
-enum Priority { LOW, MEDIUM, HIGH, URGENT }
-```
+- All endpoints under `/api/` prefix.
+- Auth: `x-user-id` header identifies caller; `x-delegated-for` enables delegated sessions.
+- Error responses: `{ error: string }` body with appropriate HTTP status.
+- State transitions not in the valid set are rejected with 422.

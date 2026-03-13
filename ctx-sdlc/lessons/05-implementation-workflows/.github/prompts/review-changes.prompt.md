@@ -1,5 +1,5 @@
 ---
-agent: ask
+agent: reviewer
 description: Review recent code changes against specs and NFRs.
 ---
 

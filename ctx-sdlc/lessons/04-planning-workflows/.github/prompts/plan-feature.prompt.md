@@ -1,12 +1,12 @@
 ---
 name: plan-feature
 description: "Decompose a Loan Workbench feature request into implementation tasks using specs, NFRs, and architecture docs"
-agent: Plan
+agent: planner
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
+  - read/readFile
 argument-hint: "Describe the feature in one sentence"
 ---
 
@@ -23,7 +23,7 @@ Current selection: ${selection}
 2. Read [ADR-003](../../docs/adr/ADR-003-frontend-state.md)
 3. Read [product spec](../../specs/product-spec-notification-preferences.md)
 4. Read [NFRs](../../specs/non-functional-requirements.md)
-5. Search for related workflow, service, and rule files in `src/`
+5. Search for related workflow, service, and rule files in `app/`
 
 ## Planning Requirements
 

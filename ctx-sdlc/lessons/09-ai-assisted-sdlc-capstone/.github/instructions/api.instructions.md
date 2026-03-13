@@ -1,18 +1,20 @@
 ---
-applyTo: "packages/api/**"
+applyTo: "app/backend/src/**"
 ---
 
-# API Instructions — Express 5 + Prisma
+# API Instructions — Express 4 + SQLite
 
-## Controller Pattern
+## Route Handler Pattern
 
 Every route handler MUST follow this template:
 
 ```typescript
-// routes/tasks.ts
-router.get("/api/v1/tasks", authenticate, async (req, res) => {
-  const tasks = await taskService.listForUser(req.user.id);
-  res.json({ data: tasks });
+router.post("/path", authenticate, authorize("role"), async (req, res) => {
+  const validated = schema.parse(req.body);
+  const result = await ruleFunction(validated);
+  await auditService.record({ action: "action_name", ...result });
+  await persistenceService.save(result);
+  res.status(201).json(result);
 });
 ```
 
@@ -20,33 +22,26 @@ router.get("/api/v1/tasks", authenticate, async (req, res) => {
 
 Apply in this order:
 
-1. `authenticate` — validates JWT, attaches `req.user`
-2. `authorize(role)` — checks role-based access (admin, member, viewer)
-3. `validate(schema)` — Zod validation of request body
-4. Controller body — delegates to service, returns response
+1. `authenticate` — validates session token
+2. `authorize(role)` — checks role-based access
+3. Handler body — validates, delegates, responds
 
 ## Error Handling
 
-```typescript
-// Standard error response format
-res.status(code).json({ error: string, code: string });
-```
-
-| Status | Code               | When                           |
-| ------ | ------------------ | ------------------------------ |
-| 400    | `VALIDATION_ERROR` | Request body fails Zod parsing |
-| 401    | `AUTH_REQUIRED`    | Missing or invalid JWT         |
-| 403    | `FORBIDDEN`        | Insufficient role              |
-| 404    | `NOT_FOUND`        | Resource doesn't exist         |
-| 409    | `CONFLICT`         | Duplicate or state conflict    |
-| 500    | `INTERNAL_ERROR`   | Unexpected server error        |
+| Status | Code                 | When                          |
+| ------ | -------------------- | ----------------------------- |
+| 400    | `VALIDATION_ERROR`   | Request body fails validation |
+| 401    | `AUTH_REQUIRED`      | Missing or invalid session    |
+| 403    | `FORBIDDEN`          | Insufficient role             |
+| 404    | `NOT_FOUND`          | Resource or disabled feature  |
+| 422    | `INVALID_TRANSITION` | State machine violation       |
+| 500    | `INTERNAL_ERROR`     | Unexpected server error       |
 
 ## Database
 
-- All queries through Prisma Client
-- No raw SQL unless solving N+1 with `$queryRaw`
-- Use transactions for multi-model writes
-- Always use `select` or `include` — no `findMany()` without field selection
+- All queries through better-sqlite3 wrapper
+- Domain types from `app/backend/src/models/types.ts`
+- Use transactions for multi-table writes
 
 ## Real-time
 

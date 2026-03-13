@@ -15,7 +15,7 @@ This project configures MCP servers in `.github/mcp.json`. Follow these rules:
 1. **Database access is read-only.** Never attempt to write to the database via
    MCP. All mutations go through the Express API routes with audit trail.
 2. **Filesystem access is scoped.** The MCP filesystem server can only read
-   `src/backend/src/`, `src/backend/tests/`, and `docs/`. It cannot access
+   `app/backend/src/`, `app/backend/tests/`, and `docs/`. It cannot access
    `.env`, `node_modules`, or config files with secrets.
 3. **Do not add MCP servers** without updating `docs/tool-trust-boundaries.md`
    with the new server's trust classification.
@@ -42,8 +42,8 @@ Hooks in `.github/hooks/` enforce deterministic rules. Do not try to bypass them
 ## Code Conventions
 
 - TypeScript strict mode, ESM imports.
-- Business rules in `backend/src/rules/` — pure functions, no side effects.
-- Services in `backend/src/services/` — I/O and external integrations.
-- Routes in `backend/src/routes/` — orchestration only, delegate to rules and services.
-- Queue broker in `backend/src/queue/` — async event handling (notifications, audit).
-- All tests in `backend/tests/` using Vitest.
+- Business rules in `app/backend/src/rules/` — pure functions, no side effects.
+- Services in `app/backend/src/services/` — I/O and external integrations.
+- Routes in `app/backend/src/routes/` — orchestration only, delegate to rules and services.
+- Queue broker in `app/backend/src/queue/` — async event handling (notifications, audit).
+- All tests in `app/backend/tests/` using Vitest.

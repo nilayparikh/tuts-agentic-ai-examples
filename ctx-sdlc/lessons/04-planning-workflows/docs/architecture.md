@@ -8,8 +8,9 @@ final decision workflows for commercial loan applications.
 ## System Shape
 
 ```
-backend/
-  src/
+app/
+  backend/
+    src/
     app.ts                  ← Express entry point, middleware chain
     config/                 ← Environment config, feature flags
     db/                     ← SQLite connection, schema, seed, migrations
@@ -23,7 +24,7 @@ backend/
     rules/                  ← State machine, business rules, role permissions
     services/               ← Business logic orchestration
   tests/
-frontend/
+  frontend/
   src/
     api/                    ← Typed HTTP client matching backend routes
     pages/                  ← Dashboard, application detail, preferences
@@ -43,7 +44,7 @@ frontend/
 4. Pilot-gated features must call out rollout, observability, and fallback behavior.
 5. Product rules may vary by role, loan jurisdiction, and delegated-session mode.
 6. Audit is mandatory for all writes — via queue broker or direct DB write.
-7. Message contracts in `backend/src/queue/contracts.ts` are a breaking-change surface.
+7. Message contracts in `app/backend/src/queue/contracts.ts` are a breaking-change surface.
 
 ## State Machine
 

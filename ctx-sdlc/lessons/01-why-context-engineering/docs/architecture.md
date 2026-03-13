@@ -8,8 +8,9 @@ final decision workflows for commercial loan applications.
 ## System Shape
 
 ```
-backend/
-  src/
+app/
+  backend/
+    src/
     app.ts                  ← Express entry point, middleware chain
     config/                 ← Environment config, feature flags
     db/                     ← SQLite connection, schema, seed data, migrations
@@ -20,7 +21,7 @@ backend/
     rules/                  ← State machine, business rules, permissions
     services/               ← Orchestration layer (loan, decision, notification, audit)
   tests/                    ← Unit + integration tests
-frontend/
+  frontend/
   src/
     api/                    ← Typed HTTP client
     pages/                  ← Dashboard, detail, preferences

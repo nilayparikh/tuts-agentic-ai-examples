@@ -1,5 +1,5 @@
 ---
-applyTo: "src/backend/src/**/*.ts"
+applyTo: "app/backend/src/**/*.ts"
 ---
 
 # Backend API Instructions
@@ -22,11 +22,11 @@ Rules for Express route handlers, services, and domain logic.
 
 ## State Machine
 
-- All state transitions must go through `canTransition()` in `backend/src/rules/state-machine.ts`.
+- All state transitions must go through `canTransition()` in `app/backend/src/rules/state-machine.ts`.
 - Never assign a status directly without checking the transition table.
 - `funded` and `closed` are terminal states.
 
 ## Feature Flags
 
-- Feature flags are defined in `backend/src/config/feature-flags.ts`.
+- Feature flags are defined in `app/backend/src/config/feature-flags.ts`.
 - Feature-flagged endpoints return 404 (not 403) to hide feature existence from non-pilot users.

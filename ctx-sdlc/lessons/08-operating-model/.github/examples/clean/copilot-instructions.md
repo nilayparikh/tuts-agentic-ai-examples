@@ -1,8 +1,7 @@
-# Loan Workbench — Project Context
+# Loan Workbench — Project Context (CLEAN)
 
-> **Auto-loaded** by all Copilot surfaces that support repository-level instructions.
-> This is the most portable context artifact — it works in VS Code Chat,
-> VS Code Inline, GitHub CLI, Copilot Coding Agent, and Code Review suggestions.
+> **This file demonstrates a healthy, well-maintained instructions file.**
+> Compare with `../drifted/copilot-instructions.md` to see the anti-patterns fixed.
 
 ## Project
 
@@ -14,24 +13,24 @@ role-based access, and audit-first persistence.
 
 - Runtime: Node.js 20 LTS
 - Language: TypeScript 5.x (strict mode)
-- Framework: Express 4, better-sqlite3 for persistence
-- Queue: In-process event broker for async side-effects
+- Framework: Express 4 (see ADR-001 — do NOT suggest Fastify)
 - Tests: Vitest (see ADR-002 — do NOT suggest Jest)
 - Modules: ESM only (see ADR-003 — no CommonJS)
 - Logging: structured JSON via pino
+- Database: Prisma ORM (see ADR-004 — do NOT suggest knex)
+- Deploy: Azure Container Apps
 
 ## Architecture
 
-Four-layer separation:
+Three-layer separation:
 
 1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
 2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
 3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
-4. **Queue** (`app/backend/src/queue/`) — async event handling (notifications, audit)
 
 Request flow: Route → authenticate → authorize → validate → Rule → Service → respond.
 
-Audit events are emitted BEFORE persistence — if the audit fails, the write
+Audit events are recorded BEFORE persistence — if logging fails, the write
 does NOT proceed (fail-closed semantics).
 
 ## Coding Conventions
@@ -40,12 +39,15 @@ does NOT proceed (fail-closed semantics).
 - All route handlers are `async`
 - All errors return structured JSON: `{ error: string, code: string }`
 - No stack traces in error responses (security)
-- Feature flags use 404 (feature not found), not 403 (forbidden)
-- Logging: structured JSON, never `console.log()`
+- Feature flags use 404 (not found), not 403 (forbidden)
+- Structured JSON logging only — never `console.log()`
 - Tests annotated with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
 
 ## References
 
 - Full architecture: see `/docs/architecture.md`
 - API conventions: see `/docs/api-conventions.md`
+- Route handler template: see `.github/instructions/api.instructions.md`
+- Notification rules: see `.github/instructions/notifications.instructions.md`
+- Test conventions: see `.github/instructions/test.instructions.md`
 - Technology decisions: see `/docs/adr/`

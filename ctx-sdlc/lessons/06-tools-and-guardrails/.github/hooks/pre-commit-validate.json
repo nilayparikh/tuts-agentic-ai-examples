@@ -1,10 +1,11 @@
 {
-  "event": "preCommit",
-  "description": "Run lint and tests before allowing a commit. Blocks on failure.",
-  "command": "bash",
-  "args": [
-    "scripts/validate-commit.sh"
-  ],
-  "blocking": true,
-  "failureMessage": "Commit blocked: lint or test failures detected. Fix issues before committing."
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python .github/scripts/validate_commit.py",
+        "timeout": 60
+      }
+    ]
+  }
 }
