@@ -10,8 +10,8 @@
 ### 1. Set up the workspace
 
 ```bash
-python util.py --setup
-cd src && npm install
+python util.py --setup   # copies app, creates .env interactively
+python util.py --run     # installs deps + starts backend & frontend
 ```
 
 ### 2. Without context — baseline prompt

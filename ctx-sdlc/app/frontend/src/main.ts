@@ -35,6 +35,16 @@ function init(): void {
           m.renderApplicationDetail(content),
         );
         break;
+      case "queue":
+        import("./pages/queue-monitor.js").then((m) =>
+          m.renderQueueMonitor(content),
+        );
+        break;
+      case "api":
+        import("./pages/api-explorer.js").then((m) =>
+          m.renderApiExplorer(content),
+        );
+        break;
       default:
         renderDashboard(content);
     }

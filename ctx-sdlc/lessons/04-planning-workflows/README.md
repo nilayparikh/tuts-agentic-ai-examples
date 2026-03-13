@@ -6,8 +6,8 @@
 ## Setup
 
 ```bash
-python util.py --setup
-cd src && npm install
+python util.py --setup   # copies app, creates .env interactively
+python util.py --run     # installs deps + starts backend & frontend
 ```
 
 ## What This Demonstrates

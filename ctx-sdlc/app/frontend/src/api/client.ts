@@ -21,7 +21,7 @@ export function setCurrentUser(userId: string): void {
   currentUserId = userId;
 }
 
-async function apiFetch<T>(
+export async function apiFetch<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {

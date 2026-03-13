@@ -14,6 +14,8 @@
 // ---------------------------------------------------------------------------
 
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import { config } from "./config/env.js";
 import { getDb } from "./db/connection.js";
 import { seedDatabase } from "./db/seed.js";
@@ -25,8 +27,11 @@ import { applicationRoutes } from "./routes/applications.js";
 import { decisionRoutes } from "./routes/decisions.js";
 import { notificationRoutes } from "./routes/notifications.js";
 import { auditRoutes } from "./routes/audit.js";
+import { queueStatusRoutes } from "./routes/queue-status.js";
 import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
 import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -49,10 +54,20 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/decisions", decisionRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/audit", auditRoutes);
+app.use("/api/queue", queueStatusRoutes);
 
 // ── Health check (no auth required — placed before auth middleware in request flow) ──
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// ── Serve frontend static files ──
+const frontendDir = path.resolve(__dirname, "../../frontend");
+app.use(express.static(frontendDir));
+
+// ── SPA fallback — serve index.html for non-API routes ──
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(frontendDir, "index.html"));
 });
 
 // ── Error handler (MUST be last) ──

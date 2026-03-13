@@ -11,6 +11,8 @@ export function renderAppShell(root: HTMLElement): void {
       <nav class="app-nav">
         <a href="#dashboard" class="nav-link">Dashboard</a>
         <a href="#preferences" class="nav-link">Preferences</a>
+        <a href="#queue" class="nav-link">Queue</a>
+        <a href="#api" class="nav-link">API Explorer</a>
       </nav>
       <div class="user-info">
         <select id="user-select" class="user-select">

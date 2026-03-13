@@ -24,6 +24,8 @@ type EventHandler<T extends BrokerEvent = BrokerEvent> = (
 class EventBroker {
   private handlers = new Map<EventType, EventHandler[]>();
   private pendingCount = 0;
+  private eventHistory: Array<{ event: BrokerEvent; processedAt: string }> = [];
+  private readonly maxHistory = 200;
 
   /**
    * Register a handler for a specific event type.
@@ -49,6 +51,10 @@ class EventBroker {
     }
 
     this.pendingCount++;
+    this.eventHistory.push({ event, processedAt: new Date().toISOString() });
+    if (this.eventHistory.length > this.maxHistory) {
+      this.eventHistory.shift();
+    }
     this.processHandlers(event, handlers).finally(() => {
       this.pendingCount--;
     });
@@ -76,6 +82,24 @@ class EventBroker {
         console.error(`[broker] Handler error for ${event.type}:`, err);
       }
     }
+  }
+
+  /** Return the list of registered event types and handler counts. */
+  getSubscriptions(): Array<{ type: string; handlerCount: number }> {
+    return Array.from(this.handlers.entries()).map(([type, handlers]) => ({
+      type,
+      handlerCount: handlers.length,
+    }));
+  }
+
+  /** Return recent event history. */
+  getHistory(limit = 50): Array<{ event: BrokerEvent; processedAt: string }> {
+    return this.eventHistory.slice(-limit).reverse();
+  }
+
+  /** Return pending event count. */
+  getPendingCount(): number {
+    return this.pendingCount;
   }
 }
 
