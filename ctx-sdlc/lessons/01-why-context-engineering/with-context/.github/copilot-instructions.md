@@ -26,3 +26,14 @@ SQLite persistence for commercial loan processing.
 - Use the central error handler in `app/backend/src/middleware/error-handler.ts`.
 - In route handlers: wrap async logic in try/catch and call `next(err)`.
 - Never send stack traces or internal identifiers in API responses.
+
+## Lesson 01 Canonical Experiment
+
+- If the user asks to implement the manual review escalation workflow, use
+  `docs/manual-review-escalation.md` as the source of truth.
+- Do not invent a new queue event contract for that workflow — reuse the
+  existing `notification.requested` contract.
+- Keep the route thin and place orchestration in the service layer.
+- Respect delegated-session write restrictions from the auth middleware.
+- If repo docs and the user prompt differ, prefer the repo docs and explain the
+  mismatch.

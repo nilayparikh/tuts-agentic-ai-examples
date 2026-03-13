@@ -11,8 +11,8 @@ import sys
 from pathlib import Path
 
 LESSON = Path(__file__).resolve().parent
-sys.path.insert(0, str(LESSON.parent / "_common"))
+sys.path.insert(0, str(LESSON.parent.parent / "_common"))
 from util_base import main  # noqa: E402
 
 if __name__ == "__main__":
-    main("01", "Why Context Engineering", LESSON, LESSON.parent.parent / "app")
+  main("01", "Why Context Engineering (With Context)", LESSON, LESSON.parent.parent.parent / "app")

@@ -37,3 +37,11 @@ app/
 4. Notification preferences support SMS → email fallback.
 5. Audit logging is mandatory for all mutating operations.
 6. The queue broker uses typed message contracts — changing them is a breaking change.
+
+## Lesson 01 Experiment Notes
+
+This lesson intentionally uses a workflow whose requirements are spread across
+multiple files. A model without repository context will often produce code that
+looks competent but violates repo rules.
+
+For the canonical experiment, see `docs/manual-review-escalation.md`.

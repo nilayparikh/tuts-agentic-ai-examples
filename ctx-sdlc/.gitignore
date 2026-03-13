@@ -1,7 +1,7 @@
 # ── App source copied by util.py ──
 # Each lesson's src/ is populated from the root app/.
 # Run `python util.py --setup` in each lesson to recreate.
-lessons/*/src/
+lessons/**/src/
 
 # ── Runtime / build artifacts ──
 node_modules/
