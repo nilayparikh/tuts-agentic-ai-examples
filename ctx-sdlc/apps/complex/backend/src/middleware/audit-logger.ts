@@ -64,7 +64,7 @@ export function auditLoggerMiddleware(
         }
       }
     }
-    return originalEnd(...args);
+    return originalEnd(...(args as Parameters<Response["end"]>));
   };
 
   next();

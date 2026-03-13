@@ -10,6 +10,10 @@ import * as auditRepo from "../models/audit-repository.js";
 
 export const auditRoutes = Router();
 
+function firstParam(value: string | string[]): string {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 /** GET /api/audit — list recent audit entries. */
 auditRoutes.get(
   "/",
@@ -26,6 +30,6 @@ auditRoutes.get(
   "/action/:action",
   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
   (req, res) => {
-    res.json(auditRepo.findAuditEntriesByAction(req.params.action));
+    res.json(auditRepo.findAuditEntriesByAction(firstParam(req.params.action)));
   },
 );

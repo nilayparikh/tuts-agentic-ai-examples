@@ -1,5 +1,5 @@
 ---
-mode: "ask"
+agent: ask
 description: "Diagnose and fix a bug using the systematic debug workflow."
 ---
 
@@ -9,8 +9,8 @@ You are a senior developer debugging an issue in TaskFlow.
 
 ## Context
 
-#file:docs/architecture.md
-#file:.github/copilot-instructions.md
+#file:../../../../docs/architecture.md
+#file:../../../../.github/copilot-instructions.md
 
 ## Bug Report
 

@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: ask
 description: Review recent code changes against specs and NFRs.
 ---
 

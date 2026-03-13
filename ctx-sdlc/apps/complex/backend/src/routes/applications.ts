@@ -12,6 +12,10 @@ import type { SessionContext, ApplicationState } from "../models/types.js";
 
 export const applicationRoutes = Router();
 
+function firstParam(value: string | string[]): string {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 /** GET /api/applications — list all applications. */
 applicationRoutes.get(
   "/",
@@ -33,7 +37,7 @@ applicationRoutes.get(
   "/:id",
   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
   (req, res) => {
-    const app = loanRepo.findLoanById(req.params.id);
+    const app = loanRepo.findLoanById(firstParam(req.params.id));
     if (!app) {
       res.status(404).json({ error: "Application not found." });
       return;
@@ -78,7 +82,7 @@ applicationRoutes.patch(
       const session = req.session as SessionContext;
       const updated = loanService.transitionLoan(
         session,
-        req.params.id,
+        firstParam(req.params.id),
         req.body.status,
       );
       res.json(updated);

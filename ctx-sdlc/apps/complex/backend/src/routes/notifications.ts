@@ -26,12 +26,18 @@ import type {
 
 export const notificationRoutes = Router();
 
+function firstParam(value: string | string[]): string {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 /** GET /api/notifications/preferences/:userId — get preferences for a user. */
 notificationRoutes.get(
   "/preferences/:userId",
   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
   (req, res) => {
-    const prefs = prefRepo.findPreferencesForUser(req.params.userId);
+    const prefs = prefRepo.findPreferencesForUser(
+      firstParam(req.params.userId),
+    );
     res.json(prefs);
   },
 );

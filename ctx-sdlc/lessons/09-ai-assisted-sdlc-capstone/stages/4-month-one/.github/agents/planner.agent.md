@@ -1,11 +1,11 @@
 ---
-name: Planner
+name: planner
 description: Plans features and estimates scope before any implementation begins.
 tools:
-  - read_file
-  - grep_search
-  - semantic_search
-  - file_search
+  - search
+  - search/codebase
+  - read/problems
+  - search/usages
 ---
 
 # Planner Agent

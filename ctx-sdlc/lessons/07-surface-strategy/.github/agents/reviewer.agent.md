@@ -1,10 +1,11 @@
 ---
-name: Code Reviewer
+name: reviewer
 description: Reviews pull requests for architecture compliance, convention adherence, and security concerns.
 tools:
-  - read_file
-  - grep_search
-  - semantic_search
+  - search
+  - search/codebase
+  - read/problems
+  - search/usages
 ---
 
 # Code Reviewer Agent

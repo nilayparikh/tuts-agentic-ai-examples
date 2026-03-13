@@ -1,14 +1,16 @@
 ---
-name: Implementer
+name: implementer
 description: Implements features based on plans, following all project conventions.
 tools:
-  - read_file
-  - replace_string_in_file
-  - create_file
-  - run_in_terminal
-  - grep_search
-  - file_search
-  - runTests
+  - edit
+  - execute/runInTerminal
+  - execute/getTerminalOutput
+  - read/terminalLastCommand
+  - read/terminalSelection
+  - execute/runTests
+  - execute/testFailure
+  - search/codebase
+  - read/problems
 ---
 
 # Implementer Agent

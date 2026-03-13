@@ -2,7 +2,10 @@
 name: reviewer
 description: Read-only code reviewer. Cannot write files or run commands.
 tools:
-  - codebase
+  - search
+  - search/codebase
+  - read/problems
+  - search/usages
 ---
 
 # Reviewer Agent

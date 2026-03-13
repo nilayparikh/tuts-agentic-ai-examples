@@ -1,5 +1,4 @@
 ---
-mode: agent
 description: Implement a feature using role-separated agents with TDD handoff.
 ---
 

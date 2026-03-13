@@ -1,11 +1,12 @@
 ---
-name: "investigate-bug"
+name: investigate-bug
 description: "Diagnose a Loan Workbench bug by cross-referencing code against specs, NFRs, and ADRs"
-agent: "planner"
+agent: agent
 tools:
-  - read_file
-  - grep_search
-  - get_errors
+  - search
+  - search/codebase
+  - read/problems
+  - search/usages
 argument-hint: "Paste the bug description or failing scenario"
 ---
 
@@ -18,10 +19,10 @@ Selected code: ${selection}
 
 ## Investigation Steps
 
-1. Read [architecture](../docs/architecture.md)
-2. Read [ADR-003](../docs/adr/ADR-003-frontend-state.md)
-3. Read [product spec](../specs/product-spec-notification-preferences.md)
-4. Read [NFRs](../specs/non-functional-requirements.md)
+1. Read [architecture](../../docs/architecture.md)
+2. Read [ADR-003](../../docs/adr/ADR-003-frontend-state.md)
+3. Read [product spec](../../specs/product-spec-notification-preferences.md)
+4. Read [NFRs](../../specs/non-functional-requirements.md)
 5. Search for the affected routes, services, rules, and tests in `src/`
 6. Check whether the issue conflicts with ADR guidance, product rules, or NFRs
 

@@ -13,6 +13,7 @@ data/
 # ── Python bytecode ──
 __pycache__/
 *.pyc
+*.egg-info/
 
 # ── Environment ──
 .env

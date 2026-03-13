@@ -1,5 +1,5 @@
 ---
-mode: "ask"
+agent: Plan
 description: "Plan a new feature for TaskFlow following the architecture and conventions."
 ---
 
@@ -9,8 +9,8 @@ You are a senior developer planning a new feature for TaskFlow.
 
 ## Context
 
-#file:docs/architecture.md
-#file:.github/copilot-instructions.md
+#file:../../../../docs/architecture.md
+#file:../../../../.github/copilot-instructions.md
 
 ## Feature Request
 

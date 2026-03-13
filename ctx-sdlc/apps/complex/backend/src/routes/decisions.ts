@@ -10,13 +10,17 @@ import type { SessionContext } from "../models/types.js";
 
 export const decisionRoutes = Router();
 
+function firstParam(value: string | string[]): string {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 /** GET /api/decisions/:applicationId — get decisions for an application. */
 decisionRoutes.get(
   "/:applicationId",
   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
   (req, res) => {
     const decisions = decisionService.getDecisionsForApplication(
-      req.params.applicationId,
+      firstParam(req.params.applicationId),
     );
     res.json(decisions);
   },

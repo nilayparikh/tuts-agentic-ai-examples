@@ -1,3 +1,8 @@
+---
+name: tdd-workflow
+description: Structured red-green-refactor workflow for Loan Workbench implementation tasks
+---
+
 # TDD Workflow Skill
 
 A structured test-driven development workflow for the Loan Workbench API.

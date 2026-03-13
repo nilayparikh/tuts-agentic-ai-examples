@@ -1,3 +1,8 @@
+---
+name: tdd-workflow
+description: Structured red-green-refactor workflow for TaskFlow implementation tasks
+---
+
 # TDD Workflow Skill
 
 > Guides test-driven development for TaskFlow features.

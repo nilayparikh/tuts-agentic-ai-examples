@@ -2,10 +2,15 @@
 name: tester
 description: TDD-focused testing agent. Writes tests and runs the test suite.
 tools:
-  - filesystem
-  - terminal
-  - codebase
-  - testRunner
+  - edit
+  - execute/runInTerminal
+  - execute/getTerminalOutput
+  - read/terminalLastCommand
+  - read/terminalSelection
+  - execute/runTests
+  - execute/testFailure
+  - search/codebase
+  - read/problems
 ---
 
 # Tester Agent
