@@ -133,7 +133,23 @@ export function getDecisionsForApplication(applicationId: string): Decision[] {
   const db = getDb();
   return db
     .prepare(
-      "SELECT * FROM decisions WHERE application_id = ? ORDER BY decided_at DESC",
+      `SELECT
+        id,
+        application_id AS applicationId,
+        type,
+        rationale,
+        decided_by AS decidedBy,
+        decided_at AS decidedAt,
+        conditions
+      FROM decisions
+      WHERE application_id = ?
+      ORDER BY decided_at DESC`,
     )
-    .all(applicationId) as Decision[];
+    .all(applicationId)
+    .map((decision) => ({
+      ...decision,
+      conditions: decision.conditions
+        ? (JSON.parse(decision.conditions as string) as string[])
+        : undefined,
+    })) as Decision[];
 }

@@ -2,6 +2,7 @@
 // API Explorer Page
 // ---------------------------------------------------------------------------
 // Interactive interface to test and validate all backend API endpoints.
+// Branded with LocalM™ Tuts design tokens.
 // ---------------------------------------------------------------------------
 
 const ENDPOINTS = [
@@ -69,34 +70,40 @@ function buildUrl(ep: Endpoint, paramValue: string): string {
 export function renderApiExplorer(container: HTMLElement): void {
   container.innerHTML = `
     <section class="api-explorer">
-      <h2>API Explorer</h2>
-      <p class="text-muted">Select an endpoint, fill parameters, and send requests to the backend.</p>
+      <div class="page-header">
+        <h2>API Explorer</h2>
+        <p>Select an endpoint, fill parameters, and send requests to the backend.</p>
+      </div>
 
       <div class="explorer-layout">
-        <div class="endpoint-list">
-          <h3>Endpoints</h3>
-          ${ENDPOINTS.map(
-            (ep, i) => `
-            <button class="endpoint-btn" data-idx="${i}">
-              <span class="method-badge method-${ep.method.toLowerCase()}">${ep.method}</span>
-              ${ep.label}
-            </button>`,
-          ).join("")}
+        <div class="endpoint-sidebar">
+          <div class="endpoint-sidebar-title">Endpoints</div>
+          <div class="endpoint-list">
+            ${ENDPOINTS.map(
+              (ep, i) => `
+              <button class="endpoint-btn" data-idx="${i}">
+                <span class="method-badge method-${ep.method.toLowerCase()}">${ep.method}</span>
+                <span>${ep.label}</span>
+              </button>`,
+            ).join("")}
+          </div>
         </div>
 
         <div class="request-panel">
-          <div id="request-form" class="request-form">
-            <p class="text-muted">Select an endpoint from the list.</p>
+          <div id="request-form" class="request-card">
+            <p class="text-muted" style="padding: 2rem; text-align: center;">Select an endpoint from the sidebar to get started.</p>
           </div>
-          <div id="response-output" class="response-output">
-            <pre class="response-pre"><code>// Response will appear here</code></pre>
+          <div id="response-output" class="response-card">
+            <div class="response-header">
+              <span class="card-title">Response</span>
+            </div>
+            <pre class="response-pre"><code class="text-muted">// Response will appear here</code></pre>
           </div>
         </div>
       </div>
     </section>
   `;
 
-  // Event delegation for endpoint buttons
   container.querySelectorAll<HTMLButtonElement>(".endpoint-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       container.querySelectorAll(".endpoint-btn").forEach((b) => b.classList.remove("active"));
@@ -114,7 +121,10 @@ function renderRequestForm(container: HTMLElement, ep: Endpoint): void {
   const hasBody = ep.body;
 
   form.innerHTML = `
-    <h3>${ep.method} ${ep.path}</h3>
+    <h3>
+      <span class="method-badge method-${ep.method.toLowerCase()}">${ep.method}</span>
+      ${ep.path}
+    </h3>
     ${
       hasParam
         ? `<label class="form-label">
@@ -139,14 +149,20 @@ function renderRequestForm(container: HTMLElement, ep: Endpoint): void {
 
 async function sendRequest(container: HTMLElement, ep: Endpoint): Promise<void> {
   const output = container.querySelector<HTMLElement>("#response-output")!;
-  output.innerHTML = `<pre class="response-pre"><code>Sending...</code></pre>`;
+  output.innerHTML = `
+    <div class="response-header"><span class="card-title">Response</span></div>
+    <pre class="response-pre"><code class="text-muted">Sending\u2026</code></pre>
+  `;
 
   const paramInput = container.querySelector<HTMLInputElement>("#param-input");
   const bodyInput = container.querySelector<HTMLTextAreaElement>("#body-input");
 
   const paramValue = paramInput?.value.trim() ?? "";
   if ("param" in ep && ep.param && !paramValue) {
-    output.innerHTML = `<pre class="response-pre error"><code>Please enter a value for ${ep.param}</code></pre>`;
+    output.innerHTML = `
+      <div class="response-header"><span class="card-title">Response</span></div>
+      <pre class="response-pre"><code class="error">Please enter a value for ${ep.param}</code></pre>
+    `;
     return;
   }
 
@@ -162,7 +178,10 @@ async function sendRequest(container: HTMLElement, ep: Endpoint): Promise<void> 
     try {
       JSON.parse(bodyInput.value);
     } catch {
-      output.innerHTML = `<pre class="response-pre error"><code>Invalid JSON in request body</code></pre>`;
+      output.innerHTML = `
+        <div class="response-header"><span class="card-title">Response</span></div>
+        <pre class="response-pre"><code class="error">Invalid JSON in request body</code></pre>
+      `;
       return;
     }
     init.body = bodyInput.value;
@@ -189,10 +208,13 @@ async function sendRequest(container: HTMLElement, ep: Endpoint): Promise<void> 
         <span class="${statusClass}">${res.status} ${res.statusText}</span>
         <span class="response-time">${elapsed}ms</span>
       </div>
-      <pre class="response-pre"><code>${escapeHtml(formatted)}</code></pre>
+      <pre class="response-pre"><code>${syntaxHighlight(formatted)}</code></pre>
     `;
   } catch (err) {
-    output.innerHTML = `<pre class="response-pre error"><code>Network error: ${(err as Error).message}</code></pre>`;
+    output.innerHTML = `
+      <div class="response-header"><span class="card-title">Response</span></div>
+      <pre class="response-pre"><code class="error">Network error: ${escapeHtml((err as Error).message)}</code></pre>
+    `;
   }
 }
 
@@ -200,4 +222,26 @@ function escapeHtml(text: string): string {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
+}
+
+function syntaxHighlight(json: string): string {
+  const escaped = escapeHtml(json);
+  return escaped.replace(
+    /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?|\bnull\b)/g,
+    (match) => {
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          return `<span class="json-key">${match}</span>`;
+        }
+        return `<span class="json-string">${match}</span>`;
+      }
+      if (/true|false/.test(match)) {
+        return `<span class="json-boolean">${match}</span>`;
+      }
+      if (/null/.test(match)) {
+        return `<span class="json-null">${match}</span>`;
+      }
+      return `<span class="json-number">${match}</span>`;
+    },
+  );
 }

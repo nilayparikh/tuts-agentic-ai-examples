@@ -20,8 +20,9 @@ function init(): void {
     if (!content) return;
 
     const hash = window.location.hash.slice(1) || "dashboard";
+    const route = hash.split("?")[0];
 
-    switch (hash) {
+    switch (route) {
       case "dashboard":
         renderDashboard(content);
         break;

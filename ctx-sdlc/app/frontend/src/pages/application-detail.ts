@@ -11,6 +11,14 @@ import {
 } from "../api/client.js";
 import { renderStatusBadge } from "../components/status-badge.js";
 
+const NEXT_STATES: Record<string, string[]> = {
+  intake: ["review"],
+  review: ["underwriting", "intake"],
+  underwriting: ["decision"],
+  decision: ["finalized", "underwriting"],
+  finalized: [],
+};
+
 export async function renderApplicationDetail(
   container: HTMLElement,
 ): Promise<void> {
@@ -29,17 +37,33 @@ export async function renderApplicationDetail(
       getApplication(id),
       getDecisions(id),
     ]);
+    const nextStates = NEXT_STATES[loan.status] ?? [];
 
     container.innerHTML = `
       <section class="application-detail">
-        <h2>${loan.borrowerName}</h2>
+        <div class="page-header">
+          <h2>${loan.borrowerName}</h2>
+          <p>${loan.id} · ${loan.loanState} · Assigned to ${loan.assignedUnderwriter}</p>
+        </div>
         <div class="detail-grid">
-          <div class="detail-field"><strong>ID:</strong> ${loan.id}</div>
-          <div class="detail-field"><strong>Amount:</strong> $${loan.amount.toLocaleString()}</div>
-          <div class="detail-field"><strong>State:</strong> ${loan.loanState}</div>
-          <div class="detail-field"><strong>Status:</strong> ${renderStatusBadge(loan.status)}</div>
-          <div class="detail-field"><strong>Risk Score:</strong> ${loan.riskScore ?? "—"}</div>
-          <div class="detail-field"><strong>Created:</strong> ${new Date(loan.createdAt).toLocaleDateString()}</div>
+          <div class="detail-field"><span class="field-label">ID</span><span class="field-value">${loan.id}</span></div>
+          <div class="detail-field"><span class="field-label">Amount</span><span class="field-value">$${loan.amount.toLocaleString()}</span></div>
+          <div class="detail-field"><span class="field-label">State</span><span class="field-value">${loan.loanState}</span></div>
+          <div class="detail-field"><span class="field-label">Status</span><span class="field-value">${renderStatusBadge(loan.status)}</span></div>
+          <div class="detail-field"><span class="field-label">Risk Score</span><span class="field-value">${loan.riskScore ?? "—"}</span></div>
+          <div class="detail-field"><span class="field-label">Created</span><span class="field-value">${new Date(loan.createdAt).toLocaleDateString()}</span></div>
+        </div>
+
+        <div class="actions">
+          ${
+            nextStates.length === 0
+              ? `<p class="subtitle">This application is finalized. No further transitions are available.</p>`
+              : nextStates
+                  .map(
+                    (state) => `<button class="btn btn-primary transition-btn" data-next-state="${state}">Move to ${state}</button>`,
+                  )
+                  .join("")
+          }
         </div>
 
         <h3>Decisions (${decisions.length})</h3>
@@ -61,6 +85,31 @@ export async function renderApplicationDetail(
         <div id="transition-actions" class="actions"></div>
       </section>
     `;
+
+    container
+      .querySelectorAll<HTMLButtonElement>(".transition-btn")
+      .forEach((button) => {
+        button.addEventListener("click", async () => {
+          const nextState = button.dataset.nextState;
+          if (!nextState) {
+            return;
+          }
+
+          button.disabled = true;
+          try {
+            await transitionApplication(id, nextState);
+            await renderApplicationDetail(container);
+          } catch (err) {
+            button.disabled = false;
+            container
+              .querySelector(".actions")
+              ?.insertAdjacentHTML(
+                "beforeend",
+                `<p class="error">Failed to transition application: ${(err as Error).message}</p>`,
+              );
+          }
+        });
+      });
   } catch (err) {
     container.innerHTML = `<p class="error">Failed to load application: ${(err as Error).message}</p>`;
   }

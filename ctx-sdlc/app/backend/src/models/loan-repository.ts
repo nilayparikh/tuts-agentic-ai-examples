@@ -12,16 +12,30 @@ import { v4 as uuid } from "uuid";
 import { getDb } from "../db/connection.js";
 import type { LoanApplication, ApplicationState } from "./types.js";
 
+const LOAN_COLUMNS = `
+  id,
+  borrower_name AS borrowerName,
+  amount,
+  loan_state AS loanState,
+  status,
+  assigned_underwriter AS assignedUnderwriter,
+  risk_score AS riskScore,
+  created_at AS createdAt,
+  updated_at AS updatedAt
+`;
+
 export function findAllLoans(): LoanApplication[] {
   const db = getDb();
   return db
-    .prepare("SELECT * FROM loan_applications ORDER BY created_at DESC")
+    .prepare(
+      `SELECT ${LOAN_COLUMNS} FROM loan_applications ORDER BY created_at DESC`,
+    )
     .all() as LoanApplication[];
 }
 
 export function findLoanById(id: string): LoanApplication | undefined {
   const db = getDb();
-  return db.prepare("SELECT * FROM loan_applications WHERE id = ?").get(id) as
+  return db.prepare(`SELECT ${LOAN_COLUMNS} FROM loan_applications WHERE id = ?`).get(id) as
     | LoanApplication
     | undefined;
 }
@@ -30,7 +44,7 @@ export function findLoansByStatus(status: ApplicationState): LoanApplication[] {
   const db = getDb();
   return db
     .prepare(
-      "SELECT * FROM loan_applications WHERE status = ? ORDER BY created_at DESC",
+      `SELECT ${LOAN_COLUMNS} FROM loan_applications WHERE status = ? ORDER BY created_at DESC`,
     )
     .all(status) as LoanApplication[];
 }
@@ -41,7 +55,7 @@ export function findLoansByUnderwriter(
   const db = getDb();
   return db
     .prepare(
-      "SELECT * FROM loan_applications WHERE assigned_underwriter = ? ORDER BY created_at DESC",
+      `SELECT ${LOAN_COLUMNS} FROM loan_applications WHERE assigned_underwriter = ? ORDER BY created_at DESC`,
     )
     .all(underwriterId) as LoanApplication[];
 }

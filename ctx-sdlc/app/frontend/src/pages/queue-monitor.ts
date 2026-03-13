@@ -2,6 +2,7 @@
 // Queue Monitor Page
 // ---------------------------------------------------------------------------
 // Shows event broker subscriptions, recent event history, and broker health.
+// Branded with LocalM™ Tuts design tokens.
 // ---------------------------------------------------------------------------
 
 import { apiFetch } from "../api/client.js";
@@ -26,7 +27,7 @@ interface QueueStatus {
 export async function renderQueueMonitor(
   container: HTMLElement,
 ): Promise<void> {
-  container.innerHTML = `<p class="loading">Loading queue status...</p>`;
+  container.innerHTML = `<p class="loading">Loading queue status\u2026</p>`;
 
   try {
     const [status, history] = await Promise.all([
@@ -36,15 +37,27 @@ export async function renderQueueMonitor(
 
     container.innerHTML = `
       <section class="queue-monitor">
-        <h2>Event Queue Monitor</h2>
-
-        <div class="stats-bar">
-          <div class="stat"><span class="stat-value">${status.subscriptions.length}</span> Subscriptions</div>
-          <div class="stat"><span class="stat-value">${status.pendingCount}</span> Pending</div>
-          <div class="stat"><span class="stat-value">${status.recentEventCount}</span> Recent Events</div>
+        <div class="page-header">
+          <h2>Event Queue Monitor</h2>
+          <p>Real-time view of the in-process event broker.</p>
         </div>
 
-        <h3>Subscriptions</h3>
+        <div class="stats-bar">
+          <div class="stat">
+            <span class="stat-value">${status.subscriptions.length}</span>
+            <span class="stat-label">Subscriptions</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">${status.pendingCount}</span>
+            <span class="stat-label">Pending</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">${status.recentEventCount}</span>
+            <span class="stat-label">Recent Events</span>
+          </div>
+        </div>
+
+        <div class="section-title">Subscriptions</div>
         <table class="loan-table">
           <thead>
             <tr><th>Event</th><th>Handlers</th></tr>
@@ -62,7 +75,7 @@ export async function renderQueueMonitor(
           </tbody>
         </table>
 
-        <h3>Recent Events</h3>
+        <div class="section-title">Recent Events</div>
         ${
           history.length === 0
             ? `<p class="empty-state">No events recorded yet. Try creating a loan application or changing its status.</p>`

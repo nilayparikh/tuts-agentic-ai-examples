@@ -27,6 +27,16 @@ export function seedDatabase(): void {
      VALUES (?, ?, ?, ?, ?, ?)`,
   );
 
+  const insertDecision = db.prepare(
+    `INSERT OR IGNORE INTO decisions (id, application_id, type, rationale, decided_by, decided_at, conditions)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+  );
+
+  const insertAudit = db.prepare(
+    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+  );
+
   const seedAll = db.transaction(() => {
     // ── Users ──
     insertUser.run(
@@ -105,6 +115,48 @@ export function seedDatabase(): void {
     insertPref.run("u-2", "approval", "email", 1, now, "u-2");
     insertPref.run("u-2", "manual-review-escalation", "sms", 1, now, "u-2");
     // u-3 intentionally has NO preferences → tests default behavior
+
+    // ── Decisions ──
+    insertDecision.run(
+      "dec-1",
+      "app-3",
+      "conditional",
+      "High loan amount requires additional collateral verification.",
+      "u-2",
+      now,
+      JSON.stringify(["Collateral appraisal", "Updated revenue statements"]),
+    );
+    insertDecision.run(
+      "dec-2",
+      "app-4",
+      "approved",
+      "Loan meets policy thresholds and required documentation is complete.",
+      "u-2",
+      now,
+      null,
+    );
+
+    // ── Audit Trail ──
+    insertAudit.run(
+      "aud-1",
+      "application.created",
+      "u-1",
+      null,
+      now,
+      null,
+      JSON.stringify({ applicationId: "app-1", status: "underwriting" }),
+      "seed-script",
+    );
+    insertAudit.run(
+      "aud-2",
+      "decision.recorded",
+      "u-2",
+      null,
+      now,
+      null,
+      JSON.stringify({ applicationId: "app-4", type: "approved" }),
+      "seed-script",
+    );
   });
 
   seedAll();

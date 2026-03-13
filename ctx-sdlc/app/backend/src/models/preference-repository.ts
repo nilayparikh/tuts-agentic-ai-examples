@@ -17,13 +17,28 @@ import type {
   NotificationChannel,
 } from "./types.js";
 
+const PREFERENCE_COLUMNS = `
+  user_id AS userId,
+  event,
+  channel,
+  enabled,
+  updated_at AS updatedAt,
+  updated_by AS updatedBy
+`;
+
 export function findPreferencesForUser(
   userId: string,
 ): NotificationPreference[] {
   const db = getDb();
   return db
-    .prepare("SELECT * FROM notification_preferences WHERE user_id = ?")
-    .all(userId) as NotificationPreference[];
+    .prepare(
+      `SELECT ${PREFERENCE_COLUMNS} FROM notification_preferences WHERE user_id = ?`,
+    )
+    .all(userId)
+    .map((pref) => ({
+      ...pref,
+      enabled: Boolean(pref.enabled),
+    })) as NotificationPreference[];
 }
 
 export function findPreference(
@@ -32,11 +47,15 @@ export function findPreference(
   channel: NotificationChannel,
 ): NotificationPreference | undefined {
   const db = getDb();
-  return db
+  const pref = db
     .prepare(
-      "SELECT * FROM notification_preferences WHERE user_id = ? AND event = ? AND channel = ?",
+      `SELECT ${PREFERENCE_COLUMNS} FROM notification_preferences WHERE user_id = ? AND event = ? AND channel = ?`,
     )
-    .get(userId, event, channel) as NotificationPreference | undefined;
+    .get(userId, event, channel) as
+    | (NotificationPreference & { enabled: number | boolean })
+    | undefined;
+
+  return pref ? { ...pref, enabled: Boolean(pref.enabled) } : undefined;
 }
 
 export function setPreference(pref: NotificationPreference): void {

@@ -12,6 +12,17 @@ import { v4 as uuid } from "uuid";
 import { getDb } from "../db/connection.js";
 import type { AuditEntry } from "./types.js";
 
+const AUDIT_COLUMNS = `
+  id,
+  action,
+  actor,
+  delegated_for AS delegatedFor,
+  timestamp,
+  previous_value AS previousValue,
+  new_value AS newValue,
+  source
+`;
+
 export function createAuditEntry(data: {
   action: string;
   actor: string;
@@ -55,7 +66,7 @@ export function findAuditEntries(opts?: {
   limit?: number;
 }): AuditEntry[] {
   const db = getDb();
-  let sql = "SELECT * FROM audit_entries";
+  let sql = `SELECT ${AUDIT_COLUMNS} FROM audit_entries`;
   const params: unknown[] = [];
 
   if (opts?.actor) {
@@ -77,7 +88,7 @@ export function findAuditEntriesByAction(action: string): AuditEntry[] {
   const db = getDb();
   return db
     .prepare(
-      "SELECT * FROM audit_entries WHERE action = ? ORDER BY timestamp DESC",
+      `SELECT ${AUDIT_COLUMNS} FROM audit_entries WHERE action = ? ORDER BY timestamp DESC`,
     )
     .all(action) as AuditEntry[];
 }
