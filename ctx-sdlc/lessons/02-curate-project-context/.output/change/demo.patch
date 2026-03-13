@@ -1,0 +1,134 @@
+--- a/backend/src/routes/notifications.ts
++++ b/backend/src/routes/notifications.ts
+@@ -30,6 +30,36 @@
+   return Array.isArray(value) ? value[0] : value;
+ }
+ 
++/**
++ * Helper to validate authorization for notification preference writes.
++ * Ensures owner-only writes, blocks delegated sessions, and enforces role permissions.
++ */
++function validatePreferenceWriteAuth(
++  session: SessionContext,
++  targetUserId: string,
++): void {
++  // Block writes in delegated sessions
++  if (session.delegatedFor) {
++    throw new Error(
++      "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
++    );
++  }
++
++  // Enforce owner-only writes
++  if (session.actor.id !== targetUserId) {
++    throw new Error(
++      "FORBIDDEN: Users can only modify their own notification preferences.",
++    );
++  }
++
++  // Permission check
++  if (!hasPermission(session.actor.role, "notification-pref:write")) {
++    throw new Error(
++      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
++    );
++  }
++}
++
+ /** GET /api/notifications/preferences/:userId — get preferences for a user. */
+ notificationRoutes.get(
+   "/preferences/:userId",
+@@ -55,26 +85,12 @@
+   (req, res, next) => {
+     try {
+       const session = req.session as SessionContext;
+-
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Additional permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
+-
+       const { userId, event, channel, enabled } = req.body;
++
++      // Validate authorization (owner-only, no delegated sessions, has permission)
++      validatePreferenceWriteAuth(session, userId);
++
+       const now = new Date().toISOString();
+-
+       const previous = prefRepo.findPreference(userId, event, channel);
+ 
+       const pref: NotificationPreference = {
+@@ -120,29 +136,8 @@
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+ 
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+-        });
+-        return;
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
++      // Validate authorization (owner-only, no delegated sessions, has permission)
++      validatePreferenceWriteAuth(session, targetUserId);
+ 
+       const { enabled } = req.body;
+       const now = new Date().toISOString();
+@@ -203,29 +198,8 @@
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+ 
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+-        });
+-        return;
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
++      // Validate authorization (owner-only, no delegated sessions, has permission)
++      validatePreferenceWriteAuth(session, targetUserId);
+ 
+       const { enabled } = req.body;
+       const now = new Date().toISOString();

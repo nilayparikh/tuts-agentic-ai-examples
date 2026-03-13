@@ -1,5 +1,5 @@
 ---
-applyTo: "app/backend/src/middleware/**"
+applyTo: "src/backend/src/middleware/**"
 ---
 
 # Security Instructions

@@ -103,3 +103,169 @@ notificationRoutes.put(
     }
   },
 );
+
+/**
+ * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
+ * Updates the enabled flag for all notification events on the email channel.
+ * Only the owner can modify their own preferences. Delegated sessions are blocked.
+ */
+notificationRoutes.put(
+  "/preferences/:userId/email",
+  requireRole("underwriter", "analyst-manager"),
+  validateBody([
+    { field: "enabled", type: "boolean", required: true },
+  ]),
+  (req, res, next) => {
+    try {
+      const session = req.session as SessionContext;
+      const targetUserId = firstParam(req.params.userId);
+
+      // Block writes in delegated sessions
+      if (session.delegatedFor) {
+        res.status(403).json({
+          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+        });
+        return;
+      }
+
+      // Enforce owner-only writes
+      if (session.actor.id !== targetUserId) {
+        res.status(403).json({
+          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+        });
+        return;
+      }
+
+      // Permission check
+      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+        res.status(403).json({
+          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+        });
+        return;
+      }
+
+      const { enabled } = req.body;
+      const now = new Date().toISOString();
+      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+        "approval",
+        "decline",
+        "document-request",
+        "manual-review-escalation",
+      ];
+
+      const updates: NotificationPreference[] = [];
+
+      for (const event of events) {
+        const previous = prefRepo.findPreference(targetUserId, event, "email");
+
+        const pref: NotificationPreference = {
+          userId: targetUserId,
+          event,
+          channel: "email",
+          enabled,
+          updatedAt: now,
+          updatedBy: session.actor.id,
+        };
+
+        prefRepo.setPreference(pref);
+        updates.push(pref);
+
+        // Audit each preference change
+        auditAction(
+          session,
+          "preference.updated",
+          previous ?? null,
+          pref,
+          "notification-routes",
+        );
+      }
+
+      res.json(updates);
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+/**
+ * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
+ * Updates the enabled flag for all notification events on the SMS channel.
+ * Only the owner can modify their own preferences. Delegated sessions are blocked.
+ */
+notificationRoutes.put(
+  "/preferences/:userId/sms",
+  requireRole("underwriter", "analyst-manager"),
+  validateBody([
+    { field: "enabled", type: "boolean", required: true },
+  ]),
+  (req, res, next) => {
+    try {
+      const session = req.session as SessionContext;
+      const targetUserId = firstParam(req.params.userId);
+
+      // Block writes in delegated sessions
+      if (session.delegatedFor) {
+        res.status(403).json({
+          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+        });
+        return;
+      }
+
+      // Enforce owner-only writes
+      if (session.actor.id !== targetUserId) {
+        res.status(403).json({
+          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+        });
+        return;
+      }
+
+      // Permission check
+      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+        res.status(403).json({
+          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+        });
+        return;
+      }
+
+      const { enabled } = req.body;
+      const now = new Date().toISOString();
+      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+        "approval",
+        "decline",
+        "document-request",
+        "manual-review-escalation",
+      ];
+
+      const updates: NotificationPreference[] = [];
+
+      for (const event of events) {
+        const previous = prefRepo.findPreference(targetUserId, event, "sms");
+
+        const pref: NotificationPreference = {
+          userId: targetUserId,
+          event,
+          channel: "sms",
+          enabled,
+          updatedAt: now,
+          updatedBy: session.actor.id,
+        };
+
+        prefRepo.setPreference(pref);
+        updates.push(pref);
+
+        // Audit each preference change
+        auditAction(
+          session,
+          "preference.updated",
+          previous ?? null,
+          pref,
+          "notification-routes",
+        );
+      }
+
+      res.json(updates);
+    } catch (err) {
+      next(err);
+    }
+  },
+);

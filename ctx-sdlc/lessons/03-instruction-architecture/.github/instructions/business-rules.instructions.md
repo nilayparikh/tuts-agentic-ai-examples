@@ -1,10 +1,10 @@
 ---
-applyTo: "app/backend/src/rules/**"
+applyTo: "src/backend/src/rules/**"
 ---
 
 # Business Rules Instructions
 
-Rules for authoring and modifying business rule modules in `app/backend/src/rules/`.
+Rules for authoring and modifying business rule modules in `src/backend/src/rules/`.
 
 ## Authoring Standards
 

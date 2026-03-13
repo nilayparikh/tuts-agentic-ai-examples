@@ -32,43 +32,51 @@ A single global instruction file is not enough. This lesson shows layered
 | `.github/instructions/security.instructions.md` | `src/backend/src/middleware/**` | Auth and security patterns |
 | `.github/instructions/testing.instructions.md` | `src/backend/tests/**` | Test conventions and anti-patterns |
 | `docs/architecture.md` | — | Referenced by instructions |
+| `docs/instruction-layering-example.md` | — | Concrete lesson-03 demo target and constraints |
+
+## Example Goal
+
+This lesson should demonstrate scoped instruction layering, not just a random backend change.
+
+For this example, the intended change is:
+
+- create a pure rule module at `src/backend/src/rules/notification-channel-rules.ts`
+- add matching tests at `src/backend/tests/unit/notification-channel-rules.test.ts`
+- make the rule and tests reflect the scoped instruction files for `rules/` and `tests/`
+- preserve the repository's expectations around structured rule results, LEGAL-218 references, and explicit test categories
 
 ## Copilot CLI Workflow
 
 Use the installed CLI from the lesson root:
 
 ```bash
-copilot -p "Add a DELETE /notifications/preferences/:event endpoint that resets to defaults." --allow-all-tools
+copilot -p "Create a pure business-rule module for notification channel restrictions and add matching unit tests. Follow the repository conventions you discover." --allow-all-tools
 ```
 
 Expected outcome:
 
-- the CLI can discover general project rules
-- it does not demonstrate fine-grained path-scoped activation as clearly as the editor
+- the CLI can still discover repository-wide rules and scoped instruction files when it edits both `src/backend/src/rules/` and `src/backend/tests/`
+- the generated rule module should stay pure, use structured results, and include LEGAL-218 in the California restriction
+- the generated tests should mirror the new source file and cover happy path, boundary, false positive, and hard negative scenarios
 
-That limitation is the point of the lesson.
+The editor remains the clearest place to observe file-scoped activation, but this CLI demo is now strong enough to assess whether layered instructions were applied.
 
 ## VS Code Chat Workflow
 
-Routes layer:
-
-- open `src/backend/src/routes/notifications.ts`
-- ask for a DELETE endpoint that resets preferences to defaults
-
 Rules layer:
 
-- open `src/backend/src/rules/state-rules.ts`
-- ask for a validation rule for notification channels by role
+- open `src/backend/src/rules/notification-channel-rules.ts`
+- ask for a pure validation rule for notification channel changes
+
+Test layer:
+
+- open `src/backend/tests/unit/notification-channel-rules.test.ts`
+- ask for tests covering false positives and hard negatives
 
 Security layer:
 
 - open `src/backend/src/middleware/auth.ts`
 - ask for auth or rate-limiting changes
-
-Test layer:
-
-- open `src/backend/tests/`
-- ask for tests for the reset endpoint
 
 Expected result: each location activates a different instruction stack automatically.
 

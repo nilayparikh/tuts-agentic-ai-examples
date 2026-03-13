@@ -17,3 +17,13 @@ __pycache__/
 
 # ── Environment ──
 .env
+
+# ── Captured lesson demo outputs (track selected files) ──
+!lessons/**/.output/logs/
+!lessons/**/.output/logs/command.txt
+!lessons/**/.output/logs/prompt.txt
+!lessons/**/.output/logs/session.md
+!lessons/**/.output/logs/*.log
+!lessons/**/.output/change/
+!lessons/**/.output/change/*.patch
+!lessons/**/.output/change/changed-files.json

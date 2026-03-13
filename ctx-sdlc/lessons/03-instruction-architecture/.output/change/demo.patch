@@ -1,0 +1,372 @@
+--- a/backend/src/rules/notification-channel-rules.ts
++++ b/backend/src/rules/notification-channel-rules.ts
+@@ -0,0 +1,93 @@
++// ---------------------------------------------------------------------------
++// Notification Channel Rules
++// ---------------------------------------------------------------------------
++// Validates when disabling a notification channel is allowed for mandatory
++// events. Enforces California-specific restrictions for decline notifications.
++//
++// FALSE POSITIVE:
++//   Disabling SMS for a California decline notification looks like a channel
++//   violation but is acceptable when email remains enabled. The rule allows
++//   this because at least one channel is still active for the event.
++//
++// HARD NEGATIVE:
++//   Disabling the last enabled channel for a California decline notification
++//   looks like a routine preference toggle but violates LEGAL-218. The system
++//   must reject this to maintain compliance with California notification
++//   requirements for decline events.
++// ---------------------------------------------------------------------------
++
++import type { NotificationChannel, NotificationEvent } from "../models/types.js";
++
++/**
++ * Result of a notification channel validation check.
++ */
++export interface ChannelValidationResult {
++  allowed: boolean;
++  reason: string;
++  ruleId?: string;
++}
++
++/**
++ * Check if disabling a notification channel is allowed for a given event.
++ *
++ * @param event - The notification event type
++ * @param channel - The channel being disabled
++ * @param otherChannelEnabled - Whether another channel is still enabled for this event
++ * @param loanState - The US state/jurisdiction of the loan
++ * @param isMandatoryEvent - Whether this is a mandatory notification event
++ * @returns A structured validation result with human-readable reason
++ */
++export function validateChannelDisable(
++  event: NotificationEvent,
++  channel: NotificationChannel,
++  otherChannelEnabled: boolean,
++  loanState: string,
++  isMandatoryEvent: boolean,
++): ChannelValidationResult {
++  // Mandatory events require at least one channel to remain enabled
++  if (isMandatoryEvent && !otherChannelEnabled) {
++    // California decline notifications have a specific legal requirement
++    if (loanState === "CA" && event === "decline") {
++      return {
++        allowed: false,
++        reason:
++          "Cannot disable the last notification channel for decline events on California loans. " +
++          "LEGAL-218 requires at least one active channel for decline communications.",
++        ruleId: "ca-decline-notification-legal-218",
++      };
++    }
++
++    // Other mandatory events also require at least one channel
++    return {
++      allowed: false,
++      reason: `Cannot disable the last notification channel for mandatory event '${event}'. ` +
++        "At least one channel must remain enabled for mandatory events.",
++      ruleId: "mandatory-event-requires-channel",
++    };
++  }
++
++  // If not a mandatory event or another channel is enabled, allow the disable
++  return {
++    allowed: true,
++    reason: "Channel disable is permitted.",
++  };
++}
++
++/**
++ * Determine if a notification event is mandatory.
++ *
++ * Mandatory events are those that MUST fire for certain state transitions.
++ * Users cannot disable all channels for mandatory events.
++ */
++export function isMandatoryNotificationEvent(
++  event: NotificationEvent,
++): boolean {
++  // Based on the mandatory events defined in mandatory-events.ts
++  const mandatoryEvents: NotificationEvent[] = [
++    "approval",
++    "decline",
++    "document-request",
++    "manual-review-escalation",
++  ];
++  return mandatoryEvents.includes(event);
++}
+
+--- a/backend/tests/unit/notification-channel-rules.test.ts
++++ b/backend/tests/unit/notification-channel-rules.test.ts
+@@ -0,0 +1,272 @@
++// ---------------------------------------------------------------------------
++// Notification Channel Rules Tests
++// ---------------------------------------------------------------------------
++
++import { describe, it, expect } from "vitest";
++import {
++  validateChannelDisable,
++  isMandatoryNotificationEvent,
++  type ChannelValidationResult,
++} from "../../src/rules/notification-channel-rules.js";
++
++describe("Notification Channel Rules", () => {
++  describe("validateChannelDisable", () => {
++    // -----------------------------------------------------------------------
++    // Happy Path — Allowed disables
++    // -----------------------------------------------------------------------
++    it("allows disabling email when sms remains enabled for mandatory event", () => {
++      // Happy path: disable one channel, another remains active
++      const result = validateChannelDisable(
++        "approval", // mandatory event
++        "email", // channel being disabled
++        true, // sms is still enabled
++        "NY", // not California
++        true, // is mandatory
++      );
++
++      expect(result.allowed).toBe(true);
++      expect(result.reason).toContain("permitted");
++    });
++
++    it("allows disabling sms when email remains enabled for non-mandatory event", () => {
++      // Happy path: non-mandatory event, one channel disabled
++      const result = validateChannelDisable(
++        "approval",
++        "sms",
++        true, // email still enabled
++        "CA",
++        false, // not mandatory
++      );
++
++      expect(result.allowed).toBe(true);
++    });
++
++    it("allows disabling any channel when it is not mandatory", () => {
++      // Happy path: non-mandatory event can have all channels disabled
++      const result = validateChannelDisable(
++        "approval",
++        "email",
++        false, // no other channel enabled
++        "NY",
++        false, // not mandatory
++      );
++
++      expect(result.allowed).toBe(true);
++      expect(result.reason).toContain("permitted");
++    });
++
++    // -----------------------------------------------------------------------
++    // Boundary Case — Exactly at the threshold
++    // -----------------------------------------------------------------------
++    it("blocks disabling the last channel for mandatory event on any state", () => {
++      // Boundary: mandatory event, no other channel enabled
++      const result = validateChannelDisable(
++        "document-request", // mandatory event
++        "sms",
++        false, // no other channel enabled
++        "TX",
++        true, // is mandatory
++      );
++
++      expect(result.allowed).toBe(false);
++      expect(result.reason).toContain("mandatory event");
++      expect(result.reason).toContain("one channel must remain enabled");
++    });
++
++    // -----------------------------------------------------------------------
++    // False Positive — Looks wrong, is actually allowed
++    // -----------------------------------------------------------------------
++    it("allows disabling sms for California decline when email is enabled (false positive scenario)", () => {
++      // False positive: disabling decline SMS on CA looks like a violation,
++      // but is acceptable because email channel remains active.
++      const result = validateChannelDisable(
++        "decline",
++        "sms", // disabling SMS channel
++        true, // email IS still enabled
++        "CA", // California loan
++        true, // decline is mandatory
++      );
++
++      expect(result.allowed).toBe(true);
++      expect(result.reason).toContain("permitted");
++      // Note: LEGAL-218 should NOT appear in the result since we're allowing it
++      expect(result.reason).not.toContain("LEGAL-218");
++    });
++
++    // -----------------------------------------------------------------------
++    // Hard Negative — Looks allowed, is actually forbidden
++    // -----------------------------------------------------------------------
++    it("blocks disabling the last channel for California decline (hard negative: LEGAL-218)", () => {
++      // Hard negative: disabling the last decline channel on CA is forbidden
++      // even though it looks like a routine preference toggle.
++      const result = validateChannelDisable(
++        "decline",
++        "email", // disabling email
++        false, // SMS is also not enabled (or being disabled)
++        "CA", // California loan
++        true, // decline is mandatory
++      );
++
++      expect(result.allowed).toBe(false);
++      expect(result.reason).toContain("LEGAL-218");
++      expect(result.reason).toContain(
++        "Cannot disable the last notification channel",
++      );
++      expect(result.reason).toContain("decline events on California loans");
++      expect(result.ruleId).toBe("ca-decline-notification-legal-218");
++    });
++
++    it("blocks disabling the last channel for decline on non-California state", () => {
++      // Mandatory event rule still applies to decline outside California
++      const result = validateChannelDisable(
++        "decline",
++        "sms",
++        false, // no other channel
++        "NY", // not California
++        true, // decline is mandatory
++      );
++
++      expect(result.allowed).toBe(false);
++      expect(result.reason).toContain("mandatory event");
++      expect(result.ruleId).toBe("mandatory-event-requires-channel");
++    });
++
++    // -----------------------------------------------------------------------
++    // Additional boundary conditions
++    // -----------------------------------------------------------------------
++    it("allows disabling email for non-mandatory approval event even on California", () => {
++      // Non-mandatory approval event can have channels disabled freely
++      const result = validateChannelDisable(
++        "approval",
++        "email",
++        false, // no other channel
++        "CA",
++        false, // not mandatory
++      );
++
++      expect(result.allowed).toBe(true);
++    });
++
++    it("provides structured result with rule ID for California decline violation", () => {
++      // Verify the structured result includes proper metadata
++      const result = validateChannelDisable(
++        "decline",
++        "sms",
++        false,
++        "CA",
++        true,
++      );
++
++      expect(result).toHaveProperty("allowed");
++      expect(result).toHaveProperty("reason");
++      expect(result).toHaveProperty("ruleId");
++      expect(typeof result.allowed).toBe("boolean");
++      expect(typeof result.reason).toBe("string");
++      expect(typeof result.ruleId).toBe("string");
++    });
++
++    it("handles different California case variants correctly", () => {
++      // The rule should work with different case representations if normalized
++      // Note: Current implementation expects uppercase "CA"
++      const result = validateChannelDisable(
++        "decline",
++        "email",
++        false,
++        "CA", // uppercase
++        true,
++      );
++
++      expect(result.allowed).toBe(false);
++      expect(result.reason).toContain("LEGAL-218");
++    });
++  });
++
++  describe("isMandatoryNotificationEvent", () => {
++    it("identifies approval as mandatory", () => {
++      expect(isMandatoryNotificationEvent("approval")).toBe(true);
++    });
++
++    it("identifies decline as mandatory", () => {
++      expect(isMandatoryNotificationEvent("decline")).toBe(true);
++    });
++
++    it("identifies document-request as mandatory", () => {
++      expect(isMandatoryNotificationEvent("document-request")).toBe(true);
++    });
++
++    it("identifies manual-review-escalation as mandatory", () => {
++      expect(isMandatoryNotificationEvent("manual-review-escalation")).toBe(
++        true,
++      );
++    });
++
++    // Note: There are no non-mandatory events in the current domain model,
++    // but the function is designed to support future extensions.
++  });
++
++  describe("Integration scenarios", () => {
++    it("enforces LEGAL-218 only for California decline events", () => {
++      // Test that LEGAL-218 is specific to CA + decline combination
++      const scenarios = [
++        {
++          state: "CA",
++          event: "decline" as const,
++          shouldMentionLegal218: true,
++        },
++        {
++          state: "NY",
++          event: "decline" as const,
++          shouldMentionLegal218: false,
++        },
++        {
++          state: "CA",
++          event: "approval" as const,
++          shouldMentionLegal218: false,
++        },
++      ];
++
++      for (const scenario of scenarios) {
++        const result = validateChannelDisable(
++          scenario.event,
++          "email",
++          false,
++          scenario.state,
++          true,
++        );
++
++        if (scenario.shouldMentionLegal218) {
++          expect(
++            result.reason.includes("LEGAL-218"),
++            `Expected LEGAL-218 in reason for ${scenario.state} ${scenario.event}`,
++          ).toBe(true);
++        } else {
++          expect(
++            result.reason.includes("LEGAL-218"),
++            `Did not expect LEGAL-218 in reason for ${scenario.state} ${scenario.event}`,
++          ).toBe(false);
++        }
++      }
++    });
++
++    it("allows flexible channel management when other channels remain active", () => {
++      // Users have flexibility as long as at least one channel is active
++      const channels = ["email", "sms"] as const;
++
++      for (const channelToDisable of channels) {
++        const otherChannel = channelToDisable === "email" ? "sms" : "email";
++        const result = validateChannelDisable(
++          "decline",
++          channelToDisable,
++          true, // other channel is enabled
++          "CA",
++          true,
++        );
++
++        expect(
++          result.allowed,
++          `Should allow disabling ${channelToDisable} when ${otherChannel} is active`,
++        ).toBe(true);
++      }
++    });
++  });
++});

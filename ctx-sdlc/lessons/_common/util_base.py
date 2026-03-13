@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 # ── LocalM™ Tuts CLI Brand Banner ──────────────────────────────────────────
@@ -304,7 +305,13 @@ def run(lesson_dir: Path, title: str) -> None:
         print("\n  Stopped.")
 
 
-def main(lesson_num: str, lesson_title: str, lesson_dir: Path, app_source: Path) -> None:
+def main(
+    lesson_num: str,
+    lesson_title: str,
+    lesson_dir: Path,
+    app_source: Path,
+    extra_commands: dict[str, tuple[str, Callable[[], int | None]]] | None = None,
+) -> None:
     """Common CLI entry point for all lesson util.py files."""
     title = f"Lesson {lesson_num} — {lesson_title}"
     p = argparse.ArgumentParser(description=f"{title} workspace utility")
@@ -312,11 +319,20 @@ def main(lesson_num: str, lesson_title: str, lesson_dir: Path, app_source: Path)
     g.add_argument("--setup", action="store_true", help="Clean + copy app source + create .env")
     g.add_argument("--clean", action="store_true", help="Remove copied src/ and artifacts")
     g.add_argument("--run", action="store_true", help="Install deps + start backend & frontend")
+    for command_name, (help_text, _) in (extra_commands or {}).items():
+        g.add_argument(f"--{command_name}", action="store_true", help=help_text)
     args = p.parse_args()
 
     if args.setup:
         setup(lesson_dir, app_source, title)
     elif args.run:
         run(lesson_dir, title)
+    elif extra_commands:
+        for command_name, (_help_text, handler) in extra_commands.items():
+            if getattr(args, command_name, False):
+                result = handler()
+                if isinstance(result, int):
+                    raise SystemExit(result)
+                return
     else:
         clean(lesson_dir)
