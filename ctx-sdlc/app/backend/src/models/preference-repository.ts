@@ -26,6 +26,8 @@ const PREFERENCE_COLUMNS = `
   updated_by AS updatedBy
 `;
 
+type PreferenceRow = NotificationPreference & { enabled: number | boolean };
+
 export function findPreferencesForUser(
   userId: string,
 ): NotificationPreference[] {
@@ -35,6 +37,7 @@ export function findPreferencesForUser(
       `SELECT ${PREFERENCE_COLUMNS} FROM notification_preferences WHERE user_id = ?`,
     )
     .all(userId)
+    .map((pref) => pref as PreferenceRow)
     .map((pref) => ({
       ...pref,
       enabled: Boolean(pref.enabled),

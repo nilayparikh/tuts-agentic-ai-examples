@@ -21,6 +21,8 @@ import type {
   NotificationRequestedEvent,
 } from "../queue/contracts.js";
 
+type DecisionRow = Decision & { conditions?: string | null };
+
 /**
  * Record a decision against a loan application.
  *
@@ -146,6 +148,7 @@ export function getDecisionsForApplication(applicationId: string): Decision[] {
       ORDER BY decided_at DESC`,
     )
     .all(applicationId)
+    .map((decision) => decision as DecisionRow)
     .map((decision) => ({
       ...decision,
       conditions: decision.conditions

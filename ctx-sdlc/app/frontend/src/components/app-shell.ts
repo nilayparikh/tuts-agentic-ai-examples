@@ -8,13 +8,14 @@
 export function renderAppShell(root: HTMLElement): void {
   root.innerHTML = `
     <header class="app-header">
-      <a href="#dashboard" class="brand-lockup" aria-label="LocalM Tuts — Loan Workbench">
-        <img src="/brand/icon-mark-gradient.svg" alt="" class="brand-mark" width="32" height="32" />
+      <a href="#dashboard" class="brand-lockup" aria-label="LocalM Tuts Examples">
+        <img src="/brand/icon-mark-gradient.svg" alt="" class="brand-mark" width="35" height="35" />
         <div class="brand-wordmark">
-          <span class="brand-localm">localm</span><span class="brand-tm">™</span>
+          <span class="brand-primary">localm<span class="brand-tm">™</span></span>
+          <span class="brand-tuts">TUTS</span>
         </div>
         <span class="brand-separator">|</span>
-        <span class="brand-app-name">Loan Workbench</span>
+        <span class="brand-context">Examples</span>
       </a>
       <nav class="app-nav" id="main-nav">
         <a href="#dashboard" class="nav-link" data-page="dashboard">Dashboard</a>
