@@ -6,8 +6,8 @@ attempting to edit a protected file. Returns a deny decision if so.
 
 Protected files:
   - .env, .env.*
-  - app/backend/src/config/feature-flags.ts
-  - app/backend/src/db/connection.ts
+    - src/backend/src/config/feature-flags.ts
+    - src/backend/src/db/connection.ts
 """
 import json
 import sys
@@ -15,8 +15,8 @@ from pathlib import PurePosixPath
 
 PROTECTED_PATTERNS = [
     ".env",
-    "app/backend/src/config/feature-flags.ts",
-    "app/backend/src/db/connection.ts",
+    "src/backend/src/config/feature-flags.ts",
+    "src/backend/src/db/connection.ts",
 ]
 
 

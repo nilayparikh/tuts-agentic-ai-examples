@@ -16,6 +16,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -174,7 +175,23 @@ def _validate_demo_model() -> str:
 
 def _write_json(path: Path, payload: object) -> None:
   """Write JSON with stable formatting."""
-  path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+  _write_text_atomic(path, json.dumps(payload, indent=2) + "\n")
+
+
+def _write_text_atomic(path: Path, content: str) -> None:
+  """Atomically replace a text file so readers never observe partial content."""
+  path.parent.mkdir(parents=True, exist_ok=True)
+  with tempfile.NamedTemporaryFile(
+    "w",
+    encoding="utf-8",
+    delete=False,
+    dir=path.parent,
+    prefix=f".{path.name}.",
+    suffix=".tmp",
+  ) as handle:
+    handle.write(content)
+    temp_path = Path(handle.name)
+  temp_path.replace(path)
 
 
 def _write_diff(before: dict[str, str], after: dict[str, str]) -> dict[str, list[str]]:
@@ -207,10 +224,51 @@ def _write_diff(before: dict[str, str], after: dict[str, str]) -> dict[str, list
 
   patch_path = CHANGE_DIR / "demo.patch"
   patch_text = "\n".join(chunk for chunk in patch_chunks if chunk)
-  patch_path.write_text(patch_text, encoding="utf-8")
+  _write_text_atomic(patch_path, patch_text)
 
   _write_json(CHANGE_DIR / "changed-files.json", changed)
   return changed
+
+
+def _wait_for_fresh_artifacts(run_started_at: float) -> None:
+  """Wait until key demo artifacts exist and stop changing for two checks."""
+  required_paths = [
+    LOG_DIR / "command.txt",
+    LOG_DIR / "prompt.txt",
+    LOG_DIR / "session.md",
+    LOG_DIR / "copilot.log",
+    CHANGE_DIR / "demo.patch",
+    CHANGE_DIR / "changed-files.json",
+  ]
+  stable_hits = 0
+  previous_state: tuple[tuple[str, int, int], ...] | None = None
+  deadline = time.time() + 15
+
+  while time.time() < deadline:
+    if not all(path.exists() for path in required_paths):
+      time.sleep(0.5)
+      continue
+
+    current_state = tuple(
+      (str(path), path.stat().st_size, int(path.stat().st_mtime_ns))
+      for path in required_paths
+    )
+    if any(state[2] < int(run_started_at * 1_000_000_000) for state in current_state):
+      time.sleep(0.5)
+      previous_state = current_state
+      stable_hits = 0
+      continue
+
+    if current_state == previous_state:
+      stable_hits += 1
+    else:
+      stable_hits = 0
+      previous_state = current_state
+
+    if stable_hits >= 2:
+      return
+
+    time.sleep(0.5)
 
 
 def _kill_process_tree(pid: int) -> None:
@@ -295,8 +353,8 @@ def _run_copilot_demo(
     "-p",
     prompt,
   ]
-  (LOG_DIR / "prompt.txt").write_text(prompt + "\n", encoding="utf-8")
-  (LOG_DIR / "command.txt").write_text(" ".join(command) + "\n", encoding="utf-8")
+  _write_text_atomic(LOG_DIR / "prompt.txt", prompt + "\n")
+  _write_text_atomic(LOG_DIR / "command.txt", " ".join(command) + "\n")
 
   with open(RUNNER_LOG_PATH, "wb") as runner_log:
     process = subprocess.Popen(
@@ -365,6 +423,7 @@ def demo() -> int:
 
   print(f"Using GitHub Copilot CLI model: {demo_model}")
 
+  run_started_at = time.time()
   src_dir = _reset_demo_workspace()
   _reset_output_dirs()
 
@@ -378,6 +437,7 @@ def demo() -> int:
   )
   after = _snapshot_tree(src_dir)
   changed = _write_diff(before, after)
+  _wait_for_fresh_artifacts(run_started_at)
 
   if return_code == 124:
     print(

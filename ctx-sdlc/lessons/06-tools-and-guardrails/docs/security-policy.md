@@ -11,9 +11,9 @@ edited by AI assistance:
 | File                                      | Reason                                                                  | Change Process                                         |
 | ----------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------ |
 | `.env` / `.env.*`                         | Contains database paths, API keys, feature flag overrides               | Manual edit by an authorized engineer. Reviewed in PR. |
-| `app/backend/src/config/feature-flags.ts` | Controls pilot gating. Incorrect changes expose unreleased features.    | Product owner approval + manual edit.                  |
-| `app/backend/src/db/schema.sql`           | Database DDL. Modifications can break migrations and the test baseline. | Coordinated change with migration update.              |
-| `app/backend/src/db/seed.ts`              | Contains seeded test data. Modifications can break the test baseline.   | Coordinated change with test update.                   |
+| `src/backend/src/config/feature-flags.ts` | Controls pilot gating. Incorrect changes expose unreleased features.    | Product owner approval + manual edit.                  |
+| `src/backend/src/db/schema.sql`           | Database DDL. Modifications can break migrations and the test baseline. | Coordinated change with migration update.              |
+| `src/backend/src/db/seed.ts`              | Contains seeded test data. Modifications can break the test baseline.   | Coordinated change with test update.                   |
 
 ### Why AI Cannot Edit These Files
 
@@ -80,7 +80,7 @@ Error responses must not leak:
 - User IDs of other users
 - Feature flag names or values
 
-The central error handler in `app/backend/src/middleware/error-handler.ts` enforces this.
+The central error handler in `src/backend/src/middleware/error-handler.ts` enforces this.
 For 4xx errors, a brief message is returned. For 5xx errors, only a generic
 "Internal server error" with a correlation ID is returned.
 

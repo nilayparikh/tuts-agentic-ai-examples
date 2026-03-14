@@ -31,6 +31,7 @@ These constraints are part of the example and must be preserved by the generated
 6. The tests must use explicit assertions rather than snapshots.
 7. Do not modify `src/backend/src/models/types.ts` for this lesson.
 8. Do not run shell commands during the assessment run.
+9. Discover and reuse the existing mandatory-event source of truth instead of creating a new hardcoded mandatory-events list or helper.
 
 ## Concrete Scenario
 
@@ -44,6 +45,8 @@ The intended hard case is:
 
 Good output usually introduces a function like `validateNotificationChannelChange(...)` with a narrow input shape and a structured result object.
 
+The preferred implementation should reuse the discovered mandatory-event source of truth rather than introducing a second source of truth.
+
 ## What Good Output Looks Like
 
 Good output will usually:
@@ -52,3 +55,4 @@ Good output will usually:
 - keep all business logic inside the rule module
 - keep tests close to the instruction language: false positive, hard negative, and boundary cases should be visible in test names or comments
 - avoid inventing services, repositories, or new global domain types
+- avoid duplicating mandatory-event definitions inside the new rule module

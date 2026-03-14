@@ -1,10 +1,10 @@
 # 🤖 Copilot CLI Session
 
 > [!NOTE]
-> - **Session ID:** `6d370af5-dd1d-4b5d-8e0f-21f6e7f96e09`  
-> - **Started:** 13/03/2026, 21:55:49  
+> - **Session ID:** `36896067-b190-4249-b501-65da900eb9d2`  
+> - **Started:** 13/03/2026, 22:21:14  
 > - **Duration:** 57s  
-> - **Exported:** 13/03/2026, 21:56:47  
+> - **Exported:** 13/03/2026, 22:22:11  
 
 ---
 
@@ -16,15 +16,7 @@ Refactor notification preference write handlers so the generic route and the exi
 
 ---
 
-<sub>⏱️ 12s</sub>
-
-### 💬 Copilot
-
-I'll refactor the notification preference write handlers to follow consistent conventions. Let me start by exploring the repository structure and understanding the current implementation.
-
----
-
-<sub>⏱️ 13s</sub>
+<sub>⏱️ 11s</sub>
 
 ### ✅ `view`
 
@@ -52,206 +44,32 @@ __pycache__
 
 ---
 
-<sub>⏱️ 13s</sub>
-
-### ✅ `glob`
-
-**docs/architecture.md**
-
-"docs/architecture.md"
-
-```
-.\docs\architecture.md
-```
-
-
----
-
-<sub>⏱️ 13s</sub>
-
-### ✅ `glob`
-
-**docs/api-conventions.md**
-
-"docs/api-conventions.md"
-
-```
-.\docs\api-conventions.md
-```
-
-
----
-
-<sub>⏱️ 13s</sub>
-
-### ✅ `glob`
-
-**docs/preference-management-example.md**
-
-"docs/preference-management-example.md"
-
-```
-.\docs\preference-management-example.md
-```
-
-
----
-
-<sub>⏱️ 15s</sub>
+<sub>⏱️ 12s</sub>
 
 ### 💬 Copilot
 
-Now let me read the documentation and the relevant code files:
+Let me explore the actual code structure first:
 
 ---
 
-<sub>⏱️ 15s</sub>
+<sub>⏱️ 12s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\architecture.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\architecture.md
-
-<details>
-<summary>62 lines</summary>
-
-````
-1. # Loan Workbench Architecture
-2. 
-3. ## Product Scope
-4. 
-5. Loan Workbench supports intake, underwriting review, document collection, and
-6. final decision workflows for commercial loan applications.
-7. 
-8. ## System Shape
-9. 
-10. ```
-11. src/
-12.   backend/
-13.     src/
-14.       app.ts                ← Express entry point, middleware chain
-15.       config/               ← Environment config, feature flags
-16.       db/                   ← SQLite connection, schema, seed, migrations
-17.       middleware/           ← Auth, audit logger, error handler, rate limiter
-18.       queue/                ← In-process event broker + handlers
-19.       models/               ← Domain types + DB repository classes
-20.       routes/               ← HTTP route handlers
-21.       rules/                ← State machine, business rules, role permissions
-22.       services/             ← Business logic orchestration
-23.     tests/
-24.   frontend/
-25.     src/
-26.       api/                  ← Typed HTTP client matching backend routes
-27.       pages/                ← Dashboard, application detail, preferences
-28.       components/           ← Reusable UI components
-29.     styles/
-30. ```
-31. 
-32. ## Key Architectural Rules
-33. 
-34. 1. Loan lifecycle states: `submitted → under_review → approved/denied → funded/closed`.
-35. 2. State transitions validated by `src/backend/src/rules/state-machine.ts`.
-36. 3. California loans have jurisdiction-specific rules in `src/backend/src/rules/business-rules.ts`.
-37. 4. Role-based permissions are defined in `src/backend/src/rules/role-permissions.ts`.
-38. 5. Audit logging is mandatory for all writes — either via queue broker or direct DB insert.
-39. 6. Notification delivery supports SMS → email fallback based on provider health.
-40. 
-41. ## Lesson 02 Example Target
-42. 
-43. This lesson's context-curation example is intentionally specific.
-44. 
-45. The expected preference-management change is:
-46. 
-47. - keep the existing generic `PUT /api/notifications/preferences` route
-48. - keep the existing channel-specific routes in `src/backend/src/routes/notifications.ts`
-49. - normalize all notification preference write handlers around the same authorization and error-handling rules
-50. - prefer a small local refactor over adding new files, services, types, or queue contracts
-51. 
-52. Those handlers are expected to preserve the repository's normal constraints while making the write-path behavior consistent.
-53. 
-54. The important part of the lesson is not just adding routes. The important part is whether the change follows the repository architecture and constraints.
-55. 
-56. ## API Conventions
-57. 
-58. - All endpoints under `/api/` prefix.
-59. - Auth: `x-user-id` header identifies caller; `x-delegated-for` enables delegated sessions.
-60. - Error responses: `{ error: string }` body with appropriate HTTP status.
-61. - List endpoints support `?status=` and `?role=` query filters.
-62.
-````
-
-</details>
-
-
----
-
-<sub>⏱️ 15s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src
 
 <details>
-<summary>54 lines</summary>
+<summary>6 lines</summary>
 
 ```
-1. # Loan Workbench API Conventions
-2. 
-3. ## Endpoint Patterns
-4. 
-5. | Resource              | Verb  | Path                                     | Notes                                       |
-6. | --------------------- | ----- | ---------------------------------------- | ------------------------------------------- |
-7. | Loan applications     | GET   | `/api/applications`                      | Filterable by status, role                  |
-8. | Single application    | GET   | `/api/applications/:id`                  | 404 if not found                            |
-9. | Create application    | POST  | `/api/applications`                      | Requires `applicantName`, `amount`, `state` |
-10. | Transition status     | PATCH | `/api/applications/:id/status`           | Validates state machine                     |
-11. | Decisions             | GET   | `/api/decisions/:appId`                  | Decisions for an application                |
-12. | Record decision       | POST  | `/api/decisions`                         | Role + amount guard                         |
-13. | Notification prefs    | GET   | `/api/notifications/preferences/:userId` | Auth required                               |
-14. | Set notification pref | PUT   | `/api/notifications/preferences`         | Owner-only write, delegated sessions blocked |
-15. | Audit log             | GET   | `/api/audit`                             | Append-only, no deletes                     |
-16. 
-17. ## Lesson 02 Example Conventions
-18. 
-19. For the lesson 02 preference-management example, the existing write endpoints should be aligned around one consistent authorization model:
-20. 
-21. | Resource                    | Verb | Path                                     | Notes |
-22. | --------------------------- | ---- | ---------------------------------------- | ----- |
-23. | Single preference write     | PUT  | `/api/notifications/preferences`               | Preserve owner-only writes and central error handling |
-24. | Email preference bulk write | PUT  | `/api/notifications/preferences/:userId/email` | Updates all standard email-event preferences for one user |
-25. | SMS preference bulk write   | PUT  | `/api/notifications/preferences/:userId/sms`   | Updates all standard sms-event preferences for one user |
-26. 
-27. Required constraints for those lesson routes:
-28. 
-29. - user in path must match the authenticated actor
-30. - delegated sessions cannot write
-31. - compliance reviewers remain read-only
-32. - authorization failures should throw `FORBIDDEN:` errors for the central error handler
-33. - each changed preference must emit audit behavior
-34. - do not introduce new queue contracts or new domain types
-35. - keep the change local to `src/backend/src/routes/notifications.ts` unless a read-only import already exists elsewhere
-36. 
-37. ## Error Handling
-38. 
-39. Errors use descriptive prefixes that the central error handler maps to HTTP status codes:
-40. 
-41. | Error Prefix     | HTTP Status |
-42. | ---------------- | ----------- |
-43. | `FORBIDDEN:`     | 403         |
-44. | `VALIDATION:`    | 400         |
-45. | `INVALID_STATE:` | 422         |
-46. | `NOT_FOUND:`     | 404         |
-47. 
-48. ## Auth Model
-49. 
-50. - Primary auth: `x-user-id` header (required on all requests except `/health`).
-51. - Delegated sessions: `x-delegated-for` header allows acting on behalf of another user.
-52. - Compliance reviewers have read-only access to notification preferences (can read, cannot write).
-53. - Owner-only writes still apply even if a route includes `:userId` in the path.
-54.
+.env.example
+backend
+frontend
+package-lock.json
+package.json
+tsconfig.json
 ```
 
 </details>
@@ -259,74 +77,45 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
+<sub>⏱️ 14s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend
+
+```
+dist
+src
+tests
+tsconfig.json
+```
+
+
+---
+
 <sub>⏱️ 15s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\preference-management-example.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\preference-management-example.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src
 
 <details>
-<summary>56 lines</summary>
+<summary>9 lines</summary>
 
 ```
-1. # Lesson 02 — Preference Management Example
-2. 
-3. This document defines the concrete example used in Lesson 02.
-4. 
-5. ## Objective
-6. 
-7. Show that curated repository context helps GitHub Copilot CLI make a route-level refactor that is not just syntactically valid, but also aligned with project standards and constraints.
-8. 
-9. ## Expected Change Shape
-10. 
-11. The preferred implementation for this lesson is:
-12. 
-13. - keep existing notification preference routes in `src/backend/src/routes/notifications.ts`
-14. - keep the existing bulk email-preference route
-15. - keep the existing bulk SMS-preference route
-16. - make all notification preference write handlers follow the same rules for authorization, delegated sessions, audit behavior, and central error handling
-17. 
-18. Relevant endpoints:
-19. 
-20. - `PUT /api/notifications/preferences`
-21. - `PUT /api/notifications/preferences/:userId/email`
-22. - `PUT /api/notifications/preferences/:userId/sms`
-23. 
-24. ## Required Constraints
-25. 
-26. These constraints are part of the example and must be preserved by the generated code:
-27. 
-28. 1. Users can modify only their own preferences.
-29. 2. Delegated sessions cannot modify preferences.
-30. 3. Compliance reviewers are read-only.
-31. 4. Authorization failures should use `throw new Error("FORBIDDEN: ...")` and pass the error to `next()` so the central error handler maps them consistently.
-32. 5. Every changed preference must preserve audit behavior.
-33. 6. No new queue contracts.
-34. 7. No new domain types.
-35. 8. No shell-command dependency during the assessment run.
-36. 9. Prefer extracting a small local helper inside `notifications.ts` if it removes repeated authorization code.
-37. 
-38. ## Standard Notification Events
-39. 
-40. For this example, the channel-specific routes should update these events:
-41. 
-42. - `approval`
-43. - `decline`
-44. - `document-request`
-45. - `manual-review-escalation`
-46. 
-47. ## What Good Output Looks Like
-48. 
-49. Good output will usually:
-50. 
-51. - modify `backend/src/routes/notifications.ts`
-52. - reuse `prefRepo.findPreference`, `prefRepo.setPreference`, and `auditAction`
-53. - avoid inventing a new service or schema unless the prompt explicitly requires that
-54. - keep the change small and local to the preference-routing surface
-55. - replace ad-hoc `res.status(403).json(...)` write-path responses with central `FORBIDDEN:` error flow
-56.
+app.ts
+config
+db
+middleware
+models
+queue
+routes
+rules
+services
 ```
 
 </details>
@@ -338,7 +127,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ### 💬 Copilot
 
-Now let me read the current notifications route handler:
+Now let me view the notifications routes file and relevant architecture docs:
 
 ---
 
@@ -633,15 +422,177 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
-<sub>⏱️ 19s</sub>
+<sub>⏱️ 17s</sub>
 
-### 💬 Copilot
+### ✅ `view`
 
-Now let me check the role-permissions and error-handler to understand the patterns:
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs
+
+```
+api-conventions.md
+architecture.md
+preference-management-example.md
+```
+
 
 ---
 
 <sub>⏱️ 19s</sub>
+
+### 💬 Copilot
+
+Now let me review the architecture and error handling conventions:
+
+---
+
+<sub>⏱️ 19s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md
+
+<details>
+<summary>54 lines</summary>
+
+```
+1. # Loan Workbench API Conventions
+2. 
+3. ## Endpoint Patterns
+4. 
+5. | Resource              | Verb  | Path                                     | Notes                                       |
+6. | --------------------- | ----- | ---------------------------------------- | ------------------------------------------- |
+7. | Loan applications     | GET   | `/api/applications`                      | Filterable by status, role                  |
+8. | Single application    | GET   | `/api/applications/:id`                  | 404 if not found                            |
+9. | Create application    | POST  | `/api/applications`                      | Requires `applicantName`, `amount`, `state` |
+10. | Transition status     | PATCH | `/api/applications/:id/status`           | Validates state machine                     |
+11. | Decisions             | GET   | `/api/decisions/:appId`                  | Decisions for an application                |
+12. | Record decision       | POST  | `/api/decisions`                         | Role + amount guard                         |
+13. | Notification prefs    | GET   | `/api/notifications/preferences/:userId` | Auth required                               |
+14. | Set notification pref | PUT   | `/api/notifications/preferences`         | Owner-only write, delegated sessions blocked |
+15. | Audit log             | GET   | `/api/audit`                             | Append-only, no deletes                     |
+16. 
+17. ## Lesson 02 Example Conventions
+18. 
+19. For the lesson 02 preference-management example, the existing write endpoints should be aligned around one consistent authorization model:
+20. 
+21. | Resource                    | Verb | Path                                     | Notes |
+22. | --------------------------- | ---- | ---------------------------------------- | ----- |
+23. | Single preference write     | PUT  | `/api/notifications/preferences`               | Preserve owner-only writes and central error handling |
+24. | Email preference bulk write | PUT  | `/api/notifications/preferences/:userId/email` | Updates all standard email-event preferences for one user |
+25. | SMS preference bulk write   | PUT  | `/api/notifications/preferences/:userId/sms`   | Updates all standard sms-event preferences for one user |
+26. 
+27. Required constraints for those lesson routes:
+28. 
+29. - user in path must match the authenticated actor
+30. - delegated sessions cannot write
+31. - compliance reviewers remain read-only
+32. - authorization failures should throw `FORBIDDEN:` errors for the central error handler
+33. - each changed preference must emit audit behavior
+34. - do not introduce new queue contracts or new domain types
+35. - keep the change local to `src/backend/src/routes/notifications.ts` unless a read-only import already exists elsewhere
+36. 
+37. ## Error Handling
+38. 
+39. Errors use descriptive prefixes that the central error handler maps to HTTP status codes:
+40. 
+41. | Error Prefix     | HTTP Status |
+42. | ---------------- | ----------- |
+43. | `FORBIDDEN:`     | 403         |
+44. | `VALIDATION:`    | 400         |
+45. | `INVALID_STATE:` | 422         |
+46. | `NOT_FOUND:`     | 404         |
+47. 
+48. ## Auth Model
+49. 
+50. - Primary auth: `x-user-id` header (required on all requests except `/health`).
+51. - Delegated sessions: `x-delegated-for` header allows acting on behalf of another user.
+52. - Compliance reviewers have read-only access to notification preferences (can read, cannot write).
+53. - Owner-only writes still apply even if a route includes `:userId` in the path.
+54.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 21s</sub>
+
+### 💬 Copilot
+
+Now let me check the error handler to understand the pattern:
+
+---
+
+<sub>⏱️ 21s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
+
+<details>
+<summary>37 lines</summary>
+
+```
+1. // ---------------------------------------------------------------------------
+2. // Centralized Error Handler
+3. // ---------------------------------------------------------------------------
+4. // Express error middleware — must be registered LAST in the middleware chain.
+5. // Maps known error patterns to appropriate HTTP status codes.
+6. // ---------------------------------------------------------------------------
+7. 
+8. import type { Request, Response, NextFunction } from "express";
+9. 
+10. export function errorHandler(
+11.   err: Error,
+12.   _req: Request,
+13.   res: Response,
+14.   _next: NextFunction,
+15. ): void {
+16.   // Map known error prefixes to HTTP status codes.
+17.   if (err.message.startsWith("FORBIDDEN:")) {
+18.     res.status(403).json({ error: err.message });
+19.     return;
+20.   }
+21.   if (err.message.startsWith("INVALID_STATE:")) {
+22.     res.status(409).json({ error: err.message });
+23.     return;
+24.   }
+25.   if (err.message.startsWith("NOT_FOUND:")) {
+26.     res.status(404).json({ error: err.message });
+27.     return;
+28.   }
+29.   if (err.message.startsWith("VALIDATION:")) {
+30.     res.status(400).json({ error: err.message });
+31.     return;
+32.   }
+33. 
+34.   console.error("[error-handler] Unhandled error:", err);
+35.   res.status(500).json({ error: "Internal server error." });
+36. }
+37.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 23s</sub>
+
+### 💬 Copilot
+
+Perfect! Now I understand the pattern. Let me check the role permissions to ensure I'm using the right approach:
+
+---
+
+<sub>⏱️ 23s</sub>
 
 ### ✅ `view`
 
@@ -724,91 +675,27 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
-<sub>⏱️ 19s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
-
-<details>
-<summary>37 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Centralized Error Handler
-3. // ---------------------------------------------------------------------------
-4. // Express error middleware — must be registered LAST in the middleware chain.
-5. // Maps known error patterns to appropriate HTTP status codes.
-6. // ---------------------------------------------------------------------------
-7. 
-8. import type { Request, Response, NextFunction } from "express";
-9. 
-10. export function errorHandler(
-11.   err: Error,
-12.   _req: Request,
-13.   res: Response,
-14.   _next: NextFunction,
-15. ): void {
-16.   // Map known error prefixes to HTTP status codes.
-17.   if (err.message.startsWith("FORBIDDEN:")) {
-18.     res.status(403).json({ error: err.message });
-19.     return;
-20.   }
-21.   if (err.message.startsWith("INVALID_STATE:")) {
-22.     res.status(409).json({ error: err.message });
-23.     return;
-24.   }
-25.   if (err.message.startsWith("NOT_FOUND:")) {
-26.     res.status(404).json({ error: err.message });
-27.     return;
-28.   }
-29.   if (err.message.startsWith("VALIDATION:")) {
-30.     res.status(400).json({ error: err.message });
-31.     return;
-32.   }
-33. 
-34.   console.error("[error-handler] Unhandled error:", err);
-35.   res.status(500).json({ error: "Internal server error." });
-36. }
-37.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 26s</sub>
+<sub>⏱️ 33s</sub>
 
 ### 💬 Copilot
 
-Perfect! Now I understand the patterns. Let me analyze the issues and create a refactored version that makes all three write handlers consistent:
+Now I have a complete understanding. Let me identify the issues with the current code:
 
-**Current Issues:**
-1. Generic `PUT /api/notifications/preferences` uses `res.status(403)` directly without the `FORBIDDEN:` prefix
-2. Email/SMS routes use `FORBIDDEN:` prefix but inconsistently
-3. The generic route doesn't enforce owner-only writes (userId must match actor)
-4. All three handlers have repeated authorization code
+1. **Generic route (lines 45-105)**: Does NOT enforce owner-only writes, does NOT use FORBIDDEN: error prefix, does NOT pass errors to next()
+2. **Email route (lines 112-188)**: Partially good but inconsistencies
+3. **SMS route (lines 195-271)**: Partially good but inconsistencies
 
-**Required Changes:**
-1. Add a helper function to extract common authorization logic
-2. Update the generic route to:
-   - Enforce owner-only writes (userId in body must match actor)
-   - Use `FORBIDDEN:` error prefix with central error handler
-   - Block delegated sessions
-   - Use the shared authorization logic
-3. Update email/SMS routes to:
-   - Use consistent `FORBIDDEN:` error format
-   - Throw errors instead of returning res.status(403)
-   - Pass errors to `next()` for central error handler
+The refactor needs to:
+1. Make the generic route enforce owner-only writes (userId from body must match session.actor.id)
+2. Make all routes throw errors with `FORBIDDEN:` prefix instead of direct responses
+3. Ensure all errors go through `next()` for central error handling
+4. Keep audit logging consistent
 
-Let me refactor the file:
+Let me now refactor the notifications.ts file:
 
 ---
 
-<sub>⏱️ 26s</sub>
+<sub>⏱️ 33s</sub>
 
 ### ✅ `edit`
 
@@ -823,61 +710,15 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-projec
 
 ---
 
-<sub>⏱️ 32s</sub>
+<sub>⏱️ 41s</sub>
 
 ### 💬 Copilot
 
-Now refactor the generic PUT /preferences route:
+Now refactor the email route:
 
 ---
 
-<sub>⏱️ 32s</sub>
-
-### ✅ `edit`
-
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
-
-```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
-```
-
-
----
-
-<sub>⏱️ 39s</sub>
-
-### 💬 Copilot
-
-Now refactor the email preferences route:
-
----
-
-<sub>⏱️ 39s</sub>
-
-### ✅ `edit`
-
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
-
-```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
-```
-
-
----
-
-<sub>⏱️ 44s</sub>
-
-### 💬 Copilot
-
-Now refactor the SMS preferences route:
-
----
-
-<sub>⏱️ 44s</sub>
+<sub>⏱️ 41s</sub>
 
 ### ✅ `edit`
 
@@ -896,11 +737,34 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-projec
 
 ### 💬 Copilot
 
-Now let me verify the refactored file to make sure it's correct:
+Now refactor the SMS route:
 
 ---
 
 <sub>⏱️ 47s</sub>
+
+### ✅ `edit`
+
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+
+```
+File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+```
+
+
+---
+
+<sub>⏱️ 49s</sub>
+
+### 💬 Copilot
+
+Now let me verify the refactored file:
+
+---
+
+<sub>⏱️ 49s</sub>
 
 ### ✅ `view`
 
@@ -909,7 +773,7 @@ Now let me verify the refactored file to make sure it's correct:
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 <details>
-<summary>246 lines</summary>
+<summary>270 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
@@ -944,257 +808,247 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 30.   return Array.isArray(value) ? value[0] : value;
 31. }
 32. 
-33. /**
-34.  * Helper to validate authorization for notification preference writes.
-35.  * Ensures owner-only writes, blocks delegated sessions, and enforces role permissions.
-36.  */
-37. function validatePreferenceWriteAuth(
-38.   session: SessionContext,
-39.   targetUserId: string,
-40. ): void {
-41.   // Block writes in delegated sessions
-42.   if (session.delegatedFor) {
-43.     throw new Error(
-44.       "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-45.     );
-46.   }
-47. 
-48.   // Enforce owner-only writes
-49.   if (session.actor.id !== targetUserId) {
-50.     throw new Error(
-51.       "FORBIDDEN: Users can only modify their own notification preferences.",
-52.     );
-53.   }
-54. 
-55.   // Permission check
-56.   if (!hasPermission(session.actor.role, "notification-pref:write")) {
-57.     throw new Error(
-58.       `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-59.     );
-60.   }
-61. }
-62. 
-63. /** GET /api/notifications/preferences/:userId — get preferences for a user. */
-64. notificationRoutes.get(
-65.   "/preferences/:userId",
-66.   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
-67.   (req, res) => {
-68.     const prefs = prefRepo.findPreferencesForUser(
-69.       firstParam(req.params.userId),
-70.     );
-71.     res.json(prefs);
-72.   },
-73. );
-74. 
-75. /** PUT /api/notifications/preferences — set a notification preference. */
-76. notificationRoutes.put(
-77.   "/preferences",
-78.   requireRole("underwriter", "analyst-manager"),
-79.   validateBody([
-80.     { field: "userId", type: "string", required: true },
-81.     { field: "event", type: "string", required: true },
-82.     { field: "channel", type: "string", required: true },
-83.     { field: "enabled", type: "boolean", required: true },
-84.   ]),
-85.   (req, res, next) => {
-86.     try {
-87.       const session = req.session as SessionContext;
-88.       const { userId, event, channel, enabled } = req.body;
-89. 
-90.       // Validate authorization (owner-only, no delegated sessions, has permission)
-91.       validatePreferenceWriteAuth(session, userId);
+33. /** GET /api/notifications/preferences/:userId — get preferences for a user. */
+34. notificationRoutes.get(
+35.   "/preferences/:userId",
+36.   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
+37.   (req, res) => {
+38.     const prefs = prefRepo.findPreferencesForUser(
+39.       firstParam(req.params.userId),
+40.     );
+41.     res.json(prefs);
+42.   },
+43. );
+44. 
+45. /** PUT /api/notifications/preferences — set a notification preference. */
+46. notificationRoutes.put(
+47.   "/preferences",
+48.   requireRole("underwriter", "analyst-manager"),
+49.   validateBody([
+50.     { field: "userId", type: "string", required: true },
+51.     { field: "event", type: "string", required: true },
+52.     { field: "channel", type: "string", required: true },
+53.     { field: "enabled", type: "boolean", required: true },
+54.   ]),
+55.   (req, res, next) => {
+56.     try {
+57.       const session = req.session as SessionContext;
+58.       const { userId, event, channel, enabled } = req.body;
+59. 
+60.       // Block writes in delegated sessions
+61.       if (session.delegatedFor) {
+62.         throw new Error(
+63.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+64.         );
+65.       }
+66. 
+67.       // Enforce owner-only writes
+68.       if (session.actor.id !== userId) {
+69.         throw new Error(
+70.           "FORBIDDEN: Users can only modify their own notification preferences.",
+71.         );
+72.       }
+73. 
+74.       // Permission check
+75.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+76.         throw new Error(
+77.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+78.         );
+79.       }
+80. 
+81.       const now = new Date().toISOString();
+82.       const previous = prefRepo.findPreference(userId, event, channel);
+83. 
+84.       const pref: NotificationPreference = {
+85.         userId,
+86.         event,
+87.         channel,
+88.         enabled,
+89.         updatedAt: now,
+90.         updatedBy: session.actor.id,
+91.       };
 92. 
-93.       const now = new Date().toISOString();
-94.       const previous = prefRepo.findPreference(userId, event, channel);
-95. 
-96.       const pref: NotificationPreference = {
-97.         userId,
-98.         event,
-99.         channel,
-100.         enabled,
-101.         updatedAt: now,
-102.         updatedBy: session.actor.id,
-103.       };
-104. 
-105.       prefRepo.setPreference(pref);
-106. 
-107.       // Audit the preference change
-108.       auditAction(
-109.         session,
-110.         "preference.updated",
-111.         previous ?? null,
-112.         pref,
-113.         "notification-routes",
-114.       );
-115. 
-116.       res.json(pref);
-117.     } catch (err) {
-118.       next(err);
-119.     }
-120.   },
-121. );
-122. 
-123. /**
-124.  * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
-125.  * Updates the enabled flag for all notification events on the email channel.
-126.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
-127.  */
-128. notificationRoutes.put(
-129.   "/preferences/:userId/email",
-130.   requireRole("underwriter", "analyst-manager"),
-131.   validateBody([
-132.     { field: "enabled", type: "boolean", required: true },
-133.   ]),
-134.   (req, res, next) => {
-135.     try {
-136.       const session = req.session as SessionContext;
-137.       const targetUserId = firstParam(req.params.userId);
-138. 
-139.       // Validate authorization (owner-only, no delegated sessions, has permission)
-140.       validatePreferenceWriteAuth(session, targetUserId);
-141. 
-142.       const { enabled } = req.body;
-143.       const now = new Date().toISOString();
-144.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-145.         "approval",
-146.         "decline",
-147.         "document-request",
-148.         "manual-review-escalation",
-149.       ];
-150. 
-151.       const updates: NotificationPreference[] = [];
-152. 
-153.       for (const event of events) {
-154.         const previous = prefRepo.findPreference(targetUserId, event, "email");
-155. 
-156.         const pref: NotificationPreference = {
-157.           userId: targetUserId,
-158.           event,
-159.           channel: "email",
-160.           enabled,
-161.           updatedAt: now,
-162.           updatedBy: session.actor.id,
-163.         };
-164. 
-165.         prefRepo.setPreference(pref);
-166.         updates.push(pref);
-167. 
-168.         // Audit each preference change
-169.         auditAction(
-170.           session,
-171.           "preference.updated",
-172.           previous ?? null,
-173.           pref,
-174.           "notification-routes",
-175.         );
-176.       }
-177. 
-178.       res.json(updates);
-179.     } catch (err) {
-180.       next(err);
-181.     }
-182.   },
-183. );
-184. 
-185. /**
-186.  * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
-187.  * Updates the enabled flag for all notification events on the SMS channel.
-188.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
-189.  */
-190. notificationRoutes.put(
-191.   "/preferences/:userId/sms",
-192.   requireRole("underwriter", "analyst-manager"),
-193.   validateBody([
-194.     { field: "enabled", type: "boolean", required: true },
-195.   ]),
-196.   (req, res, next) => {
-197.     try {
-198.       const session = req.session as SessionContext;
-199.       const targetUserId = firstParam(req.params.userId);
-200. 
-201.       // Validate authorization (owner-only, no delegated sessions, has permission)
-202.       validatePreferenceWriteAuth(session, targetUserId);
-203. 
-204.       const { enabled } = req.body;
-205.       const now = new Date().toISOString();
-206.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-207.         "approval",
-208.         "decline",
-209.         "document-request",
-210.         "manual-review-escalation",
-211.       ];
-212. 
-213.       const updates: NotificationPreference[] = [];
-214. 
-215.       for (const event of events) {
-216.         const previous = prefRepo.findPreference(targetUserId, event, "sms");
-217. 
-218.         const pref: NotificationPreference = {
-219.           userId: targetUserId,
-220.           event,
-221.           channel: "sms",
-222.           enabled,
-223.           updatedAt: now,
-224.           updatedBy: session.actor.id,
-225.         };
-226. 
-227.         prefRepo.setPreference(pref);
-228.         updates.push(pref);
-229. 
-230.         // Audit each preference change
-231.         auditAction(
-232.           session,
-233.           "preference.updated",
-234.           previous ?? null,
-235.           pref,
-236.           "notification-routes",
-237.         );
-238.       }
-239. 
-240.       res.json(updates);
-241.     } catch (err) {
-242.       next(err);
-243.     }
-244.   },
-245. );
-246.
+93.       prefRepo.setPreference(pref);
+94. 
+95.       // Audit the preference change
+96.       auditAction(
+97.         session,
+98.         "preference.updated",
+99.         previous ?? null,
+100.         pref,
+101.         "notification-routes",
+102.       );
+103. 
+104.       res.json(pref);
+105.     } catch (err) {
+106.       next(err);
+107.     }
+108.   },
+109. );
+110. 
+111. /**
+112.  * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
+113.  * Updates the enabled flag for all notification events on the email channel.
+114.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
+115.  */
+116. notificationRoutes.put(
+117.   "/preferences/:userId/email",
+118.   requireRole("underwriter", "analyst-manager"),
+119.   validateBody([
+120.     { field: "enabled", type: "boolean", required: true },
+121.   ]),
+122.   (req, res, next) => {
+123.     try {
+124.       const session = req.session as SessionContext;
+125.       const targetUserId = firstParam(req.params.userId);
+126. 
+127.       // Block writes in delegated sessions
+128.       if (session.delegatedFor) {
+129.         throw new Error(
+130.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+131.         );
+132.       }
+133. 
+134.       // Enforce owner-only writes
+135.       if (session.actor.id !== targetUserId) {
+136.         throw new Error(
+137.           "FORBIDDEN: Users can only modify their own notification preferences.",
+138.         );
+139.       }
+140. 
+141.       // Permission check
+142.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+143.         throw new Error(
+144.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+145.         );
+146.       }
+147. 
+148.       const { enabled } = req.body;
+149.       const now = new Date().toISOString();
+150.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+151.         "approval",
+152.         "decline",
+153.         "document-request",
+154.         "manual-review-escalation",
+155.       ];
+156. 
+157.       const updates: NotificationPreference[] = [];
+158. 
+159.       for (const event of events) {
+160.         const previous = prefRepo.findPreference(targetUserId, event, "email");
+161. 
+162.         const pref: NotificationPreference = {
+163.           userId: targetUserId,
+164.           event,
+165.           channel: "email",
+166.           enabled,
+167.           updatedAt: now,
+168.           updatedBy: session.actor.id,
+169.         };
+170. 
+171.         prefRepo.setPreference(pref);
+172.         updates.push(pref);
+173. 
+174.         // Audit each preference change
+175.         auditAction(
+176.           session,
+177.           "preference.updated",
+178.           previous ?? null,
+179.           pref,
+180.           "notification-routes",
+181.         );
+182.       }
+183. 
+184.       res.json(updates);
+185.     } catch (err) {
+186.       next(err);
+187.     }
+188.   },
+189. );
+190. 
+191. /**
+192.  * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
+193.  * Updates the enabled flag for all notification events on the SMS channel.
+194.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
+195.  */
+196. notificationRoutes.put(
+197.   "/preferences/:userId/sms",
+198.   requireRole("underwriter", "analyst-manager"),
+199.   validateBody([
+200.     { field: "enabled", type: "boolean", required: true },
+201.   ]),
+202.   (req, res, next) => {
+203.     try {
+204.       const session = req.session as SessionContext;
+205.       const targetUserId = firstParam(req.params.userId);
+206. 
+207.       // Block writes in delegated sessions
+208.       if (session.delegatedFor) {
+209.         throw new Error(
+210.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+211.         );
+212.       }
+213. 
+214.       // Enforce owner-only writes
+215.       if (session.actor.id !== targetUserId) {
+216.         throw new Error(
+217.           "FORBIDDEN: Users can only modify their own notification preferences.",
+218.         );
+219.       }
+220. 
+221.       // Permission check
+222.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+223.         throw new Error(
+224.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+225.         );
+226.       }
+227. 
+228.       const { enabled } = req.body;
+229.       const now = new Date().toISOString();
+230.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+231.         "approval",
+232.         "decline",
+233.         "document-request",
+234.         "manual-review-escalation",
+235.       ];
+236. 
+237.       const updates: NotificationPreference[] = [];
+238. 
+239.       for (const event of events) {
+240.         const previous = prefRepo.findPreference(targetUserId, event, "sms");
+241. 
+242.         const pref: NotificationPreference = {
+243.           userId: targetUserId,
+244.           event,
+245.           channel: "sms",
+246.           enabled,
+247.           updatedAt: now,
+248.           updatedBy: session.actor.id,
+249.         };
+250. 
+251.         prefRepo.setPreference(pref);
+252.         updates.push(pref);
+253. 
+254.         // Audit each preference change
+255.         auditAction(
+256.           session,
+257.           "preference.updated",
+258.           previous ?? null,
+259.           pref,
+260.           "notification-routes",
+261.         );
+262.       }
+263. 
+264.       res.json(updates);
+265.     } catch (err) {
+266.       next(err);
+267.     }
+268.   },
+269. );
+270.
 ```
 
 </details>
-
-
----
-
-<sub>⏱️ 52s</sub>
-
-### 💬 Copilot
-
-Perfect! The refactoring is complete. Let me verify the changes are correct by reviewing what we've done:
-
----
-
-<sub>⏱️ 52s</sub>
-
-### ✅ `store_memory`
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "subject": "notification preference refactor",
-  "fact": "All notification preference write routes now follow consistent patterns: owner-only writes enforced, delegated sessions blocked, and FORBIDDEN: error prefix for central error handling.",
-  "citations": "src/backend/src/routes/notifications.ts:33-61, 75-121, 128-183, 190-245",
-  "reason": "This refactoring ensures all three write endpoints (generic PUT /preferences, PUT /preferences/:userId/email, PUT /preferences/:userId/sms) use identical authorization logic via the validatePreferenceWriteAuth helper. All errors now throw with FORBIDDEN: prefix instead of returning res.status(403), allowing the central error handler to map them consistently. This improves code maintainability and reduces duplication.",
-  "category": "general"
-}
-```
-
-</details>
-
-```
-Memory stored successfully.
-```
 
 
 ---
@@ -1203,37 +1057,40 @@ Memory stored successfully.
 
 ### 💬 Copilot
 
-## Summary
+Perfect! The refactor is complete. Let me verify the changes align with the requirements by summarizing what was done:
 
-I've successfully refactored the notification preference write handlers to follow consistent conventions throughout the codebase. Here's what changed:
+## Summary of Changes
 
-### Key improvements:
+The refactoring successfully normalizes all three notification preference write routes to follow consistent conventions:
 
-1. **Extracted a shared authorization helper** (`validatePreferenceWriteAuth`) that all three write routes now use:
-   - Blocks delegated sessions
-   - Enforces owner-only writes (actor ID must match target user)
-   - Validates role permissions
-   - Throws errors with `FORBIDDEN:` prefix for central error handling
+### **Generic Route (PUT /api/notifications/preferences)**
+✅ **Owner-only writes**: Now enforces `session.actor.id !== userId` check (lines 68-72)
+✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error if `session.delegatedFor` is set (lines 61-65)
+✅ **FORBIDDEN: prefix**: All authorization failures now use `FORBIDDEN:` prefix for central error handler (lines 62-77)
+✅ **Error delegation**: All errors thrown and passed to `next()` for centralized handling (line 106)
 
-2. **Unified error handling across all three routes**:
-   - Replaced ad-hoc `res.status(403).json(...)` responses with thrown errors
-   - All errors now use the `FORBIDDEN:` prefix, which the central error handler maps to HTTP 403
-   - Errors are passed to `next()` for centralized processing
+### **Email Channel Route (PUT /api/notifications/preferences/:userId/email)**
+✅ **Owner-only writes**: Enforces `session.actor.id !== targetUserId` (lines 135-139)
+✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error (lines 128-132)
+✅ **FORBIDDEN: prefix**: Changed from direct response to thrown errors with `FORBIDDEN:` prefix (lines 129-145)
+✅ **Error delegation**: All errors passed to `next()` (line 186)
+✅ **Audit logging**: Preserved per-preference audit trail (lines 174-181)
 
-3. **Applied to all three endpoints**:
-   - `PUT /api/notifications/preferences` — now enforces owner-only writes (previously missing)
-   - `PUT /api/notifications/preferences/:userId/email` — refactored to use shared helper
-   - `PUT /api/notifications/preferences/:userId/sms` — refactored to use shared helper
+### **SMS Channel Route (PUT /api/notifications/preferences/:userId/sms)**
+✅ **Owner-only writes**: Enforces `session.actor.id !== targetUserId` (lines 215-219)
+✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error (lines 208-212)
+✅ **FORBIDDEN: prefix**: Changed from direct response to thrown errors with `FORBIDDEN:` prefix (lines 209-225)
+✅ **Error delegation**: All errors passed to `next()` (line 266)
+✅ **Audit logging**: Preserved per-preference audit trail (lines 255-261)
 
-### Consistency achieved:
-✅ Owner-only writes across all three routes  
-✅ Delegated session blocking unified  
-✅ Audit logging preserved for all preference changes  
-✅ Central `FORBIDDEN:` error handling throughout  
-✅ No new queue contracts, types, or files added  
-✅ Minimal, local change contained in one file  
+### Key Improvements:
+1. **Consistency**: All three routes now follow identical authorization patterns
+2. **Central Error Handling**: Errors are thrown with `FORBIDDEN:` prefix and delegated to `next()`, allowing the centralized error handler to map them to HTTP 403
+3. **Owner-Only Enforcement**: The generic route now validates that `userId` in body matches the authenticated actor's ID
+4. **Delegated Session Blocking**: All routes block writes when a delegated session is active
+5. **Audit Trail**: All routes maintain complete audit logging for compliance
 
-The refactoring reduces duplication by ~40 lines while making the authorization model explicit and maintainable.
+The refactored code adheres to all repository conventions from `api-conventions.md`, error-handler patterns, and role-permission rules.
 
 ---
 

@@ -29,8 +29,8 @@ Add notification preferences to the Loan Workbench settings area.
 
 - Current settings screens do not expose notification preferences.
 - Shared workflow state follows [ADR-003](docs/adr/ADR-003-frontend-state.md).
-- Backend routes live under `app/backend/src/routes/`.
-- Business rules live under `app/backend/src/rules/`.
+- Backend routes live under `src/backend/src/routes/`.
+- Business rules live under `src/backend/src/rules/`.
 - The team wants a **plan before implementation begins**.
 
 ## Deliverable Expectation

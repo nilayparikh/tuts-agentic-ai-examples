@@ -5,7 +5,7 @@
       "args": [
         "-y",
         "@anthropic-ai/mcp-server-sqlite",
-        "${workspaceFolder}/app/data/loan-workbench.db"
+        "${workspaceFolder}/src/data/loan-workbench.db"
       ],
       "description": "Read-only access to the Loan Workbench SQLite database for querying application state, audit logs, and notification preferences.",
       "permissions": {
@@ -18,9 +18,9 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "${workspaceFolder}/app/backend/src",
-        "${workspaceFolder}/app/backend/tests",
-        "${workspaceFolder}/app/frontend/src",
+        "${workspaceFolder}/src/backend/src",
+        "${workspaceFolder}/src/backend/tests",
+        "${workspaceFolder}/src/frontend/src",
         "${workspaceFolder}/docs"
       ],
       "description": "Scoped filesystem access for reading source code, tests, and documentation. Excludes .env, node_modules, and config secrets.",

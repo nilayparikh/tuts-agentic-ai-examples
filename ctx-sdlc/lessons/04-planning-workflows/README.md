@@ -15,23 +15,36 @@ python util.py --run
 Planning workflows use read-only agents and prompt files that combine docs,
 specs, and codebase context to produce structured plans without editing code.
 
-| File | Type | Purpose |
-| --- | --- | --- |
-| `.github/agents/planner.agent.md` | Agent | Read-only investigator |
+| File                                        | Type   | Purpose                    |
+| ------------------------------------------- | ------ | -------------------------- |
+| `.github/agents/planner.agent.md`           | Agent  | Read-only investigator     |
 | `.github/prompts/investigate-bug.prompt.md` | Prompt | Bug investigation workflow |
-| `.github/prompts/plan-feature.prompt.md` | Prompt | Feature planning workflow |
-| `.github/prompts/triage-incident.prompt.md` | Prompt | Incident triage workflow |
+| `.github/prompts/plan-feature.prompt.md`    | Prompt | Feature planning workflow  |
+| `.github/prompts/triage-incident.prompt.md` | Prompt | Incident triage workflow   |
 
 ## Context Files
 
-| Path | Purpose |
-| --- | --- |
-| `docs/architecture.md` | System architecture reference |
-| `docs/adr/ADR-003-frontend-state.md` | Architecture decision record |
-| `specs/product-spec-notification-preferences.md` | Product specification |
-| `specs/non-functional-requirements.md` | NFR constraints |
-| `specs/bug-report.md` | Sample bug report |
-| `specs/feature-request.md` | Sample feature request |
+| Path                                             | Purpose                                                 |
+| ------------------------------------------------ | ------------------------------------------------------- |
+| `docs/architecture.md`                           | System architecture reference                           |
+| `docs/adr/ADR-003-frontend-state.md`             | Architecture decision record                            |
+| `specs/product-spec-notification-preferences.md` | Product specification                                   |
+| `specs/non-functional-requirements.md`           | NFR constraints                                         |
+| `specs/bug-report.md`                            | Sample bug report                                       |
+| `specs/feature-request.md`                       | Sample feature request                                  |
+| `docs/planning-workflow-example.md`              | Concrete lesson-04 demo target and planning constraints |
+
+## Example Goal
+
+This lesson should demonstrate planning quality, not implementation speed.
+
+For this example, the intended outcome is:
+
+- investigate the notification preferences feature request in a read-only workflow
+- inspect the relevant lesson docs, specs, and code surfaces first instead of relying on a hardcoded file checklist
+- synthesize architecture, ADR, product spec, and NFR constraints into a structured implementation plan
+- explicitly separate product requirements from inferred implementation choices
+- produce open questions, task breakdown, validation steps, risks, and hidden complexity without editing code or using any write-capable tools
 
 ## Copilot CLI Workflow
 
@@ -44,10 +57,16 @@ copilot -p "Investigate specs/bug-report.md. Trace the data flow for stale notif
 Plan a feature:
 
 ```bash
-copilot -p "Read specs/product-spec-notification-preferences.md and specs/non-functional-requirements.md. Plan the implementation and list the files that would need to change." --allow-all-tools
+copilot -p "Inspect the relevant docs/, specs/, and existing source surfaces for notification preferences in this lesson before answering. Discover the architecture, ADR, product, and NFR context you need rather than assuming a fixed file list. Produce a read-only implementation plan with source-backed confirmed requirements, open questions with file references, inferred implementation choices, constraints, numbered tasks with acceptance criteria and source refs, validation steps, and risks. If the sources overlap or conflict, identify the canonical source for the plan and explain why. Do not use SQL, task/todo write tools, or any other write-capable tools." --allow-all-tools --deny-tool=sql
 ```
 
-Expected outcome: the CLI can produce a useful plan, but it does not expose the same custom planner-agent workflow as VS Code.
+Expected outcome:
+
+- the CLI produces a structured plan without modifying files
+- the CLI stays inside read-only tools and does not create planning todos or other side effects
+- the plan cites FR, SC, ADR, and NFR sources instead of giving a shallow task list
+- the plan explains which source should be treated as canonical if multiple lesson artifacts overlap or conflict
+- the plan surfaces hidden complexity such as delegated sessions, LEGAL-218, fail-closed audit behavior, and degraded-mode fallback
 
 ## VS Code Chat Workflow
 

@@ -23,7 +23,7 @@ Selected code: ${selection}
 2. Read [ADR-003](../../docs/adr/ADR-003-frontend-state.md)
 3. Read [product spec](../../specs/product-spec-notification-preferences.md)
 4. Read [NFRs](../../specs/non-functional-requirements.md)
-5. Search for the affected routes, services, rules, and tests in `app/`
+5. Search for the affected routes, services, rules, and tests in `src/`
 6. Check whether the issue conflicts with ADR guidance, product rules, or NFRs
 
 ## Analysis Requirements

@@ -12,6 +12,7 @@ SQLite persistence for commercial loan processing.
 - Domain types live in `src/backend/src/models/types.ts` — import from there, do not redeclare.
 - Business rules live in `src/backend/src/rules/` — do not embed rule logic in route handlers.
 - Before changing business rules or tests, read `docs/architecture.md` and `docs/instruction-layering-example.md`.
+- Reuse existing rule sources of truth; do not create duplicate hardcoded mandatory-event definitions when `src/backend/src/rules/mandatory-events.ts` already defines that knowledge.
 
 ## Architecture
 

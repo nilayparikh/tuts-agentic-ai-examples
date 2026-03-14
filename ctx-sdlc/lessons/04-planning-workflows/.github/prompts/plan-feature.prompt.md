@@ -23,7 +23,7 @@ Current selection: ${selection}
 2. Read [ADR-003](../../docs/adr/ADR-003-frontend-state.md)
 3. Read [product spec](../../specs/product-spec-notification-preferences.md)
 4. Read [NFRs](../../specs/non-functional-requirements.md)
-5. Search for related workflow, service, and rule files in `app/`
+5. Search for related workflow, service, and rule files in `src/`
 
 ## Planning Requirements
 

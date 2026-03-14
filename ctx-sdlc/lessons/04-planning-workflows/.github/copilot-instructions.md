@@ -17,14 +17,15 @@ for loan application workflow management.
 
 ## Architecture Rules
 
-- Backend code in `app/backend/src/`, frontend in `app/frontend/src/`
-- Routes orchestrate; business rules live in `app/backend/src/rules/`
+- Backend code in `src/backend/src/`, frontend in `src/frontend/src/`
+- Routes orchestrate; business rules live in `src/backend/src/rules/`
 - Services handle I/O; rules are pure functions
 - Audit via queue broker or direct DB write (based on `queueAudit` feature flag)
 - State machine guards required for all application transitions
 - Feature flags return 404 for non-pilot users (not 403)
 - Delegated sessions (analyst-manager acting for another user) are read-only
-- Message contracts in `app/backend/src/queue/contracts.ts` are a breaking-change surface
+- Message contracts in `src/backend/src/queue/contracts.ts` are a breaking-change surface
+- Lesson 04 planning workflows are read-only. Plans should not propose direct edits until ambiguity is resolved.
 
 ## Domain
 

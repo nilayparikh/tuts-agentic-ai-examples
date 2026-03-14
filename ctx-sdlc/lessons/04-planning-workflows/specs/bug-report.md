@@ -58,7 +58,7 @@ touches **four** independent rules:
 ### Investigation Inputs
 
 - Compare UI behavior against `specs/product-spec-notification-preferences.md` sections SC-2 and FR-4.
-- Check `app/backend/src/routes/notifications.ts` for the `blockDelegatedWrites` middleware attachment.
+- Check `src/backend/src/routes/notifications.ts` for the `blockDelegatedWrites` middleware attachment.
 - Check whether the preference save sends `loanState` to the API.
 - Verify that the audit service was healthy at the time of the report.
-- Check `app/backend/src/middleware/auth.ts` for delegated-session detection logic.
+- Check `src/backend/src/middleware/auth.ts` for delegated-session detection logic.
