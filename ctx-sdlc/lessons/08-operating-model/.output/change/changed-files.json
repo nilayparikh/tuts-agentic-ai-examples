@@ -1,5 +1,7 @@
 {
   "added": [],
-  "modified": [],
+  "modified": [
+    ".github/examples/drifted/copilot-instructions.md"
+  ],
   "deleted": []
 }

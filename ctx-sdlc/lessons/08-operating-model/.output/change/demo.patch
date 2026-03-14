@@ -1,0 +1,56 @@
+--- a/.github/examples/drifted/copilot-instructions.md
++++ b/.github/examples/drifted/copilot-instructions.md
+@@ -1,13 +1,13 @@
+ # Loan Workbench — Project Context
+ 
+-> **This file shows the corrected version of the drifted example.**
+-> It now follows the clean example's structure and keeps references valid.
++> **This file demonstrates the repaired drifted example.**
++> It follows the clean example's conventions while keeping lesson references valid.
+ 
+ ## Project
+ 
+ Loan Workbench API — TypeScript + Express REST service managing loan
+-application lifecycles with regulatory compliance, role-based access, and
+-audit-first persistence.
++application lifecycles with regulatory compliance (California SMS restriction),
++role-based access, and audit-first persistence.
+ 
+ ## Tech Stack
+ 
+@@ -31,25 +31,26 @@
+ Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
+ Service -> respond.
+ 
+-Audit events are recorded before persistence. Mutating operations should use
+-structured logging only; do not use `console.log()`.
++Audit events are recorded BEFORE persistence. If audit logging fails, the write
++does NOT proceed.
+ 
+ ## Coding Conventions
+ 
+ - `const` over `let`; never `var`
+ - All route handlers are `async`
+ - All errors return structured JSON: `{ error: string, code: string }`
+-- No stack traces in error responses
+-- Feature flags use 404, not 403
+-- Keep global instructions concise; detailed route, notification, and test
+-  patterns belong in scoped instructions or dedicated docs
+-- Annotate tests with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
++- No stack traces in error responses (security)
++- Feature flags use 404 (not found), not 403 (forbidden)
++- Structured JSON logging only — never `console.log()`
++- Keep global instructions concise; move route, notification, and test
++  implementation details into scoped instructions or dedicated docs
++- Tests annotated with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
+ 
+ ## References
+ 
+ - Canonical project context: see `.github/copilot-instructions.md`
+-- Clean example: see `.github/examples/clean/copilot-instructions.md`
+ - Maintenance cadence: see `/docs/maintenance-schedule.md`
+ - Lesson scope and expected output: see `/docs/operating-model-example.md`
+-- Context audit: see `.github/scripts/audit_context.py`
++- Context audit script: see `.github/scripts/audit_context.py`
+ - Stale reference detector: see `.github/scripts/detect_stale_refs.py`
++- Healthy reference example: see `.github/examples/clean/copilot-instructions.md`
