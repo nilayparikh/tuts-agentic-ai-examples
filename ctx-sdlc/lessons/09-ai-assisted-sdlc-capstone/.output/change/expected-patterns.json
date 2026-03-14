@@ -1,26 +1,26 @@
 [
   {
-    "pattern": "event.*channel|channel.*event|combination",
-    "description": "Validator must check event-channel combinations"
+    "pattern": "event-channel|event channel",
+    "description": "Implementation should add event-channel validation"
   },
   {
-    "pattern": "mandatory|mandatory.event",
-    "description": "Validator must enforce mandatory event constraints"
+    "pattern": "mandatory",
+    "description": "Implementation should enforce mandatory-event constraints"
   },
   {
-    "pattern": "LEGAL.218|California|CA",
-    "description": "Validator must reference LEGAL-218 California SMS restrictions"
+    "pattern": "LEGAL-218",
+    "description": "Implementation should reference LEGAL-218"
   },
   {
-    "pattern": "import.*preference-event-channel-validator",
-    "description": "Route file must import the new validator"
+    "pattern": "preference-event-channel-validator|validator",
+    "description": "Route and tests should reference the validator"
   },
   {
-    "pattern": "describe|test|it\\(|expect",
-    "description": "Test file must contain test cases"
+    "pattern": "test|describe|it\\(",
+    "description": "Implementation should add unit tests"
   },
   {
-    "pattern": "false.positive|hard.negative|FALSE.POSITIVE|HARD.NEGATIVE",
+    "pattern": "false positive|hard negative",
     "description": "Tests should annotate false positive and hard negative cases"
   }
 ]

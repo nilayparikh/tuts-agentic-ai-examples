@@ -1,22 +1,22 @@
 [
   {
-    "pattern": "applyTo|apply_to|scope",
-    "description": "Portable baseline instruction file should have scoping metadata"
+    "pattern": "applyTo:\\s*\"\\*\\*\"|applyTo:\\s*'\\*\\*'",
+    "description": "Portable baseline should use applyTo: '**' scope"
   },
   {
-    "pattern": "portable|cross-surface|baseline",
-    "description": "Portable baseline should mention portability concept"
+    "pattern": "portable|baseline",
+    "description": "Portable baseline file should emphasize portability"
   },
   {
     "pattern": "CLI|chat|inline|coding agent|code review",
-    "description": "Surface portability notes should compare Copilot surfaces"
+    "description": "Surface notes should compare multiple Copilot surfaces"
   },
   {
-    "pattern": "VS Code|surface-specific|VS Code-only",
-    "description": "Surface notes should distinguish VS Code-specific features"
+    "pattern": "VS Code",
+    "description": "Surface notes should distinguish VS Code-specific behavior"
   },
   {
-    "pattern": "false positive|hard negative|portability risk",
+    "pattern": "portability risk|false positive|hard negative",
     "description": "Surface notes should include risk taxonomy"
   }
 ]

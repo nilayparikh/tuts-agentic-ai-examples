@@ -1,6 +1,6 @@
 {
   "added": [
-    ".github/hooks/import-validation.json"
+    "docs/notification-preferences-plan.md"
   ],
   "modified": [],
   "deleted": []

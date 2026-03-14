@@ -1,0 +1,30 @@
+[
+  {
+    "pattern": "delegated[ -]?session|delegated sessions",
+    "description": "Plan must call out delegated-session behavior"
+  },
+  {
+    "pattern": "LEGAL-218",
+    "description": "Plan must reference LEGAL-218"
+  },
+  {
+    "pattern": "mandatory[ -]?event",
+    "description": "Plan must cover mandatory-event delivery"
+  },
+  {
+    "pattern": "fail-closed audit|audit fail-closed",
+    "description": "Plan must call out fail-closed audit behavior"
+  },
+  {
+    "pattern": "false positive",
+    "description": "Plan must identify a false positive"
+  },
+  {
+    "pattern": "hard negative",
+    "description": "Plan must identify a hard negative"
+  },
+  {
+    "pattern": "acceptance criteria|numbered tasks|validation steps",
+    "description": "Plan must include tasks and acceptance criteria"
+  }
+]

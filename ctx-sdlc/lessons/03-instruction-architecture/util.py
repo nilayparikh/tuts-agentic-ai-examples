@@ -109,9 +109,15 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 def _reset_output_dirs() -> None:
   """Recreate lesson output directories for a fresh demo run."""
   for directory in (LOG_DIR, CHANGE_DIR):
+    preserved_expected = {
+        path.name: path.read_text(encoding="utf-8")
+        for path in CHANGE_DIR.glob("expected-*.json")
+    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)
+  for name, content in preserved_expected.items():
+    _write_text_atomic(CHANGE_DIR / name, content)
 
 
 def _reset_demo_workspace() -> Path:
