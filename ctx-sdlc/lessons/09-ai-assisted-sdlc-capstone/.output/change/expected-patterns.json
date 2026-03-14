@@ -1,0 +1,26 @@
+[
+  {
+    "pattern": "event.*channel|channel.*event|combination",
+    "description": "Validator must check event-channel combinations"
+  },
+  {
+    "pattern": "mandatory|mandatory.event",
+    "description": "Validator must enforce mandatory event constraints"
+  },
+  {
+    "pattern": "LEGAL.218|California|CA",
+    "description": "Validator must reference LEGAL-218 California SMS restrictions"
+  },
+  {
+    "pattern": "import.*preference-event-channel-validator",
+    "description": "Route file must import the new validator"
+  },
+  {
+    "pattern": "describe|test|it\\(|expect",
+    "description": "Test file must contain test cases"
+  },
+  {
+    "pattern": "false.positive|hard.negative|FALSE.POSITIVE|HARD.NEGATIVE",
+    "description": "Tests should annotate false positive and hard negative cases"
+  }
+]

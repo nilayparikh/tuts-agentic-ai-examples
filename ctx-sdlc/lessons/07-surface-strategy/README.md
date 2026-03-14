@@ -34,36 +34,31 @@ Different Copilot surfaces consume context differently.
 
 ## Example Goal
 
-This lesson should demonstrate surface-portability analysis quality, not code generation.
+This lesson should demonstrate surface-portability analysis through produced artifacts.
 
 For this example, the intended outcome is:
 
-- inspect the lesson's baseline instructions, scoped instructions, agent, and docs in a read-only workflow
+- inspect the lesson's baseline instructions, scoped instructions, agent, and docs
 - discover the relevant portability artifacts instead of relying on a hardcoded read list
-- explain what guidance is portable across CLI, chat, inline, coding agent, and review surfaces
-- identify one portability risk, one false positive, and one hard negative without editing code
-- resolve which artifact should be treated as canonical if the lesson materials disagree
+- create a portable-baseline instruction file extracting the cross-surface-portable subset
+- create a surface-portability notes document with risk taxonomy and recommendations
+- the changes are assessable via actual vs expected file and pattern comparison
 
 ## Copilot CLI Workflow
 
 Run from the lesson root:
 
 ```bash
-copilot -p "Inspect the lesson's surface-strategy artifacts before answering. Discover the relevant baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that exist here rather than assuming a fixed file list. Produce a read-only surface-strategy analysis covering portability across CLI, chat, inline, coding agent, and code review. Include one portability risk, one false positive, one hard negative, prioritized recommendations, and identify which artifact should be treated as canonical if the lesson materials disagree." --allow-all-tools --deny-tool=sql
-```
-
-Then test a generation prompt:
-
-```bash
-copilot -p "Review the notification preferences API and suggest one improvement that would still work across the widest range of Copilot surfaces." --allow-all-tools
+copilot -p "Inspect the lesson's surface-strategy artifacts before answering. Discover the relevant baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that exist here rather than assuming a fixed file list. Then create two new files based on your analysis: 1. Create .github/instructions/portable-baseline.instructions.md containing the extracted cross-surface-portable subset of the existing instructions that works on CLI, Chat, inline completions, coding agent, and code review surfaces. Use applyTo: '**' scope. 2. Create docs/surface-portability-notes.md documenting which features are portable vs surface-specific, one concrete portability risk, one false positive, one hard negative, and recommendations for where each kind of guidance should live. Follow the discovered instruction architecture conventions. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
 Expected result:
 
-- the CLI returns a source-grounded portability analysis without modifying files
-- the analysis distinguishes universal baseline guidance from VS Code-only context layers
-- the analysis resolves which artifact should be treated as canonical when portability guidance conflicts
-- the analysis explicitly notes where CLI cannot demonstrate path-scoped activation or agent behavior directly
+- the CLI creates `.github/instructions/portable-baseline.instructions.md` and `docs/surface-portability-notes.md`
+- the portable baseline instruction contains only cross-surface guidance
+- the portability notes document includes risk taxonomy with false positive and hard negative
+- `.output/change/demo.patch` contains the new files
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
 
 ## VS Code Chat Workflow
 

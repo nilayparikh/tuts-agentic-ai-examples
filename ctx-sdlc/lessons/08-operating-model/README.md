@@ -35,36 +35,31 @@ Context files drift as codebases evolve. This lesson shows how to detect and fix
 
 ## Example Goal
 
-This lesson should demonstrate context-maintenance analysis quality, not script execution.
+This lesson should demonstrate context-maintenance through direct drift repair.
 
 For this example, the intended outcome is:
 
-- inspect the maintenance scripts, clean example, drifted example, and schedule in a read-only workflow
+- inspect the maintenance scripts, clean example, drifted example, and schedule
 - discover the relevant maintenance artifacts instead of relying on a hardcoded read list
-- explain which kinds of context drift the lesson is trying to catch
-- identify the most dangerous drift patterns without editing files
-- map each major drift risk back to the specific artifact or artifact pair that shows it
+- fix the drifted example by resolving all discovered drift issues directly in the file
+- the changes are assessable via actual vs expected file and pattern comparison
 
 ## Copilot CLI Workflow
 
-Use the CLI to reason about drift and maintenance:
+Fix the drifted example:
 
 ```bash
-copilot -p "Inspect the lesson's context-maintenance artifacts before answering. Discover the relevant project instructions, audit scripts, clean and drifted examples, and maintenance docs that exist here rather than assuming a fixed file list. Produce a read-only operating-model analysis covering drift types, the most dangerous clean-versus-drifted differences, one false positive, one hard negative, maintenance cadence recommendations, prioritized fixes, and map each major drift risk back to the specific artifact or artifact pair that shows it." --allow-all-tools --deny-tool=sql
-```
-
-Then compare the clean and drifted examples:
-
-```bash
-copilot -p "Compare .github/examples/clean/ and .github/examples/drifted/. Identify the most dangerous context drift issues." --allow-all-tools
+copilot -p "Inspect the lesson's context-maintenance artifacts before answering. Discover the relevant project instructions, audit scripts, clean and drifted examples, and maintenance docs that exist here rather than assuming a fixed file list. Then fix the drifted example at .github/examples/drifted/copilot-instructions.md by resolving all drift issues you find. Specifically: update stale technology references (Node.js version, logging library), remove contradictory rules (console.log vs structured logging), fix dead file path references (deleted helpers directory), remove over-specified inline code blocks that belong in scoped instructions, and align the drifted file with the clean example's conventions for accuracy and conciseness. Apply the fixes directly in the file. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
 Expected result:
 
-- the CLI returns a source-grounded maintenance analysis without modifying files
-- the analysis explains copy-paste drift, stale references, contradictory rules, over-specification, and under-specification
-- the analysis ties its main conclusions back to the exact clean, drifted, or script artifacts that demonstrate them
-- the analysis distinguishes static drift detection from the richer workflow you would get by actually running the scripts in an editor-assisted flow
+- the CLI fixes `.github/examples/drifted/copilot-instructions.md`
+- stale Node.js and logging references are updated
+- contradictory rules are resolved
+- dead file references are removed
+- `.output/change/demo.patch` contains the drift fixes
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
 
 ## VS Code Chat Workflow
 

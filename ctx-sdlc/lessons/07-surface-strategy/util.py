@@ -29,13 +29,12 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
-READ_ONLY_DENY_TOOLS = ("powershell", "sql")
 TEXT_EXTENSIONS = {
   ".css", ".html", ".js", ".json", ".md", ".mjs", ".ts", ".tsx", ".txt", ".yaml", ".yml",
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
-from util_base import clean, main  # noqa: E402
+from util_base import clean, compare_with_expected, main  # noqa: E402
 
 
 def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
@@ -76,7 +75,7 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
   for path in sorted(root.rglob("*")):
     if not path.is_file() or not _is_text_file(path):
       continue
-    if any(part in {"node_modules", "dist", "data", ".git"} for part in path.parts):
+    if any(part in {"node_modules", "dist", "data", ".git", ".output"} for part in path.parts):
       continue
     snapshot[path.relative_to(root).as_posix()] = path.read_text(encoding="utf-8")
   return snapshot
@@ -100,11 +99,11 @@ def _demo_prompt() -> str:
   return (
     "Inspect the lesson's surface-strategy artifacts before answering. "
     "Discover the relevant baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that exist here rather than assuming a fixed file list. "
-    "Produce a read-only surface-strategy analysis for this lesson. "
-    "Return: summary, what is portable across all surfaces, what is VS Code-only, one concrete portability risk, one false positive, one hard negative, and prioritized recommendations for where each kind of guidance should live. "
-    "Explicitly compare CLI, VS Code Chat, inline completions, coding agent, and code review surfaces, and call out path-scoped instructions, agents, prompts, MCP, hooks, and docs separately. "
-    "If two artifacts disagree, identify which one should be canonical for users and why. "
-    "Do not modify files, do not run shell commands, and do not use SQL, task/todo write tools, or any other write-capable tools. Inspect and read only."
+    "Then create two new files based on your analysis: "
+    "1. Create .github/instructions/portable-baseline.instructions.md containing the extracted cross-surface-portable subset of the existing instructions that works on CLI, Chat, inline completions, coding agent, and code review surfaces. Use applyTo: '**' scope. "
+    "2. Create docs/surface-portability-notes.md documenting which features are portable vs surface-specific, one concrete portability risk, one false positive, one hard negative, and recommendations for where each kind of guidance should live. "
+    "Follow the discovered instruction architecture conventions. "
+    "Apply the changes directly in files. Do not run shell commands and do not use SQL."
   )
 
 
@@ -217,9 +216,7 @@ def _finalize_log_dir() -> None:
 
 def _run_copilot_demo(prompt: str, src_dir: Path, copilot_executable: str, demo_model: str) -> tuple[int, str]:
   session_path = LOG_DIR / "session.md"
-  command = [copilot_executable, "--model", demo_model, "--log-dir", str(LOG_DIR), "--log-level", "debug", "--stream", "off", "--share", str(LOG_DIR / "session.md"), "--add-dir", str(src_dir), "--allow-all-tools", "--allow-all-paths", "--no-ask-user"]
-  for tool_name in READ_ONLY_DENY_TOOLS:
-    command.append(f"--deny-tool={tool_name}")
+  command = [copilot_executable, "--model", demo_model, "--log-dir", str(LOG_DIR), "--log-level", "debug", "--stream", "off", "--share", str(LOG_DIR / "session.md"), "--add-dir", str(src_dir), "--allow-all-tools", "--allow-all-paths", "--deny-tool=powershell", "--deny-tool=sql", "--no-ask-user"]
   command.extend(["-p", prompt])
   _write_text_atomic(LOG_DIR / "prompt.txt", prompt + "\n")
   _write_text_atomic(LOG_DIR / "command.txt", " ".join(command) + "\n")
@@ -277,10 +274,10 @@ def demo() -> int:
   run_started_at = time.time()
   src_dir = _reset_demo_workspace()
   _reset_output_dirs()
-  before = _snapshot_tree(src_dir)
+  before = _snapshot_tree(LESSON)
   prompt = _demo_prompt()
   return_code, status = _run_copilot_demo(prompt, src_dir, copilot_executable, demo_model)
-  after = _snapshot_tree(src_dir)
+  after = _snapshot_tree(LESSON)
   changed = _write_diff(before, after)
   _wait_for_fresh_artifacts(run_started_at)
   if return_code == 124:
@@ -289,9 +286,16 @@ def demo() -> int:
   if return_code != 0:
     print("ERROR: Copilot CLI demo failed. See .output/logs for details.")
     return return_code
-  if any(changed.values()):
-    print("ERROR: Surface-strategy demo must remain read-only, but tracked files in src/ changed.")
-    return 5
+  if not any(changed.values()):
+    print("NOTE: Copilot completed but did not modify tracked text files.")
+    return 2
+
+  report = compare_with_expected(CHANGE_DIR, changed)
+  if not report["files_match"]:
+    print("WARNING: Actual file changes do not match expected. See .output/change/comparison.md.")
+  if not report["patterns_match"]:
+    print("WARNING: Some expected patterns not found in patch. See .output/change/comparison.md.")
+
   if status == "session-export-detected":
     print("Demo complete. Session export detected; Copilot process tree was terminated cleanly.")
     return 0

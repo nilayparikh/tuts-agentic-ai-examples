@@ -111,3 +111,12 @@ Overall judgment:
 For this prompt, the correct assessment is:
 
 > The run should be considered successful for the lesson objective. It produced a focused rule-plus-tests implementation slice in the intended surfaces and preserved the key delegated-session and notification-policy constraints. The main non-blocking caveats are the use of a SQL todo tool, the missing lesson-local product-spec file, and incomplete evidence for a strict red-step TDD sequence.
+
+## Expected Change Comparison
+
+Assessment now also compares actual output against gold-standard expectations:
+
+- `.output/change/expected-files.json` — expected files: `backend/src/rules/notification-preference-write-rules.ts` (added), `backend/tests/unit/notification-preference-write-rules.test.ts` (added), `backend/src/routes/notifications.ts` (modified)
+- `.output/change/expected-patterns.json` — required patterns in patch: import, validate, LEGAL-218, test, delegated/owner
+
+The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. Future re-runs will automatically produce this comparison alongside the existing assessment artifacts.

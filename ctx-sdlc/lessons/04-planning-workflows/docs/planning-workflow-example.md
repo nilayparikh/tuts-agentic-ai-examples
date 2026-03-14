@@ -4,22 +4,31 @@ This document defines the concrete example used in Lesson 04.
 
 ## Objective
 
-Show that a planning workflow can turn a visible feature request into a grounded implementation plan without modifying code.
+Show that a planning workflow can turn a visible feature request into a grounded, written implementation plan. The CLI writes the plan to `docs/notification-preferences-plan.md` so the output is assessable as a code change.
 
 ## Expected Output Shape
 
-The preferred output for this lesson is a structured plan with:
+The demo must produce a new file `docs/notification-preferences-plan.md` containing:
 
 1. Summary
-2. Open questions with source references
-3. Constraints and special conditions
-4. Numbered tasks with acceptance criteria and source references
-5. Validation steps
-6. Risks and dependencies
+2. Source-backed confirmed requirements with FR/SC/ADR/NFR references
+3. Open questions with file references
+4. Inferred implementation choices separated from confirmed requirements
+5. Constraints and special conditions
+6. Numbered tasks with acceptance criteria and source references
+7. Validation steps
+8. Risks and dependencies
+
+## Expected Change Artifacts
+
+Assessment compares the actual `demo.patch` and `changed-files.json` against:
+
+- `.output/change/expected-files.json` — expected added/modified/deleted files
+- `.output/change/expected-patterns.json` — regex patterns that must appear in the patch
 
 ## Required Constraints
 
-1. The workflow must remain read-only. No code edits should be proposed as already completed.
+1. The plan must be written to `docs/notification-preferences-plan.md` as a real file change.
 2. The plan must cite product spec, NFR, ADR, or special-condition references where relevant.
 3. The plan must separate confirmed requirements from inferred implementation choices.
 4. The plan must explicitly call out delegated-session behavior, LEGAL-218, mandatory-event delivery, fail-closed audit semantics, and degraded-mode fallback.
@@ -27,7 +36,7 @@ The preferred output for this lesson is a structured plan with:
 6. The plan must surface at least one false positive and one hard negative pattern from the provided specs.
 7. Do not run shell commands during the assessment run.
 8. If lesson artifacts overlap or conflict, the plan must identify the canonical source and explain why.
-9. Do not use SQL, task/todo write tools, or any other write-capable tools during the assessment run.
+9. Do not use SQL during the assessment run.
 
 ## Concrete Scenario
 
@@ -48,5 +57,4 @@ Good output will usually:
 - cite FR-2, FR-4, FR-5, FR-6, SC-2, ADR-003, and relevant NFRs
 - identify affected route, rule, service, UI, state, and audit surfaces
 - list validation steps that cover false-positive and hard-negative cases
-- stay read-only and avoid pretending the implementation has already been done
-- avoid any side-effecting tool usage such as SQL inserts or task/todo writes
+- produce a written plan file that the comparison tooling can verify against expected patterns

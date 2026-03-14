@@ -24,13 +24,14 @@ This lesson also includes MCP configuration for extending tool capabilities.
 
 ## Example Goal
 
-This lesson should demonstrate guardrail analysis quality, not hook execution.
+This lesson should demonstrate guardrail implementation, not just analysis.
 
 For this example, the intended outcome is:
 
-- inspect the hook, MCP, and policy files in a read-only workflow
-- identify mismatches between documented policy and actual enforcement
-- call out what the CLI can analyze statically versus what only VS Code runtime hooks can demonstrate
+- inspect the hook, MCP, and policy files to discover existing guardrail patterns
+- create a new import-validation guardrail (hook config + validation script) that follows those patterns
+- the new guardrail must enforce barrel-file import conventions for TypeScript files
+- the change is assessable via actual vs expected file and pattern comparison
 
 ## Context Files
 
@@ -49,20 +50,19 @@ For this example, the intended outcome is:
 
 ## Copilot CLI Workflow
 
-The CLI does not execute VS Code hooks, so this lesson is mostly about understanding the guardrails rather than triggering them directly.
-
-Inspect the files with:
+Create a new guardrail:
 
 ```bash
-copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Produce a read-only guardrail audit that names mismatches between docs and enforcement, hard negatives, false positives, prioritized fixes, residual risks, what the CLI cannot prove because VS Code hooks do not run here, and which artifact should be treated as canonical when policy and enforcement disagree." --allow-all-tools --deny-tool=sql
+copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
 Expected outcome:
 
-- the CLI returns a source-grounded audit without modifying files
-- the audit spots real inconsistencies between policy docs and hook/script enforcement
-- the audit explains which artifact should win when the documented policy and the enforced script behavior disagree
-- the audit clearly distinguishes static config review from runtime hook behavior that only VS Code can demonstrate
+- the CLI creates `.github/hooks/import-validation.json` and `.github/scripts/validate_imports.py`
+- the hook config uses `PreToolUse` event type following existing patterns
+- the validation script enforces barrel-file imports
+- `.output/change/demo.patch` contains the new files
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
 
 ## VS Code Chat Workflow
 

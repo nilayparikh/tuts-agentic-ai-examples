@@ -44,7 +44,7 @@ TEXT_EXTENSIONS = {
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
-from util_base import clean, main  # noqa: E402
+from util_base import clean, compare_with_expected, main  # noqa: E402
 
 
 def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
@@ -147,6 +147,7 @@ def _reset_demo_workspace() -> Path:
 def _demo_prompt() -> str:
   """Return the lesson README Copilot CLI generation prompt."""
   return (
+    "First inspect the existing notification-preference write surface in this lesson to discover the current authorization, audit, and error-handling conventions. "
     "Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions. "
     "Follow the repository conventions you discover. "
     "Apply the change directly in code instead of only describing it. "
@@ -453,6 +454,12 @@ def demo() -> int:
   if not any(changed.values()):
     print("NOTE: Copilot completed but did not modify tracked text files in src/.")
     return 2
+
+  report = compare_with_expected(CHANGE_DIR, changed)
+  if not report["files_match"]:
+    print("WARNING: Actual file changes do not match expected. See .output/change/comparison.md.")
+  if not report["patterns_match"]:
+    print("WARNING: Some expected patterns not found in patch. See .output/change/comparison.md.")
 
   if status == "session-export-detected":
     print("Demo complete. Session export detected; Copilot process tree was terminated cleanly.")

@@ -12,6 +12,10 @@ It does not assess the lesson overall.
 Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions. Follow the repository conventions you discover. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
 ```
 
+This is the historical prompt captured for the assessed run.
+
+Follow-up lesson design change: future runs should begin by discovering the current notification-preference write surface before applying the refactor, instead of assuming the conventions directly from the prompt.
+
 The assessment run used the shared default model from `lessons/_common/assessment-config.json`:
 
 - `claude-haiku-4.5`
@@ -81,3 +85,12 @@ Overall judgment:
 For this prompt, the correct assessment is:
 
 > Code changes were applied and they follow the repository's standards, constraints, and discovered context as required for this lesson prompt. This run should be considered fully successful.
+
+## Expected Change Comparison
+
+Assessment now also compares actual output against gold-standard expectations:
+
+- `.output/change/expected-files.json` — expected file: `backend/src/routes/notifications.ts` (modified)
+- `.output/change/expected-patterns.json` — required patterns in patch: FORBIDDEN, delegated, owner, audit
+
+The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. Future re-runs will automatically produce this comparison alongside the existing assessment artifacts.

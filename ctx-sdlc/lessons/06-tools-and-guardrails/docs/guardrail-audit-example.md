@@ -1,46 +1,45 @@
-# Lesson 06 — Guardrail Audit Example
+# Lesson 06 — Guardrail Implementation Example
 
 This document defines the concrete example used in Lesson 06.
 
 ## Objective
 
-Show that a read-only audit workflow can inspect the lesson's hook, MCP, and policy files and identify real enforcement gaps without modifying the repository.
+Show that the CLI can discover existing guardrail patterns and create a new import-validation guardrail that follows the same conventions — producing assessable file changes.
 
 ## Expected Output Shape
 
-The preferred output for this lesson is a structured audit with:
+The demo must produce two new files:
 
-1. Summary
-2. Confirmed controls
-3. Inconsistencies with file references
-4. False positives
-5. Hard negatives
-6. Prioritized fixes
-7. Residual risks
+1. `.github/hooks/import-validation.json` — PreToolUse hook config matching existing hook patterns
+2. `.github/scripts/validate_imports.py` — validation script enforcing barrel-file import convention
+
+## Expected Change Artifacts
+
+Assessment compares the actual `demo.patch` and `changed-files.json` against:
+
+- `.output/change/expected-files.json` — expected added/modified/deleted files
+- `.output/change/expected-patterns.json` — regex patterns that must appear in the patch
 
 ## Required Constraints
 
-1. The workflow must remain read-only.
-2. The audit must inspect the hook JSON, hook scripts, MCP config, Copilot instructions, and the policy docs together.
-3. The audit must explicitly compare documented protected files with actual hook enforcement.
-4. The audit must explicitly compare documented trust boundaries with actual MCP scope.
-5. The audit must mention fail-closed audit semantics and the 404-not-403 feature-flag rule.
-6. The audit must call out what the CLI cannot validate because VS Code hooks do not execute in the CLI run.
-7. The audit must include at least one hard negative and one false positive.
-8. The audit must identify the canonical artifact when policy documentation and enforcement logic disagree.
-9. The assessment run must not use SQL, task/todo write tools, or other write-capable tools.
+1. The hook config must use `PreToolUse` event type following existing hook file patterns.
+2. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths.
+3. The implementation must follow the discovered conventions from existing hook configs and scripts.
+4. The change must stay scoped to `.github/hooks/` and `.github/scripts/`.
+5. Do not run shell commands during the assessment run.
+6. Do not use SQL during the assessment run.
 
 ## Concrete Scenario
 
-Use the lesson's current hook, MCP, and policy files to determine whether the documented guardrails match the actual enforcement code.
+Use the lesson's existing hook configs (file-protection, pre-commit-validate, post-save-format) and their scripts as pattern references to create a new import-validation guardrail.
 
-Good output should identify mismatches rather than just repeating the intended policy.
+Good output should produce a hook + script pair that is consistent with the existing guardrail style.
 
 ## What Good Output Looks Like
 
 Good output will usually:
 
-- compare `docs/security-policy.md` against `.github/scripts/check_protected_files.py`
-- compare `docs/tool-trust-boundaries.md` and `.github/copilot-instructions.md` against `.github/mcp.json`
-- explain which controls are purely static documentation and which ones are actually enforced by scripts or runtime hooks
-- note that CLI analysis cannot substitute for a live VS Code hook demonstration
+- create a hook JSON config with `PreToolUse` event type and a reference to `validate_imports.py`
+- create a Python validation script that checks import paths
+- follow the same structure and conventions as the existing hook + script pairs
+- keep the change scoped to the `.github/` guardrail surface

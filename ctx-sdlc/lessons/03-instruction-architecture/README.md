@@ -51,14 +51,14 @@ For this example, the intended change is:
 Use the installed CLI from the lesson root:
 
 ```bash
-copilot -p "Create a pure business-rule module at src/backend/src/rules/notification-channel-rules.ts and matching tests at src/backend/tests/unit/notification-channel-rules.test.ts. First inspect the existing backend rule and test surfaces to discover the current notification-channel conventions and the existing mandatory-event source of truth. Then implement the rule for mandatory-event channel changes, including the California decline LEGAL-218 restriction. Reuse the discovered mandatory-event rule or explicit function inputs; do not create a second hardcoded mandatory-events list or helper. Follow the repository conventions you discover." --allow-all-tools
+copilot -p "Create a pure business-rule module at src/backend/src/rules/notification-channel-rules.ts and matching tests at src/backend/tests/unit/notification-channel-rules.test.ts. First inspect the existing backend rule and test surfaces to discover the current notification-channel conventions and the existing mandatory-event source of truth. Then implement the rule for mandatory-event channel changes, including the California decline LEGAL-218 restriction. Reuse the discovered mandatory-event source or explicit function inputs; do not assume its file path and do not create a second hardcoded mandatory-events list or helper. Follow the repository conventions you discover." --allow-all-tools
 ```
 
 Expected outcome:
 
 - the CLI can still discover repository-wide rules and scoped instruction files when it edits both `src/backend/src/rules/` and `src/backend/tests/`
 - the generated rule module should stay pure, use structured results, and include LEGAL-218 in the California restriction
-- the generated rule should derive mandatory-event behavior from the discovered source of truth or explicit inputs, not a duplicate in-file list
+- the generated rule should derive mandatory-event behavior from the discovered source of truth or explicit inputs, not a duplicate in-file list or an assumed hardcoded source path
 - the generated tests should mirror the new source file and cover happy path, boundary, false positive, and hard negative scenarios
 
 The editor remains the clearest place to observe file-scoped activation, but this CLI demo is now strong enough to assess whether layered instructions were applied.

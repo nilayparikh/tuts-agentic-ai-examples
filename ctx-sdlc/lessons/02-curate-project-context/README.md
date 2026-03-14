@@ -52,7 +52,7 @@ copilot -p "What is the architecture of this project, and what coding convention
 Then ask for generation:
 
 ```bash
-copilot -p "Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions." --allow-all-tools
+copilot -p "First inspect the existing notification-preference write surface in this lesson to discover the current authorization, audit, and error-handling conventions. Then refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions." --allow-all-tools
 ```
 
 The lesson demo helper runs this generation prompt, writes the CLI prompt/session artifacts into `.output/`, and is intended to use GitHub Copilot's Gemini Flash model when that model is exposed by the CLI surface.
@@ -61,6 +61,7 @@ Expected outcome:
 
 - behavior guidance comes through strongly from `.github/`
 - knowledge from `docs/` is available only if the model chooses to read it
+- the generation prompt still requires context discovery instead of assuming route behavior from the prompt alone
 - the best output should tighten `notifications.ts`, keep audit behavior, and preserve the repository's write constraints with a small local refactor
 
 ## VS Code Chat Workflow

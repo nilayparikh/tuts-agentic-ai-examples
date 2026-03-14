@@ -34,6 +34,7 @@ These constraints are part of the example and must be preserved by the generated
 7. No new domain types.
 8. No shell-command dependency during the assessment run.
 9. Prefer extracting a small local helper inside `notifications.ts` if it removes repeated authorization code.
+10. Discover the current write-path conventions from the existing route surface instead of assuming them from the prompt.
 
 ## Standard Notification Events
 

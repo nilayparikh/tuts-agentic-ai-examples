@@ -52,7 +52,7 @@ For this example, the intended outcome is:
 The CLI cannot switch into custom agents, but it can still provide a baseline implementation prompt.
 
 ```bash
-copilot -p "Inspect docs/, specs/, and the relevant notification-preference route, rule, model, and service files you discover in this lesson before editing. Use the playbook and example doc as success criteria, not as a fixed file checklist. Add one focused notification-preference write rule plus matching tests, then wire the minimal production change into the route. Keep delegated-session and role guards, enforce mandatory-event and LEGAL-218 edge cases, keep the scope to the current notification write path, and do not edit protected config or database files. In the final handoff, state which behaviors the tests should fail on before the production change and which should pass after it. Do not use SQL or task/todo write tools." --allow-all-tools --deny-tool=sql
+copilot -p "Inspect docs/, specs/, and the relevant notification-preference write surfaces you discover in this lesson before editing. Use the playbook and example doc as success criteria, not as a fixed file checklist. Add one focused notification-preference write rule plus matching tests, then wire the minimal production change into the route. Keep delegated-session and role guards, enforce mandatory-event and LEGAL-218 edge cases, keep the scope to the current notification write path, and do not edit protected config or database files. In the final handoff, state which behaviors the tests should fail on before the production change and which should pass after it, and name any intentionally deferred write surfaces that remain out of scope. Do not use SQL or task/todo write tools." --allow-all-tools --deny-tool=sql
 ```
 
 For review-oriented prompting:
@@ -67,6 +67,7 @@ Expected outcome:
 - the change reflects the playbook's rule/service/route boundaries rather than inlining everything in the route
 - the run stays constrained to repo file work instead of side-effecting task/todo tools
 - the handoff explains the expected test-first red/green behavior even though the CLI run does not execute tests
+- the handoff makes the scope boundary explicit by naming any still-deferred preference-write surfaces
 - the result is still a baseline approximation, not true multi-agent separation, because the CLI cannot switch agents mid-run
 
 ## VS Code Chat Workflow

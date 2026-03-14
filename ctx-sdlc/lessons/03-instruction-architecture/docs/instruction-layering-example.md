@@ -32,6 +32,7 @@ These constraints are part of the example and must be preserved by the generated
 7. Do not modify `src/backend/src/models/types.ts` for this lesson.
 8. Do not run shell commands during the assessment run.
 9. Discover and reuse the existing mandatory-event source of truth instead of creating a new hardcoded mandatory-events list or helper.
+10. Do not assume a fixed source file path for that mandatory-event knowledge; discover the current source-of-truth location from the lesson surfaces.
 
 ## Concrete Scenario
 
@@ -45,7 +46,7 @@ The intended hard case is:
 
 Good output usually introduces a function like `validateNotificationChannelChange(...)` with a narrow input shape and a structured result object.
 
-The preferred implementation should reuse the discovered mandatory-event source of truth rather than introducing a second source of truth.
+The preferred implementation should reuse the discovered mandatory-event source of truth rather than introducing a second source of truth or assuming a fixed file path for it.
 
 ## What Good Output Looks Like
 

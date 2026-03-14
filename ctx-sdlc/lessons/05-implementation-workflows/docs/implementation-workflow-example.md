@@ -26,6 +26,7 @@ The preferred output for this lesson is a small change set with:
 7. The run must not edit protected files such as feature flags, schema, or seed data.
 8. The run must not use SQL or task/todo write tools.
 9. The final handoff should explain the expected red/green test behavior and name any deferred follow-up surfaces that remain intentionally out of scope.
+10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
 
 ## Concrete Scenario
 
@@ -37,6 +38,8 @@ Harden notification preference writes so the existing route cannot:
 Good output should keep the change local and avoid sprawling refactors.
 
 It should also make the intentional scope boundary visible: this lesson is about hardening the current notification write path, not implementing every preference mutation surface in the repository at once.
+
+Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
 
 ## What Good Output Looks Like
 

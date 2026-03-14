@@ -1,0 +1,22 @@
+[
+  {
+    "pattern": "import.*notification-preference-write-rules",
+    "description": "Route file must import the new write rules"
+  },
+  {
+    "pattern": "validate|validation|preference.write",
+    "description": "Rule must contain preference write validation logic"
+  },
+  {
+    "pattern": "LEGAL.218|California",
+    "description": "Rules must reference LEGAL-218 or California restrictions"
+  },
+  {
+    "pattern": "describe|test|it\\(|expect",
+    "description": "Test file must contain test cases"
+  },
+  {
+    "pattern": "delegated|owner",
+    "description": "Rules must reference delegated-session or owner constraints"
+  }
+]

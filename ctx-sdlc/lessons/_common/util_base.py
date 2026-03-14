@@ -305,6 +305,79 @@ def run(lesson_dir: Path, title: str) -> None:
         print("\n  Stopped.")
 
 
+def compare_with_expected(change_dir: Path, changed: dict[str, list[str]]) -> dict[str, object]:
+    """Compare actual changed-files against expected-files.json and expected-patterns.json.
+
+    Returns a comparison report dict with match/mismatch details.
+    """
+    import re as _re
+
+    report: dict[str, object] = {"files_match": False, "patterns_match": False, "details": []}
+
+    expected_files_path = change_dir / "expected-files.json"
+    if expected_files_path.exists():
+        expected = json.loads(expected_files_path.read_text(encoding="utf-8"))
+        actual_added = set(changed.get("added", []))
+        actual_modified = set(changed.get("modified", []))
+        actual_deleted = set(changed.get("deleted", []))
+        expected_added = set(expected.get("added", []))
+        expected_modified = set(expected.get("modified", []))
+        expected_deleted = set(expected.get("deleted", []))
+
+        files_match = (
+            actual_added == expected_added
+            and actual_modified == expected_modified
+            and actual_deleted == expected_deleted
+        )
+        report["files_match"] = files_match
+
+        if not files_match:
+            if actual_added != expected_added:
+                report["details"].append(f"Added files — expected: {sorted(expected_added)}, actual: {sorted(actual_added)}")
+            if actual_modified != expected_modified:
+                report["details"].append(f"Modified files — expected: {sorted(expected_modified)}, actual: {sorted(actual_modified)}")
+            if actual_deleted != expected_deleted:
+                report["details"].append(f"Deleted files — expected: {sorted(expected_deleted)}, actual: {sorted(actual_deleted)}")
+        else:
+            report["details"].append("File manifest matches expected.")
+
+        # Check for zero changes when changes are expected
+        if (expected_added or expected_modified or expected_deleted) and not any(changed.values()):
+            report["details"].append("ERROR: Expected code changes but got 0 changes.")
+    else:
+        report["details"].append("No expected-files.json found — skipping file manifest comparison.")
+
+    expected_patterns_path = change_dir / "expected-patterns.json"
+    patch_path = change_dir / "demo.patch"
+    if expected_patterns_path.exists() and patch_path.exists():
+        patterns = json.loads(expected_patterns_path.read_text(encoding="utf-8"))
+        patch_text = patch_path.read_text(encoding="utf-8", errors="replace")
+        all_matched = True
+        for entry in patterns:
+            pattern = entry.get("pattern", "")
+            description = entry.get("description", pattern)
+            if _re.search(pattern, patch_text, _re.IGNORECASE):
+                report["details"].append(f"Pattern matched: {description}")
+            else:
+                report["details"].append(f"Pattern MISSING: {description}")
+                all_matched = False
+        report["patterns_match"] = all_matched
+    else:
+        report["details"].append("No expected-patterns.json or demo.patch — skipping pattern comparison.")
+
+    # Write comparison report
+    comparison_path = change_dir / "comparison.md"
+    lines = ["# Actual vs Expected Comparison\n"]
+    lines.append(f"- **Files match:** {report['files_match']}")
+    lines.append(f"- **Patterns match:** {report['patterns_match']}\n")
+    lines.append("## Details\n")
+    for detail in report["details"]:
+        lines.append(f"- {detail}")
+    comparison_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    return report
+
+
 def main(
     lesson_num: str,
     lesson_title: str,

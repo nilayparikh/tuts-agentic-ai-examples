@@ -29,7 +29,6 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
-READ_ONLY_DENY_TOOLS = ("powershell", "sql")
 TEXT_EXTENSIONS = {
   ".css",
   ".html",
@@ -45,7 +44,7 @@ TEXT_EXTENSIONS = {
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
-from util_base import clean, main  # noqa: E402
+from util_base import clean, compare_with_expected, main  # noqa: E402
 
 
 def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
@@ -97,7 +96,7 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
   for path in sorted(root.rglob("*")):
     if not path.is_file() or not _is_text_file(path):
       continue
-    if any(part in {"node_modules", "dist", "data", ".git"} for part in path.parts):
+    if any(part in {"node_modules", "dist", "data", ".git", ".output"} for part in path.parts):
       continue
     snapshot[path.relative_to(root).as_posix()] = path.read_text(encoding="utf-8")
   return snapshot
@@ -125,12 +124,14 @@ def _demo_prompt() -> str:
   return (
     "Inspect the relevant docs/, specs/, and existing source surfaces for notification preferences in this lesson before answering. "
     "Discover the architecture, ADR, product, and NFR context you need rather than assuming a fixed file list. "
-    "Produce a read-only implementation plan for notification preferences. "
-    "Separate confirmed product requirements from inferred implementation choices. "
-    "Return: summary, source-backed confirmed requirements, open questions with file references, inferred implementation choices, constraints and special conditions, numbered tasks with acceptance criteria and source refs, validation steps, and risks/dependencies. "
-    "Explicitly call out delegated sessions, LEGAL-218, mandatory-event delivery, fail-closed audit behavior, degraded-mode fallback, at least one false positive, and at least one hard negative. "
+    "Produce a structured implementation plan and save it to docs/notification-preferences-plan.md. "
+    "The plan must include: summary, source-backed confirmed requirements with references to FR/SC/ADR/NFR identifiers, open questions with file references, "
+    "inferred implementation choices separated from confirmed requirements, constraints and special conditions, "
+    "numbered tasks with acceptance criteria and source references, validation steps, and risks/dependencies. "
+    "Explicitly call out delegated sessions, LEGAL-218, mandatory-event delivery, fail-closed audit behavior, degraded-mode fallback, "
+    "at least one false positive, and at least one hard negative. "
     "If the sources overlap or conflict, identify the canonical source for the plan and explain why. "
-    "Do not modify files, do not run shell commands, and do not use SQL, task/todo write tools, or any other write-capable tools. Inspect and read only."
+    "Do not run shell commands and do not use SQL."
   )
 
 
@@ -297,11 +298,12 @@ def _run_copilot_demo(prompt: str, src_dir: Path, copilot_executable: str, demo_
     str(src_dir),
     "--allow-all-tools",
     "--allow-all-paths",
+    "--deny-tool=powershell",
+    "--deny-tool=sql",
     "--no-ask-user",
+    "-p",
+    prompt,
   ]
-  for tool_name in READ_ONLY_DENY_TOOLS:
-    command.append(f"--deny-tool={tool_name}")
-  command.extend(["-p", prompt])
   _write_text_atomic(LOG_DIR / "prompt.txt", prompt + "\n")
   _write_text_atomic(LOG_DIR / "command.txt", " ".join(command) + "\n")
 
@@ -365,10 +367,10 @@ def demo() -> int:
   src_dir = _reset_demo_workspace()
   _reset_output_dirs()
 
-  before = _snapshot_tree(src_dir)
+  before = _snapshot_tree(LESSON)
   prompt = _demo_prompt()
   return_code, status = _run_copilot_demo(prompt, src_dir, copilot_executable, demo_model)
-  after = _snapshot_tree(src_dir)
+  after = _snapshot_tree(LESSON)
   changed = _write_diff(before, after)
   _wait_for_fresh_artifacts(run_started_at)
 
@@ -380,9 +382,15 @@ def demo() -> int:
     print("ERROR: Copilot CLI demo failed. See .output/logs for details.")
     return return_code
 
-  if any(changed.values()):
-    print("ERROR: Planning demo must remain read-only, but tracked files in src/ changed.")
-    return 5
+  if not any(changed.values()):
+    print("NOTE: Copilot completed but did not write the plan file.")
+    return 2
+
+  report = compare_with_expected(CHANGE_DIR, changed)
+  if not report["files_match"]:
+    print("WARNING: Actual file changes do not match expected. See .output/change/comparison.md.")
+  if not report["patterns_match"]:
+    print("WARNING: Some expected patterns not found in patch. See .output/change/comparison.md.")
 
   if status == "session-export-detected":
     print("Demo complete. Session export detected; Copilot process tree was terminated cleanly.")

@@ -45,7 +45,7 @@ TEXT_EXTENSIONS = {
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
-from util_base import clean, main  # noqa: E402
+from util_base import clean, compare_with_expected, main  # noqa: E402
 
 
 def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
@@ -123,13 +123,13 @@ def _reset_demo_workspace() -> Path:
 
 def _demo_prompt() -> str:
   return (
-    "Inspect docs/, specs/, and the relevant notification-preference route, rule, model, and service files you discover in this lesson before editing. "
+    "Inspect docs/, specs/, and the relevant notification-preference write surfaces you discover in this lesson before editing. "
     "Use the playbook and example doc as success criteria, not as a fixed file checklist. "
     "Implement a focused notification-preference write hardening slice. "
     "Write tests first at src/backend/tests/unit/notification-preference-write-rules.test.ts, "
     "then add a pure rule module at src/backend/src/rules/notification-preference-write-rules.ts, "
     "and wire the minimal production changes into src/backend/src/routes/notifications.ts. "
-    "In the final handoff, state which behaviors the tests should fail on before the production change and which should pass after it. "
+    "In the final handoff, state which behaviors the tests should fail on before the production change and which should pass after it, and name any intentionally deferred write surfaces that remain out of scope. "
     "The rule must use explicit inputs plus existing types, not direct DB access. "
     "Enforce these cases: manual-review-escalation must keep at least one channel enabled; "
     "decline SMS cannot be enabled when loanState is CA or California under LEGAL-218; "
@@ -391,6 +391,12 @@ def demo() -> int:
   if not any(changed.values()):
     print("ERROR: Implementation demo should produce a focused change, but no tracked src/ files changed.")
     return 5
+
+  report = compare_with_expected(CHANGE_DIR, changed)
+  if not report["files_match"]:
+    print("WARNING: Actual file changes do not match expected. See .output/change/comparison.md.")
+  if not report["patterns_match"]:
+    print("WARNING: Some expected patterns not found in patch. See .output/change/comparison.md.")
 
   if status == "session-export-detected":
     print("Demo complete. Session export detected; Copilot process tree was terminated cleanly.")

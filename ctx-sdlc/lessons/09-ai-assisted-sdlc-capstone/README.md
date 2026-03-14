@@ -12,15 +12,15 @@ python util.py --run
 
 ## What This Demonstrates
 
-This capstone combines every major context surface into a single end-to-end workflow:
+This capstone combines the live context surfaces that are actually present in the lesson into one cross-stack workflow:
 
-- instructions scoped by file type
-- agents and prompts for planning and implementation
-- hooks and guardrails
-- cross-surface portability strategy
-- maintenance and context freshness
+- global project instructions
+- backend-scoped instructions
+- frontend-scoped instructions
+- shared architecture documentation
+- discovered backend and frontend implementation surfaces
 
-The workspace includes both API and frontend instruction files, simulating a full-stack project with different guidance needs by area.
+The point of the lesson is not breadth for its own sake. It is to show that a discovery-first workflow can build a credible backend-plus-frontend plan without hardcoding all of the context into the prompt.
 
 ## Context Files
 
@@ -30,28 +30,49 @@ The workspace includes both API and frontend instruction files, simulating a ful
 | `.github/instructions/api.instructions.md` | API-specific patterns |
 | `.github/instructions/frontend.instructions.md` | Frontend-specific patterns |
 | `docs/architecture.md` | System architecture reference |
+| `docs/capstone-example.md` | Concrete lesson-09 demo target and assessment constraints |
+
+## Example Goal
+
+This lesson should demonstrate cross-stack SDLC implementation quality.
+
+For this example, the intended outcome is:
+
+- inspect the capstone's baseline instructions, backend/frontend scoped instructions, architecture doc, and relevant notification-preference code surfaces
+- discover the specific backend route, backend supporting surfaces, frontend page, frontend component, and API-client surfaces instead of relying on a hardcoded read list
+- implement a notification preference event-channel validator with unit tests
+- wire the validator into the existing notification route
+- the changes are assessable via actual vs expected file and pattern comparison
 
 ## Copilot CLI Workflow
 
-Use the CLI for a baseline cross-stack prompt:
+Use the CLI for a discovery-first capstone implementation:
 
 ```bash
-copilot -p "Plan and implement the next increment of the Loan Workbench application across backend and frontend, following the repository conventions you discover." --allow-all-tools
+copilot -p "Inspect the capstone lesson's project instructions, backend and frontend scoped instructions, architecture doc, and the relevant backend/frontend notification-preference surfaces you discover before answering. Do not assume a fixed file list beyond those starting points. Then implement a notification preference event-channel validator as a cross-stack hardening slice: 1. Create a pure validation rule module at backend/src/rules/preference-event-channel-validator.ts that validates event-channel combinations are allowed, enforcing that mandatory events cannot have all channels disabled, and respecting LEGAL-218 California SMS restrictions from existing rules. 2. Create unit tests at backend/tests/unit/preference-event-channel-validator.test.ts covering valid combinations, mandatory-event violations, and LEGAL-218 false positive and hard negative cases. 3. Wire the validator import into the existing notification preference write route in backend/src/routes/notifications.ts. Follow the repository conventions you discover. Apply the changes directly in code. Do not run npm install, npm test, or any shell commands. Do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
-Expected result: the CLI can produce a broad full-stack answer, but it will not match the richness of the specialized agent workflow.
+Expected result:
+
+- the CLI creates a validator module and matching tests using discovered conventions
+- the validator is wired into the existing route
+- mandatory-event and LEGAL-218 constraints are enforced
+- `.output/change/demo.patch` contains all file changes
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
 
 ## VS Code Chat Workflow
 
 Suggested capstone flow:
 
-1. Use planning context to outline the change.
-2. Switch to an implementation agent for backend work where API instructions activate.
-3. Move to frontend files where frontend instructions activate.
-4. Run review or tester agents for follow-up validation.
-5. Reflect on which lessons contributed which context surface.
+1. Start with a planning ask that identifies the backend and frontend surfaces involved.
+2. Open backend files where API instructions activate and refine the backend slice.
+3. Open frontend files where frontend instructions activate and refine the UX slice.
+4. Compare which requirements are globally portable versus scoped to one surface.
+5. Reflect on which earlier lesson patterns are being reused in the capstone.
 
-Expected result: learners see how all earlier lessons combine into a practical SDLC workflow.
+Expected result: learners see how a discovery-first prompt plus scoped instruction activation can produce a practical cross-stack SDLC plan.
+
+For the captured demo run, use `python util.py --demo --model gpt-5.4`.
 
 ## Cleanup
 

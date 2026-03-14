@@ -12,6 +12,10 @@ It does not assess the lesson overall.
 Create a pure business-rule module at src/backend/src/rules/notification-channel-rules.ts and matching tests at src/backend/tests/unit/notification-channel-rules.test.ts. The rule should validate when disabling a notification channel is allowed for mandatory events, including the California decline LEGAL-218 restriction. Follow the repository conventions you discover. Reuse existing mandatory-event knowledge from src/backend/src/rules/mandatory-events.ts or explicit function inputs; do not create a second hardcoded mandatory-events list or helper. Return structured results with human-readable reasons, include top-of-module false-positive and hard-negative comments, and add tests for happy path, boundary, false positive, and hard negative scenarios. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
 ```
 
+This is the historical prompt captured for the assessed run.
+
+Follow-up lesson design change: future runs should discover the current mandatory-event source of truth automatically instead of naming a specific source file path in the prompt.
+
 The assessment run used the shared default model from `lessons/_common/assessment-config.json`:
 
 - `claude-haiku-4.5`
@@ -92,3 +96,12 @@ Overall judgment:
 For this prompt, the correct assessment is:
 
 > Code changes were applied in the intended scoped locations and they follow the repository's layered instruction context well. This run should be considered fully successful for the lesson prompt, with only a minor non-blocking implementation tradeoff around local transition parsing.
+
+## Expected Change Comparison
+
+Assessment now also compares actual output against gold-standard expectations:
+
+- `.output/change/expected-files.json` — expected files: `backend/src/rules/notification-channel-rules.ts` (added), `backend/tests/unit/notification-channel-rules.test.ts` (added)
+- `.output/change/expected-patterns.json` — required patterns in patch: LEGAL-218, mandatory-event, false positive, hard negative, test
+
+The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. Future re-runs will automatically produce this comparison alongside the existing assessment artifacts.

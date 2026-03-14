@@ -1,0 +1,30 @@
+[
+  {
+    "pattern": "delegated.session",
+    "description": "Plan must reference delegated-session behavior"
+  },
+  {
+    "pattern": "LEGAL.218",
+    "description": "Plan must reference LEGAL-218 California restriction"
+  },
+  {
+    "pattern": "mandatory.event",
+    "description": "Plan must reference mandatory-event delivery"
+  },
+  {
+    "pattern": "fail.closed|audit",
+    "description": "Plan must reference fail-closed audit behavior"
+  },
+  {
+    "pattern": "false.positive",
+    "description": "Plan must include at least one false positive"
+  },
+  {
+    "pattern": "hard.negative",
+    "description": "Plan must include at least one hard negative"
+  },
+  {
+    "pattern": "acceptance.criteria|task|step",
+    "description": "Plan must include numbered tasks with acceptance criteria"
+  }
+]

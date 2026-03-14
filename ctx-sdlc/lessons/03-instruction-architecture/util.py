@@ -44,7 +44,7 @@ TEXT_EXTENSIONS = {
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
-from util_base import clean, main  # noqa: E402
+from util_base import clean, compare_with_expected, main  # noqa: E402
 
 
 def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
@@ -135,7 +135,7 @@ def _demo_prompt() -> str:
     "First inspect the existing backend rule and test surfaces to discover the current notification-channel conventions and the existing mandatory-event source of truth. "
     "The rule should validate when disabling a notification channel is allowed for mandatory events, "
     "including the California decline LEGAL-218 restriction. Follow the repository conventions you discover. "
-    "Reuse the discovered mandatory-event rule or explicit function inputs; do not create a second hardcoded mandatory-events list or helper. "
+    "Reuse the discovered mandatory-event source or explicit function inputs; do not assume its file path and do not create a second hardcoded mandatory-events list or helper. "
     "Return structured results with human-readable reasons, include top-of-module false-positive and hard-negative comments, "
     "and add tests for happy path, boundary, false positive, and hard negative scenarios. "
     "Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only."
@@ -441,6 +441,12 @@ def demo() -> int:
   if not any(changed.values()):
     print("NOTE: Copilot completed but did not modify tracked text files in src/.")
     return 2
+
+  report = compare_with_expected(CHANGE_DIR, changed)
+  if not report["files_match"]:
+    print("WARNING: Actual file changes do not match expected. See .output/change/comparison.md.")
+  if not report["patterns_match"]:
+    print("WARNING: Some expected patterns not found in patch. See .output/change/comparison.md.")
 
   if status == "session-export-detected":
     print("Demo complete. Session export detected; Copilot process tree was terminated cleanly.")

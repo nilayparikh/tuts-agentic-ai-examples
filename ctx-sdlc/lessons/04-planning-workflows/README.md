@@ -36,37 +36,33 @@ specs, and codebase context to produce structured plans without editing code.
 
 ## Example Goal
 
-This lesson should demonstrate planning quality, not implementation speed.
+This lesson should demonstrate planning quality through a written plan artifact.
 
 For this example, the intended outcome is:
 
-- investigate the notification preferences feature request in a read-only workflow
+- investigate the notification preferences feature request
 - inspect the relevant lesson docs, specs, and code surfaces first instead of relying on a hardcoded file checklist
 - synthesize architecture, ADR, product spec, and NFR constraints into a structured implementation plan
 - explicitly separate product requirements from inferred implementation choices
-- produce open questions, task breakdown, validation steps, risks, and hidden complexity without editing code or using any write-capable tools
+- write the plan to `docs/notification-preferences-plan.md` so the output is assessable as a code change
+- the plan must explicitly call out delegated sessions, LEGAL-218, mandatory-event delivery, fail-closed audit behavior, degraded-mode fallback, at least one false positive, and at least one hard negative
 
 ## Copilot CLI Workflow
-
-Investigate a bug:
-
-```bash
-copilot -p "Investigate specs/bug-report.md. Trace the data flow for stale notification preference data and identify likely root causes." --allow-all-tools
-```
 
 Plan a feature:
 
 ```bash
-copilot -p "Inspect the relevant docs/, specs/, and existing source surfaces for notification preferences in this lesson before answering. Discover the architecture, ADR, product, and NFR context you need rather than assuming a fixed file list. Produce a read-only implementation plan with source-backed confirmed requirements, open questions with file references, inferred implementation choices, constraints, numbered tasks with acceptance criteria and source refs, validation steps, and risks. If the sources overlap or conflict, identify the canonical source for the plan and explain why. Do not use SQL, task/todo write tools, or any other write-capable tools." --allow-all-tools --deny-tool=sql
+copilot -p "Inspect the relevant docs/, specs/, and existing source surfaces for notification preferences in this lesson before answering. Discover the architecture, ADR, product, and NFR context you need rather than assuming a fixed file list. Produce a structured implementation plan and save it to docs/notification-preferences-plan.md. The plan must include: summary, source-backed confirmed requirements with references to FR/SC/ADR/NFR identifiers, open questions with file references, inferred implementation choices separated from confirmed requirements, constraints and special conditions, numbered tasks with acceptance criteria and source references, validation steps, and risks/dependencies. Explicitly call out delegated sessions, LEGAL-218, mandatory-event delivery, fail-closed audit behavior, degraded-mode fallback, at least one false positive, and at least one hard negative. If the sources overlap or conflict, identify the canonical source for the plan and explain why. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
 Expected outcome:
 
-- the CLI produces a structured plan without modifying files
-- the CLI stays inside read-only tools and does not create planning todos or other side effects
+- the CLI writes a structured plan to `docs/notification-preferences-plan.md`
 - the plan cites FR, SC, ADR, and NFR sources instead of giving a shallow task list
 - the plan explains which source should be treated as canonical if multiple lesson artifacts overlap or conflict
 - the plan surfaces hidden complexity such as delegated sessions, LEGAL-218, fail-closed audit behavior, and degraded-mode fallback
+- `.output/change/demo.patch` contains the plan file addition
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
 
 ## VS Code Chat Workflow
 

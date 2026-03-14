@@ -1,0 +1,18 @@
+[
+  {
+    "pattern": "Node\\.js 20",
+    "description": "Drifted file must update Node.js version from 18 to 20"
+  },
+  {
+    "pattern": "pino",
+    "description": "Drifted file must update logging library from winston to pino"
+  },
+  {
+    "pattern": "-.*console\\.log|\\+.*structured.*JSON.*logging",
+    "description": "Drifted file must remove console.log contradiction"
+  },
+  {
+    "pattern": "-.*[Hh]elpers",
+    "description": "Drifted file must remove reference to deleted helpers directory"
+  }
+]

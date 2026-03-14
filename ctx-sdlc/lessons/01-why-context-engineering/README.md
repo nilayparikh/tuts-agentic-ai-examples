@@ -1,13 +1,6 @@
 # Lesson 01 — Why Context Engineering
 
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
-> **Topic:** A weak/fast model only becomes repository-aware when the workspace exposes the right context.
-
-## Setup
-
-# Lesson 01 — Why Context Engineering
-
-> **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** A weak or fast model only becomes repository-aware when the workspace exposes the right context.
 
 ## Setup
@@ -32,6 +25,10 @@ The same short prompt is sent in two different workspace conditions:
 The prompt intentionally omits route shape, role restrictions, audit behavior,
 queue contract usage, and California-specific nuance. Those rules live only in
 the contextual folder.
+
+This lesson is assessed comparatively rather than through a single prompt-scoped
+CLI artifact bundle. See `COMPARE.md` and `ASSESSMENT.md` for the current
+evaluation framing.
 
 ## Context Files
 
