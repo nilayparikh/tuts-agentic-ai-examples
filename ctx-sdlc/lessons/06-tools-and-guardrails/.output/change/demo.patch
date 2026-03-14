@@ -7,7 +7,7 @@
 +      {
 +        "type": "command",
 +        "command": "python .github/scripts/validate_imports.py",
-+        "timeout": 20
++        "timeout": 30
 +      }
 +    ]
 +  }

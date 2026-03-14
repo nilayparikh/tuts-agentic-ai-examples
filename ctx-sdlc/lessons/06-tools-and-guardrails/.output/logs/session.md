@@ -1,10 +1,10 @@
 # 🤖 Copilot CLI Session
 
 > [!NOTE]
-> - **Session ID:** `40c75b31-2f1d-4e6a-818e-77eed151539f`  
-> - **Started:** 14/03/2026, 01:51:45  
-> - **Duration:** 3m 13s  
-> - **Exported:** 14/03/2026, 01:54:59  
+> - **Session ID:** `0d5ad777-fe33-4da0-ab2c-6e18a3ac59e1`  
+> - **Started:** 14/03/2026, 17:05:18  
+> - **Duration:** 3m 52s  
+> - **Exported:** 14/03/2026, 17:09:10  
 
 ---
 
@@ -16,203 +16,60 @@ Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP 
 
 ---
 
-<sub>⏱️ 15s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"**/.github/**/*.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\mcp.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
-```
-
-
----
-
-<sub>⏱️ 15s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"**/.github/**/*.py" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
-```
-
-
----
-
-<sub>⏱️ 15s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"**/docs/**/*.md" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
-```
-
-
----
-
-<sub>⏱️ 15s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "guardrail|hook|PreToolUse|mcp|policy|barrel|index\\.ts|import",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails",
-  "output_mode": "files_with_matches",
-  "glob": "*.{md,json,py,ts}",
-  "-i": true,
-  "head_limit": 200
-}
-```
-
-</details>
-
-<details>
-<summary>14 lines</summary>
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\mcp.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 20s</sub>
+<sub>⏱️ 17s</sub>
 
 ### 💬 Copilot
 
-I found the lesson’s actual guardrail surfaces. Next I’m reading the existing configs/scripts and the TypeScript layout so the new guardrail matches the lesson’s patterns instead of inventing one.
+I’m first mapping the lesson’s existing guardrail setup so the new import validation matches its conventions instead of inventing a new pattern.
 
 ---
 
-<sub>⏱️ 20s</sub>
+<sub>⏱️ 18s</sub>
 
-### ✅ `apply_patch`
+### ✅ `glob`
 
-<details>
-<summary>Arguments</summary>
+**.github\hooks\*.json**
 
-```json
-"*** Begin Patch\n*** Add File: C:/Users/nilay/.copilot/session-state/40c75b31-2f1d-4e6a-818e-77eed151539f/plan.md\n+## Plan\n+\n+1. Inspect existing Copilot instructions, hook configs, guardrail scripts, MCP config, and policy docs.\n+2. Inspect TypeScript source layout to confirm the barrel-file import convention and identify representative imports.\n+3. Add `.github/hooks/import-validation.json` matching existing hook config structure and using `PreToolUse`.\n+4. Add `.github/scripts/validate_imports.py` matching existing script conventions and enforcing barrel-file imports.\n+5. Review affected files to verify consistency with project patterns.\n*** End Patch\n"
-```
-
-</details>
+".github\hooks\*.json"
 
 ```
-Added 1 file(s): C:\Users\nilay\.copilot\session-state\40c75b31-2f1d-4e6a-818e-77eed151539f\plan.md
+No files matched the pattern.
 ```
 
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 18s</sub>
 
-### ✅ `view`
+### ✅ `glob`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\copilot-instructions.md.**
+**.github\scripts\*.py**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
-
-<details>
-<summary>50 lines</summary>
+".github\scripts\*.py"
 
 ```
-1. # Loan Workbench — Copilot Instructions (Guardrails Focus)
-2. 
-3. ## Project
-4. 
-5. TypeScript Express API with embedded message broker and SQLite persistence
-6. for loan application workflow management. This workspace uses MCP servers and
-7. hooks for capability expansion and enforcement.
-8. 
-9. ## Tool Policy
-10. 
-11. ### MCP Servers
-12. 
-13. This project configures MCP servers in `.github/mcp.json`. Follow these rules:
-14. 
-15. 1. **Database access is read-only.** Never attempt to write to the database via
-16.    MCP. All mutations go through the Express API routes with audit trail.
-17. 2. **Filesystem access is scoped.** The MCP filesystem server can only read
-18.    `src/backend/src/`, `src/backend/tests/`, and `docs/`. It cannot access
-19.    `.env`, `node_modules`, or config files with secrets.
-20. 3. **Do not add MCP servers** without updating `docs/tool-trust-boundaries.md`
-21.    with the new server's trust classification.
-22. 
-23. ### Hooks
-24. 
-25. Hooks in `.github/hooks/` enforce deterministic rules. Do not try to bypass them:
-26. 
-27. 1. **Pre-commit validation** (`pre-commit-validate.json`): Runs lint and tests.
-28.    If they fail, the commit is blocked. Fix the issues — do not disable the hook.
-29. 2. **Post-save formatting** (`post-save-format.json`): Prettier runs after every
-30.    `.ts` file save. Do not add manual formatting code.
-31. 3. **File protection** (`file-protection.json`): Certain files cannot be edited
-32.    by AI assistance. See `docs/security-policy.md` for the approval process.
-33. 
-34. ## Security Rules
-35. 
-36. - Audit events must succeed before mutations persist (fail-closed).
-37. - Error responses must not leak internal state or stack traces.
-38. - Delegated sessions cannot perform write operations.
-39. - Feature flags use 404 (not 403) for non-pilot users.
-40. - Protected files require manual approval for changes.
-41. 
-42. ## Code Conventions
-43. 
-44. - TypeScript strict mode, ESM imports.
-45. - Business rules in `src/backend/src/rules/` — pure functions, no side effects.
-46. - Services in `src/backend/src/services/` — I/O and external integrations.
-47. - Routes in `src/backend/src/routes/` — orchestration only, delegate to rules and services.
-48. - Queue broker in `src/backend/src/queue/` — async event handling (notifications, audit).
-49. - All tests in `src/backend/tests/` using Vitest.
-50.
+No files matched the pattern.
 ```
-
-</details>
 
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 18s</sub>
+
+### ✅ `glob`
+
+**docs\*.md**
+
+"docs\*.md"
+
+```
+No files matched the pattern.
+```
+
+
+---
+
+<sub>⏱️ 17s</sub>
 
 ### ✅ `view`
 
@@ -264,29 +121,102 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 18s</sub>
 
-### ✅ `view`
+### ✅ `rg`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
 
 <details>
-<summary>11 lines</summary>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "guardrail|hook|MCP|policy|import-validation|barrel|index\\.ts",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails",
+  "output_mode": "content",
+  "glob": "{README.md,ASSESSMENT.md,docs/*.md,.github/hooks/*.json,.github/scripts/*.py}",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>70 lines</summary>
 
 ```
-1. {
-2.   "hooks": {
-3.     "PreToolUse": [
-4.       {
-5.         "type": "command",
-6.         "command": "python .github/scripts/validate_commit.py",
-7.         "timeout": 60
-8.       }
-9.     ]
-10.   }
-11. }
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:4:> **Topic:** Hooks, MCP configuration, and runtime scripts that guard against unsafe operations.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:15:Hooks intercept Copilot tool calls at runtime to enforce guardrails.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:23:This lesson also includes MCP configuration for extending tool capabilities.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:27:This lesson should demonstrate guardrail implementation, not just analysis.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:31:- inspect the hook, MCP, and policy files to discover existing guardrail patterns
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:32:- create a new import-validation guardrail (hook config + validation script) that follows those patterns
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:33:- the new guardrail must enforce barrel-file import conventions for TypeScript files
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:40:| `.github/hooks/file-protection.json`       | PreToolUse hook                                           |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:41:| `.github/hooks/post-save-format.json`      | PostToolUse hook                                          |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:42:| `.github/hooks/pre-commit-validate.json`   | PreToolUse hook                                           |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:46:| `.github/mcp.json`                         | MCP server configuration                                  |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:47:| `docs/security-policy.md`                  | Security policy                                           |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:49:| `docs/guardrail-audit-example.md`          | Concrete lesson-06 demo target and assessment constraints |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:53:Create a new guardrail:
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:56:copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:61:- the CLI creates `.github/hooks/import-validation.json` and `.github/scripts/validate_imports.py`
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:62:- the hook config uses `PreToolUse` event type following existing patterns
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:63:- the validation script enforces barrel-file imports
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:69:Ask Copilot to perform edits that should trigger hooks.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:75:- inspect the GitHub Copilot output logs to confirm hook execution
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:77:Expected result: you can see the operational difference between static instructions and runtime guardrails.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:4:Workbench project. Every MCP server and external integration must be classified
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:11:| 1     | **Read-only internal** | Can read project files and data. No mutations.    | Filesystem MCP (scoped to `src/backend/src/`, `src/backend/tests/`, `docs/`) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:12:| 2     | **Read-only external** | Can query external systems. No mutations.         | SQLite MCP (read-only connection to `data/loan-workbench.db`)                |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:13:| 3     | **Write internal**     | Can modify project files within scope.            | Filesystem MCP with write access (rarely justified)                          |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:14:| 4     | **Write external**     | Can mutate external systems.                      | API MCP with POST/PUT/DELETE access                                          |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:15:| 5     | **Privileged**         | Can execute arbitrary commands or access secrets. | Shell MCP, deployment tools                                                  |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:17:## Current MCP Server Inventory
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:32:## Adding a New MCP Server
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:40:5. **Review**: Have the security policy owner approve the addition.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:53:2. **Scope narrowly**: MCP filesystem access should list specific directories,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:55:3. **No secret exposure**: MCP servers must not have access to `.env` files,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:57:4. **Defense in depth**: MCP scoping + hook enforcement + instruction guidance.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md:59:5. **Audit trail**: Write-capable MCP servers should have their operations
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json:2:  "hooks": {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:3:This document defines the security controls enforced by hooks and instructions.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:8:The following files are protected by the file-protection hook and cannot be
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:27:database schema without a migration. The file-protection hook prevents this.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:92:2. Verify hook configurations have not been modified.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:93:3. Review MCP server access logs (if write-capable servers are configured).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md:94:4. Document the incident and update this policy if needed.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:12:Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:21:> Did the produced code changes implement the prompt in a way that follows the repository's standards, constraints, and discovered guardrail patterns?
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:27:- `.output/change/expected-files.json` — expected files: `.github/hooks/import-validation.json` (added), `.github/scripts/validate_imports.py` (added)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:28:- `.output/change/expected-patterns.json` — required patterns in patch: PreToolUse, validate_imports.py, import, barrel/index.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:36:| Hook config created at `.github/hooks/import-validation.json` | `expected-files.json` |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:41:| Script enforces barrel-file (index.ts) convention | `expected-patterns.json` |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:47:Pending re-run with the updated implementation-oriented prompt. Previous assessment was for a read-only guardrail audit demo that has been replaced.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:7:Show that the CLI can discover existing guardrail patterns and create a new import-validation guardrail that follows the same conventions — producing assessable file changes.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:13:1. `.github/hooks/import-validation.json` — PreToolUse hook config matching existing hook patterns
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:14:2. `.github/scripts/validate_imports.py` — validation script enforcing barrel-file import convention
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:25:1. The hook config must use `PreToolUse` event type following existing hook file patterns.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:26:2. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:27:3. The implementation must follow the discovered conventions from existing hook configs and scripts.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:28:4. The change must stay scoped to `.github/hooks/` and `.github/scripts/`.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:34:Use the lesson's existing hook configs (file-protection, pre-commit-validate, post-save-format) and their scripts as pattern references to create a new import-validation guardrail.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:36:Good output should produce a hook + script pair that is consistent with the existing guardrail style.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:42:- create a hook JSON config with `PreToolUse` event type and a reference to `validate_imports.py`
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:44:- follow the same structure and conventions as the existing hook + script pairs
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:45:- keep the change scoped to the `.github/` guardrail surface
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json:2:  "hooks": {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json:2:  "hooks": {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:2:"""PreToolUse hook: block edits to protected files.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:4:Reads JSON from stdin (VS Code hook input) and checks if the tool is
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:47:                "hookSpecificOutput": {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:48:                    "hookEventName": "PreToolUse",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:51:                        f"Edit blocked: '{fp}' is protected by security policy. "
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:52:                        "See docs/security-policy.md for the change approval process."
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py:4:Called by the post-save hook to auto-format TypeScript files.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:4:Called by the pre-commit hook to ensure code quality before committing.
 ```
 
 </details>
@@ -294,273 +224,128 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
-### ✅ `view`
+### 💬 Copilot
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
-
-<details>
-<summary>11 lines</summary>
-
-```
-1. {
-2.   "hooks": {
-3.     "PostToolUse": [
-4.       {
-5.         "type": "command",
-6.         "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\"",
-7.         "timeout": 15
-8.       }
-9.     ]
-10.   }
-11. }
-```
-
-</details>
-
+I found the lesson’s guardrail surface and now I’m reading the concrete hook/script/doc files plus a few TypeScript examples so the new validator matches the existing style and the actual import convention.
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
-
-<details>
-<summary>11 lines</summary>
-
-```
-1. {
-2.   "hooks": {
-3.     "PreToolUse": [
-4.       {
-5.         "type": "command",
-6.         "command": "python .github/scripts/check_protected_files.py",
-7.         "timeout": 10
-8.       }
-9.     ]
-10.   }
-11. }
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 28s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md (lines 1-140)
 
 <details>
-<summary>52 lines</summary>
+<summary>85 lines</summary>
 
-```
-1. #!/usr/bin/env python3
-2. """Pre-commit validation script (Python replacement for validate-commit.sh).
-3. 
-4. Called by the pre-commit hook to ensure code quality before committing.
-5. Usage: python validate_commit.py
-6. """
-7. import subprocess
-8. import sys
-9. from pathlib import Path
-10. 
-11. 
-12. def run_step(name: str, cmd: list[str]) -> bool:
-13.     """Run a validation step and return True if it passed."""
-14.     print(f"  {name}...")
-15.     result = subprocess.run(cmd, capture_output=True, text=True)
-16.     if result.returncode != 0:
-17.         print(f"  FAIL: {name}")
-18.         if result.stdout:
-19.             print(result.stdout[:500])
-20.         if result.stderr:
-21.             print(result.stderr[:500])
-22.         return False
-23.     print(f"  OK")
-24.     return True
-25. 
-26. 
-27. def main() -> None:
-28.     print("=== Pre-commit validation ===")
-29. 
-30.     steps = [
-31.         ("[1/3] TypeScript compilation", ["npx", "tsc", "--noEmit"]),
-32.     ]
-33. 
-34.     # Only run eslint if config exists
-35.     if Path(".eslintrc.json").exists() or Path("eslint.config.js").exists():
-36.         steps.append(("[2/3] Lint", ["npx", "eslint", "src/", "tests/", "--max-warnings", "0"]))
-37.     else:
-38.         print("  [2/3] Lint skipped (no eslint config found)")
-39. 
-40.     steps.append(("[3/3] Tests", ["npx", "vitest", "run", "--reporter=verbose"]))
-41. 
-42.     for name, cmd in steps:
-43.         if not run_step(name, cmd):
-44.             print(f"\nFAIL: {name} failed. Fix issues before committing.")
-45.             sys.exit(1)
-46. 
-47.     print("\n=== All checks passed ===")
-48. 
-49. 
-50. if __name__ == "__main__":
-51.     main()
-52.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 28s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py
-
-<details>
-<summary>24 lines</summary>
-
-```
-1. #!/usr/bin/env python3
-2. """Post-save formatting script (Python replacement for format-file.sh).
-3. 
-4. Called by the post-save hook to auto-format TypeScript files.
-5. Usage: python format_file.py <filepath>
-6. """
-7. import subprocess
-8. import sys
-9. from pathlib import Path
-10. 
-11. 
-12. def main() -> None:
-13.     if len(sys.argv) < 2:
-14.         print("Usage: python format_file.py <filepath>", file=sys.stderr)
-15.         sys.exit(1)
+````
+1. # Lesson 06 — Tools and Guardrails
+2. 
+3. > **App:** Loan Workbench (TypeScript Express API + SQLite)
+4. > **Topic:** Hooks, MCP configuration, and runtime scripts that guard against unsafe operations.
+5. 
+6. ## Setup
+7. 
+8. ```bash
+9. python util.py --setup
+10. python util.py --run
+11. ```
+12. 
+13. ## What This Demonstrates
+14. 
+15. Hooks intercept Copilot tool calls at runtime to enforce guardrails.
 16. 
-17.     filepath = Path(sys.argv[1])
-18.     if filepath.suffix in (".ts", ".tsx"):
-19.         subprocess.run(["npx", "prettier", "--write", str(filepath)], check=True)
-20. 
-21. 
-22. if __name__ == "__main__":
-23.     main()
-24.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 28s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
-
-<details>
-<summary>64 lines</summary>
-
-```
-1. #!/usr/bin/env python3
-2. """PreToolUse hook: block edits to protected files.
-3. 
-4. Reads JSON from stdin (VS Code hook input) and checks if the tool is
-5. attempting to edit a protected file. Returns a deny decision if so.
-6. 
-7. Protected files:
-8.   - .env, .env.*
-9.     - src/backend/src/config/feature-flags.ts
-10.     - src/backend/src/db/connection.ts
-11. """
-12. import json
-13. import sys
-14. from pathlib import PurePosixPath
-15. 
-16. PROTECTED_PATTERNS = [
-17.     ".env",
-18.     "src/backend/src/config/feature-flags.ts",
-19.     "src/backend/src/db/connection.ts",
-20. ]
-21. 
+17. | Hook File                  | Event       | Purpose                                    |
+18. | -------------------------- | ----------- | ------------------------------------------ |
+19. | `file-protection.json`     | PreToolUse  | Blocks edits to protected files            |
+20. | `post-save-format.json`    | PostToolUse | Auto-formats files after writes            |
+21. | `pre-commit-validate.json` | PreToolUse  | Validates changes before commit operations |
 22. 
-23. def is_protected(filepath: str) -> bool:
-24.     p = PurePosixPath(filepath)
-25.     for pattern in PROTECTED_PATTERNS:
-26.         if p.name.startswith(".env") or str(p) == pattern:
-27.             return True
-28.     return False
-29. 
+23. This lesson also includes MCP configuration for extending tool capabilities.
+24. 
+25. ## Example Goal
+26. 
+27. This lesson should demonstrate guardrail implementation, not just analysis.
+28. 
+29. For this example, the intended outcome is:
 30. 
-31. def main() -> None:
-32.     data = json.load(sys.stdin)
-33.     tool_name = data.get("tool_name", "")
-34.     tool_input = data.get("tool_input", {})
+31. - inspect the hook, MCP, and policy files to discover existing guardrail patterns
+32. - create a new import-validation guardrail (hook config + validation script) that follows those patterns
+33. - the new guardrail must enforce barrel-file import conventions for TypeScript files
+34. - the change is assessable via actual vs expected file and pattern comparison
 35. 
-36.     # Only check file-editing tools
-37.     if tool_name not in ("editFiles", "createFile"):
-38.         sys.exit(0)
-39. 
-40.     files = tool_input.get("files", [])
-41.     file_path = tool_input.get("filePath", "")
-42.     paths_to_check = files if files else ([file_path] if file_path else [])
-43. 
-44.     for fp in paths_to_check:
-45.         if is_protected(fp):
-46.             result = {
-47.                 "hookSpecificOutput": {
-48.                     "hookEventName": "PreToolUse",
-49.                     "permissionDecision": "deny",
-50.                     "permissionDecisionReason": (
-51.                         f"Edit blocked: '{fp}' is protected by security policy. "
-52.                         "See docs/security-policy.md for the change approval process."
-53.                     ),
-54.                 }
-55.             }
-56.             json.dump(result, sys.stdout)
-57.             sys.exit(0)
+36. ## Context Files
+37. 
+38. | Path                                       | Purpose                                                   |
+39. | ------------------------------------------ | --------------------------------------------------------- |
+40. | `.github/hooks/file-protection.json`       | PreToolUse hook                                           |
+41. | `.github/hooks/post-save-format.json`      | PostToolUse hook                                          |
+42. | `.github/hooks/pre-commit-validate.json`   | PreToolUse hook                                           |
+43. | `.github/scripts/check_protected_files.py` | File protection script                                    |
+44. | `.github/scripts/format_file.py`           | Formatter script                                          |
+45. | `.github/scripts/validate_commit.py`       | Commit validation script                                  |
+46. | `.github/mcp.json`                         | MCP server configuration                                  |
+47. | `docs/security-policy.md`                  | Security policy                                           |
+48. | `docs/tool-trust-boundaries.md`            | Tool trust boundaries                                     |
+49. | `docs/guardrail-audit-example.md`          | Concrete lesson-06 demo target and assessment constraints |
+50. 
+51. ## Copilot CLI Workflow
+52. 
+53. Create a new guardrail:
+54. 
+55. ```bash
+56. copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+57. ```
 58. 
-59.     sys.exit(0)
+59. Expected outcome:
 60. 
-61. 
-62. if __name__ == "__main__":
-63.     main()
-64.
-```
+61. - the CLI creates `.github/hooks/import-validation.json` and `.github/scripts/validate_imports.py`
+62. - the hook config uses `PreToolUse` event type following existing patterns
+63. - the validation script enforces barrel-file imports
+64. - `.output/change/demo.patch` contains the new files
+65. - `.output/change/comparison.md` shows actual vs expected file and pattern match results
+66. 
+67. ## VS Code Chat Workflow
+68. 
+69. Ask Copilot to perform edits that should trigger hooks.
+70. 
+71. Examples:
+72. 
+73. - ask it to edit a protected file and observe the block
+74. - ask it to create or update a normal source file and observe post-save formatting
+75. - inspect the GitHub Copilot output logs to confirm hook execution
+76. 
+77. Expected result: you can see the operational difference between static instructions and runtime guardrails.
+78. 
+79. For the captured demo run, use `python util.py --demo --model gpt-5.4`.
+80. 
+81. ## Cleanup
+82. 
+83. ```bash
+84. python util.py --clean
+85. ```
+````
 
 </details>
 
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\security-policy.md (lines 1-140)
 
 <details>
-<summary>95 lines</summary>
+<summary>94 lines</summary>
 
 ```
 1. # Security Policy — Loan Workbench
@@ -657,7 +442,6 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 92. 2. Verify hook configurations have not been modified.
 93. 3. Review MCP server access logs (if write-capable servers are configured).
 94. 4. Document the incident and update this policy if needed.
-95.
 ```
 
 </details>
@@ -665,16 +449,16 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\tool-trust-boundaries.md (lines 1-140)
 
 <details>
-<summary>61 lines</summary>
+<summary>60 lines</summary>
 
 ```
 1. # Tool Trust Boundaries
@@ -737,7 +521,6 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 58.    No single layer is sufficient alone.
 59. 5. **Audit trail**: Write-capable MCP servers should have their operations
 60.    logged, just like API mutations.
-61.
 ```
 
 </details>
@@ -745,16 +528,16 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md (lines 1-140)
 
 <details>
-<summary>46 lines</summary>
+<summary>45 lines</summary>
 
 ```
 1. # Lesson 06 — Guardrail Implementation Example
@@ -802,7 +585,6 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 43. - create a Python validation script that checks import paths
 44. - follow the same structure and conventions as the existing hook + script pairs
 45. - keep the change scoped to the `.github/` guardrail surface
-46.
 ```
 
 </details>
@@ -810,13 +592,300 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
+
+<details>
+<summary>11 lines</summary>
+
+```
+1. {
+2.   "hooks": {
+3.     "PreToolUse": [
+4.       {
+5.         "type": "command",
+6.         "command": "python .github/scripts/check_protected_files.py",
+7.         "timeout": 10
+8.       }
+9.     ]
+10.   }
+11. }
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
+
+<details>
+<summary>11 lines</summary>
+
+```
+1. {
+2.   "hooks": {
+3.     "PostToolUse": [
+4.       {
+5.         "type": "command",
+6.         "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\"",
+7.         "timeout": 15
+8.       }
+9.     ]
+10.   }
+11. }
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
+
+<details>
+<summary>11 lines</summary>
+
+```
+1. {
+2.   "hooks": {
+3.     "PreToolUse": [
+4.       {
+5.         "type": "command",
+6.         "command": "python .github/scripts/validate_commit.py",
+7.         "timeout": 60
+8.       }
+9.     ]
+10.   }
+11. }
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
+
+<details>
+<summary>64 lines</summary>
+
+```
+1. #!/usr/bin/env python3
+2. """PreToolUse hook: block edits to protected files.
+3. 
+4. Reads JSON from stdin (VS Code hook input) and checks if the tool is
+5. attempting to edit a protected file. Returns a deny decision if so.
+6. 
+7. Protected files:
+8.   - .env, .env.*
+9.     - src/backend/src/config/feature-flags.ts
+10.     - src/backend/src/db/connection.ts
+11. """
+12. import json
+13. import sys
+14. from pathlib import PurePosixPath
+15. 
+16. PROTECTED_PATTERNS = [
+17.     ".env",
+18.     "src/backend/src/config/feature-flags.ts",
+19.     "src/backend/src/db/connection.ts",
+20. ]
+21. 
+22. 
+23. def is_protected(filepath: str) -> bool:
+24.     p = PurePosixPath(filepath)
+25.     for pattern in PROTECTED_PATTERNS:
+26.         if p.name.startswith(".env") or str(p) == pattern:
+27.             return True
+28.     return False
+29. 
+30. 
+31. def main() -> None:
+32.     data = json.load(sys.stdin)
+33.     tool_name = data.get("tool_name", "")
+34.     tool_input = data.get("tool_input", {})
+35. 
+36.     # Only check file-editing tools
+37.     if tool_name not in ("editFiles", "createFile"):
+38.         sys.exit(0)
+39. 
+40.     files = tool_input.get("files", [])
+41.     file_path = tool_input.get("filePath", "")
+42.     paths_to_check = files if files else ([file_path] if file_path else [])
+43. 
+44.     for fp in paths_to_check:
+45.         if is_protected(fp):
+46.             result = {
+47.                 "hookSpecificOutput": {
+48.                     "hookEventName": "PreToolUse",
+49.                     "permissionDecision": "deny",
+50.                     "permissionDecisionReason": (
+51.                         f"Edit blocked: '{fp}' is protected by security policy. "
+52.                         "See docs/security-policy.md for the change approval process."
+53.                     ),
+54.                 }
+55.             }
+56.             json.dump(result, sys.stdout)
+57.             sys.exit(0)
+58. 
+59.     sys.exit(0)
+60. 
+61. 
+62. if __name__ == "__main__":
+63.     main()
+64.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\format_file.py
+
+<details>
+<summary>24 lines</summary>
+
+```
+1. #!/usr/bin/env python3
+2. """Post-save formatting script (Python replacement for format-file.sh).
+3. 
+4. Called by the post-save hook to auto-format TypeScript files.
+5. Usage: python format_file.py <filepath>
+6. """
+7. import subprocess
+8. import sys
+9. from pathlib import Path
+10. 
+11. 
+12. def main() -> None:
+13.     if len(sys.argv) < 2:
+14.         print("Usage: python format_file.py <filepath>", file=sys.stderr)
+15.         sys.exit(1)
+16. 
+17.     filepath = Path(sys.argv[1])
+18.     if filepath.suffix in (".ts", ".tsx"):
+19.         subprocess.run(["npx", "prettier", "--write", str(filepath)], check=True)
+20. 
+21. 
+22. if __name__ == "__main__":
+23.     main()
+24.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
+
+<details>
+<summary>52 lines</summary>
+
+```
+1. #!/usr/bin/env python3
+2. """Pre-commit validation script (Python replacement for validate-commit.sh).
+3. 
+4. Called by the pre-commit hook to ensure code quality before committing.
+5. Usage: python validate_commit.py
+6. """
+7. import subprocess
+8. import sys
+9. from pathlib import Path
+10. 
+11. 
+12. def run_step(name: str, cmd: list[str]) -> bool:
+13.     """Run a validation step and return True if it passed."""
+14.     print(f"  {name}...")
+15.     result = subprocess.run(cmd, capture_output=True, text=True)
+16.     if result.returncode != 0:
+17.         print(f"  FAIL: {name}")
+18.         if result.stdout:
+19.             print(result.stdout[:500])
+20.         if result.stderr:
+21.             print(result.stderr[:500])
+22.         return False
+23.     print(f"  OK")
+24.     return True
+25. 
+26. 
+27. def main() -> None:
+28.     print("=== Pre-commit validation ===")
+29. 
+30.     steps = [
+31.         ("[1/3] TypeScript compilation", ["npx", "tsc", "--noEmit"]),
+32.     ]
+33. 
+34.     # Only run eslint if config exists
+35.     if Path(".eslintrc.json").exists() or Path("eslint.config.js").exists():
+36.         steps.append(("[2/3] Lint", ["npx", "eslint", "src/", "tests/", "--max-warnings", "0"]))
+37.     else:
+38.         print("  [2/3] Lint skipped (no eslint config found)")
+39. 
+40.     steps.append(("[3/3] Tests", ["npx", "vitest", "run", "--reporter=verbose"]))
+41. 
+42.     for name, cmd in steps:
+43.         if not run_step(name, cmd):
+44.             print(f"\nFAIL: {name} failed. Fix issues before committing.")
+45.             sys.exit(1)
+46. 
+47.     print("\n=== All checks passed ===")
+48. 
+49. 
+50. if __name__ == "__main__":
+51.     main()
+52.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 36s</sub>
 
 ### ✅ `glob`
 
 **Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
 
-"src/**/*.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
+"src\**\index.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
 
 ```
 No files matched the pattern.
@@ -825,22 +894,7 @@ No files matched the pattern.
 
 ---
 
-<sub>⏱️ 28s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"src/**/index.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 28s</sub>
+<sub>⏱️ 36s</sub>
 
 ### ✅ `rg`
 
@@ -853,10 +907,10 @@ No files matched the pattern.
 {
   "pattern": "from ['\\\"][^'\\\"]+['\\\"]",
   "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
+  "glob": "**/*.{ts,tsx}",
   "output_mode": "content",
-  "glob": "*.ts",
   "-n": true,
-  "head_limit": 200
+  "head_limit": 120
 }
 ```
 
@@ -869,12 +923,12 @@ No files matched the pattern.
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\vite.config.ts:1:import { defineConfig } from "vite";
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts:5:import { describe, it, expect } from "vitest";
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts:10:} from "../../src/rules/state-machine.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\integration\decisions.test.ts:5:import { describe, it, expect } from "vitest";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\integration\applications.test.ts:5:import { describe, it, expect } from "vitest";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\notification-service.test.ts:5:import { describe, it, expect, vi, beforeEach } from "vitest";
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:5:import { describe, it, expect } from "vitest";
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:10:} from "../../src/rules/business-rules.js";
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:11:import type { LoanApplication } from "../../src/models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\integration\decisions.test.ts:5:import { describe, it, expect } from "vitest";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\notification-service.test.ts:5:import { describe, it, expect, vi, beforeEach } from "vitest";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\integration\applications.test.ts:5:import { describe, it, expect } from "vitest";
 ```
 
 </details>
@@ -882,15 +936,15 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 40s</sub>
+<sub>⏱️ 42s</sub>
 
 ### 💬 Copilot
 
-I’ve confirmed the lesson explicitly expects this exact hook/script pair. I’m now checking the source layout to make the validator enforce the real import convention instead of a guessed regex.
+I’ve got the hook/script shape now. Next I’m checking the TypeScript layout so the validator can enforce the barrel rule without flagging the project’s legitimate relative imports.
 
 ---
 
-<sub>⏱️ 40s</sub>
+<sub>⏱️ 42s</sub>
 
 ### ✅ `view`
 
@@ -915,7 +969,112 @@ tsconfig.json
 
 ---
 
-<sub>⏱️ 40s</sub>
+<sub>⏱️ 42s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "index\\.ts",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
+  "output_mode": "files_with_matches",
+  "glob": "**/*.ts"
+}
+```
+
+</details>
+
+```
+No matches found.
+```
+
+
+---
+
+<sub>⏱️ 42s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "from ['\\\"](\\.{1,2}\\/[^'\\\"]+)['\\\"]",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
+  "glob": "**/*.{ts,tsx}",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts:10:} from "../../src/rules/state-machine.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:10:} from "../../src/rules/business-rules.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:11:import type { LoanApplication } from "../../src/models/types.js";
+```
+
+
+---
+
+<sub>⏱️ 42s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "export .* from ['\\\"]",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
+  "glob": "**/*.ts",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+```
+No matches found.
+```
+
+
+---
+
+<sub>⏱️ 52s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend
+
+```
+dist
+src
+tests
+tsconfig.json
+```
+
+
+---
+
+<sub>⏱️ 52s</sub>
 
 ### ✅ `view`
 
@@ -943,364 +1102,27 @@ services
 
 ---
 
-<sub>⏱️ 40s</sub>
+<sub>⏱️ 52s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests
-
-```
-integration
-unit
-```
-
-
----
-
-<sub>⏱️ 40s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "^export\\s+(\\*|\\{)|^export\\s+type",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
-  "output_mode": "content",
-  "glob": "*.ts",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
-
-```
-No matches found.
-```
-
-
----
-
-<sub>⏱️ 40s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "index\\.ts",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
-  "output_mode": "files_with_matches",
-  "glob": "*.ts",
-  "head_limit": 200
-}
-```
-
-</details>
-
-```
-No matches found.
-```
-
-
----
-
-<sub>⏱️ 40s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "from ['\\\"](\\.{1,2}/[^'\\\"]+)['\\\"]",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src\\backend",
-  "output_mode": "content",
-  "glob": "*.ts",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts:10:} from "../../src/rules/state-machine.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:10:} from "../../src/rules/business-rules.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:11:import type { LoanApplication } from "../../src/models/types.js";
-```
-
-
----
-
-<sub>⏱️ 47s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "tool_input|TOOL_INPUT|filePath|oldString|newString|content",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails",
-  "output_mode": "content",
-  "glob": "*.{md,json,py}",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend
 
 <details>
 <summary>6 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py:153:def _write_text_atomic(path: Path, content: str) -> None:
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py:163:    handle.write(content)
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:34:    tool_input = data.get("tool_input", {})
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:40:    files = tool_input.get("files", [])
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:41:    file_path = tool_input.get("filePath", "")
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json:6:        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\"",
+index.html
+public
+src
+styles
+tsconfig.json
+vite.config.ts
 ```
 
 </details>
-
-
----
-
-<sub>⏱️ 47s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs**
-
-"**/*hook*" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 47s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md
-
-<details>
-<summary>86 lines</summary>
-
-````
-1. # Lesson 06 — Tools and Guardrails
-2. 
-3. > **App:** Loan Workbench (TypeScript Express API + SQLite)
-4. > **Topic:** Hooks, MCP configuration, and runtime scripts that guard against unsafe operations.
-5. 
-6. ## Setup
-7. 
-8. ```bash
-9. python util.py --setup
-10. python util.py --run
-11. ```
-12. 
-13. ## What This Demonstrates
-14. 
-15. Hooks intercept Copilot tool calls at runtime to enforce guardrails.
-16. 
-17. | Hook File                  | Event       | Purpose                                    |
-18. | -------------------------- | ----------- | ------------------------------------------ |
-19. | `file-protection.json`     | PreToolUse  | Blocks edits to protected files            |
-20. | `post-save-format.json`    | PostToolUse | Auto-formats files after writes            |
-21. | `pre-commit-validate.json` | PreToolUse  | Validates changes before commit operations |
-22. 
-23. This lesson also includes MCP configuration for extending tool capabilities.
-24. 
-25. ## Example Goal
-26. 
-27. This lesson should demonstrate guardrail implementation, not just analysis.
-28. 
-29. For this example, the intended outcome is:
-30. 
-31. - inspect the hook, MCP, and policy files to discover existing guardrail patterns
-32. - create a new import-validation guardrail (hook config + validation script) that follows those patterns
-33. - the new guardrail must enforce barrel-file import conventions for TypeScript files
-34. - the change is assessable via actual vs expected file and pattern comparison
-35. 
-36. ## Context Files
-37. 
-38. | Path                                       | Purpose                                                   |
-39. | ------------------------------------------ | --------------------------------------------------------- |
-40. | `.github/hooks/file-protection.json`       | PreToolUse hook                                           |
-41. | `.github/hooks/post-save-format.json`      | PostToolUse hook                                          |
-42. | `.github/hooks/pre-commit-validate.json`   | PreToolUse hook                                           |
-43. | `.github/scripts/check_protected_files.py` | File protection script                                    |
-44. | `.github/scripts/format_file.py`           | Formatter script                                          |
-45. | `.github/scripts/validate_commit.py`       | Commit validation script                                  |
-46. | `.github/mcp.json`                         | MCP server configuration                                  |
-47. | `docs/security-policy.md`                  | Security policy                                           |
-48. | `docs/tool-trust-boundaries.md`            | Tool trust boundaries                                     |
-49. | `docs/guardrail-audit-example.md`          | Concrete lesson-06 demo target and assessment constraints |
-50. 
-51. ## Copilot CLI Workflow
-52. 
-53. Create a new guardrail:
-54. 
-55. ```bash
-56. copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
-57. ```
-58. 
-59. Expected outcome:
-60. 
-61. - the CLI creates `.github/hooks/import-validation.json` and `.github/scripts/validate_imports.py`
-62. - the hook config uses `PreToolUse` event type following existing patterns
-63. - the validation script enforces barrel-file imports
-64. - `.output/change/demo.patch` contains the new files
-65. - `.output/change/comparison.md` shows actual vs expected file and pattern match results
-66. 
-67. ## VS Code Chat Workflow
-68. 
-69. Ask Copilot to perform edits that should trigger hooks.
-70. 
-71. Examples:
-72. 
-73. - ask it to edit a protected file and observe the block
-74. - ask it to create or update a normal source file and observe post-save formatting
-75. - inspect the GitHub Copilot output logs to confirm hook execution
-76. 
-77. Expected result: you can see the operational difference between static instructions and runtime guardrails.
-78. 
-79. For the captured demo run, use `python util.py --demo --model gpt-5.4`.
-80. 
-81. ## Cleanup
-82. 
-83. ```bash
-84. python util.py --clean
-85. ```
-86.
-````
-
-</details>
-
-
----
-
-<sub>⏱️ 47s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md
-
-<details>
-<summary>52 lines</summary>
-
-````
-1. # Lesson 06 CLI Prompt Assessment
-2. 
-3. This assessment is intentionally narrow.
-4. 
-5. It evaluates only whether the code changes produced by the lesson's GitHub Copilot CLI prompt respected the required standards, constraints, and repository context for that prompt.
-6. 
-7. It does not assess the lesson overall.
-8. 
-9. ## Prompt Under Test
-10. 
-11. ```text
-12. Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL.
-13. ```
-14. 
-15. The assessment run uses the model from `lessons/_common/assessment-config.json`.
-16. 
-17. ## Assessment Scope
-18. 
-19. The only question being evaluated is:
-20. 
-21. > Did the produced code changes implement the prompt in a way that follows the repository's standards, constraints, and discovered guardrail patterns?
-22. 
-23. ## Expected Change Artifacts
-24. 
-25. Assessment compares actual output against gold-standard expectations:
-26. 
-27. - `.output/change/expected-files.json` — expected files: `.github/hooks/import-validation.json` (added), `.github/scripts/validate_imports.py` (added)
-28. - `.output/change/expected-patterns.json` — required patterns in patch: PreToolUse, validate_imports.py, import, barrel/index.ts
-29. 
-30. The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report.
-31. 
-32. ## Assessment Criteria
-33. 
-34. | Criterion | Source |
-35. | --- | --- |
-36. | Hook config created at `.github/hooks/import-validation.json` | `expected-files.json` |
-37. | Validation script created at `.github/scripts/validate_imports.py` | `expected-files.json` |
-38. | Hook uses `PreToolUse` event type | `expected-patterns.json` |
-39. | Hook references `validate_imports.py` | `expected-patterns.json` |
-40. | Script checks import paths | `expected-patterns.json` |
-41. | Script enforces barrel-file (index.ts) convention | `expected-patterns.json` |
-42. | No shell commands executed | Prompt constraint |
-43. | No SQL tools used | Prompt constraint |
-44. 
-45. ## Captured Result
-46. 
-47. Pending re-run with the updated implementation-oriented prompt. Previous assessment was for a read-only guardrail audit demo that has been replaced.
-48. 
-49. ## Verdict
-50. 
-51. Pending re-run.
-52.
-````
-
-</details>
-
-
----
-
-<sub>⏱️ 52s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "editFiles|createFile|tool_name|tool_input",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\util.py",
-  "output_mode": "content",
-  "-n": true,
-  "head_limit": 100
-}
-```
-
-</details>
-
-```
-No matches found.
-```
 
 
 ---
@@ -1309,404 +1131,148 @@ No matches found.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py (lines 1-260)
-
-<details>
-<summary>260 lines</summary>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src
 
 ```
-1. #!/usr/bin/env python3
-2. """Lesson 06 — Tools And Guardrails workspace utility.
-3. 
-4. Usage:
-5.   python util.py --setup    Copy app source into src/, create .env interactively
-6.   python util.py --run      Install deps + start backend & frontend dev servers
-7.   python util.py --clean    Remove copied src/ and build artifacts
-8.   python util.py --demo     Run a Copilot CLI guardrail-audit demo and capture artifacts
-9. """
-10. 
-11. from __future__ import annotations
-12. 
-13. import difflib
-14. import json
-15. import os
-16. import shutil
-17. import subprocess
-18. import sys
-19. import tempfile
-20. import time
-21. from pathlib import Path
-22. 
-23. MODEL_OVERRIDE_FLAG = "--model"
-24. LESSON = Path(__file__).resolve().parent
-25. APP_SOURCE = LESSON.parent.parent / "app"
-26. CONFIG_PATH = LESSON.parent / "_common" / "assessment-config.json"
-27. OUTPUT_DIR = LESSON / ".output"
-28. LOG_DIR = OUTPUT_DIR / "logs"
-29. CHANGE_DIR = OUTPUT_DIR / "change"
-30. KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
-31. RUNNER_LOG_PATH = LOG_DIR / "runner.log"
-32. TEXT_EXTENSIONS = {
-33.   ".css",
-34.   ".html",
-35.   ".js",
-36.   ".json",
-37.   ".md",
-38.   ".mjs",
-39.   ".ts",
-40.   ".tsx",
-41.   ".txt",
-42.   ".yaml",
-43.   ".yml",
-44. }
-45. 
-46. sys.path.insert(0, str(LESSON.parent / "_common"))
-47. from util_base import clean, compare_with_expected, main  # noqa: E402
-48. 
-49. 
-50. def _extract_model_override(argv: list[str]) -> tuple[list[str], str | None]:
-51.   if MODEL_OVERRIDE_FLAG not in argv:
-52.     return argv, None
-53. 
-54.   index = argv.index(MODEL_OVERRIDE_FLAG)
-55.   if index + 1 >= len(argv):
-56.     raise SystemExit("ERROR: --model requires a value.")
-57. 
-58.   model_name = argv[index + 1]
-59.   trimmed = argv[:index] + argv[index + 2 :]
-60.   return trimmed, model_name
-61. 
-62. 
-63. sys.argv, _MODEL_OVERRIDE = _extract_model_override(sys.argv)
-64. if _MODEL_OVERRIDE:
-65.   os.environ["CTX_SDLC_COPILOT_MODEL"] = _MODEL_OVERRIDE
-66. 
-67. 
-68. def _load_assessment_config() -> dict[str, object]:
-69.   if not CONFIG_PATH.exists():
-70.     return {}
-71.   return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
-72. 
-73. 
-74. ASSESSMENT_CONFIG = _load_assessment_config()
-75. DEMO_TIMEOUT_SECONDS = int(
-76.   os.environ.get(
-77.     "CTX_SDLC_DEMO_TIMEOUT",
-78.     str(ASSESSMENT_CONFIG.get("defaultDemoTimeoutSeconds", 180)),
-79.   )
-80. )
-81. DEMO_MODEL = os.environ.get(
-82.   "CTX_SDLC_COPILOT_MODEL",
-83.   str(ASSESSMENT_CONFIG.get("defaultAssessmentModel", "claude-haiku-4.5")),
-84. )
-85. 
-86. 
-87. def _is_text_file(path: Path) -> bool:
-88.   return path.suffix.lower() in TEXT_EXTENSIONS
-89. 
-90. 
-91. def _snapshot_tree(root: Path) -> dict[str, str]:
-92.   snapshot: dict[str, str] = {}
-93.   if not root.exists():
-94.     return snapshot
-95. 
-96.   for path in sorted(root.rglob("*")):
-97.     if not path.is_file() or not _is_text_file(path):
-98.       continue
-99.     if any(part in {"node_modules", "dist", "data", ".git", ".output"} for part in path.parts):
-100.       continue
-101.     snapshot[path.relative_to(root).as_posix()] = path.read_text(encoding="utf-8")
-102.   return snapshot
-103. 
-104. 
-105. def _reset_output_dirs() -> None:
-106.   for directory in (LOG_DIR, CHANGE_DIR):
-107.     if directory.exists():
-108.       shutil.rmtree(directory)
-109.     directory.mkdir(parents=True, exist_ok=True)
-110. 
-111. 
-112. def _reset_demo_workspace() -> Path:
-113.   clean(LESSON)
-114.   src_dir = LESSON / "src"
-115.   shutil.copytree(
-116.     APP_SOURCE,
-117.     src_dir,
-118.     ignore=shutil.ignore_patterns("node_modules", ".env", "*.db", "data"),
-119.   )
-120.   return src_dir
-121. 
-122. 
-123. def _demo_prompt() -> str:
-124.   return (
-125.     "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. "
-126.     "Discover the relevant files rather than assuming a fixed list. "
-127.     "Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. "
-128.     "Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. "
-129.     "Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. "
-130.     "The hook must use PreToolUse event type and invoke the Python validation script. "
-131.     "The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. "
-132.     "Apply the changes directly in files. Do not run shell commands and do not use SQL."
-133.   )
-134. 
-135. 
-136. def _resolve_copilot_executable() -> str:
-137.   copilot_executable = (
-138.     shutil.which("copilot.cmd")
-139.     or shutil.which("copilot.bat")
-140.     or shutil.which("copilot")
-141.   )
-142.   if copilot_executable is None:
-143.     raise FileNotFoundError("Could not resolve the Copilot CLI executable on PATH.")
-144.   return copilot_executable
-145. 
-146. 
-147. def _validate_demo_model() -> str:
-148.   if not DEMO_MODEL.strip():
-149.     raise RuntimeError("Assessment model configuration is empty.")
-150.   return DEMO_MODEL
-151. 
-152. 
-153. def _write_text_atomic(path: Path, content: str) -> None:
-154.   path.parent.mkdir(parents=True, exist_ok=True)
-155.   with tempfile.NamedTemporaryFile(
-156.     "w",
-157.     encoding="utf-8",
-158.     delete=False,
-159.     dir=path.parent,
-160.     prefix=f".{path.name}.",
-161.     suffix=".tmp",
-162.   ) as handle:
-163.     handle.write(content)
-164.     temp_path = Path(handle.name)
-165.   temp_path.replace(path)
-166. 
-167. 
-168. def _write_json(path: Path, payload: object) -> None:
-169.   _write_text_atomic(path, json.dumps(payload, indent=2) + "\n")
-170. 
-171. 
-172. def _write_diff(before: dict[str, str], after: dict[str, str]) -> dict[str, list[str]]:
-173.   keys = sorted(set(before) | set(after))
-174.   patch_chunks: list[str] = []
-175.   changed = {"added": [], "modified": [], "deleted": []}
-176. 
-177.   for key in keys:
-178.     old_text = before.get(key)
-179.     new_text = after.get(key)
-180.     if old_text == new_text:
-181.       continue
-182. 
-183.     if old_text is None:
-184.       changed["added"].append(key)
-185.     elif new_text is None:
-186.       changed["deleted"].append(key)
-187.     else:
-188.       changed["modified"].append(key)
-189. 
-190.     diff = difflib.unified_diff(
-191.       (old_text or "").splitlines(keepends=True),
-192.       (new_text or "").splitlines(keepends=True),
-193.       fromfile=f"a/{key}",
-194.       tofile=f"b/{key}",
-195.       n=3,
-196.     )
-197.     patch_chunks.append("".join(diff))
-198. 
-199.   _write_text_atomic(CHANGE_DIR / "demo.patch", "\n".join(chunk for chunk in patch_chunks if chunk))
-200.   _write_json(CHANGE_DIR / "changed-files.json", changed)
-201.   return changed
-202. 
-203. 
-204. def _wait_for_fresh_artifacts(run_started_at: float) -> None:
-205.   required_paths = [
-206.     LOG_DIR / "command.txt",
-207.     LOG_DIR / "prompt.txt",
-208.     LOG_DIR / "session.md",
-209.     LOG_DIR / "copilot.log",
-210.     CHANGE_DIR / "demo.patch",
-211.     CHANGE_DIR / "changed-files.json",
-212.   ]
-213.   stable_hits = 0
-214.   previous_state: tuple[tuple[str, int, int], ...] | None = None
-215.   deadline = time.time() + 15
-216. 
-217.   while time.time() < deadline:
-218.     if not all(path.exists() for path in required_paths):
-219.       time.sleep(0.5)
-220.       continue
-221. 
-222.     current_state = tuple(
-223.       (str(path), path.stat().st_size, int(path.stat().st_mtime_ns))
-224.       for path in required_paths
-225.     )
-226.     if any(state[2] < int(run_started_at * 1_000_000_000) for state in current_state):
-227.       time.sleep(0.5)
-228.       previous_state = current_state
-229.       stable_hits = 0
-230.       continue
-231. 
-232.     if current_state == previous_state:
-233.       stable_hits += 1
-234.     else:
-235.       stable_hits = 0
-236.       previous_state = current_state
-237. 
-238.     if stable_hits >= 2:
-239.       return
-240. 
-241.     time.sleep(0.5)
-242. 
-243. 
-244. def _kill_process_tree(pid: int) -> None:
-245.   if os.name == "nt":
-246.     subprocess.run(["taskkill", "/PID", str(pid), "/T", "/F"], capture_output=True, check=False, shell=False)
-247.     return
-248.   try:
-249.     os.kill(pid, 9)
-250.   except ProcessLookupError:
-251.     return
-252. 
-253. 
-254. def _finalize_log_dir() -> None:
-255.   process_logs = sorted(LOG_DIR.glob("process-*.log"), key=lambda path: path.stat().st_mtime, reverse=True)
-256.   target_log = LOG_DIR / "copilot.log"
-257.   if target_log.exists():
-258.     target_log.unlink()
-259.   if process_logs:
-260.     process_logs[0].replace(target_log)
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 52s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"src/backend/src/**/*.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-No files matched the pattern.
+api
+components
+main.ts
+pages
 ```
 
 
 ---
 
-<sub>⏱️ 52s</sub>
+<sub>⏱️ 58s</sub>
 
-### ❌ `view`
+### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\package.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\package.json
-
-```
-Path does not exist
-```
-
-
----
-
-<sub>⏱️ 57s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
-
-"**/package.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\package.json
+audit-repository.ts
+loan-repository.ts
+preference-repository.ts
+types.ts
+user-repository.ts
 ```
 
 
 ---
 
-<sub>⏱️ 57s</sub>
+<sub>⏱️ 58s</sub>
 
-### ✅ `glob`
+### ✅ `view`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules.**
 
-"**/tsconfig*.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\tsconfig.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\tsconfig.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tsconfig.json
-```
-
-
----
-
-<sub>⏱️ 57s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "from ['\\\"]\\.\\.?/.+/.+['\\\"]",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
-  "output_mode": "content",
-  "glob": "*.ts",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts:10:} from "../../src/rules/state-machine.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:10:} from "../../src/rules/business-rules.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:11:import type { LoanApplication } from "../../src/models/types.js";
+business-rules.ts
+mandatory-events.ts
+role-permissions.ts
+state-machine.ts
 ```
 
 
 ---
 
-<sub>⏱️ 57s</sub>
+<sub>⏱️ 59s</sub>
 
-### ✅ `rg`
+### ✅ `view`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services.**
 
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "from ['\\\"][^'\\\"]+index\\.js['\\\"]|from ['\\\"][^'\\\"]+/index['\\\"]",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
-  "output_mode": "content",
-  "glob": "*.ts",
-  "-n": true,
-  "head_limit": 100
-}
-```
-
-</details>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services
 
 ```
-No matches found.
+audit-service.ts
+decision-service.ts
+loan-service.ts
+notification-service.ts
 ```
 
 
 ---
 
-<sub>⏱️ 1m 2s</sub>
+<sub>⏱️ 59s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes
+
+```
+applications.ts
+audit.ts
+decisions.ts
+notifications.ts
+queue-status.ts
+```
+
+
+---
+
+<sub>⏱️ 59s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\api.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\api
+
+```
+client.ts
+types.ts
+```
+
+
+---
+
+<sub>⏱️ 59s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components
+
+```
+app-shell.ts
+loan-table.ts
+notification-toggle.ts
+status-badge.ts
+```
+
+
+---
+
+<sub>⏱️ 59s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages
+
+```
+api-explorer.ts
+application-detail.ts
+dashboard.ts
+preferences.ts
+queue-monitor.ts
+```
+
+
+---
+
+<sub>⏱️ 1m 10s</sub>
 
 ### ✅ `view`
 
@@ -1759,7 +1325,52 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 1m 2s</sub>
+<sub>⏱️ 1m 10s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\tsconfig.json.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\tsconfig.json
+
+<details>
+<summary>26 lines</summary>
+
+```
+1. {
+2.   "compilerOptions": {
+3.     "target": "ES2022",
+4.     "module": "NodeNext",
+5.     "moduleResolution": "NodeNext",
+6.     "outDir": "backend/dist",
+7.     "rootDir": "backend/src",
+8.     "strict": true,
+9.     "esModuleInterop": true,
+10.     "skipLibCheck": true,
+11.     "forceConsistentCasingInFileNames": true,
+12.     "resolveJsonModule": true,
+13.     "declaration": true,
+14.     "declarationMap": true,
+15.     "sourceMap": true
+16.   },
+17.   "include": [
+18.     "backend/src/**/*.ts"
+19.   ],
+20.   "exclude": [
+21.     "node_modules",
+22.     "backend/dist",
+23.     "backend/tests",
+24.     "frontend"
+25.   ]
+26. }
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 1m 10s</sub>
 
 ### ✅ `view`
 
@@ -1804,90 +1415,39 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 1m 2s</sub>
+<sub>⏱️ 1m 10s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\tsconfig.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\tsconfig.json
 
 <details>
-<summary>72 lines</summary>
+<summary>21 lines</summary>
 
 ```
-1. // ---------------------------------------------------------------------------
-2. // Business Rules Tests
-3. // ---------------------------------------------------------------------------
-4. 
-5. import { describe, it, expect } from "vitest";
-6. import {
-7.   validateLoanRules,
-8.   requiredApprovalRoles,
-9.   canApprove,
-10. } from "../../src/rules/business-rules.js";
-11. import type { LoanApplication } from "../../src/models/types.js";
-12. 
-13. const baseLoan: LoanApplication = {
-14.   id: "test-1",
-15.   borrowerName: "Test Corp",
-16.   amount: 100000,
-17.   loanState: "NY",
-18.   status: "intake",
-19.   assignedUnderwriter: "u-1",
-20.   riskScore: null,
-21.   createdAt: new Date().toISOString(),
-22.   updatedAt: new Date().toISOString(),
-23. };
-24. 
-25. describe("Business Rules", () => {
-26.   it("passes for a valid standard loan", () => {
-27.     expect(validateLoanRules(baseLoan)).toEqual([]);
-28.   });
-29. 
-30.   it("rejects zero amount", () => {
-31.     const violations = validateLoanRules({ ...baseLoan, amount: 0 });
-32.     expect(violations).toHaveLength(1);
-33.     expect(violations[0].rule).toBe("positive-amount");
-34.   });
-35. 
-36.   it("rejects California loan below minimum", () => {
-37.     const violations = validateLoanRules({
-38.       ...baseLoan,
-39.       loanState: "CA",
-40.       amount: 10000,
-41.     });
-42.     expect(violations.some((v) => v.rule === "ca-min-amount")).toBe(true);
-43.   });
-44. 
-45.   it("rejects California loan above maximum", () => {
-46.     const violations = validateLoanRules({
-47.       ...baseLoan,
-48.       loanState: "CA",
-49.       amount: 6_000_000,
-50.     });
-51.     expect(violations.some((v) => v.rule === "ca-max-amount")).toBe(true);
-52.   });
-53. });
-54. 
-55. describe("Approval Roles", () => {
-56.   it("underwriter can approve loans up to $1M", () => {
-57.     expect(canApprove("underwriter", 500000)).toBe(true);
-58.   });
-59. 
-60.   it("underwriter cannot approve loans over $1M", () => {
-61.     expect(canApprove("underwriter", 1_500_000)).toBe(false);
-62.   });
-63. 
-64.   it("analyst-manager required for loans over $1M", () => {
-65.     expect(requiredApprovalRoles(1_500_000)).toContain("analyst-manager");
-66.   });
-67. 
-68.   it("compliance-reviewer required for loans over $2.5M", () => {
-69.     expect(requiredApprovalRoles(3_000_000)).toContain("compliance-reviewer");
-70.   });
-71. });
-72.
+1. {
+2.   "compilerOptions": {
+3.     "target": "ES2022",
+4.     "module": "NodeNext",
+5.     "moduleResolution": "NodeNext",
+6.     "strict": true,
+7.     "skipLibCheck": true,
+8.     "forceConsistentCasingInFileNames": true,
+9.     "lib": [
+10.       "ES2022",
+11.       "DOM",
+12.       "DOM.Iterable"
+13.     ]
+14.   },
+15.   "include": [
+16.     "src/**/*.ts"
+17.   ],
+18.   "exclude": [
+19.     "../node_modules"
+20.   ]
+21. }
 ```
 
 </details>
@@ -1895,344 +1455,21 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 1m 2s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\state-machine.test.ts
-
-<details>
-<summary>47 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // State Machine Tests
-3. // ---------------------------------------------------------------------------
-4. 
-5. import { describe, it, expect } from "vitest";
-6. import {
-7.   canTransition,
-8.   validNextStates,
-9.   assertTransition,
-10. } from "../../src/rules/state-machine.js";
-11. 
-12. describe("State Machine", () => {
-13.   it("allows intake → review", () => {
-14.     expect(canTransition("intake", "review")).toBe(true);
-15.   });
-16. 
-17.   it("allows review → underwriting", () => {
-18.     expect(canTransition("review", "underwriting")).toBe(true);
-19.   });
-20. 
-21.   it("allows review → intake (rework)", () => {
-22.     expect(canTransition("review", "intake")).toBe(true);
-23.   });
-24. 
-25.   it("blocks intake → decision (skip)", () => {
-26.     expect(canTransition("intake", "decision")).toBe(false);
-27.   });
-28. 
-29.   it("blocks finalized → any state", () => {
-30.     expect(canTransition("finalized", "intake")).toBe(false);
-31.     expect(canTransition("finalized", "review")).toBe(false);
-32.     expect(canTransition("finalized", "underwriting")).toBe(false);
-33.     expect(canTransition("finalized", "decision")).toBe(false);
-34.   });
-35. 
-36.   it("returns valid next states", () => {
-37.     expect(validNextStates("decision")).toEqual(["finalized", "underwriting"]);
-38.     expect(validNextStates("finalized")).toEqual([]);
-39.   });
-40. 
-41.   it("assertTransition throws for invalid transitions", () => {
-42.     expect(() => assertTransition("intake", "finalized")).toThrow(
-43.       "INVALID_STATE",
-44.     );
-45.   });
-46. });
-47.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 1m 2s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
-
-"src/backend/src/{rules,models,services,routes,queue}/**/*.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 1m 2s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\business-rules.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\business-rules.ts
-
-<details>
-<summary>84 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Business Rules
-3. // ---------------------------------------------------------------------------
-4. // Domain-specific validation rules.  These are checked by services BEFORE
-5. // persisting changes.
-6. //
-7. // CALIFORNIA RULES — REGULATORY REQUIREMENT:
-8. //   Loans in California (loan_state = "CA") have additional requirements:
-9. //   - Minimum loan amount: $50,000
-10. //   - Maximum loan amount: $5,000,000
-11. //   - Mandatory 3-day cooling-off period between "review" → "underwriting"
-12. //   - Additional disclosure document required before finalization
-13. //
-14. //   These rules are gated behind the `californiaRules` feature flag.
-15. //   When disabled, California loans follow standard rules.
-16. //
-17. // AMOUNT THRESHOLDS:
-18. //   - Loans over $1,000,000 require analyst-manager approval (not just underwriter)
-19. //   - Loans over $2,500,000 require compliance-reviewer sign-off
-20. // ---------------------------------------------------------------------------
-21. 
-22. import { featureFlags } from "../config/feature-flags.js";
-23. import type { LoanApplication, UserRole } from "../models/types.js";
-24. 
-25. export interface RuleViolation {
-26.   rule: string;
-27.   message: string;
-28. }
-29. 
-30. /**
-31.  * Validate a loan application against all business rules.
-32.  * Returns an empty array if all rules pass.
-33.  */
-34. export function validateLoanRules(loan: LoanApplication): RuleViolation[] {
-35.   const violations: RuleViolation[] = [];
-36. 
-37.   // Standard rules
-38.   if (loan.amount <= 0) {
-39.     violations.push({
-40.       rule: "positive-amount",
-41.       message: "Loan amount must be positive.",
-42.     });
-43.   }
-44. 
-45.   // California-specific rules
-46.   if (featureFlags.californiaRules && loan.loanState === "CA") {
-47.     if (loan.amount < 50_000) {
-48.       violations.push({
-49.         rule: "ca-min-amount",
-50.         message: "California loans must be at least $50,000.",
-51.       });
-52.     }
-53.     if (loan.amount > 5_000_000) {
-54.       violations.push({
-55.         rule: "ca-max-amount",
-56.         message: "California loans cannot exceed $5,000,000.",
-57.       });
-58.     }
-59.   }
-60. 
-61.   return violations;
-62. }
-63. 
-64. /**
-65.  * Determine which roles are required to approve a loan at the given amount.
-66.  */
-67. export function requiredApprovalRoles(amount: number): UserRole[] {
-68.   if (amount > 2_500_000) {
-69.     return ["analyst-manager", "compliance-reviewer"];
-70.   }
-71.   if (amount > 1_000_000) {
-72.     return ["analyst-manager"];
-73.   }
-74.   return ["underwriter"];
-75. }
-76. 
-77. /**
-78.  * Check if a role is authorized to approve a loan of the given amount.
-79.  */
-80. export function canApprove(role: UserRole, amount: number): boolean {
-81.   const required = requiredApprovalRoles(amount);
-82.   return required.includes(role);
-83. }
-84.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 1m 2s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\types.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\types.ts
-
-<details>
-<summary>112 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Loan Workbench — Domain Types
-3. // ---------------------------------------------------------------------------
-4. // This file defines the core domain model for the Loan Workbench platform.
-5. // Business rules, state machines, authorization logic, queue contracts, and
-6. // database schema all depend on these types.  Changes here affect nearly
-7. // every module in the project.
-8. // ---------------------------------------------------------------------------
-9. 
-10. /** Lifecycle states for a commercial loan application. */
-11. export type ApplicationState =
-12.   | "intake"
-13.   | "review"
-14.   | "underwriting"
-15.   | "decision"
-16.   | "finalized";
-17. 
-18. /**
-19.  * Valid state transitions.
-20.  * Transitions not listed here are forbidden — the system must never allow
-21.  * a finalized application to move backward.
-22.  */
-23. export const VALID_TRANSITIONS: Record<ApplicationState, ApplicationState[]> = {
-24.   intake: ["review"],
-25.   review: ["underwriting", "intake"], // can return to intake for rework
-26.   underwriting: ["decision"],
-27.   decision: ["finalized", "underwriting"], // can push back to underwriting
-28.   finalized: [], // terminal — no transitions allowed
-29. };
-30. 
-31. /** Organizational roles recognized by the Loan Workbench. */
-32. export type UserRole =
-33.   | "underwriter"
-34.   | "analyst-manager"
-35.   | "compliance-reviewer";
-36. 
-37. /** Notification event types that can trigger user-facing alerts. */
-38. export type NotificationEvent =
-39.   | "approval"
-40.   | "decline"
-41.   | "document-request"
-42.   | "manual-review-escalation";
-43. 
-44. /** Delivery channels available for notifications. */
-45. export type NotificationChannel = "email" | "sms";
-46. 
-47. // ---------------------------------------------------------------------------
-48. // Entity interfaces
-49. // ---------------------------------------------------------------------------
-50. 
-51. export interface User {
-52.   id: string;
-53.   role: UserRole;
-54.   name: string;
-55.   email: string;
-56.   phone?: string;
-57. }
-58. 
-59. /**
-60.  * Session context attached to every authenticated request.
-61.  *
-62.  * When `delegatedFor` is present the actor is operating on behalf of another
-63.  * user.  Delegated sessions restrict write operations — see auth middleware.
-64.  */
-65. export interface SessionContext {
-66.   actor: User;
-67.   delegatedFor?: User;
-68. }
-69. 
-70. export interface LoanApplication {
-71.   id: string;
-72.   borrowerName: string;
-73.   amount: number;
-74.   /** US state / jurisdiction — affects business rules (e.g. California). */
-75.   loanState: string;
-76.   status: ApplicationState;
-77.   assignedUnderwriter: string;
-78.   riskScore: number | null;
-79.   createdAt: string;
-80.   updatedAt: string;
-81. }
-82. 
-83. export interface Decision {
-84.   id: string;
-85.   applicationId: string;
-86.   type: "approved" | "declined" | "conditional";
-87.   rationale: string;
-88.   decidedBy: string;
-89.   decidedAt: string;
-90.   conditions?: string[];
-91. }
-92. 
-93. export interface NotificationPreference {
-94.   userId: string;
-95.   event: NotificationEvent;
-96.   channel: NotificationChannel;
-97.   enabled: boolean;
-98.   updatedAt: string;
-99.   updatedBy: string;
-100. }
-101. 
-102. export interface AuditEntry {
-103.   id: string;
-104.   action: string;
-105.   actor: string;
-106.   delegatedFor: string | null;
-107.   timestamp: string;
-108.   previousValue: string | null;
-109.   newValue: string | null;
-110.   source: string;
-111. }
-112.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 1m 58s</sub>
-
-### 💬 Copilot
-
-I’ve got the main pattern now: hook JSONs are tiny, while the Python scripts either read `PreToolUse` JSON from `stdin` or run a standalone validation flow. I’m implementing the new guardrail as a small hook plus a Python validator that understands TypeScript import paths and exempts barrel files themselves.
-
----
-
-<sub>⏱️ 1m 58s</sub>
+<sub>⏱️ 1m 28s</sub>
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails**
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github**
 
 <details>
 <summary>Arguments</summary>
 
 ```json
 {
-  "pattern": "barrel|index\\.ts|internal module",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails",
+  "pattern": "tool_name|tool_input|PreToolUse|stdin|commit",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github",
+  "glob": "**/*.{py,json}",
   "output_mode": "content",
-  "glob": "*.{md,py,json,ts}",
   "-n": true,
   "head_limit": 200
 }
@@ -2241,19 +1478,26 @@ I’ve got the main pattern now: hook JSONs are tiny, while the Python scripts e
 </details>
 
 <details>
-<summary>10 lines</summary>
+<summary>17 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py:127:    "Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. "
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\util.py:131:    "The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. "
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:33:- the new guardrail must enforce barrel-file import conventions for TypeScript files
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:56:copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\README.md:63:- the validation script enforces barrel-file imports
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:14:2. `.github/scripts/validate_imports.py` — validation script enforcing barrel-file import convention
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md:26:2. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:12:Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:28:- `.output/change/expected-patterns.json` — required patterns in patch: PreToolUse, validate_imports.py, import, barrel/index.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\ASSESSMENT.md:41:| Script enforces barrel-file (index.ts) convention | `expected-patterns.json` |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:2:"""Pre-commit validation script (Python replacement for validate-commit.sh).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:4:Called by the pre-commit hook to ensure code quality before committing.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:5:Usage: python validate_commit.py
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:28:    print("=== Pre-commit validation ===")
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py:44:            print(f"\nFAIL: {name} failed. Fix issues before committing.")
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:2:"""PreToolUse hook: block edits to protected files.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:4:Reads JSON from stdin (VS Code hook input) and checks if the tool is
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:32:    data = json.load(sys.stdin)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:33:    tool_name = data.get("tool_name", "")
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:34:    tool_input = data.get("tool_input", {})
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:37:    if tool_name not in ("editFiles", "createFile"):
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:40:    files = tool_input.get("files", [])
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:41:    file_path = tool_input.get("filePath", "")
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py:48:                    "hookEventName": "PreToolUse",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json:3:    "PreToolUse": [
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json:6:        "command": "python .github/scripts/validate_commit.py",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json:3:    "PreToolUse": [
 ```
 
 </details>
@@ -2261,128 +1505,164 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 1m 58s</sub>
+<sub>⏱️ 1m 28s</sub>
 
-### ✅ `view`
+### ✅ `rg`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts (lines 1-120)
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src**
 
 <details>
-<summary>81 lines</summary>
+<summary>Arguments</summary>
 
-```
-1. // ---------------------------------------------------------------------------
-2. // Loan Workbench — Application Entry Point
-3. // ---------------------------------------------------------------------------
-4. // Express server with middleware chain, route mounting, database init,
-5. // and message queue handler registration.
-6. //
-7. // MIDDLEWARE ORDER (matters!):
-8. //   1. express.json()          — Parse JSON bodies
-9. //   2. rateLimiterMiddleware   — Rate limit before auth (prevent brute force)
-10. //   3. authMiddleware          — Authenticate & attach session context
-11. //   4. auditLoggerMiddleware   — Log mutating requests (needs session)
-12. //   5. Routes                  — Business logic
-13. //   6. errorHandler            — Catch-all error handler (MUST be last)
-14. // ---------------------------------------------------------------------------
-15. 
-16. import express from "express";
-17. import path from "path";
-18. import { fileURLToPath } from "url";
-19. import { config } from "./config/env.js";
-20. import { getDb } from "./db/connection.js";
-21. import { seedDatabase } from "./db/seed.js";
-22. import { authMiddleware } from "./middleware/auth.js";
-23. import { auditLoggerMiddleware } from "./middleware/audit-logger.js";
-24. import { rateLimiterMiddleware } from "./middleware/rate-limiter.js";
-25. import { errorHandler } from "./middleware/error-handler.js";
-26. import { applicationRoutes } from "./routes/applications.js";
-27. import { decisionRoutes } from "./routes/decisions.js";
-28. import { notificationRoutes } from "./routes/notifications.js";
-29. import { auditRoutes } from "./routes/audit.js";
-30. import { queueStatusRoutes } from "./routes/queue-status.js";
-31. import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
-32. import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
-33. 
-34. const __dirname = path.dirname(fileURLToPath(import.meta.url));
-35. 
-36. const app = express();
-37. 
-38. // ── Initialize database ──
-39. getDb();
-40. seedDatabase();
-41. 
-42. // ── Register queue handlers ──
-43. registerNotificationHandler();
-44. registerAuditHandler();
-45. 
-46. // ── Middleware chain (ORDER MATTERS) ──
-47. app.use(express.json());
-48. app.use(rateLimiterMiddleware);
-49. app.use(authMiddleware);
-50. app.use(auditLoggerMiddleware);
-51. 
-52. // ── API Routes ──
-53. app.use("/api/applications", applicationRoutes);
-54. app.use("/api/decisions", decisionRoutes);
-55. app.use("/api/notifications", notificationRoutes);
-56. app.use("/api/audit", auditRoutes);
-57. app.use("/api/queue", queueStatusRoutes);
-58. 
-59. // ── Health check (no auth required — placed before auth middleware in request flow) ──
-60. app.get("/health", (_req, res) => {
-61.   res.json({ status: "ok", timestamp: new Date().toISOString() });
-62. });
-63. 
-64. // ── Serve frontend static files ──
-65. const frontendDir = path.resolve(__dirname, "../../frontend");
-66. app.use(express.static(frontendDir));
-67. 
-68. // ── SPA fallback — serve index.html for non-API routes ──
-69. app.get("*", (_req, res) => {
-70.   res.sendFile(path.join(frontendDir, "index.html"));
-71. });
-72. 
-73. // ── Error handler (MUST be last) ──
-74. app.use(errorHandler);
-75. 
-76. app.listen(config.port, () => {
-77.   console.log(`Loan Workbench API listening on port ${config.port}`);
-78.   console.log(`Database: ${config.dbPath}`);
-79. });
-80. 
-81. export default app;
+```json
+{
+  "pattern": "import .* from ['\\\"].*\\/.+\\/.+['\\\"]",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src",
+  "glob": "**/*.{ts,tsx}",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
 ```
 
 </details>
 
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\tests\unit\business-rules.test.ts:11:import type { LoanApplication } from "../../src/models/types.js";
+```
+
 
 ---
 
-<sub>⏱️ 1m 58s</sub>
+<sub>⏱️ 1m 28s</sub>
 
-### ✅ `view`
+### ✅ `rg`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\vite.config.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\vite.config.ts (lines 1-80)
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src**
 
 <details>
-<summary>10 lines</summary>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "import .* from ['\\\"][^'\\\"]+['\\\"]",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src\\backend\\src",
+  "glob": "**/*.ts",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>103 lines</summary>
 
 ```
-1. import { defineConfig } from "vite";
-2. 
-3. export default defineConfig({
-4.   server: {
-5.     proxy: {
-6.       "/api": "http://localhost:3100",
-7.       "/health": "http://localhost:3100",
-8.     },
-9.   },
-10. });
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\notification-service.ts:20:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\notification-service.ts:21:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\notification-service.ts:22:import type { NotificationRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\request-validator.ts:11:import type { Request, Response, NextFunction } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\broker.ts:18:import type { BrokerEvent, EventType } from "./contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:8:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:9:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:10:import { featureFlags } from "../config/feature-flags.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:11:import { createAuditEntry } from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:12:import type { AuditRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\audit-service.ts:13:import type { SessionContext } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:13:import type { Request, Response, NextFunction } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:14:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:15:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:16:import type { AuditRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:17:import { featureFlags } from "../config/feature-flags.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\audit-logger.ts:18:import { createAuditEntry } from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:9:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:10:import * as loanRepo from "../models/loan-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:11:import { assertTransition } from "../rules/state-machine.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:12:import { validateLoanRules, canApprove } from "../rules/business-rules.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:13:import { getMandatoryEvents } from "../rules/mandatory-events.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\loan-service.ts:14:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\user-repository.ts:7:import { getDb } from "../db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\user-repository.ts:8:import type { User } from "./types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\state-machine.ts:11:import { VALID_TRANSITIONS, type ApplicationState } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\notification-handler.ts:14:import { broker } from "../broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\notification-handler.ts:15:import type { NotificationRequestedEvent } from "../contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\notification-handler.ts:16:import { findPreferencesForUser } from "../../models/preference-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\notification-handler.ts:17:import { featureFlags } from "../../config/feature-flags.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\queue-status.ts:9:import { Router } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\queue-status.ts:10:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\config\feature-flags.ts:14:import { config } from "./env.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\decision-service.ts:9:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\decision-service.ts:10:import { getDb } from "../db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\decision-service.ts:16:import { findLoanById } from "../models/loan-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\decision-service.ts:17:import { canApprove } from "../rules/business-rules.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\services\decision-service.ts:18:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:16:import express from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:17:import path from "path";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:18:import { fileURLToPath } from "url";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:19:import { config } from "./config/env.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:20:import { getDb } from "./db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:21:import { seedDatabase } from "./db/seed.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:22:import { authMiddleware } from "./middleware/auth.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:23:import { auditLoggerMiddleware } from "./middleware/audit-logger.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:24:import { rateLimiterMiddleware } from "./middleware/rate-limiter.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:25:import { errorHandler } from "./middleware/error-handler.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:26:import { applicationRoutes } from "./routes/applications.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:27:import { decisionRoutes } from "./routes/decisions.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:28:import { notificationRoutes } from "./routes/notifications.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:29:import { auditRoutes } from "./routes/audit.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:30:import { queueStatusRoutes } from "./routes/queue-status.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:31:import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\app.ts:32:import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\rate-limiter.ts:13:import type { Request, Response, NextFunction } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\rate-limiter.ts:14:import { config } from "../config/env.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\auth.ts:18:import type { Request, Response, NextFunction } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\auth.ts:19:import type { UserRole, SessionContext } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\auth.ts:20:import { findUserById } from "../models/user-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\role-permissions.ts:14:import type { UserRole } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\middleware\error-handler.ts:8:import type { Request, Response, NextFunction } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\audit-handler.ts:15:import { broker } from "../broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\audit-handler.ts:16:import type { AuditRequestedEvent } from "../contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\queue\handlers\audit-handler.ts:17:import { createAuditEntry } from "../../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\loan-repository.ts:11:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\loan-repository.ts:12:import { getDb } from "../db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\loan-repository.ts:13:import type { LoanApplication, ApplicationState } from "./types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\audit-repository.ts:11:import { v4 as uuid } from "uuid";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\audit-repository.ts:12:import { getDb } from "../db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\audit-repository.ts:13:import type { AuditEntry } from "./types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\audit.ts:7:import { Router } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\audit.ts:8:import { requireRole } from "../middleware/auth.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\audit.ts:9:import * as auditRepo from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\mandatory-events.ts:12:import type { ApplicationState, NotificationEvent } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:12:import Database from "better-sqlite3";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:13:import { readFileSync } from "node:fs";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:14:import { join, dirname } from "node:path";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:15:import { mkdirSync } from "node:fs";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:16:import { fileURLToPath } from "node:url";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\connection.ts:17:import { config } from "../config/env.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:5:import { Router } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:6:import { requireRole } from "../middleware/auth.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:7:import { validateBody } from "../middleware/request-validator.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:8:import { auditAction } from "../services/audit-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:9:import * as loanService from "../services/loan-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:10:import * as loanRepo from "../models/loan-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\applications.ts:11:import type { SessionContext, ApplicationState } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:16:import { Router } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:17:import { requireRole } from "../middleware/auth.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:18:import { validateBody } from "../middleware/request-validator.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:19:import { hasPermission } from "../rules/role-permissions.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:20:import { auditAction } from "../services/audit-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\notifications.ts:21:import * as prefRepo from "../models/preference-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\models\preference-repository.ts:13:import { getDb } from "../db/connection.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts:5:import { Router } from "express";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts:6:import { requireRole } from "../middleware/auth.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts:7:import { validateBody } from "../middleware/request-validator.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts:8:import * as decisionService from "../services/decision-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts:9:import type { SessionContext } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\business-rules.ts:22:import { featureFlags } from "../config/feature-flags.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\rules\business-rules.ts:23:import type { LoanApplication, UserRole } from "../models/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\backend\src\db\seed.ts:11:import { getDb, closeDb } from "./connection.js";
 ```
 
 </details>
@@ -2390,7 +1670,52 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 2m 46s</sub>
+<sub>⏱️ 1m 28s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "import .* from ['\\\"][^'\\\"]+['\\\"]",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\src\\frontend\\src",
+  "glob": "**/*.ts",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>12 lines</summary>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\queue-monitor.ts:8:import { apiFetch } from "../api/client.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\preferences.ts:7:import { getPreferences } from "../api/client.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\preferences.ts:8:import { renderNotificationToggle } from "../components/notification-toggle.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\dashboard.ts:7:import { getApplications } from "../api/client.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\dashboard.ts:8:import { renderLoanTable } from "../components/loan-table.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\main.ts:8:import { renderAppShell } from "./components/app-shell.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\main.ts:9:import { renderDashboard } from "./pages/dashboard.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\pages\application-detail.ts:12:import { renderStatusBadge } from "../components/status-badge.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components\loan-table.ts:7:import type { ApiLoanApplication } from "../api/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components\loan-table.ts:8:import { renderStatusBadge } from "./status-badge.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components\notification-toggle.ts:7:import type { ApiPreference } from "../api/types.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\src\frontend\src\components\notification-toggle.ts:8:import { setPreference } from "../api/client.js";
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 1m 38s</sub>
 
 ### ✅ `apply_patch`
 
@@ -2398,7 +1723,35 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\hooks\\import-validation.json\n+{\n+  \"hooks\": {\n+    \"PreToolUse\": [\n+      {\n+        \"type\": \"command\",\n+        \"command\": \"python .github/scripts/validate_imports.py\",\n+        \"timeout\": 20\n+      }\n+    ]\n+  }\n+}\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\scripts\\validate_imports.py\n+#!/usr/bin/env python3\n+\"\"\"PreToolUse hook: enforce barrel-file imports for TypeScript modules.\n+\n+This validator blocks imports that reach through another module's internal file\n+path when the import should go through that module's `index.ts` barrel instead.\n+Barrel files themselves are exempt because they aggregate those internal files.\n+\"\"\"\n+import json\n+import re\n+import sys\n+from pathlib import Path, PurePosixPath\n+\n+PROJECT_ROOT = Path(__file__).resolve().parents[2]\n+SOURCE_ROOT = PROJECT_ROOT / \"src\"\n+TS_EXTENSIONS = {\".ts\", \".tsx\", \".mts\", \".cts\"}\n+JS_TO_TS_EXTENSIONS = {\n+    \".js\": [\".ts\", \".tsx\"],\n+    \".jsx\": [\".tsx\", \".ts\"],\n+    \".mjs\": [\".mts\", \".ts\"],\n+    \".cjs\": [\".cts\", \".ts\"],\n+}\n+EDIT_TOOLS = {\"editFiles\", \"createFile\"}\n+IMPORT_RE = re.compile(\n+    r\"\"\"\n+    ^\\s*\n+    (?:\n+      import\n+      (?:\n+        \\s+(?:type\\s+)?[\\s\\S]*?\\s+from\n+      )?\n+      |\n+      export\n+      \\s+(?:type\\s+)?\n+      [\\s\\S]*?\\s+from\n+    )\n+    \\s*[\"'](?P<specifier>[^\"']+)[\"']\n+    \"\"\",\n+    re.MULTILINE | re.VERBOSE,\n+)\n+\n+\n+def is_typescript_file(path: Path) -> bool:\n+    return path.suffix in TS_EXTENSIONS\n+\n+\n+def is_barrel_file(path: Path) -> bool:\n+    return path.name.startswith(\"index.\") and is_typescript_file(path)\n+\n+\n+def normalize_path(raw_path: str) -> Path:\n+    path = Path(raw_path)\n+    if path.is_absolute():\n+        return path\n+    posix_path = PurePosixPath(raw_path.replace(\"\\\\\", \"/\"))\n+    return PROJECT_ROOT.joinpath(*posix_path.parts)\n+\n+\n+def relative_path(path: Path) -> str:\n+    try:\n+        return path.relative_to(PROJECT_ROOT).as_posix()\n+    except ValueError:\n+        return path.as_posix()\n+\n+\n+def strip_relative_segments(specifier: str) -> list[str]:\n+    parts = PurePosixPath(specifier).parts\n+    return [part for part in parts if part not in (\".\", \"..\")]\n+\n+\n+def resolve_base_target(source_path: Path, specifier: str) -> Path:\n+    specifier_path = PurePosixPath(specifier)\n+    return source_path.parent.joinpath(*specifier_path.parts).resolve(strict=False)\n+\n+\n+def has_barrel_file(directory: Path) -> bool:\n+    return any((directory / f\"index{extension}\").exists() for extension in TS_EXTENSIONS)\n+\n+\n+def is_barrel_import(source_path: Path, specifier: str) -> bool:\n+    base_target = resolve_base_target(source_path, specifier)\n+\n+    if base_target.is_dir():\n+        return has_barrel_file(base_target)\n+\n+    if base_target.exists() and base_target.stem == \"index\":\n+        return True\n+\n+    if base_target.suffix in JS_TO_TS_EXTENSIONS:\n+        for extension in JS_TO_TS_EXTENSIONS[base_target.suffix]:\n+            if base_target.with_suffix(extension).exists() and base_target.stem == \"index\":\n+                return True\n+\n+    if not base_target.suffix and has_barrel_file(base_target):\n+        return True\n+\n+    return False\n+\n+\n+def is_deep_relative_import(source_path: Path, specifier: str) -> bool:\n+    if not specifier.startswith(\".\"):\n+        return False\n+\n+    if is_barrel_import(source_path, specifier):\n+        return False\n+\n+    path_parts = strip_relative_segments(specifier)\n+    if len(path_parts) <= 1:\n+        return False\n+\n+    if PurePosixPath(path_parts[-1]).stem == \"index\":\n+        return False\n+\n+    return True\n+\n+\n+def suggested_barrel(specifier: str) -> str:\n+    path = PurePosixPath(specifier)\n+    parent = path.parent\n+    if str(parent) == \".\":\n+        return \"./index.ts\"\n+    return f\"{parent.as_posix()}/index.ts\"\n+\n+\n+def collect_violations(source_path: Path, content: str) -> list[str]:\n+    if is_barrel_file(source_path):\n+        return []\n+\n+    violations: list[str] = []\n+    for match in IMPORT_RE.finditer(content):\n+        specifier = match.group(\"specifier\")\n+        if is_deep_relative_import(source_path, specifier):\n+            violations.append(\n+                f\"{relative_path(source_path)} imports '{specifier}'. \"\n+                f\"Use the barrel file '{suggested_barrel(specifier)}' \"\n+                \"instead of an internal module path.\"\n+            )\n+    return violations\n+\n+\n+def collect_repository_violations() -> list[str]:\n+    violations: list[str] = []\n+    if not SOURCE_ROOT.exists():\n+        return violations\n+\n+    for path in sorted(SOURCE_ROOT.rglob(\"*\")):\n+        if not path.is_file() or not is_typescript_file(path):\n+            continue\n+        if any(part in {\"node_modules\", \"dist\"} for part in path.parts):\n+            continue\n+        violations.extend(collect_violations(path, path.read_text(encoding=\"utf-8\")))\n+    return violations\n+\n+\n+def read_hook_payload() -> dict | None:\n+    if sys.stdin.isatty():\n+        return None\n+\n+    raw = sys.stdin.read().strip()\n+    if not raw:\n+        return None\n+\n+    try:\n+        return json.loads(raw)\n+    except json.JSONDecodeError:\n+        return None\n+\n+\n+def collect_hook_violations(payload: dict) -> list[str]:\n+    tool_name = payload.get(\"tool_name\", \"\")\n+    tool_input = payload.get(\"tool_input\", {})\n+\n+    if tool_name not in EDIT_TOOLS:\n+        return []\n+\n+    file_path = tool_input.get(\"filePath\")\n+    files = tool_input.get(\"files\", [])\n+    paths_to_check = files if files else ([file_path] if file_path else [])\n+\n+    content = (\n+        tool_input.get(\"content\")\n+        or tool_input.get(\"newContent\")\n+        or tool_input.get(\"newString\")\n+        or \"\"\n+    )\n+\n+    violations: list[str] = []\n+    for raw_path in paths_to_check:\n+        path = normalize_path(raw_path)\n+        if not is_typescript_file(path):\n+            continue\n+\n+        if content:\n+            violations.extend(collect_violations(path, content))\n+            continue\n+\n+        if path.exists():\n+            violations.extend(collect_violations(path, path.read_text(encoding=\"utf-8\")))\n+\n+    return violations\n+\n+\n+def emit_deny(violations: list[str]) -> None:\n+    result = {\n+        \"hookSpecificOutput\": {\n+            \"hookEventName\": \"PreToolUse\",\n+            \"permissionDecision\": \"deny\",\n+            \"permissionDecisionReason\": (\n+                \"Import validation failed. \"\n+                + \" \".join(violations[:3])\n+            ),\n+        }\n+    }\n+    json.dump(result, sys.stdout)\n+\n+\n+def main() -> None:\n+    payload = read_hook_payload()\n+    if payload is not None:\n+        violations = collect_hook_violations(payload)\n+        if violations:\n+            emit_deny(violations)\n+        return\n+\n+    print(\"=== Import validation ===\")\n+    violations = collect_repository_violations()\n+    if violations:\n+        print(\"FAIL: TypeScript imports must use barrel files (index.ts).\")\n+        for violation in violations[:20]:\n+            print(f\"  - {violation}\")\n+        sys.exit(1)\n+\n+    print(\"OK\")\n+\n+\n+if __name__ == \"__main__\":\n+    main()\n*** End Patch\n"
+"*** Begin Patch\n*** Add File: C:\\Users\\nilay\\.copilot\\session-state\\0d5ad777-fe33-4da0-ab2c-6e18a3ac59e1\\plan.md\n+## Plan\n+\n+1. Inspect the lesson's guardrail instructions, hook configs, scripts, MCP config, and policy docs to capture existing conventions.\n+2. Inspect the TypeScript source layout to design an import-validation rule that fits the project's barrel-file convention goal.\n+3. Add `.github/hooks/import-validation.json` following the established hook config structure.\n+4. Add `.github/scripts/validate_imports.py` following the established Python guardrail script style and enforcing barrel-file imports.\n+5. Review the new files for consistency with the discovered patterns and ensure the change stays scoped to `.github/hooks/` and `.github/scripts/`.\n*** End Patch\n"
+```
+
+</details>
+
+```
+Added 1 file(s): C:\Users\nilay\.copilot\session-state\0d5ad777-fe33-4da0-ab2c-6e18a3ac59e1\plan.md
+```
+
+
+---
+
+<sub>⏱️ 2m 56s</sub>
+
+### 💬 Copilot
+
+I’ve got a safe enforcement strategy: only flag imports that bypass an existing `index.ts` barrel, which matches the convention without breaking folders that don’t yet expose a barrel.
+
+---
+
+<sub>⏱️ 2m 56s</sub>
+
+### ✅ `apply_patch`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+"*** Begin Patch\n*** Add File: .github/hooks/import-validation.json\n+{\n+  \"hooks\": {\n+    \"PreToolUse\": [\n+      {\n+        \"type\": \"command\",\n+        \"command\": \"python .github/scripts/validate_imports.py\",\n+        \"timeout\": 30\n+      }\n+    ]\n+  }\n+}\n*** Add File: .github/scripts/validate_imports.py\n+#!/usr/bin/env python3\n+\"\"\"PreToolUse hook: enforce barrel-file imports for TypeScript code.\n+\n+Reads hook JSON from stdin when available and blocks changes that import from\n+internal module files when a sibling barrel/index.ts file exists. This keeps\n+TypeScript imports pointed at the public index.ts barrel instead of deep paths.\n+\"\"\"\n+import json\n+import re\n+import sys\n+from pathlib import Path\n+\n+TS_SUFFIXES = {\".ts\", \".tsx\"}\n+EXCLUDED_DIRS = {\"dist\", \"node_modules\", \".git\"}\n+IMPORT_PATTERNS = (\n+    re.compile(r\"\"\"\\bimport\\s+(?:type\\s+)?[^;\"']*?\\bfrom\\s+[\"']([^\"']+)[\"']\"\"\"),\n+    re.compile(r\"\"\"\\bexport\\s+[^;\"']*?\\bfrom\\s+[\"']([^\"']+)[\"']\"\"\"),\n+    re.compile(r\"\"\"\\bimport\\(\\s*[\"']([^\"']+)[\"']\\s*\\)\"\"\"),\n+)\n+REPO_ROOT = Path(__file__).resolve().parents[2]\n+\n+\n+def load_hook_payload() -> dict:\n+    raw = sys.stdin.read().strip()\n+    if not raw:\n+        return {}\n+\n+    try:\n+        payload = json.loads(raw)\n+    except json.JSONDecodeError:\n+        return {}\n+\n+    return payload if isinstance(payload, dict) else {}\n+\n+\n+def is_typescript_file(path: Path) -> bool:\n+    return path.suffix in TS_SUFFIXES and not any(part in EXCLUDED_DIRS for part in path.parts)\n+\n+\n+def normalize_candidate_path(raw_path: str) -> Path:\n+    path = Path(raw_path)\n+    return path if path.is_absolute() else REPO_ROOT / path\n+\n+\n+def collect_candidate_files(payload: dict) -> list[Path]:\n+    tool_name = str(payload.get(\"tool_name\", \"\"))\n+    tool_input = payload.get(\"tool_input\", {})\n+    paths: list[Path] = []\n+\n+    if isinstance(tool_input, dict):\n+        files = tool_input.get(\"files\", [])\n+        if isinstance(files, list):\n+            for file_path in files:\n+                if isinstance(file_path, str) and file_path:\n+                    paths.append(normalize_candidate_path(file_path))\n+\n+        file_path = tool_input.get(\"filePath\")\n+        if isinstance(file_path, str) and file_path:\n+            paths.append(normalize_candidate_path(file_path))\n+\n+    candidates = [path for path in paths if path.exists() and is_typescript_file(path)]\n+    if candidates:\n+        return sorted(set(candidates))\n+\n+    if tool_name and \"commit\" not in tool_name.lower():\n+        return []\n+\n+    return sorted(\n+        path\n+        for path in REPO_ROOT.rglob(\"*\")\n+        if path.is_file() and is_typescript_file(path) and \"src\" in path.parts\n+    )\n+\n+\n+def extract_imports(source: str) -> list[str]:\n+    specifiers: list[str] = []\n+    for pattern in IMPORT_PATTERNS:\n+        specifiers.extend(pattern.findall(source))\n+    return specifiers\n+\n+\n+def resolve_import_target(source_file: Path, specifier: str) -> Path | None:\n+    if not specifier.startswith(\".\"):\n+        return None\n+\n+    base_path = (source_file.parent / specifier).resolve(strict=False)\n+    candidates: list[Path] = []\n+\n+    if base_path.suffix in {\".js\", \".jsx\", \".mjs\", \".cjs\"}:\n+        candidates.extend(\n+            [\n+                base_path.with_suffix(\".ts\"),\n+                base_path.with_suffix(\".tsx\"),\n+                base_path.with_suffix(\".mts\"),\n+                base_path.with_suffix(\".cts\"),\n+            ]\n+        )\n+    elif base_path.suffix:\n+        candidates.append(base_path)\n+    else:\n+        candidates.extend(\n+            [\n+                base_path / \"index.ts\",\n+                base_path / \"index.tsx\",\n+                base_path.with_suffix(\".ts\"),\n+                base_path.with_suffix(\".tsx\"),\n+            ]\n+        )\n+\n+    for candidate in candidates:\n+        if candidate.exists() and candidate.is_file():\n+            return candidate\n+\n+    return None\n+\n+\n+def to_import_specifier(source_file: Path, target_file: Path) -> str:\n+    relative = target_file.relative_to(source_file.parent) if target_file.is_relative_to(source_file.parent) else None\n+    if relative is None:\n+        relative = Path(\n+            *Path(\n+                str(\n+                    Path(\n+                        __import__(\"os\").path.relpath(target_file, start=source_file.parent)\n+                    )\n+                )\n+            ).parts\n+        )\n+\n+    specifier = relative.as_posix()\n+    if not specifier.startswith(\".\"):\n+        specifier = f\"./{specifier}\"\n+\n+    if specifier.endswith(\".ts\"):\n+        return f\"{specifier[:-3]}.js\"\n+    if specifier.endswith(\".tsx\"):\n+        return f\"{specifier[:-4]}.js\"\n+    return specifier\n+\n+\n+def barrel_for_target(target_file: Path) -> Path | None:\n+    barrel = target_file.parent / \"index.ts\"\n+    if target_file.name == \"index.ts\" or not barrel.exists():\n+        return None\n+    return barrel\n+\n+\n+def find_violations(files: list[Path]) -> list[str]:\n+    violations: list[str] = []\n+\n+    for source_file in files:\n+        source = source_file.read_text(encoding=\"utf-8\")\n+        for specifier in extract_imports(source):\n+            target = resolve_import_target(source_file, specifier)\n+            if target is None or not target.is_relative_to(REPO_ROOT):\n+                continue\n+\n+            barrel = barrel_for_target(target)\n+            if barrel is None:\n+                continue\n+\n+            suggested = to_import_specifier(source_file, barrel)\n+            relative_source = source_file.relative_to(REPO_ROOT).as_posix()\n+            relative_barrel = barrel.relative_to(REPO_ROOT).as_posix()\n+            violations.append(\n+                f\"{relative_source}: import '{specifier}' reaches into an internal module path. \"\n+                f\"Use the barrel '{suggested}' ({relative_barrel}) instead.\"\n+            )\n+\n+    return violations\n+\n+\n+def emit_deny(message: str) -> None:\n+    json.dump(\n+        {\n+            \"hookSpecificOutput\": {\n+                \"hookEventName\": \"PreToolUse\",\n+                \"permissionDecision\": \"deny\",\n+                \"permissionDecisionReason\": message,\n+            }\n+        },\n+        sys.stdout,\n+    )\n+\n+\n+def main() -> None:\n+    payload = load_hook_payload()\n+    files = collect_candidate_files(payload)\n+    if not files:\n+        sys.exit(0)\n+\n+    violations = find_violations(files)\n+    if not violations:\n+        sys.exit(0)\n+\n+    summary = \"Import validation failed: \" + \" | \".join(violations[:3])\n+    if len(violations) > 3:\n+        summary += f\" | ...and {len(violations) - 3} more violation(s).\"\n+\n+    if payload:\n+        emit_deny(summary)\n+        sys.exit(0)\n+\n+    print(summary, file=sys.stderr)\n+    sys.exit(1)\n+\n+\n+if __name__ == \"__main__\":\n+    main()\n*** End Patch\n"
 ```
 
 </details>
@@ -2410,27 +1763,15 @@ Added 2 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-t
 
 ---
 
-<sub>⏱️ 2m 59s</sub>
+<sub>⏱️ 3m 3s</sub>
 
-### ✅ `apply_patch`
+### 💬 Copilot
 
-<details>
-<summary>Arguments</summary>
-
-```json
-"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\scripts\\validate_imports.py\n@@\n EDIT_TOOLS = {\"editFiles\", \"createFile\"}\n@@\n def read_hook_payload() -> dict | None:\n@@\n     except json.JSONDecodeError:\n         return None\n \n \n+def is_commit_operation(payload: dict) -> bool:\n+    tool_name = payload.get(\"tool_name\", \"\")\n+    tool_input = payload.get(\"tool_input\", {})\n+\n+    if tool_name in {\"runTerminalCommand\", \"powershell\", \"bash\"}:\n+        command = \" \".join(\n+            str(part)\n+            for part in (\n+                tool_input.get(\"command\"),\n+                tool_input.get(\"input\"),\n+                tool_input.get(\"args\"),\n+            )\n+            if part\n+        )\n+        return \"git commit\" in command\n+\n+    return False\n+\n+\n def collect_hook_violations(payload: dict) -> list[str]:\n     tool_name = payload.get(\"tool_name\", \"\")\n     tool_input = payload.get(\"tool_input\", {})\n \n+    if is_commit_operation(payload):\n+        return collect_repository_violations()\n+\n     if tool_name not in EDIT_TOOLS:\n         return []\n*** End Patch\n"
-```
-
-</details>
-
-```
-Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
-```
-
+The files are in place. I’m doing a code-level review now to catch any portability or Python issues since I’m not allowed to validate with shell commands here.
 
 ---
 
-<sub>⏱️ 3m 4s</sub>
+<sub>⏱️ 3m 3s</sub>
 
 ### ✅ `view`
 
@@ -2448,7 +1789,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 4.       {
 5.         "type": "command",
 6.         "command": "python .github/scripts/validate_imports.py",
-7.         "timeout": 20
+7.         "timeout": 30
 8.       }
 9.     ]
 10.   }
@@ -2461,7 +1802,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 3m 4s</sub>
+<sub>⏱️ 3m 3s</sub>
 
 ### ✅ `view`
 
@@ -2470,268 +1811,219 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
 
 <details>
-<summary>259 lines</summary>
+<summary>210 lines</summary>
 
 ```
 1. #!/usr/bin/env python3
-2. """PreToolUse hook: enforce barrel-file imports for TypeScript modules.
+2. """PreToolUse hook: enforce barrel-file imports for TypeScript code.
 3. 
-4. This validator blocks imports that reach through another module's internal file
-5. path when the import should go through that module's `index.ts` barrel instead.
-6. Barrel files themselves are exempt because they aggregate those internal files.
+4. Reads hook JSON from stdin when available and blocks changes that import from
+5. internal module files when a sibling barrel/index.ts file exists. This keeps
+6. TypeScript imports pointed at the public index.ts barrel instead of deep paths.
 7. """
 8. import json
 9. import re
 10. import sys
-11. from pathlib import Path, PurePosixPath
+11. from pathlib import Path
 12. 
-13. PROJECT_ROOT = Path(__file__).resolve().parents[2]
-14. SOURCE_ROOT = PROJECT_ROOT / "src"
-15. TS_EXTENSIONS = {".ts", ".tsx", ".mts", ".cts"}
-16. JS_TO_TS_EXTENSIONS = {
-17.     ".js": [".ts", ".tsx"],
-18.     ".jsx": [".tsx", ".ts"],
-19.     ".mjs": [".mts", ".ts"],
-20.     ".cjs": [".cts", ".ts"],
-21. }
-22. EDIT_TOOLS = {"editFiles", "createFile"}
-23. IMPORT_RE = re.compile(
-24.     r"""
-25.     ^\s*
-26.     (?:
-27.       import
-28.       (?:
-29.         \s+(?:type\s+)?[\s\S]*?\s+from
-30.       )?
-31.       |
-32.       export
-33.       \s+(?:type\s+)?
-34.       [\s\S]*?\s+from
-35.     )
-36.     \s*["'](?P<specifier>[^"']+)["']
-37.     """,
-38.     re.MULTILINE | re.VERBOSE,
-39. )
-40. 
-41. 
-42. def is_typescript_file(path: Path) -> bool:
-43.     return path.suffix in TS_EXTENSIONS
+13. TS_SUFFIXES = {".ts", ".tsx"}
+14. EXCLUDED_DIRS = {"dist", "node_modules", ".git"}
+15. IMPORT_PATTERNS = (
+16.     re.compile(r"""\bimport\s+(?:type\s+)?[^;"']*?\bfrom\s+["']([^"']+)["']"""),
+17.     re.compile(r"""\bexport\s+[^;"']*?\bfrom\s+["']([^"']+)["']"""),
+18.     re.compile(r"""\bimport\(\s*["']([^"']+)["']\s*\)"""),
+19. )
+20. REPO_ROOT = Path(__file__).resolve().parents[2]
+21. 
+22. 
+23. def load_hook_payload() -> dict:
+24.     raw = sys.stdin.read().strip()
+25.     if not raw:
+26.         return {}
+27. 
+28.     try:
+29.         payload = json.loads(raw)
+30.     except json.JSONDecodeError:
+31.         return {}
+32. 
+33.     return payload if isinstance(payload, dict) else {}
+34. 
+35. 
+36. def is_typescript_file(path: Path) -> bool:
+37.     return path.suffix in TS_SUFFIXES and not any(part in EXCLUDED_DIRS for part in path.parts)
+38. 
+39. 
+40. def normalize_candidate_path(raw_path: str) -> Path:
+41.     path = Path(raw_path)
+42.     return path if path.is_absolute() else REPO_ROOT / path
+43. 
 44. 
-45. 
-46. def is_barrel_file(path: Path) -> bool:
-47.     return path.name.startswith("index.") and is_typescript_file(path)
-48. 
+45. def collect_candidate_files(payload: dict) -> list[Path]:
+46.     tool_name = str(payload.get("tool_name", ""))
+47.     tool_input = payload.get("tool_input", {})
+48.     paths: list[Path] = []
 49. 
-50. def normalize_path(raw_path: str) -> Path:
-51.     path = Path(raw_path)
-52.     if path.is_absolute():
-53.         return path
-54.     posix_path = PurePosixPath(raw_path.replace("\\", "/"))
-55.     return PROJECT_ROOT.joinpath(*posix_path.parts)
+50.     if isinstance(tool_input, dict):
+51.         files = tool_input.get("files", [])
+52.         if isinstance(files, list):
+53.             for file_path in files:
+54.                 if isinstance(file_path, str) and file_path:
+55.                     paths.append(normalize_candidate_path(file_path))
 56. 
-57. 
-58. def relative_path(path: Path) -> str:
-59.     try:
-60.         return path.relative_to(PROJECT_ROOT).as_posix()
-61.     except ValueError:
-62.         return path.as_posix()
-63. 
+57.         file_path = tool_input.get("filePath")
+58.         if isinstance(file_path, str) and file_path:
+59.             paths.append(normalize_candidate_path(file_path))
+60. 
+61.     candidates = [path for path in paths if path.exists() and is_typescript_file(path)]
+62.     if candidates:
+63.         return sorted(set(candidates))
 64. 
-65. def strip_relative_segments(specifier: str) -> list[str]:
-66.     parts = PurePosixPath(specifier).parts
-67.     return [part for part in parts if part not in (".", "..")]
-68. 
-69. 
-70. def resolve_base_target(source_path: Path, specifier: str) -> Path:
-71.     specifier_path = PurePosixPath(specifier)
-72.     return source_path.parent.joinpath(*specifier_path.parts).resolve(strict=False)
+65.     if tool_name and "commit" not in tool_name.lower():
+66.         return []
+67. 
+68.     return sorted(
+69.         path
+70.         for path in REPO_ROOT.rglob("*")
+71.         if path.is_file() and is_typescript_file(path) and "src" in path.parts
+72.     )
 73. 
 74. 
-75. def has_barrel_file(directory: Path) -> bool:
-76.     return any((directory / f"index{extension}").exists() for extension in TS_EXTENSIONS)
-77. 
-78. 
-79. def is_barrel_import(source_path: Path, specifier: str) -> bool:
-80.     base_target = resolve_base_target(source_path, specifier)
+75. def extract_imports(source: str) -> list[str]:
+76.     specifiers: list[str] = []
+77.     for pattern in IMPORT_PATTERNS:
+78.         specifiers.extend(pattern.findall(source))
+79.     return specifiers
+80. 
 81. 
-82.     if base_target.is_dir():
-83.         return has_barrel_file(base_target)
-84. 
-85.     if base_target.exists() and base_target.stem == "index":
-86.         return True
-87. 
-88.     if base_target.suffix in JS_TO_TS_EXTENSIONS:
-89.         for extension in JS_TO_TS_EXTENSIONS[base_target.suffix]:
-90.             if base_target.with_suffix(extension).exists() and base_target.stem == "index":
-91.                 return True
-92. 
-93.     if not base_target.suffix and has_barrel_file(base_target):
-94.         return True
-95. 
-96.     return False
-97. 
-98. 
-99. def is_deep_relative_import(source_path: Path, specifier: str) -> bool:
-100.     if not specifier.startswith("."):
-101.         return False
-102. 
-103.     if is_barrel_import(source_path, specifier):
-104.         return False
-105. 
-106.     path_parts = strip_relative_segments(specifier)
-107.     if len(path_parts) <= 1:
-108.         return False
+82. def resolve_import_target(source_file: Path, specifier: str) -> Path | None:
+83.     if not specifier.startswith("."):
+84.         return None
+85. 
+86.     base_path = (source_file.parent / specifier).resolve(strict=False)
+87.     candidates: list[Path] = []
+88. 
+89.     if base_path.suffix in {".js", ".jsx", ".mjs", ".cjs"}:
+90.         candidates.extend(
+91.             [
+92.                 base_path.with_suffix(".ts"),
+93.                 base_path.with_suffix(".tsx"),
+94.                 base_path.with_suffix(".mts"),
+95.                 base_path.with_suffix(".cts"),
+96.             ]
+97.         )
+98.     elif base_path.suffix:
+99.         candidates.append(base_path)
+100.     else:
+101.         candidates.extend(
+102.             [
+103.                 base_path / "index.ts",
+104.                 base_path / "index.tsx",
+105.                 base_path.with_suffix(".ts"),
+106.                 base_path.with_suffix(".tsx"),
+107.             ]
+108.         )
 109. 
-110.     if PurePosixPath(path_parts[-1]).stem == "index":
-111.         return False
-112. 
-113.     return True
-114. 
+110.     for candidate in candidates:
+111.         if candidate.exists() and candidate.is_file():
+112.             return candidate
+113. 
+114.     return None
 115. 
-116. def suggested_barrel(specifier: str) -> str:
-117.     path = PurePosixPath(specifier)
-118.     parent = path.parent
-119.     if str(parent) == ".":
-120.         return "./index.ts"
-121.     return f"{parent.as_posix()}/index.ts"
-122. 
-123. 
-124. def collect_violations(source_path: Path, content: str) -> list[str]:
-125.     if is_barrel_file(source_path):
-126.         return []
-127. 
-128.     violations: list[str] = []
-129.     for match in IMPORT_RE.finditer(content):
-130.         specifier = match.group("specifier")
-131.         if is_deep_relative_import(source_path, specifier):
-132.             violations.append(
-133.                 f"{relative_path(source_path)} imports '{specifier}'. "
-134.                 f"Use the barrel file '{suggested_barrel(specifier)}' "
-135.                 "instead of an internal module path."
-136.             )
-137.     return violations
-138. 
+116. 
+117. def to_import_specifier(source_file: Path, target_file: Path) -> str:
+118.     relative = target_file.relative_to(source_file.parent) if target_file.is_relative_to(source_file.parent) else None
+119.     if relative is None:
+120.         relative = Path(
+121.             *Path(
+122.                 str(
+123.                     Path(
+124.                         __import__("os").path.relpath(target_file, start=source_file.parent)
+125.                     )
+126.                 )
+127.             ).parts
+128.         )
+129. 
+130.     specifier = relative.as_posix()
+131.     if not specifier.startswith("."):
+132.         specifier = f"./{specifier}"
+133. 
+134.     if specifier.endswith(".ts"):
+135.         return f"{specifier[:-3]}.js"
+136.     if specifier.endswith(".tsx"):
+137.         return f"{specifier[:-4]}.js"
+138.     return specifier
 139. 
-140. def collect_repository_violations() -> list[str]:
-141.     violations: list[str] = []
-142.     if not SOURCE_ROOT.exists():
-143.         return violations
-144. 
-145.     for path in sorted(SOURCE_ROOT.rglob("*")):
-146.         if not path.is_file() or not is_typescript_file(path):
-147.             continue
-148.         if any(part in {"node_modules", "dist"} for part in path.parts):
-149.             continue
-150.         violations.extend(collect_violations(path, path.read_text(encoding="utf-8")))
-151.     return violations
-152. 
-153. 
-154. def read_hook_payload() -> dict | None:
-155.     if sys.stdin.isatty():
-156.         return None
+140. 
+141. def barrel_for_target(target_file: Path) -> Path | None:
+142.     barrel = target_file.parent / "index.ts"
+143.     if target_file.name == "index.ts" or not barrel.exists():
+144.         return None
+145.     return barrel
+146. 
+147. 
+148. def find_violations(files: list[Path]) -> list[str]:
+149.     violations: list[str] = []
+150. 
+151.     for source_file in files:
+152.         source = source_file.read_text(encoding="utf-8")
+153.         for specifier in extract_imports(source):
+154.             target = resolve_import_target(source_file, specifier)
+155.             if target is None or not target.is_relative_to(REPO_ROOT):
+156.                 continue
 157. 
-158.     raw = sys.stdin.read().strip()
-159.     if not raw:
-160.         return None
+158.             barrel = barrel_for_target(target)
+159.             if barrel is None:
+160.                 continue
 161. 
-162.     try:
-163.         return json.loads(raw)
-164.     except json.JSONDecodeError:
-165.         return None
-166. 
-167. 
-168. def is_commit_operation(payload: dict) -> bool:
-169.     tool_name = payload.get("tool_name", "")
-170.     tool_input = payload.get("tool_input", {})
+162.             suggested = to_import_specifier(source_file, barrel)
+163.             relative_source = source_file.relative_to(REPO_ROOT).as_posix()
+164.             relative_barrel = barrel.relative_to(REPO_ROOT).as_posix()
+165.             violations.append(
+166.                 f"{relative_source}: import '{specifier}' reaches into an internal module path. "
+167.                 f"Use the barrel '{suggested}' ({relative_barrel}) instead."
+168.             )
+169. 
+170.     return violations
 171. 
-172.     if tool_name in {"runTerminalCommand", "powershell", "bash"}:
-173.         command = " ".join(
-174.             str(part)
-175.             for part in (
-176.                 tool_input.get("command"),
-177.                 tool_input.get("input"),
-178.                 tool_input.get("args"),
-179.             )
-180.             if part
-181.         )
-182.         return "git commit" in command
-183. 
-184.     return False
+172. 
+173. def emit_deny(message: str) -> None:
+174.     json.dump(
+175.         {
+176.             "hookSpecificOutput": {
+177.                 "hookEventName": "PreToolUse",
+178.                 "permissionDecision": "deny",
+179.                 "permissionDecisionReason": message,
+180.             }
+181.         },
+182.         sys.stdout,
+183.     )
+184. 
 185. 
-186. 
-187. def collect_hook_violations(payload: dict) -> list[str]:
-188.     tool_name = payload.get("tool_name", "")
-189.     tool_input = payload.get("tool_input", {})
-190. 
-191.     if is_commit_operation(payload):
-192.         return collect_repository_violations()
-193. 
-194.     if tool_name not in EDIT_TOOLS:
-195.         return []
-196. 
-197.     file_path = tool_input.get("filePath")
-198.     files = tool_input.get("files", [])
-199.     paths_to_check = files if files else ([file_path] if file_path else [])
-200. 
-201.     content = (
-202.         tool_input.get("content")
-203.         or tool_input.get("newContent")
-204.         or tool_input.get("newString")
-205.         or ""
-206.     )
+186. def main() -> None:
+187.     payload = load_hook_payload()
+188.     files = collect_candidate_files(payload)
+189.     if not files:
+190.         sys.exit(0)
+191. 
+192.     violations = find_violations(files)
+193.     if not violations:
+194.         sys.exit(0)
+195. 
+196.     summary = "Import validation failed: " + " | ".join(violations[:3])
+197.     if len(violations) > 3:
+198.         summary += f" | ...and {len(violations) - 3} more violation(s)."
+199. 
+200.     if payload:
+201.         emit_deny(summary)
+202.         sys.exit(0)
+203. 
+204.     print(summary, file=sys.stderr)
+205.     sys.exit(1)
+206. 
 207. 
-208.     violations: list[str] = []
-209.     for raw_path in paths_to_check:
-210.         path = normalize_path(raw_path)
-211.         if not is_typescript_file(path):
-212.             continue
-213. 
-214.         if content:
-215.             violations.extend(collect_violations(path, content))
-216.             continue
-217. 
-218.         if path.exists():
-219.             violations.extend(collect_violations(path, path.read_text(encoding="utf-8")))
-220. 
-221.     return violations
-222. 
-223. 
-224. def emit_deny(violations: list[str]) -> None:
-225.     result = {
-226.         "hookSpecificOutput": {
-227.             "hookEventName": "PreToolUse",
-228.             "permissionDecision": "deny",
-229.             "permissionDecisionReason": (
-230.                 "Import validation failed. "
-231.                 + " ".join(violations[:3])
-232.             ),
-233.         }
-234.     }
-235.     json.dump(result, sys.stdout)
-236. 
-237. 
-238. def main() -> None:
-239.     payload = read_hook_payload()
-240.     if payload is not None:
-241.         violations = collect_hook_violations(payload)
-242.         if violations:
-243.             emit_deny(violations)
-244.         return
-245. 
-246.     print("=== Import validation ===")
-247.     violations = collect_repository_violations()
-248.     if violations:
-249.         print("FAIL: TypeScript imports must use barrel files (index.ts).")
-250.         for violation in violations[:20]:
-251.             print(f"  - {violation}")
-252.         sys.exit(1)
-253. 
-254.     print("OK")
-255. 
-256. 
-257. if __name__ == "__main__":
-258.     main()
-259.
+208. if __name__ == "__main__":
+209.     main()
+210.
 ```
 
 </details>
@@ -2739,23 +2031,326 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrai
 
 ---
 
-<sub>⏱️ 3m 13s</sub>
+<sub>⏱️ 3m 17s</sub>
 
 ### 💬 Copilot
 
-Implemented the new guardrail in the requested surfaces:
+I spotted one implementation smell in the new script and am tightening it up so the path suggestion logic stays simple and portable.
 
-- Added `.github/hooks/import-validation.json` with a `PreToolUse` command hook that runs `python .github/scripts/validate_imports.py`.
-- Added `.github/scripts/validate_imports.py` following the existing script patterns.
+---
 
-The validator:
-- reads `PreToolUse` payloads like the file-protection guardrail,
-- checks TypeScript imports for deep relative/internal module paths,
-- allows barrel imports via `index.ts`,
-- skips barrel files themselves,
-- can also scan the repo when triggered for commit-like operations or standalone.
+<sub>⏱️ 3m 17s</sub>
 
-I inspected the lesson instructions, hook configs, scripts, MCP config, and policy docs first. No shell commands or SQL were used.
+### ✅ `apply_patch`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+"*** Begin Patch\n*** Update File: .github/scripts/validate_imports.py\n@@\n import json\n+import os\n import re\n import sys\n from pathlib import Path\n@@\n     if tool_name and \"commit\" not in tool_name.lower():\n         return []\n \n     return sorted(\n         path\n-        for path in REPO_ROOT.rglob(\"*\")\n+        for path in (REPO_ROOT / \"src\").rglob(\"*\")\n         if path.is_file() and is_typescript_file(path) and \"src\" in path.parts\n     )\n@@\n def to_import_specifier(source_file: Path, target_file: Path) -> str:\n-    relative = target_file.relative_to(source_file.parent) if target_file.is_relative_to(source_file.parent) else None\n-    if relative is None:\n-        relative = Path(\n-            *Path(\n-                str(\n-                    Path(\n-                        __import__(\"os\").path.relpath(target_file, start=source_file.parent)\n-                    )\n-                )\n-            ).parts\n-        )\n+    relative = Path(os.path.relpath(target_file, start=source_file.parent))\n \n     specifier = relative.as_posix()\n     if not specifier.startswith(\".\"):\n         specifier = f\"./{specifier}\"\n*** End Patch\n"
+```
+
+</details>
+
+```
+Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+```
+
+
+---
+
+<sub>⏱️ 3m 29s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+
+<details>
+<summary>201 lines</summary>
+
+```
+1. #!/usr/bin/env python3
+2. """PreToolUse hook: enforce barrel-file imports for TypeScript code.
+3. 
+4. Reads hook JSON from stdin when available and blocks changes that import from
+5. internal module files when a sibling barrel/index.ts file exists. This keeps
+6. TypeScript imports pointed at the public index.ts barrel instead of deep paths.
+7. """
+8. import json
+9. import os
+10. import re
+11. import sys
+12. from pathlib import Path
+13. 
+14. TS_SUFFIXES = {".ts", ".tsx"}
+15. EXCLUDED_DIRS = {"dist", "node_modules", ".git"}
+16. IMPORT_PATTERNS = (
+17.     re.compile(r"""\bimport\s+(?:type\s+)?[^;"']*?\bfrom\s+["']([^"']+)["']"""),
+18.     re.compile(r"""\bexport\s+[^;"']*?\bfrom\s+["']([^"']+)["']"""),
+19.     re.compile(r"""\bimport\(\s*["']([^"']+)["']\s*\)"""),
+20. )
+21. REPO_ROOT = Path(__file__).resolve().parents[2]
+22. 
+23. 
+24. def load_hook_payload() -> dict:
+25.     raw = sys.stdin.read().strip()
+26.     if not raw:
+27.         return {}
+28. 
+29.     try:
+30.         payload = json.loads(raw)
+31.     except json.JSONDecodeError:
+32.         return {}
+33. 
+34.     return payload if isinstance(payload, dict) else {}
+35. 
+36. 
+37. def is_typescript_file(path: Path) -> bool:
+38.     return path.suffix in TS_SUFFIXES and not any(part in EXCLUDED_DIRS for part in path.parts)
+39. 
+40. 
+41. def normalize_candidate_path(raw_path: str) -> Path:
+42.     path = Path(raw_path)
+43.     return path if path.is_absolute() else REPO_ROOT / path
+44. 
+45. 
+46. def collect_candidate_files(payload: dict) -> list[Path]:
+47.     tool_name = str(payload.get("tool_name", ""))
+48.     tool_input = payload.get("tool_input", {})
+49.     paths: list[Path] = []
+50. 
+51.     if isinstance(tool_input, dict):
+52.         files = tool_input.get("files", [])
+53.         if isinstance(files, list):
+54.             for file_path in files:
+55.                 if isinstance(file_path, str) and file_path:
+56.                     paths.append(normalize_candidate_path(file_path))
+57. 
+58.         file_path = tool_input.get("filePath")
+59.         if isinstance(file_path, str) and file_path:
+60.             paths.append(normalize_candidate_path(file_path))
+61. 
+62.     candidates = [path for path in paths if path.exists() and is_typescript_file(path)]
+63.     if candidates:
+64.         return sorted(set(candidates))
+65. 
+66.     if tool_name and "commit" not in tool_name.lower():
+67.         return []
+68. 
+69.     return sorted(
+70.         path
+71.         for path in (REPO_ROOT / "src").rglob("*")
+72.         if path.is_file() and is_typescript_file(path) and "src" in path.parts
+73.     )
+74. 
+75. 
+76. def extract_imports(source: str) -> list[str]:
+77.     specifiers: list[str] = []
+78.     for pattern in IMPORT_PATTERNS:
+79.         specifiers.extend(pattern.findall(source))
+80.     return specifiers
+81. 
+82. 
+83. def resolve_import_target(source_file: Path, specifier: str) -> Path | None:
+84.     if not specifier.startswith("."):
+85.         return None
+86. 
+87.     base_path = (source_file.parent / specifier).resolve(strict=False)
+88.     candidates: list[Path] = []
+89. 
+90.     if base_path.suffix in {".js", ".jsx", ".mjs", ".cjs"}:
+91.         candidates.extend(
+92.             [
+93.                 base_path.with_suffix(".ts"),
+94.                 base_path.with_suffix(".tsx"),
+95.                 base_path.with_suffix(".mts"),
+96.                 base_path.with_suffix(".cts"),
+97.             ]
+98.         )
+99.     elif base_path.suffix:
+100.         candidates.append(base_path)
+101.     else:
+102.         candidates.extend(
+103.             [
+104.                 base_path / "index.ts",
+105.                 base_path / "index.tsx",
+106.                 base_path.with_suffix(".ts"),
+107.                 base_path.with_suffix(".tsx"),
+108.             ]
+109.         )
+110. 
+111.     for candidate in candidates:
+112.         if candidate.exists() and candidate.is_file():
+113.             return candidate
+114. 
+115.     return None
+116. 
+117. 
+118. def to_import_specifier(source_file: Path, target_file: Path) -> str:
+119.     relative = Path(os.path.relpath(target_file, start=source_file.parent))
+120. 
+121.     specifier = relative.as_posix()
+122.     if not specifier.startswith("."):
+123.         specifier = f"./{specifier}"
+124. 
+125.     if specifier.endswith(".ts"):
+126.         return f"{specifier[:-3]}.js"
+127.     if specifier.endswith(".tsx"):
+128.         return f"{specifier[:-4]}.js"
+129.     return specifier
+130. 
+131. 
+132. def barrel_for_target(target_file: Path) -> Path | None:
+133.     barrel = target_file.parent / "index.ts"
+134.     if target_file.name == "index.ts" or not barrel.exists():
+135.         return None
+136.     return barrel
+137. 
+138. 
+139. def find_violations(files: list[Path]) -> list[str]:
+140.     violations: list[str] = []
+141. 
+142.     for source_file in files:
+143.         source = source_file.read_text(encoding="utf-8")
+144.         for specifier in extract_imports(source):
+145.             target = resolve_import_target(source_file, specifier)
+146.             if target is None or not target.is_relative_to(REPO_ROOT):
+147.                 continue
+148. 
+149.             barrel = barrel_for_target(target)
+150.             if barrel is None:
+151.                 continue
+152. 
+153.             suggested = to_import_specifier(source_file, barrel)
+154.             relative_source = source_file.relative_to(REPO_ROOT).as_posix()
+155.             relative_barrel = barrel.relative_to(REPO_ROOT).as_posix()
+156.             violations.append(
+157.                 f"{relative_source}: import '{specifier}' reaches into an internal module path. "
+158.                 f"Use the barrel '{suggested}' ({relative_barrel}) instead."
+159.             )
+160. 
+161.     return violations
+162. 
+163. 
+164. def emit_deny(message: str) -> None:
+165.     json.dump(
+166.         {
+167.             "hookSpecificOutput": {
+168.                 "hookEventName": "PreToolUse",
+169.                 "permissionDecision": "deny",
+170.                 "permissionDecisionReason": message,
+171.             }
+172.         },
+173.         sys.stdout,
+174.     )
+175. 
+176. 
+177. def main() -> None:
+178.     payload = load_hook_payload()
+179.     files = collect_candidate_files(payload)
+180.     if not files:
+181.         sys.exit(0)
+182. 
+183.     violations = find_violations(files)
+184.     if not violations:
+185.         sys.exit(0)
+186. 
+187.     summary = "Import validation failed: " + " | ".join(violations[:3])
+188.     if len(violations) > 3:
+189.         summary += f" | ...and {len(violations) - 3} more violation(s)."
+190. 
+191.     if payload:
+192.         emit_deny(summary)
+193.         sys.exit(0)
+194. 
+195.     print(summary, file=sys.stderr)
+196.     sys.exit(1)
+197. 
+198. 
+199. if __name__ == "__main__":
+200.     main()
+201.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 3m 29s</sub>
+
+### ✅ `view`
+
+**view the file at C:\Users\nilay\.copilot\session-state\0d5ad777-fe33-4da0-ab2c-6e18a3ac59e1\plan.md.**
+
+C:\Users\nilay\.copilot\session-state\0d5ad777-fe33-4da0-ab2c-6e18a3ac59e1\plan.md
+
+<details>
+<summary>8 lines</summary>
+
+```
+1. ## Plan
+2. 
+3. 1. Inspect the lesson's guardrail instructions, hook configs, scripts, MCP config, and policy docs to capture existing conventions.
+4. 2. Inspect the TypeScript source layout to design an import-validation rule that fits the project's barrel-file convention goal.
+5. 3. Add `.github/hooks/import-validation.json` following the established hook config structure.
+6. 4. Add `.github/scripts/validate_imports.py` following the established Python guardrail script style and enforcing barrel-file imports.
+7. 5. Review the new files for consistency with the discovered patterns and ensure the change stays scoped to `.github/hooks/` and `.github/scripts/`.
+8.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 3m 42s</sub>
+
+### 💬 Copilot
+
+I’m done with the file edits. I’m saving one small repo convention I verified because it’ll help future guardrail work stay consistent.
+
+---
+
+<sub>⏱️ 3m 43s</sub>
+
+### ✅ `store_memory`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "subject": "guardrails",
+  "fact": "Lesson 06 hook configs use a hooks object keyed by event name with command entries invoking scripts from .github/scripts/.",
+  "citations": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\hooks\\file-protection.json:1-11; Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\hooks\\pre-commit-validate.json:1-11; Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\06-tools-and-guardrails\\.github\\hooks\\import-validation.json:1-11",
+  "reason": "This convention is stable and affects any future hook or guardrail additions in Lesson 06. Remembering it will help future implementation and review tasks quickly match the lesson’s established hook shape instead of inventing a new schema or command layout.",
+  "category": "general"
+}
+```
+
+</details>
+
+```
+Memory stored successfully.
+```
+
+
+---
+
+<sub>⏱️ 3m 52s</sub>
+
+### 💬 Copilot
+
+Implemented the new guardrail in-place after inspecting the lesson’s existing hook configs, scripts, MCP config, and policy docs.
+
+Added `\.github\hooks\import-validation.json` using the same `hooks -\> PreToolUse -\> command` pattern as the existing guardrails.
+
+Added `\.github\scripts\validate_imports.py` following the existing Python guardrail style. It parses TypeScript import/export specifiers, resolves local targets, and denies the operation when a file imports an internal module path even though that module exposes an `index.ts` barrel.
+
+I didn’t run shell commands or SQL, per your instructions.
 
 ---
 
