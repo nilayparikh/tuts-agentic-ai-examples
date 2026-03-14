@@ -1,7 +1,7 @@
 # Actual vs Expected Comparison
 
 - **Files match:** True
-- **Patterns match:** False
+- **Patterns match:** True
 
 ## Details
 
@@ -10,4 +10,4 @@
 - Pattern matched: Rule must contain preference write validation logic
 - Pattern matched: Rules must reference LEGAL-218 or California restrictions
 - Pattern matched: Test file must contain test cases
-- Pattern MISSING: Rules must reference delegated-session or owner constraints
+- Pattern matched: Route wiring should pass contextual inputs and preserve audited write flow

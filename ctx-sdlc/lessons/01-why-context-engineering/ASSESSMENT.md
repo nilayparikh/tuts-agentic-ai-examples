@@ -1,16 +1,8 @@
-# Lesson 01 Comparative Prompt Assessment
+# Lesson 01 — Why Context Engineering Matters — Assessment
 
-This assessment is intentionally comparative.
+> **Model:** comparative (no single model) · **Format:** with-context vs without-context · **Date:** 2026-03-13
 
-It evaluates the same prompt under two workspace conditions:
-
-- `with-context/`
-- `without-context/`
-
-It does not claim a fresh rerun in this change. It records the current lesson-01
-assessment framing based on the existing comparison material.
-
-## Prompt Under Review
+## Prompt Under Test
 
 ```text
 Implement the manual review escalation workflow for this repository.
@@ -18,61 +10,90 @@ Follow existing repo conventions and architecture.
 Return the exact files you would change and the code for each change.
 ```
 
-This is the historical prompt used for the existing with-context versus without-context comparison.
+Same prompt run in two workspace conditions: `with-context/` (curated `.github/`
+and `docs/`) vs `without-context/` (bare workspace).
 
-## Assessment Scope
+## Scorecard
 
-The only question being evaluated is:
+| # | Dimension | Rating | Summary |
+|---|-----------|--------|---------|
+| 1 | Context Utilization (CU) | ✅ PASS | With-context run discovered hidden repo rules; without-context had none to discover |
+| 2 | Session Efficiency (SE) | — | Not applicable for comparative format |
+| 3 | Prompt Alignment (PA) | ✅ PASS | Same short prompt in both conditions; no constraints violated |
+| 4 | Change Correctness (CC) | ✅ PASS | With-context scored 13/14 on rubric; without-context scored 2–3/14 |
+| 5 | Objective Completion (OC) | ✅ PASS | All four lesson objectives demonstrated through comparative gap |
+| 6 | Behavioral Compliance (BC) | — | Not applicable for manual comparison |
 
-> Does the same prompt become materially more repository-aware when the lesson exposes the right contextual workspace files?
+**Verdict:** ✅ PASS
 
-## Current Assessment Basis
+## 1 · Context Utilization
 
-Lesson 01 does not yet use the standardized `.output/` prompt-assessment bundle
-used by lessons 02 through 08.
+The with-context workspace provides three curated files:
 
-The current comparative assessment is based on:
+- `.github/copilot-instructions.md` — behavioral guidance
+- `docs/architecture.md` — system design and service boundaries
+- `docs/manual-review-escalation.md` — workflow-specific hidden spec
 
-- `README.md`
-- `COMPARE.md`
-- `with-context/docs/experiment.md`
-- `with-context/docs/manual-review-escalation.md`
+The with-context run consumed all three and produced code that reflects route
+design, service-layer orchestration, delegated-session rules, queue contract
+reuse, audit behavior, and California-specific notification rules. The
+without-context run had no context to discover and defaulted to plausible but
+repo-wrong design (new lifecycle state, schema changes, wrong permissions).
 
-## Current Verdict
+## 2 · Session Efficiency
 
-Based on the existing comparison, the lesson succeeds.
+Not applicable. Lesson 01 uses a comparative format, not the standardized
+`.output/` bundle. No session duration or tool call data available.
 
-- The with-context run is clearly more repository-aware.
-- The without-context run is plausible but wrong in repo-specific ways.
-- The comparison demonstrates that context changes architecture choices, route shape, permission behavior, audit behavior, queue reuse, and regulatory nuance.
+## 3 · Prompt Alignment
 
-## What The Lesson Already Demonstrates Well
+The prompt is deliberately short and realistic — three sentences with no
+explicit constraints. This design is intentional: the lesson demonstrates that
+**context surfaces hidden rules without restating them in the prompt**. Both
+runs received the identical prompt.
 
-- It keeps the prompt short and realistic.
-- It shows that hidden repository rules do not need to be restated in the prompt when the workspace carries the right context.
-- It creates a strong contrast between a context-aware workflow and a plausible but repo-wrong workflow.
-- It focuses on repository intent, not only syntactic correctness.
+## 4 · Change Correctness
 
-## Current Gaps
+Scored against the 14-point rubric in `with-context/docs/experiment.md`:
 
-1. Lesson 01 does not yet have the same standardized prompt-assessment artifact bundle as lessons 02 through 08.
+| Requirement | With Context | Without Context |
+|---|---|---|
+| Correct route path (`POST /api/applications/:id/manual-review`) | ✅ | ❌ |
+| Correct route file (`routes/applications.ts`) | ✅ | ⚠️ |
+| Correct orchestration file (`services/loan-service.ts`) | ✅ | ❌ |
+| Thin route handler, logic in service layer | ✅ | ❌ |
+| Correct role gate (`analyst-manager`) | ✅ | ❌ |
+| Delegated sessions blocked | ✅ | ❌ |
+| No loan status transition | ✅ | ❌ |
+| Reuses `notification.requested` | ✅ | ❌ |
+| Uses event `manual-review-escalation` | ✅ | ✅ |
+| No new queue contract type | ✅ | ✅ |
+| Audits the operation | ✅ | ❌ |
+| Uses action `loan.manual-review-requested` | ✅ | ❌ |
+| Adds `[CA-HighRisk]` subject prefix | ✅ | ❌ |
+| Returns expected payload shape | ⚠️ | ❌ |
 
-That makes the lesson slightly harder to compare mechanically with the rest of the series.
+- **With context:** 13/14
+- **Without context:** 2–3/14
 
-2. The with-context run still appears to miss one response detail called out in `COMPARE.md`.
+## 5 · Objective Completion
 
-The expected payload shape should include `notificationEventId`, so the contextual result is substantially better than baseline but still not perfect.
+| Objective | Status | Evidence |
+|---|---|---|
+| Explain why AI-assisted engineering fails without durable project context | ✅ | Without-context run is plausible but wrong in 11+ repo-specific ways |
+| Distinguish prompt engineering from durable repository-level context engineering | ✅ | Same prompt, dramatically different outcomes based on workspace context |
+| Describe why context should be treated as engineering infrastructure | ✅ | Three small files changed architecture, permissions, audit, and regulatory compliance |
+| Position context engineering as foundation for planning, implementation, review, and maintenance | ✅ | Gap spans design, permissions, audit, queue usage, and regulatory nuance |
 
-## Follow-Up Design Change
+## 6 · Behavioral Compliance
 
-Future standardization for lesson 01 should:
+Not applicable. Lesson 01 is a manual comparison, not a CLI-driven demo.
 
-- capture both runs under a consistent artifact layout similar to lessons 02 through 08
-- preserve the same short prompt in both workspace conditions
-- score the pair explicitly against the existing lesson rubric instead of relying only on prose comparison
+## Caveats & Follow-Ups
 
-## Final Assessment
-
-For lesson 01, the correct assessment is:
-
-> The lesson is successful as a comparative context-engineering demonstration. The same prompt performs materially better when the workspace exposes the hidden repository context. The remaining gap is structural: lesson 01 should eventually adopt the same standardized artifact capture used by the later lessons.
+- With-context run missed `notificationEventId` in response payload (1/14
+  partial). This is a useful teaching point: context improves output
+  substantially but does not guarantee perfection.
+- Lesson 01 does not yet use the standardized `.output/` artifact bundle.
+  Future improvement: capture both runs under consistent artifact layout for
+  mechanical comparison.

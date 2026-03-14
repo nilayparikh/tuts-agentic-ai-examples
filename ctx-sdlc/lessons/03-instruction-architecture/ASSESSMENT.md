@@ -1,107 +1,167 @@
-# Lesson 03 CLI Prompt Assessment
+# Lesson 03 — Instruction Architecture — Assessment
 
-This assessment is intentionally narrow.
-
-It evaluates only whether the code changes produced by the lesson's GitHub Copilot CLI prompt respected the required standards, constraints, and repository context for that prompt.
-
-It does not assess the lesson overall.
+> **Model:** `gpt-5.4` · **Duration:** 2m 3s · **Date:** 2026-03-13
 
 ## Prompt Under Test
 
 ```text
-Create a pure business-rule module at src/backend/src/rules/notification-channel-rules.ts and matching tests at src/backend/tests/unit/notification-channel-rules.test.ts. The rule should validate when disabling a notification channel is allowed for mandatory events, including the California decline LEGAL-218 restriction. Follow the repository conventions you discover. Reuse existing mandatory-event knowledge from src/backend/src/rules/mandatory-events.ts or explicit function inputs; do not create a second hardcoded mandatory-events list or helper. Return structured results with human-readable reasons, include top-of-module false-positive and hard-negative comments, and add tests for happy path, boundary, false positive, and hard negative scenarios. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
+Create a pure business-rule module at src/backend/src/rules/notification-channel-rules.ts
+and matching tests at src/backend/tests/unit/notification-channel-rules.test.ts. The rule
+should validate when disabling a notification channel is allowed for mandatory events,
+including the California decline LEGAL-218 restriction. Follow the repository conventions
+you discover. Reuse existing mandatory-event knowledge from
+src/backend/src/rules/mandatory-events.ts or explicit function inputs; do not create a
+second hardcoded mandatory-events list or helper. Return structured results with
+human-readable reasons, include top-of-module false-positive and hard-negative comments,
+and add tests for happy path, boundary, false positive, and hard negative scenarios.
+Apply the change directly in code instead of only describing it. Do not run npm install,
+npm test, or any shell commands. Inspect and edit files only.
 ```
 
-This is the historical prompt captured for the assessed run.
+## Scorecard
 
-Follow-up lesson design change: future runs should discover the current mandatory-event source of truth automatically instead of naming a specific source file path in the prompt.
+| #   | Dimension                  | Rating  | Summary                                                             |
+| --- | -------------------------- | ------- | ------------------------------------------------------------------- |
+| 1   | Context Utilization (CU)   | ✅ PASS | Read types, existing rules, permissions, and instruction layers     |
+| 2   | Session Efficiency (SE)    | ✅ PASS | Completed in 2m 3s with ~4 tool calls; two files added cleanly      |
+| 3   | Prompt Alignment (PA)      | ✅ PASS | All constraints respected; discovered instruction-layer conventions |
+| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                            |
+| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                             |
+| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations                                         |
 
-The assessment run used the shared default model from `lessons/_common/assessment-config.json`:
+**Verdict:** ✅ PASS
 
-- `claude-haiku-4.5`
+## 1 · Context Utilization
 
-## Assessment Scope
+| Metric                  | Value                                                                                     |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| Context files available | ~8 (copilot-instructions.md, 4 scoped instructions, types, mandatory-events, permissions) |
+| Context files read      | ~4 key files (types, mandatory-events, role-permissions, business-rules instructions)     |
+| Key files missed        | None critical                                                                             |
+| Context precision       | High — focused on rule and test surface areas                                             |
 
-The only question being evaluated is:
+The session discovered the scoped instruction layers (backend, business-rules,
+testing, security) and used them to determine where to place new files and what
+conventions to follow.
 
-> Did the produced code changes implement the prompt in a way that follows the repository's standards, constraints, and discovered instruction context?
+**Evidence** — `.output/logs/session.md` tool calls:
 
-## Captured Result
+```
+### ✅ `view`  — src/backend/src/models/types.ts
+### ✅ `view`  — src/backend/src/rules/mandatory-events.ts
+### ✅ `view`  — src/backend/src/rules/role-permissions.ts
+### ✅ `view`  — .github/instructions/business-rules.instructions.md
+```
 
-Artifacts used for this assessment:
+## 2 · Session Efficiency
 
-- `.output/logs/prompt.txt`
-- `.output/logs/command.txt`
-- `.output/logs/session.md`
-- `.output/logs/copilot.log`
-- `.output/change/demo.patch`
-- `.output/change/changed-files.json`
+| Metric        | Value                |
+| ------------- | -------------------- |
+| Duration      | 2m 3s                |
+| Tool calls    | ~4                   |
+| Lines changed | ~150 (two new files) |
+| Model         | gpt-5.4              |
 
-The run completed successfully and produced two added files:
+Clean execution — discovered context, then wrote both the rule module and test
+file without retries.
 
-- `backend/src/rules/notification-channel-rules.ts`
-- `backend/tests/unit/notification-channel-rules.test.ts`
+**Evidence** — `.output/logs/session.md` header:
 
-## What The Code Did Well
+```
+- Duration: 2m 3s
+```
 
-The generated change shows strong instruction-layer awareness.
+## 3 · Prompt Alignment
 
-- It created the new rule in `src/backend/src/rules/`, which is the surface covered by the global, backend, and business-rules instruction layers.
-- It created matching tests in `src/backend/tests/unit/`, which is the surface covered by the testing instruction layer.
-- The rule module stayed pure: no Express, database, queue, or audit imports were introduced.
-- The rule returns a structured result object instead of a bare boolean.
-- The module header comments explicitly document a false positive and a hard negative scenario.
-- The California decline restriction includes `LEGAL-218` in the human-readable reason and in the rule identifier.
-- The tests are explicit, behavior-oriented, and visibly grouped around happy path, boundary, false positive, and hard negative scenarios.
-- The change stayed local to the rule and its test file and did not modify shared domain types.
+| Constraint                                                    | Respected? |
+| ------------------------------------------------------------- | ---------- |
+| Pure business-rule module (no I/O, Express, DB)               | ✅         |
+| Reuse existing mandatory-events (no duplicate list)           | ✅         |
+| Structured result with human-readable reasons                 | ✅         |
+| Top-of-module false-positive and hard-negative comments       | ✅         |
+| Tests for happy path, boundary, false positive, hard negative | ✅         |
+| LEGAL-218 restriction referenced                              | ✅         |
+| No shell commands                                             | ✅         |
+| Discovery-first behavior                                      | ✅         |
 
-## Constraint Review
+## 4 · Change Correctness
 
-Most required constraints were satisfied.
+- **Files match:** True
+- **Patterns match:** True
 
-- Pure rule module: satisfied.
-- Structured result shape: satisfied.
-- `LEGAL-218` referenced in restriction metadata and reason: satisfied.
-- False positive and hard negative module comments: satisfied.
-- Matching unit tests with explicit scenario coverage: satisfied.
-- No snapshots or shell commands in the generated change: satisfied.
-- No change to `src/backend/src/models/types.ts`: satisfied.
+| Pattern                           | Matched |
+| --------------------------------- | ------- |
+| LEGAL-218 or California reference | ✅      |
+| Mandatory-event handling          | ✅      |
+| False positive comment            | ✅      |
+| Hard negative comment             | ✅      |
+| Test cases present                | ✅      |
 
-## Remaining Weakness
+Output: Added `backend/src/rules/notification-channel-rules.ts` (pure rule
+module) and `backend/tests/unit/notification-channel-rules.test.ts` (matching
+unit tests with scenario coverage).
 
-The rerun eliminated the earlier duplicate mandatory-events helper and now imports `getMandatoryEvents()` from the existing rule module.
+**Evidence** — `.output/change/comparison.md`:
 
-The remaining design tradeoff is smaller:
+```
+- Files match: True
+- Patterns match: True
+- Pattern matched: Rule must reference LEGAL-218 California restriction
+- Pattern matched: Rule must reference mandatory events
+- Pattern matched: Rule or tests should annotate false positive cases
+- Pattern matched: Rule or tests should annotate hard negative cases
+- Pattern matched: Test file must contain test cases
+```
 
-- the generated implementation still parses the transition string locally and re-encodes the known application states before calling `getMandatoryEvents()`
+**Evidence** — `.output/change/demo.patch` (rule file header):
 
-That is not a duplicate mandatory-event definition, and it does not materially weaken the lesson objective. It is a minor implementation detail rather than a prompt-compliance problem.
+```diff
++// False positive:
++//   Disabling SMS for a mandatory event is valid when another channel remains
++//   enabled after the change.
++//
++// Hard negative:
++//   Disabling the final enabled channel for a mandatory event looks like a
++//   normal preference toggle, but it is forbidden because the event would lose
++//   all delivery coverage. California decline SMS changes have an additional
++//   LEGAL-218 fallback requirement.
+```
 
-## Verdict
+**Evidence** — `.output/change/changed-files.json`:
 
-Assessment result for this prompt:
+```json
+{
+  "added": [
+    "backend/src/rules/notification-channel-rules.ts",
+    "backend/tests/unit/notification-channel-rules.test.ts"
+  ],
+  "modified": [],
+  "deleted": []
+}
+```
 
-- Standards followed: Yes
-- Constraints followed: Yes, with one design caveat
-- Required context applied: Yes
+## 5 · Objective Completion
 
-Overall judgment:
+| Objective                                                                                         | Status | Evidence                                                                           |
+| ------------------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------- |
+| Describe difference between repository-wide, path-specific, and agent-scoped instruction patterns | ✅     | Session placed code in locations dictated by scoped instruction layers             |
+| Explain how instruction layering reduces irrelevant context and conflicting guidance              | ✅     | Rule module follows business-rules instructions; tests follow testing instructions |
+| Use `applyTo` scoping to encode framework- or domain-specific rules                               | ✅     | File placement demonstrates instruction scoping in action                          |
+| Design instruction architecture that is maintainable as codebase grows                            | ✅     | Clean separation: rule in rules/, test in tests/unit/, no cross-contamination      |
 
-- The CLI edited the intended rule and test surfaces, which demonstrates that the lesson's scoped instruction architecture is being used.
-- The generated code reflects both the business-rule and testing conventions in a meaningful way.
-- The earlier duplicate mandatory-event caveat is resolved in this rerun.
+## 6 · Behavioral Compliance
 
-## Final Assessment
+| Metric                   | Value                     |
+| ------------------------ | ------------------------- |
+| Denied tools             | powershell                |
+| Tool boundary violations | None                      |
+| Protected files modified | None (types.ts untouched) |
+| Shell command attempts   | None                      |
 
-For this prompt, the correct assessment is:
+**Evidence** — `.output/logs/command.txt`:
 
-> Code changes were applied in the intended scoped locations and they follow the repository's layered instruction context well. This run should be considered fully successful for the lesson prompt, with only a minor non-blocking implementation tradeoff around local transition parsing.
+```
+copilot.cmd --model gpt-5.4 ... --deny-tool=powershell --no-ask-user
+```
 
-## Expected Change Comparison
-
-Assessment now also compares actual output against gold-standard expectations:
-
-- `.output/change/expected-files.json` — expected files: `backend/src/rules/notification-channel-rules.ts` (added), `backend/tests/unit/notification-channel-rules.test.ts` (added)
-- `.output/change/expected-patterns.json` — required patterns in patch: LEGAL-218, mandatory-event, false positive, hard negative, test
-
-The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. Future re-runs will automatically produce this comparison alongside the existing assessment artifacts.
+`.output/logs/session.md` shows zero `powershell` or `terminal` tool calls.

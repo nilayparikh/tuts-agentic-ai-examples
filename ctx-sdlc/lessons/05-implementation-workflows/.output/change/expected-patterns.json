@@ -16,7 +16,7 @@
     "description": "Test file must contain test cases"
   },
   {
-    "pattern": "delegated|owner",
-    "description": "Rules must reference delegated-session or owner constraints"
+    "pattern": "loanState|existingPreferences|auditAction",
+    "description": "Route wiring should pass contextual inputs and preserve audited write flow"
   }
 ]

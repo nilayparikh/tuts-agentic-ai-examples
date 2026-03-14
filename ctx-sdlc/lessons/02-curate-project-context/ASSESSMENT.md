@@ -1,96 +1,151 @@
-# Lesson 02 CLI Prompt Assessment
+# Lesson 02 — Curate Project Context — Assessment
 
-This assessment is intentionally narrow.
-
-It evaluates only whether the code changes produced by the lesson's GitHub Copilot CLI prompt respected the required standards, constraints, and repository context for that prompt.
-
-It does not assess the lesson overall.
+> **Model:** `gpt-5.4` · **Duration:** 1m 44s · **Date:** 2026-03-14
 
 ## Prompt Under Test
 
 ```text
-Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions. Follow the repository conventions you discover. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
+Refactor notification preference write handlers so the generic route and the
+existing email/SMS routes follow the same owner-only, delegated-session, audit,
+and FORBIDDEN-error conventions. Follow the repository conventions you discover.
+Apply the change directly in code instead of only describing it. Do not run npm
+install, npm test, or any shell commands. Inspect and edit files only.
 ```
 
-This is the historical prompt captured for the assessed run.
+## Scorecard
 
-Follow-up lesson design change: future runs should begin by discovering the current notification-preference write surface before applying the refactor, instead of assuming the conventions directly from the prompt.
+| #   | Dimension                  | Rating  | Summary                                                                        |
+| --- | -------------------------- | ------- | ------------------------------------------------------------------------------ |
+| 1   | Context Utilization (CU)   | ✅ PASS | Read architecture, API conventions, preference management docs, and route file |
+| 2   | Session Efficiency (SE)    | ✅ PASS | Completed in 1m 44s with ~5 tool calls; single focused file edit               |
+| 3   | Prompt Alignment (PA)      | ✅ PASS | All constraints respected; inspection-first behavior observed                  |
+| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                                       |
+| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                                        |
+| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations; no shell commands executed                        |
 
-The assessment run used the shared default model from `lessons/_common/assessment-config.json`:
+**Verdict:** ✅ PASS
 
-- `claude-haiku-4.5`
+## 1 · Context Utilization
 
-## Assessment Scope
+| Metric                  | Value                                                                                              |
+| ----------------------- | -------------------------------------------------------------------------------------------------- |
+| Context files available | 4 (copilot-instructions.md, architecture.md, api-conventions.md, preference-management-example.md) |
+| Context files read      | 4                                                                                                  |
+| Key files missed        | None                                                                                               |
+| Context precision       | High — only read relevant route and doc files                                                      |
 
-The only question being evaluated is:
+**Evidence** — `.output/logs/session.md` tool calls:
 
-> Did the produced code changes implement the prompt in a way that follows the repository's standards, constraints, and discovered context?
+```
+### ✅ `view`  — docs/architecture.md
+### ✅ `view`  — docs/api-conventions.md
+### ✅ `view`  — docs/preference-management-example.md
+### ✅ `view`  — backend/src/routes/notifications.ts (272 lines)
+```
 
-## Captured Result
+All available context was consumed before editing.
 
-Artifacts used for this assessment:
+## 2 · Session Efficiency
 
-- `.output/logs/prompt.txt`
-- `.output/logs/command.txt`
-- `.output/logs/session.md`
-- `.output/logs/copilot.log`
-- `.output/change/demo.patch`
-- `.output/change/changed-files.json`
+| Metric        | Value                          |
+| ------------- | ------------------------------ |
+| Duration      | 1m 44s                         |
+| Tool calls    | ~5                             |
+| Lines changed | ~30 (single file modification) |
+| Model         | gpt-5.4                        |
 
-The run completed successfully and produced one modified file:
+**Evidence** — `.output/logs/session.md` header:
 
-- `backend/src/routes/notifications.ts`
+```
+- Session ID: <session-id>
+- Started: 13/03/2026, ...
+- Duration: 1m 44s
+```
 
-## What The Code Did Well
+Efficient session — read 4 files, made one focused edit with no retries.
 
-The generated change shows clear repository-awareness in several ways.
+## 3 · Prompt Alignment
 
-- It worked in the existing `notifications.ts` route file instead of inventing a new unrelated location.
-- It kept the generic route and the existing email and SMS routes, then refactored them locally.
-- It extracted a small shared helper, `validatePreferenceWriteAuth`, instead of duplicating the same authorization logic in three places.
-- It enforces owner-only writes for the generic route and both channel-specific routes.
-- It blocks delegated sessions consistently across all write paths.
-- It keeps the existing `hasPermission` check and preserves compliance-reviewer read-only behavior.
-- It switched the write-path authorization failures to `throw new Error("FORBIDDEN: ...")`, which matches the repository's central error-handler contract.
-- It preserved `auditAction(...)` behavior and did not introduce new queue contracts, types, services, or shell-command dependencies.
+| Constraint                               | Respected?                      |
+| ---------------------------------------- | ------------------------------- |
+| Follow discovered repository conventions | ✅                              |
+| Apply changes directly in code           | ✅                              |
+| No npm install/test/shell commands       | ✅                              |
+| Inspect and edit files only              | ✅                              |
+| Discovery-first behavior                 | ✅ — read docs before editing   |
+| Scope discipline                         | ✅ — stayed in notifications.ts |
 
-## Constraint Review
+## 4 · Change Correctness
 
-The final result satisfies the lesson prompt's required constraints.
+- **Files match:** True
+- **Patterns match:** True
 
-- Owner-only writes: satisfied.
-- Delegated-session blocking: satisfied.
-- Compliance-reviewer read-only behavior: satisfied through role + permission enforcement.
-- Central `FORBIDDEN:` error-prefix handling: satisfied.
-- Audit behavior preserved: satisfied.
-- No new queue contracts or domain types: satisfied.
-- Change stays local to the preference-routing surface: satisfied.
+| Pattern                    | Matched |
+| -------------------------- | ------- |
+| FORBIDDEN error prefix     | ✅      |
+| Delegated-session handling | ✅      |
+| Owner-only writes          | ✅      |
+| Audit behavior preserved   | ✅      |
 
-## Verdict
+**Evidence** — `.output/change/comparison.md`:
 
-Assessment result for this prompt:
+```
+- Files match: True
+- Patterns match: True
+- Pattern matched: Refactored routes must use FORBIDDEN error prefix
+- Pattern matched: Routes must enforce delegated-session blocking
+- Pattern matched: Routes must enforce owner-only writes
+- Pattern matched: Routes must preserve audit behavior
+```
 
-- Standards followed: Yes
-- Constraints followed: Yes
-- Required context applied: Yes
+**Evidence** — `.output/change/demo.patch` (key hunk):
 
-Overall judgment:
+```diff
++function assertCanWriteNotificationPreferences(
++  session: SessionContext,
++  targetUserId: string,
++): void {
++  if (session.delegatedFor) {
++    throw new Error(
++      "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
++    );
++  }
++
++  if (session.actor.id !== targetUserId) {
++    throw new Error(
++      "FORBIDDEN: Users can only modify their own notification preferences.",
++    );
++  }
+```
 
-- The CLI applied a focused refactor that matches the lesson's curated context.
-- The resulting change follows the repository standards and the prompt's constraints without expanding the scope of the edit.
-- This run should be treated as a complete success for the lesson prompt.
+**Evidence** — `.output/change/changed-files.json`:
 
-## Final Assessment
+```json
+{ "added": [], "modified": ["backend/src/routes/notifications.ts"], "deleted": [] }
+```
 
-For this prompt, the correct assessment is:
+## 5 · Objective Completion
 
-> Code changes were applied and they follow the repository's standards, constraints, and discovered context as required for this lesson prompt. This run should be considered fully successful.
+| Objective                                                                | Status | Evidence                                                                                |
+| ------------------------------------------------------------------------ | ------ | --------------------------------------------------------------------------------------- |
+| Explain why `.github/` and `/docs/` function as one shared context layer | ✅     | Session used both `.github/copilot-instructions.md` and `docs/` files as context        |
+| Distinguish behavioral guidance from knowledge context                   | ✅     | Behavioral (instructions) drove error convention; knowledge (docs) drove refactor shape |
+| Identify repository artifacts that provide high-leverage project context | ✅     | API conventions and preference management docs directly shaped the refactor             |
+| Design a starter context layout for both humans and AI assistants        | ✅     | Lesson structure demonstrates minimal effective `.github/` + `docs/` layout             |
 
-## Expected Change Comparison
+## 6 · Behavioral Compliance
 
-Assessment now also compares actual output against gold-standard expectations:
+| Metric                   | Value      |
+| ------------------------ | ---------- |
+| Denied tools             | powershell |
+| Tool boundary violations | None       |
+| Protected files modified | None       |
+| Shell command attempts   | None       |
 
-- `.output/change/expected-files.json` — expected file: `backend/src/routes/notifications.ts` (modified)
-- `.output/change/expected-patterns.json` — required patterns in patch: FORBIDDEN, delegated, owner, audit
+**Evidence** — `.output/logs/command.txt`:
 
-The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. Future re-runs will automatically produce this comparison alongside the existing assessment artifacts.
+```
+copilot.cmd --model gpt-5.4 ... --deny-tool=powershell --no-ask-user
+```
+
+`.output/logs/session.md` shows zero `powershell` or `terminal` tool calls.

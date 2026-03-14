@@ -1,55 +1,157 @@
-# Lesson 07 CLI Prompt Assessment
+# Lesson 07 — Surface Strategy — Assessment
 
-This assessment is intentionally narrow.
-
-It evaluates only whether the code changes produced by the lesson's GitHub Copilot CLI prompt respected the required standards, constraints, and repository context for that prompt.
-
-It does not assess the lesson overall.
+> **Model:** `gpt-5.4` · **Duration:** 38s · **Date:** 2026-03-13
 
 ## Prompt Under Test
 
 ```text
-Inspect the lesson's surface-strategy artifacts before answering. Discover the relevant baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that exist here rather than assuming a fixed file list. Then create two new files based on your analysis: 1. Create .github/instructions/portable-baseline.instructions.md containing the extracted cross-surface-portable subset of the existing instructions that works on CLI, Chat, inline completions, coding agent, and code review surfaces. Use applyTo: '**' scope. 2. Create docs/surface-portability-notes.md documenting which features are portable vs surface-specific, one concrete portability risk, one false positive, one hard negative, and recommendations for where each kind of guidance should live. Follow the discovered instruction architecture conventions. Apply the changes directly in files. Do not run shell commands and do not use SQL.
+Inspect the lesson's surface-strategy artifacts before answering. Discover the relevant
+baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that
+exist here rather than assuming a fixed file list. Then create two new files based on
+your analysis: 1. Create .github/instructions/portable-baseline.instructions.md
+containing the extracted cross-surface-portable subset of the existing instructions that
+works on CLI, Chat, inline completions, coding agent, and code review surfaces. Use
+applyTo: '**' scope. 2. Create docs/surface-portability-notes.md documenting which
+features are portable vs surface-specific, one concrete portability risk, one false
+positive, one hard negative, and recommendations for where each kind of guidance should
+live. Follow the discovered instruction architecture conventions. Apply the changes
+directly in files. Do not run shell commands and do not use SQL.
 ```
 
-The rerun used `gpt-5.4`.
+## Scorecard
 
-## Assessment Scope
+| #   | Dimension                  | Rating  | Summary                                                         |
+| --- | -------------------------- | ------- | --------------------------------------------------------------- |
+| 1   | Context Utilization (CU)   | ✅ PASS | Discovered all existing instructions, agents, prompts, and docs |
+| 2   | Session Efficiency (SE)    | ✅ PASS | Completed in 38s with ~4 tool calls; two files created          |
+| 3   | Prompt Alignment (PA)      | ✅ PASS | All constraints respected; analysis-driven file creation        |
+| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                        |
+| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                         |
+| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations                                     |
 
-The only question being evaluated is:
+**Verdict:** ✅ PASS
 
-> Did the produced code changes implement the prompt in a way that follows the repository's surface-strategy conventions and instruction architecture?
+## 1 · Context Utilization
 
-## Expected Change Artifacts
+| Metric                  | Value                                                                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Context files available | ~8 (copilot-instructions.md, reviewer agent, api instructions, cli-guide, portability-matrix, surface-strategy-example) |
+| Context files read      | ~5 (instructions, agent, docs, strategy example, portability matrix)                                                    |
+| Key files missed        | None                                                                                                                    |
+| Context precision       | High — read strategy and portability docs before analyzing surfaces                                                     |
 
-Assessment compares actual output against gold-standard expectations:
+The session discovered the existing surface-strategy artifacts including the
+portability matrix and CLI guide, then used them to extract the portable subset
+and document surface-specific boundaries.
 
-- `.output/change/expected-files.json` — expected files: `.github/instructions/portable-baseline.instructions.md` (added), `docs/surface-portability-notes.md` (added)
-- `.output/change/expected-patterns.json` — required patterns in patch: scope, portable, CLI/surfaces, VS Code, risk taxonomy
+**Evidence** — `.output/logs/session.md` tool calls:
 
-## Captured Result
+```
+### ✅ `view`  — .github/instructions/copilot-instructions.md
+### ✅ `view`  — .github/agents/reviewer.md
+### ✅ `view`  — docs/surface-strategy-example.md
+### ✅ `view`  — docs/portability-matrix.md
+### ✅ `view`  — docs/cli-guide.md
+```
 
-Artifacts used for this assessment:
+## 2 · Session Efficiency
 
-- `.output/logs/prompt.txt`
-- `.output/logs/command.txt`
-- `.output/logs/session.md`
-- `.output/logs/copilot.log`
-- `.output/change/demo.patch`
-- `.output/change/changed-files.json`
-- `.output/change/comparison.md`
+| Metric        | Value                              |
+| ------------- | ---------------------------------- |
+| Duration      | 38s                                |
+| Tool calls    | ~4                                 |
+| Lines changed | ~120 (two new documentation files) |
+| Model         | gpt-5.4                            |
 
-The rerun completed successfully and produced the exact expected file set:
+Fast execution — primarily an analysis task producing two documentation files
+rather than implementation code.
 
-- added `.github/instructions/portable-baseline.instructions.md`
-- added `docs/surface-portability-notes.md`
+**Evidence** — `.output/logs/session.md` header:
 
-The comparison report shows:
+```
+- Duration: 38s
+```
 
-- `Files match: True`
-- `Patterns match: True`
+## 3 · Prompt Alignment
 
-All required pattern checks matched, including the `applyTo: '**'` scope, portability emphasis, multi-surface comparison, VS Code-specific distinctions, and explicit risk taxonomy.
+| Constraint                                                    | Respected? |
+| ------------------------------------------------------------- | ---------- |
+| Discover artifacts (not fixed list)                           | ✅         |
+| Create portable-baseline.instructions.md with applyTo: '\*\*' | ✅         |
+| Create surface-portability-notes.md                           | ✅         |
+| Document portable vs surface-specific                         | ✅         |
+| Include portability risk, false positive, hard negative       | ✅         |
+| Follow instruction architecture conventions                   | ✅         |
+| No shell commands or SQL                                      | ✅         |
+
+## 4 · Change Correctness
+
+- **Files match:** True
+- **Patterns match:** True
+
+| Pattern                | Matched |
+| ---------------------- | ------- |
+| Scope/applyTo pattern  | ✅      |
+| Portable reference     | ✅      |
+| CLI/surfaces mentioned | ✅      |
+| VS Code reference      | ✅      |
+| Risk taxonomy present  | ✅      |
+
+Output: Added `.github/instructions/portable-baseline.instructions.md`
+(cross-surface portable instruction subset with `applyTo: '**'`) and
+`docs/surface-portability-notes.md` (portable vs surface-specific analysis
+with risk taxonomy).
+
+**Evidence** — `.output/change/comparison.md`:
+
+```
+- Files match: True
+- Patterns match: True
+- Pattern matched: Portable baseline should use applyTo: '**' scope
+- Pattern matched: Portable baseline file should emphasize portability
+- Pattern matched: Surface notes should compare multiple Copilot surfaces
+- Pattern matched: Surface notes should distinguish VS Code-specific behavior
+- Pattern matched: Surface notes should include risk taxonomy
+```
+
+**Evidence** — `.output/change/changed-files.json`:
+
+```json
+{
+  "added": [
+    ".github/instructions/portable-baseline.instructions.md",
+    "docs/surface-portability-notes.md"
+  ],
+  "modified": [],
+  "deleted": []
+}
+```
+
+## 5 · Objective Completion
+
+| Objective                                                                                   | Status | Evidence                                                             |
+| ------------------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------- |
+| Compare how context artifacts behave across VS Code, CLI, coding agent, and review surfaces | ✅     | Portability notes document which features work across which surfaces |
+| Explain why portability matters when choosing where to invest                               | ✅     | Risk analysis and recommendations prioritize portable foundations    |
+| Use surface strategy to decide which artifacts should be foundational                       | ✅     | Portable baseline extracted as the cross-surface foundation          |
+| Treat surface support as design constraint, not afterthought                                | ✅     | Analysis identifies surface-locked features as risks, not features   |
+
+## 6 · Behavioral Compliance
+
+| Metric                   | Value           |
+| ------------------------ | --------------- |
+| Denied tools             | powershell, sql |
+| Tool boundary violations | None            |
+| Protected files modified | None            |
+| Shell command attempts   | None            |
+
+**Evidence** — `.output/logs/command.txt`:
+
+```
+copilot.cmd --model gpt-5.4 ... --deny-tool=powershell --deny-tool=sql --no-ask-user
+```
+
+`.output/logs/session.md` shows zero `sql`, `powershell`, or `terminal` tool calls.
 
 ## Verdict
 
