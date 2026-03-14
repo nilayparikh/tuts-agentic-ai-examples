@@ -29,6 +29,8 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
+GENERATED_HOOK_PATH = LESSON / ".github" / "hooks" / "import-validation.json"
+GENERATED_SCRIPT_PATH = LESSON / ".github" / "scripts" / "validate_imports.py"
 TEXT_EXTENSIONS = {
   ".css",
   ".html",
@@ -36,6 +38,7 @@ TEXT_EXTENSIONS = {
   ".json",
   ".md",
   ".mjs",
+  ".py",
   ".ts",
   ".tsx",
   ".txt",
@@ -103,11 +106,11 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 
 
 def _reset_output_dirs() -> None:
+  preserved_expected = {
+    path.name: path.read_text(encoding="utf-8")
+    for path in CHANGE_DIR.glob("expected-*.json")
+  }
   for directory in (LOG_DIR, CHANGE_DIR):
-    preserved_expected = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in CHANGE_DIR.glob("expected-*.json")
-    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)
@@ -117,6 +120,9 @@ def _reset_output_dirs() -> None:
 
 def _reset_demo_workspace() -> Path:
   clean(LESSON)
+  for generated_path in (GENERATED_HOOK_PATH, GENERATED_SCRIPT_PATH):
+    if generated_path.exists():
+      generated_path.unlink()
   src_dir = LESSON / "src"
   shutil.copytree(
     APP_SOURCE,
@@ -134,7 +140,8 @@ def _demo_prompt() -> str:
     "Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. "
     "Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. "
     "The hook must use PreToolUse event type and invoke the Python validation script. "
-    "The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. "
+    "The validation script must be a complete Python file, not a placeholder, and the run is only complete when both files exist. "
+    "The validation script must read hook JSON from stdin when present, inspect changed .ts/.tsx files, and deny imports that bypass a sibling index.ts barrel and reach into internal module paths. "
     "Apply the changes directly in files. Do not run shell commands and do not use SQL."
   )
 

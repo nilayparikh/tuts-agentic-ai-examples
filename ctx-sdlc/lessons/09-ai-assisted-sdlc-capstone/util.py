@@ -30,7 +30,7 @@ CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
 TEXT_EXTENSIONS = {
-  ".css", ".html", ".js", ".json", ".md", ".mjs", ".ts", ".tsx", ".txt", ".yaml", ".yml",
+  ".css", ".html", ".js", ".json", ".md", ".mjs", ".py", ".ts", ".tsx", ".txt", ".yaml", ".yml",
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
@@ -82,11 +82,11 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 
 
 def _reset_output_dirs() -> None:
+  preserved_expected = {
+    path.name: path.read_text(encoding="utf-8")
+    for path in CHANGE_DIR.glob("expected-*.json")
+  }
   for directory in (LOG_DIR, CHANGE_DIR):
-    preserved_expected = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in CHANGE_DIR.glob("expected-*.json")
-    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)

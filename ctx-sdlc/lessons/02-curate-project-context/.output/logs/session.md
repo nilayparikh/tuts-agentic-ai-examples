@@ -1,75 +1,201 @@
 # 🤖 Copilot CLI Session
 
 > [!NOTE]
-> - **Session ID:** `36896067-b190-4249-b501-65da900eb9d2`  
-> - **Started:** 13/03/2026, 22:21:14  
-> - **Duration:** 57s  
-> - **Exported:** 13/03/2026, 22:22:11  
+> - **Session ID:** `f7b0578c-da1b-41a2-b2ef-41ff6af49bce`  
+> - **Started:** 14/03/2026, 17:35:47  
+> - **Duration:** 1m 44s  
+> - **Exported:** 14/03/2026, 17:37:31  
 
 ---
 
-<sub>⏱️ 6s</sub>
+<sub>⏱️ 5s</sub>
 
 ### 👤 User
 
-Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions. Follow the repository conventions you discover. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
+First inspect the existing notification-preference write surface in this lesson to discover the current authorization, audit, and error-handling conventions. Refactor notification preference write handlers so the generic route and the existing email/SMS routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-error conventions. Follow the repository conventions you discover. Apply the change directly in code instead of only describing it. Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
 
 ---
 
-<sub>⏱️ 11s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context
-
-<details>
-<summary>9 lines</summary>
-
-```
-.github
-.output
-ASSESSMENT.md
-docs
-package-lock.json
-README.md
-src
-util.py
-__pycache__
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 12s</sub>
+<sub>⏱️ 23s</sub>
 
 ### 💬 Copilot
 
-Let me explore the actual code structure first:
+I’m mapping the current write-path conventions first so the refactor stays aligned with this lesson’s backend patterns. After that I’ll make the route changes directly and do a quick file-only verification pass.
 
 ---
 
-<sub>⏱️ 12s</sub>
+<sub>⏱️ 23s</sub>
+
+### ✅ `sql`
+
+**Create todos table entries**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "description": "Create todos table entries",
+  "query": "INSERT INTO todos (id, title, description, status) VALUES\n  ('inspect-notification-conventions', 'Inspect notification write conventions', 'Read the backend architecture, API conventions, preference example, notifications routes, and related error/audit code to discover current authorization, audit, and error-handling patterns.', 'in_progress'),\n  ('refactor-notification-routes', 'Refactor notification write handlers', 'Update notification preference write handlers so generic and channel-specific routes follow the same owner-only, delegated-session, audit, and FORBIDDEN-prefixed error conventions.', 'pending'),\n  ('verify-file-changes', 'Verify route consistency', 'Review the edited files to confirm the write paths are aligned and no unrelated surfaces were changed.', 'pending');"
+}
+```
+
+</details>
+
+```
+3 row(s) inserted. Last inserted row ID: 3.
+```
+
+
+---
+
+<sub>⏱️ 23s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\architecture.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\architecture.md
 
 <details>
-<summary>6 lines</summary>
+<summary>62 lines</summary>
+
+````
+1. # Loan Workbench Architecture
+2. 
+3. ## Product Scope
+4. 
+5. Loan Workbench supports intake, underwriting review, document collection, and
+6. final decision workflows for commercial loan applications.
+7. 
+8. ## System Shape
+9. 
+10. ```
+11. src/
+12.   backend/
+13.     src/
+14.       app.ts                ← Express entry point, middleware chain
+15.       config/               ← Environment config, feature flags
+16.       db/                   ← SQLite connection, schema, seed, migrations
+17.       middleware/           ← Auth, audit logger, error handler, rate limiter
+18.       queue/                ← In-process event broker + handlers
+19.       models/               ← Domain types + DB repository classes
+20.       routes/               ← HTTP route handlers
+21.       rules/                ← State machine, business rules, role permissions
+22.       services/             ← Business logic orchestration
+23.     tests/
+24.   frontend/
+25.     src/
+26.       api/                  ← Typed HTTP client matching backend routes
+27.       pages/                ← Dashboard, application detail, preferences
+28.       components/           ← Reusable UI components
+29.     styles/
+30. ```
+31. 
+32. ## Key Architectural Rules
+33. 
+34. 1. Loan lifecycle states: `submitted → under_review → approved/denied → funded/closed`.
+35. 2. State transitions validated by `src/backend/src/rules/state-machine.ts`.
+36. 3. California loans have jurisdiction-specific rules in `src/backend/src/rules/business-rules.ts`.
+37. 4. Role-based permissions are defined in `src/backend/src/rules/role-permissions.ts`.
+38. 5. Audit logging is mandatory for all writes — either via queue broker or direct DB insert.
+39. 6. Notification delivery supports SMS → email fallback based on provider health.
+40. 
+41. ## Lesson 02 Example Target
+42. 
+43. This lesson's context-curation example is intentionally specific.
+44. 
+45. The expected preference-management change is:
+46. 
+47. - keep the existing generic `PUT /api/notifications/preferences` route
+48. - keep the existing channel-specific routes in `src/backend/src/routes/notifications.ts`
+49. - normalize all notification preference write handlers around the same authorization and error-handling rules
+50. - prefer a small local refactor over adding new files, services, types, or queue contracts
+51. 
+52. Those handlers are expected to preserve the repository's normal constraints while making the write-path behavior consistent.
+53. 
+54. The important part of the lesson is not just adding routes. The important part is whether the change follows the repository architecture and constraints.
+55. 
+56. ## API Conventions
+57. 
+58. - All endpoints under `/api/` prefix.
+59. - Auth: `x-user-id` header identifies caller; `x-delegated-for` enables delegated sessions.
+60. - Error responses: `{ error: string }` body with appropriate HTTP status.
+61. - List endpoints support `?status=` and `?role=` query filters.
+62.
+````
+
+</details>
+
+
+---
+
+<sub>⏱️ 23s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md
+
+<details>
+<summary>54 lines</summary>
 
 ```
-.env.example
-backend
-frontend
-package-lock.json
-package.json
-tsconfig.json
+1. # Loan Workbench API Conventions
+2. 
+3. ## Endpoint Patterns
+4. 
+5. | Resource              | Verb  | Path                                     | Notes                                       |
+6. | --------------------- | ----- | ---------------------------------------- | ------------------------------------------- |
+7. | Loan applications     | GET   | `/api/applications`                      | Filterable by status, role                  |
+8. | Single application    | GET   | `/api/applications/:id`                  | 404 if not found                            |
+9. | Create application    | POST  | `/api/applications`                      | Requires `applicantName`, `amount`, `state` |
+10. | Transition status     | PATCH | `/api/applications/:id/status`           | Validates state machine                     |
+11. | Decisions             | GET   | `/api/decisions/:appId`                  | Decisions for an application                |
+12. | Record decision       | POST  | `/api/decisions`                         | Role + amount guard                         |
+13. | Notification prefs    | GET   | `/api/notifications/preferences/:userId` | Auth required                               |
+14. | Set notification pref | PUT   | `/api/notifications/preferences`         | Owner-only write, delegated sessions blocked |
+15. | Audit log             | GET   | `/api/audit`                             | Append-only, no deletes                     |
+16. 
+17. ## Lesson 02 Example Conventions
+18. 
+19. For the lesson 02 preference-management example, the existing write endpoints should be aligned around one consistent authorization model:
+20. 
+21. | Resource                    | Verb | Path                                     | Notes |
+22. | --------------------------- | ---- | ---------------------------------------- | ----- |
+23. | Single preference write     | PUT  | `/api/notifications/preferences`               | Preserve owner-only writes and central error handling |
+24. | Email preference bulk write | PUT  | `/api/notifications/preferences/:userId/email` | Updates all standard email-event preferences for one user |
+25. | SMS preference bulk write   | PUT  | `/api/notifications/preferences/:userId/sms`   | Updates all standard sms-event preferences for one user |
+26. 
+27. Required constraints for those lesson routes:
+28. 
+29. - user in path must match the authenticated actor
+30. - delegated sessions cannot write
+31. - compliance reviewers remain read-only
+32. - authorization failures should throw `FORBIDDEN:` errors for the central error handler
+33. - each changed preference must emit audit behavior
+34. - do not introduce new queue contracts or new domain types
+35. - keep the change local to `src/backend/src/routes/notifications.ts` unless a read-only import already exists elsewhere
+36. 
+37. ## Error Handling
+38. 
+39. Errors use descriptive prefixes that the central error handler maps to HTTP status codes:
+40. 
+41. | Error Prefix     | HTTP Status |
+42. | ---------------- | ----------- |
+43. | `FORBIDDEN:`     | 403         |
+44. | `VALIDATION:`    | 400         |
+45. | `INVALID_STATE:` | 422         |
+46. | `NOT_FOUND:`     | 404         |
+47. 
+48. ## Auth Model
+49. 
+50. - Primary auth: `x-user-id` header (required on all requests except `/health`).
+51. - Delegated sessions: `x-delegated-for` header allows acting on behalf of another user.
+52. - Compliance reviewers have read-only access to notification preferences (can read, cannot write).
+53. - Owner-only writes still apply even if a route includes `:userId` in the path.
+54.
 ```
 
 </details>
@@ -77,45 +203,75 @@ tsconfig.json
 
 ---
 
-<sub>⏱️ 14s</sub>
+<sub>⏱️ 23s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\preference-management-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend
-
-```
-dist
-src
-tests
-tsconfig.json
-```
-
-
----
-
-<sub>⏱️ 15s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\preference-management-example.md
 
 <details>
-<summary>9 lines</summary>
+<summary>57 lines</summary>
 
 ```
-app.ts
-config
-db
-middleware
-models
-queue
-routes
-rules
-services
+1. # Lesson 02 — Preference Management Example
+2. 
+3. This document defines the concrete example used in Lesson 02.
+4. 
+5. ## Objective
+6. 
+7. Show that curated repository context helps GitHub Copilot CLI make a route-level refactor that is not just syntactically valid, but also aligned with project standards and constraints.
+8. 
+9. ## Expected Change Shape
+10. 
+11. The preferred implementation for this lesson is:
+12. 
+13. - keep existing notification preference routes in `src/backend/src/routes/notifications.ts`
+14. - keep the existing bulk email-preference route
+15. - keep the existing bulk SMS-preference route
+16. - make all notification preference write handlers follow the same rules for authorization, delegated sessions, audit behavior, and central error handling
+17. 
+18. Relevant endpoints:
+19. 
+20. - `PUT /api/notifications/preferences`
+21. - `PUT /api/notifications/preferences/:userId/email`
+22. - `PUT /api/notifications/preferences/:userId/sms`
+23. 
+24. ## Required Constraints
+25. 
+26. These constraints are part of the example and must be preserved by the generated code:
+27. 
+28. 1. Users can modify only their own preferences.
+29. 2. Delegated sessions cannot modify preferences.
+30. 3. Compliance reviewers are read-only.
+31. 4. Authorization failures should use `throw new Error("FORBIDDEN: ...")` and pass the error to `next()` so the central error handler maps them consistently.
+32. 5. Every changed preference must preserve audit behavior.
+33. 6. No new queue contracts.
+34. 7. No new domain types.
+35. 8. No shell-command dependency during the assessment run.
+36. 9. Prefer extracting a small local helper inside `notifications.ts` if it removes repeated authorization code.
+37. 10. Discover the current write-path conventions from the existing route surface instead of assuming them from the prompt.
+38. 
+39. ## Standard Notification Events
+40. 
+41. For this example, the channel-specific routes should update these events:
+42. 
+43. - `approval`
+44. - `decline`
+45. - `document-request`
+46. - `manual-review-escalation`
+47. 
+48. ## What Good Output Looks Like
+49. 
+50. Good output will usually:
+51. 
+52. - modify `backend/src/routes/notifications.ts`
+53. - reuse `prefRepo.findPreference`, `prefRepo.setPreference`, and `auditAction`
+54. - avoid inventing a new service or schema unless the prompt explicitly requires that
+55. - keep the change small and local to the preference-routing surface
+56. - replace ad-hoc `res.status(403).json(...)` write-path responses with central `FORBIDDEN:` error flow
+57.
 ```
 
 </details>
@@ -123,15 +279,7 @@ services
 
 ---
 
-<sub>⏱️ 17s</sub>
-
-### 💬 Copilot
-
-Now let me view the notifications routes file and relevant architecture docs:
-
----
-
-<sub>⏱️ 17s</sub>
+<sub>⏱️ 23s</sub>
 
 ### ✅ `view`
 
@@ -422,113 +570,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
-<sub>⏱️ 17s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs
-
-```
-api-conventions.md
-architecture.md
-preference-management-example.md
-```
-
-
----
-
-<sub>⏱️ 19s</sub>
-
-### 💬 Copilot
-
-Now let me review the architecture and error handling conventions:
-
----
-
-<sub>⏱️ 19s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\docs\api-conventions.md
-
-<details>
-<summary>54 lines</summary>
-
-```
-1. # Loan Workbench API Conventions
-2. 
-3. ## Endpoint Patterns
-4. 
-5. | Resource              | Verb  | Path                                     | Notes                                       |
-6. | --------------------- | ----- | ---------------------------------------- | ------------------------------------------- |
-7. | Loan applications     | GET   | `/api/applications`                      | Filterable by status, role                  |
-8. | Single application    | GET   | `/api/applications/:id`                  | 404 if not found                            |
-9. | Create application    | POST  | `/api/applications`                      | Requires `applicantName`, `amount`, `state` |
-10. | Transition status     | PATCH | `/api/applications/:id/status`           | Validates state machine                     |
-11. | Decisions             | GET   | `/api/decisions/:appId`                  | Decisions for an application                |
-12. | Record decision       | POST  | `/api/decisions`                         | Role + amount guard                         |
-13. | Notification prefs    | GET   | `/api/notifications/preferences/:userId` | Auth required                               |
-14. | Set notification pref | PUT   | `/api/notifications/preferences`         | Owner-only write, delegated sessions blocked |
-15. | Audit log             | GET   | `/api/audit`                             | Append-only, no deletes                     |
-16. 
-17. ## Lesson 02 Example Conventions
-18. 
-19. For the lesson 02 preference-management example, the existing write endpoints should be aligned around one consistent authorization model:
-20. 
-21. | Resource                    | Verb | Path                                     | Notes |
-22. | --------------------------- | ---- | ---------------------------------------- | ----- |
-23. | Single preference write     | PUT  | `/api/notifications/preferences`               | Preserve owner-only writes and central error handling |
-24. | Email preference bulk write | PUT  | `/api/notifications/preferences/:userId/email` | Updates all standard email-event preferences for one user |
-25. | SMS preference bulk write   | PUT  | `/api/notifications/preferences/:userId/sms`   | Updates all standard sms-event preferences for one user |
-26. 
-27. Required constraints for those lesson routes:
-28. 
-29. - user in path must match the authenticated actor
-30. - delegated sessions cannot write
-31. - compliance reviewers remain read-only
-32. - authorization failures should throw `FORBIDDEN:` errors for the central error handler
-33. - each changed preference must emit audit behavior
-34. - do not introduce new queue contracts or new domain types
-35. - keep the change local to `src/backend/src/routes/notifications.ts` unless a read-only import already exists elsewhere
-36. 
-37. ## Error Handling
-38. 
-39. Errors use descriptive prefixes that the central error handler maps to HTTP status codes:
-40. 
-41. | Error Prefix     | HTTP Status |
-42. | ---------------- | ----------- |
-43. | `FORBIDDEN:`     | 403         |
-44. | `VALIDATION:`    | 400         |
-45. | `INVALID_STATE:` | 422         |
-46. | `NOT_FOUND:`     | 404         |
-47. 
-48. ## Auth Model
-49. 
-50. - Primary auth: `x-user-id` header (required on all requests except `/health`).
-51. - Delegated sessions: `x-delegated-for` header allows acting on behalf of another user.
-52. - Compliance reviewers have read-only access to notification preferences (can read, cannot write).
-53. - Owner-only writes still apply even if a route includes `:userId` in the path.
-54.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 21s</sub>
-
-### 💬 Copilot
-
-Now let me check the error handler to understand the pattern:
-
----
-
-<sub>⏱️ 21s</sub>
+<sub>⏱️ 23s</sub>
 
 ### ✅ `view`
 
@@ -586,13 +628,169 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 <sub>⏱️ 23s</sub>
 
-### 💬 Copilot
+### ✅ `rg`
 
-Perfect! Now I understand the pattern. Let me check the role permissions to ensure I'm using the right approach:
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "audit|publish|emit.*audit|audit event|queue",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\02-curate-project-context\\src\\backend\\src",
+  "output_mode": "content",
+  "glob": "**/*.ts",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>103 lines</summary>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\config\feature-flags.ts:8:// and audit behavior.  When adding a new flag, update:
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\config\feature-flags.ts:23:  /** Route audit writes through the message queue instead of synchronous DB writes. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\config\feature-flags.ts:24:  queueAudit: config.features.queueAudit,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\notification-service.ts:6:// handled by queue/handlers/notification-handler.ts.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\notification-service.ts:21:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\notification-service.ts:22:import type { NotificationRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\notification-service.ts:30: * The actual delivery is asynchronous via the message queue.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\loan-service.ts:14:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\loan-service.ts:23:} from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:18:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:22:} from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:33: *  - The decision is audited via the message queue.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:96:  // Emit audit event
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:97:  const auditEvent: AuditRequestedEvent = {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:101:    type: "audit.requested",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\decision-service.ts:110:  broker.emit(auditEvent);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:4:// High-level audit API.  Provides convenience methods that emit events
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:5:// to the message queue (or write directly depending on feature flags).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:9:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:11:import { createAuditEntry } from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:12:import type { AuditRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:16: * Write an audit entry for an action performed in a session context.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:18:export function auditAction(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:34:  if (featureFlags.queueAudit) {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts:39:      type: "audit.requested",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\config\env.ts:21:    queueAudit: process.env.FEATURE_QUEUE_AUDIT !== "false",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:5:// and message queue handler registration.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:11://   4. auditLoggerMiddleware   — Log mutating requests (needs session)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:23:import { auditLoggerMiddleware } from "./middleware/audit-logger.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:29:import { auditRoutes } from "./routes/audit.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:30:import { queueStatusRoutes } from "./routes/queue-status.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:31:import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:32:import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:42:// ── Register queue handlers ──
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:50:app.use(auditLoggerMiddleware);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:56:app.use("/api/audit", auditRoutes);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\app.ts:57:app.use("/api/queue", queueStatusRoutes);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\rules\role-permissions.ts:24:  | "audit:read"
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\rules\role-permissions.ts:36:    "audit:read",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\rules\role-permissions.ts:46:    "audit:read",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\rules\role-permissions.ts:52:    "audit:read",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\db\seed.ts:36:    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\auth.ts:12://   Compliance reviewers can view notification preferences and audit logs
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\types.ts:5:// Business rules, state machines, authorization logic, queue contracts, and
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:4:// Emits an `audit.requested` event for every mutating request (POST, PUT,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:6:// asynchronously by the queue's audit handler.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:8:// Fine-grained audit entries (e.g. per-preference-field changes) are
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:10:// baseline request-level audit log.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:15:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:16:import type { AuditRequestedEvent } from "../queue/contracts.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:18:import { createAuditEntry } from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:22:export function auditLoggerMiddleware(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:32:  // Capture the original end() to inject audit logging after response.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:37:    // Only audit successful operations.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:39:      const auditPayload = {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:45:        source: "audit-logger-middleware",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:48:      if (featureFlags.queueAudit) {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:49:        // Route through the message queue for async persistence
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:53:          source: "audit-logger-middleware",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:54:          type: "audit.requested",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:55:          payload: auditPayload,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:61:          createAuditEntry(auditPayload);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\audit-logger.ts:63:          console.error("[audit-logger] Failed to write audit entry:", err);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\contracts.ts:12://   4. Add an audit entry for the contract change
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\contracts.ts:42:/** Emitted when an audit entry must be persisted. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\contracts.ts:44:  type: "audit.requested";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\broker.ts:14://   handlers from running.  For critical operations (like audit writes),
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:10:import { broker } from "../queue/broker.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:12:export const queueStatusRoutes = Router();
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:14:/** GET /api/queue/subscriptions — list registered event handlers. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:15:queueStatusRoutes.get("/subscriptions", (_req, res) => {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:23:/** GET /api/queue/history — recent events processed by the broker. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:24:queueStatusRoutes.get("/history", (req, res) => {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:37:/** GET /api/queue/status — broker health summary. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\queue-status.ts:38:queueStatusRoutes.get("/status", (_req, res) => {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:4:// Consumes `audit.requested` events from the broker and writes them to
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:5:// the database.  This decouples audit writes from request handlers,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:9://   If the audit write fails, the handler retries once.  If the retry
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:17:import { createAuditEntry } from "../../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:34:      "[audit-handler] First write attempt failed, retrying...",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:48:        "[audit-handler] CRITICAL: Audit write failed after retry",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:57:  broker.on("audit.requested", handleAuditRequested);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\queue\handlers\audit-handler.ts:58:  console.log("[audit-handler] Registered for audit.requested events");
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\applications.ts:8:import { auditAction } from "../services/audit-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:4:// Read-only access to the audit trail.  No mutations allowed via API.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:9:import * as auditRepo from "../models/audit-repository.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:11:export const auditRoutes = Router();
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:17:/** GET /api/audit — list recent audit entries. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:18:auditRoutes.get(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:24:    res.json(auditRepo.findAuditEntries({ actor, limit }));
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:28:/** GET /api/audit/action/:action — filter by action type. */
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:29:auditRoutes.get(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\audit.ts:33:    res.json(auditRepo.findAuditEntriesByAction(firstParam(req.params.action)));
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:4:// Database operations for the audit trail.  Audit entries are immutable —
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:7:// IMPORTANT: The audit trail is append-only.  Never expose a DELETE or
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:8:// UPDATE endpoint for audit entries.  Compliance requires the full history.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:39:    `INSERT INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:69:  let sql = `SELECT ${AUDIT_COLUMNS} FROM audit_entries`;
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\audit-repository.ts:91:      `SELECT ${AUDIT_COLUMNS} FROM audit_entries WHERE action = ? ORDER BY timestamp DESC`,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:20:import { auditAction } from "../services/audit-service.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:92:      auditAction(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:174:        auditAction(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:257:        auditAction(
+```
+
+</details>
+
 
 ---
 
-<sub>⏱️ 23s</sub>
+<sub>⏱️ 31s</sub>
+
+### 💬 Copilot
+
+I’ve confirmed the lesson docs are pointing at a very small local refactor in `notifications.ts`: central `FORBIDDEN:` errors via `next()`, owner-only writes, delegated-session blocking, and preserved per-preference audit calls. I’m creating a short plan artifact now, then I’ll inspect the remaining nearby types/rules before patching the route file.
+
+---
+
+<sub>⏱️ 31s</sub>
+
+### ✅ `apply_patch`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+"*** Begin Patch\n*** Add File: C:/Users/nilay/.copilot/session-state/f7b0578c-da1b-41a2-b2ef-41ff6af49bce/plan.md\n+## Plan\n+\n+1. Read the notification preference route, permission rule, and related types to confirm the current write-path conventions for authorization, delegated sessions, auditing, and central error handling.\n+2. Refactor `src/backend/src/routes/notifications.ts` with a small local helper so the generic and channel-specific write handlers enforce the same owner-only and `FORBIDDEN:`-prefixed rules while preserving existing audit behavior.\n+3. Re-read the edited route file and store any durable repository conventions that are verified during the change.\n*** End Patch\n"
+```
+
+</details>
+
+```
+Added 1 file(s): C:\Users\nilay\.copilot\session-state\f7b0578c-da1b-41a2-b2ef-41ff6af49bce\plan.md
+```
+
+
+---
+
+<sub>⏱️ 37s</sub>
 
 ### ✅ `view`
 
@@ -675,96 +873,501 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
-<sub>⏱️ 33s</sub>
+<sub>⏱️ 37s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\types.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\types.ts
+
+<details>
+<summary>112 lines</summary>
+
+```
+1. // ---------------------------------------------------------------------------
+2. // Loan Workbench — Domain Types
+3. // ---------------------------------------------------------------------------
+4. // This file defines the core domain model for the Loan Workbench platform.
+5. // Business rules, state machines, authorization logic, queue contracts, and
+6. // database schema all depend on these types.  Changes here affect nearly
+7. // every module in the project.
+8. // ---------------------------------------------------------------------------
+9. 
+10. /** Lifecycle states for a commercial loan application. */
+11. export type ApplicationState =
+12.   | "intake"
+13.   | "review"
+14.   | "underwriting"
+15.   | "decision"
+16.   | "finalized";
+17. 
+18. /**
+19.  * Valid state transitions.
+20.  * Transitions not listed here are forbidden — the system must never allow
+21.  * a finalized application to move backward.
+22.  */
+23. export const VALID_TRANSITIONS: Record<ApplicationState, ApplicationState[]> = {
+24.   intake: ["review"],
+25.   review: ["underwriting", "intake"], // can return to intake for rework
+26.   underwriting: ["decision"],
+27.   decision: ["finalized", "underwriting"], // can push back to underwriting
+28.   finalized: [], // terminal — no transitions allowed
+29. };
+30. 
+31. /** Organizational roles recognized by the Loan Workbench. */
+32. export type UserRole =
+33.   | "underwriter"
+34.   | "analyst-manager"
+35.   | "compliance-reviewer";
+36. 
+37. /** Notification event types that can trigger user-facing alerts. */
+38. export type NotificationEvent =
+39.   | "approval"
+40.   | "decline"
+41.   | "document-request"
+42.   | "manual-review-escalation";
+43. 
+44. /** Delivery channels available for notifications. */
+45. export type NotificationChannel = "email" | "sms";
+46. 
+47. // ---------------------------------------------------------------------------
+48. // Entity interfaces
+49. // ---------------------------------------------------------------------------
+50. 
+51. export interface User {
+52.   id: string;
+53.   role: UserRole;
+54.   name: string;
+55.   email: string;
+56.   phone?: string;
+57. }
+58. 
+59. /**
+60.  * Session context attached to every authenticated request.
+61.  *
+62.  * When `delegatedFor` is present the actor is operating on behalf of another
+63.  * user.  Delegated sessions restrict write operations — see auth middleware.
+64.  */
+65. export interface SessionContext {
+66.   actor: User;
+67.   delegatedFor?: User;
+68. }
+69. 
+70. export interface LoanApplication {
+71.   id: string;
+72.   borrowerName: string;
+73.   amount: number;
+74.   /** US state / jurisdiction — affects business rules (e.g. California). */
+75.   loanState: string;
+76.   status: ApplicationState;
+77.   assignedUnderwriter: string;
+78.   riskScore: number | null;
+79.   createdAt: string;
+80.   updatedAt: string;
+81. }
+82. 
+83. export interface Decision {
+84.   id: string;
+85.   applicationId: string;
+86.   type: "approved" | "declined" | "conditional";
+87.   rationale: string;
+88.   decidedBy: string;
+89.   decidedAt: string;
+90.   conditions?: string[];
+91. }
+92. 
+93. export interface NotificationPreference {
+94.   userId: string;
+95.   event: NotificationEvent;
+96.   channel: NotificationChannel;
+97.   enabled: boolean;
+98.   updatedAt: string;
+99.   updatedBy: string;
+100. }
+101. 
+102. export interface AuditEntry {
+103.   id: string;
+104.   action: string;
+105.   actor: string;
+106.   delegatedFor: string | null;
+107.   timestamp: string;
+108.   previousValue: string | null;
+109.   newValue: string | null;
+110.   source: string;
+111. }
+112.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 37s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\services\audit-service.ts
+
+<details>
+<summary>47 lines</summary>
+
+```
+1. // ---------------------------------------------------------------------------
+2. // Audit Service
+3. // ---------------------------------------------------------------------------
+4. // High-level audit API.  Provides convenience methods that emit events
+5. // to the message queue (or write directly depending on feature flags).
+6. // ---------------------------------------------------------------------------
+7. 
+8. import { v4 as uuid } from "uuid";
+9. import { broker } from "../queue/broker.js";
+10. import { featureFlags } from "../config/feature-flags.js";
+11. import { createAuditEntry } from "../models/audit-repository.js";
+12. import type { AuditRequestedEvent } from "../queue/contracts.js";
+13. import type { SessionContext } from "../models/types.js";
+14. 
+15. /**
+16.  * Write an audit entry for an action performed in a session context.
+17.  */
+18. export function auditAction(
+19.   session: SessionContext,
+20.   action: string,
+21.   previousValue: unknown,
+22.   newValue: unknown,
+23.   source: string,
+24. ): void {
+25.   const payload = {
+26.     action,
+27.     actor: session.actor.id,
+28.     delegatedFor: session.delegatedFor?.id,
+29.     previousValue,
+30.     newValue,
+31.     source,
+32.   };
+33. 
+34.   if (featureFlags.queueAudit) {
+35.     const event: AuditRequestedEvent = {
+36.       eventId: uuid(),
+37.       timestamp: new Date().toISOString(),
+38.       source,
+39.       type: "audit.requested",
+40.       payload,
+41.     };
+42.     broker.emit(event);
+43.   } else {
+44.     createAuditEntry(payload);
+45.   }
+46. }
+47.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 37s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\preference-repository.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\models\preference-repository.ts
+
+<details>
+<summary>86 lines</summary>
+
+```
+1. // ---------------------------------------------------------------------------
+2. // Notification Preference Repository
+3. // ---------------------------------------------------------------------------
+4. // Database operations for notification preferences.
+5. //
+6. // KEY NUANCE — UPSERT BEHAVIOR:
+7. //   The `setPreference` function uses INSERT OR REPLACE on the composite
+8. //   primary key (user_id, event, channel).  This means updating a preference
+9. //   replaces the entire row — there is no partial update.  The `updated_by`
+10. //   field MUST always be set (it tracks who last changed the preference).
+11. // ---------------------------------------------------------------------------
+12. 
+13. import { getDb } from "../db/connection.js";
+14. import type {
+15.   NotificationPreference,
+16.   NotificationEvent,
+17.   NotificationChannel,
+18. } from "./types.js";
+19. 
+20. const PREFERENCE_COLUMNS = `
+21.   user_id AS userId,
+22.   event,
+23.   channel,
+24.   enabled,
+25.   updated_at AS updatedAt,
+26.   updated_by AS updatedBy
+27. `;
+28. 
+29. type PreferenceRow = NotificationPreference & { enabled: number | boolean };
+30. 
+31. export function findPreferencesForUser(
+32.   userId: string,
+33. ): NotificationPreference[] {
+34.   const db = getDb();
+35.   return db
+36.     .prepare(
+37.       `SELECT ${PREFERENCE_COLUMNS} FROM notification_preferences WHERE user_id = ?`,
+38.     )
+39.     .all(userId)
+40.     .map((pref) => pref as PreferenceRow)
+41.     .map((pref) => ({
+42.       ...pref,
+43.       enabled: Boolean(pref.enabled),
+44.     })) as NotificationPreference[];
+45. }
+46. 
+47. export function findPreference(
+48.   userId: string,
+49.   event: NotificationEvent,
+50.   channel: NotificationChannel,
+51. ): NotificationPreference | undefined {
+52.   const db = getDb();
+53.   const pref = db
+54.     .prepare(
+55.       `SELECT ${PREFERENCE_COLUMNS} FROM notification_preferences WHERE user_id = ? AND event = ? AND channel = ?`,
+56.     )
+57.     .get(userId, event, channel) as
+58.     | (NotificationPreference & { enabled: number | boolean })
+59.     | undefined;
+60. 
+61.   return pref ? { ...pref, enabled: Boolean(pref.enabled) } : undefined;
+62. }
+63. 
+64. export function setPreference(pref: NotificationPreference): void {
+65.   const db = getDb();
+66.   db.prepare(
+67.     `INSERT OR REPLACE INTO notification_preferences (user_id, event, channel, enabled, updated_at, updated_by)
+68.      VALUES (?, ?, ?, ?, ?, ?)`,
+69.   ).run(
+70.     pref.userId,
+71.     pref.event,
+72.     pref.channel,
+73.     pref.enabled ? 1 : 0,
+74.     pref.updatedAt,
+75.     pref.updatedBy,
+76.   );
+77. }
+78. 
+79. export function deletePreferencesForUser(userId: string): number {
+80.   const db = getDb();
+81.   const result = db
+82.     .prepare("DELETE FROM notification_preferences WHERE user_id = ?")
+83.     .run(userId);
+84.   return result.changes;
+85. }
+86.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 56s</sub>
 
 ### 💬 Copilot
 
-Now I have a complete understanding. Let me identify the issues with the current code:
-
-1. **Generic route (lines 45-105)**: Does NOT enforce owner-only writes, does NOT use FORBIDDEN: error prefix, does NOT pass errors to next()
-2. **Email route (lines 112-188)**: Partially good but inconsistencies
-3. **SMS route (lines 195-271)**: Partially good but inconsistencies
-
-The refactor needs to:
-1. Make the generic route enforce owner-only writes (userId from body must match session.actor.id)
-2. Make all routes throw errors with `FORBIDDEN:` prefix instead of direct responses
-3. Ensure all errors go through `next()` for central error handling
-4. Keep audit logging consistent
-
-Let me now refactor the notifications.ts file:
+I found the generic write route is the odd one out: it still does ad-hoc `403` responses and doesn’t enforce owner-only writes. I’m checking the auth middleware once so I can keep the refactor consistent with how the repo already reports authorization failures.
 
 ---
 
-<sub>⏱️ 33s</sub>
+<sub>⏱️ 56s</sub>
 
-### ✅ `edit`
+### ✅ `view`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\auth.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\middleware\auth.ts
+
+<details>
+<summary>98 lines</summary>
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+1. // ---------------------------------------------------------------------------
+2. // Authentication & Authorization Middleware
+3. // ---------------------------------------------------------------------------
+4. //
+5. // KEY NUANCE — DELEGATED SESSIONS:
+6. //   When the `x-delegated-for` header is present, the session is marked as
+7. //   delegated.  Delegated sessions allow READ operations on the delegate's
+8. //   data but BLOCK writes.  An AI assistant without context would likely
+9. //   skip this distinction, producing code that allows delegated writes.
+10. //
+11. // KEY NUANCE — COMPLIANCE REVIEWER:
+12. //   Compliance reviewers can view notification preferences and audit logs
+13. //   but cannot modify operational settings.  This is a read-only role for
+14. //   the notification feature, even though the role has write permissions
+15. //   in other parts of the system.
+16. // ---------------------------------------------------------------------------
+17. 
+18. import type { Request, Response, NextFunction } from "express";
+19. import type { UserRole, SessionContext } from "../models/types.js";
+20. import { findUserById } from "../models/user-repository.js";
+21. 
+22. // Extend Express Request to carry session context.
+23. declare global {
+24.   namespace Express {
+25.     interface Request {
+26.       session?: SessionContext;
+27.     }
+28.   }
+29. }
+30. 
+31. /**
+32.  * Authenticate the request and attach a SessionContext.
+33.  *
+34.  * In production this would validate a JWT or session cookie.  For the
+35.  * demo we resolve the user from an `x-user-id` header and optionally
+36.  * attach delegated-session context from `x-delegated-for`.
+37.  */
+38. export function authMiddleware(
+39.   req: Request,
+40.   res: Response,
+41.   next: NextFunction,
+42. ): void {
+43.   // Skip auth for health check.
+44.   if (req.path === "/health") {
+45.     next();
+46.     return;
+47.   }
+48. 
+49.   const userId = req.headers["x-user-id"] as string | undefined;
+50.   if (!userId) {
+51.     res.status(401).json({ error: "Missing x-user-id header." });
+52.     return;
+53.   }
+54. 
+55.   const actor = findUserById(userId);
+56.   if (!actor) {
+57.     res.status(401).json({ error: `Unknown user '${userId}'.` });
+58.     return;
+59.   }
+60. 
+61.   const session: SessionContext = { actor };
+62. 
+63.   // Check for delegated session.
+64.   const delegatedId = req.headers["x-delegated-for"] as string | undefined;
+65.   if (delegatedId) {
+66.     const delegate = findUserById(delegatedId);
+67.     if (!delegate) {
+68.       res.status(400).json({ error: `Unknown delegate '${delegatedId}'.` });
+69.       return;
+70.     }
+71.     session.delegatedFor = delegate;
+72.   }
+73. 
+74.   req.session = session;
+75.   next();
+76. }
+77. 
+78. /**
+79.  * Role-gate middleware factory.
+80.  * Returns 403 if the actor's role is not in the allowed set.
+81.  */
+82. export function requireRole(...roles: UserRole[]) {
+83.   const allowed = new Set(roles);
+84.   return (req: Request, res: Response, next: NextFunction): void => {
+85.     if (!req.session) {
+86.       res.status(401).json({ error: "Not authenticated." });
+87.       return;
+88.     }
+89.     if (!allowed.has(req.session.actor.role)) {
+90.       res.status(403).json({
+91.         error: `Role '${req.session.actor.role}' is not authorized for this operation.`,
+92.       });
+93.       return;
+94.     }
+95.     next();
+96.   };
+97. }
+98.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 1m 19s</sub>
+
+### ✅ `apply_patch`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\02-curate-project-context\\src\\backend\\src\\routes\\notifications.ts\n@@\n import * as prefRepo from \"../models/preference-repository.js\";\n import type {\n   SessionContext,\n   NotificationPreference,\n+  NotificationEvent,\n+  NotificationChannel,\n } from \"../models/types.js\";\n \n export const notificationRoutes = Router();\n+\n+const STANDARD_NOTIFICATION_EVENTS: NotificationEvent[] = [\n+  \"approval\",\n+  \"decline\",\n+  \"document-request\",\n+  \"manual-review-escalation\",\n+];\n \n function firstParam(value: string | string[]): string {\n   return Array.isArray(value) ? value[0] : value;\n }\n+\n+function assertCanWriteNotificationPreferences(\n+  session: SessionContext,\n+  targetUserId: string,\n+): void {\n+  if (session.delegatedFor) {\n+    throw new Error(\n+      \"FORBIDDEN: Delegated sessions cannot modify notification preferences.\",\n+    );\n+  }\n+\n+  if (session.actor.id !== targetUserId) {\n+    throw new Error(\n+      \"FORBIDDEN: Users can only modify their own notification preferences.\",\n+    );\n+  }\n+\n+  if (!hasPermission(session.actor.role, \"notification-pref:write\")) {\n+    throw new Error(\n+      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\n+    );\n+  }\n+}\n+\n+function setPreferenceWithAudit(\n+  session: SessionContext,\n+  pref: NotificationPreference,\n+): NotificationPreference {\n+  const previous = prefRepo.findPreference(pref.userId, pref.event, pref.channel);\n+\n+  prefRepo.setPreference(pref);\n+  auditAction(\n+    session,\n+    \"preference.updated\",\n+    previous ?? null,\n+    pref,\n+    \"notification-routes\",\n+  );\n+\n+  return pref;\n+}\n+\n+function setChannelPreferences(\n+  session: SessionContext,\n+  userId: string,\n+  channel: NotificationChannel,\n+  enabled: boolean,\n+): NotificationPreference[] {\n+  const now = new Date().toISOString();\n+\n+  return STANDARD_NOTIFICATION_EVENTS.map((event) =>\n+    setPreferenceWithAudit(session, {\n+      userId,\n+      event,\n+      channel,\n+      enabled,\n+      updatedAt: now,\n+      updatedBy: session.actor.id,\n+    }),\n+  );\n+}\n@@\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n-\n-      // Block writes in delegated sessions\n-      if (session.delegatedFor) {\n-        res.status(403).json({\n-          error: \"Delegated sessions cannot modify notification preferences.\",\n-        });\n-        return;\n-      }\n-\n-      // Additional permission check\n-      if (!hasPermission(session.actor.role, \"notification-pref:write\")) {\n-        res.status(403).json({\n-          error: `Role '${session.actor.role}' cannot modify notification preferences.`,\n-        });\n-        return;\n-      }\n-\n       const { userId, event, channel, enabled } = req.body;\n+      assertCanWriteNotificationPreferences(session, userId);\n+\n       const now = new Date().toISOString();\n-\n-      const previous = prefRepo.findPreference(userId, event, channel);\n-\n-      const pref: NotificationPreference = {\n+      const pref = setPreferenceWithAudit(session, {\n         userId,\n         event,\n         channel,\n         enabled,\n         updatedAt: now,\n         updatedBy: session.actor.id,\n-      };\n-\n-      prefRepo.setPreference(pref);\n-\n-      // Audit the preference change\n-      auditAction(\n-        session,\n-        \"preference.updated\",\n-        previous ?? null,\n-        pref,\n-        \"notification-routes\",\n-      );\n+      });\n \n       res.json(pref);\n     } catch (err) {\n       next(err);\n@@\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n       const targetUserId = firstParam(req.params.userId);\n-\n-      // Block writes in delegated sessions\n-      if (session.delegatedFor) {\n-        res.status(403).json({\n-          error: \"FORBIDDEN: Delegated sessions cannot modify notification preferences.\",\n-        });\n-        return;\n-      }\n-\n-      // Enforce owner-only writes\n-      if (session.actor.id !== targetUserId) {\n-        res.status(403).json({\n-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\n-        });\n-        return;\n-      }\n-\n-      // Permission check\n-      if (!hasPermission(session.actor.role, \"notification-pref:write\")) {\n-        res.status(403).json({\n-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\n-        });\n-        return;\n-      }\n+      assertCanWriteNotificationPreferences(session, targetUserId);\n \n       const { enabled } = req.body;\n-      const now = new Date().toISOString();\n-      const events: Array<\"approval\" | \"decline\" | \"document-request\" | \"manual-review-escalation\"> = [\n-        \"approval\",\n-        \"decline\",\n-        \"document-request\",\n-        \"manual-review-escalation\",\n-      ];\n-\n-      const updates: NotificationPreference[] = [];\n-\n-      for (const event of events) {\n-        const previous = prefRepo.findPreference(targetUserId, event, \"email\");\n-\n-        const pref: NotificationPreference = {\n-          userId: targetUserId,\n-          event,\n-          channel: \"email\",\n-          enabled,\n-          updatedAt: now,\n-          updatedBy: session.actor.id,\n-        };\n-\n-        prefRepo.setPreference(pref);\n-        updates.push(pref);\n-\n-        // Audit each preference change\n-        auditAction(\n-          session,\n-          \"preference.updated\",\n-          previous ?? null,\n-          pref,\n-          \"notification-routes\",\n-        );\n-      }\n+      const updates = setChannelPreferences(\n+        session,\n+        targetUserId,\n+        \"email\",\n+        enabled,\n+      );\n \n       res.json(updates);\n     } catch (err) {\n       next(err);\n@@\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n       const targetUserId = firstParam(req.params.userId);\n-\n-      // Block writes in delegated sessions\n-      if (session.delegatedFor) {\n-        res.status(403).json({\n-          error: \"FORBIDDEN: Delegated sessions cannot modify notification preferences.\",\n-        });\n-        return;\n-      }\n-\n-      // Enforce owner-only writes\n-      if (session.actor.id !== targetUserId) {\n-        res.status(403).json({\n-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\n-        });\n-        return;\n-      }\n-\n-      // Permission check\n-      if (!hasPermission(session.actor.role, \"notification-pref:write\")) {\n-        res.status(403).json({\n-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\n-        });\n-        return;\n-      }\n+      assertCanWriteNotificationPreferences(session, targetUserId);\n \n       const { enabled } = req.body;\n-      const now = new Date().toISOString();\n-      const events: Array<\"approval\" | \"decline\" | \"document-request\" | \"manual-review-escalation\"> = [\n-        \"approval\",\n-        \"decline\",\n-        \"document-request\",\n-        \"manual-review-escalation\",\n-      ];\n-\n-      const updates: NotificationPreference[] = [];\n-\n-      for (const event of events) {\n-        const previous = prefRepo.findPreference(targetUserId, event, \"sms\");\n-\n-        const pref: NotificationPreference = {\n-          userId: targetUserId,\n-          event,\n-          channel: \"sms\",\n-          enabled,\n-          updatedAt: now,\n-          updatedBy: session.actor.id,\n-        };\n-\n-        prefRepo.setPreference(pref);\n-        updates.push(pref);\n-\n-        // Audit each preference change\n-        auditAction(\n-          session,\n-          \"preference.updated\",\n-          previous ?? null,\n-          pref,\n-          \"notification-routes\",\n-        );\n-      }\n+      const updates = setChannelPreferences(\n+        session,\n+        targetUserId,\n+        \"sms\",\n+        enabled,\n+      );\n \n       res.json(updates);\n     } catch (err) {\n       next(err);\n*** End Patch\n"
+```
+
+</details>
+
+```
+Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 ```
 
 
 ---
 
-<sub>⏱️ 41s</sub>
+<sub>⏱️ 1m 27s</sub>
 
 ### 💬 Copilot
 
-Now refactor the email route:
+The refactor is in place. I’m doing a file-only verification pass now to make sure the generic and channel-specific handlers truly share the same helper-driven authorization, audit, and `FORBIDDEN:` flow.
 
 ---
 
-<sub>⏱️ 41s</sub>
+<sub>⏱️ 1m 27s</sub>
 
-### ✅ `edit`
+### ✅ `sql`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**Update todo progress**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+<details>
+<summary>Arguments</summary>
 
-```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
-```
-
-
----
-
-<sub>⏱️ 47s</sub>
-
-### 💬 Copilot
-
-Now refactor the SMS route:
-
----
-
-<sub>⏱️ 47s</sub>
-
-### ✅ `edit`
-
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
-
-```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+```json
+{
+  "description": "Update todo progress",
+  "query": "UPDATE todos SET status = 'done' WHERE id = 'inspect-notification-conventions';\nUPDATE todos SET status = 'in_progress' WHERE id = 'verify-file-changes';\nUPDATE todos SET status = 'done' WHERE id = 'refactor-notification-routes';"
+}
 ```
 
+</details>
+
+<details>
+<summary>7 lines</summary>
+
+```
+Executed 3 statement(s):
+
+1. UPDATE
+   1 row(s) updated.
+
+2. UPDATE
+   1 row(s) updated.
+
+3. UPDATE
+   1 row(s) updated.
+```
+
+</details>
+
 
 ---
 
-<sub>⏱️ 49s</sub>
-
-### 💬 Copilot
-
-Now let me verify the refactored file:
-
----
-
-<sub>⏱️ 49s</sub>
+<sub>⏱️ 1m 27s</sub>
 
 ### ✅ `view`
 
@@ -773,7 +1376,7 @@ Now let me verify the refactored file:
 Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 <details>
-<summary>270 lines</summary>
+<summary>211 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
@@ -800,252 +1403,193 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 22. import type {
 23.   SessionContext,
 24.   NotificationPreference,
-25. } from "../models/types.js";
-26. 
-27. export const notificationRoutes = Router();
+25.   NotificationEvent,
+26.   NotificationChannel,
+27. } from "../models/types.js";
 28. 
-29. function firstParam(value: string | string[]): string {
-30.   return Array.isArray(value) ? value[0] : value;
-31. }
-32. 
-33. /** GET /api/notifications/preferences/:userId — get preferences for a user. */
-34. notificationRoutes.get(
-35.   "/preferences/:userId",
-36.   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
-37.   (req, res) => {
-38.     const prefs = prefRepo.findPreferencesForUser(
-39.       firstParam(req.params.userId),
-40.     );
-41.     res.json(prefs);
-42.   },
-43. );
-44. 
-45. /** PUT /api/notifications/preferences — set a notification preference. */
-46. notificationRoutes.put(
-47.   "/preferences",
-48.   requireRole("underwriter", "analyst-manager"),
-49.   validateBody([
-50.     { field: "userId", type: "string", required: true },
-51.     { field: "event", type: "string", required: true },
-52.     { field: "channel", type: "string", required: true },
-53.     { field: "enabled", type: "boolean", required: true },
-54.   ]),
-55.   (req, res, next) => {
-56.     try {
-57.       const session = req.session as SessionContext;
-58.       const { userId, event, channel, enabled } = req.body;
-59. 
-60.       // Block writes in delegated sessions
-61.       if (session.delegatedFor) {
-62.         throw new Error(
-63.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-64.         );
-65.       }
-66. 
-67.       // Enforce owner-only writes
-68.       if (session.actor.id !== userId) {
-69.         throw new Error(
-70.           "FORBIDDEN: Users can only modify their own notification preferences.",
-71.         );
-72.       }
-73. 
-74.       // Permission check
-75.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
-76.         throw new Error(
-77.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-78.         );
-79.       }
-80. 
-81.       const now = new Date().toISOString();
-82.       const previous = prefRepo.findPreference(userId, event, channel);
-83. 
-84.       const pref: NotificationPreference = {
-85.         userId,
-86.         event,
-87.         channel,
-88.         enabled,
-89.         updatedAt: now,
-90.         updatedBy: session.actor.id,
-91.       };
-92. 
-93.       prefRepo.setPreference(pref);
-94. 
-95.       // Audit the preference change
-96.       auditAction(
-97.         session,
-98.         "preference.updated",
-99.         previous ?? null,
-100.         pref,
-101.         "notification-routes",
-102.       );
-103. 
-104.       res.json(pref);
-105.     } catch (err) {
-106.       next(err);
-107.     }
-108.   },
-109. );
-110. 
-111. /**
-112.  * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
-113.  * Updates the enabled flag for all notification events on the email channel.
-114.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
-115.  */
+29. export const notificationRoutes = Router();
+30. 
+31. const STANDARD_NOTIFICATION_EVENTS: NotificationEvent[] = [
+32.   "approval",
+33.   "decline",
+34.   "document-request",
+35.   "manual-review-escalation",
+36. ];
+37. 
+38. function firstParam(value: string | string[]): string {
+39.   return Array.isArray(value) ? value[0] : value;
+40. }
+41. 
+42. function assertCanWriteNotificationPreferences(
+43.   session: SessionContext,
+44.   targetUserId: string,
+45. ): void {
+46.   if (session.delegatedFor) {
+47.     throw new Error(
+48.       "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+49.     );
+50.   }
+51. 
+52.   if (session.actor.id !== targetUserId) {
+53.     throw new Error(
+54.       "FORBIDDEN: Users can only modify their own notification preferences.",
+55.     );
+56.   }
+57. 
+58.   if (!hasPermission(session.actor.role, "notification-pref:write")) {
+59.     throw new Error(
+60.       `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+61.     );
+62.   }
+63. }
+64. 
+65. function setPreferenceWithAudit(
+66.   session: SessionContext,
+67.   pref: NotificationPreference,
+68. ): NotificationPreference {
+69.   const previous = prefRepo.findPreference(pref.userId, pref.event, pref.channel);
+70. 
+71.   prefRepo.setPreference(pref);
+72.   auditAction(
+73.     session,
+74.     "preference.updated",
+75.     previous ?? null,
+76.     pref,
+77.     "notification-routes",
+78.   );
+79. 
+80.   return pref;
+81. }
+82. 
+83. function setChannelPreferences(
+84.   session: SessionContext,
+85.   userId: string,
+86.   channel: NotificationChannel,
+87.   enabled: boolean,
+88. ): NotificationPreference[] {
+89.   const now = new Date().toISOString();
+90. 
+91.   return STANDARD_NOTIFICATION_EVENTS.map((event) =>
+92.     setPreferenceWithAudit(session, {
+93.       userId,
+94.       event,
+95.       channel,
+96.       enabled,
+97.       updatedAt: now,
+98.       updatedBy: session.actor.id,
+99.     }),
+100.   );
+101. }
+102. 
+103. /** GET /api/notifications/preferences/:userId — get preferences for a user. */
+104. notificationRoutes.get(
+105.   "/preferences/:userId",
+106.   requireRole("underwriter", "analyst-manager", "compliance-reviewer"),
+107.   (req, res) => {
+108.     const prefs = prefRepo.findPreferencesForUser(
+109.       firstParam(req.params.userId),
+110.     );
+111.     res.json(prefs);
+112.   },
+113. );
+114. 
+115. /** PUT /api/notifications/preferences — set a notification preference. */
 116. notificationRoutes.put(
-117.   "/preferences/:userId/email",
+117.   "/preferences",
 118.   requireRole("underwriter", "analyst-manager"),
 119.   validateBody([
-120.     { field: "enabled", type: "boolean", required: true },
-121.   ]),
-122.   (req, res, next) => {
-123.     try {
-124.       const session = req.session as SessionContext;
-125.       const targetUserId = firstParam(req.params.userId);
-126. 
-127.       // Block writes in delegated sessions
-128.       if (session.delegatedFor) {
-129.         throw new Error(
-130.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-131.         );
-132.       }
-133. 
-134.       // Enforce owner-only writes
-135.       if (session.actor.id !== targetUserId) {
-136.         throw new Error(
-137.           "FORBIDDEN: Users can only modify their own notification preferences.",
-138.         );
-139.       }
+120.     { field: "userId", type: "string", required: true },
+121.     { field: "event", type: "string", required: true },
+122.     { field: "channel", type: "string", required: true },
+123.     { field: "enabled", type: "boolean", required: true },
+124.   ]),
+125.   (req, res, next) => {
+126.     try {
+127.       const session = req.session as SessionContext;
+128.       const { userId, event, channel, enabled } = req.body;
+129.       assertCanWriteNotificationPreferences(session, userId);
+130. 
+131.       const now = new Date().toISOString();
+132.       const pref = setPreferenceWithAudit(session, {
+133.         userId,
+134.         event,
+135.         channel,
+136.         enabled,
+137.         updatedAt: now,
+138.         updatedBy: session.actor.id,
+139.       });
 140. 
-141.       // Permission check
-142.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
-143.         throw new Error(
-144.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-145.         );
-146.       }
+141.       res.json(pref);
+142.     } catch (err) {
+143.       next(err);
+144.     }
+145.   },
+146. );
 147. 
-148.       const { enabled } = req.body;
-149.       const now = new Date().toISOString();
-150.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-151.         "approval",
-152.         "decline",
-153.         "document-request",
-154.         "manual-review-escalation",
-155.       ];
-156. 
-157.       const updates: NotificationPreference[] = [];
-158. 
-159.       for (const event of events) {
-160.         const previous = prefRepo.findPreference(targetUserId, event, "email");
-161. 
-162.         const pref: NotificationPreference = {
-163.           userId: targetUserId,
-164.           event,
-165.           channel: "email",
-166.           enabled,
-167.           updatedAt: now,
-168.           updatedBy: session.actor.id,
-169.         };
-170. 
-171.         prefRepo.setPreference(pref);
-172.         updates.push(pref);
-173. 
-174.         // Audit each preference change
-175.         auditAction(
-176.           session,
-177.           "preference.updated",
-178.           previous ?? null,
-179.           pref,
-180.           "notification-routes",
-181.         );
-182.       }
-183. 
-184.       res.json(updates);
-185.     } catch (err) {
-186.       next(err);
-187.     }
-188.   },
-189. );
-190. 
-191. /**
-192.  * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
-193.  * Updates the enabled flag for all notification events on the SMS channel.
-194.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
-195.  */
-196. notificationRoutes.put(
-197.   "/preferences/:userId/sms",
-198.   requireRole("underwriter", "analyst-manager"),
-199.   validateBody([
-200.     { field: "enabled", type: "boolean", required: true },
-201.   ]),
-202.   (req, res, next) => {
-203.     try {
-204.       const session = req.session as SessionContext;
-205.       const targetUserId = firstParam(req.params.userId);
-206. 
-207.       // Block writes in delegated sessions
-208.       if (session.delegatedFor) {
-209.         throw new Error(
-210.           "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-211.         );
-212.       }
-213. 
-214.       // Enforce owner-only writes
-215.       if (session.actor.id !== targetUserId) {
-216.         throw new Error(
-217.           "FORBIDDEN: Users can only modify their own notification preferences.",
-218.         );
-219.       }
-220. 
-221.       // Permission check
-222.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
-223.         throw new Error(
-224.           `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-225.         );
-226.       }
-227. 
-228.       const { enabled } = req.body;
-229.       const now = new Date().toISOString();
-230.       const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-231.         "approval",
-232.         "decline",
-233.         "document-request",
-234.         "manual-review-escalation",
-235.       ];
-236. 
-237.       const updates: NotificationPreference[] = [];
-238. 
-239.       for (const event of events) {
-240.         const previous = prefRepo.findPreference(targetUserId, event, "sms");
-241. 
-242.         const pref: NotificationPreference = {
-243.           userId: targetUserId,
-244.           event,
-245.           channel: "sms",
-246.           enabled,
-247.           updatedAt: now,
-248.           updatedBy: session.actor.id,
-249.         };
-250. 
-251.         prefRepo.setPreference(pref);
-252.         updates.push(pref);
-253. 
-254.         // Audit each preference change
-255.         auditAction(
-256.           session,
-257.           "preference.updated",
-258.           previous ?? null,
-259.           pref,
-260.           "notification-routes",
-261.         );
-262.       }
-263. 
-264.       res.json(updates);
-265.     } catch (err) {
-266.       next(err);
-267.     }
-268.   },
-269. );
-270.
+148. /**
+149.  * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
+150.  * Updates the enabled flag for all notification events on the email channel.
+151.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
+152.  */
+153. notificationRoutes.put(
+154.   "/preferences/:userId/email",
+155.   requireRole("underwriter", "analyst-manager"),
+156.   validateBody([
+157.     { field: "enabled", type: "boolean", required: true },
+158.   ]),
+159.   (req, res, next) => {
+160.     try {
+161.       const session = req.session as SessionContext;
+162.       const targetUserId = firstParam(req.params.userId);
+163.       assertCanWriteNotificationPreferences(session, targetUserId);
+164. 
+165.       const { enabled } = req.body;
+166.       const updates = setChannelPreferences(
+167.         session,
+168.         targetUserId,
+169.         "email",
+170.         enabled,
+171.       );
+172. 
+173.       res.json(updates);
+174.     } catch (err) {
+175.       next(err);
+176.     }
+177.   },
+178. );
+179. 
+180. /**
+181.  * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
+182.  * Updates the enabled flag for all notification events on the SMS channel.
+183.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
+184.  */
+185. notificationRoutes.put(
+186.   "/preferences/:userId/sms",
+187.   requireRole("underwriter", "analyst-manager"),
+188.   validateBody([
+189.     { field: "enabled", type: "boolean", required: true },
+190.   ]),
+191.   (req, res, next) => {
+192.     try {
+193.       const session = req.session as SessionContext;
+194.       const targetUserId = firstParam(req.params.userId);
+195.       assertCanWriteNotificationPreferences(session, targetUserId);
+196. 
+197.       const { enabled } = req.body;
+198.       const updates = setChannelPreferences(
+199.         session,
+200.         targetUserId,
+201.         "sms",
+202.         enabled,
+203.       );
+204. 
+205.       res.json(updates);
+206.     } catch (err) {
+207.       next(err);
+208.     }
+209.   },
+210. );
+211.
 ```
 
 </details>
@@ -1053,44 +1597,117 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-con
 
 ---
 
-<sub>⏱️ 57s</sub>
+<sub>⏱️ 1m 27s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "assertCanWriteNotificationPreferences|setPreferenceWithAudit|setChannelPreferences|FORBIDDEN:|preference.updated",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\02-curate-project-context\\src\\backend\\src\\routes\\notifications.ts",
+  "output_mode": "content",
+  "-n": true
+}
+```
+
+</details>
+
+<details>
+<summary>14 lines</summary>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:42:function assertCanWriteNotificationPreferences(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:48:      "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:54:      "FORBIDDEN: Users can only modify their own notification preferences.",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:60:      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:65:function setPreferenceWithAudit(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:74:    "preference.updated",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:83:function setChannelPreferences(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:92:    setPreferenceWithAudit(session, {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:129:      assertCanWriteNotificationPreferences(session, userId);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:132:      const pref = setPreferenceWithAudit(session, {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:163:      assertCanWriteNotificationPreferences(session, targetUserId);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:166:      const updates = setChannelPreferences(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:195:      assertCanWriteNotificationPreferences(session, targetUserId);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts:198:      const updates = setChannelPreferences(
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 1m 38s</sub>
+
+### ✅ `sql`
+
+**Complete verification todo**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "description": "Complete verification todo",
+  "query": "UPDATE todos SET status = 'done' WHERE id = 'verify-file-changes';"
+}
+```
+
+</details>
+
+```
+1 row(s) updated.
+```
+
+
+---
+
+<sub>⏱️ 1m 39s</sub>
+
+### ✅ `store_memory`
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "subject": "notification preference routes",
+  "fact": "Notification preference write routes use shared owner-only/delegated-session checks and FORBIDDEN-prefixed errors, with per-preference auditAction calls on all write paths.",
+  "citations": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\02-curate-project-context\\src\\backend\\src\\routes\\notifications.ts:42-101,125-205; Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\02-curate-project-context\\src\\backend\\src\\middleware\\error-handler.ts:16-31",
+  "reason": "This is a durable route-level convention for the lesson’s notification preference surface and will matter in future edits or reviews of authorization and audit behavior. Remembering it helps avoid regressing to ad-hoc 403 responses or missing per-preference audit logging when modifying these handlers later.",
+  "category": "general"
+}
+```
+
+</details>
+
+```
+Memory stored successfully.
+```
+
+
+---
+
+<sub>⏱️ 1m 44s</sub>
 
 ### 💬 Copilot
 
-Perfect! The refactor is complete. Let me verify the changes align with the requirements by summarizing what was done:
+Updated `src/backend/src/routes/notifications.ts` so all notification-preference write handlers now follow the same local conventions.
 
-## Summary of Changes
+I added small helpers to centralize write authorization and audit behavior:
+- owner-only writes for all three PUT routes
+- delegated-session blocking for all three
+- `throw new Error("FORBIDDEN: ...")` + `next(err)` flow instead of ad-hoc `res.status(403)...`
+- preserved per-preference `auditAction(...)` calls on generic and bulk email/SMS writes
 
-The refactoring successfully normalizes all three notification preference write routes to follow consistent conventions:
+I also extracted the standard event list and bulk channel update logic to remove duplication while keeping the change local to this route file.
 
-### **Generic Route (PUT /api/notifications/preferences)**
-✅ **Owner-only writes**: Now enforces `session.actor.id !== userId` check (lines 68-72)
-✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error if `session.delegatedFor` is set (lines 61-65)
-✅ **FORBIDDEN: prefix**: All authorization failures now use `FORBIDDEN:` prefix for central error handler (lines 62-77)
-✅ **Error delegation**: All errors thrown and passed to `next()` for centralized handling (line 106)
-
-### **Email Channel Route (PUT /api/notifications/preferences/:userId/email)**
-✅ **Owner-only writes**: Enforces `session.actor.id !== targetUserId` (lines 135-139)
-✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error (lines 128-132)
-✅ **FORBIDDEN: prefix**: Changed from direct response to thrown errors with `FORBIDDEN:` prefix (lines 129-145)
-✅ **Error delegation**: All errors passed to `next()` (line 186)
-✅ **Audit logging**: Preserved per-preference audit trail (lines 174-181)
-
-### **SMS Channel Route (PUT /api/notifications/preferences/:userId/sms)**
-✅ **Owner-only writes**: Enforces `session.actor.id !== targetUserId` (lines 215-219)
-✅ **Delegated sessions blocked**: Throws `FORBIDDEN:` error (lines 208-212)
-✅ **FORBIDDEN: prefix**: Changed from direct response to thrown errors with `FORBIDDEN:` prefix (lines 209-225)
-✅ **Error delegation**: All errors passed to `next()` (line 266)
-✅ **Audit logging**: Preserved per-preference audit trail (lines 255-261)
-
-### Key Improvements:
-1. **Consistency**: All three routes now follow identical authorization patterns
-2. **Central Error Handling**: Errors are thrown with `FORBIDDEN:` prefix and delegated to `next()`, allowing the centralized error handler to map them to HTTP 403
-3. **Owner-Only Enforcement**: The generic route now validates that `userId` in body matches the authenticated actor's ID
-4. **Delegated Session Blocking**: All routes block writes when a delegated session is active
-5. **Audit Trail**: All routes maintain complete audit logging for compliance
-
-The refactored code adheres to all repository conventions from `api-conventions.md`, error-handler patterns, and role-permission rules.
+No shell commands were run.
 
 ---
 

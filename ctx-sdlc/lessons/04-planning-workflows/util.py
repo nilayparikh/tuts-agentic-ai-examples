@@ -29,6 +29,7 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
+GENERATED_PLAN_PATH = LESSON / "docs" / "notification-preferences-plan.md"
 TEXT_EXTENSIONS = {
   ".css",
   ".html",
@@ -36,6 +37,7 @@ TEXT_EXTENSIONS = {
   ".json",
   ".md",
   ".mjs",
+  ".py",
   ".ts",
   ".tsx",
   ".txt",
@@ -103,11 +105,11 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 
 
 def _reset_output_dirs() -> None:
+  preserved_expected = {
+    path.name: path.read_text(encoding="utf-8")
+    for path in CHANGE_DIR.glob("expected-*.json")
+  }
   for directory in (LOG_DIR, CHANGE_DIR):
-    preserved_expected = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in CHANGE_DIR.glob("expected-*.json")
-    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)
@@ -117,6 +119,8 @@ def _reset_output_dirs() -> None:
 
 def _reset_demo_workspace() -> Path:
   clean(LESSON)
+  if GENERATED_PLAN_PATH.exists():
+    GENERATED_PLAN_PATH.unlink()
   src_dir = LESSON / "src"
   shutil.copytree(
     APP_SOURCE,

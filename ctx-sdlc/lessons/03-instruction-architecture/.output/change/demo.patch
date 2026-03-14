@@ -1,633 +1,225 @@
 --- a/backend/src/rules/notification-channel-rules.ts
 +++ b/backend/src/rules/notification-channel-rules.ts
-@@ -0,0 +1,174 @@
+@@ -0,0 +1,137 @@
 +// ---------------------------------------------------------------------------
 +// Notification Channel Rules
 +// ---------------------------------------------------------------------------
-+// Validates when disabling a notification channel is allowed, particularly
-+// for mandatory notification events.
++// False positive:
++//   Disabling SMS for a mandatory event is valid when another channel remains
++//   enabled after the change. Mandatory delivery requires coverage, not every
++//   channel to stay on.
 +//
-+// KEY RESTRICTION — LEGAL-218 (California Decline SMS):
-+//   Loans from California (loan_state = "CA") CANNOT disable SMS for decline
-+//   events.  This is a regulatory requirement for California commercial loans.
-+//   This blocks the scenario: "I'll just skip SMS for decline notifications
-+//   on my California loan". Email must be enabled as a fallback.
-+//
-+// FALSE POSITIVES (looks like violation, actually correct):
-+//   1. Disabling SMS for decline on a NEW YORK loan is always allowed.
-+//   2. Disabling EMAIL for decline on California is allowed (SMS remains as
-+//      fallback).
-+//   3. Disabling SMS for APPROVAL on California is allowed (approval is not
-+//      subject to the decline restriction).
-+//   4. Disabling a channel when the OTHER channel remains enabled counts as
-+//      valid fallback (e.g., disable SMS if email is still on).
-+//
-+// HARD NEGATIVES (looks correct, actually violates rules):
-+//   1. Disabling SMS for decline on a California loan when email is also
-+//      disabled — no fallback exists.
-+//   2. Disabling both SMS and EMAIL for any mandatory event is always a
-+//      violation (customer cannot be reached).
-+//   3. Attempting to disable SMS for decline on California even if it's
-+//      currently the only enabled channel.
++// Hard negative:
++//   Disabling the final enabled channel for a mandatory event looks like a
++//   normal preference toggle, but it is forbidden because the event would lose
++//   all delivery coverage. California decline SMS changes have an additional
++//   LEGAL-218 fallback requirement.
 +// ---------------------------------------------------------------------------
 +
++import { getMandatoryEvents } from "./mandatory-events.js";
 +import type {
 +  ApplicationState,
 +  NotificationChannel,
 +  NotificationEvent,
-+  NotificationPreference,
 +} from "../models/types.js";
-+import { getMandatoryEvents } from "./mandatory-events.js";
++
++type RuleName =
++  | "allowed"
++  | "mandatory-event-coverage"
++  | "ca-decline-sms-fallback";
++
++export interface NotificationChannelPreferenceLike {
++  channel: NotificationChannel;
++  enabled: boolean;
++}
++
++export interface ValidateNotificationChannelChangeInput {
++  event: NotificationEvent;
++  channel: NotificationChannel;
++  enabled: boolean;
++  currentPreferences: ReadonlyArray<NotificationChannelPreferenceLike>;
++  loanState?: string;
++  fromState?: ApplicationState;
++  toState?: ApplicationState;
++  mandatoryEvents?: ReadonlyArray<NotificationEvent>;
++}
 +
 +export interface ChannelDisableResult {
 +  allowed: boolean;
++  rule: RuleName;
 +  reason: string;
++  ticket?: string;
 +}
 +
-+/**
-+ * Check if disabling a notification channel is allowed for a given event
-+ * and user jurisdiction.
-+ *
-+ * @param event - The notification event (e.g., "decline", "approval")
-+ * @param channel - The channel being disabled ("email" or "sms")
-+ * @param loanState - The loan's state (jurisdiction), e.g. "CA", "NY"
-+ * @param currentPreferences - The user's current notification preferences
-+ * @param transition - Optional state transition context (e.g., "decision->finalized")
-+ *                     to determine if the event is mandatory in that transition
-+ * @returns Object with `allowed` boolean and human-readable `reason`
-+ */
-+export function canDisableChannel(
-+  event: NotificationEvent,
++const CALIFORNIA_DECLINE_SMS_RESTRICTION = {
++  rule: "ca-decline-sms-fallback",
++  ticket: "LEGAL-218",
++  reason:
++    "LEGAL-218: California decline notifications may disable SMS only when email remains enabled as a fallback.",
++} as const;
++
++function resolveMandatoryEvents(
++  input: ValidateNotificationChannelChangeInput,
++): ReadonlyArray<NotificationEvent> {
++  if (input.mandatoryEvents) {
++    return input.mandatoryEvents;
++  }
++
++  if (input.fromState && input.toState) {
++    return getMandatoryEvents(input.fromState, input.toState);
++  }
++
++  return [];
++}
++
++function buildPreferenceMap(
++  currentPreferences: ReadonlyArray<NotificationChannelPreferenceLike>,
 +  channel: NotificationChannel,
-+  loanState: string,
-+  currentPreferences: NotificationPreference[],
-+  transition?: `${string}->${string}`,
++  enabled: boolean,
++): Record<NotificationChannel, boolean> {
++  const nextState: Record<NotificationChannel, boolean> = {
++    email: false,
++    sms: false,
++  };
++
++  for (const preference of currentPreferences) {
++    nextState[preference.channel] = preference.enabled;
++  }
++
++  nextState[channel] = enabled;
++  return nextState;
++}
++
++export function validateNotificationChannelChange(
++  input: ValidateNotificationChannelChangeInput,
 +): ChannelDisableResult {
-+  // Determine if this event is mandatory for the given transition
-+  let isMandatory = false;
-+  if (transition) {
-+    const parts = transition.split("->");
-+    if (parts.length === 2) {
-+      const [from, to] = parts;
-+      // Validate that the parsed states are valid ApplicationState values
-+      const validStates: ApplicationState[] = [
-+        "intake",
-+        "review",
-+        "underwriting",
-+        "decision",
-+        "finalized",
-+      ];
-+      if (validStates.includes(from as ApplicationState) && validStates.includes(to as ApplicationState)) {
-+        const mandatoryForTransition = getMandatoryEvents(
-+          from as ApplicationState,
-+          to as ApplicationState,
-+        );
-+        isMandatory = mandatoryForTransition.includes(event);
-+      }
-+    }
++  if (input.enabled) {
++    return {
++      allowed: true,
++      rule: "allowed",
++      reason: "Enabling a notification channel is always allowed.",
++    };
 +  }
 +
-+  // LEGAL-218: California decline restriction
-+  // Cannot disable SMS for decline events on California loans
++  const nextPreferences = buildPreferenceMap(
++    input.currentPreferences,
++    input.channel,
++    input.enabled,
++  );
++  const mandatoryEvents = resolveMandatoryEvents(input);
++  const eventIsMandatory = mandatoryEvents.includes(input.event);
++  const normalizedLoanState = input.loanState?.toUpperCase();
++
 +  if (
-+    event === "decline" &&
-+    channel === "sms" &&
-+    loanState.toUpperCase() === "CA"
++    normalizedLoanState === "CA" &&
++    input.event === "decline" &&
++    input.channel === "sms" &&
++    !nextPreferences.email
 +  ) {
-+    // Check if email is the alternative fallback
-+    const emailPref = currentPreferences.find(
-+      (p) => p.event === event && p.channel === "email",
-+    );
-+
-+    if (!emailPref || !emailPref.enabled) {
-+      return {
-+        allowed: false,
-+        reason:
-+          "LEGAL-218: California loans cannot disable SMS for decline events unless email is enabled as a fallback.",
-+      };
-+    }
-+
-+    // Email is enabled, so SMS can be disabled (email is the fallback)
++    return {
++      allowed: false,
++      rule: CALIFORNIA_DECLINE_SMS_RESTRICTION.rule,
++      reason: CALIFORNIA_DECLINE_SMS_RESTRICTION.reason,
++      ticket: CALIFORNIA_DECLINE_SMS_RESTRICTION.ticket,
++    };
 +  }
 +
-+  // Mandatory events require at least one channel enabled
-+  // Cannot disable if this is the last enabled channel for a mandatory event
-+  if (isMandatory && event) {
-+    const otherChannel = channel === "email" ? "sms" : "email";
-+    const otherPref = currentPreferences.find(
-+      (p) => p.event === event && p.channel === otherChannel,
-+    );
-+
-+    // If the other channel is disabled, this disable would leave no fallback
-+    if (!otherPref || !otherPref.enabled) {
-+      return {
-+        allowed: false,
-+        reason: `Cannot disable ${channel} for mandatory event '${event}'. At least one notification channel must remain enabled.`,
-+      };
-+    }
++  if (eventIsMandatory && !nextPreferences.email && !nextPreferences.sms) {
++    return {
++      allowed: false,
++      rule: "mandatory-event-coverage",
++      reason: `Mandatory event '${input.event}' must keep at least one notification channel enabled.`,
++    };
 +  }
 +
-+  // Default: allow the disable
 +  return {
 +    allowed: true,
-+    reason: `${channel.charAt(0).toUpperCase() + channel.slice(1)} can be disabled for ${event}.`,
++    rule: "allowed",
++    reason: `Channel change allowed for '${input.event}'.`,
 +  };
-+}
-+
-+/**
-+ * Validate all proposed channel disables in a batch.
-+ * Useful for bulk preference updates where multiple channels may be disabled.
-+ *
-+ * @param disableRequests - Array of { event, channel, newEnabled }
-+ * @param loanState - The loan's state
-+ * @param currentPreferences - Current user preferences
-+ * @param transition - Optional state transition context
-+ * @returns Array of violations; empty if all disables are allowed
-+ */
-+export function validateChannelDisables(
-+  disableRequests: Array<{
-+    event: NotificationEvent;
-+    channel: NotificationChannel;
-+    newEnabled: boolean;
-+  }>,
-+  loanState: string,
-+  currentPreferences: NotificationPreference[],
-+  transition?: `${string}->${string}`,
-+): ChannelDisableResult[] {
-+  const violations: ChannelDisableResult[] = [];
-+
-+  for (const request of disableRequests) {
-+    // Only check if the request is to disable (newEnabled = false)
-+    if (!request.newEnabled) {
-+      const result = canDisableChannel(
-+        request.event,
-+        request.channel,
-+        loanState,
-+        currentPreferences,
-+        transition,
-+      );
-+
-+      if (!result.allowed) {
-+        violations.push(result);
-+      }
-+    }
-+  }
-+
-+  return violations;
 +}
 
 --- a/backend/tests/unit/notification-channel-rules.test.ts
 +++ b/backend/tests/unit/notification-channel-rules.test.ts
-@@ -0,0 +1,452 @@
-+// ---------------------------------------------------------------------------
-+// Notification Channel Rules Tests
-+// ---------------------------------------------------------------------------
+@@ -0,0 +1,81 @@
++import { describe, expect, it } from "vitest";
++import type { NotificationChannel } from "../../src/models/types.js";
++import { validateNotificationChannelChange } from "../../src/rules/notification-channel-rules.js";
 +
-+import { describe, it, expect } from "vitest";
-+import {
-+  canDisableChannel,
-+  validateChannelDisables,
-+} from "../../src/rules/notification-channel-rules.js";
-+import type {
-+  NotificationEvent,
-+  NotificationChannel,
-+  NotificationPreference,
-+} from "../../src/models/types.js";
++function preference(channel: NotificationChannel, enabled: boolean) {
++  return { channel, enabled };
++}
 +
-+// Base preference set for testing
-+const basePreferences: NotificationPreference[] = [
-+  {
-+    userId: "user-1",
-+    event: "decline",
-+    channel: "email",
-+    enabled: true,
-+    updatedAt: new Date().toISOString(),
-+    updatedBy: "system",
-+  },
-+  {
-+    userId: "user-1",
-+    event: "decline",
-+    channel: "sms",
-+    enabled: true,
-+    updatedAt: new Date().toISOString(),
-+    updatedBy: "system",
-+  },
-+  {
-+    userId: "user-1",
-+    event: "approval",
-+    channel: "email",
-+    enabled: true,
-+    updatedAt: new Date().toISOString(),
-+    updatedBy: "system",
-+  },
-+  {
-+    userId: "user-1",
-+    event: "approval",
-+    channel: "sms",
-+    enabled: true,
-+    updatedAt: new Date().toISOString(),
-+    updatedBy: "system",
-+  },
-+];
-+
-+describe("Notification Channel Rules", () => {
-+  describe("LEGAL-218: California Decline SMS Restriction", () => {
-+    // HARD NEGATIVE: California decline SMS disable when email disabled
-+    // This looks like a normal toggle but actually violates LEGAL-218
-+    it("rejects SMS disable for decline on CA when email is disabled", () => {
-+      const caPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" && p.channel === "sms" ? true : false,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "decline",
-+        "sms",
-+        "CA",
-+        caPreferences,
-+      );
-+
-+      expect(result.allowed).toBe(false);
-+      expect(result.reason).toContain("LEGAL-218");
-+      expect(result.reason).toContain("California");
++describe("notification channel rules", () => {
++  it("allows enabling a channel for a mandatory event", () => {
++    // Happy path: turning a channel on is always safe, even for mandatory events.
++    const result = validateNotificationChannelChange({
++      event: "approval",
++      channel: "sms",
++      enabled: true,
++      currentPreferences: [preference("email", false), preference("sms", false)],
++      fromState: "decision",
++      toState: "finalized",
 +    });
 +
-+    // FALSE POSITIVE: Disabling SMS decline on CA is OK if email is enabled
-+    // This looks like violation but is actually correct.
-+    it("allows SMS disable for decline on CA when email is enabled", () => {
-+      const caPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" ? p.channel === "email" : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "decline",
-+        "sms",
-+        "CA",
-+        caPreferences,
-+      );
-+
-+      expect(result.allowed).toBe(true);
-+      expect(result.reason).toContain("disabled");
-+    });
-+
-+    // HAPPY PATH: Non-CA states have no decline SMS restriction
-+    it("allows SMS disable for decline on non-CA states", () => {
-+      const nyPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" ? p.channel === "sms" : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "decline",
-+        "sms",
-+        "NY",
-+        nyPreferences,
-+      );
-+
-+      expect(result.allowed).toBe(true);
-+    });
-+
-+    // FALSE POSITIVE: Email disable on CA is OK (SMS is fallback for decline)
-+    // This looks like violation but is actually correct because SMS remains.
-+    it("allows email disable for decline on CA if SMS is enabled", () => {
-+      const caPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" ? p.channel === "sms" : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "decline",
-+        "email",
-+        "CA",
-+        caPreferences,
-+      );
-+
-+      expect(result.allowed).toBe(true);
-+    });
-+
-+    // BOUNDARY: CA state check is case-insensitive
-+    it("handles California state code case-insensitively", () => {
-+      const caPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" ? p.channel === "email" : true,
-+      }));
-+
-+      // Test with lowercase "ca"
-+      const resultLower = canDisableChannel(
-+        "decline",
-+        "sms",
-+        "ca",
-+        caPreferences,
-+      );
-+      expect(resultLower.allowed).toBe(true);
-+
-+      // Test with mixed case "Ca"
-+      const resultMixed = canDisableChannel(
-+        "decline",
-+        "sms",
-+        "Ca",
-+        caPreferences,
-+      );
-+      expect(resultMixed.allowed).toBe(true);
++    expect(result).toEqual({
++      allowed: true,
++      rule: "allowed",
++      reason: "Enabling a notification channel is always allowed.",
 +    });
 +  });
 +
-+  describe("Mandatory Event Constraints", () => {
-+    // HARD NEGATIVE: Disabling last enabled channel for mandatory event
-+    // This looks valid but violates mandatory event delivery.
-+    it("rejects channel disable if it's the only enabled channel for mandatory event", () => {
-+      const transition = "decision->finalized"; // "approval" is mandatory here
-+      const prefs = basePreferences.map((p) => ({
-+        ...p,
-+        enabled:
-+          p.event === "approval" && p.channel === "email"
-+            ? true // only email is enabled for approval
-+            : p.event === "approval"
-+              ? false // disable SMS for approval
-+              : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "approval",
-+        "email",
-+        "NY",
-+        prefs,
-+        transition,
-+      );
-+
-+      expect(result.allowed).toBe(false);
-+      expect(result.reason).toContain("mandatory event");
-+      expect(result.reason).toContain("one notification channel");
++  it("blocks disabling the last enabled channel for a mandatory event", () => {
++    // Boundary case: this change removes the exact last remaining delivery path.
++    const result = validateNotificationChannelChange({
++      event: "approval",
++      channel: "email",
++      enabled: false,
++      currentPreferences: [preference("email", true), preference("sms", false)],
++      fromState: "decision",
++      toState: "finalized",
 +    });
 +
-+    // HAPPY PATH: Disabling one channel is OK if other is enabled for mandatory event
-+    it("allows disabling one channel for mandatory event if other is enabled", () => {
-+      const transition = "decision->finalized";
-+      const prefs = basePreferences; // both channels enabled
++    expect(result.allowed).toBe(false);
++    expect(result.rule).toBe("mandatory-event-coverage");
++    expect(result.reason).toBe(
++      "Mandatory event 'approval' must keep at least one notification channel enabled.",
++    );
++  });
 +
-+      const result = canDisableChannel(
-+        "approval",
-+        "sms",
-+        "NY",
-+        prefs,
-+        transition,
-+      );
-+
-+      expect(result.allowed).toBe(true);
++  it("allows disabling sms for a mandatory event when email remains enabled", () => {
++    // False positive: disabling one channel still preserves mandatory coverage.
++    const result = validateNotificationChannelChange({
++      event: "approval",
++      channel: "sms",
++      enabled: false,
++      currentPreferences: [preference("email", true), preference("sms", true)],
++      fromState: "decision",
++      toState: "finalized",
 +    });
 +
-+    // FALSE POSITIVE: Non-mandatory events have no fallback requirement
-+    // Disabling all channels for non-mandatory events is allowed.
-+    it("allows all channels disabled for non-mandatory events", () => {
-+      const prefs = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "approval", // only approval enabled
-+      }));
-+
-+      // "document-request" is not mandatory in all transitions
-+      const result = canDisableChannel(
-+        "document-request",
-+        "sms",
-+        "NY",
-+        prefs,
-+      );
-+
-+      expect(result.allowed).toBe(true);
-+    });
-+
-+    // BOUNDARY: Transition context matters for mandatory event classification
-+    it("treats event as non-mandatory when transition is not mandatory", () => {
-+      // "approval" is mandatory for decision->finalized, but not for all transitions
-+      const transition = "intake->review"; // approval is not mandatory here
-+
-+      const prefs = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "approval" ? p.channel === "email" : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "approval",
-+        "email",
-+        "NY",
-+        prefs,
-+        transition,
-+      );
-+
-+      expect(result.allowed).toBe(true); // Allowed because not mandatory in this transition
++    expect(result).toEqual({
++      allowed: true,
++      rule: "allowed",
++      reason: "Channel change allowed for 'approval'.",
 +    });
 +  });
 +
-+  describe("Event-Specific Rules", () => {
-+    // FALSE POSITIVE: SMS disable on non-decline events on CA is allowed
-+    // This looks like it might violate LEGAL-218 but only applies to decline.
-+    it("allows SMS disable for approval on CA (LEGAL-218 only applies to decline)", () => {
-+      const prefs = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "approval" ? p.channel === "email" : true,
-+      }));
-+
-+      const result = canDisableChannel(
-+        "approval",
-+        "sms",
-+        "CA",
-+        prefs,
-+      );
-+
-+      expect(result.allowed).toBe(true);
++  it("blocks disabling sms for california decline notifications without email fallback", () => {
++    // Hard negative: it looks like a normal SMS toggle, but LEGAL-218 forbids it.
++    const result = validateNotificationChannelChange({
++      event: "decline",
++      channel: "sms",
++      enabled: false,
++      currentPreferences: [preference("email", false), preference("sms", true)],
++      loanState: "ca",
 +    });
 +
-+    // HAPPY PATH: Multiple events can have independent channel states
-+    it("handles multiple different events with different channel states", () => {
-+      const prefs: NotificationPreference[] = [
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "email",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "sms",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "approval",
-+          channel: "email",
-+          enabled: false,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "approval",
-+          channel: "sms",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+      ];
-+
-+      // Can disable SMS for decline (email is fallback)
-+      const declineResult = canDisableChannel("decline", "sms", "CA", prefs);
-+      expect(declineResult.allowed).toBe(true);
-+
-+      // Can disable SMS for approval (only SMS enabled, but approval not mandatory here)
-+      const approvalResult = canDisableChannel("approval", "sms", "CA", prefs);
-+      expect(approvalResult.allowed).toBe(true);
-+    });
-+  });
-+
-+  describe("Batch Validation", () => {
-+    // HAPPY PATH: Bulk disable with no violations
-+    it("validates multiple disables successfully", () => {
-+      const disableRequests = [
-+        { event: "approval" as NotificationEvent, channel: "sms" as NotificationChannel, newEnabled: false },
-+        { event: "decline", channel: "email" as NotificationChannel, newEnabled: false },
-+      ];
-+
-+      const violations = validateChannelDisables(
-+        disableRequests,
-+        "CA",
-+        basePreferences,
-+      );
-+
-+      expect(violations).toHaveLength(0);
-+    });
-+
-+    // HARD NEGATIVE: Batch disable violates CA decline SMS restriction
-+    it("catches LEGAL-218 violation in batch", () => {
-+      const caPreferences = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" && p.channel === "sms" ? true : false,
-+      }));
-+
-+      const disableRequests = [
-+        { event: "decline" as NotificationEvent, channel: "sms" as NotificationChannel, newEnabled: false },
-+      ];
-+
-+      const violations = validateChannelDisables(
-+        disableRequests,
-+        "CA",
-+        caPreferences,
-+      );
-+
-+      expect(violations).toHaveLength(1);
-+      expect(violations[0].reason).toContain("LEGAL-218");
-+    });
-+
-+    // HAPPY PATH: Batch ignores enables (only validates disables)
-+    it("ignores enable requests and only validates disables", () => {
-+      const disableRequests = [
-+        { event: "approval" as NotificationEvent, channel: "sms" as NotificationChannel, newEnabled: true }, // enable (ignored)
-+        { event: "decline", channel: "email" as NotificationChannel, newEnabled: false }, // disable (validated)
-+      ];
-+
-+      const violations = validateChannelDisables(
-+        disableRequests,
-+        "NY",
-+        basePreferences,
-+      );
-+
-+      expect(violations).toHaveLength(0);
-+    });
-+
-+    // FALSE POSITIVE: Multiple violations reported for each violation
-+    it("reports multiple violations when batch has multiple problems", () => {
-+      const prefs = basePreferences.map((p) => ({
-+        ...p,
-+        enabled: p.event === "decline" && p.channel === "email" ? true : false,
-+      }));
-+
-+      const disableRequests = [
-+        { event: "decline" as NotificationEvent, channel: "sms" as NotificationChannel, newEnabled: false }, // violates LEGAL-218
-+        { event: "approval", channel: "email" as NotificationChannel, newEnabled: false }, // might violate mandatory
-+      ];
-+
-+      const violations = validateChannelDisables(
-+        disableRequests,
-+        "CA",
-+        prefs,
-+      );
-+
-+      expect(violations.length).toBeGreaterThan(0);
-+    });
-+  });
-+
-+  describe("Edge Cases and Fallback Logic", () => {
-+    // BOUNDARY: Empty preferences set
-+    it("handles empty preference set", () => {
-+      const result = canDisableChannel("decline", "sms", "CA", []);
-+
-+      expect(result.allowed).toBe(false);
-+      expect(result.reason).toContain("LEGAL-218");
-+    });
-+
-+    // BOUNDARY: Preference exists but with enabled=false
-+    it("treats disabled preferences as unavailable fallback", () => {
-+      const prefs: NotificationPreference[] = [
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "email",
-+          enabled: false, // email is disabled
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "sms",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+      ];
-+
-+      const result = canDisableChannel("decline", "sms", "CA", prefs);
-+
-+      expect(result.allowed).toBe(false);
-+      expect(result.reason).toContain("LEGAL-218");
-+    });
-+
-+    // HAPPY PATH: Preference for different event doesn't interfere
-+    it("ignores preferences for different events", () => {
-+      const prefs: NotificationPreference[] = [
-+        {
-+          userId: "user-1",
-+          event: "approval", // different event
-+          channel: "email",
-+          enabled: false,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "email",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+        {
-+          userId: "user-1",
-+          event: "decline",
-+          channel: "sms",
-+          enabled: true,
-+          updatedAt: new Date().toISOString(),
-+          updatedBy: "system",
-+        },
-+      ];
-+
-+      const result = canDisableChannel("decline", "sms", "CA", prefs);
-+
-+      expect(result.allowed).toBe(true);
-+    });
++    expect(result.allowed).toBe(false);
++    expect(result.rule).toBe("ca-decline-sms-fallback");
++    expect(result.ticket).toBe("LEGAL-218");
++    expect(result.reason).toBe(
++      "LEGAL-218: California decline notifications may disable SMS only when email remains enabled as a fallback.",
++    );
 +  });
 +});

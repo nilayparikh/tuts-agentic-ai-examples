@@ -1,13 +1,95 @@
 --- a/backend/src/routes/notifications.ts
 +++ b/backend/src/routes/notifications.ts
-@@ -55,26 +55,30 @@
+@@ -22,12 +22,82 @@
+ import type {
+   SessionContext,
+   NotificationPreference,
++  NotificationEvent,
++  NotificationChannel,
+ } from "../models/types.js";
+ 
+ export const notificationRoutes = Router();
++
++const STANDARD_NOTIFICATION_EVENTS: NotificationEvent[] = [
++  "approval",
++  "decline",
++  "document-request",
++  "manual-review-escalation",
++];
+ 
+ function firstParam(value: string | string[]): string {
+   return Array.isArray(value) ? value[0] : value;
++}
++
++function assertCanWriteNotificationPreferences(
++  session: SessionContext,
++  targetUserId: string,
++): void {
++  if (session.delegatedFor) {
++    throw new Error(
++      "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
++    );
++  }
++
++  if (session.actor.id !== targetUserId) {
++    throw new Error(
++      "FORBIDDEN: Users can only modify their own notification preferences.",
++    );
++  }
++
++  if (!hasPermission(session.actor.role, "notification-pref:write")) {
++    throw new Error(
++      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
++    );
++  }
++}
++
++function setPreferenceWithAudit(
++  session: SessionContext,
++  pref: NotificationPreference,
++): NotificationPreference {
++  const previous = prefRepo.findPreference(pref.userId, pref.event, pref.channel);
++
++  prefRepo.setPreference(pref);
++  auditAction(
++    session,
++    "preference.updated",
++    previous ?? null,
++    pref,
++    "notification-routes",
++  );
++
++  return pref;
++}
++
++function setChannelPreferences(
++  session: SessionContext,
++  userId: string,
++  channel: NotificationChannel,
++  enabled: boolean,
++): NotificationPreference[] {
++  const now = new Date().toISOString();
++
++  return STANDARD_NOTIFICATION_EVENTS.map((event) =>
++    setPreferenceWithAudit(session, {
++      userId,
++      event,
++      channel,
++      enabled,
++      updatedAt: now,
++      updatedBy: session.actor.id,
++    }),
++  );
+ }
+ 
+ /** GET /api/notifications/preferences/:userId — get preferences for a user. */
+@@ -55,47 +125,18 @@
    (req, res, next) => {
      try {
        const session = req.session as SessionContext;
-+      const { userId, event, channel, enabled } = req.body;
- 
-       // Block writes in delegated sessions
-       if (session.delegatedFor) {
+-
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
 -        res.status(403).json({
 -          error: "Delegated sessions cannot modify notification preferences.",
 -        });
@@ -15,106 +97,189 @@
 -      }
 -
 -      // Additional permission check
-+        throw new Error(
-+          "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-+        );
-+      }
-+
-+      // Enforce owner-only writes
-+      if (session.actor.id !== userId) {
-+        throw new Error(
-+          "FORBIDDEN: Users can only modify their own notification preferences.",
-+        );
-+      }
-+
-+      // Permission check
-       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
 -        res.status(403).json({
 -          error: `Role '${session.actor.role}' cannot modify notification preferences.`,
 -        });
 -        return;
 -      }
 -
--      const { userId, event, channel, enabled } = req.body;
-+        throw new Error(
-+          `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-+        );
-+      }
+       const { userId, event, channel, enabled } = req.body;
++      assertCanWriteNotificationPreferences(session, userId);
 +
        const now = new Date().toISOString();
 -
-       const previous = prefRepo.findPreference(userId, event, channel);
+-      const previous = prefRepo.findPreference(userId, event, channel);
+-
+-      const pref: NotificationPreference = {
++      const pref = setPreferenceWithAudit(session, {
+         userId,
+         event,
+         channel,
+         enabled,
+         updatedAt: now,
+         updatedBy: session.actor.id,
+-      };
+-
+-      prefRepo.setPreference(pref);
+-
+-      // Audit the preference change
+-      auditAction(
+-        session,
+-        "preference.updated",
+-        previous ?? null,
+-        pref,
+-        "notification-routes",
+-      );
++      });
  
-       const pref: NotificationPreference = {
-@@ -122,26 +126,23 @@
- 
-       // Block writes in delegated sessions
-       if (session.delegatedFor) {
+       res.json(pref);
+     } catch (err) {
+@@ -119,66 +160,15 @@
+     try {
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+-
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
 -        res.status(403).json({
 -          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
 -        });
 -        return;
-+        throw new Error(
-+          "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-+        );
-       }
- 
-       // Enforce owner-only writes
-       if (session.actor.id !== targetUserId) {
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
 -        res.status(403).json({
 -          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
 -        });
 -        return;
-+        throw new Error(
-+          "FORBIDDEN: Users can only modify their own notification preferences.",
-+        );
-       }
- 
-       // Permission check
-       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
 -        res.status(403).json({
 -          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
 -        });
 -        return;
-+        throw new Error(
-+          `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-+        );
-       }
+-      }
++      assertCanWriteNotificationPreferences(session, targetUserId);
  
        const { enabled } = req.body;
-@@ -205,26 +206,23 @@
+-      const now = new Date().toISOString();
+-      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+-        "approval",
+-        "decline",
+-        "document-request",
+-        "manual-review-escalation",
+-      ];
+-
+-      const updates: NotificationPreference[] = [];
+-
+-      for (const event of events) {
+-        const previous = prefRepo.findPreference(targetUserId, event, "email");
+-
+-        const pref: NotificationPreference = {
+-          userId: targetUserId,
+-          event,
+-          channel: "email",
+-          enabled,
+-          updatedAt: now,
+-          updatedBy: session.actor.id,
+-        };
+-
+-        prefRepo.setPreference(pref);
+-        updates.push(pref);
+-
+-        // Audit each preference change
+-        auditAction(
+-          session,
+-          "preference.updated",
+-          previous ?? null,
+-          pref,
+-          "notification-routes",
+-        );
+-      }
++      const updates = setChannelPreferences(
++        session,
++        targetUserId,
++        "email",
++        enabled,
++      );
  
-       // Block writes in delegated sessions
-       if (session.delegatedFor) {
+       res.json(updates);
+     } catch (err) {
+@@ -202,66 +192,15 @@
+     try {
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+-
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
 -        res.status(403).json({
 -          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
 -        });
 -        return;
-+        throw new Error(
-+          "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
-+        );
-       }
- 
-       // Enforce owner-only writes
-       if (session.actor.id !== targetUserId) {
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
 -        res.status(403).json({
 -          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
 -        });
 -        return;
-+        throw new Error(
-+          "FORBIDDEN: Users can only modify their own notification preferences.",
-+        );
-       }
- 
-       // Permission check
-       if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
 -        res.status(403).json({
 -          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
 -        });
 -        return;
-+        throw new Error(
-+          `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
-+        );
-       }
+-      }
++      assertCanWriteNotificationPreferences(session, targetUserId);
  
        const { enabled } = req.body;
+-      const now = new Date().toISOString();
+-      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+-        "approval",
+-        "decline",
+-        "document-request",
+-        "manual-review-escalation",
+-      ];
+-
+-      const updates: NotificationPreference[] = [];
+-
+-      for (const event of events) {
+-        const previous = prefRepo.findPreference(targetUserId, event, "sms");
+-
+-        const pref: NotificationPreference = {
+-          userId: targetUserId,
+-          event,
+-          channel: "sms",
+-          enabled,
+-          updatedAt: now,
+-          updatedBy: session.actor.id,
+-        };
+-
+-        prefRepo.setPreference(pref);
+-        updates.push(pref);
+-
+-        // Audit each preference change
+-        auditAction(
+-          session,
+-          "preference.updated",
+-          previous ?? null,
+-          pref,
+-          "notification-routes",
+-        );
+-      }
++      const updates = setChannelPreferences(
++        session,
++        targetUserId,
++        "sms",
++        enabled,
++      );
+ 
+       res.json(updates);
+     } catch (err) {

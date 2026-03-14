@@ -29,8 +29,10 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
+GENERATED_BASELINE_PATH = LESSON / ".github" / "instructions" / "portable-baseline.instructions.md"
+GENERATED_NOTES_PATH = LESSON / "docs" / "surface-portability-notes.md"
 TEXT_EXTENSIONS = {
-  ".css", ".html", ".js", ".json", ".md", ".mjs", ".ts", ".tsx", ".txt", ".yaml", ".yml",
+  ".css", ".html", ".js", ".json", ".md", ".mjs", ".py", ".ts", ".tsx", ".txt", ".yaml", ".yml",
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
@@ -82,11 +84,11 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 
 
 def _reset_output_dirs() -> None:
+  preserved_expected = {
+    path.name: path.read_text(encoding="utf-8")
+    for path in CHANGE_DIR.glob("expected-*.json")
+  }
   for directory in (LOG_DIR, CHANGE_DIR):
-    preserved_expected = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in CHANGE_DIR.glob("expected-*.json")
-    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)
@@ -96,6 +98,9 @@ def _reset_output_dirs() -> None:
 
 def _reset_demo_workspace() -> Path:
   clean(LESSON)
+  for generated_path in (GENERATED_BASELINE_PATH, GENERATED_NOTES_PATH):
+    if generated_path.exists():
+      generated_path.unlink()
   src_dir = LESSON / "src"
   shutil.copytree(APP_SOURCE, src_dir, ignore=shutil.ignore_patterns("node_modules", ".env", "*.db", "data"))
   return src_dir

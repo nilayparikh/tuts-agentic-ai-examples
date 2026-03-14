@@ -1,12 +1,10 @@
 --- a/.github/examples/drifted/copilot-instructions.md
 +++ b/.github/examples/drifted/copilot-instructions.md
-@@ -1,13 +1,13 @@
+@@ -1,21 +1,21 @@
  # Loan Workbench — Project Context
  
--> **This file shows the corrected version of the drifted example.**
--> It now follows the clean example's structure and keeps references valid.
-+> **This file demonstrates the repaired drifted example.**
-+> It follows the clean example's conventions while keeping lesson references valid.
+-> **This file intentionally contains drift for Lesson 08.**
++> **This file shows the repaired version of the Lesson 08 drifted example.**
  
  ## Project
  
@@ -18,39 +16,54 @@
  
  ## Tech Stack
  
-@@ -31,25 +31,26 @@
- Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
- Service -> respond.
+-- Runtime: Node.js 18 LTS
++- Runtime: Node.js 20 LTS
+ - Language: TypeScript 5.x (strict mode)
+ - Framework: Express 4
+ - Tests: Vitest
+ - Modules: ESM only
+-- Logging: structured JSON via winston
++- Logging: structured JSON via pino
+ - Database: Prisma ORM
+ - Deploy: Azure Container Apps
  
--Audit events are recorded before persistence. Mutating operations should use
--structured logging only; do not use `console.log()`.
-+Audit events are recorded BEFORE persistence. If audit logging fails, the write
-+does NOT proceed.
+@@ -23,15 +23,14 @@
+ 
+ Three-layer separation:
+ 
+-1. **Routes** — HTTP handling, parameter extraction, delegation
+-2. **Rules** — pure business logic, no I/O
+-3. **Services** — persistence, external integrations, audit
++1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
++2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
++3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
+ 
+-Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
+-Service -> respond.
++Request flow: Route -> authenticate -> authorize -> validate -> Rule -> Service -> respond.
+ 
+-Audit events are recorded before persistence. Use `console.log()` for quick
+-debugging, but prefer structured logging in long-lived services.
++Audit events are recorded BEFORE persistence — if logging fails, the write
++does NOT proceed (fail-closed semantics).
  
  ## Coding Conventions
  
- - `const` over `let`; never `var`
- - All route handlers are `async`
+@@ -40,15 +39,8 @@
  - All errors return structured JSON: `{ error: string, code: string }`
--- No stack traces in error responses
--- Feature flags use 404, not 403
--- Keep global instructions concise; detailed route, notification, and test
--  patterns belong in scoped instructions or dedicated docs
--- Annotate tests with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
-+- No stack traces in error responses (security)
-+- Feature flags use 404 (not found), not 403 (forbidden)
+ - No stack traces in error responses
+ - Feature flags use 404, not 403
+-- Shared helpers live in `app/backend/src/helpers/`
+-- Keep global instructions concise, but include this example route snippet:
+-
+-```ts
+-app.post('/notifications', async (req, res) => {
+-  console.log('saving notification preferences');
+-  res.status(202).json({ ok: true });
+-});
+-```
 +- Structured JSON logging only — never `console.log()`
-+- Keep global instructions concise; move route, notification, and test
-+  implementation details into scoped instructions or dedicated docs
-+- Tests annotated with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
++- Keep global instructions concise; route-level examples belong in scoped instruction files
  
  ## References
  
- - Canonical project context: see `.github/copilot-instructions.md`
--- Clean example: see `.github/examples/clean/copilot-instructions.md`
- - Maintenance cadence: see `/docs/maintenance-schedule.md`
- - Lesson scope and expected output: see `/docs/operating-model-example.md`
--- Context audit: see `.github/scripts/audit_context.py`
-+- Context audit script: see `.github/scripts/audit_context.py`
- - Stale reference detector: see `.github/scripts/detect_stale_refs.py`
-+- Healthy reference example: see `.github/examples/clean/copilot-instructions.md`

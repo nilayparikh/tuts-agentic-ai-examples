@@ -1,7 +1,6 @@
 # Loan Workbench — Project Context
 
-> **This file demonstrates the repaired drifted example.**
-> It follows the clean example's conventions while keeping lesson references valid.
+> **This file shows the repaired version of the Lesson 08 drifted example.**
 
 ## Project
 
@@ -24,27 +23,24 @@ role-based access, and audit-first persistence.
 
 Three-layer separation:
 
-1. **Routes** — HTTP handling, parameter extraction, delegation
-2. **Rules** — pure business logic, no I/O
-3. **Services** — persistence, external integrations, audit
+1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
+2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
+3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
 
-Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
-Service -> respond.
+Request flow: Route -> authenticate -> authorize -> validate -> Rule -> Service -> respond.
 
-Audit events are recorded BEFORE persistence. If audit logging fails, the write
-does NOT proceed.
+Audit events are recorded BEFORE persistence — if logging fails, the write
+does NOT proceed (fail-closed semantics).
 
 ## Coding Conventions
 
 - `const` over `let`; never `var`
 - All route handlers are `async`
 - All errors return structured JSON: `{ error: string, code: string }`
-- No stack traces in error responses (security)
-- Feature flags use 404 (not found), not 403 (forbidden)
+- No stack traces in error responses
+- Feature flags use 404, not 403
 - Structured JSON logging only — never `console.log()`
-- Keep global instructions concise; move route, notification, and test
-  implementation details into scoped instructions or dedicated docs
-- Tests annotated with `// FALSE POSITIVE` or `// HARD NEGATIVE` where applicable
+- Keep global instructions concise; route-level examples belong in scoped instruction files
 
 ## References
 

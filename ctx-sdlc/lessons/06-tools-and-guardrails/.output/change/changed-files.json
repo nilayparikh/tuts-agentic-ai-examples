@@ -1,6 +1,7 @@
 {
   "added": [
-    ".github/hooks/import-validation.json"
+    ".github/hooks/import-validation.json",
+    ".github/scripts/validate_imports.py"
   ],
   "modified": [],
   "deleted": []

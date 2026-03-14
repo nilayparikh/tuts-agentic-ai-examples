@@ -1,0 +1,269 @@
+--- a/backend/src/routes/notifications.ts
++++ b/backend/src/routes/notifications.ts
+@@ -17,6 +17,7 @@
+ import { requireRole } from "../middleware/auth.js";
+ import { validateBody } from "../middleware/request-validator.js";
+ import { hasPermission } from "../rules/role-permissions.js";
++import { assertPreferenceEventChannelAllowed } from "../rules/preference-event-channel-validator.js";
+ import { auditAction } from "../services/audit-service.js";
+ import * as prefRepo from "../models/preference-repository.js";
+ import type {
+@@ -74,8 +75,16 @@
+ 
+       const { userId, event, channel, enabled } = req.body;
+       const now = new Date().toISOString();
++      const existingPreferences = prefRepo.findPreferencesForUser(userId);
+ 
+       const previous = prefRepo.findPreference(userId, event, channel);
++
++      assertPreferenceEventChannelAllowed({
++        event,
++        channel,
++        enabled,
++        existingPreferences,
++      });
+ 
+       const pref: NotificationPreference = {
+         userId,
+
+--- a/backend/src/rules/preference-event-channel-validator.ts
++++ b/backend/src/rules/preference-event-channel-validator.ts
+@@ -0,0 +1,124 @@
++// ---------------------------------------------------------------------------
++// Preference Event-Channel Validator
++// ---------------------------------------------------------------------------
++// Validates whether a notification preference update leaves an allowed
++// event/channel combination in place.
++//
++// IMPORTANT — MANDATORY EVENTS:
++//   Events reused from mandatory-events.ts must keep at least one delivery
++//   channel enabled. Disabling the last channel would make required notices
++//   impossible to send.
++//
++// IMPORTANT — LEGAL-218:
++//   California decline notifications cannot disable SMS unless email remains
++//   enabled as a fallback for that event.
++// ---------------------------------------------------------------------------
++
++import { MANDATORY_EVENTS } from "./mandatory-events.js";
++import type {
++  NotificationChannel,
++  NotificationEvent,
++  NotificationPreference,
++} from "../models/types.js";
++
++const NOTIFICATION_CHANNELS: NotificationChannel[] = ["email", "sms"];
++
++const MANDATORY_NOTIFICATION_EVENTS = new Set<NotificationEvent>(
++  Object.values(MANDATORY_EVENTS)
++    .flatMap((events) => events ?? [])
++    .filter(
++      (event, index, events): event is NotificationEvent =>
++        events.indexOf(event) === index,
++    ),
++);
++
++type EventChannelState = Record<NotificationChannel, boolean>;
++
++export interface PreferenceEventChannelValidationInput {
++  event: NotificationEvent;
++  channel: NotificationChannel;
++  enabled: boolean;
++  existingPreferences: NotificationPreference[];
++  loanState?: string;
++}
++
++export interface PreferenceEventChannelViolation {
++  rule: string;
++  message: string;
++}
++
++function getNextEventChannelState(
++  input: PreferenceEventChannelValidationInput,
++): EventChannelState {
++  const nextState: EventChannelState = {
++    email: false,
++    sms: false,
++  };
++
++  for (const pref of input.existingPreferences) {
++    if (pref.event !== input.event) {
++      continue;
++    }
++
++    nextState[pref.channel] = pref.enabled;
++  }
++
++  nextState[input.channel] = input.enabled;
++  return nextState;
++}
++
++function isCaliforniaRestrictedContext(loanState?: string): boolean {
++  // Preference writes are global user settings, so the route-level validator
++  // must conservatively keep California-safe combinations when no loan context
++  // is available.
++  if (loanState === undefined) {
++    return true;
++  }
++
++  return loanState.toUpperCase() === "CA";
++}
++
++export function validatePreferenceEventChannel(
++  input: PreferenceEventChannelValidationInput,
++): PreferenceEventChannelViolation[] {
++  const violations: PreferenceEventChannelViolation[] = [];
++  const nextState = getNextEventChannelState(input);
++
++  if (
++    MANDATORY_NOTIFICATION_EVENTS.has(input.event) &&
++    NOTIFICATION_CHANNELS.every((channel) => !nextState[channel])
++  ) {
++    violations.push({
++      rule: "mandatory-event-channel",
++      message: `Mandatory event '${input.event}' must keep at least one notification channel enabled.`,
++    });
++  }
++
++  if (
++    isCaliforniaRestrictedContext(input.loanState) &&
++    input.event === "decline" &&
++    input.channel === "sms" &&
++    !input.enabled &&
++    !nextState.email
++  ) {
++    violations.push({
++      rule: "LEGAL-218",
++      message:
++        "LEGAL-218: California decline notifications cannot disable SMS unless email remains enabled.",
++    });
++  }
++
++  return violations;
++}
++
++export function assertPreferenceEventChannelAllowed(
++  input: PreferenceEventChannelValidationInput,
++): void {
++  const violations = validatePreferenceEventChannel(input);
++
++  if (violations.length > 0) {
++    throw new Error(
++      `VALIDATION: ${violations.map((violation) => violation.message).join("; ")}`,
++    );
++  }
++}
+
+--- a/backend/tests/unit/preference-event-channel-validator.test.ts
++++ b/backend/tests/unit/preference-event-channel-validator.test.ts
+@@ -0,0 +1,110 @@
++// ---------------------------------------------------------------------------
++// Preference Event-Channel Validator Tests
++// ---------------------------------------------------------------------------
++
++import { describe, it, expect } from "vitest";
++import {
++  assertPreferenceEventChannelAllowed,
++  validatePreferenceEventChannel,
++} from "../../src/rules/preference-event-channel-validator.js";
++import type { NotificationPreference } from "../../src/models/types.js";
++
++function buildPreference(
++  overrides: Partial<NotificationPreference>,
++): NotificationPreference {
++  return {
++    userId: "u-1",
++    event: "approval",
++    channel: "email",
++    enabled: true,
++    updatedAt: "2026-03-14T00:00:00.000Z",
++    updatedBy: "u-1",
++    ...overrides,
++  };
++}
++
++describe("Preference Event-Channel Validator", () => {
++  it("allows mandatory events when another channel remains enabled", () => {
++    const existingPreferences: NotificationPreference[] = [
++      buildPreference({ event: "document-request", channel: "email", enabled: true }),
++      buildPreference({ event: "document-request", channel: "sms", enabled: true }),
++    ];
++
++    expect(
++      validatePreferenceEventChannel({
++        event: "document-request",
++        channel: "sms",
++        enabled: false,
++        existingPreferences,
++      }),
++    ).toEqual([]);
++  });
++
++  it("rejects disabling the last channel for a mandatory event", () => {
++    const existingPreferences: NotificationPreference[] = [
++      buildPreference({ event: "manual-review-escalation", channel: "email", enabled: false }),
++      buildPreference({ event: "manual-review-escalation", channel: "sms", enabled: true }),
++    ];
++
++    const violations = validatePreferenceEventChannel({
++      event: "manual-review-escalation",
++      channel: "sms",
++      enabled: false,
++      existingPreferences,
++    });
++
++    expect(violations).toHaveLength(1);
++    expect(violations[0].rule).toBe("mandatory-event-channel");
++  });
++
++  it("avoids a LEGAL-218 false positive for non-California declines", () => {
++    const existingPreferences: NotificationPreference[] = [
++      buildPreference({ event: "decline", channel: "email", enabled: false }),
++      buildPreference({ event: "decline", channel: "sms", enabled: true }),
++    ];
++
++    expect(
++      validatePreferenceEventChannel({
++        event: "decline",
++        channel: "sms",
++        enabled: false,
++        existingPreferences,
++        loanState: "NY",
++      }),
++    ).toEqual([]);
++  });
++
++  it("rejects California decline SMS disable without email fallback", () => {
++    const existingPreferences: NotificationPreference[] = [
++      buildPreference({ event: "decline", channel: "email", enabled: false }),
++      buildPreference({ event: "decline", channel: "sms", enabled: true }),
++    ];
++
++    expect(() =>
++      assertPreferenceEventChannelAllowed({
++        event: "decline",
++        channel: "sms",
++        enabled: false,
++        existingPreferences,
++        loanState: "CA",
++      }),
++    ).toThrow("LEGAL-218");
++  });
++
++  it("allows California decline SMS disable when email fallback remains enabled", () => {
++    const existingPreferences: NotificationPreference[] = [
++      buildPreference({ event: "decline", channel: "email", enabled: true }),
++      buildPreference({ event: "decline", channel: "sms", enabled: true }),
++    ];
++
++    expect(
++      validatePreferenceEventChannel({
++        event: "decline",
++        channel: "sms",
++        enabled: false,
++        existingPreferences,
++        loanState: "CA",
++      }),
++    ).toEqual([]);
++  });
++});

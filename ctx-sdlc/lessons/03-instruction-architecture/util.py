@@ -36,6 +36,7 @@ TEXT_EXTENSIONS = {
   ".json",
   ".md",
   ".mjs",
+  ".py",
   ".ts",
   ".tsx",
   ".txt",

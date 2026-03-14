@@ -12,7 +12,7 @@ It does not assess the lesson overall.
 Inspect the lesson's context-maintenance artifacts before answering. Discover the relevant project instructions, audit scripts, clean and drifted examples, and maintenance docs that exist here rather than assuming a fixed file list. Then fix the drifted example at .github/examples/drifted/copilot-instructions.md by resolving all drift issues you find. Specifically: update stale technology references (Node.js version, logging library), remove contradictory rules (console.log vs structured logging), fix dead file path references (deleted helpers directory), remove over-specified inline code blocks that belong in scoped instructions, and align the drifted file with the clean example's conventions for accuracy and conciseness. Apply the fixes directly in the file. Do not run shell commands and do not use SQL.
 ```
 
-The assessment run uses the model from `lessons/_common/assessment-config.json`.
+The rerun used `gpt-5.4`.
 
 ## Assessment Scope
 
@@ -27,24 +27,50 @@ Assessment compares actual output against gold-standard expectations:
 - `.output/change/expected-files.json` — expected file: `.github/examples/drifted/copilot-instructions.md` (modified)
 - `.output/change/expected-patterns.json` — required patterns in patch: Node.js 20, pino, remove console.log, remove helpers
 
-The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report.
-
-## Assessment Criteria
-
-| Criterion | Source |
-| --- | --- |
-| Drifted file modified | `expected-files.json` |
-| Node.js version updated (18 → 20) | `expected-patterns.json` |
-| Logging library updated (winston → pino) | `expected-patterns.json` |
-| console.log contradiction resolved | `expected-patterns.json` |
-| Dead helpers reference removed | `expected-patterns.json` |
-| No shell commands executed | Prompt constraint |
-| No SQL tools used | Prompt constraint |
-
 ## Captured Result
 
-Pending re-run with the updated implementation-oriented prompt. Previous assessment was for a read-only operating-model analysis demo that has been replaced.
+Artifacts used for this assessment:
+
+- `.output/logs/prompt.txt`
+- `.output/logs/command.txt`
+- `.output/logs/session.md`
+- `.output/logs/copilot.log`
+- `.output/change/demo.patch`
+- `.output/change/changed-files.json`
+- `.output/change/comparison.md`
+
+The rerun completed and the comparison report shows:
+
+- `Files match: True`
+- `Patterns match: False`
+
+The file-manifest match confirms that the run targeted the correct file surface:
+
+- modified `.github/examples/drifted/copilot-instructions.md`
+
+But the pattern comparison only confirmed one of the required drift fixes:
+
+- matched: console.log contradiction resolution
+- missing: explicit Node.js 20 update
+- missing: explicit `pino` logging update
+- missing: dead helpers-directory reference removal
 
 ## Verdict
 
-Pending re-run.
+Assessment result for this prompt:
+
+- Standards followed: Partially
+- Constraints followed: Partially
+- Required context applied: Partially
+
+Overall judgment:
+
+- The rerun did operate on the correct drifted instruction file.
+- It did not show evidence that the most important stale-fact fixes were actually applied.
+- That makes the run incomplete for the lesson objective even though the file target itself was correct.
+
+## Final Assessment
+
+For this prompt, the correct assessment is:
+
+> The run should not be considered fully successful. It modified the correct file, but the captured comparison does not show the required stale technology and dead-reference fixes that define the lesson's drift-repair objective.

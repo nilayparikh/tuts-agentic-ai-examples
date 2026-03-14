@@ -29,8 +29,70 @@ LOG_DIR = OUTPUT_DIR / "logs"
 CHANGE_DIR = OUTPUT_DIR / "change"
 KEPT_LOG_FILES = {"command.txt", "prompt.txt", "session.md", "copilot.log"}
 RUNNER_LOG_PATH = LOG_DIR / "runner.log"
+DRIFTED_EXAMPLE_PATH = LESSON / ".github" / "examples" / "drifted" / "copilot-instructions.md"
+DRIFTED_EXAMPLE_BASELINE = """# Loan Workbench — Project Context
+
+> **This file intentionally contains drift for Lesson 08.**
+
+## Project
+
+Loan Workbench API — TypeScript + Express REST service managing loan
+application lifecycles with regulatory compliance, role-based access, and
+audit-first persistence.
+
+## Tech Stack
+
+- Runtime: Node.js 18 LTS
+- Language: TypeScript 5.x (strict mode)
+- Framework: Express 4
+- Tests: Vitest
+- Modules: ESM only
+- Logging: structured JSON via winston
+- Database: Prisma ORM
+- Deploy: Azure Container Apps
+
+## Architecture
+
+Three-layer separation:
+
+1. **Routes** — HTTP handling, parameter extraction, delegation
+2. **Rules** — pure business logic, no I/O
+3. **Services** — persistence, external integrations, audit
+
+Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
+Service -> respond.
+
+Audit events are recorded before persistence. Use `console.log()` for quick
+debugging, but prefer structured logging in long-lived services.
+
+## Coding Conventions
+
+- `const` over `let`; never `var`
+- All route handlers are `async`
+- All errors return structured JSON: `{ error: string, code: string }`
+- No stack traces in error responses
+- Feature flags use 404, not 403
+- Shared helpers live in `app/backend/src/helpers/`
+- Keep global instructions concise, but include this example route snippet:
+
+```ts
+app.post('/notifications', async (req, res) => {
+  console.log('saving notification preferences');
+  res.status(202).json({ ok: true });
+});
+```
+
+## References
+
+- Canonical project context: see `.github/copilot-instructions.md`
+- Maintenance cadence: see `/docs/maintenance-schedule.md`
+- Lesson scope and expected output: see `/docs/operating-model-example.md`
+- Context audit script: see `.github/scripts/audit_context.py`
+- Stale reference detector: see `.github/scripts/detect_stale_refs.py`
+- Healthy reference example: see `.github/examples/clean/copilot-instructions.md`
+"""
 TEXT_EXTENSIONS = {
-  ".css", ".html", ".js", ".json", ".md", ".mjs", ".ts", ".tsx", ".txt", ".yaml", ".yml",
+  ".css", ".html", ".js", ".json", ".md", ".mjs", ".py", ".ts", ".tsx", ".txt", ".yaml", ".yml",
 }
 
 sys.path.insert(0, str(LESSON.parent / "_common"))
@@ -82,11 +144,11 @@ def _snapshot_tree(root: Path) -> dict[str, str]:
 
 
 def _reset_output_dirs() -> None:
+  preserved_expected = {
+    path.name: path.read_text(encoding="utf-8")
+    for path in CHANGE_DIR.glob("expected-*.json")
+  }
   for directory in (LOG_DIR, CHANGE_DIR):
-    preserved_expected = {
-        path.name: path.read_text(encoding="utf-8")
-        for path in CHANGE_DIR.glob("expected-*.json")
-    }
     if directory.exists():
       shutil.rmtree(directory)
     directory.mkdir(parents=True, exist_ok=True)
@@ -96,6 +158,7 @@ def _reset_output_dirs() -> None:
 
 def _reset_demo_workspace() -> Path:
   clean(LESSON)
+  _write_text_atomic(DRIFTED_EXAMPLE_PATH, DRIFTED_EXAMPLE_BASELINE)
   src_dir = LESSON / "src"
   shutil.copytree(APP_SOURCE, src_dir, ignore=shutil.ignore_patterns("node_modules", ".env", "*.db", "data"))
   return src_dir

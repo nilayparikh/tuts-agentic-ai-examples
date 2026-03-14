@@ -1,199 +1,254 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: enforce barrel-file imports for TypeScript code.
+"""PreToolUse hook: enforce barrel-file imports for TypeScript files.
 
-Reads hook JSON from stdin when available and blocks changes that import from
-internal module files when a sibling barrel/index.ts file exists. This keeps
-TypeScript imports pointed at the public index.ts barrel instead of deep paths.
+Reads hook JSON from stdin when present, inspects changed .ts/.tsx files, and
+denies imports that bypass a sibling index.ts barrel to reach into an internal
+module path.
 """
+from __future__ import annotations
+
 import json
 import os
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from typing import Iterable
 
-TS_SUFFIXES = {".ts", ".tsx"}
-EXCLUDED_DIRS = {"dist", "node_modules", ".git"}
-IMPORT_PATTERNS = (
-    re.compile(r"""\bimport\s+(?:type\s+)?[^;"']*?\bfrom\s+["']([^"']+)["']"""),
-    re.compile(r"""\bexport\s+[^;"']*?\bfrom\s+["']([^"']+)["']"""),
-    re.compile(r"""\bimport\(\s*["']([^"']+)["']\s*\)"""),
+IMPORT_PATTERN = re.compile(
+    r"""
+    (?:
+        import\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+)? |
+        export\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+) |
+        import\s*\(
+    )
+    ["'](?P<specifier>[^"']+)["']
+    """,
+    re.VERBOSE,
 )
+PATH_TOKEN_PATTERN = re.compile(
+    r"(?P<path>(?:[A-Za-z]:)?[\\/][^\s\"']+\.(?:ts|tsx)|[A-Za-z0-9_.\\/-]+\.(?:ts|tsx))"
+)
+TS_FILE_SUFFIXES = {".ts", ".tsx"}
+SOURCE_SUFFIXES = (".ts", ".tsx", ".js", ".jsx", ".mts", ".cts", ".mjs", ".cjs")
+BARREL_NAMES = ("index.ts", "index.tsx")
+IGNORED_DIRECTORIES = {"node_modules", "dist", ".git"}
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-def load_hook_payload() -> dict:
-    raw = sys.stdin.read().strip()
-    if not raw:
-        return {}
+def load_hook_payload() -> dict | None:
+    """Read hook JSON from stdin when available."""
+    try:
+        raw = sys.stdin.read()
+    except OSError:
+        return None
+
+    if not raw.strip():
+        return None
 
     try:
-        payload = json.loads(raw)
+        data = json.loads(raw)
     except json.JSONDecodeError:
-        return {}
+        return None
 
-    return payload if isinstance(payload, dict) else {}
+    return data if isinstance(data, dict) else None
 
 
 def is_typescript_file(path: Path) -> bool:
-    return path.suffix in TS_SUFFIXES and not any(part in EXCLUDED_DIRS for part in path.parts)
+    return path.suffix in TS_FILE_SUFFIXES and path.is_file()
 
 
-def normalize_candidate_path(raw_path: str) -> Path:
-    path = Path(raw_path)
-    return path if path.is_absolute() else REPO_ROOT / path
+def normalize_candidate(raw_path: str) -> Path | None:
+    raw_path = raw_path.strip().strip("\"'")
+    if not raw_path:
+        return None
+
+    normalized = raw_path.replace("/", "\\")
+    path = Path(normalized)
+    if not path.is_absolute():
+        path = REPO_ROOT / path
+
+    try:
+        resolved = path.resolve(strict=False)
+    except OSError:
+        return None
+
+    try:
+        resolved.relative_to(REPO_ROOT)
+    except ValueError:
+        return None
+
+    return resolved if is_typescript_file(resolved) else None
 
 
-def collect_candidate_files(payload: dict) -> list[Path]:
-    tool_name = str(payload.get("tool_name", ""))
-    tool_input = payload.get("tool_input", {})
-    paths: list[Path] = []
+def extract_typescript_paths(value: object) -> set[Path]:
+    """Recursively collect .ts/.tsx paths from hook JSON."""
+    matches: set[Path] = set()
 
-    if isinstance(tool_input, dict):
-        files = tool_input.get("files", [])
-        if isinstance(files, list):
-            for file_path in files:
-                if isinstance(file_path, str) and file_path:
-                    paths.append(normalize_candidate_path(file_path))
+    if isinstance(value, str):
+        for token in PATH_TOKEN_PATTERN.findall(value):
+            candidate = normalize_candidate(token)
+            if candidate is not None:
+                matches.add(candidate)
+        return matches
 
-        file_path = tool_input.get("filePath")
-        if isinstance(file_path, str) and file_path:
-            paths.append(normalize_candidate_path(file_path))
+    if isinstance(value, dict):
+        for nested in value.values():
+            matches.update(extract_typescript_paths(nested))
+        return matches
 
-    candidates = [path for path in paths if path.exists() and is_typescript_file(path)]
-    if candidates:
-        return sorted(set(candidates))
+    if isinstance(value, list):
+        for nested in value:
+            matches.update(extract_typescript_paths(nested))
 
-    if tool_name and "commit" not in tool_name.lower():
-        return []
-
-    return sorted(
-        path
-        for path in (REPO_ROOT / "src").rglob("*")
-        if path.is_file() and is_typescript_file(path) and "src" in path.parts
-    )
+    return matches
 
 
-def extract_imports(source: str) -> list[str]:
-    specifiers: list[str] = []
-    for pattern in IMPORT_PATTERNS:
-        specifiers.extend(pattern.findall(source))
-    return specifiers
+def discover_files(payload: dict | None) -> list[Path]:
+    """Prefer changed files from hook JSON; otherwise scan the workspace."""
+    if payload is not None:
+        payload_files = sorted(extract_typescript_paths(payload))
+        if payload_files:
+            return payload_files
+
+    files: list[Path] = []
+    for extension in ("*.ts", "*.tsx"):
+        for path in REPO_ROOT.rglob(extension):
+            if any(part in IGNORED_DIRECTORIES for part in path.parts):
+                continue
+            if path.is_file():
+                files.append(path)
+    return sorted(set(files))
 
 
-def resolve_import_target(source_file: Path, specifier: str) -> Path | None:
+def find_barrel(directory: Path) -> Path | None:
+    for barrel_name in BARREL_NAMES:
+        barrel = directory / barrel_name
+        if barrel.is_file():
+            return barrel
+    return None
+
+
+def is_within(path: Path, directory: Path) -> bool:
+    try:
+        path.relative_to(directory)
+        return True
+    except ValueError:
+        return False
+
+
+def candidate_targets(base_path: Path, specifier: str) -> Iterable[Path]:
+    suffix = PurePosixPath(specifier).suffix
+
+    if suffix in SOURCE_SUFFIXES:
+        if suffix == ".ts" or suffix == ".tsx":
+            yield base_path
+            return
+
+        stem = base_path.with_suffix("")
+        for target_suffix in TS_FILE_SUFFIXES:
+            yield stem.with_suffix(target_suffix)
+        return
+
+    yield base_path.with_suffix(".ts")
+    yield base_path.with_suffix(".tsx")
+    yield base_path / "index.ts"
+    yield base_path / "index.tsx"
+
+
+def resolve_import(importer: Path, specifier: str) -> Path | None:
     if not specifier.startswith("."):
         return None
 
-    base_path = (source_file.parent / specifier).resolve(strict=False)
-    candidates: list[Path] = []
+    specifier_path = PurePosixPath(specifier)
+    base_path = (importer.parent / Path(*specifier_path.parts)).resolve(strict=False)
 
-    if base_path.suffix in {".js", ".jsx", ".mjs", ".cjs"}:
-        candidates.extend(
-            [
-                base_path.with_suffix(".ts"),
-                base_path.with_suffix(".tsx"),
-                base_path.with_suffix(".mts"),
-                base_path.with_suffix(".cts"),
-            ]
-        )
-    elif base_path.suffix:
-        candidates.append(base_path)
-    else:
-        candidates.extend(
-            [
-                base_path / "index.ts",
-                base_path / "index.tsx",
-                base_path.with_suffix(".ts"),
-                base_path.with_suffix(".tsx"),
-            ]
-        )
-
-    for candidate in candidates:
-        if candidate.exists() and candidate.is_file():
+    for candidate in candidate_targets(base_path, specifier):
+        if candidate.is_file():
             return candidate
 
     return None
 
 
-def to_import_specifier(source_file: Path, target_file: Path) -> str:
-    relative = Path(os.path.relpath(target_file, start=source_file.parent))
-
-    specifier = relative.as_posix()
-    if not specifier.startswith("."):
-        specifier = f"./{specifier}"
-
-    if specifier.endswith(".ts"):
-        return f"{specifier[:-3]}.js"
-    if specifier.endswith(".tsx"):
-        return f"{specifier[:-4]}.js"
-    return specifier
+def format_relative_import(importer: Path, barrel: Path) -> str:
+    text = Path(os.path.relpath(barrel.parent, importer.parent)).as_posix()
+    if not text.startswith("."):
+        text = f"./{text}"
+    return text
 
 
-def barrel_for_target(target_file: Path) -> Path | None:
-    barrel = target_file.parent / "index.ts"
-    if target_file.name == "index.ts" or not barrel.exists():
+def find_barrel_violation(importer: Path, specifier: str) -> tuple[Path, Path] | None:
+    target = resolve_import(importer, specifier)
+    if target is None or target.name.startswith("index."):
         return None
-    return barrel
+
+    for directory in [target.parent, *target.parent.parents]:
+        if not is_within(directory, REPO_ROOT):
+            continue
+
+        barrel = find_barrel(directory)
+        if barrel is None:
+            continue
+
+        if is_within(importer.parent, directory):
+            continue
+
+        return target, barrel
+
+    return None
 
 
-def find_violations(files: list[Path]) -> list[str]:
+def collect_violations(path: Path) -> list[str]:
+    try:
+        content = path.read_text(encoding="utf-8")
+    except OSError:
+        return []
+
     violations: list[str] = []
+    for match in IMPORT_PATTERN.finditer(content):
+        specifier = match.group("specifier")
+        violation = find_barrel_violation(path, specifier)
+        if violation is None:
+            continue
 
-    for source_file in files:
-        source = source_file.read_text(encoding="utf-8")
-        for specifier in extract_imports(source):
-            target = resolve_import_target(source_file, specifier)
-            if target is None or not target.is_relative_to(REPO_ROOT):
-                continue
-
-            barrel = barrel_for_target(target)
-            if barrel is None:
-                continue
-
-            suggested = to_import_specifier(source_file, barrel)
-            relative_source = source_file.relative_to(REPO_ROOT).as_posix()
-            relative_barrel = barrel.relative_to(REPO_ROOT).as_posix()
-            violations.append(
-                f"{relative_source}: import '{specifier}' reaches into an internal module path. "
-                f"Use the barrel '{suggested}' ({relative_barrel}) instead."
+        target, barrel = violation
+        suggested_import = format_relative_import(path, barrel)
+        violations.append(
+            (
+                f"{path.relative_to(REPO_ROOT)} imports '{specifier}', which bypasses "
+                f"the barrel '{barrel.relative_to(REPO_ROOT)}' and reaches an internal "
+                f"module path '{target.relative_to(REPO_ROOT)}'. Import from "
+                f"'{suggested_import}' instead."
             )
+        )
 
     return violations
 
 
-def emit_deny(message: str) -> None:
-    json.dump(
-        {
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "deny",
-                "permissionDecisionReason": message,
-            }
-        },
-        sys.stdout,
-    )
+def emit_deny(violations: list[str]) -> None:
+    reason = "Import validation failed:\n- " + "\n- ".join(violations[:10])
+    if len(violations) > 10:
+        reason += f"\n- ...and {len(violations) - 10} more violation(s)."
+
+    result = {
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": reason,
+        }
+    }
+    json.dump(result, sys.stdout)
 
 
 def main() -> None:
     payload = load_hook_payload()
-    files = collect_candidate_files(payload)
-    if not files:
-        sys.exit(0)
+    files = discover_files(payload)
 
-    violations = find_violations(files)
-    if not violations:
-        sys.exit(0)
+    violations: list[str] = []
+    for path in files:
+        violations.extend(collect_violations(path))
 
-    summary = "Import validation failed: " + " | ".join(violations[:3])
-    if len(violations) > 3:
-        summary += f" | ...and {len(violations) - 3} more violation(s)."
-
-    if payload:
-        emit_deny(summary)
-        sys.exit(0)
-
-    print(summary, file=sys.stderr)
-    sys.exit(1)
+    if violations:
+        emit_deny(violations)
 
 
 if __name__ == "__main__":
