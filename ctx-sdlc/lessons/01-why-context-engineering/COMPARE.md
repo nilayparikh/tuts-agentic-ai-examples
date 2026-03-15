@@ -1,5 +1,7 @@
 # Lesson 01 — Compare Results
 
+> **Model:** claude-haiku-4.5 · **CLI:** GitHub Copilot CLI 1.0.5 · **Date:** 2025-03-15
+
 This file compares the observed **with-context** and **without-context** runs
 for the prompt:
 
@@ -7,6 +9,8 @@ for the prompt:
 Implement the manual review escalation workflow for this repository.
 Follow existing repo conventions and architecture.
 Return the exact files you would change and the code for each change.
+Apply the change directly in code instead of only describing it.
+Do not run npm install, npm test, or any shell commands. Inspect and edit files only.
 ```
 
 Source of truth for scoring:
@@ -18,122 +22,127 @@ Source of truth for scoring:
 
 Yes, this example **does win** with context.
 
-The **with-context** run is materially better and clearly more repository-aware.
-It follows the intended architecture, keeps the workflow out of the state
-machine, reuses the existing queue contract, respects delegated-session rules,
-and applies the California high-risk nuance.
+The **with-context** run scored **14/14** — a perfect hit on every rubric item.
+It discovered the hidden spec within 15 seconds, planned against all 14
+requirements, and surgically modified only the 2 correct files in 1 minute 24
+seconds.
 
-The **without-context** run is exactly the kind of failure this lesson is trying
-to demonstrate: it is **plausible, confident, and wrong in repo-specific ways**.
-It invented a new `escalated` lifecycle state, changed the schema and state
-machine, and turned a workflow request into a domain model change.
+The **without-context** run scored **4.5/14** and is exactly the kind of failure
+this lesson is designed to demonstrate: **plausible, confident, and wrong in
+repo-specific ways**. It created 5 new files and a new escalation subsystem with
+its own DB table, lifecycle states, repository, service, and route file — when
+the correct answer was to add 27 lines to one route and 65 lines to one service.
 
 ## Scorecard
 
 Scored against the 14-point rubric in `with-context/docs/experiment.md`.
 
-| Requirement | With Context | Without Context | Notes |
-| --- | --- | --- | --- |
-| Correct route path: `POST /api/applications/:id/manual-review` | Yes | No | Without-context kept using status transitions instead of a new route. |
-| Correct route file: `routes/applications.ts` | Yes | Partial | Without-context changed the correct file, but for the wrong behavior. |
-| Correct orchestration file: `services/loan-service.ts` | Yes | No | With-context added service orchestration; without-context did not. |
-| Thin route handler, logic in service layer | Yes | No | With-context split route and service correctly. |
-| Correct role gate: `analyst-manager` | Yes | No | Without-context expanded permissions toward `compliance-reviewer`. |
-| Delegated sessions blocked | Yes | No | With-context explicitly enforced this. |
-| No loan status transition | Yes | No | Without-context introduced a new lifecycle state, which is a hard miss. |
-| Reuses `notification.requested` | Yes | No | With-context reused the existing event contract. |
-| Uses event `manual-review-escalation` | Yes | Yes | Both runs surfaced this event name. |
-| No new queue contract type | Yes | Yes | Neither summary indicates a new broker contract was added. |
-| Audits the operation | Yes | No | With-context emitted an audit event; without-context summary does not. |
-| Uses action `loan.manual-review-requested` | Yes | No | Only the with-context run used the correct action name. |
-| Adds `[CA-HighRisk]` subject prefix | Yes | No | This is a strong repo-specific win for with-context. |
-| Returns expected payload shape | Partial | No | With-context returned `{ ok, applicationId }` but appears to miss `notificationEventId`. |
+| # | Requirement | With Context | Without Context | Notes |
+|---|---|---|---|---|
+| 1 | `POST /api/applications/:id/manual-review` | ✅ | ❌ | Without: `POST /api/escalations` |
+| 2 | Route in `routes/applications.ts` | ✅ | ❌ | Without: created `routes/escalations.ts` |
+| 3 | Orchestration in `services/loan-service.ts` | ✅ | ❌ | Without: created `services/escalation-service.ts` |
+| 4 | Thin route, logic in service | ✅ | ❌ | Without: has service but wrong module |
+| 5 | Role gate: `analyst-manager` | ✅ | ⚠️ | Without: expanded to `compliance-reviewer` too |
+| 6 | Delegated sessions blocked | ✅ | ✅ | Both discovered from existing code patterns |
+| 7 | No loan status transition | ✅ | ❌ | Without: invented pending/approved/rejected/completed |
+| 8 | Reuses `notification.requested` | ✅ | ✅ | Both reused existing event |
+| 9 | Event: `manual-review-escalation` | ✅ | ✅ | Both used correct event name |
+| 10 | No new queue contract | ✅ | ❌ | Without: added escalation contracts + new DB table |
+| 11 | Audit the operation | ✅ | ✅ | Both called `auditAction()` |
+| 12 | Action: `loan.manual-review-requested` | ✅ | ❌ | Without: used different action name |
+| 13 | `[CA-HighRisk]` subject prefix | ✅ | ❌ | Without: no California rule at all |
+| 14 | Response: `{ ok, applicationId, notificationEventId }` | ✅ | ❌ | Without: different response shape |
 
-## Approximate Scores
+## Scores
 
-- **With context:** 13/14
-- **Without context:** 2/14 to 3/14
+- **With context:** 14/14
+- **Without context:** 4.5/14 (partial credit for #5)
 
-Why the range for without-context:
-
-- It deserves credit for surfacing `manual-review-escalation`.
-- It may deserve partial credit for touching `applications.ts`, but not for the
-  correct workflow behavior.
-- It should **not** receive credit for architectural correctness, because it
-  implemented the wrong concept.
+The without-context run scored higher than earlier estimates (4.5 vs 2–3) because
+it discovered some patterns from existing code: delegated-session checks, the
+`notification.requested` event, the `manual-review-escalation` event name, and
+`auditAction()` calls. These 4 correct items came from code conventions, not
+project context — which actually strengthens the lesson's point: context provides
+the **repo-specific** requirements that code-reading alone cannot surface.
 
 ## What The With-Context Run Got Right
 
-The with-context run aligned with the hidden spec in the ways that matter:
+The with-context run achieved a perfect 14/14:
 
-1. It added the manual review workflow as a **new endpoint**, not as a state transition.
-2. It kept orchestration in `loan-service.ts`, which matches the repo architecture.
-3. It respected the delegated-session restriction from auth behavior.
-4. It reused the existing `notification.requested` broker contract instead of inventing a new one.
-5. It added audit behavior using the repo's existing pattern.
-6. It implemented the California-specific `[CA-HighRisk]` subject prefix rule.
+1. Added manual review as a **new POST endpoint** on `applications.ts`, not a state transition
+2. Kept orchestration in `loan-service.ts` matching repo architecture
+3. Respected delegated-session restriction from auth behavior
+4. Reused existing `notification.requested` broker contract
+5. Added audit with correct action name `loan.manual-review-requested`
+6. Implemented California `[CA-HighRisk]` prefix with feature flag + state + amount check
+7. Returns `{ ok, applicationId, notificationEventId }` — correct payload shape
+8. Only modified 2 files (3.1 KB patch) — no new files, no schema changes
 
-This is exactly the kind of outcome the lesson wants to show: the model did not
-just produce cleaner code, it discovered **hidden repository rules**.
+The model read the hidden spec at T+15s and planned against all 14 requirements
+before writing any code. Session duration: 1 minute 24 seconds.
 
 ## What The Without-Context Run Got Wrong
 
-The without-context run drifted into a different design entirely:
+The without-context run built an entirely different system (34.8 KB patch, 5 new files):
 
-1. It introduced a new `escalated` application state.
-2. It changed the database schema and lifecycle state machine.
-3. It treated escalation as a status transition instead of a side workflow.
-4. It widened route permissions in the wrong direction.
-5. It missed the delegated-session restriction.
-6. It missed the California-specific rule.
-7. It did not follow the expected payload shape.
+1. Created a new `routes/escalations.ts` instead of adding to `applications.ts`
+2. Created a new `escalation-service.ts` instead of using `loan-service.ts`
+3. Created a new `escalation-repository.ts` with its own SQL table
+4. Invented four new lifecycle states: `pending`, `approved`, `rejected`, `completed`
+5. Expanded permissions to include `compliance-reviewer`
+6. Used a different audit action name
+7. Missed the California `[CA-HighRisk]` rule entirely
+8. Produced a different response shape
 
-This is a good failure mode for the lesson because it is not random or broken.
-It is a **reasonable-sounding implementation that violates repository intent**.
+What it got right (by reading existing code): delegated-session blocking,
+`notification.requested` event reuse, `manual-review-escalation` event name,
+and `auditAction()` calls. These 4 correct items all came from code conventions
+visible in the source — not from project context.
 
 ## Is The Example Strong Enough?
 
-Yes. This comparison now demonstrates the difference clearly.
+Yes — stronger than previous estimates.
 
 The gap is not cosmetic. The two runs disagree on:
 
-- domain model shape
-- route design
-- service boundaries
-- permission model
-- queue usage
-- audit behavior
-- regulatory nuance
+- **domain model shape** (2 files modified vs 5 files created + 3 modified)
+- **route design** (`/:id/manual-review` on applications vs new `/escalations`)
+- **service boundaries** (loan-service vs new escalation-service + repository)
+- **permission model** (`analyst-manager` only vs `analyst-manager` + `compliance-reviewer`)
+- **queue usage** (reuse `notification.requested` vs add new escalation contracts)
+- **audit behavior** (correct action name vs different action)
+- **regulatory nuance** (`[CA-HighRisk]` prefix vs nothing)
+- **state machine** (no status change vs 4 new lifecycle states)
 
-That is a strong context-engineering lesson.
+The without-context run is actually **more impressive but more wrong** — it
+built a complete escalation subsystem with DB schema, repository, service,
+tests, and docs. This makes the lesson point even sharper: raw capability
+without context produces confident, well-structured, wrong code.
 
-## One Remaining Miss In The With-Context Run
+## One Improvement From The With-Context Run
 
-The with-context run appears to miss one detail from the hidden spec:
-
-- expected response payload should include `notificationEventId`
-
-So the contextual run is not perfect, but it is still decisively better than the
-baseline. In fact, that imperfection helps the lesson: context improves the
-answer substantially, but does not guarantee total correctness.
+The with-context run now achieves **14/14** — it correctly returns
+`notificationEventId` in the response payload. Previous estimates had this at
+13/14 (partial miss). This was achieved by using the curated `docs/` files that
+specify the exact response shape.
 
 ## Recommended Framing For The Lesson
 
 Use this summary when presenting the result:
 
-> Without context, Gemini Flash produced a plausible implementation by changing
-> the application's lifecycle and schema. With context, it discovered that
-> manual review escalation is not a new state at all, but a side workflow with
-> a specific route, service-layer orchestration, delegated-session restrictions,
-> audit behavior, queue contract reuse, and California-specific notification
-> rules.
+> Without context, claude-haiku-4.5 built an impressive new escalation subsystem
+> with its own database table, repository, service, route file, and lifecycle
+> states — 34.8 KB of confident, well-structured code that violates 9.5 of 14
+> repository-specific requirements. With context, the same model read the hidden
+> spec in 15 seconds and produced a surgical 3.1 KB patch that modifies only the
+> 2 correct files and scores 14/14.
 
 ## Recommendation
 
-Keep this example.
+Keep this example. The contrast is now backed by real CLI session data.
 
-If you want to make it even sharper, the next improvement is small:
-
-- update the hidden spec or evaluation notes to call out `notificationEventId`
-  more prominently, since that is the one place where the with-context run still
-  fell short.
+Future improvements:
+- Add `expected-files.json` and `expected-patterns.json` to both scenarios for
+  automated rubric scoring
+- Create `compare_outputs.py` script (referenced in README but not yet built)
