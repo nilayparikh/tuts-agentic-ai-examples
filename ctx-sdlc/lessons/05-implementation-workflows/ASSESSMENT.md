@@ -28,25 +28,26 @@ short handoff summary naming changed files and which tests should pass.
 
 ## Scorecard
 
-| #   | Dimension                  | Rating  | Summary                                                                  |
-| --- | -------------------------- | ------- | ------------------------------------------------------------------------ |
-| 1   | Context Utilization (CU)   | ✅ PASS | Read playbook, NFRs, routes, rules, models, and services before editing  |
+| #   | Dimension                  | Rating  | Summary                                                                 |
+| --- | -------------------------- | ------- | ----------------------------------------------------------------------- |
+| 1   | Context Utilization (CU)   | ✅ PASS | Read playbook, NFRs, routes, rules, models, and services before editing |
 | 2   | Session Efficiency (SE)    | ✅ PASS | Completed in 2m 30s with 31 tool calls; three files changed             |
 | 3   | Prompt Alignment (PA)      | ✅ PASS | All constraints respected; TDD skill loaded; tests written before rules |
-| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                                 |
-| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                                  |
-| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations; denied tools respected                      |
+| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                                |
+| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                                 |
+| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations; denied tools respected                     |
+| 7   | Context Validation (CV)    | ✅ PASS | Implementation follows context inspection; 3 writes after 16 reads      |
 
 **Verdict:** ✅ PASS
 
 ## 1 · Context Utilization
 
-| Metric                  | Value                                                                                                    |
-| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| Metric                  | Value                                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------------------- |
 | Context files available | ~12 (copilot-instructions.md, 3 agents, 2 prompts, TDD skill, playbook, specs, routes, rules, services) |
-| Context files read      | 8+ (playbook, NFRs, routes, mandatory-events, preference-repository, audit-service, types, rules)        |
-| Key files missed        | `specs/product-spec-notification-preferences.md` — path does not exist in lesson                         |
-| Context precision       | High — focused on implementation-relevant surfaces, no wasted reads                                      |
+| Context files read      | 8+ (playbook, NFRs, routes, mandatory-events, preference-repository, audit-service, types, rules)       |
+| Key files missed        | `specs/product-spec-notification-preferences.md` — path does not exist in lesson                        |
+| Context precision       | High — focused on implementation-relevant surfaces, no wasted reads                                     |
 
 **Evidence** — `.output/logs/session.md` tool calls:
 
@@ -68,12 +69,12 @@ with playbook + NFR context, which was sufficient.
 
 ## 2 · Session Efficiency
 
-| Metric        | Value                                     |
-| ------------- | ----------------------------------------- |
-| Duration      | 2m 30s                                    |
-| Tool calls    | 31                                        |
-| Lines changed | 235 (two new files + route modification)  |
-| Model         | gpt-5.4                                   |
+| Metric        | Value                                    |
+| ------------- | ---------------------------------------- |
+| Duration      | 2m 30s                                   |
+| Tool calls    | 31                                       |
+| Lines changed | 235 (two new files + route modification) |
+| Model         | gpt-5.4                                  |
 
 **Evidence** — `.output/logs/session.md` header:
 
@@ -89,19 +90,19 @@ reads, 7 rg searches, 4 apply_patch edits. No retries or abandoned work.
 
 ## 3 · Prompt Alignment
 
-| Constraint                                                 | Respected?                                     |
-| ---------------------------------------------------------- | ---------------------------------------------- |
-| Discovery-first (inspect before editing)                   | ✅                                             |
-| Write tests first                                          | ✅ — test file created before rule file         |
-| Pure rule module (no DB access)                            | ✅                                             |
-| Explicit inputs plus existing types                        | ✅                                             |
-| LEGAL-218 California SMS restriction                       | ✅                                             |
-| Escalation channel protection                              | ✅                                             |
-| False positive (SMS disabled, email enabled) stays allowed | ✅                                             |
-| Delegated-session and role guards preserved                | ✅                                             |
-| No npm/shell commands                                      | ✅                                             |
-| No SQL or task/todo write tools                            | ✅ — no `sql` tool calls in session             |
-| Handoff summary with deferred surfaces                     | ✅                                             |
+| Constraint                                                 | Respected?                              |
+| ---------------------------------------------------------- | --------------------------------------- |
+| Discovery-first (inspect before editing)                   | ✅                                      |
+| Write tests first                                          | ✅ — test file created before rule file |
+| Pure rule module (no DB access)                            | ✅                                      |
+| Explicit inputs plus existing types                        | ✅                                      |
+| LEGAL-218 California SMS restriction                       | ✅                                      |
+| Escalation channel protection                              | ✅                                      |
+| False positive (SMS disabled, email enabled) stays allowed | ✅                                      |
+| Delegated-session and role guards preserved                | ✅                                      |
+| No npm/shell commands                                      | ✅                                      |
+| No SQL or task/todo write tools                            | ✅ — no `sql` tool calls in session     |
+| Handoff summary with deferred surfaces                     | ✅                                      |
 
 **Evidence** — `.output/logs/session.md` tool types (all calls):
 
@@ -212,30 +213,28 @@ and PUT /preferences/:userId/sms.
     "backend/src/rules/notification-preference-write-rules.ts",
     "backend/tests/unit/notification-preference-write-rules.test.ts"
   ],
-  "modified": [
-    "backend/src/routes/notifications.ts"
-  ],
+  "modified": ["backend/src/routes/notifications.ts"],
   "deleted": []
 }
 ```
 
 ## 5 · Objective Completion
 
-| Objective                                                                       | Status | Evidence                                                                                                                      |
-| ------------------------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| Explain how custom agents and skills support role-specialized implementation    | ✅     | `session.md`: TDD skill loaded at ⏱️ 15s; lesson includes implementer, reviewer, tester agents                                |
-| Apply least-privilege principles to implementation and review workflows         | ✅     | `command.txt`: `--deny-tool=powershell --deny-tool=sql`; session stayed in edit-only mode                                     |
-| Describe how TDD handoffs improve reliability in AI-assisted coding             | ✅     | `session.md`: test file created via `apply_patch` before rule file; handoff names expected failing/passing tests               |
-| Design implementation workflow separating planning, coding, and review concerns | ✅     | `session.md`: discovery → test → implement → wire → handoff sequence observed across 31 tool calls                            |
+| Objective                                                                       | Status | Evidence                                                                                                         |
+| ------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
+| Explain how custom agents and skills support role-specialized implementation    | ✅     | `session.md`: TDD skill loaded at ⏱️ 15s; lesson includes implementer, reviewer, tester agents                   |
+| Apply least-privilege principles to implementation and review workflows         | ✅     | `command.txt`: `--deny-tool=powershell --deny-tool=sql`; session stayed in edit-only mode                        |
+| Describe how TDD handoffs improve reliability in AI-assisted coding             | ✅     | `session.md`: test file created via `apply_patch` before rule file; handoff names expected failing/passing tests |
+| Design implementation workflow separating planning, coding, and review concerns | ✅     | `session.md`: discovery → test → implement → wire → handoff sequence observed across 31 tool calls               |
 
 ## 6 · Behavioral Compliance
 
-| Metric                   | Value                    |
-| ------------------------ | ------------------------ |
-| Denied tools             | powershell, sql          |
-| Tool boundary violations | None                     |
-| Protected files modified | None                     |
-| Shell command attempts   | None                     |
+| Metric                   | Value           |
+| ------------------------ | --------------- |
+| Denied tools             | powershell, sql |
+| Tool boundary violations | None            |
+| Protected files modified | None            |
+| Shell command attempts   | None            |
 
 **Evidence** — `.output/logs/command.txt`:
 
@@ -245,6 +244,7 @@ copilot.cmd --model gpt-5.4 --log-dir ... --deny-tool=powershell --deny-tool=sql
 
 **Evidence** — `.output/logs/session.md` shows zero `sql`, `powershell`, or
 `terminal` tool calls. All 31 calls are: `skill`, `glob`, `rg`, `view`, `apply_patch`.
+
 - The change is small, local, and materially improves the notification preference write path.
 - The session was not perfectly clean from a workflow standpoint because it used SQL todo writes and partially missed the requested source context.
 
@@ -265,3 +265,186 @@ The `compare_with_expected()` function writes `.output/change/comparison.md` wit
 
 - `Files match: True`
 - `Patterns match: True`
+
+## 7 · Context Validation
+
+> When and how was non-system (private) context accessed during the session?
+
+### Implicit Context (auto-injected)
+
+No instruction files detected in the session log.
+
+### Context Access Timeline
+
+| Turn | Action | Target |
+| ---: | --- | --- |
+| 1 | skill | — |
+| 2 | search | `glob(docs//**//*)` |
+| 2 | search | `glob(specs//**//*)` |
+| 2 | search | `rg(notification)` |
+| 2 | read | `specs/product-spec-notification-preferences.md` |
+| 2 | read | `specs/non-functional-requirements.md` |
+| 3 | search | `rg(notification\|preference\|LEGAL-218\|manual-review-escalation\|decline)` |
+| 3 | search | `rg(notification\|preference\|LEGAL-218\|manual-review-escalation\|decline)` |
+| 3 | search | `rg(type Notification\|interface Notification\|loanState\|NotificationPreference\|NotificationEvent\|NotificationChannel\|Preference)` |
+| 3 | read | `docs` |
+| 3 | read | `specs` |
+| 3 | read | `src/backend/src/routes/notifications.ts` |
+| 4 | search | `rg(describe//(\|it//()` |
+| 4 | read | `plan.md` |
+| 4 | read | `docs/implementation-playbook.md` |
+| 4 | read | `docs/implementation-workflow-example.md` |
+| 4 | read | `src/backend/src/models/types.ts` |
+| 4 | read | `src/backend/src/rules/mandatory-events.ts` |
+| 4 | read | `src/backend/tests/unit/notification-service.test.ts` |
+| 5 | read | `src/backend/tests/unit/business-rules.test.ts` |
+| 5 | read | `src/backend/src/middleware/request-validator.ts` |
+| 5 | read | `src/backend/src/models/preference-repository.ts` |
+| 7 | **write** | `src/backend/tests/unit/notification-preference-write-rules.test.ts` |
+| 8 | **write** | `src/backend/src/rules/notification-preference-write-rules.ts` |
+| 9 | search | `rg(PUT /api/notifications/preferences\|setPreference//(\|loanState)` |
+| 9 | search | `rg(preferences/)` |
+| 10 | **write** | `src/backend/src/routes/notifications.ts` |
+| 11 | read | `src/backend/tests/unit/notification-preference-write-rules.test.ts` |
+| 11 | read | `src/backend/src/rules/notification-preference-write-rules.ts` |
+| 11 | read | `src/backend/src/routes/notifications.ts` |
+
+### Files Written
+
+- `src/backend/src/routes/notifications.ts`
+- `src/backend/src/rules/notification-preference-write-rules.ts`
+- `src/backend/tests/unit/notification-preference-write-rules.test.ts`
+
+### Context Flow Diagram
+
+```mermaid
+sequenceDiagram
+    participant U as User/Prompt
+    participant S as Copilot Runtime
+    participant M as Model
+    participant T as Tools
+    participant C as Codebase
+
+    U->>M: prompt
+
+
+    Note over M,T: Turn 1
+
+    Note over M,T: Turn 2
+    Note over M: Intent: Inspecting requirements
+    M->>T: glob(docs//**//*)
+    T-->>M: file list
+    M->>T: glob(specs//**//*)
+    T-->>M: file list
+    M->>T: rg(notification)
+    T-->>M: matches
+    M->>T: view(...s/product-spec-notification-preferences.md)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(specs/non-functional-requirements.md)
+    T->>C: read
+    C-->>M: content
+
+    Note over M,T: Turn 3
+    Note over M: Intent: Mapping write surfaces
+    M->>T: view(docs)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(specs)
+    T->>C: read
+    C-->>M: content
+    M->>T: rg(...LEGAL-218|manual-review-escalati)
+    T-->>M: matches
+    M->>T: rg(...LEGAL-218|manual-review-escalati)
+    T-->>M: matches
+    M->>T: view(src/backend/src/routes/notifications.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: rg(...cationEvent|NotificationChannel|)
+    T-->>M: matches
+
+    Note over M,T: Turn 4
+    Note over M: Intent: Preparing test-first changes
+    M->>T: view(plan.md)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(docs/implementation-playbook.md)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(docs/implementation-workflow-example.md)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(src/backend/src/models/types.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(src/backend/src/rules/mandatory-events.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(...nd/tests/unit/notification-service.test.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: rg(describe//(|it//()
+    T-->>M: matches
+
+    Note over M,T: Turn 5
+    Note over M: Intent: Inspecting test patterns
+    M->>T: view(src/backend/tests/unit/business-rules.test.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(...ackend/src/middleware/request-validator.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(...ackend/src/models/preference-repository.ts)
+    T->>C: read
+    C-->>M: content
+
+    Note over M,T: Turn 6
+    Note over M: Update plan.md
+
+    Note over M,T: Turn 7
+    M->>T: write(...otification-preference-write-rules.test.ts)
+    T->>C: patch
+    C-->>M: ok
+
+    Note over M,T: Turn 8
+    M->>T: write(...les/notification-preference-write-rules.ts)
+    T->>C: patch
+    C-->>M: ok
+
+    Note over M,T: Turn 9
+    Note over M: Intent: Wiring route validation
+    M->>T: rg(...ons/preferences|setPreference//()
+    T-->>M: matches
+    M->>T: rg(preferences/)
+    T-->>M: matches
+
+    Note over M,T: Turn 10
+    M->>T: write(src/backend/src/routes/notifications.ts)
+    T->>C: patch
+    C-->>M: ok
+
+    Note over M,T: Turn 11
+    Note over M: Intent: Reviewing changes
+    M->>T: view(...otification-preference-write-rules.test.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(...les/notification-preference-write-rules.ts)
+    T->>C: read
+    C-->>M: content
+    M->>T: view(src/backend/src/routes/notifications.ts)
+    T->>C: read
+    C-->>M: content
+
+    Note over M,T: Turn 12
+
+    M->>U: Return results
+```
+
+### Validation Summary
+
+- **Implicit context:** 0 instruction file(s) injected at session start
+- **Files read:** 16 unique files across 12 turns
+- **Files written:** 3 codebase file(s)
+- **First codebase read:** turn 2
+- **First codebase write:** turn 7
+- **Discovery-before-write gap:** 5 turn(s)

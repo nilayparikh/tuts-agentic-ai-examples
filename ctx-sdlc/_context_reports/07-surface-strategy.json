@@ -1,0 +1,275 @@
+{
+  "lesson": "07-surface-strategy",
+  "model": "gpt-5.4",
+  "start_time": "2026-03-14T17:09:20.091Z",
+  "end_time": "2026-03-14T17:11:14.956Z",
+  "turns": 6,
+  "events": [
+    {
+      "timestamp": "2026-03-14T17:09:27.886Z",
+      "turn": 1,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Exploring artifacts"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:27.886Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": ".github/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:27.886Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "docs/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:27.886Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "**/*.md",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:27.886Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "rg",
+      "target": "applyTo:|copilot|prompt|agent|mcp|hook|instruction",
+      "detail": "in *.{md,json,yml,yaml}"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/copilot-instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/instructions/api.instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/agents/reviewer.agent.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "README.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/portability-matrix.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/cli-guide.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/surface-strategy-example.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:41.328Z",
+      "turn": 2,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reading assessment"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": ".github/prompts/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": ".github/hooks/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": ".github/mcp*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "ASSESSMENT.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:49.501Z",
+      "turn": 3,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:59.361Z",
+      "turn": 4,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": ".github/instructions/portable-baseline.instructions.md",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:59.361Z",
+      "turn": 4,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "docs/surface-portability-notes.md",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:09:59.361Z",
+      "turn": 4,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:11:00.489Z",
+      "turn": 5,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Verifying changes"
+    },
+    {
+      "timestamp": "2026-03-14T17:11:00.489Z",
+      "turn": 5,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/instructions/portable-baseline.instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:11:00.489Z",
+      "turn": 5,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/surface-portability-notes.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:11:00.489Z",
+      "turn": 5,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:11:06.946Z",
+      "turn": 6,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    }
+  ],
+  "implicit_context": [
+    "api.instructions.md",
+    "copilot-instructions.md",
+    "portable-baseline.instructions.md"
+  ],
+  "files_discovered": [],
+  "files_read": [
+    ".github/agents/reviewer.agent.md",
+    ".github/copilot-instructions.md",
+    ".github/instructions/api.instructions.md",
+    ".github/instructions/portable-baseline.instructions.md",
+    "ASSESSMENT.md",
+    "README.md",
+    "docs/cli-guide.md",
+    "docs/portability-matrix.md",
+    "docs/surface-portability-notes.md",
+    "docs/surface-strategy-example.md"
+  ],
+  "files_written": [
+    ".github/instructions/portable-baseline.instructions.md",
+    "docs/surface-portability-notes.md"
+  ],
+  "mermaid": "sequenceDiagram\n    participant U as User/Prompt\n    participant S as Copilot Runtime\n    participant M as Model\n    participant T as Tools\n    participant C as Codebase\n\n    Note over S,M: Implicit Context (auto-injected)\n    S->>M: api.instructions.md\n    S->>M: copilot-instructions.md\n    S->>M: portable-baseline.instructions.md\n\n    U->>M: prompt\n\n\n    Note over M,T: Turn 1\n    Note over M: Intent: Exploring artifacts\n    M->>T: glob(.github/**/*)\n    T-->>M: file list\n    M->>T: glob(docs/**/*)\n    T-->>M: file list\n    M->>T: glob(**/*.md)\n    T-->>M: file list\n    M->>T: rg(...|copilot|prompt|agent|mcp|hook|i)\n    T-->>M: matches\n\n    Note over M,T: Turn 2\n    M->>T: view(.github/copilot-instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(.github/instructions/api.instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(.github/agents/reviewer.agent.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(README.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/portability-matrix.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/cli-guide.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/surface-strategy-example.md)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 3\n    Note over M: Intent: Reading assessment\n    M->>T: glob(.github/prompts/**/*)\n    T-->>M: file list\n    M->>T: glob(.github/hooks/**/*)\n    T-->>M: file list\n    M->>T: glob(.github/mcp*)\n    T-->>M: file list\n    M->>T: view(ASSESSMENT.md)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 4\n    M->>T: write(...ructions/portable-baseline.instructions.md)\n    T->>C: patch\n    C-->>M: ok\n    M->>T: write(docs/surface-portability-notes.md)\n    T->>C: patch\n    C-->>M: ok\n\n    Note over M,T: Turn 5\n    Note over M: Intent: Verifying changes\n    M->>T: view(...ructions/portable-baseline.instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/surface-portability-notes.md)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 6\n\n    M->>U: Return results"
+}
