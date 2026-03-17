@@ -9,6 +9,7 @@ A simple project management API with:
 """
 
 from flask import Flask
+import os
 from .db.connection import init_db
 from .routes.tasks import tasks_bp
 from .routes.users import users_bp
@@ -44,4 +45,5 @@ def create_app(db_path: str = "data/task-tracker.db") -> Flask:
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(port=3200, debug=True)
+    debug = os.getenv("FLASK_DEBUG", "0") == "1"
+    app.run(port=3200, debug=debug)
