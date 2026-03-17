@@ -20,6 +20,23 @@ Hooks intercept Copilot tool calls at runtime to enforce guardrails.
 | `post-save-format.json`    | PostToolUse | Auto-formats files after writes            |
 | `pre-commit-validate.json` | PreToolUse  | Validates changes before commit operations |
 
+### Available Hook Event Types
+
+As of early 2026, VS Code Copilot exposes eight lifecycle events:
+
+| Event            | Fires When                             | Common Use Cases                                |
+| ---------------- | -------------------------------------- | ----------------------------------------------- |
+| SessionStart     | A new chat or agent session begins     | Log session metadata, set environment variables |
+| UserPromptSubmit | The user submits a message to chat     | Validate prompt content, inject boilerplate     |
+| PreToolUse       | Before an agent invokes a tool         | Deny protected paths, block destructive cmds    |
+| PostToolUse      | After a tool completes                 | Auto-format edited files, lint, schema checks   |
+| PreCompact       | Before the context window is compacted | Preserve critical context entries               |
+| SubagentStart    | Before a subagent is invoked           | Audit delegation, enforce allowed-agent lists   |
+| SubagentStop     | After a subagent returns               | Log subagent output, validate handoff results   |
+| Stop             | The agent session terminates           | Final validation, generate session summary      |
+
+Hooks can also be **agent-scoped** using the `agents` list in the hook config, restricting a hook to fire only for specific agents.
+
 This lesson also includes MCP configuration for extending tool capabilities.
 
 ## Example Goal

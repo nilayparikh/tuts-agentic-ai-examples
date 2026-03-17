@@ -14,23 +14,39 @@ python util.py --run
 
 Different Copilot surfaces consume context differently.
 
-| Surface | Context Access | Best For |
-| --- | --- | --- |
-| Agent mode (Chat) | Full `.github/`, agents, prompts, tools | Complex multi-step tasks |
-| Inline completions | `.github/instructions/` auto-scoped by file | Line-by-line generation |
-| CLI (`copilot`) | Baseline repo context plus what it discovers | Quick scripted prompting |
-| Other IDEs | Portable baseline instructions | Cross-IDE consistency |
+| Surface            | Context Access                               | Best For                 |
+| ------------------ | -------------------------------------------- | ------------------------ |
+| Agent mode (Chat)  | Full `.github/`, agents, prompts, tools      | Complex multi-step tasks |
+| Inline completions | `.github/instructions/` auto-scoped by file  | Line-by-line generation  |
+| CLI (`copilot`)    | Baseline repo context plus what it discovers | Quick scripted prompting |
+| Other IDEs         | Portable baseline instructions               | Cross-IDE consistency    |
+
+### Cross-Tool File Support
+
+Different AI coding tools recognize different instruction file names. The portable base remains repository docs and README files.
+
+| File                              | Tool                | Purpose                               |
+| --------------------------------- | ------------------- | ------------------------------------- |
+| `.github/copilot-instructions.md` | GitHub Copilot      | Repository-wide behavioral rules      |
+| `CLAUDE.md`                       | Claude Code         | Project context for Claude            |
+| `GEMINI.md`                       | Gemini Code Assist  | Project context for Gemini            |
+| `AGENTS.md`                       | Multiple (portable) | Base-level project agent instructions |
+| `/docs/` and `README.md`          | All tools           | Knowledge context (most portable)     |
+
+### excludeAgent Frontmatter
+
+The `excludeAgent` keyword in `.instructions.md` frontmatter controls which agent surfaces an instruction file applies to. Use `excludeAgent: code-review` to prevent verbose development guidance from loading during PR reviews, or `excludeAgent: coding-agent` to exclude autonomous agent runs.
 
 ## Context Files
 
-| Path | Purpose |
-| --- | --- |
-| `.github/copilot-instructions.md` | Universal baseline |
-| `.github/instructions/api.instructions.md` | API-scoped rules |
-| `.github/agents/reviewer.agent.md` | Review agent |
-| `docs/cli-guide.md` | CLI usage reference |
-| `docs/portability-matrix.md` | Surface compatibility reference |
-| `docs/surface-strategy-example.md` | Concrete lesson-07 demo target and assessment constraints |
+| Path                                       | Purpose                                                   |
+| ------------------------------------------ | --------------------------------------------------------- |
+| `.github/copilot-instructions.md`          | Universal baseline                                        |
+| `.github/instructions/api.instructions.md` | API-scoped rules                                          |
+| `.github/agents/reviewer.agent.md`         | Review agent                                              |
+| `docs/cli-guide.md`                        | CLI usage reference                                       |
+| `docs/portability-matrix.md`               | Surface compatibility reference                           |
+| `docs/surface-strategy-example.md`         | Concrete lesson-07 demo target and assessment constraints |
 
 ## Example Goal
 
