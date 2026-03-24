@@ -16,6 +16,8 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from typing import Dict
+from typing import List
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PID_FILE = SCRIPT_DIR / ".pids.json"
@@ -57,6 +59,136 @@ def _wait_for_port(port: int, timeout: float = 15.0) -> bool:
     return False
 
 
+def _wait_for_port_to_close(port: int, timeout: float = 10.0) -> bool:
+    """Wait until a port stops accepting connections."""
+    import socket
+
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        try:
+            with socket.create_connection(("127.0.0.1", port), timeout=1.0):
+                time.sleep(0.3)
+        except OSError:
+            return True
+    return False
+
+
+def _read_pid_file() -> Dict[str, int]:
+    """Return tracked agent PIDs from disk if the file exists."""
+    if not PID_FILE.exists():
+        return {}
+    return json.loads(PID_FILE.read_text(encoding="utf-8"))
+
+
+def _find_listener_pids(port: int) -> List[int]:
+    """Return process ids that are listening on the given TCP port."""
+    if sys.platform == "win32":
+        command = (
+            "Get-NetTCPConnection -LocalPort "
+            f"{port} -State Listen -ErrorAction SilentlyContinue | "
+            "Select-Object -ExpandProperty OwningProcess"
+        )
+        result = subprocess.run(
+            ["powershell", "-NoProfile", "-Command", command],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        values = result.stdout.splitlines()
+    else:
+        result = subprocess.run(
+            ["lsof", "-ti", f"tcp:{port}"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        values = result.stdout.splitlines()
+
+    pids: List[int] = []
+    for value in values:
+        stripped = value.strip()
+        if stripped.isdigit():
+            pids.append(int(stripped))
+    return sorted(set(pids))
+
+
+def _terminate_pid(pid: int, *, force: bool = False) -> None:
+    """Stop a process by pid using a soft or forced termination mode."""
+    if sys.platform == "win32":
+        command = ["taskkill", "/PID", str(pid), "/T"]
+        if force:
+            command.append("/F")
+        subprocess.run(
+            command,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    else:
+        os.kill(pid, signal.SIGKILL if force else signal.SIGTERM)
+
+
+def _stop_pid_group(pids: Dict[str, int], heading: str) -> None:
+    """Stop a set of named processes and print a consistent status block."""
+    if not pids:
+        return
+
+    print(heading)
+    for name, pid in pids.items():
+        try:
+            _terminate_pid(pid)
+            print(f"  Stopped {name} (PID {pid})")
+        except OSError:
+            print(f"  {name} (PID {pid}) already stopped")
+
+
+def _cleanup_existing_processes() -> bool:
+    """Stop tracked or stale listeners before starting new agent processes."""
+    print("  Preflight cleanup...")
+    tracked_pids = _read_pid_file()
+    if tracked_pids:
+        _stop_pid_group(tracked_pids, "  Stopping tracked processes from PID file...")
+        PID_FILE.unlink(missing_ok=True)
+
+    all_clear = True
+    for agent in AGENTS:
+        port = agent["port"]
+        listener_pids = [pid for pid in _find_listener_pids(port) if pid != os.getpid()]
+        if not listener_pids:
+            continue
+
+        print(
+            f"  Port {port} is already in use. Terminating listener(s): "
+            f"{', '.join(str(pid) for pid in listener_pids)}"
+        )
+        for pid in listener_pids:
+            try:
+                _terminate_pid(pid)
+            except OSError:
+                continue
+
+        if not _wait_for_port_to_close(port):
+            remaining = [pid for pid in _find_listener_pids(port) if pid != os.getpid()]
+            if remaining:
+                print(
+                    f"  Port {port} still busy after graceful shutdown. Forcing "
+                    f"listener(s): {', '.join(str(pid) for pid in remaining)}"
+                )
+                for pid in remaining:
+                    try:
+                        _terminate_pid(pid, force=True)
+                    except OSError:
+                        continue
+
+        if _wait_for_port_to_close(port):
+            print(f"  Port {port} is clear.")
+        else:
+            print(f"  ERROR: Port {port} is still busy after preflight cleanup.")
+            all_clear = False
+
+    return all_clear
+
+
 def start() -> int:
     """Start all agent servers as background processes."""
     python = _find_python()
@@ -67,6 +199,11 @@ def start() -> int:
     print("=" * 60)
     print("  Parallel Agents Pattern - Starting servers")
     print("=" * 60)
+
+    if not _cleanup_existing_processes():
+        print("  ERROR: Preflight cleanup failed. Resolve busy ports and retry.")
+        print("=" * 60)
+        return 1
 
     for agent in AGENTS:
         script = SCRIPT_DIR / agent["script"]
@@ -120,17 +257,7 @@ def stop() -> int:
         print("=" * 60)
         return 0
 
-    pids = json.loads(PID_FILE.read_text(encoding="utf-8"))
-
-    for name, pid in pids.items():
-        try:
-            if sys.platform == "win32":
-                os.kill(pid, signal.CTRL_BREAK_EVENT)
-            else:
-                os.kill(pid, signal.SIGTERM)
-            print(f"  Stopped {name} (PID {pid})")
-        except OSError:
-            print(f"  {name} (PID {pid}) already stopped")
+    _stop_pid_group(_read_pid_file(), "  Stopping tracked processes...")
 
     PID_FILE.unlink(missing_ok=True)
     print("  All agents stopped.")

@@ -1,10 +1,10 @@
-"""Process manager for the single agent example.
+"""Process manager for the Loop & Critique example.
 
 Usage:
-    python util.py --start   Start the agent server (background)
+    python util.py --start   Start all agent servers (background)
     python util.py --stop    Stop all agent processes
 
-Port: 11100
+Ports: 11401 (Generator), 11402 (Critic), 11403 (LoopOrchestrator)
 """
 
 import argparse
@@ -22,7 +22,9 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PID_FILE = SCRIPT_DIR / ".pids.json"
 
 AGENTS = [
-    {"name": "TripPlannerAgent", "script": "agent_server.py", "port": 11100},
+    {"name": "GeneratorAgent", "script": "generator_server.py", "port": 11401},
+    {"name": "CriticAgent", "script": "critic_server.py", "port": 11402},
+    {"name": "LoopOrchestrator", "script": "loop_server.py", "port": 11403},
 ]
 
 
@@ -191,7 +193,7 @@ def start() -> int:
     env["PYTHONUNBUFFERED"] = "1"
 
     print("=" * 60)
-    print("  Single Agent Pattern - Starting servers")
+    print("  Loop & Critique Pattern - Starting servers")
     print("=" * 60)
 
     if not _cleanup_existing_processes():
@@ -224,7 +226,6 @@ def start() -> int:
             print(f"  WARNING: {agent['name']} not responding on port {agent['port']}")
             all_ready = False
 
-    # Save PIDs
     PID_FILE.write_text(json.dumps(pids), encoding="utf-8")
 
     print("-" * 60)
@@ -242,7 +243,7 @@ def start() -> int:
 def stop() -> int:
     """Stop all agent processes."""
     print("=" * 60)
-    print("  Single Agent Pattern - Stopping servers")
+    print("  Loop & Critique Pattern - Stopping servers")
     print("=" * 60)
 
     if not PID_FILE.exists():
@@ -260,7 +261,7 @@ def stop() -> int:
 
 def main() -> None:
     """Parse arguments and dispatch."""
-    parser = argparse.ArgumentParser(description="Single Agent process manager")
+    parser = argparse.ArgumentParser(description="Loop & Critique process manager")
     parser.add_argument("--start", action="store_true", help="Start agent servers")
     parser.add_argument("--stop", action="store_true", help="Stop agent servers")
     args = parser.parse_args()

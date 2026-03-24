@@ -1,4 +1,4 @@
-# 03 — Loop & Critique
+# 06 — Loop & Critique
 
 Iterative refinement pattern: a Generator agent produces a trip plan and a
 Critic agent evaluates it. The Loop Orchestrator repeats until the Critic
@@ -47,7 +47,7 @@ ollama pull qwen3.5:0.8b
 ## Running
 
 ```bash
-cd _examples/agents/mono/agent-design-patterns-2/03-loop-and-critique
+cd _examples/agents/mono/agent-design-patterns-2/06-loop-and-critique
 python util.py --start
 python client.py          # in another terminal
 python util.py --stop

@@ -6,7 +6,7 @@ Runnable examples for the **AI Agent Design Patterns (Part 2)** mono video.
 
 | #   | Pattern             | Folder                  | Ports       |
 | --- | ------------------- | ----------------------- | ----------- |
-| 03  | Loop & Critique     | `03-loop-and-critique/` | 11401-11403 |
+| 06  | Loop & Critique     | `06-loop-and-critique/` | 11401-11403 |
 | 04  | Coordinator Routing | `04-coordinator/`       | 11411-11414 |
 | 05  | Agent-as-Tool       | `05-agent-as-tool/`     | 11421-11424 |
 
@@ -30,7 +30,7 @@ ollama pull qwen3.5:0.8b
 
 ## Architecture
 
-### 03 — Loop & Critique
+### 06 — Loop & Critique
 
 ```mermaid
 graph LR
@@ -77,7 +77,7 @@ and synthesizes the combined results itself.
 Each pattern folder has its own `util.py` and `client.py`:
 
 ```bash
-cd _examples/agents/mono/agent-design-patterns-2/03-loop-and-critique
+cd _examples/agents/mono/agent-design-patterns-2/06-loop-and-critique
 python util.py --start
 python client.py
 python util.py --stop
