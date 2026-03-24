@@ -17,7 +17,7 @@ AGENT_CARD_URL = "http://localhost:11100/.well-known/agent-card.json"
 
 QUERIES = [
     "Plan a weekend trip to San Francisco. Include attractions, restaurants, and weather.",
-    "What are the best things to do in New York?",
+    "What are the best things to do in San Francisco?",
 ]
 
 
