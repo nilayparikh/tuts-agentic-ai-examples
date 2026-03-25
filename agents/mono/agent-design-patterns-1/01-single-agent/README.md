@@ -36,7 +36,8 @@ python util.py --start
 # Terminal 2 — run client
 python client.py
 
-# Stop server
+# Stop server from Terminal 1 with Ctrl+C,
+# or from any terminal with:
 python util.py --stop
 ```
 

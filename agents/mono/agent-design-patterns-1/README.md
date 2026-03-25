@@ -28,9 +28,9 @@ ollama pull qwen3.5:0.8b
 
 ```bash
 cd _examples/agents/mono/agent-design-patterns-1/01-single-agent
-python util.py --start
-python client.py
-python util.py --stop
+python util.py --start   # keep this terminal open
+python client.py         # run from another terminal
+# press Ctrl+C in the util.py terminal, or run: python util.py --stop
 ```
 
 Each subfolder contains its own `util.py`, `client.py`, and README.

@@ -46,9 +46,9 @@ ollama pull qwen3.5:0.8b
 
 ```bash
 cd _examples/agents/mono/agent-design-patterns-1/03-parallel-agents
-python util.py --start     # Start all 5 agents
-python client.py           # Send a test query
-python util.py --stop      # Stop all agents
+python util.py --start     # keep this terminal open
+python client.py           # run from another terminal
+# press Ctrl+C in the util.py terminal, or run: python util.py --stop
 ```
 
 ## Data Flow
@@ -69,17 +69,17 @@ structured input.
 
 ```json
 {
-    "agent": "MuseumFinder",
-    "city": "san francisco",
-    "kind": "museum_options",
-    "items": [
-        {
-            "name": "SFMOMA",
-            "type": "Modern art",
-            "area": "SoMa"
-        }
-    ],
-    "note": "Start the day with a culture stop near the listed area."
+  "agent": "MuseumFinder",
+  "city": "san francisco",
+  "kind": "museum_options",
+  "items": [
+    {
+      "name": "SFMOMA",
+      "type": "Modern art",
+      "area": "SoMa"
+    }
+  ],
+  "note": "Start the day with a culture stop near the listed area."
 }
 ```
 
@@ -87,17 +87,17 @@ structured input.
 
 ```json
 {
-    "agent": "ConcertFinder",
-    "city": "san francisco",
-    "kind": "concert_options",
-    "items": [
-        {
-            "name": "Jazz at The Fillmore",
-            "genre": "Jazz",
-            "venue": "The Fillmore"
-        }
-    ],
-    "note": "Use the live event as the evening anchor."
+  "agent": "ConcertFinder",
+  "city": "san francisco",
+  "kind": "concert_options",
+  "items": [
+    {
+      "name": "Jazz at The Fillmore",
+      "genre": "Jazz",
+      "venue": "The Fillmore"
+    }
+  ],
+  "note": "Use the live event as the evening anchor."
 }
 ```
 
@@ -105,17 +105,17 @@ structured input.
 
 ```json
 {
-    "agent": "RestaurantFinder",
-    "city": "san francisco",
-    "kind": "restaurant_options",
-    "items": [
-        {
-            "name": "Tartine Bakery",
-            "cuisine": "French bakery",
-            "area": "Mission"
-        }
-    ],
-    "note": "Use the food stop as the afternoon break between activities."
+  "agent": "RestaurantFinder",
+  "city": "san francisco",
+  "kind": "restaurant_options",
+  "items": [
+    {
+      "name": "Tartine Bakery",
+      "cuisine": "French bakery",
+      "area": "Mission"
+    }
+  ],
+  "note": "Use the food stop as the afternoon break between activities."
 }
 ```
 
@@ -123,30 +123,30 @@ structured input.
 
 ```json
 {
-    "original_query": "Plan a full day in San Francisco with museums, concerts, and great food.",
-    "results": {
-        "MuseumFinder": {
-            "agent": "MuseumFinder",
-            "city": "san francisco",
-            "kind": "museum_options",
-            "items": [],
-            "note": "Start the day with a culture stop near the listed area."
-        },
-        "ConcertFinder": {
-            "agent": "ConcertFinder",
-            "city": "san francisco",
-            "kind": "concert_options",
-            "items": [],
-            "note": "Use the live event as the evening anchor."
-        },
-        "RestaurantFinder": {
-            "agent": "RestaurantFinder",
-            "city": "san francisco",
-            "kind": "restaurant_options",
-            "items": [],
-            "note": "Use the food stop as the afternoon break between activities."
-        }
+  "original_query": "Plan a full day in San Francisco with museums, concerts, and great food.",
+  "results": {
+    "MuseumFinder": {
+      "agent": "MuseumFinder",
+      "city": "san francisco",
+      "kind": "museum_options",
+      "items": [],
+      "note": "Start the day with a culture stop near the listed area."
+    },
+    "ConcertFinder": {
+      "agent": "ConcertFinder",
+      "city": "san francisco",
+      "kind": "concert_options",
+      "items": [],
+      "note": "Use the live event as the evening anchor."
+    },
+    "RestaurantFinder": {
+      "agent": "RestaurantFinder",
+      "city": "san francisco",
+      "kind": "restaurant_options",
+      "items": [],
+      "note": "Use the food stop as the afternoon break between activities."
     }
+  }
 }
 ```
 
@@ -177,4 +177,4 @@ Evening - Live event:
 - Specialists return machine-readable JSON rather than freeform prose.
 - The synthesizer is the only layer that renders end-user narrative text.
 - The final response is grounded strictly in returned fields, which keeps the
-    demo deterministic and easy to debug.
+  demo deterministic and easy to debug.

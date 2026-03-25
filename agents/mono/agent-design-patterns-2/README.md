@@ -78,7 +78,7 @@ Each pattern folder has its own `util.py` and `client.py`:
 
 ```bash
 cd _examples/agents/mono/agent-design-patterns-2/06-loop-and-critique
-python util.py --start
-python client.py
-python util.py --stop
+python util.py --start   # keep this terminal open
+python client.py         # run from another terminal
+# press Ctrl+C in the util.py terminal, or run: python util.py --stop
 ```

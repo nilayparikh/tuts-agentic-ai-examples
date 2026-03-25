@@ -1,7 +1,7 @@
 """Process manager for the single agent example.
 
 Usage:
-    python util.py --start   Start the agent server (background)
+    python util.py --start   Start the agent server and keep it attached
     python util.py --stop    Stop all agent processes
 
 Port: 11100
@@ -183,9 +183,27 @@ def _cleanup_existing_processes() -> bool:
     return all_clear
 
 
+def _wait_for_processes(processes: Dict[str, subprocess.Popen]) -> int:
+    """Keep the manager alive until Ctrl+C or a child process exits."""
+    print("  Agents are running. Press Ctrl+C in this terminal to stop them.")
+    try:
+        while True:
+            for name, proc in processes.items():
+                return_code = proc.poll()
+                if return_code is None:
+                    continue
+                print(f"  ERROR: {name} exited unexpectedly with code {return_code}.")
+                return 1
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        print("\n  Ctrl+C received. Stopping tracked processes...")
+        return 0
+
+
 def start() -> int:
-    """Start all agent servers as background processes."""
+    """Start all agent servers and keep them attached to this terminal."""
     python = _find_python()
+    processes = {}
     pids = {}
     env = os.environ.copy()
     env["PYTHONUNBUFFERED"] = "1"
@@ -203,6 +221,8 @@ def start() -> int:
         script = SCRIPT_DIR / agent["script"]
         if not script.exists():
             print(f"ERROR: {script} not found")
+            _stop_pid_group(pids, "  Stopping tracked processes...")
+            PID_FILE.unlink(missing_ok=True)
             return 1
 
         print(f"  Starting {agent['name']} on port {agent['port']}...")
@@ -210,8 +230,8 @@ def start() -> int:
             [python, str(script)],
             cwd=str(SCRIPT_DIR),
             env=env,
-            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if sys.platform == "win32" else 0,
         )
+        processes[agent["name"]] = proc
         pids[agent["name"]] = proc.pid
         print(f"    PID: {proc.pid}")
 
@@ -231,12 +251,24 @@ def start() -> int:
     if all_ready:
         print("  All agents started successfully.")
         print("  Server logs stream in this terminal while the agents run.")
-        print("  Run 'python client.py' to test.")
-        print("  Run 'python util.py --stop' to stop.")
+        print("  Keep this terminal open while the agent runs.")
+        print("  Run 'python client.py' from another terminal to test.")
+        print("  Press Ctrl+C here or run 'python util.py --stop' from another terminal.")
     else:
-        print("  WARNING: Some agents failed to start.")
+        print("  ERROR: The agent failed to become ready. Stopping started processes.")
+        _stop_pid_group(pids, "  Stopping tracked processes...")
+        PID_FILE.unlink(missing_ok=True)
+        print("=" * 60)
+        return 1
     print("=" * 60)
-    return 0
+
+    try:
+        return _wait_for_processes(processes)
+    finally:
+        _stop_pid_group(pids, "  Stopping tracked processes...")
+        PID_FILE.unlink(missing_ok=True)
+        print("  All agents stopped.")
+        print("=" * 60)
 
 
 def stop() -> int:
@@ -261,7 +293,11 @@ def stop() -> int:
 def main() -> None:
     """Parse arguments and dispatch."""
     parser = argparse.ArgumentParser(description="Single Agent process manager")
-    parser.add_argument("--start", action="store_true", help="Start agent servers")
+    parser.add_argument(
+        "--start",
+        action="store_true",
+        help="Start agent servers and keep the manager attached",
+    )
     parser.add_argument("--stop", action="store_true", help="Stop agent servers")
     args = parser.parse_args()
 

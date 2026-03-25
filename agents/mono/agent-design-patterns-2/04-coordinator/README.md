@@ -47,7 +47,7 @@ ollama pull qwen3.5:0.8b
 cd _examples/agents/mono/agent-design-patterns-2/04-coordinator
 python util.py --start
 python client.py          # in another terminal
-python util.py --stop
+# press Ctrl+C in the util.py terminal, or run: python util.py --stop
 ```
 
 ## Key Concepts
