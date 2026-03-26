@@ -1,15 +1,24 @@
 """Synthesizer A2A Agent -- merges parallel results into a day plan.
 
 Receives combined results from all parallel finders and produces
-a unified day itinerary using the LLM.
+a unified day itinerary using Ollama. If Ollama is unavailable or
+returns an empty response, the agent falls back to a deterministic
+formatter so the A2A request still completes.
+
+Required env vars:
+    - Optional: OLLAMA_BASE (defaults to http://127.0.0.1:11434/v1)
+    - Optional: OLLAMA_MODEL (defaults to qwen3.5:0.8b)
 
 Port: 11304
 """
 
 import json
 import logging
+import os
+from typing import Any
 
 import uvicorn
+from openai import OpenAI
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.apps import A2AStarletteApplication
@@ -23,22 +32,92 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(message
 logger = logging.getLogger("synthesizer")
 
 PORT = 11304
+OLLAMA_BASE = os.getenv("OLLAMA_BASE", "http://127.0.0.1:11434/v1")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
+SYSTEM_PROMPT = (
+    "You are a city itinerary synthesizer. Build a concise plain-text day plan "
+    "using only the structured specialist results provided by the user. Do not "
+    "invent venues, cuisines, or neighborhoods. Do not use markdown bullets or "
+    "headings beyond plain text labels. Do not wrap your answer in <think> tags."
+)
 
 
 class SynthesizerAgent:
     """Merges parallel agent outputs into a cohesive day plan."""
 
-    def __init__(self) -> None:
-        """Initialize the agent."""
-        pass
+    def __init__(self, client: Any | None = None) -> None:
+        """Initialize the Ollama-compatible OpenAI client."""
+        self._client = client or OpenAI(base_url=OLLAMA_BASE, api_key="unused")
 
     def process(self, combined_input: str) -> str:
         """Synthesize multiple finder results into one plan."""
         logger.info("Synthesizing results (input length=%d)", len(combined_input))
 
-        answer = _format_day_plan(combined_input)
+        fallback_plan = _format_day_plan(combined_input)
+        answer = self._generate_plan(combined_input, fallback_plan)
         logger.info("Synthesized plan generated (length=%d)", len(answer))
         return answer
+
+    def _generate_plan(self, combined_input: str, fallback_plan: str) -> str:
+        """Call Ollama for the final natural-language synthesis."""
+        try:
+            response = self._client.chat.completions.create(
+                model=MODEL,
+                messages=_build_messages(combined_input, fallback_plan),
+                extra_body={"reasoning": {"effort": "none"}},
+                max_tokens=1200,
+            )
+        except Exception as exc:
+            logger.warning("Ollama synthesis failed: %s", exc)
+            return fallback_plan
+
+        answer = _extract_model_text(response)
+        if answer:
+            return answer
+
+        logger.warning("Ollama synthesis returned an empty response. Using fallback plan.")
+        return fallback_plan
+
+
+def _build_messages(combined_input: str, fallback_plan: str) -> list[dict[str, str]]:
+    """Build the prompt payload for the synthesis model."""
+    payload = _parse_payload(combined_input)
+    request = payload.get("original_query", "")
+    structured_results = json.dumps(payload.get("results", {}), indent=2)
+    user_prompt = (
+        f"User request:\n{request}\n\n"
+        f"Structured specialist results:\n{structured_results}\n\n"
+        "Use only the provided specialist facts. If one category has no options, "
+        "say so plainly. Keep the answer compact and practical.\n\n"
+        f"Deterministic fallback plan for reference:\n{fallback_plan}"
+    )
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": user_prompt},
+    ]
+
+
+def _extract_model_text(response: Any) -> str:
+    """Extract and normalize text returned by the Ollama chat completion."""
+    choices = getattr(response, "choices", [])
+    if not choices:
+        return ""
+
+    message = getattr(choices[0], "message", None)
+    content = getattr(message, "content", "") if message is not None else ""
+    if not isinstance(content, str):
+        return ""
+
+    return _strip_think_tags(content).strip()
+
+
+def _strip_think_tags(text: str) -> str:
+    """Remove model reasoning tags when they appear in Ollama output."""
+    if "<think>" not in text:
+        return text
+    if "</think>" in text:
+        return text.split("</think>", maxsplit=1)[-1]
+    return text.replace("<think>", "")
 
 
 def _parse_payload(combined_input: str) -> dict:

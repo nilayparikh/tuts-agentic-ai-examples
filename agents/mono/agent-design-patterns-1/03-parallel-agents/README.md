@@ -2,6 +2,10 @@
 
 Demonstrates the **parallel agent** pattern: multiple specialist agents run
 concurrently, and their results are synthesized into a unified response.
+The three specialist finders return structured JSON from demo data, and the
+Synthesizer uses Ollama to turn that combined payload into the final plan.
+If the model call fails, the Synthesizer falls back to a deterministic formatter
+so the request still completes.
 
 ## Architecture
 
@@ -57,7 +61,8 @@ python client.py           # run from another terminal
 2. Orchestrator fans out three concurrent A2A calls to the finders.
 3. Each finder returns a structured JSON payload for its domain.
 4. Orchestrator combines those JSON payloads and forwards them to the **Synthesizer** (11304).
-5. Synthesizer renders a richer merged day plan from structured data and returns it to the client.
+5. Synthesizer calls Ollama to render a richer merged day plan from structured data.
+6. If Ollama is unavailable, the Synthesizer returns a deterministic fallback plan instead of dropping the request.
 
 ## Structured Payload Contract
 
@@ -175,6 +180,7 @@ Evening - Live event:
 ## Best Practice Notes
 
 - Specialists return machine-readable JSON rather than freeform prose.
-- The synthesizer is the only layer that renders end-user narrative text.
+- The synthesizer is the only layer that renders end-user narrative text and it does that through Ollama.
 - The final response is grounded strictly in returned fields, which keeps the
   demo deterministic and easy to debug.
+- Ollama failure should degrade gracefully to a deterministic fallback instead of failing the A2A call.
