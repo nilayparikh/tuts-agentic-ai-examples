@@ -136,15 +136,16 @@ class CoordinatorRouter:
         """Initialize the OpenAI client for Ollama."""
         self._client = OpenAI(base_url=OLLAMA_BASE, api_key=OLLAMA_API_KEY)
 
-    def _classify_query(self, query: str) -> str:
-        """Use LLM to classify which agent should handle the query."""
-        # Try keyword-based classification first for reliability
-        keyword_result = self._keyword_classify(query)
-        if keyword_result:
-            logger.info("Keyword classifier matched: %s", keyword_result)
-            return keyword_result
+    def _normalize_agent_name(self, answer: str) -> str:
+        """Map an LLM answer back to one of the registered specialist agents."""
+        cleaned = answer.strip()
+        for agent in SPECIALIST_AGENTS:
+            if agent["name"].lower() in cleaned.lower():
+                return agent["name"]
+        return ""
 
-        # Fall back to LLM classification
+    def _llm_classify(self, query: str) -> str:
+        """Ask the configured LLM to choose the best specialist agent."""
         agent_descriptions = "\n".join(
             f"- {a['name']}: {a['description']}" for a in SPECIALIST_AGENTS
         )
@@ -174,6 +175,26 @@ class CoordinatorRouter:
             answer = parts[-1].strip() if len(parts) > 1 else answer
         return answer.strip()
 
+    def _classify_query(self, query: str) -> str:
+        """Use LLM classification first and recover with keyword rules if needed."""
+        llm_answer = ""
+        try:
+            llm_answer = self._llm_classify(query)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            logger.warning("LLM classifier failed, using keyword fallback: %s", exc)
+
+        normalized = self._normalize_agent_name(llm_answer)
+        if normalized:
+            logger.info("LLM classifier selected: %s", normalized)
+            return normalized
+
+        keyword_result = self._keyword_classify(query)
+        if keyword_result:
+            logger.info("Keyword fallback matched: %s", keyword_result)
+            return keyword_result
+
+        return llm_answer.strip()
+
     def _keyword_classify(self, query: str) -> str:
         """Classify query using keyword matching. Returns agent name or empty."""
         q_lower = query.lower()
@@ -187,7 +208,7 @@ class CoordinatorRouter:
         """Classify and route the query to the appropriate agent."""
         logger.info("Coordinator routing: %s", user_query[:60])
 
-        # Step 1: Classify the query (keyword first, then LLM fallback)
+        # Step 1: Classify the query (LLM first, keyword fallback if needed)
         chosen = self._classify_query(user_query)
         logger.info("Classification result: %s", chosen)
 

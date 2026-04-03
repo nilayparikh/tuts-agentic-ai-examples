@@ -13,6 +13,7 @@ Port: 11100
 import json
 import logging
 import os
+import re
 
 import uvicorn
 from openai import OpenAI
@@ -143,6 +144,91 @@ TOOL_MAP = {
     "get_weather": get_weather,
 }
 
+RAW_TOOL_PATTERN = re.compile(
+    r"(?:search_attractions|search_restaurants|get_weather)\s*\{",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_raw_tool_text(text: str) -> bool:
+    """Detect plain-text tool syntax returned instead of an actual plan."""
+    return bool(RAW_TOOL_PATTERN.search(text))
+
+
+def _extract_city_from_query(query: str) -> str:
+    """Extract a destination city from the user query when possible."""
+    for city in ["San Francisco", "New York"]:
+        if city.lower() in query.lower():
+            return city
+
+    match = re.search(r"\b(?:to|in)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)", query)
+    if match:
+        return match.group(1)
+    return "the destination"
+
+
+def _select_fallback_tools(query: str) -> list[str]:
+    """Choose which local tools to invoke for a deterministic fallback."""
+    lower_query = query.lower()
+    selected = []
+
+    if any(word in lower_query for word in ["attraction", "things to do", "trip", "weekend"]):
+        selected.append("search_attractions")
+    if any(word in lower_query for word in ["restaurant", "food", "dining", "trip", "weekend"]):
+        selected.append("search_restaurants")
+    if any(word in lower_query for word in ["weather", "forecast", "trip", "weekend"]):
+        selected.append("get_weather")
+
+    return selected or ["search_attractions", "search_restaurants", "get_weather"]
+
+
+def _parse_tool_json(text: str) -> dict:
+    """Parse a JSON tool response into a dict."""
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError:
+        return {}
+    return parsed if isinstance(parsed, dict) else {}
+
+
+def _build_fallback_plan(query: str) -> str:
+    """Create a grounded response when the model emits raw tool syntax."""
+    city = _extract_city_from_query(query)
+    requested_tools = _select_fallback_tools(query)
+    results = {}
+
+    for tool_name in requested_tools:
+        if tool_name == "search_restaurants":
+            results[tool_name] = _parse_tool_json(search_restaurants(city))
+        elif tool_name == "search_attractions":
+            results[tool_name] = _parse_tool_json(search_attractions(city))
+        elif tool_name == "get_weather":
+            results[tool_name] = _parse_tool_json(get_weather(city))
+
+    lines = [f"Trip summary for {city}:"]
+
+    attractions = results.get("search_attractions", {}).get("attractions", [])
+    if attractions:
+        lines.append(f"Attractions: {attractions[0]}")
+        if len(attractions) > 1:
+            lines.append(f"More to do: {'; '.join(attractions[1:])}")
+
+    restaurants = results.get("search_restaurants", {}).get("restaurants", [])
+    if restaurants:
+        lines.append(f"Food: {restaurants[0]}")
+        if len(restaurants) > 1:
+            lines.append(f"More food options: {'; '.join(restaurants[1:])}")
+
+    weather = results.get("get_weather", {})
+    if weather:
+        lines.append(
+            "Weather: "
+            f"{weather.get('temp', 'Unknown')}, {weather.get('condition', 'Unknown')}, "
+            f"wind {weather.get('wind', 'Unknown')}"
+        )
+
+    return "\n".join(lines)
+
 
 # ---------------------------------------------------------------------------
 # Agent logic
@@ -212,10 +298,14 @@ class TripPlannerAgent:
                 if "<think>" in answer:
                     parts = answer.split("</think>")
                     answer = parts[-1].strip() if len(parts) > 1 else answer
+                if _looks_like_raw_tool_text(answer):
+                    logger.info("Model returned raw tool text; using deterministic fallback")
+                    return _build_fallback_plan(user_query)
                 logger.info("Final answer produced (length=%d)", len(answer))
                 return answer
 
-        return "Could not complete the request within the iteration limit."
+        logger.info("Iteration limit reached; using deterministic fallback")
+        return _build_fallback_plan(user_query)
 
 
 # ---------------------------------------------------------------------------

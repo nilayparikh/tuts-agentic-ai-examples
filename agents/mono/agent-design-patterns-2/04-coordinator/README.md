@@ -2,7 +2,8 @@
 
 Dynamic routing pattern: a Coordinator uses an LLM to classify the user
 query and route it to the best-fit specialist agent. No fixed pipeline —
-the LLM decides routing at runtime.
+the LLM decides routing at runtime, with keyword fallback only when the
+model returns no usable agent choice.
 
 ## Architecture
 
@@ -54,9 +55,10 @@ python client.py          # in another terminal
 
 - **LLM-driven routing**: The Coordinator uses an LLM to read agent descriptions
   and decide which specialist handles the query
-- **Dynamic dispatch**: No hardcoded if/else — new agents can be added to the
-  registry and the LLM will route to them automatically
-- **Fallback**: If classification fails, defaults to FoodAgent
+- **Dynamic dispatch**: The LLM path runs first. A small keyword table is used
+  only as a recovery path when the model returns no valid agent name
+- **Fallback**: If neither the LLM nor the keyword fallback yields a match,
+  the Coordinator defaults to FoodAgent
 - **Single-hop**: Each query is routed to exactly one specialist
 - **Structured specialist contract**: Each specialist returns a JSON payload so
   the Coordinator can render a grounded response consistently
