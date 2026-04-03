@@ -145,7 +145,7 @@ TOOL_MAP = {
 }
 
 RAW_TOOL_PATTERN = re.compile(
-    r"(?:search_attractions|search_restaurants|get_weather)\s*\{",
+    r"(?:search_attractions|search_restaurants|get_weather)\s*(?:\{|\()",
     re.IGNORECASE,
 )
 

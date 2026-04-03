@@ -44,9 +44,9 @@ class TripPlannerAgentTests(unittest.TestCase):
     def test_process_replaces_raw_tool_text_with_grounded_fallback_plan(self) -> None:
         """Execute fallback tools when the model emits tool syntax as plain text."""
         fake_client = _FakeOpenAI(
-            "search_attractions{city:<|\"|>San Francisco<|\"|>}\n"
-            "search_restaurants{city:<|\"|>San Francisco<|\"|>}\n"
-            "get_weather{city:<|\"|>San Francisco<|\"|>}"
+            "search_attractions(city=\"San Francisco\")\n"
+            "search_restaurants(city=\"San Francisco\")\n"
+            "get_weather(city=\"San Francisco\")"
         )
 
         with patch.object(agent_server, "OpenAI", return_value=fake_client):
