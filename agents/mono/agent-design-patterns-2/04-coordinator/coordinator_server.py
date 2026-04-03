@@ -11,17 +11,19 @@ Available specialists:
 
 Requires:
     - All specialist agents running (ports 11411-11413)
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11414
 """
 
 import json
 import logging
+import os
 
 import httpx
 import uvicorn
 from openai import OpenAI
+from dotenv import load_dotenv
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.apps import A2AStarletteApplication
@@ -34,9 +36,12 @@ from a2a.utils import new_agent_text_message
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(message)s")
 logger = logging.getLogger("coordinator")
 
+load_dotenv()
+
 PORT = 11414
-OLLAMA_BASE = "http://127.0.0.1:11434/v1"
-MODEL = "qwen3.5:0.8b"
+OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
+MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
 
 SPECIALIST_AGENTS = [
     {
@@ -59,7 +64,7 @@ SPECIALIST_AGENTS = [
 
 async def call_agent(name: str, port: int, payload: str) -> str:
     """Send a message to an A2A agent and return the text response."""
-    url = f"http://localhost:{port}/"
+    url = f"http://127.0.0.1:{port}/"
     rpc_request = {
         "jsonrpc": "2.0",
         "id": f"coord-{name}",
@@ -129,7 +134,7 @@ class CoordinatorRouter:
 
     def __init__(self) -> None:
         """Initialize the OpenAI client for Ollama."""
-        self._client = OpenAI(base_url=OLLAMA_BASE, api_key="unused")
+        self._client = OpenAI(base_url=OLLAMA_BASE, api_key=OLLAMA_API_KEY)
 
     def _classify_query(self, query: str) -> str:
         """Use LLM to classify which agent should handle the query."""
@@ -278,7 +283,7 @@ def _format_routing_result(user_query: str, agent_name: str, payload: dict) -> s
 agent_card = AgentCard(
     name="Coordinator",
     description="Routes queries dynamically to specialist agents using LLM classification.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

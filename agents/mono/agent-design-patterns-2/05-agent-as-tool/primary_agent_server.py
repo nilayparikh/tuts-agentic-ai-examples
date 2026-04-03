@@ -12,17 +12,19 @@ Sub-agents:
 
 Requires:
     - All sub-agents running (ports 11421-11423)
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11424
 """
 
 import json
 import logging
+import os
 
 import httpx
 import uvicorn
 from openai import OpenAI
+from dotenv import load_dotenv
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.apps import A2AStarletteApplication
@@ -35,9 +37,12 @@ from a2a.utils import new_agent_text_message
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(message)s")
 logger = logging.getLogger("primary-agent")
 
+load_dotenv()
+
 PORT = 11424
-OLLAMA_BASE = "http://127.0.0.1:11434/v1"
-MODEL = "qwen3.5:0.8b"
+OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
+MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
 
 # Map tool names to their A2A agent ports
 AGENT_TOOLS = {
@@ -105,7 +110,7 @@ TOOLS = [
 async def call_sub_agent(tool_name: str, query: str) -> str:
     """Call a sub-agent via A2A and return the text response."""
     port = AGENT_TOOLS[tool_name]
-    url = f"http://localhost:{port}/"
+    url = f"http://127.0.0.1:{port}/"
     rpc_request = {
         "jsonrpc": "2.0",
         "id": f"tool-{tool_name}",
@@ -151,7 +156,7 @@ class PrimaryAgent:
 
     def __init__(self) -> None:
         """Initialize the OpenAI client for Ollama."""
-        self._client = OpenAI(base_url=OLLAMA_BASE, api_key="unused")
+        self._client = OpenAI(base_url=OLLAMA_BASE, api_key=OLLAMA_API_KEY)
 
     async def process(self, user_query: str) -> str:
         """Process query using sub-agents as tools."""
@@ -322,7 +327,7 @@ def _format_trip_plan(query: str, tool_results: dict) -> str:
 agent_card = AgentCard(
     name="PrimaryAgent",
     description="Trip planner that uses sub-agents as tools for food, transport, and attractions.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

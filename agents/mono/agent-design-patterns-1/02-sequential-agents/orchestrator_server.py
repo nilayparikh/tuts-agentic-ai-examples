@@ -36,7 +36,7 @@ PIPELINE = [
 
 async def call_agent(name: str, port: int, payload: str) -> str:
     """Send a message to an A2A agent and return the text response."""
-    url = f"http://localhost:{port}/"
+    url = f"http://127.0.0.1:{port}/"
     rpc_request = {
         "jsonrpc": "2.0",
         "id": f"seq-{name}",
@@ -162,7 +162,7 @@ def _format_trip_plan(user_query: str, food_payload: dict, transport_payload: di
 agent_card = AgentCard(
     name="SequentialOrchestrator",
     description="Chains Food Finder and Transport agents in sequence.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

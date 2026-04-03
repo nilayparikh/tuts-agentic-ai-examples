@@ -42,4 +42,3 @@ uv.lock
 # App
 **/*.log
 **/.pids.json
-agents/mono/agent-design-patterns-1/03-parallel-agents/.pids.json

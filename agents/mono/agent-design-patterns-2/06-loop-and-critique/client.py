@@ -12,8 +12,8 @@ import sys
 
 import httpx
 
-AGENT_URL = "http://localhost:11403/"
-AGENT_CARD_URL = "http://localhost:11403/.well-known/agent-card.json"
+AGENT_URL = "http://127.0.0.1:11403/"
+AGENT_CARD_URL = "http://127.0.0.1:11403/.well-known/agent-card.json"
 
 QUERIES = [
     "Plan a weekend trip to San Francisco. Include hotel, attractions, dining, and transport.",

@@ -5,9 +5,12 @@ a unified day itinerary using Ollama. If Ollama is unavailable or
 returns an empty response, the agent falls back to a deterministic
 formatter so the A2A request still completes.
 
-Required env vars:
-    - Optional: OLLAMA_BASE (defaults to http://127.0.0.1:11434/v1)
-    - Optional: OLLAMA_MODEL (defaults to qwen3.5:0.8b)
+Optional environment overrides:
+    - OLLAMA_BASE_URL (defaults to http://127.0.0.1:11434/v1)
+    - OLLAMA_API_KEY (defaults to unused)
+    - OLLAMA_MODEL (defaults to gemma4:e2b)
+
+If these variables are not set, the server uses the defaults above.
 
 Port: 11304
 """
@@ -18,6 +21,7 @@ import os
 from typing import Any
 
 import uvicorn
+from dotenv import load_dotenv
 from openai import OpenAI
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
@@ -31,9 +35,12 @@ from a2a.utils import new_agent_text_message
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(message)s")
 logger = logging.getLogger("synthesizer")
 
+load_dotenv()
+
 PORT = 11304
-OLLAMA_BASE = os.getenv("OLLAMA_BASE", "http://127.0.0.1:11434/v1")
-MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
+OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
+MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
 SYSTEM_PROMPT = (
     "You are a city itinerary synthesizer. Build a concise plain-text day plan "
     "using only the structured specialist results provided by the user. Do not "
@@ -47,7 +54,7 @@ class SynthesizerAgent:
 
     def __init__(self, client: Any | None = None) -> None:
         """Initialize the Ollama-compatible OpenAI client."""
-        self._client = client or OpenAI(base_url=OLLAMA_BASE, api_key="unused")
+        self._client = client or OpenAI(base_url=OLLAMA_BASE, api_key=OLLAMA_API_KEY)
 
     def process(self, combined_input: str) -> str:
         """Synthesize multiple finder results into one plan."""
@@ -200,7 +207,7 @@ def _format_day_plan(combined_input: str) -> str:
 agent_card = AgentCard(
     name="SynthesizerAgent",
     description="Merges parallel agent results into a unified day plan.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

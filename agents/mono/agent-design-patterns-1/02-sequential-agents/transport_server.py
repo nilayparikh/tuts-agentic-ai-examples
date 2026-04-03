@@ -122,7 +122,7 @@ def _extract_city(text: str) -> str:
 agent_card = AgentCard(
     name="TransportAgent",
     description="Plans transportation routes between food destinations.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

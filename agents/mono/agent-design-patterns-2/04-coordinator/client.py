@@ -12,8 +12,8 @@ import sys
 
 import httpx
 
-AGENT_URL = "http://localhost:11414/"
-AGENT_CARD_URL = "http://localhost:11414/.well-known/agent-card.json"
+AGENT_URL = "http://127.0.0.1:11414/"
+AGENT_CARD_URL = "http://127.0.0.1:11414/.well-known/agent-card.json"
 
 # Three queries designed to trigger different routing decisions
 QUERIES = [

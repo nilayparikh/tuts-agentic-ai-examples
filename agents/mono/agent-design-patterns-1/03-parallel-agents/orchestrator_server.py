@@ -155,7 +155,7 @@ agent_card = AgentCard(
         "Orchestrates parallel lookups across museum, concert, and restaurant "
         "finders, then synthesizes results into a day plan."
     ),
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

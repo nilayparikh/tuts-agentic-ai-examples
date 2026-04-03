@@ -21,7 +21,13 @@ python -m venv .venv
 # macOS/Linux
 source .venv/bin/activate
 pip install -r requirements.txt
-ollama pull qwen3.5:0.8b
+ollama pull gemma4:e2b
+
+# No environment variables are required.
+# These examples default to http://127.0.0.1:11434/v1 and gemma4:e2b.
+# Only set overrides if you want different values.
+# set OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+# set OLLAMA_MODEL=gemma4:e2b
 ```
 
 ## Running

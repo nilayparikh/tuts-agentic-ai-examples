@@ -4,7 +4,7 @@ Specialist agent for the Coordinator pattern. Answers food-related
 queries for any city.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11411
 """
@@ -90,7 +90,7 @@ def _split_label_and_detail(entry: str) -> dict:
 agent_card = AgentCard(
     name="FoodAgent",
     description="Specialist for food, dining, and restaurant recommendations.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

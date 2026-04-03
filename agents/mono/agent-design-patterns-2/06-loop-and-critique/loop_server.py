@@ -40,7 +40,7 @@ CRITIC_PORT = 11402
 
 async def call_agent(name: str, port: int, payload: str) -> str:
     """Send a message to an A2A agent and return the text response."""
-    url = f"http://localhost:{port}/"
+    url = f"http://127.0.0.1:{port}/"
     rpc_request = {
         "jsonrpc": "2.0",
         "id": f"loop-{name}",
@@ -137,7 +137,7 @@ class LoopOrchestrator:
 agent_card = AgentCard(
     name="LoopOrchestrator",
     description="Iteratively refines trip plans using generate-critique loop.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

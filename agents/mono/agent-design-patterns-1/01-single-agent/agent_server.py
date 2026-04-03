@@ -5,16 +5,18 @@ to call and in what order. The agent has three tools (search_attractions,
 search_restaurants, get_weather) and autonomously decides execution flow.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11100
 """
 
 import json
 import logging
+import os
 
 import uvicorn
 from openai import OpenAI
+from dotenv import load_dotenv
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.apps import A2AStarletteApplication
@@ -27,9 +29,12 @@ from a2a.utils import new_agent_text_message
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(message)s")
 logger = logging.getLogger("single-agent")
 
+load_dotenv()
+
 PORT = 11100
-OLLAMA_BASE = "http://127.0.0.1:11434/v1"
-MODEL = "qwen3.5:0.8b"
+OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
+MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
 
 # ---------------------------------------------------------------------------
 # Tool definitions (simulated data for demo)
@@ -148,7 +153,7 @@ class TripPlannerAgent:
 
     def __init__(self) -> None:
         """Initialize the OpenAI client for Ollama."""
-        self._client = OpenAI(base_url=OLLAMA_BASE, api_key="unused")
+        self._client = OpenAI(base_url=OLLAMA_BASE, api_key=OLLAMA_API_KEY)
 
     def process(self, user_query: str) -> str:
         """Process a trip planning query with tool-use loop."""
@@ -220,7 +225,7 @@ class TripPlannerAgent:
 agent_card = AgentCard(
     name="TripPlannerAgent",
     description="Plans trips by searching attractions, restaurants, and weather.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

@@ -1,7 +1,7 @@
 [project]
 name = "agent-design-patterns-1"
 version = "0.1.0"
-description = "Runnable foundational agent design pattern examples using qwen3.5:0.8b by default"
+description = "Runnable foundational agent design pattern examples using Ollama gemma4:e2b by default"
 requires-python = ">=3.11"
 license = { text = "MPL-2.0" }
 

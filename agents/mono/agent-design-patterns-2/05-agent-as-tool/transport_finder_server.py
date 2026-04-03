@@ -4,7 +4,7 @@ Lightweight agent that returns transport info for a city.
 Called as a stateless tool by the Primary Agent.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11422
 """
@@ -90,7 +90,7 @@ def _split_label_and_detail(entry: str) -> dict:
 agent_card = AgentCard(
     name="TransportFinderTool",
     description="Returns transport options for a city (tool-style agent).",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

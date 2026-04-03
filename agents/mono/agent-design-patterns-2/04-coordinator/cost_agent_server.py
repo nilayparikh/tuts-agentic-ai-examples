@@ -4,7 +4,7 @@ Specialist agent for the Coordinator pattern. Provides budget
 estimates and cost breakdowns for travel.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
+    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
 
 Port: 11413
 """
@@ -95,7 +95,7 @@ def _build_cost_payload(city: str, costs: dict[str, str]) -> dict:
 agent_card = AgentCard(
     name="CostAgent",
     description="Specialist for travel budgets, pricing, and cost estimates.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],

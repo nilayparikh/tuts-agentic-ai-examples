@@ -100,7 +100,7 @@ def _build_food_payload(city_key: str, restaurants: list[dict]) -> dict:
 agent_card = AgentCard(
     name="FoodFinderAgent",
     description="Finds restaurants and food options for trip planning.",
-    url=f"http://localhost:{PORT}/",
+    url=f"http://127.0.0.1:{PORT}/",
     version="1.0.0",
     capabilities=AgentCapabilities(streaming=False),
     default_input_modes=["text"],
