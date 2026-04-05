@@ -4,7 +4,7 @@ Lightweight agent that returns food recommendations for a city.
 Called as a stateless tool by the Primary Agent.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11421
 """

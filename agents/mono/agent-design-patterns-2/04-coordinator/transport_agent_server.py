@@ -4,7 +4,7 @@ Specialist agent for the Coordinator pattern. Answers transport
 and getting-around queries for any city.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11412
 """

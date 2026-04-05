@@ -13,7 +13,7 @@ Runnable examples for the **AI Agent Design Patterns (Part 2)** mono video.
 ## Prerequisites
 
 - **Ollama** running at `http://127.0.0.1:11434`
-- Model: `ollama pull gemma4:e2b`
+- Model: `ollama pull qwen3.5:0.8b`
 
 ## Setup
 
@@ -25,13 +25,13 @@ python -m venv .venv
 # macOS/Linux
 source .venv/bin/activate
 pip install -r requirements.txt
-ollama pull gemma4:e2b
+ollama pull qwen3.5:0.8b
 
 # No environment variables are required.
-# These examples default to http://127.0.0.1:11434/v1 and gemma4:e2b.
+# These examples default to http://127.0.0.1:11434/v1 and qwen3.5:0.8b.
 # Only set overrides if you want different values.
 # set OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
-# set OLLAMA_MODEL=gemma4:e2b
+# set OLLAMA_MODEL=qwen3.5:0.8b
 ```
 
 ## Architecture

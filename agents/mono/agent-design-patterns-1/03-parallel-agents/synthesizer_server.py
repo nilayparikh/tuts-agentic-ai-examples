@@ -8,7 +8,7 @@ formatter so the A2A request still completes.
 Optional environment overrides:
     - OLLAMA_BASE_URL (defaults to http://127.0.0.1:11434/v1)
     - OLLAMA_API_KEY (defaults to unused)
-    - OLLAMA_MODEL (defaults to gemma4:e2b)
+    - OLLAMA_MODEL (defaults to qwen3.5:0.8b)
 
 If these variables are not set, the server uses the defaults above.
 
@@ -40,7 +40,7 @@ load_dotenv()
 PORT = 11304
 OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
-MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
 SYSTEM_PROMPT = (
     "You are a city itinerary synthesizer. Build a concise plain-text day plan "
     "using only the structured specialist results provided by the user. Do not "

@@ -4,7 +4,7 @@ Specialist agent for the Coordinator pattern. Provides budget
 estimates and cost breakdowns for travel.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11413
 """

@@ -4,7 +4,7 @@ Takes a trip planning query and produces a draft plan. When feedback
 is provided (from the Critic), it refines the plan accordingly.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11401
 """
@@ -32,7 +32,7 @@ load_dotenv()
 PORT = 11401
 OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
-MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
 
 
 class GeneratorAgent:

@@ -41,7 +41,7 @@ python -m venv .venv
 # macOS/Linux
 source .venv/bin/activate
 pip install -r requirements.txt
-ollama pull gemma4:e2b
+ollama pull qwen3.5:0.8b
 ```
 
 ## Running

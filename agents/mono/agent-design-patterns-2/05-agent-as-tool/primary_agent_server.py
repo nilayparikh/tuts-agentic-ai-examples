@@ -12,7 +12,7 @@ Sub-agents:
 
 Requires:
     - All sub-agents running (ports 11421-11423)
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11424
 """
@@ -42,7 +42,7 @@ load_dotenv()
 PORT = 11424
 OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
-MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
 
 # Map tool names to their A2A agent ports
 AGENT_TOOLS = {

@@ -5,7 +5,7 @@ to call and in what order. The agent has three tools (search_attractions,
 search_restaurants, get_weather) and autonomously decides execution flow.
 
 Requires:
-    - Ollama running at http://127.0.0.1:11434 with gemma4:e2b pulled
+    - Ollama running at http://127.0.0.1:11434 with qwen3.5:0.8b pulled
 
 Port: 11100
 """
@@ -35,7 +35,7 @@ load_dotenv()
 PORT = 11100
 OLLAMA_BASE = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434/v1")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "unused")
-MODEL = os.getenv("OLLAMA_MODEL", "gemma4:e2b")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:0.8b")
 
 # ---------------------------------------------------------------------------
 # Tool definitions (simulated data for demo)
