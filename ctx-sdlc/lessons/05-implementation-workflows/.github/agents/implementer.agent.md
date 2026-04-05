@@ -2,13 +2,14 @@
 name: implementer
 description: Implementation agent that writes production code. No test execution.
 tools:
-  - edit
+  - edit/editFiles
   - execute/runInTerminal
   - execute/getTerminalOutput
   - read/terminalLastCommand
   - read/terminalSelection
   - search/codebase
   - read/problems
+  - read/readFile
 ---
 
 # Implementer Agent

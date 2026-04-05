@@ -1,0 +1,10 @@
+{
+  "added": [
+    "backend/src/rules/preference-event-channel-validator.ts",
+    "backend/tests/unit/preference-event-channel-validator.test.ts"
+  ],
+  "modified": [
+    "backend/src/routes/notifications.ts"
+  ],
+  "deleted": []
+}

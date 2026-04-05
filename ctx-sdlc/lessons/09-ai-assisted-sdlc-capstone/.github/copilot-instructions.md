@@ -1,41 +1,45 @@
-# TaskFlow — Project Context (Week One)
+# Loan Workbench — Capstone Project Context
 
-> **Stage 2**: First week. Added instructions and documentation.
-> Copilot now knows HOW code should be written AND the architecture.
+> **Capstone**: This lesson combines all context-engineering surfaces learned
+> in Lessons 01–08. The `.github/` folder demonstrates a complete, production-
+> grade Copilot configuration for the Loan Workbench codebase.
 
 ## Project
 
-TaskFlow — a full-stack task management application with team collaboration,
-real-time updates, and role-based access control.
+Loan Workbench — TypeScript + Express REST API managing loan application
+lifecycles with regulatory compliance (California SMS restriction), role-based
+access, audit-first persistence, and an embedded message broker.
 
 ## Tech Stack
 
-- Frontend: React 19, TypeScript, Vite, Tailwind CSS
-- State: Zustand (see ADR-001 — do NOT suggest Redux)
-- Backend: Node.js 22 LTS, Express 5, TypeScript
-- Database: PostgreSQL 16 via Prisma ORM
-- Real-time: WebSocket (ws library)
-- Auth: JWT with refresh tokens
-- Tests: Vitest + React Testing Library
-- Modules: ESM only
-- Package manager: pnpm (monorepo with pnpm workspaces)
-
-## Monorepo Structure
-
-```
-packages/
-  web/        ← React frontend (React 19, Vite, Tailwind)
-  api/        ← Express API (Express 5, Prisma)
-  shared/     ← Shared types and utilities
-```
+- Runtime: Node.js 20 LTS
+- Language: TypeScript 5.x (strict mode)
+- Framework: Express 4
+- Tests: Vitest
+- Modules: ESM only (`import`/`export` — no CommonJS `require()`)
+- Database: SQLite via better-sqlite3
+- Queue: Embedded in-process message broker
+- Frontend: Vanilla TypeScript SPA (no framework)
 
 ## Architecture
 
-Frontend: Component → Hook → Zustand Store → API Client → Express Route
+Three-layer separation in `app/backend/src/`:
 
-Backend: Route → Middleware → Controller → Service → Prisma Model
+1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
+2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
+3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
 
-See `/docs/architecture.md` for the full system overview.
+Request flow: Route → authenticate → authorize → validate → Rule → Service → respond.
+
+Audit events are recorded BEFORE persistence — if logging fails, the write
+does NOT proceed (fail-closed semantics).
+
+Domain types live in `app/backend/src/models/types.ts` — import from there, do not redeclare.
+
+The queue broker (`app/backend/src/queue/broker.ts`) handles async events.
+Message contracts in `app/backend/src/queue/contracts.ts` are a breaking-change surface.
+
+Frontend: `app/frontend/src/` — Vanilla TypeScript SPA.
 
 ## Coding Conventions
 
@@ -43,32 +47,29 @@ See `/docs/architecture.md` for the full system overview.
 
 - Strict mode always
 - `const` over `let`, never `var`
-- Prefer `interface` over `type` for object shapes
-- Export types from `packages/shared/`
-
-### React (Frontend)
-
-- Functional components only
-- Hooks for all state and side effects
-- Zustand for global state (NOT Redux, NOT Context for mutable state)
-- Tailwind CSS for styling (NO CSS modules, NO styled-components)
-- Server components where possible (React 19)
+- ESM imports only — no CommonJS `require()`
+- Structured JSON logging — never `console.log()`
 
 ### Express (Backend)
 
-- Controller pattern: routes → controllers → services
+- Route handlers delegate to rules/services — no inline business logic
 - All routes `async`
-- Structured error responses: `{ error: string, code: string }`
-- Prisma for all database access (no raw SQL unless N+1 optimization)
-- JWT middleware on protected routes
+- Structured error responses: `{ error: string, code: string }` — no stack traces
+- Feature flags return 404 (not 403) when disabled
+- All mutating operations must be audited via the queue broker
 
 ### Testing
 
 - Vitest for all tests
-- React Testing Library for component tests
 - `describe`/`it`/`expect` pattern
+- Business rule tests: happy path, boundary, false positive, hard negative
+
+## Error Handling
+
+- Use the central error handler in `app/backend/src/middleware/error-handler.ts`.
+- In route handlers: wrap async logic in try/catch and call `next(err)`.
+- Never send stack traces or internal identifiers in API responses.
 
 ## References
 
 - Architecture: `/docs/architecture.md`
-- Technology decisions: `/docs/adr/`

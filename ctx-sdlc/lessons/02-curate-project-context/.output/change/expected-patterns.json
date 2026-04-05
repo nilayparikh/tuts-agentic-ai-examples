@@ -1,0 +1,18 @@
+[
+  {
+    "pattern": "FORBIDDEN",
+    "description": "Refactored routes must use FORBIDDEN error prefix"
+  },
+  {
+    "pattern": "delegated",
+    "description": "Routes must enforce delegated-session blocking"
+  },
+  {
+    "pattern": "owner|actor\\.id",
+    "description": "Routes must enforce owner-only writes"
+  },
+  {
+    "pattern": "audit|auditAction",
+    "description": "Routes must preserve audit behavior"
+  }
+]

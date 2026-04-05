@@ -1,0 +1,226 @@
+# Notification Preferences Implementation Plan
+
+## Summary
+
+This plan covers a pilot-gated notification-preferences feature for Loan Workbench that spans backend routes, rules, services, audit behavior, queue delivery, frontend state, and UX. The implementation must preserve mandatory-event delivery, block delegated-session writes, enforce the California decline-SMS restriction tracked in `LEGAL-218`, fail closed when audit logging is unavailable, preserve stored preferences during degraded-mode SMS-to-email fallback, and honor ADR-003 by using central store state for persisted preferences instead of component-local state.
+
+## Canonical sources and conflict handling
+
+### Canonical sources for this plan
+
+- **Behavioral requirements:** `specs/product-spec-notification-preferences.md` and `specs/non-functional-requirements.md` are canonical because they define the normalized `FR-*`, `SC-*`, and `NFR-*` requirements that this plan must trace.
+- **Architecture and implementation constraints:** `docs/architecture.md` and `docs/adr/ADR-003-frontend-state.md` are canonical for lesson-specific structure, cross-layer responsibilities, and frontend state ownership.
+- **Actual impact surfaces:** the current `src/**` code is canonical for file paths and current behavior because the product spec uses placeholder paths (`apps/web/`, `services/api/`) that do not match this lesson repo.
+
+### Overlaps and conflicts
+
+- `specs/feature-request.md` overlaps with the product spec but is a summary input, not the normative source, because it lacks the full FR/SC detail and open-question resolution.
+- `specs/bug-report.md` is evidence of likely failure modes and missing guards, not a normative source of desired behavior.
+- The product spec mentions `apps/web/` and `services/api/` (`specs/product-spec-notification-preferences.md:30-31`), but `docs/architecture.md:10-33` and the repository structure under `src/frontend/src/` and `src/backend/src/` are the canonical lesson paths.
+
+## Source-backed confirmed requirements
+
+### Confirmed product and UX requirements
+
+1. **Per-event, per-channel matrix is required.** Users configure `email` and `sms` independently for `approval`, `decline`, `document-request`, and `manual-review-escalation` (`FR-1`, `specs/product-spec-notification-preferences.md:68-80`).
+2. **Mandatory-event delivery rule:** `manual-review-escalation` must always remain deliverable, meaning at least one channel stays enabled; disabling both channels is a hard negative and both UI and API must enforce it (`FR-2`, `specs/product-spec-notification-preferences.md:81-92`).
+3. **Role-based defaults on first access:** underwriters and analyst managers default to all email events enabled plus SMS for escalation only, without a backfill migration; compliance reviewers are read-only and have no operational defaults (`FR-3`, `specs/product-spec-notification-preferences.md:94-104`; `NFR-6`, `specs/non-functional-requirements.md:84-97`).
+4. **LEGAL-218 restriction:** decline SMS must remain unavailable for California loans; the rule is based on `loanState`, not borrower address, and mixed portfolio contexts must show conditional messaging instead of blanket disabling (`FR-4`, `specs/product-spec-notification-preferences.md:105-119`; `SC-3`, `specs/product-spec-notification-preferences.md:166-170`).
+5. **Degraded-mode fallback:** when SMS is unavailable, delivery may fall back to email only if email is enabled; stored preferences must not change, and fallback needs a separate metric (`FR-5`, `specs/product-spec-notification-preferences.md:120-130`).
+6. **Auditability:** each preference change must record actor, timestamp, previous value, new value, source channel, and delegated-for user when applicable (`FR-6`, `specs/product-spec-notification-preferences.md:132-142`).
+7. **Delegated sessions are view-only:** an analyst manager acting for another user may view but not modify that user’s preferences; the UI must visibly indicate delegated mode and audit must capture both actor and delegated-for user (`SC-2`, `specs/product-spec-notification-preferences.md:153-165`).
+8. **Finalized application nuance:** preference updates remain global, but the UI must explain that changes do not affect already queued notifications for finalized applications (`SC-1`, `specs/product-spec-notification-preferences.md:147-151`).
+9. **Accessibility and feedback:** disabled controls need persistent helper text, not just tooltips, and save success/failure must be announced via ARIA live regions (`NFR-4`, `specs/non-functional-requirements.md:50-60`).
+
+### Confirmed architecture and implementation constraints
+
+10. **Typed client + route/rule/service split:** routes orchestrate, rules hold business logic, and services handle orchestration/I/O; plans must identify frontend, route, rule, service, audit, and observability surfaces (`docs/architecture.md:41-58`).
+11. **Audit is mandatory for all writes** and may flow through queue broker or direct DB write, so preference writes cannot bypass audit coverage (`docs/architecture.md:41-47`).
+12. **ADR-003 applies:** persisted user preferences must live in a central client store, and optimistic updates require rollback if the API rejects the write (`docs/adr/ADR-003-frontend-state.md:16-37`).
+13. **Pilot rollout must hide the feature for non-pilot users with `404`, not `403`** (`NFR-6`, `specs/non-functional-requirements.md:84-95`).
+14. **Reads tolerate downstream degradation, but writes fail closed when audit is unavailable** (`NFR-2`, `specs/non-functional-requirements.md:21-34`).
+15. **Observability requirements are explicit:** emit `preference.read.failure`, `preference.save.failure`, `audit.write.failure`, `notification.sms.fallback`, and `preference.save.latency`, and distinguish validation failures from infrastructure failures in logs (`NFR-5`, `specs/non-functional-requirements.md:63-80`).
+16. **Security/privacy constraints:** only authenticated internal users can access the endpoints, delegated sessions must be identified in audit logs, and sensitive SMS destination data must not appear in client logs or analytics (`NFR-3`, `specs/non-functional-requirements.md:38-47`).
+17. **Compliance constraints:** audit retention is 24 months, mandatory escalation rules must be testable and documented, and compliance read-only views must show effective preferences including applied defaults (`NFR-7`, `specs/non-functional-requirements.md:101-110`).
+
+### Confirmed current implementation surfaces
+
+18. **Backend notification routes already exist** at `src/backend/src/routes/notifications.ts`, including GET and PUT endpoints plus bulk email/SMS endpoints (`src/backend/src/routes/notifications.ts:33-271`).
+19. **Delegated-session detection already exists** in auth middleware via `x-delegated-for` and `SessionContext.delegatedFor` (`src/backend/src/middleware/auth.ts:61-75`; `src/backend/src/models/types.ts:59-68`).
+20. **The notification delivery path already has a degraded-mode concept** in both the notification service and queue handler, including the requirement to preserve stored preferences during fallback (`src/backend/src/services/notification-service.ts:8-17`; `src/backend/src/queue/handlers/notification-handler.ts:7-12`).
+21. **Mandatory events already exist for workflow transitions** through `getMandatoryEvents(...)`, which means the preference work must not accidentally suppress those deliveries (`src/backend/src/rules/mandatory-events.ts:16-37`; `src/backend/src/services/loan-service.ts:100-117`).
+22. **The frontend currently renders direct toggle controls and calls the API client directly** from the component (`src/frontend/src/pages/preferences.ts:16-36`; `src/frontend/src/components/notification-toggle.ts:29-41`; `src/frontend/src/api/client.ts:83-97`).
+
+## Open questions with file references
+
+1. **Where should compliance reviewers see audit history?** The product spec leaves open whether this belongs on the same settings page or in a separate audit viewer (`specs/product-spec-notification-preferences.md:187-193`). The repo already has a separate audit route and queue/audit pages, which suggests an existing split (`src/backend/src/routes/audit.ts:17-35`; `docs/architecture.md:21,29-31`).
+2. **How should loan context reach the preferences screen?** `FR-4` and `SC-3` require loan-state-aware restrictions and mixed-portfolio messaging, but the current preferences page only derives a `userId` from `#user-select` and has no application or portfolio context (`specs/product-spec-notification-preferences.md:105-119,166-170`; `src/frontend/src/pages/preferences.ts:13-18`; `src/frontend/src/components/app-shell.ts:26-31`).
+3. **How should fail-closed audit semantics work when `queueAudit` is enabled?** Current queued audit handling explicitly does not roll back the original operation after audit failure, which conflicts with `NFR-2` for preference writes (`src/backend/src/services/audit-service.ts:18-45`; `src/backend/src/queue/handlers/audit-handler.ts:8-13`; `specs/non-functional-requirements.md:21-34`).
+4. **Should the bulk `/preferences/:userId/email` and `/sms` endpoints remain part of the pilot scope?** The product spec requires a matrix and per-event/per-channel rules, but it does not require channel-wide bulk toggles; bulk writes may complicate FR-2 and FR-4 enforcement (`specs/product-spec-notification-preferences.md:68-92,105-119`; `src/backend/src/routes/notifications.ts:107-271`).
+5. **What is the pilot gating surface?** `NFR-6` requires a release flag and `404` for non-pilot users, but the current feature flag set does not include a notification-preferences pilot flag (`specs/non-functional-requirements.md:84-95`; `src/backend/src/config/feature-flags.ts:16-25`).
+
+## Inferred implementation choices
+
+The items below are planning recommendations, not confirmed requirements.
+
+1. **Add a dedicated notification-preferences release flag** in backend config and apply it at both route and frontend-navigation entry points, returning `404` from API endpoints and hiding the navigation affordance for non-pilot users. This is inferred from `NFR-6` and the existing feature-flag pattern in `src/backend/src/config/feature-flags.ts`.
+2. **Introduce a frontend preference store module** under `src/frontend/src/` and move read/update state out of `renderNotificationToggle(...)` so the page follows ADR-003 instead of component-local state.
+3. **Treat the general `PUT /api/notifications/preferences` endpoint as the canonical write path** for the matrix UI and either remove, hide, or narrowly constrain the bulk email/SMS endpoints during pilot to reduce rule-bypass risk.
+4. **Add backend rule helpers for preference validation** rather than embedding FR-2 and FR-4 checks in routes, because `docs/architecture.md` says business rules belong in `src/backend/src/rules/`.
+5. **Materialize effective preferences at read time** by combining stored rows with role defaults when no explicit record exists, instead of backfilling all missing rows. This matches `FR-3` and `NFR-6`.
+6. **Make preference writes synchronously audit-safe** either by forcing direct audit writes for this feature or by changing the queued audit path to provide write-time durability/acknowledgement before the preference save is committed. This is inferred to satisfy `NFR-2`.
+7. **Represent UI restrictions as metadata from the API or store selectors** so the frontend can render persistent helper text for delegated mode, mandatory-event rules, and `LEGAL-218` without duplicating backend logic.
+
+## Constraints and special conditions
+
+- **Delegated sessions:** view-only in delegated mode; no success-shaped fallback or optimistic success toast on rejected writes (`SC-2`, `specs/product-spec-notification-preferences.md:153-165`; bug example in `specs/bug-report.md:20-27,47-56`).
+- **LEGAL-218:** decline SMS is unavailable for California loans and must be explained inline; the rule keys off `loanState` (`FR-4`, `specs/product-spec-notification-preferences.md:105-119`).
+- **Mandatory-event delivery:** preference changes must not suppress `manual-review-escalation` below one enabled channel, and transition-driven mandatory events must still emit from the loan workflow (`FR-2`, `specs/product-spec-notification-preferences.md:81-92`; `src/backend/src/rules/mandatory-events.ts:16-37`; `src/backend/src/services/loan-service.ts:100-117`).
+- **Fail-closed audit behavior:** preference writes must be rejected if audit cannot be recorded; current async queue-audit behavior is not sufficient for this feature (`NFR-2`, `specs/non-functional-requirements.md:21-34`; `src/backend/src/queue/handlers/audit-handler.ts:8-13`).
+- **Degraded-mode fallback:** SMS outage may deliver by email when allowed, but the stored preference model must remain unchanged and fallback must be separately observable (`FR-5`, `specs/product-spec-notification-preferences.md:120-130`; `src/backend/src/queue/handlers/notification-handler.ts:62-71`).
+- **Pilot hiding:** non-pilot users must see no change; API should return `404`, not `403` (`NFR-6`, `specs/non-functional-requirements.md:84-95`).
+- **Accessibility:** disabled controls need persistent explanatory text and save outcomes need ARIA announcements (`NFR-4`, `specs/non-functional-requirements.md:50-60`).
+- **Finalized applications:** preferences stay global, but the UI must clarify that queued notifications for finalized applications are unaffected (`SC-1`, `specs/product-spec-notification-preferences.md:147-151`).
+- **Security/privacy:** avoid client-side logging of sensitive operational data; the current toggle component’s `console.error(...)` should not evolve into logging full preference or phone metadata (`NFR-3`, `specs/non-functional-requirements.md:38-47`; `src/frontend/src/components/notification-toggle.ts:37-40`).
+
+## False positives and hard negatives to protect against
+
+### False positives
+
+- **False positive:** disabling escalation SMS while escalation email remains enabled is valid and must not be treated as a violation (`FR-2`, `specs/product-spec-notification-preferences.md:90-92`).
+- **False positive:** preference reads succeeding during an audit-service outage are not a bug; only writes require audit availability (`NFR-2`, `specs/non-functional-requirements.md:33-34`).
+- **False positive:** a user receiving email instead of SMS during an SMS outage is not a preference-store bug if fallback rules triggered (`FR-5`, `specs/product-spec-notification-preferences.md:128-130`).
+
+### Hard negatives
+
+- **Hard negative:** allowing both escalation channels to be disabled (`FR-2`, `specs/product-spec-notification-preferences.md:86-88`).
+- **Hard negative:** enabling decline SMS for a California loan despite `LEGAL-218` (`FR-4`, `specs/product-spec-notification-preferences.md:117-118`).
+- **Hard negative:** using `403` instead of `404` for hidden non-pilot endpoints (`NFR-6`, `specs/non-functional-requirements.md:92-95`).
+- **Hard negative:** swallowing audit failure and persisting the preference anyway (`NFR-2`, `specs/non-functional-requirements.md:28-31`).
+- **Hard negative:** delegated save appears successful in the UI but reverts on refresh (`SC-2`, `specs/product-spec-notification-preferences.md:162-164`; `specs/bug-report.md:14-18,49-56`).
+
+## Numbered tasks with acceptance criteria and source references
+
+1. **Define the pilot-gated backend contract and route guards.**
+   - Acceptance criteria:
+     - Notification-preferences endpoints are guarded by a dedicated release flag.
+     - Non-pilot users receive `404`, not `403`.
+     - Authenticated underwriters, analyst managers, and compliance reviewers can read when in pilot; only allowed write actors can proceed to validation.
+   - Source references: `NFR-6` (`specs/non-functional-requirements.md:84-95`), `docs/architecture.md:41-47`, `src/backend/src/routes/notifications.ts:33-271`, `src/backend/src/config/feature-flags.ts:16-25`, `src/backend/src/middleware/auth.ts:78-97`.
+
+2. **Refactor backend preference validation into rule-layer functions.**
+   - Acceptance criteria:
+     - Backend rules enforce mandatory-event minimum-channel behavior for `manual-review-escalation`.
+     - Backend rules enforce `LEGAL-218` based on `loanState`.
+     - Validation logic is reusable by both single-cell and any retained bulk update path.
+   - Source references: `FR-2` (`specs/product-spec-notification-preferences.md:81-92`), `FR-4` (`specs/product-spec-notification-preferences.md:105-119`), `docs/architecture.md:53-58`, `src/backend/src/routes/notifications.ts:45-105,107-271`.
+
+3. **Correct authorization semantics for ownership, delegated sessions, and compliance access.**
+   - Acceptance criteria:
+     - Delegated sessions can read but cannot write another user’s preferences.
+     - Compliance reviewers remain read-only.
+     - Write paths consistently reject non-owner preference changes unless the product later explicitly broadens scope.
+     - Errors align with central error handling conventions.
+   - Source references: `SC-2` (`specs/product-spec-notification-preferences.md:153-165`), `FR-6` (`specs/product-spec-notification-preferences.md:132-142`), `src/backend/src/middleware/auth.ts:61-75`, `src/backend/src/rules/role-permissions.ts:27-59`, `src/backend/src/routes/notifications.ts:55-73,123-145,206-228`, `src/backend/src/middleware/error-handler.ts:16-35`.
+
+4. **Implement effective-default reads without migration backfill.**
+   - Acceptance criteria:
+     - Users with no stored preferences receive role-based effective defaults on first read.
+     - Compliance reviewers see effective read-only state including defaults.
+     - No pre-backfill or migration is required to make the feature usable for existing users.
+   - Source references: `FR-3` (`specs/product-spec-notification-preferences.md:94-104`), `NFR-6` (`specs/non-functional-requirements.md:89-97`), `NFR-7` (`specs/non-functional-requirements.md:103-107`), `src/backend/src/models/preference-repository.ts:31-77`, `src/backend/src/db/seed.ts:111-117`.
+
+5. **Make preference writes fail closed on audit unavailability.**
+   - Acceptance criteria:
+     - A preference write does not persist unless its audit record is durably accepted.
+     - `audit.write.failure` is emitted/logged distinctly from validation failures.
+     - Preference reads continue to work during audit outages.
+   - Source references: `NFR-2` (`specs/non-functional-requirements.md:21-34`), `NFR-5` (`specs/non-functional-requirements.md:65-80`), `FR-6` (`specs/product-spec-notification-preferences.md:132-142`), `src/backend/src/services/audit-service.ts:18-45`, `src/backend/src/queue/handlers/audit-handler.ts:8-13`.
+
+6. **Preserve degraded-mode delivery semantics and observability.**
+   - Acceptance criteria:
+     - SMS outage triggers email fallback only when allowed by effective preferences.
+     - Stored preference rows remain unchanged by fallback behavior.
+     - `notification.sms.fallback` is emitted, and operational logs distinguish provider problems from user validation errors.
+   - Source references: `FR-5` (`specs/product-spec-notification-preferences.md:120-130`), `NFR-5` (`specs/non-functional-requirements.md:65-80`), `src/backend/src/services/notification-service.ts:8-17`, `src/backend/src/queue/handlers/notification-handler.ts:56-76`.
+
+7. **Design the frontend state model and data flow around ADR-003.**
+   - Acceptance criteria:
+     - Persisted preference data is owned by a central client store, not individual toggle components.
+     - Optimistic UI is allowed only with rollback support and explicit server-error handling.
+     - The store tracks effective preferences, saving state, and delegated/read-only mode.
+   - Source references: `ADR-003` (`docs/adr/ADR-003-frontend-state.md:16-37`), `specs/product-spec-notification-preferences.md:176-180`, `src/frontend/src/pages/preferences.ts:16-36`, `src/frontend/src/components/notification-toggle.ts:29-41`.
+
+8. **Redesign the preferences UI to match matrix, restriction, and accessibility requirements.**
+   - Acceptance criteria:
+     - The page renders a matrix by event and channel.
+     - Mandatory events are visually marked with persistent explanatory text.
+     - Delegated-session mode is visibly indicated and disables writes.
+     - California decline SMS shows inline explanation tied to current loan context.
+     - Success/failure feedback uses screen-reader-announced status messaging.
+   - Source references: `FR-1` (`specs/product-spec-notification-preferences.md:68-80`), `FR-2` (`specs/product-spec-notification-preferences.md:81-92`), `FR-4` (`specs/product-spec-notification-preferences.md:105-119`), `SC-2` (`specs/product-spec-notification-preferences.md:153-165`), `NFR-4` (`specs/non-functional-requirements.md:50-60`), `src/frontend/src/pages/preferences.ts:19-35`, `src/frontend/src/components/app-shell.ts:20-31`.
+
+9. **Add loan-context and mixed-portfolio restriction handling to the UI/API boundary.**
+   - Acceptance criteria:
+     - The frontend can display conditional restrictions for California and mixed-state portfolio contexts without turning the global preference model into per-loan overrides.
+     - The save request includes enough context for backend validation when a state-dependent rule applies, or the backend can resolve it from authoritative state.
+     - Finalized-application messaging clarifies queued-notification behavior.
+   - Source references: `FR-4` (`specs/product-spec-notification-preferences.md:110-115`), `SC-1` (`specs/product-spec-notification-preferences.md:147-151`), `SC-3` (`specs/product-spec-notification-preferences.md:166-170`), `specs/bug-report.md:60-63`, `src/frontend/src/pages/application-detail.ts:35-53`, `src/frontend/src/pages/preferences.ts:13-18`, `src/frontend/src/api/client.ts:87-97`.
+
+10. **Add automated coverage for rules, routes, delivery, and UX failure handling.**
+    - Acceptance criteria:
+      - Tests cover delegated read-only behavior, mandatory-event enforcement, California decline SMS restriction, effective defaults, fail-closed audit rejection, fallback-without-mutation, pilot `404` hiding, and optimistic rollback.
+      - Release validation explicitly includes false-positive and hard-negative scenarios from the specs.
+    - Source references: `docs/planning-workflow-example.md:53-60`, `FR-2` (`specs/product-spec-notification-preferences.md:86-92`), `FR-4` (`specs/product-spec-notification-preferences.md:117-118`), `FR-5` (`specs/product-spec-notification-preferences.md:128-130`), `SC-2` (`specs/product-spec-notification-preferences.md:162-164`), `NFR-2` (`specs/non-functional-requirements.md:28-34`), `NFR-6` (`specs/non-functional-requirements.md:92-97`), `src/backend/tests/unit/notification-service.test.ts:10-15`, `src/backend/tests/integration/decisions.test.ts:7-14`.
+
+## Validation steps
+
+1. **Backend rule tests**
+   - Verify `manual-review-escalation` rejects zero enabled channels but accepts email-only and sms-only valid states.
+   - Verify California decline SMS is rejected when `loanState === "CA"` and not rejected solely because borrower data differs.
+
+2. **Authorization and delegated-session tests**
+   - Verify delegated sessions can fetch the delegate’s effective preferences but receive a write rejection.
+   - Verify compliance reviewers can read but not write.
+   - Verify non-owner direct writes are rejected if owner-only semantics are retained.
+
+3. **Pilot gating tests**
+   - Verify non-pilot API reads/writes return `404`.
+   - Verify pilot users with no stored rows still see effective defaults on first load.
+
+4. **Audit fail-closed tests**
+   - Simulate audit unavailability and verify preference writes are rejected and not persisted.
+   - Verify preference reads still succeed during the same outage.
+   - Verify `audit.write.failure` and `preference.save.failure` are distinguishable.
+
+5. **Delivery fallback tests**
+   - Simulate unhealthy SMS provider with email enabled and confirm fallback delivery occurs without mutating stored preferences.
+   - Simulate unhealthy SMS provider with email disabled and confirm no silent preference mutation or misleading UX.
+
+6. **Frontend state and UX tests**
+   - Verify the page renders a matrix, mandatory inline helper text, delegated-session banner, and ARIA-announced save status.
+   - Verify optimistic rollback occurs on rejected saves and no false success toast/state persists.
+   - Verify mixed-portfolio messaging is conditional, not blanket-disabled.
+
+7. **Regression checks against known nuanced cases**
+   - **False positive check:** escalation SMS off + escalation email on remains valid.
+   - **False positive check:** email delivery during SMS outage is not surfaced as a preference corruption bug.
+   - **Hard negative check:** delegated save must never look successful.
+   - **Hard negative check:** non-pilot hidden route must not leak via `403`.
+
+## Risks and dependencies
+
+### Risks
+
+- **Audit architecture mismatch:** current queued audit flow does not satisfy fail-closed semantics for preference writes; this is the largest implementation risk because it crosses service, queue, and persistence boundaries (`src/backend/src/services/audit-service.ts:18-45`; `src/backend/src/queue/handlers/audit-handler.ts:8-13`).
+- **State/context mismatch in the UI:** current preferences page has no loan or portfolio context, but FR-4/SC-3 require conditional restriction messaging. Without a clear context source, the UI may either over-disable or under-enforce.
+- **ADR-003 gap:** the current direct-toggle pattern bypasses a central store, increasing risk of repeated delegated-session false successes and inconsistent rollback behavior.
+- **Bulk endpoint complexity:** channel-wide bulk updates can easily violate FR-2 or FR-4 unless rule evaluation is centralized and context-aware.
+- **Observability gap:** no metrics surface is currently present in source for the required counters/histograms, so telemetry work may require introducing a common instrumentation surface.
+
+### Dependencies
+
+- Product decision on compliance-view placement (`specs/product-spec-notification-preferences.md:187-193`).
+- Product/engineering decision on how the preferences page receives active application or mixed-portfolio context.
+- Engineering decision on synchronous audit durability strategy when `queueAudit` is enabled.
+- Release-management support for pilot flag rollout and checklist updates required by `NFR-7`.

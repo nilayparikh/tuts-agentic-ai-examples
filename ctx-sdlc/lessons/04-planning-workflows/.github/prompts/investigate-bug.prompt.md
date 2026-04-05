@@ -1,12 +1,12 @@
 ---
 name: investigate-bug
 description: "Diagnose a Loan Workbench bug by cross-referencing code against specs, NFRs, and ADRs"
-agent: agent
+agent: planner
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
+  - read/readFile
 argument-hint: "Paste the bug description or failing scenario"
 ---
 

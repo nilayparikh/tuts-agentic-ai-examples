@@ -1,0 +1,69 @@
+--- a/.github/examples/drifted/copilot-instructions.md
++++ b/.github/examples/drifted/copilot-instructions.md
+@@ -1,21 +1,21 @@
+ # Loan Workbench — Project Context
+ 
+-> **This file intentionally contains drift for Lesson 08.**
++> **This file shows the repaired version of the Lesson 08 drifted example.**
+ 
+ ## Project
+ 
+ Loan Workbench API — TypeScript + Express REST service managing loan
+-application lifecycles with regulatory compliance, role-based access, and
+-audit-first persistence.
++application lifecycles with regulatory compliance (California SMS restriction),
++role-based access, and audit-first persistence.
+ 
+ ## Tech Stack
+ 
+-- Runtime: Node.js 18 LTS
++- Runtime: Node.js 20 LTS
+ - Language: TypeScript 5.x (strict mode)
+ - Framework: Express 4
+ - Tests: Vitest
+ - Modules: ESM only
+-- Logging: structured JSON via winston
++- Logging: structured JSON via pino
+ - Database: Prisma ORM
+ - Deploy: Azure Container Apps
+ 
+@@ -23,15 +23,14 @@
+ 
+ Three-layer separation:
+ 
+-1. **Routes** — HTTP handling, parameter extraction, delegation
+-2. **Rules** — pure business logic, no I/O
+-3. **Services** — persistence, external integrations, audit
++1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
++2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
++3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
+ 
+-Request flow: Route -> authenticate -> authorize -> validate -> Rule ->
+-Service -> respond.
++Request flow: Route -> authenticate -> authorize -> validate -> Rule -> Service -> respond.
+ 
+-Audit events are recorded before persistence. Use `console.log()` for quick
+-debugging, but prefer structured logging in long-lived services.
++Audit events are recorded BEFORE persistence — if logging fails, the write
++does NOT proceed (fail-closed semantics).
+ 
+ ## Coding Conventions
+ 
+@@ -40,15 +39,8 @@
+ - All errors return structured JSON: `{ error: string, code: string }`
+ - No stack traces in error responses
+ - Feature flags use 404, not 403
+-- Shared helpers live in `app/backend/src/helpers/`
+-- Keep global instructions concise, but include this example route snippet:
+-
+-```ts
+-app.post('/notifications', async (req, res) => {
+-  console.log('saving notification preferences');
+-  res.status(202).json({ ok: true });
+-});
+-```
++- Structured JSON logging only — never `console.log()`
++- Keep global instructions concise; route-level examples belong in scoped instruction files
+ 
+ ## References
+ 

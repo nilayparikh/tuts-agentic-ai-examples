@@ -1,12 +1,12 @@
 ---
 name: plan-feature
 description: "Decompose a Loan Workbench feature request into implementation tasks using specs, NFRs, and architecture docs"
-agent: Plan
+agent: planner
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
+  - read/readFile
 argument-hint: "Describe the feature in one sentence"
 ---
 

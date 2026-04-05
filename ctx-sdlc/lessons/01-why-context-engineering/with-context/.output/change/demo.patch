@@ -1,0 +1,109 @@
+--- a/backend/src/routes/applications.ts
++++ b/backend/src/routes/applications.ts
+@@ -91,3 +91,27 @@
+     }
+   },
+ );
++
++/**
++ * POST /api/applications/:id/manual-review — escalate application to manual review.
++ *
++ * Triggers the manual review escalation workflow for an existing loan.
++ * Does not change the application status.
++ * Emits a notification and audit event.
++ */
++applicationRoutes.post(
++  "/:id/manual-review",
++  requireRole("analyst-manager"),
++  (req, res, next) => {
++    try {
++      const session = req.session as SessionContext;
++      const result = loanService.manualReviewEscalation(
++        session,
++        firstParam(req.params.id),
++      );
++      res.json(result);
++    } catch (err) {
++      next(err);
++    }
++  },
++);
+
+--- a/backend/src/services/loan-service.ts
++++ b/backend/src/services/loan-service.ts
+@@ -11,7 +11,9 @@
+ import { assertTransition } from "../rules/state-machine.js";
+ import { validateLoanRules, canApprove } from "../rules/business-rules.js";
+ import { getMandatoryEvents } from "../rules/mandatory-events.js";
++import { auditAction } from "./audit-service.js";
+ import { broker } from "../queue/broker.js";
++import { featureFlags } from "../config/feature-flags.js";
+ import type {
+   LoanApplication,
+   SessionContext,
+@@ -118,3 +120,65 @@
+ 
+   return updated;
+ }
++
++/**
++ * Escalate a loan application to manual review.
++ * Does not change the loan status, but emits a notification event.
++ * California high-risk loans (CA, >= $1M) get a special subject prefix.
++ */
++export function manualReviewEscalation(
++  session: SessionContext,
++  applicationId: string,
++): { ok: true; applicationId: string; notificationEventId: string } {
++  if (session.delegatedFor) {
++    throw new Error("FORBIDDEN: Delegated sessions cannot escalate to manual review.");
++  }
++
++  const loan = loanRepo.findLoanById(applicationId);
++  if (!loan) {
++    throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);
++  }
++
++  const notificationEventId = uuid();
++
++  // Build notification subject with California high-risk prefix if applicable
++  let subject = `Loan ${applicationId}: Manual Review Escalation`;
++  if (
++    featureFlags.californiaRules &&
++    loan.loanState === "CA" &&
++    loan.amount >= 1000000
++  ) {
++    subject = `[CA-HighRisk] ${subject}`;
++  }
++
++  // Emit notification event
++  const notifEvent: NotificationRequestedEvent = {
++    eventId: notificationEventId,
++    timestamp: new Date().toISOString(),
++    source: "loan-service",
++    type: "notification.requested",
++    payload: {
++      userId: loan.assignedUnderwriter,
++      event: "manual-review-escalation",
++      subject,
++      body: `Application ${applicationId} has been escalated for manual review.`,
++      preferredChannel: "email",
++    },
++  };
++  broker.emit(notifEvent);
++
++  // Audit the escalation
++  auditAction(
++    session,
++    "loan.manual-review-requested",
++    null,
++    { applicationId },
++    "loan-service",
++  );
++
++  return {
++    ok: true,
++    applicationId,
++    notificationEventId,
++  };
++}

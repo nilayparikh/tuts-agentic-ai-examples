@@ -1,0 +1,18 @@
+[
+  {
+    "pattern": "Node\\.js 20|Node 20",
+    "description": "Drifted file should update stale Node.js version references"
+  },
+  {
+    "pattern": "pino",
+    "description": "Drifted file should use pino instead of winston"
+  },
+  {
+    "pattern": "console\\.log|structured logging",
+    "description": "Drifted file should resolve the console.log contradiction"
+  },
+  {
+    "pattern": "helpers",
+    "description": "Drifted file should remove dead helpers-directory references"
+  }
+]

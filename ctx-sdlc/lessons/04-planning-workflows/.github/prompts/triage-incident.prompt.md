@@ -1,12 +1,12 @@
 ---
 name: triage-incident
 description: "Triage a production incident by checking NFR compliance, observability gaps, and blast radius"
-agent: agent
+agent: planner
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
+  - read/readFile
 argument-hint: "Describe the incident symptoms"
 ---
 
@@ -18,7 +18,7 @@ Incident report: ${input:incident:Describe the production incident symptoms}
 
 1. Read [NFRs](../../specs/non-functional-requirements.md) — especially NFR-2 (resilience) and NFR-5 (observability).
 2. Read [architecture](../../docs/architecture.md) — identify which services are in the blast radius.
-3. Search `src/services/` and `src/middleware/` for error handling and fallback logic.
+3. Search `src/backend/src/services/` and `src/backend/src/middleware/` for error handling and fallback logic.
 4. Check whether existing metrics (NFR-5 table) would surface this incident.
 
 ## Triage Requirements

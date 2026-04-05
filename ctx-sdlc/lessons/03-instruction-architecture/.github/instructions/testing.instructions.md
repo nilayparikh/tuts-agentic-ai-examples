@@ -8,7 +8,7 @@ Rules for writing and maintaining Vitest test suites.
 
 ## Test Structure
 
-- Test files mirror source paths: `backend/src/rules/state-machine.ts` → `backend/tests/unit/state-machine.test.ts`.
+- Test files mirror source paths: `src/backend/src/rules/state-machine.ts` → `src/backend/tests/unit/state-machine.test.ts`.
 - Use `describe()` blocks to group related scenarios.
 - Each test should have a clear intent documented in its name.
 - Annotate edge-case tests with comments explaining WHY the case matters.
@@ -37,6 +37,6 @@ Rules for writing and maintaining Vitest test suites.
 
 ## Coverage Expectations
 
-- All business rules in `src/rules/` must have > 90% branch coverage.
+- All business rules in `src/backend/src/rules/` must have > 90% branch coverage.
 - Service-level tests should cover the audit fail-closed path.
 - Route-level tests are integration tests — they can be thinner.

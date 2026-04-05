@@ -1,0 +1,15 @@
+{
+  "added": [
+    "backend/ESCALATION_WORKFLOW.md",
+    "backend/src/models/escalation-repository.ts",
+    "backend/src/routes/escalations.ts",
+    "backend/src/services/escalation-service.ts",
+    "backend/tests/integration/escalations.test.ts"
+  ],
+  "modified": [
+    "backend/src/app.ts",
+    "backend/src/db/seed.ts",
+    "backend/src/models/types.ts"
+  ],
+  "deleted": []
+}

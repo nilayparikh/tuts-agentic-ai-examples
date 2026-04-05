@@ -4,7 +4,7 @@ applyTo: "src/backend/src/rules/**"
 
 # Business Rules Instructions
 
-Rules for authoring and modifying business rule modules in `src/rules/`.
+Rules for authoring and modifying business rule modules in `src/backend/src/rules/`.
 
 ## Authoring Standards
 
@@ -32,6 +32,7 @@ When adding a new rule, always document:
 ## Mandatory Event Rules
 
 - The mandatory events set is defined in `mandatory-events.ts`.
+- Do not create a second hardcoded mandatory-events list or helper when `mandatory-events.ts` already provides the source of truth.
 - Validation checks the proposed change against ALL current preferences for the user+event combination.
 - Enabling a channel is always allowed; only disabling is guarded.
 

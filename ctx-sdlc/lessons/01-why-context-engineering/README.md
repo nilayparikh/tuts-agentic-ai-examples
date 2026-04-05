@@ -1,58 +1,115 @@
 # Lesson 01 — Why Context Engineering
 
-> **Template app:** `apps/complex/` (Loan Workbench)
-> **Topic:** Demonstrating that the same prompt produces different code depending on what context the repository provides.
+> **App:** Loan Workbench (TypeScript Express API + SQLite)
+> **Topic:** A weak or fast model only becomes repository-aware when the workspace exposes the right context.
 
 ## Setup
 
 ```bash
-python default.py --clean
-cd src && npm install
+python with-context/util.py --setup
+python without-context/util.py --setup
+python with-context/util.py --run
+python without-context/util.py --run
 ```
 
-See [SETUP.md](SETUP.md) for full details and validation scenarios.
+## What This Demonstrates
 
-## What This Lesson Demonstrates
+This lesson uses a hidden-spec workflow rather than a generic CRUD prompt.
+The same short prompt is sent in two different workspace conditions:
 
-This lesson runs **the same prompt** with and without custom instructions to
-show how repository context changes Copilot output:
+| Scenario | Context | Expected Result |
+| --- | --- | --- |
+| Without context | `src/` only or `src/` + `without-context/` | Plausible but repo-wrong implementation |
+| With context | `src/` + `with-context/` | Repository-aware implementation that follows hidden rules |
 
-| Scenario          | Context Available                         | Expected Quality                      |
-| ----------------- | ----------------------------------------- | ------------------------------------- |
-| `without-context` | `--no-custom-instructions` — nothing read | Generic, misses domain rules          |
-| `with-context`    | `.github/` + `docs/` auto-loaded          | Architecturally correct, domain-aware |
+The prompt intentionally omits route shape, role restrictions, audit behavior,
+queue contract usage, and California-specific nuance. Those rules live only in
+the contextual folder.
 
-The **prompt is identical**. The **repository context** is what changes.
+This lesson is assessed comparatively rather than through a single prompt-scoped
+CLI artifact bundle. See `COMPARE.md` and `ASSESSMENT.md` for the current
+evaluation framing.
 
 ## Context Files
 
-| Path                              | Purpose                                     |
-| --------------------------------- | ------------------------------------------- |
-| `.github/copilot-instructions.md` | Global project identity and rules           |
-| `docs/architecture.md`            | System shape, domain model, key constraints |
+| Path | Purpose |
+| --- | --- |
+| `with-context/.github/copilot-instructions.md` | Project identity and behavioral rules |
+| `with-context/docs/architecture.md` | System shape and domain constraints |
+| `with-context/docs/manual-review-escalation.md` | Hidden workflow specification |
+| `with-context/docs/experiment.md` | Scoring rubric and evaluation guidance |
 
-## Validation
+## Workspace Layout
 
-```bash
-python validate.py --all
+```text
+01-why-context-engineering/
+  README.md
+  CHAT.md
+  CLI.md
+  COMPARE.md
+  compare_outputs.py
+  with-context/
+  without-context/
 ```
 
-| Scenario          | Flag                       | What It Shows                                    |
-| ----------------- | -------------------------- | ------------------------------------------------ |
-| `without-context` | `--no-custom-instructions` | AI ignores `.github/` + `docs/` — generic output |
-| `with-context`    | (default)                  | AI reads all context files — domain-aware output |
+## Copilot CLI Workflow
 
-Outputs are saved to `output/` for comparison.
+Use this exact prompt in both runs:
 
-## Teaching Outcome
+```text
+Implement the manual review escalation workflow for this repository.
+Follow existing repo conventions and architecture.
+Return the exact files you would change and the code for each change.
+```
 
-Learners should understand:
+Baseline run:
 
-1. **Context engineering is not prompt engineering** — the prompt stays the same;
-   the repository context changes.
-2. **`.github/` files are automatically consumed** by Copilot — no manual
-   attachment needed for instructions.
-3. **`docs/` files provide architectural context** that instructions alone cannot
-   capture (system shape, conventions, fallback behavior).
-4. **Context is iterative** — you discover gaps by observing what the AI gets
-   wrong and adding targeted context files.
+```bash
+cd without-context
+copilot -p "Implement the manual review escalation workflow for this repository. Follow existing repo conventions and architecture. Return the exact files you would change and the code for each change." --allow-all-tools
+```
+
+Contextual run:
+
+```bash
+cd with-context
+copilot -p "Implement the manual review escalation workflow for this repository. Follow existing repo conventions and architecture. Return the exact files you would change and the code for each change." --allow-all-tools
+```
+
+Notes:
+
+- `copilot` uses prompt mode rather than separate `suggest` and `explain` commands.
+- This lesson is still strongest in editor chat because it depends on workspace composition.
+- Save outputs under `with-context/output/` and `without-context/output/`, then run `python compare_outputs.py`.
+
+## VS Code Chat Workflow
+
+Use the same prompt in both scenarios.
+
+Without context:
+
+- Open `src/` and optionally `without-context/`
+- Do not open `with-context/`
+
+With context:
+
+- Open `src/` and `with-context/`
+- Send the same prompt again
+
+Expected difference:
+
+- with context: route location, service split, delegated-session rules, audit behavior, queue contract reuse, and California high-risk subject prefix are discovered
+- without context: the answer usually drifts into plausible but incorrect domain changes
+
+To verify context loading, ask:
+
+```text
+What specific rules control the manual review escalation workflow in this repository?
+```
+
+## Cleanup
+
+```bash
+python with-context/util.py --clean
+python without-context/util.py --clean
+```

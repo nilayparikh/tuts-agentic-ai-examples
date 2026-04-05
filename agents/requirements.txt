@@ -1,0 +1,6 @@
+# Default Ollama model for these examples: qwen3.5:0.8b (f3817196d142)
+openai>=1.30.0
+a2a-sdk[http-server]==0.3.24
+uvicorn[standard]>=0.27.0
+httpx>=0.27.0
+python-dotenv>=1.0.0

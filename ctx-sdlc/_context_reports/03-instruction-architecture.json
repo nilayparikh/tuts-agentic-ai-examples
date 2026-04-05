@@ -1,0 +1,805 @@
+{
+  "lesson": "03-instruction-architecture",
+  "model": "gpt-5.4",
+  "start_time": "2026-03-14T17:37:42.001Z",
+  "end_time": "2026-03-14T17:40:25.213Z",
+  "turns": 15,
+  "events": [
+    {
+      "timestamp": "2026-03-14T17:37:48.834Z",
+      "turn": 1,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Exploring rule surfaces"
+    },
+    {
+      "timestamp": "2026-03-14T17:37:48.834Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "src/backend/src/rules/**/*.ts",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:37:48.834Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "src/backend/tests/**/*.test.ts",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:37:48.834Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "docs/*.md",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:37:48.834Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "rg",
+      "target": "mandatory-events|notification-channel|LEGAL-218|decline",
+      "detail": "in src/backend/src/**/*.ts"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Inspecting project layout"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "(lesson root)",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/architecture.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/instruction-layering-example.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:02.673Z",
+      "turn": 2,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:08.500Z",
+      "turn": 3,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Inspecting backend files"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:08.500Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "src/backend/src/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:08.500Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "src/backend/tests/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:08.500Z",
+      "turn": 3,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:13.088Z",
+      "turn": 4,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reading backend directories"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:13.088Z",
+      "turn": 4,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:13.088Z",
+      "turn": 4,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:13.088Z",
+      "turn": 4,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:13.088Z",
+      "turn": 4,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:19.541Z",
+      "turn": 5,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reviewing rule files"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:19.541Z",
+      "turn": 5,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:19.541Z",
+      "turn": 5,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:19.541Z",
+      "turn": 5,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:25.329Z",
+      "turn": 6,
+      "phase": "plan",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "plan.md",
+      "detail": "session plan"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:25.329Z",
+      "turn": 6,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reading rule details"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/mandatory-events.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/business-rules.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/state-machine.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/role-permissions.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit/business-rules.test.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit/state-machine.test.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/models/types.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:29.809Z",
+      "turn": 7,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Inspecting notification surfaces"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "rg",
+      "target": "NotificationPreference|notification|mandatory",
+      "detail": "in **/*.ts"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit/notification-service.test.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/services",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/routes",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:40.366Z",
+      "turn": 8,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reading notification code"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/routes/notifications.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/models/preference-repository.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/services/notification-service.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/db/seed.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:47.251Z",
+      "turn": 9,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Implementing channel rules"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "memory",
+      "actor": "model",
+      "action": "store_memory",
+      "target": "Mandatory notification events are defined in src/backend/src/rules/mandatory-eve",
+      "detail": "memory"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:38:52.347Z",
+      "turn": 10,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "src/backend/src/rules/notification-channel-rules.ts",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "src/backend/tests/unit/notification-channel-rules.test.ts",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:32.620Z",
+      "turn": 11,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reviewing new files"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/notification-channel-rules.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit/notification-channel-rules.test.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:39:56.263Z",
+      "turn": 12,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:00.817Z",
+      "turn": 13,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "src/backend/src/rules/notification-channel-rules.ts",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:00.817Z",
+      "turn": 13,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:00.817Z",
+      "turn": 13,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:00.817Z",
+      "turn": 13,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:00.817Z",
+      "turn": 13,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Reviewing final edits"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/src/rules/notification-channel-rules.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "src/backend/tests/unit/notification-channel-rules.test.ts",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:11.693Z",
+      "turn": 14,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:17.089Z",
+      "turn": 15,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Developing the function inputs**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:17.089Z",
+      "turn": 15,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "**Planning file inspection**"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:17.089Z",
+      "turn": 15,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I'm thinking about"
+    },
+    {
+      "timestamp": "2026-03-14T17:40:17.089Z",
+      "turn": 15,
+      "phase": "thinking",
+      "actor": "model",
+      "action": "reasoning",
+      "target": "",
+      "detail": "I should check"
+    }
+  ],
+  "implicit_context": [
+    "backend.instructions.md",
+    "business-rules.instructions.md",
+    "copilot-instructions.md",
+    "security.instructions.md",
+    "testing.instructions.md"
+  ],
+  "files_discovered": [],
+  "files_read": [
+    "(lesson root)",
+    "docs/architecture.md",
+    "docs/instruction-layering-example.md",
+    "src",
+    "src/backend",
+    "src/backend/src",
+    "src/backend/src/db/seed.ts",
+    "src/backend/src/models/preference-repository.ts",
+    "src/backend/src/models/types.ts",
+    "src/backend/src/routes",
+    "src/backend/src/routes/notifications.ts",
+    "src/backend/src/rules",
+    "src/backend/src/rules/business-rules.ts",
+    "src/backend/src/rules/mandatory-events.ts",
+    "src/backend/src/rules/notification-channel-rules.ts",
+    "src/backend/src/rules/role-permissions.ts",
+    "src/backend/src/rules/state-machine.ts",
+    "src/backend/src/services",
+    "src/backend/src/services/notification-service.ts",
+    "src/backend/tests",
+    "src/backend/tests/unit",
+    "src/backend/tests/unit/business-rules.test.ts",
+    "src/backend/tests/unit/notification-channel-rules.test.ts",
+    "src/backend/tests/unit/notification-service.test.ts",
+    "src/backend/tests/unit/state-machine.test.ts"
+  ],
+  "files_written": [
+    "src/backend/src/rules/notification-channel-rules.ts",
+    "src/backend/tests/unit/notification-channel-rules.test.ts"
+  ],
+  "mermaid": "sequenceDiagram\n    participant U as User/Prompt\n    participant S as Copilot Runtime\n    participant M as Model\n    participant T as Tools\n    participant C as Codebase\n\n    Note over S,M: Implicit Context (auto-injected)\n    S->>M: backend.instructions.md\n    S->>M: business-rules.instructions.md\n    S->>M: copilot-instructions.md\n    S->>M: security.instructions.md\n    S->>M: testing.instructions.md\n\n    U->>M: prompt\n\n\n    Note over M,T: Turn 1\n    Note over M: Intent: Exploring rule surfaces\n    M->>T: glob(src/backend/src/rules/**/*.ts)\n    T-->>M: file list\n    M->>T: glob(src/backend/tests/**/*.test.ts)\n    T-->>M: file list\n    M->>T: glob(docs/*.md)\n    T-->>M: file list\n    M->>T: rg(...nts|notification-channel|LEGAL-2)\n    T-->>M: matches\n\n    Note over M,T: Turn 2\n    Note over M: Intent: Inspecting project layout\n    M->>T: view((lesson root))\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/architecture.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/instruction-layering-example.md)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 3\n    Note over M: Intent: Inspecting backend files\n    M->>T: glob(src/backend/src/**/*)\n    T-->>M: file list\n    M->>T: glob(src/backend/tests/**/*)\n    T-->>M: file list\n\n    Note over M,T: Turn 4\n    Note over M: Intent: Reading backend directories\n    M->>T: view(src/backend)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/tests)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 5\n    Note over M: Intent: Reviewing rule files\n    M->>T: view(src/backend/src/rules)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/tests/unit)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 6\n    Note over M: Update plan.md\n\n    Note over M,T: Turn 7\n    Note over M: Intent: Reading rule details\n    M->>T: view(src/backend/src/rules/mandatory-events.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/rules/business-rules.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/rules/state-machine.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/rules/role-permissions.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/tests/unit/business-rules.test.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/tests/unit/state-machine.test.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/models/types.ts)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 8\n    Note over M: Intent: Inspecting notification surfaces\n    M->>T: rg(NotificationPreference|notification)\n    T-->>M: matches\n    M->>T: view(...nd/tests/unit/notification-service.test.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/services)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/routes)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 9\n    Note over M: Intent: Reading notification code\n    M->>T: view(src/backend/src/routes/notifications.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...ackend/src/models/preference-repository.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...ckend/src/services/notification-service.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(src/backend/src/db/seed.ts)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 10\n    Note over M: Intent: Implementing channel rules\n    M->>T: store_memory()\n    T-->>M: ok\n\n    Note over M,T: Turn 11\n    M->>T: write(...nd/src/rules/notification-channel-rules.ts)\n    T->>C: patch\n    C-->>M: ok\n    M->>T: write(...ts/unit/notification-channel-rules.test.ts)\n    T->>C: patch\n    C-->>M: ok\n\n    Note over M,T: Turn 12\n    Note over M: Intent: Reviewing new files\n    M->>T: view(...nd/src/rules/notification-channel-rules.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...ts/unit/notification-channel-rules.test.ts)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 13\n    M->>T: write(...nd/src/rules/notification-channel-rules.ts)\n    T->>C: patch\n    C-->>M: ok\n\n    Note over M,T: Turn 14\n    Note over M: Intent: Reviewing final edits\n    M->>T: view(...nd/src/rules/notification-channel-rules.ts)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...ts/unit/notification-channel-rules.test.ts)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 15\n\n    M->>U: Return results"
+}

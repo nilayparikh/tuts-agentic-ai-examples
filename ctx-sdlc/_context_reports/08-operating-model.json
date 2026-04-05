@@ -1,0 +1,237 @@
+{
+  "lesson": "08-operating-model",
+  "model": "gpt-5.4",
+  "start_time": "2026-03-14T17:34:02.425Z",
+  "end_time": "2026-03-14T17:35:37.614Z",
+  "turns": 7,
+  "events": [
+    {
+      "timestamp": "2026-03-14T17:34:09.162Z",
+      "turn": 1,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Inspecting artifacts"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:09.162Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "**/.github/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:09.162Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "**/docs/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:09.162Z",
+      "turn": 1,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "rg",
+      "target": "audit_context|detect_stale_refs|context-maintenance|stale refs|drift",
+      "detail": "search content"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Comparing examples"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/copilot-instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/examples/clean/copilot-instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/examples/drifted/copilot-instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/maintenance-schedule.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "docs/operating-model-example.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/scripts/audit_context.py",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/scripts/detect_stale_refs.py",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:17.453Z",
+      "turn": 2,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "plan.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:28.683Z",
+      "turn": 3,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Verifying references"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:28.683Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "app/backend/src/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:28.683Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": ".github/instructions/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:28.683Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "docs/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:28.683Z",
+      "turn": 3,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "glob",
+      "target": "**/helpers/**/*",
+      "detail": "search files"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:39.524Z",
+      "turn": 4,
+      "phase": "plan",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": "plan.md",
+      "detail": "session plan"
+    },
+    {
+      "timestamp": "2026-03-14T17:34:55.881Z",
+      "turn": 5,
+      "phase": "write",
+      "actor": "model",
+      "action": "apply_patch",
+      "target": ".github/examples/drifted/copilot-instructions.md",
+      "detail": "write"
+    },
+    {
+      "timestamp": "2026-03-14T17:35:28.615Z",
+      "turn": 6,
+      "phase": "intent",
+      "actor": "model",
+      "action": "report_intent",
+      "target": "",
+      "detail": "Verifying edits"
+    },
+    {
+      "timestamp": "2026-03-14T17:35:28.615Z",
+      "turn": 6,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": ".github/examples/drifted/copilot-instructions.md",
+      "detail": "read file"
+    },
+    {
+      "timestamp": "2026-03-14T17:35:28.615Z",
+      "turn": 6,
+      "phase": "discovery",
+      "actor": "model",
+      "action": "view",
+      "target": "plan.md",
+      "detail": "read file"
+    }
+  ],
+  "implicit_context": [
+    "api.instructions.md",
+    "copilot-instructions.md",
+    "notifications.instructions.md",
+    "test.instructions.md"
+  ],
+  "files_discovered": [],
+  "files_read": [
+    ".github/copilot-instructions.md",
+    ".github/examples/clean/copilot-instructions.md",
+    ".github/examples/drifted/copilot-instructions.md",
+    ".github/scripts/audit_context.py",
+    ".github/scripts/detect_stale_refs.py",
+    "docs/maintenance-schedule.md",
+    "docs/operating-model-example.md",
+    "plan.md"
+  ],
+  "files_written": [
+    ".github/examples/drifted/copilot-instructions.md"
+  ],
+  "mermaid": "sequenceDiagram\n    participant U as User/Prompt\n    participant S as Copilot Runtime\n    participant M as Model\n    participant T as Tools\n    participant C as Codebase\n\n    Note over S,M: Implicit Context (auto-injected)\n    S->>M: api.instructions.md\n    S->>M: copilot-instructions.md\n    S->>M: notifications.instructions.md\n    S->>M: test.instructions.md\n\n    U->>M: prompt\n\n\n    Note over M,T: Turn 1\n    Note over M: Intent: Inspecting artifacts\n    M->>T: glob(**/.github/**/*)\n    T-->>M: file list\n    M->>T: glob(**/docs/**/*)\n    T-->>M: file list\n    M->>T: rg(..._refs|context-maintenance|stale )\n    T-->>M: matches\n\n    Note over M,T: Turn 2\n    Note over M: Intent: Comparing examples\n    M->>T: view(.github/copilot-instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...hub/examples/clean/copilot-instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(...b/examples/drifted/copilot-instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/maintenance-schedule.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(docs/operating-model-example.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(.github/scripts/audit_context.py)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(.github/scripts/detect_stale_refs.py)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(plan.md)\n    T->>C: read\n    C-->>M: content\n\n    Note over M,T: Turn 3\n    Note over M: Intent: Verifying references\n    M->>T: glob(app/backend/src/**/*)\n    T-->>M: file list\n    M->>T: glob(.github/instructions/**/*)\n    T-->>M: file list\n    M->>T: glob(docs/**/*)\n    T-->>M: file list\n    M->>T: glob(**/helpers/**/*)\n    T-->>M: file list\n\n    Note over M,T: Turn 4\n    Note over M: Update plan.md\n\n    Note over M,T: Turn 5\n    M->>T: write(...b/examples/drifted/copilot-instructions.md)\n    T->>C: patch\n    C-->>M: ok\n\n    Note over M,T: Turn 6\n    Note over M: Intent: Verifying edits\n    M->>T: view(...b/examples/drifted/copilot-instructions.md)\n    T->>C: read\n    C-->>M: content\n    M->>T: view(plan.md)\n    T->>C: read\n    C-->>M: content\n\n    M->>U: Return results"
+}

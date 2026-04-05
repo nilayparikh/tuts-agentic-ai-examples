@@ -1,10 +1,10 @@
 ---
-applyTo: "src/backend/src/routes/**"
+applyTo: "app/backend/src/routes/**"
 ---
 
 # API Route Instructions
 
-These rules apply only when editing files under `backend/src/routes/`.
+These rules apply only when editing files under `app/backend/src/routes/`.
 
 ## Route Handler Pattern
 

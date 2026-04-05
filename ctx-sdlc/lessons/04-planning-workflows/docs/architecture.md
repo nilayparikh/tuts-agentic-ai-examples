@@ -8,27 +8,28 @@ final decision workflows for commercial loan applications.
 ## System Shape
 
 ```
-backend/
-  src/
-    app.ts                  ← Express entry point, middleware chain
-    config/                 ← Environment config, feature flags
-    db/                     ← SQLite connection, schema, seed, migrations
-    middleware/             ← Auth, audit logger, error handler, rate limiter
-    queue/                  ← In-process event broker + handlers
-      contracts.ts          ← Typed message contracts (breaking-change surface)
-      broker.ts             ← Pub/sub: on(), emit(), flush()
-      handlers/             ← Notification + audit event consumers
-    models/                 ← Domain types + DB repository classes
-    routes/                 ← HTTP route handlers
-    rules/                  ← State machine, business rules, role permissions
-    services/               ← Business logic orchestration
-  tests/
-frontend/
-  src/
-    api/                    ← Typed HTTP client matching backend routes
-    pages/                  ← Dashboard, application detail, preferences
-    components/             ← UI building blocks
-  styles/
+src/
+  backend/
+    src/
+      app.ts                ← Express entry point, middleware chain
+      config/               ← Environment config, feature flags
+      db/                   ← SQLite connection, schema, seed, migrations
+      middleware/           ← Auth, audit logger, error handler, rate limiter
+      queue/                ← In-process event broker + handlers
+        contracts.ts        ← Typed message contracts (breaking-change surface)
+        broker.ts           ← Pub/sub: on(), emit(), flush()
+        handlers/           ← Notification + audit event consumers
+      models/               ← Domain types + DB repository classes
+      routes/               ← HTTP route handlers
+      rules/                ← State machine, business rules, role permissions
+      services/             ← Business logic orchestration
+    tests/
+  frontend/
+    src/
+      api/                  ← Typed HTTP client matching backend routes
+      pages/                ← Dashboard, application detail, preferences
+      components/           ← UI building blocks
+    styles/
 ```
 
 - `docs/` stores architecture documentation.
@@ -43,7 +44,18 @@ frontend/
 4. Pilot-gated features must call out rollout, observability, and fallback behavior.
 5. Product rules may vary by role, loan jurisdiction, and delegated-session mode.
 6. Audit is mandatory for all writes — via queue broker or direct DB write.
-7. Message contracts in `backend/src/queue/contracts.ts` are a breaking-change surface.
+7. Message contracts in `src/backend/src/queue/contracts.ts` are a breaking-change surface.
+
+## Lesson 04 Planning Target
+
+The lesson demo is intentionally read-only.
+
+The preferred planning output should:
+
+- read the architecture, ADR, product spec, and NFRs together
+- separate confirmed requirements from inferred implementation choices
+- identify the frontend, route, rule, service, audit, and observability surfaces that would likely change
+- stop short of editing code
 
 ## State Machine
 

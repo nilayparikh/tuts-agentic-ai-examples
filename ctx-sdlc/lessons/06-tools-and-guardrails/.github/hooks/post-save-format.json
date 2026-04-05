@@ -1,12 +1,11 @@
 {
-  "event": "postSave",
-  "description": "Auto-format TypeScript files after save using Prettier.",
-  "pattern": "**/*.ts",
-  "command": "npx",
-  "args": [
-    "prettier",
-    "--write",
-    "${file}"
-  ],
-  "blocking": false
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\"",
+        "timeout": 15
+      }
+    ]
+  }
 }

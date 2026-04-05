@@ -1,0 +1,273 @@
+--- a/.github/hooks/import-validation.json
++++ b/.github/hooks/import-validation.json
+@@ -0,0 +1,11 @@
++{
++  "hooks": {
++    "PreToolUse": [
++      {
++        "type": "command",
++        "command": "python .github/scripts/validate_imports.py",
++        "timeout": 10
++      }
++    ]
++  }
++}
+
+--- a/.github/scripts/validate_imports.py
++++ b/.github/scripts/validate_imports.py
+@@ -0,0 +1,255 @@
++#!/usr/bin/env python3
++"""PreToolUse hook: enforce barrel-file imports for TypeScript files.
++
++Reads hook JSON from stdin when present, inspects changed .ts/.tsx files, and
++denies imports that bypass a sibling index.ts barrel to reach into an internal
++module path.
++"""
++from __future__ import annotations
++
++import json
++import os
++import re
++import sys
++from pathlib import Path, PurePosixPath
++from typing import Iterable
++
++IMPORT_PATTERN = re.compile(
++    r"""
++    (?:
++        import\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+)? |
++        export\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+) |
++        import\s*\(
++    )
++    ["'](?P<specifier>[^"']+)["']
++    """,
++    re.VERBOSE,
++)
++PATH_TOKEN_PATTERN = re.compile(
++    r"(?P<path>(?:[A-Za-z]:)?[\\/][^\s\"']+\.(?:ts|tsx)|[A-Za-z0-9_.\\/-]+\.(?:ts|tsx))"
++)
++TS_FILE_SUFFIXES = {".ts", ".tsx"}
++SOURCE_SUFFIXES = (".ts", ".tsx", ".js", ".jsx", ".mts", ".cts", ".mjs", ".cjs")
++BARREL_NAMES = ("index.ts", "index.tsx")
++IGNORED_DIRECTORIES = {"node_modules", "dist", ".git"}
++REPO_ROOT = Path(__file__).resolve().parents[2]
++
++
++def load_hook_payload() -> dict | None:
++    """Read hook JSON from stdin when available."""
++    try:
++        raw = sys.stdin.read()
++    except OSError:
++        return None
++
++    if not raw.strip():
++        return None
++
++    try:
++        data = json.loads(raw)
++    except json.JSONDecodeError:
++        return None
++
++    return data if isinstance(data, dict) else None
++
++
++def is_typescript_file(path: Path) -> bool:
++    return path.suffix in TS_FILE_SUFFIXES and path.is_file()
++
++
++def normalize_candidate(raw_path: str) -> Path | None:
++    raw_path = raw_path.strip().strip("\"'")
++    if not raw_path:
++        return None
++
++    normalized = raw_path.replace("/", "\\")
++    path = Path(normalized)
++    if not path.is_absolute():
++        path = REPO_ROOT / path
++
++    try:
++        resolved = path.resolve(strict=False)
++    except OSError:
++        return None
++
++    try:
++        resolved.relative_to(REPO_ROOT)
++    except ValueError:
++        return None
++
++    return resolved if is_typescript_file(resolved) else None
++
++
++def extract_typescript_paths(value: object) -> set[Path]:
++    """Recursively collect .ts/.tsx paths from hook JSON."""
++    matches: set[Path] = set()
++
++    if isinstance(value, str):
++        for token in PATH_TOKEN_PATTERN.findall(value):
++            candidate = normalize_candidate(token)
++            if candidate is not None:
++                matches.add(candidate)
++        return matches
++
++    if isinstance(value, dict):
++        for nested in value.values():
++            matches.update(extract_typescript_paths(nested))
++        return matches
++
++    if isinstance(value, list):
++        for nested in value:
++            matches.update(extract_typescript_paths(nested))
++
++    return matches
++
++
++def discover_files(payload: dict | None) -> list[Path]:
++    """Prefer changed files from hook JSON; otherwise scan the workspace."""
++    if payload is not None:
++        payload_files = sorted(extract_typescript_paths(payload))
++        if payload_files:
++            return payload_files
++
++    files: list[Path] = []
++    for extension in ("*.ts", "*.tsx"):
++        for path in REPO_ROOT.rglob(extension):
++            if any(part in IGNORED_DIRECTORIES for part in path.parts):
++                continue
++            if path.is_file():
++                files.append(path)
++    return sorted(set(files))
++
++
++def find_barrel(directory: Path) -> Path | None:
++    for barrel_name in BARREL_NAMES:
++        barrel = directory / barrel_name
++        if barrel.is_file():
++            return barrel
++    return None
++
++
++def is_within(path: Path, directory: Path) -> bool:
++    try:
++        path.relative_to(directory)
++        return True
++    except ValueError:
++        return False
++
++
++def candidate_targets(base_path: Path, specifier: str) -> Iterable[Path]:
++    suffix = PurePosixPath(specifier).suffix
++
++    if suffix in SOURCE_SUFFIXES:
++        if suffix == ".ts" or suffix == ".tsx":
++            yield base_path
++            return
++
++        stem = base_path.with_suffix("")
++        for target_suffix in TS_FILE_SUFFIXES:
++            yield stem.with_suffix(target_suffix)
++        return
++
++    yield base_path.with_suffix(".ts")
++    yield base_path.with_suffix(".tsx")
++    yield base_path / "index.ts"
++    yield base_path / "index.tsx"
++
++
++def resolve_import(importer: Path, specifier: str) -> Path | None:
++    if not specifier.startswith("."):
++        return None
++
++    specifier_path = PurePosixPath(specifier)
++    base_path = (importer.parent / Path(*specifier_path.parts)).resolve(strict=False)
++
++    for candidate in candidate_targets(base_path, specifier):
++        if candidate.is_file():
++            return candidate
++
++    return None
++
++
++def format_relative_import(importer: Path, barrel: Path) -> str:
++    text = Path(os.path.relpath(barrel.parent, importer.parent)).as_posix()
++    if not text.startswith("."):
++        text = f"./{text}"
++    return text
++
++
++def find_barrel_violation(importer: Path, specifier: str) -> tuple[Path, Path] | None:
++    target = resolve_import(importer, specifier)
++    if target is None or target.name.startswith("index."):
++        return None
++
++    for directory in [target.parent, *target.parent.parents]:
++        if not is_within(directory, REPO_ROOT):
++            continue
++
++        barrel = find_barrel(directory)
++        if barrel is None:
++            continue
++
++        if is_within(importer.parent, directory):
++            continue
++
++        return target, barrel
++
++    return None
++
++
++def collect_violations(path: Path) -> list[str]:
++    try:
++        content = path.read_text(encoding="utf-8")
++    except OSError:
++        return []
++
++    violations: list[str] = []
++    for match in IMPORT_PATTERN.finditer(content):
++        specifier = match.group("specifier")
++        violation = find_barrel_violation(path, specifier)
++        if violation is None:
++            continue
++
++        target, barrel = violation
++        suggested_import = format_relative_import(path, barrel)
++        violations.append(
++            (
++                f"{path.relative_to(REPO_ROOT)} imports '{specifier}', which bypasses "
++                f"the barrel '{barrel.relative_to(REPO_ROOT)}' and reaches an internal "
++                f"module path '{target.relative_to(REPO_ROOT)}'. Import from "
++                f"'{suggested_import}' instead."
++            )
++        )
++
++    return violations
++
++
++def emit_deny(violations: list[str]) -> None:
++    reason = "Import validation failed:\n- " + "\n- ".join(violations[:10])
++    if len(violations) > 10:
++        reason += f"\n- ...and {len(violations) - 10} more violation(s)."
++
++    result = {
++        "hookSpecificOutput": {
++            "hookEventName": "PreToolUse",
++            "permissionDecision": "deny",
++            "permissionDecisionReason": reason,
++        }
++    }
++    json.dump(result, sys.stdout)
++
++
++def main() -> None:
++    payload = load_hook_payload()
++    files = discover_files(payload)
++
++    violations: list[str] = []
++    for path in files:
++        violations.extend(collect_violations(path))
++
++    if violations:
++        emit_deny(violations)
++
++
++if __name__ == "__main__":
++    main()

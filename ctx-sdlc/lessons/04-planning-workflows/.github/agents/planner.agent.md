@@ -2,11 +2,11 @@
 name: planner
 description: "Read-only planning agent for the Loan Workbench project — decomposes features, investigates bugs, and triages incidents using specs, NFRs, and architecture docs."
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
-agents: []
+  - read/readFile
+  - search/textSearch
 ---
 
 # Planner Agent

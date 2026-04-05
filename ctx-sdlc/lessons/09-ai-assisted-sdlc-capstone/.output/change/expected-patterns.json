@@ -1,0 +1,26 @@
+[
+  {
+    "pattern": "event-channel|event channel",
+    "description": "Implementation should add event-channel validation"
+  },
+  {
+    "pattern": "mandatory",
+    "description": "Implementation should enforce mandatory-event constraints"
+  },
+  {
+    "pattern": "LEGAL-218",
+    "description": "Implementation should reference LEGAL-218"
+  },
+  {
+    "pattern": "preference-event-channel-validator|validator",
+    "description": "Route and tests should reference the validator"
+  },
+  {
+    "pattern": "test|describe|it\\(",
+    "description": "Implementation should add unit tests"
+  },
+  {
+    "pattern": "false positive|hard negative",
+    "description": "Tests should annotate false positive and hard negative cases"
+  }
+]

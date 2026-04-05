@@ -1,38 +1,24 @@
 ---
-applyTo: "packages/web/**"
+applyTo: "app/frontend/src/**"
 ---
 
-# Frontend Instructions — React 19 + Tailwind
+# Frontend Instructions — Vanilla TypeScript SPA
 
 ## Component Pattern
 
-All components MUST follow this structure:
+The frontend is a vanilla TypeScript single-page application — no framework.
 
-```typescript
-interface Props {
-  // Explicit props — no `any`
-}
+- All UI logic lives in `app/frontend/src/`
+- API calls go through the client in `app/frontend/src/api/`
+- Page rendering is in `app/frontend/src/pages/`
+- Reusable UI elements are in `app/frontend/src/components/`
 
-export function ComponentName({ prop1, prop2 }: Props) {
-  // Hooks first
-  // Event handlers
-  // Return JSX
-}
-```
+## Conventions
 
-## State Management
-
-- Local state: `useState` / `useReducer`
-- Global state: Zustand stores in `packages/web/src/stores/`
-- Server state: React 19 `use()` + Suspense boundaries
-- Do NOT use Redux, MobX, or React Context for mutable state
-
-## Styling
-
-- Tailwind utility classes only
-- No CSS modules, styled-components, or emotion
-- Custom design tokens in `tailwind.config.ts`
-- Dark mode: use `dark:` variant classes
+- TypeScript strict mode
+- ESM imports only
+- No external UI framework (no React, Vue, Angular)
+- Styling via plain CSS in `app/frontend/styles/`
 
 ## Accessibility
 

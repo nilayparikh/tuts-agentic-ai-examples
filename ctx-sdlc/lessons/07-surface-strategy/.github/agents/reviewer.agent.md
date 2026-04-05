@@ -2,10 +2,11 @@
 name: reviewer
 description: Reviews pull requests for architecture compliance, convention adherence, and security concerns.
 tools:
-  - search
   - search/codebase
   - read/problems
   - search/usages
+  - read/readFile
+  - search/textSearch
 ---
 
 # Code Reviewer Agent
@@ -20,7 +21,7 @@ For every file changed, verify:
 ### Architecture Compliance
 
 - [ ] Routes only handle HTTP — no business logic
-- [ ] Business logic is in `src/rules/` — pure functions, no I/O
+- [ ] Business logic is in `app/backend/src/rules/` — pure functions, no I/O
 - [ ] Services handle persistence and external calls
 - [ ] Audit events are recorded BEFORE persistence (fail-closed)
 

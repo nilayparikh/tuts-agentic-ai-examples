@@ -1,0 +1,22 @@
+[
+  {
+    "pattern": "applyTo:\\s*\"\\*\\*\"|applyTo:\\s*'\\*\\*'",
+    "description": "Portable baseline should use applyTo: '**' scope"
+  },
+  {
+    "pattern": "portable|baseline",
+    "description": "Portable baseline file should emphasize portability"
+  },
+  {
+    "pattern": "CLI|chat|inline|coding agent|code review",
+    "description": "Surface notes should compare multiple Copilot surfaces"
+  },
+  {
+    "pattern": "VS Code",
+    "description": "Surface notes should distinguish VS Code-specific behavior"
+  },
+  {
+    "pattern": "portability risk|false positive|hard negative",
+    "description": "Surface notes should include risk taxonomy"
+  }
+]

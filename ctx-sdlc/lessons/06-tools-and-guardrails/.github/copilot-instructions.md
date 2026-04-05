@@ -42,8 +42,8 @@ Hooks in `.github/hooks/` enforce deterministic rules. Do not try to bypass them
 ## Code Conventions
 
 - TypeScript strict mode, ESM imports.
-- Business rules in `backend/src/rules/` — pure functions, no side effects.
-- Services in `backend/src/services/` — I/O and external integrations.
-- Routes in `backend/src/routes/` — orchestration only, delegate to rules and services.
-- Queue broker in `backend/src/queue/` — async event handling (notifications, audit).
-- All tests in `backend/tests/` using Vitest.
+- Business rules in `src/backend/src/rules/` — pure functions, no side effects.
+- Services in `src/backend/src/services/` — I/O and external integrations.
+- Routes in `src/backend/src/routes/` — orchestration only, delegate to rules and services.
+- Queue broker in `src/backend/src/queue/` — async event handling (notifications, audit).
+- All tests in `src/backend/tests/` using Vitest.

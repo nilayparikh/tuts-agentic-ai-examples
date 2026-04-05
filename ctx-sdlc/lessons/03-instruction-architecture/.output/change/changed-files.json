@@ -1,0 +1,8 @@
+{
+  "added": [
+    "backend/src/rules/notification-channel-rules.ts",
+    "backend/tests/unit/notification-channel-rules.test.ts"
+  ],
+  "modified": [],
+  "deleted": []
+}

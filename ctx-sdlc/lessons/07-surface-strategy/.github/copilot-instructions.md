@@ -24,10 +24,10 @@ role-based access, and audit-first persistence.
 
 Four-layer separation:
 
-1. **Routes** (`backend/src/routes/`) — HTTP handling, parameter extraction, delegation
-2. **Rules** (`backend/src/rules/`) — pure business logic, no I/O
-3. **Services** (`backend/src/services/`) — persistence, external integrations, audit
-4. **Queue** (`backend/src/queue/`) — async event handling (notifications, audit)
+1. **Routes** (`app/backend/src/routes/`) — HTTP handling, parameter extraction, delegation
+2. **Rules** (`app/backend/src/rules/`) — pure business logic, no I/O
+3. **Services** (`app/backend/src/services/`) — persistence, external integrations, audit
+4. **Queue** (`app/backend/src/queue/`) — async event handling (notifications, audit)
 
 Request flow: Route → authenticate → authorize → validate → Rule → Service → respond.
 
