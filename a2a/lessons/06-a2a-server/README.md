@@ -1,5 +1,14 @@
 # Lesson 06 — Wrapping Agents as A2A Servers
 
+[![Watch: Wrapping Agents as A2A Servers](https://img.youtube.com/vi/mXEXEy53UTk/maxresdefault.jpg)](https://www.youtube.com/watch?v=mXEXEy53UTk)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [Building Your First A2A Agent](../05-first-a2a-agent/)
+- Next lesson: [A2A Client Fundamentals](../07-a2a-client/)
+
 Transform the standalone QAAgent from Lesson 5 into a fully **A2A-compliant server**.
 
 ## What You'll Build

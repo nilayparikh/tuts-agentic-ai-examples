@@ -1,5 +1,14 @@
 # Lesson 14 — Multi-Agent Loan Approval System (Capstone)
 
+[![Watch: Multi-Agent System Deep Dive - Loan Approval](https://img.youtube.com/vi/ONhelxVH1SQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=ONhelxVH1SQ)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with Claude Style Agents](../13-claude-agent-sdk/)
+- Next lesson: <a href="https://tuts.localm.dev/a2a/advanced-concepts" target="_blank" rel="noopener noreferrer">Advanced Concepts</a>
+
 A production-grade multi-agent loan approval pipeline built with the A2A protocol,
 featuring AI-driven decisioning (80%), human-in-the-loop escalation (20%),
 a React approval dashboard, and OpenTelemetry observability.

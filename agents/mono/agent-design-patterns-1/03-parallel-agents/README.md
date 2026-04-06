@@ -2,8 +2,11 @@
 
 [![Watch: Parallel AI Agents & Synthesizer Patterns](https://img.youtube.com/vi/trrAd7zXVqI/maxresdefault.jpg)](https://www.youtube.com/watch?v=trrAd7zXVqI)
 
-> **Watch the video:** [Parallel AI Agents & Synthesizer Patterns](https://www.youtube.com/watch?v=trrAd7zXVqI)
-> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Watch the video</a>
+- [Part 1 overview](../README.md)
+- <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">Series website</a>
 
 Demonstrates the **parallel agent** pattern: multiple specialist agents run
 concurrently, and their results are synthesized into a unified response.
@@ -68,6 +71,13 @@ python client.py           # run from another terminal
 4. Orchestrator combines those JSON payloads and forwards them to the **Synthesizer** (11304).
 5. Synthesizer calls Ollama to render a richer merged day plan from structured data.
 6. If Ollama is unavailable, the Synthesizer returns a deterministic fallback plan instead of dropping the request.
+
+## Series Links
+
+- Previous pattern: [Sequential Agents](../02-sequential-agents/)
+- Current pattern: Parallel Agents
+- Next pattern: [Coordinator](../../agent-design-patterns-2/04-coordinator/)
+- Full series: [Part 1 overview](../README.md) and [Part 2 overview](../../agent-design-patterns-2/README.md)
 
 ## Structured Payload Contract
 
@@ -189,14 +199,3 @@ Evening - Live event:
 - The final response is grounded strictly in returned fields, which keeps the
   demo deterministic and easy to debug.
 - Ollama failure should degrade gracefully to a deterministic fallback instead of failing the A2A call.
-
-## Series Navigation
-
-| # | Pattern | Video | Example |
-|---|---------|-------|---------|
-| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../01-single-agent/) |
-| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../02-sequential-agents/) |
-| **03** | **Parallel Agents** (this) | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | — |
-| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../../agent-design-patterns-2/04-coordinator/) |
-| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../../agent-design-patterns-2/05-agent-as-tool/) |
-| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../../agent-design-patterns-2/06-loop-and-critique/) |

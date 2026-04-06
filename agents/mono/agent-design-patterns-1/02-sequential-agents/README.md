@@ -2,8 +2,11 @@
 
 [![Watch: The Sequential AI Agent Blueprint](https://img.youtube.com/vi/XaiCXeeyNzQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=XaiCXeeyNzQ)
 
-> **Watch the video:** [The Sequential AI Agent Blueprint](https://www.youtube.com/watch?v=XaiCXeeyNzQ)
-> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">Watch the video</a>
+- [Part 1 overview](../README.md)
+- <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">Series website</a>
 
 Fixed pipeline of A2A agents executing in deterministic order.
 
@@ -55,13 +58,9 @@ python util.py --stop
 | 11202 | Transport Agent         |
 | 11203 | Sequential Orchestrator |
 
-## Series Navigation
+## Series Links
 
-| # | Pattern | Video | Example |
-|---|---------|-------|---------|
-| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../01-single-agent/) |
-| **02** | **Sequential Agents** (this) | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | — |
-| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../03-parallel-agents/) |
-| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../../agent-design-patterns-2/04-coordinator/) |
-| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../../agent-design-patterns-2/05-agent-as-tool/) |
-| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../../agent-design-patterns-2/06-loop-and-critique/) |
+- Previous pattern: [Single Agent](../01-single-agent/)
+- Current pattern: Sequential Agents
+- Next pattern: [Parallel Agents](../03-parallel-agents/)
+- Full series: [Part 1 overview](../README.md) and [Part 2 overview](../../agent-design-patterns-2/README.md)

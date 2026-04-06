@@ -1,5 +1,14 @@
 # Lesson 09 — A2A with Google Agent Development Kit (ADK)
 
+[![Watch: A2A with Google ADK](https://img.youtube.com/vi/6pIgKOY16IE/maxresdefault.jpg)](https://www.youtube.com/watch?v=6pIgKOY16IE)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/google-adk" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with Microsoft Agent Framework](../08-microsoft-agent-framework/)
+- Next lesson: [A2A with LangGraph](../10-langgraph/)
+
 This folder contains the working example for Lesson 09 of the A2A tutorial.
 
 ## What It Does

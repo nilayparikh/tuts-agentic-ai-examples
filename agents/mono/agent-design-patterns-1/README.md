@@ -1,26 +1,24 @@
 # Agent Design Patterns Part 1 — Foundational Patterns
 
 Runnable examples for the foundational patterns in the
-[AI Agent Design Patterns](https://tuts.localm.dev/) mono series from
-[LocalM Tuts](https://tuts.localm.dev/).
+<a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">AI Agent Design Patterns</a> mono series from
+<a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>.
 
-## Videos
+## Video Lineup
 
-| # | Video | Watch |
-|---|-------|-------|
-| 01 | [![Single AI Agent Pattern](https://img.youtube.com/vi/j98Csy8DbPo/mqdefault.jpg)](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Single AI Agent Pattern: Why Simple Wins](https://www.youtube.com/watch?v=j98Csy8DbPo) |
-| 02 | [![Sequential AI Agent Blueprint](https://img.youtube.com/vi/XaiCXeeyNzQ/mqdefault.jpg)](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [The Sequential AI Agent Blueprint](https://www.youtube.com/watch?v=XaiCXeeyNzQ) |
-| 03 | [![Parallel AI Agents](https://img.youtube.com/vi/trrAd7zXVqI/mqdefault.jpg)](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Parallel AI Agents & Synthesizer Patterns](https://www.youtube.com/watch?v=trrAd7zXVqI) |
+1. <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Single AI Agent Pattern: Why Simple Wins</a>
+2. <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">The Sequential AI Agent Blueprint</a>
+3. <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Parallel AI Agents & Synthesizer Patterns</a>
 
 > **Continue with Part 2 →** [Agent Design Patterns Part 2 — Advanced Patterns](../agent-design-patterns-2/)
 
-## Patterns
+## Pattern Folders
 
 | #   | Pattern           | Folder                  | Ports       | Video |
 | --- | ----------------- | ----------------------- | ----------- | ----- |
-| 01  | Single Agent      | `01-single-agent/`      | 11100       | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) |
-| 02  | Sequential Agents | `02-sequential-agents/` | 11201-11203 | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) |
-| 03  | Parallel Agents   | `03-parallel-agents/`   | 11301-11305 | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) |
+| 01  | Single Agent      | `01-single-agent/`      | 11100       | <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Watch</a> |
+| 02  | Sequential Agents | `02-sequential-agents/` | 11201-11203 | <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">Watch</a> |
+| 03  | Parallel Agents   | `03-parallel-agents/`   | 11301-11305 | <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Watch</a> |
 
 ## Setup
 

@@ -1,9 +1,12 @@
 # 04 — Coordinator Routing
 
-[![Watch: Stop Hardcoding Your Agents](https://img.youtube.com/vi/N05AycfgBPc/maxresdefault.jpg)](https://www.youtube.com/watch?v=N05AycfgBPc)
+[![Watch: Stop Hardcoding Your Agents: Master the Coordinator Pattern](https://img.youtube.com/vi/N05AycfgBPc/maxresdefault.jpg)](https://www.youtube.com/watch?v=N05AycfgBPc)
 
-> **Watch the video:** [Stop Hardcoding Your Agents: Master the Coordinator Pattern](https://www.youtube.com/watch?v=N05AycfgBPc)
-> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=N05AycfgBPc" target="_blank" rel="noopener noreferrer">Watch the video</a>
+- [Part 2 overview](../README.md)
+- <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">Series website</a>
 
 Dynamic routing pattern: a Coordinator uses an LLM to classify the user
 query and route it to the best-fit specialist agent. No fixed pipeline —
@@ -160,13 +163,9 @@ Note: Specialist returned typical budget ranges.
 - The coordinator response stays grounded because it never invents fields beyond
   what the chosen specialist returned.
 
-## Series Navigation
+## Series Links
 
-| # | Pattern | Video | Example |
-|---|---------|-------|---------|
-| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../../agent-design-patterns-1/01-single-agent/) |
-| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../../agent-design-patterns-1/02-sequential-agents/) |
-| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../../agent-design-patterns-1/03-parallel-agents/) |
-| **04** | **Coordinator** (this) | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | — |
-| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../05-agent-as-tool/) |
-| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../06-loop-and-critique/) |
+- Previous pattern: [Parallel Agents](../../agent-design-patterns-1/03-parallel-agents/)
+- Current pattern: Coordinator
+- Next pattern: [Agent-as-Tool](../05-agent-as-tool/)
+- Full series: [Part 1 overview](../../agent-design-patterns-1/README.md) and [Part 2 overview](../README.md)

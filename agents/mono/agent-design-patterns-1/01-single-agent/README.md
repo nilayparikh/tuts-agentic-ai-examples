@@ -2,8 +2,11 @@
 
 [![Watch: Single AI Agent Pattern](https://img.youtube.com/vi/j98Csy8DbPo/maxresdefault.jpg)](https://www.youtube.com/watch?v=j98Csy8DbPo)
 
-> **Watch the video:** [Single AI Agent Pattern: Why Simple Wins](https://www.youtube.com/watch?v=j98Csy8DbPo)
-> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Watch the video</a>
+- [Part 1 overview](../README.md)
+- <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">Series website</a>
 
 One LLM agent with tools that dynamically decides execution order.
 
@@ -52,13 +55,8 @@ python util.py --stop
 | ----- | ---------------------- |
 | 11100 | Trip Planner A2A Agent |
 
-## Series Navigation
+## Series Links
 
-| # | Pattern | Video | Example |
-|---|---------|-------|---------|
-| **01** | **Single Agent** (this) | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | — |
-| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../02-sequential-agents/) |
-| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../03-parallel-agents/) |
-| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../../agent-design-patterns-2/04-coordinator/) |
-| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../../agent-design-patterns-2/05-agent-as-tool/) |
-| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../../agent-design-patterns-2/06-loop-and-critique/) |
+- Current pattern: Single Agent
+- Next pattern: [Sequential Agents](../02-sequential-agents/)
+- Full series: [Part 1 overview](../README.md) and [Part 2 overview](../../agent-design-patterns-2/README.md)

@@ -5,6 +5,21 @@ Ten progressive lessons build from a standalone LLM agent to a multi-framework
 A2A deployment, culminating in a full loan approval pipeline with six agents
 and a React dashboard.
 
+## Video-Backed Lessons
+
+| Lesson | Topic | Video | Example |
+| ------ | ----- | ----- | ------- |
+| 05 | <a href="https://tuts.localm.dev/a2a/first-a2a-agent" target="_blank" rel="noopener noreferrer">Building Your First A2A Agent</a> | <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/05-first-a2a-agent/`](lessons/05-first-a2a-agent/README.md) |
+| 06 | <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Wrapping Agents as A2A Servers</a> | <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/06-a2a-server/`](lessons/06-a2a-server/README.md) |
+| 07 | <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">A2A Client Fundamentals</a> | <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/07-a2a-client/`](lessons/07-a2a-client/README.md) |
+| 08 | <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">A2A with Microsoft Agent Framework</a> | <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/08-microsoft-agent-framework/`](lessons/08-microsoft-agent-framework/README.md) |
+| 09 | <a href="https://tuts.localm.dev/a2a/google-adk" target="_blank" rel="noopener noreferrer">A2A with Google ADK</a> | <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/09-google-adk/`](lessons/09-google-adk/README.md) |
+| 10 | <a href="https://tuts.localm.dev/a2a/langgraph" target="_blank" rel="noopener noreferrer">A2A with LangGraph</a> | <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/10-langgraph/`](lessons/10-langgraph/README.md) |
+| 11 | <a href="https://tuts.localm.dev/a2a/crewai" target="_blank" rel="noopener noreferrer">A2A with CrewAI</a> | <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/11-crewai/`](lessons/11-crewai/README.md) |
+| 12 | <a href="https://tuts.localm.dev/a2a/openai-agents-sdk" target="_blank" rel="noopener noreferrer">A2A with OpenAI Agents SDK</a> | <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/12-openai-agents-sdk/`](lessons/12-openai-agents-sdk/README.md) |
+| 13 | <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">A2A with Claude Style Agents</a> | <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/13-claude-agent-sdk/`](lessons/13-claude-agent-sdk/README.md) |
+| 14 | <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Multi-Agent System Deep Dive - Loan Approval</a> | <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/14-multi-agent-deep-dive/`](lessons/14-multi-agent-deep-dive/README.md) |
+
 ## Lesson Map
 
 ```mermaid
@@ -57,7 +72,7 @@ graph TD
 
 ### GitHub Models (default)
 
-1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) → **Generate new token (classic)**
+1. Go to <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">github.com/settings/tokens</a> → **Generate new token (classic)**
 2. No scopes required — a token with no permissions works
 3. Copy the token to `_examples/.env`:
    ```dotenv
@@ -66,7 +81,7 @@ graph TD
 
 ### AI Toolkit LocalFoundry
 
-1. Install the [VS Code AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio)
+1. Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio" target="_blank" rel="noopener noreferrer">VS Code AI Toolkit extension</a>
 2. Open AI Toolkit → **Models** → choose a model (e.g. `qwen2.5-0.5b-instruct-generic-gpu:4`) → **Load**
 3. The server starts on `http://localhost:5272/v1/` — no token needed
 4. In the notebook, change `PROVIDER = "localfoundry"` in cell 2
@@ -153,7 +168,7 @@ cp ../.env.example ../.env
 
 | Variable                         | Required for                                                   | Where to get                                                     |
 | -------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `GITHUB_TOKEN`                   | Lessons 05–09 notebooks + scripts, Lesson 14 (GitHub provider) | [github.com/settings/tokens](https://github.com/settings/tokens) |
+| `GITHUB_TOKEN`                   | Lessons 05–09 notebooks + scripts, Lesson 14 (GitHub provider) | <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">github.com/settings/tokens</a> |
 | `AZURE_AI_PROJECT_ENDPOINT`      | Lesson 08 full script (Kimi-K2-Thinking)                       | Azure AI Foundry portal                                          |
 | `AZURE_AI_API_KEY`               | Lessons 08–13 full scripts                                     | Azure AI Foundry portal                                          |
 | `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Lessons 08–13 full scripts                                     | Azure AI Foundry portal                                          |
