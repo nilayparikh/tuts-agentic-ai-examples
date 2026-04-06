@@ -4,13 +4,43 @@ Runnable examples for the foundational patterns in the
 <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">AI Agent Design Patterns</a> mono series from
 <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>.
 
+[![Watch: Your AI "Tech Debt" is Exploding. Here's Why.](https://img.youtube.com/vi/V74YBIFpM6U/maxresdefault.jpg)](https://www.youtube.com/watch?v=V74YBIFpM6U)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=V74YBIFpM6U" target="_blank" rel="noopener noreferrer">Your AI "Tech Debt" is Exploding. Here's Why.</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 ## Video Lineup
 
-1. <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Single AI Agent Pattern: Why Simple Wins</a>
-2. <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">The Sequential AI Agent Blueprint</a>
-3. <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Parallel AI Agents & Synthesizer Patterns</a>
+- S1 — <a href="https://www.youtube.com/watch?v=V74YBIFpM6U" target="_blank" rel="noopener noreferrer">Your AI "Tech Debt" is Exploding. Here's Why.</a>
+- S2 — <a href="https://www.youtube.com/watch?v=IOrkQeqvNbk" target="_blank" rel="noopener noreferrer">The Only 6 AI Agent Patterns You'll Ever Need</a>
+- 01 — <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Single AI Agent Pattern: Why Simple Wins</a>
+- 02 — <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">The Sequential AI Agent Blueprint</a>
+- 03 — <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Parallel AI Agents & Synthesizer Patterns</a>
 
 > **Continue with Part 2 →** [Agent Design Patterns Part 2 — Advanced Patterns](../agent-design-patterns-2/)
+
+## Videos
+
+| Video | Title | Examples |
+| --- | --- | --- |
+| [![Watch: Your AI "Tech Debt" is Exploding. Here's Why.](https://img.youtube.com/vi/V74YBIFpM6U/maxresdefault.jpg)](https://www.youtube.com/watch?v=V74YBIFpM6U) | <a href="https://www.youtube.com/watch?v=V74YBIFpM6U" target="_blank" rel="noopener noreferrer">Your AI "Tech Debt" is Exploding. Here's Why.</a> | [Part 1 overview](README.md) |
+| [![Watch: The Only 6 AI Agent Patterns You'll Ever Need](https://img.youtube.com/vi/IOrkQeqvNbk/maxresdefault.jpg)](https://www.youtube.com/watch?v=IOrkQeqvNbk) | <a href="https://www.youtube.com/watch?v=IOrkQeqvNbk" target="_blank" rel="noopener noreferrer">The Only 6 AI Agent Patterns You'll Ever Need</a> | [Part 1 overview](README.md) |
+| [![Watch: Single AI Agent Pattern: Why Simple Wins](https://img.youtube.com/vi/j98Csy8DbPo/maxresdefault.jpg)](https://www.youtube.com/watch?v=j98Csy8DbPo) | <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Single AI Agent Pattern: Why Simple Wins</a> | [01-single-agent](01-single-agent/) |
+| [![Watch: The Sequential AI Agent Blueprint](https://img.youtube.com/vi/XaiCXeeyNzQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">The Sequential AI Agent Blueprint</a> | [02-sequential-agents](02-sequential-agents/) |
+| [![Watch: Parallel AI Agents & Synthesizer Patterns](https://img.youtube.com/vi/trrAd7zXVqI/maxresdefault.jpg)](https://www.youtube.com/watch?v=trrAd7zXVqI) | <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Parallel AI Agents & Synthesizer Patterns</a> | [03-parallel-agents](03-parallel-agents/) |
+
+## Series Navigation
+
+| Step | Video | Examples |
+| --- | --- | --- |
+| S1 | <a href="https://www.youtube.com/watch?v=V74YBIFpM6U" target="_blank" rel="noopener noreferrer">Your AI "Tech Debt" is Exploding. Here's Why.</a> | [Part 1 overview](README.md) |
+| S2 | <a href="https://www.youtube.com/watch?v=IOrkQeqvNbk" target="_blank" rel="noopener noreferrer">The Only 6 AI Agent Patterns You'll Ever Need</a> | [Part 1 overview](README.md) |
+| 01 | <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Single AI Agent Pattern: Why Simple Wins</a> | [01-single-agent](01-single-agent/) |
+| 02 | <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">The Sequential AI Agent Blueprint</a> | [02-sequential-agents](02-sequential-agents/) |
+| 03 | <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Parallel AI Agents & Synthesizer Patterns</a> | [03-parallel-agents](03-parallel-agents/) |
+| 04 | <a href="https://www.youtube.com/watch?v=N05AycfgBPc" target="_blank" rel="noopener noreferrer">Stop Hardcoding Your Agents: Master the Coordinator Pattern</a> | [Part 2 overview](../agent-design-patterns-2/README.md) |
+| 05 | <a href="https://www.youtube.com/watch?v=fG-0_nCm3K8" target="_blank" rel="noopener noreferrer">Stop Delegating, Start Controlling: The Agent-as-Tool Pattern</a> | [Part 2 overview](../agent-design-patterns-2/README.md) |
+| 06 | <a href="https://www.youtube.com/watch?v=SSJ_c77bJSY" target="_blank" rel="noopener noreferrer">Stop Shipping AI Hallucinations: The Loop & Critique Pattern</a> | [Part 2 overview](../agent-design-patterns-2/README.md) |
 
 ## Pattern Folders
 
