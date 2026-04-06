@@ -1,14 +1,25 @@
 # Agent Design Patterns Part 2 — Advanced Patterns
 
-Runnable examples for the **AI Agent Design Patterns (Part 2)** mono video.
+Runnable examples for the **AI Agent Design Patterns (Part 2)** mono video
+from [LocalM Tuts](https://tuts.localm.dev/).
+
+> **Start with Part 1 ←** [Agent Design Patterns Part 1 — Foundational Patterns](../agent-design-patterns-1/)
+
+## Videos
+
+| # | Video | Watch |
+|---|-------|-------|
+| 04 | [![Coordinator Pattern](https://img.youtube.com/vi/N05AycfgBPc/mqdefault.jpg)](https://www.youtube.com/watch?v=N05AycfgBPc) | [Stop Hardcoding Your Agents: Master the Coordinator Pattern](https://www.youtube.com/watch?v=N05AycfgBPc) |
+| 05 | [![Agent-as-Tool Pattern](https://img.youtube.com/vi/fG-0_nCm3K8/mqdefault.jpg)](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Stop Delegating, Start Controlling: The Agent-as-Tool Pattern](https://www.youtube.com/watch?v=fG-0_nCm3K8) |
+| 06 | [![Loop & Critique Pattern](https://img.youtube.com/vi/SSJ_c77bJSY/mqdefault.jpg)](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Stop Shipping AI Hallucinations: The Loop & Critique Pattern](https://www.youtube.com/watch?v=SSJ_c77bJSY) |
 
 ## Patterns
 
-| #   | Pattern             | Folder                  | Ports       |
-| --- | ------------------- | ----------------------- | ----------- |
-| 06  | Loop & Critique     | `06-loop-and-critique/` | 11401-11403 |
-| 04  | Coordinator Routing | `04-coordinator/`       | 11411-11414 |
-| 05  | Agent-as-Tool       | `05-agent-as-tool/`     | 11421-11424 |
+| #   | Pattern             | Folder                  | Ports       | Video |
+| --- | ------------------- | ----------------------- | ----------- | ----- |
+| 04  | Coordinator Routing | `04-coordinator/`       | 11411-11414 | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) |
+| 05  | Agent-as-Tool       | `05-agent-as-tool/`     | 11421-11424 | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) |
+| 06  | Loop & Critique     | `06-loop-and-critique/` | 11401-11403 | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) |
 
 ## Prerequisites
 

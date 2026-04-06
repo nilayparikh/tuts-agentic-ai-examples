@@ -1,5 +1,10 @@
 # 06 — Loop & Critique
 
+[![Watch: Stop Shipping AI Hallucinations](https://img.youtube.com/vi/SSJ_c77bJSY/maxresdefault.jpg)](https://www.youtube.com/watch?v=SSJ_c77bJSY)
+
+> **Watch the video:** [Stop Shipping AI Hallucinations: The Loop & Critique Pattern](https://www.youtube.com/watch?v=SSJ_c77bJSY)
+> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+
 Iterative refinement pattern: a Generator agent produces a trip plan and a
 Critic agent evaluates it. The Loop Orchestrator repeats until the Critic
 says PASS or the max iteration count (3) is reached.
@@ -59,3 +64,14 @@ python client.py          # in another terminal
 - **Iterative refinement**: Feedback is injected into the next Generator prompt
 - **Safety bound**: Max 3 iterations prevents infinite loops
 - **Separation of concerns**: Generator and Critic are independent A2A agents
+
+## Series Navigation
+
+| # | Pattern | Video | Example |
+|---|---------|-------|---------|
+| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../../agent-design-patterns-1/01-single-agent/) |
+| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../../agent-design-patterns-1/02-sequential-agents/) |
+| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../../agent-design-patterns-1/03-parallel-agents/) |
+| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../04-coordinator/) |
+| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../05-agent-as-tool/) |
+| **06** | **Loop & Critique** (this) | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | — |

@@ -1,15 +1,26 @@
 # Agent Design Patterns Part 1 — Foundational Patterns
 
-Runnable examples for the foundational patterns in the AI Agent Design Patterns
-mono series.
+Runnable examples for the foundational patterns in the
+[AI Agent Design Patterns](https://tuts.localm.dev/) mono series from
+[LocalM Tuts](https://tuts.localm.dev/).
+
+## Videos
+
+| # | Video | Watch |
+|---|-------|-------|
+| 01 | [![Single AI Agent Pattern](https://img.youtube.com/vi/j98Csy8DbPo/mqdefault.jpg)](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Single AI Agent Pattern: Why Simple Wins](https://www.youtube.com/watch?v=j98Csy8DbPo) |
+| 02 | [![Sequential AI Agent Blueprint](https://img.youtube.com/vi/XaiCXeeyNzQ/mqdefault.jpg)](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [The Sequential AI Agent Blueprint](https://www.youtube.com/watch?v=XaiCXeeyNzQ) |
+| 03 | [![Parallel AI Agents](https://img.youtube.com/vi/trrAd7zXVqI/mqdefault.jpg)](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Parallel AI Agents & Synthesizer Patterns](https://www.youtube.com/watch?v=trrAd7zXVqI) |
+
+> **Continue with Part 2 →** [Agent Design Patterns Part 2 — Advanced Patterns](../agent-design-patterns-2/)
 
 ## Patterns
 
-| #   | Pattern           | Folder                  | Ports       |
-| --- | ----------------- | ----------------------- | ----------- |
-| 01  | Single Agent      | `01-single-agent/`      | 11100       |
-| 02  | Sequential Agents | `02-sequential-agents/` | 11201-11203 |
-| 03  | Parallel Agents   | `03-parallel-agents/`   | 11301-11305 |
+| #   | Pattern           | Folder                  | Ports       | Video |
+| --- | ----------------- | ----------------------- | ----------- | ----- |
+| 01  | Single Agent      | `01-single-agent/`      | 11100       | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) |
+| 02  | Sequential Agents | `02-sequential-agents/` | 11201-11203 | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) |
+| 03  | Parallel Agents   | `03-parallel-agents/`   | 11301-11305 | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) |
 
 ## Setup
 

@@ -1,5 +1,10 @@
 # Pattern 3 -- Parallel Agents
 
+[![Watch: Parallel AI Agents & Synthesizer Patterns](https://img.youtube.com/vi/trrAd7zXVqI/maxresdefault.jpg)](https://www.youtube.com/watch?v=trrAd7zXVqI)
+
+> **Watch the video:** [Parallel AI Agents & Synthesizer Patterns](https://www.youtube.com/watch?v=trrAd7zXVqI)
+> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+
 Demonstrates the **parallel agent** pattern: multiple specialist agents run
 concurrently, and their results are synthesized into a unified response.
 The three specialist finders return structured JSON from demo data, and the
@@ -184,3 +189,14 @@ Evening - Live event:
 - The final response is grounded strictly in returned fields, which keeps the
   demo deterministic and easy to debug.
 - Ollama failure should degrade gracefully to a deterministic fallback instead of failing the A2A call.
+
+## Series Navigation
+
+| # | Pattern | Video | Example |
+|---|---------|-------|---------|
+| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../01-single-agent/) |
+| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../02-sequential-agents/) |
+| **03** | **Parallel Agents** (this) | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | — |
+| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../../agent-design-patterns-2/04-coordinator/) |
+| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../../agent-design-patterns-2/05-agent-as-tool/) |
+| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../../agent-design-patterns-2/06-loop-and-critique/) |

@@ -1,5 +1,10 @@
 # Single Agent Pattern
 
+[![Watch: Single AI Agent Pattern](https://img.youtube.com/vi/j98Csy8DbPo/maxresdefault.jpg)](https://www.youtube.com/watch?v=j98Csy8DbPo)
+
+> **Watch the video:** [Single AI Agent Pattern: Why Simple Wins](https://www.youtube.com/watch?v=j98Csy8DbPo)
+> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+
 One LLM agent with tools that dynamically decides execution order.
 
 ## Architecture
@@ -46,3 +51,14 @@ python util.py --stop
 | Port  | Service                |
 | ----- | ---------------------- |
 | 11100 | Trip Planner A2A Agent |
+
+## Series Navigation
+
+| # | Pattern | Video | Example |
+|---|---------|-------|---------|
+| **01** | **Single Agent** (this) | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | — |
+| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../02-sequential-agents/) |
+| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../03-parallel-agents/) |
+| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../../agent-design-patterns-2/04-coordinator/) |
+| 05 | Agent-as-Tool | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | [Code](../../agent-design-patterns-2/05-agent-as-tool/) |
+| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../../agent-design-patterns-2/06-loop-and-critique/) |

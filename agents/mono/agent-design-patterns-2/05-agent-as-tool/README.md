@@ -1,5 +1,10 @@
 # 05 — Agent-as-Tool
 
+[![Watch: Stop Delegating, Start Controlling](https://img.youtube.com/vi/fG-0_nCm3K8/maxresdefault.jpg)](https://www.youtube.com/watch?v=fG-0_nCm3K8)
+
+> **Watch the video:** [Stop Delegating, Start Controlling: The Agent-as-Tool Pattern](https://www.youtube.com/watch?v=fG-0_nCm3K8)
+> **Website:** [LocalM Tuts](https://tuts.localm.dev/)
+
 Controlled composition pattern: the Primary Agent treats sub-agents as
 stateless tool calls. Instead of delegating full control, the LLM invokes
 sub-agents like functions and synthesizes the results itself.
@@ -140,4 +145,15 @@ Getting around:
 - Alternates: Muni (buses and streetcars covering the city); Cable Cars (iconic transit on steep hills)
 
 Note: this plan is composed only from structured sub-agent payloads.
+
+## Series Navigation
+
+| # | Pattern | Video | Example |
+|---|---------|-------|---------|
+| 01 | Single Agent | [Watch](https://www.youtube.com/watch?v=j98Csy8DbPo) | [Code](../../agent-design-patterns-1/01-single-agent/) |
+| 02 | Sequential Agents | [Watch](https://www.youtube.com/watch?v=XaiCXeeyNzQ) | [Code](../../agent-design-patterns-1/02-sequential-agents/) |
+| 03 | Parallel Agents | [Watch](https://www.youtube.com/watch?v=trrAd7zXVqI) | [Code](../../agent-design-patterns-1/03-parallel-agents/) |
+| 04 | Coordinator | [Watch](https://www.youtube.com/watch?v=N05AycfgBPc) | [Code](../04-coordinator/) |
+| **05** | **Agent-as-Tool** (this) | [Watch](https://www.youtube.com/watch?v=fG-0_nCm3K8) | — |
+| 06 | Loop & Critique | [Watch](https://www.youtube.com/watch?v=SSJ_c77bJSY) | [Code](../06-loop-and-critique/) |
 ```
