@@ -13,11 +13,11 @@ from <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer
 
 ## Videos
 
-| Video | Title | Examples |
-| --- | --- | --- |
-| [![Watch: Stop Hardcoding Your Agents: Master the Coordinator Pattern](https://img.youtube.com/vi/N05AycfgBPc/maxresdefault.jpg)](https://www.youtube.com/watch?v=N05AycfgBPc) | <a href="https://www.youtube.com/watch?v=N05AycfgBPc" target="_blank" rel="noopener noreferrer">Stop Hardcoding Your Agents: Master the Coordinator Pattern</a> | [04-coordinator](04-coordinator/) |
-| [![Watch: Stop Delegating, Start Controlling: The Agent-as-Tool Pattern](https://img.youtube.com/vi/fG-0_nCm3K8/maxresdefault.jpg)](https://www.youtube.com/watch?v=fG-0_nCm3K8) | <a href="https://www.youtube.com/watch?v=fG-0_nCm3K8" target="_blank" rel="noopener noreferrer">Stop Delegating, Start Controlling: The Agent-as-Tool Pattern</a> | [05-agent-as-tool](05-agent-as-tool/) |
-| [![Watch: Stop Shipping AI Hallucinations: The Loop & Critique Pattern](https://img.youtube.com/vi/SSJ_c77bJSY/maxresdefault.jpg)](https://www.youtube.com/watch?v=SSJ_c77bJSY) | <a href="https://www.youtube.com/watch?v=SSJ_c77bJSY" target="_blank" rel="noopener noreferrer">Stop Shipping AI Hallucinations: The Loop & Critique Pattern</a> | [06-loop-and-critique](06-loop-and-critique/) |
+| Video                                                                                                                                                                            | Title                                                                                                                                                             | Examples                                      |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| [![Watch: Stop Hardcoding Your Agents: Master the Coordinator Pattern](https://img.youtube.com/vi/N05AycfgBPc/maxresdefault.jpg)](https://www.youtube.com/watch?v=N05AycfgBPc)   | <a href="https://www.youtube.com/watch?v=N05AycfgBPc" target="_blank" rel="noopener noreferrer">Stop Hardcoding Your Agents: Master the Coordinator Pattern</a>   | [04-coordinator](04-coordinator/)             |
+| [![Watch: Stop Delegating, Start Controlling: The Agent-as-Tool Pattern](https://img.youtube.com/vi/fG-0_nCm3K8/maxresdefault.jpg)](https://www.youtube.com/watch?v=fG-0_nCm3K8) | <a href="https://www.youtube.com/watch?v=fG-0_nCm3K8" target="_blank" rel="noopener noreferrer">Stop Delegating, Start Controlling: The Agent-as-Tool Pattern</a> | [05-agent-as-tool](05-agent-as-tool/)         |
+| [![Watch: Stop Shipping AI Hallucinations: The Loop & Critique Pattern](https://img.youtube.com/vi/SSJ_c77bJSY/maxresdefault.jpg)](https://www.youtube.com/watch?v=SSJ_c77bJSY)  | <a href="https://www.youtube.com/watch?v=SSJ_c77bJSY" target="_blank" rel="noopener noreferrer">Stop Shipping AI Hallucinations: The Loop & Critique Pattern</a>  | [06-loop-and-critique](06-loop-and-critique/) |
 
 ## Pattern Folders
 
