@@ -30,16 +30,16 @@ pip install -r requirements.txt
 
 ### Part 1 — Foundational Patterns
 
-| Pattern           | Folder                                               | Description                                 | Video |
-| ----------------- | ---------------------------------------------------- | ------------------------------------------- | ----- |
+| Pattern           | Folder                                               | Description                                 | Video                                                                                                     |
+| ----------------- | ---------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Single Agent      | `mono/agent-design-patterns-1/01-single-agent/`      | One LLM agent with tools, dynamic execution | <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Watch</a> |
 | Sequential Agents | `mono/agent-design-patterns-1/02-sequential-agents/` | Fixed pipeline of chained A2A agents        | <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">Watch</a> |
 | Parallel Agents   | `mono/agent-design-patterns-1/03-parallel-agents/`   | Concurrent A2A agents with aggregation      | <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Watch</a> |
 
 ### Part 2 — Advanced Patterns
 
-| Pattern             | Folder                                               | Description                               | Video |
-| ------------------- | ---------------------------------------------------- | ----------------------------------------- | ----- |
+| Pattern             | Folder                                               | Description                               | Video                                                                                                     |
+| ------------------- | ---------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Coordinator Routing | `mono/agent-design-patterns-2/04-coordinator/`       | LLM-driven dynamic routing to specialists | <a href="https://www.youtube.com/watch?v=N05AycfgBPc" target="_blank" rel="noopener noreferrer">Watch</a> |
 | Agent-as-Tool       | `mono/agent-design-patterns-2/05-agent-as-tool/`     | Sub-agents as stateless tool calls        | <a href="https://www.youtube.com/watch?v=fG-0_nCm3K8" target="_blank" rel="noopener noreferrer">Watch</a> |
 | Loop & Critique     | `mono/agent-design-patterns-2/06-loop-and-critique/` | Iterative refinement with quality gate    | <a href="https://www.youtube.com/watch?v=SSJ_c77bJSY" target="_blank" rel="noopener noreferrer">Watch</a> |

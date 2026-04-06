@@ -26,8 +26,8 @@ A `QAAgent` class that:
 
 Choose a model provider:
 
-| Provider                    | Setup                                                                                                                                                            | Credential                 |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| Provider                    | Setup                                                                                                                                                                                                                 | Credential                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
 | **GitHub Models** (default) | No Azure required. <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">Create a free PAT</a> — no scopes needed.                                                                   | `GITHUB_TOKEN` in `.env`   |
 | **AI Toolkit LocalFoundry** | No token needed. Install <a href="https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio" target="_blank" rel="noopener noreferrer">VS Code AI Toolkit</a>, load a model, run it. | Model running on port 5272 |
 

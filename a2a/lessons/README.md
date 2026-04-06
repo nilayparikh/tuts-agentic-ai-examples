@@ -9,18 +9,18 @@ multi-agent loan approval pipeline with a React dashboard.
 
 ## Video Links
 
-| Lesson | Topic | Video | Companion Page |
-| ------ | ----- | ----- | -------------- |
-| 05 | Building Your First A2A Agent | <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/first-a2a-agent" target="_blank" rel="noopener noreferrer">Open</a> |
-| 06 | Wrapping Agents as A2A Servers | <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Open</a> |
-| 07 | A2A Client Fundamentals | <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">Open</a> |
-| 08 | A2A with Microsoft Agent Framework | <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">Open</a> |
-| 09 | A2A with Google ADK | <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/google-adk" target="_blank" rel="noopener noreferrer">Open</a> |
-| 10 | A2A with LangGraph | <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/langgraph" target="_blank" rel="noopener noreferrer">Open</a> |
-| 11 | A2A with CrewAI | <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/crewai" target="_blank" rel="noopener noreferrer">Open</a> |
-| 12 | A2A with OpenAI Agents SDK | <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/openai-agents-sdk" target="_blank" rel="noopener noreferrer">Open</a> |
-| 13 | A2A with Claude Style Agents | <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">Open</a> |
-| 14 | Multi-Agent System Deep Dive - Loan Approval | <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Open</a> |
+| Lesson | Topic                                        | Video                                                                                                     | Companion Page                                                                                                     |
+| ------ | -------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| 05     | Building Your First A2A Agent                | <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/first-a2a-agent" target="_blank" rel="noopener noreferrer">Open</a>           |
+| 06     | Wrapping Agents as A2A Servers               | <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Open</a>                |
+| 07     | A2A Client Fundamentals                      | <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">Open</a>                |
+| 08     | A2A with Microsoft Agent Framework           | <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">Open</a> |
+| 09     | A2A with Google ADK                          | <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/google-adk" target="_blank" rel="noopener noreferrer">Open</a>                |
+| 10     | A2A with LangGraph                           | <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/langgraph" target="_blank" rel="noopener noreferrer">Open</a>                 |
+| 11     | A2A with CrewAI                              | <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/crewai" target="_blank" rel="noopener noreferrer">Open</a>                    |
+| 12     | A2A with OpenAI Agents SDK                   | <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/openai-agents-sdk" target="_blank" rel="noopener noreferrer">Open</a>         |
+| 13     | A2A with Claude Style Agents                 | <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">Open</a>          |
+| 14     | Multi-Agent System Deep Dive - Loan Approval | <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch</a> | <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Open</a>     |
 
 ---
 

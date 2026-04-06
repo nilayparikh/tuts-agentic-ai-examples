@@ -14,8 +14,8 @@ Runnable examples for the foundational patterns in the
 
 ## Pattern Folders
 
-| #   | Pattern           | Folder                  | Ports       | Video |
-| --- | ----------------- | ----------------------- | ----------- | ----- |
+| #   | Pattern           | Folder                  | Ports       | Video                                                                                                     |
+| --- | ----------------- | ----------------------- | ----------- | --------------------------------------------------------------------------------------------------------- |
 | 01  | Single Agent      | `01-single-agent/`      | 11100       | <a href="https://www.youtube.com/watch?v=j98Csy8DbPo" target="_blank" rel="noopener noreferrer">Watch</a> |
 | 02  | Sequential Agents | `02-sequential-agents/` | 11201-11203 | <a href="https://www.youtube.com/watch?v=XaiCXeeyNzQ" target="_blank" rel="noopener noreferrer">Watch</a> |
 | 03  | Parallel Agents   | `03-parallel-agents/`   | 11301-11305 | <a href="https://www.youtube.com/watch?v=trrAd7zXVqI" target="_blank" rel="noopener noreferrer">Watch</a> |

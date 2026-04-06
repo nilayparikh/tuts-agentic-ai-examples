@@ -195,8 +195,6 @@ UNDERWRITER CONDITIONS:
 --- Done ---
 ```
 
-
-
 1. **Server start** — OrchestratorAgent is wrapped in `A2AStarletteApplication` on port 10008
 2. **Agent discovery** — Client fetches `GET /.well-known/agent-card.json` to discover capabilities
 3. **Validation via A2A** — Client sends `message/send` JSON-RPC to validate an applicant

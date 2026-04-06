@@ -111,6 +111,7 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 ```
 crewai>=0.100.0
 ```
+
 ## Sample Output
 
 Running `python client.py` produces (requires active Azure AI Foundry endpoint):
@@ -159,4 +160,5 @@ Applicant: Carol Martinez (APP-2024-003)
 
 > **Note:** Requires the Kimi-K2-Thinking deployment on Azure AI Foundry to be available
 > with sufficient quota. The CrewAI agent runs two sequential crew tasks (compliance analyst
-> + senior underwriter) per applicant.
+>
+> - senior underwriter) per applicant.

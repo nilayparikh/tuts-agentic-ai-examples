@@ -4,10 +4,10 @@ Code examples for LocalM tutorial courses. Each sub-folder maps to one published
 
 ## Courses
 
-| Folder                  | Course                        | Status                           |
-| ----------------------- | ----------------------------- | -------------------------------- |
-| [`agents/`](agents/README.md) | AI Agent Design Patterns       | Active - Part 1 and Part 2 published |
-| [`a2a/`](a2a/README.md) | Agent-to-Agent (A2A) Protocol | Active — lessons 05–14 available |
+| Folder                        | Course                        | Status                               |
+| ----------------------------- | ----------------------------- | ------------------------------------ |
+| [`agents/`](agents/README.md) | AI Agent Design Patterns      | Active - Part 1 and Part 2 published |
+| [`a2a/`](a2a/README.md)       | Agent-to-Agent (A2A) Protocol | Active — lessons 05–14 available     |
 
 ## Model Providers
 

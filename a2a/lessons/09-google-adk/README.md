@@ -115,7 +115,7 @@ litellm>=1.50.0
 
 Running `python client.py` produces:
 
-```text
+````text
 --- Agent Discovery (Google ADK) ---
   Name    : LoanValidatorADK
   Version : 0.0.1
@@ -136,12 +136,14 @@ Running `python client.py` produces:
   "risk_flags": [],
   "conditions": []
 }
-```
+````
 
 --- Done ---
+
 ```
 
 > **Note:** The Google ADK `to_a2a()` integration wraps the `LlmAgent` directly.
 > The agent receives the applicant ID via the A2A message and uses `adk_run_hard_checks`
 > and `adk_run_soft_checks` tools to fetch validation data before synthesising a verdict.
 > Actual LLM-generated reasoning content will vary between runs.
+```
