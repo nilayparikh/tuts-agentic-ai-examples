@@ -1,24 +1,18 @@
 --- a/backend/src/routes/applications.ts
 +++ b/backend/src/routes/applications.ts
-@@ -91,3 +91,27 @@
+@@ -91,3 +91,21 @@
      }
    },
  );
 +
-+/**
-+ * POST /api/applications/:id/manual-review — escalate application to manual review.
-+ *
-+ * Triggers the manual review escalation workflow for an existing loan.
-+ * Does not change the application status.
-+ * Emits a notification and audit event.
-+ */
++/** POST /api/applications/:id/manual-review — request manual review escalation. */
 +applicationRoutes.post(
 +  "/:id/manual-review",
 +  requireRole("analyst-manager"),
 +  (req, res, next) => {
 +    try {
 +      const session = req.session as SessionContext;
-+      const result = loanService.manualReviewEscalation(
++      const result = loanService.requestManualReview(
 +        session,
 +        firstParam(req.params.id),
 +      );
@@ -31,12 +25,11 @@
 
 --- a/backend/src/services/loan-service.ts
 +++ b/backend/src/services/loan-service.ts
-@@ -11,7 +11,9 @@
- import { assertTransition } from "../rules/state-machine.js";
+@@ -12,6 +12,8 @@
  import { validateLoanRules, canApprove } from "../rules/business-rules.js";
  import { getMandatoryEvents } from "../rules/mandatory-events.js";
-+import { auditAction } from "./audit-service.js";
  import { broker } from "../queue/broker.js";
++import { auditAction } from "./audit-service.js";
 +import { featureFlags } from "../config/feature-flags.js";
  import type {
    LoanApplication,
@@ -47,16 +40,16 @@
  }
 +
 +/**
-+ * Escalate a loan application to manual review.
-+ * Does not change the loan status, but emits a notification event.
-+ * California high-risk loans (CA, >= $1M) get a special subject prefix.
++ * Request manual review escalation for a loan application.
++ * Emits a notification.requested event and audits the action.
++ * Does not change the loan's lifecycle status.
 + */
-+export function manualReviewEscalation(
++export function requestManualReview(
 +  session: SessionContext,
 +  applicationId: string,
-+): { ok: true; applicationId: string; notificationEventId: string } {
++): { ok: boolean; applicationId: string; notificationEventId: string } {
 +  if (session.delegatedFor) {
-+    throw new Error("FORBIDDEN: Delegated sessions cannot escalate to manual review.");
++    throw new Error("FORBIDDEN: Delegated sessions cannot request manual review.");
 +  }
 +
 +  const loan = loanRepo.findLoanById(applicationId);
@@ -64,21 +57,21 @@
 +    throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);
 +  }
 +
-+  const notificationEventId = uuid();
++  const eventId = uuid();
 +
 +  // Build notification subject with California high-risk prefix if applicable
-+  let subject = `Loan ${applicationId}: Manual Review Escalation`;
++  let subject = "Manual Review Escalation Requested";
 +  if (
 +    featureFlags.californiaRules &&
 +    loan.loanState === "CA" &&
 +    loan.amount >= 1000000
 +  ) {
-+    subject = `[CA-HighRisk] ${subject}`;
++    subject = "[CA-HighRisk] " + subject;
 +  }
 +
 +  // Emit notification event
 +  const notifEvent: NotificationRequestedEvent = {
-+    eventId: notificationEventId,
++    eventId,
 +    timestamp: new Date().toISOString(),
 +    source: "loan-service",
 +    type: "notification.requested",
@@ -86,24 +79,24 @@
 +      userId: loan.assignedUnderwriter,
 +      event: "manual-review-escalation",
 +      subject,
-+      body: `Application ${applicationId} has been escalated for manual review.`,
++      body: `Manual review has been requested for loan application ${applicationId} (${loan.borrowerName}, $${loan.amount.toLocaleString()}).`,
 +      preferredChannel: "email",
 +    },
 +  };
 +  broker.emit(notifEvent);
 +
-+  // Audit the escalation
++  // Audit the action
 +  auditAction(
 +    session,
 +    "loan.manual-review-requested",
 +    null,
-+    { applicationId },
++    { applicationId, initiatedBy: session.actor.id },
 +    "loan-service",
 +  );
 +
 +  return {
 +    ok: true,
 +    applicationId,
-+    notificationEventId,
++    notificationEventId: eventId,
 +  };
 +}
