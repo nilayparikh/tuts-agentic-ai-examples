@@ -234,3 +234,13 @@ graph TD
     C --> L["08-operating-model/"]
     C --> M["09-ai-assisted-sdlc-capstone/"]
 ```
+
+---
+
+## Videos
+
+| # | Thumbnail | Title | Link |
+|---|-----------|-------|------|
+| 01 | [![Lesson 01](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4) | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01 of 09 | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) |
+
+Full Course: <https://tuts.localm.dev/ctx-sdlc>
