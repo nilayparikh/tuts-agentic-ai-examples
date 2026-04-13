@@ -64,7 +64,7 @@ ASSESSMENT_CONFIG = _load_assessment_config()
 DEMO_TIMEOUT_SECONDS = int(
   os.environ.get(
     "CTX_SDLC_DEMO_TIMEOUT",
-    str(ASSESSMENT_CONFIG.get("defaultDemoTimeoutSeconds", 180)),
+    str(ASSESSMENT_CONFIG.get("withoutContextDemoTimeoutSeconds", 600)),
   )
 )
 DEMO_MODEL = os.environ.get(

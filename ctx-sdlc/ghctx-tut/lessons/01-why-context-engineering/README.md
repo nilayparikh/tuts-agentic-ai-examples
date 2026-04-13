@@ -1,9 +1,10 @@
 # Lesson 01 — Why Context Engineering
 
-[![Watch: Context Engineering for GitHub Copilot [Course Intro] | Lesson 01 of 09](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4)
+[![Watch: Context Engineering for GitHub Copilot [Course Intro] | Lesson 01](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4)
 
-> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot [Course Intro] | Lesson 01 of 09</a>
-> <strong>Website:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">LocalM Tuts — Context Engineering for GitHub Copilot</a>
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot [Course Intro] | Lesson 01</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
 
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** A weak or fast model only becomes repository-aware when the workspace exposes the right context.
@@ -22,10 +23,10 @@ python without-context/util.py --run
 This lesson uses a hidden-spec workflow rather than a generic CRUD prompt.
 The same short prompt is sent in two different workspace conditions:
 
-| Scenario | Context | Expected Result |
-| --- | --- | --- |
-| Without context | `src/` only or `src/` + `without-context/` | Plausible but repo-wrong implementation |
-| With context | `src/` + `with-context/` | Repository-aware implementation that follows hidden rules |
+| Scenario        | Context                                    | Expected Result                                           |
+| --------------- | ------------------------------------------ | --------------------------------------------------------- |
+| Without context | `src/` only or `src/` + `without-context/` | Plausible but repo-wrong implementation                   |
+| With context    | `src/` + `with-context/`                   | Repository-aware implementation that follows hidden rules |
 
 The prompt intentionally omits route shape, role restrictions, audit behavior,
 queue contract usage, and California-specific nuance. Those rules live only in
@@ -37,12 +38,12 @@ evaluation framing.
 
 ## Context Files
 
-| Path | Purpose |
-| --- | --- |
-| `with-context/.github/copilot-instructions.md` | Project identity and behavioral rules |
-| `with-context/docs/architecture.md` | System shape and domain constraints |
-| `with-context/docs/manual-review-escalation.md` | Hidden workflow specification |
-| `with-context/docs/experiment.md` | Scoring rubric and evaluation guidance |
+| Path                                            | Purpose                                |
+| ----------------------------------------------- | -------------------------------------- |
+| `with-context/.github/copilot-instructions.md`  | Project identity and behavioral rules  |
+| `with-context/docs/architecture.md`             | System shape and domain constraints    |
+| `with-context/docs/manual-review-escalation.md` | Hidden workflow specification          |
+| `with-context/docs/experiment.md`               | Scoring rubric and evaluation guidance |
 
 ## Workspace Layout
 
@@ -123,16 +124,16 @@ python without-context/util.py --clean
 
 ## Series Navigation
 
-| # | Lesson | Video | Example Code |
-|---|--------|-------|--------------|
-| 01 | Why Context Engineering | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) | [01-why-context-engineering](../01-why-context-engineering) |
-| 02 | Curate Project Context | _Coming soon_ | [02-curate-project-context](../02-curate-project-context) |
-| 03 | Instruction Architecture | _Coming soon_ | [03-instruction-architecture](../03-instruction-architecture) |
-| 04 | Planning Workflows | _Coming soon_ | [04-planning-workflows](../04-planning-workflows) |
-| 05 | Implementation Workflows | _Coming soon_ | [05-implementation-workflows](../05-implementation-workflows) |
-| 06 | Tools and Guardrails | _Coming soon_ | [06-tools-and-guardrails](../06-tools-and-guardrails) |
-| 07 | Surface Strategy | _Coming soon_ | [07-surface-strategy](../07-surface-strategy) |
-| 08 | Operating Model | _Coming soon_ | [08-operating-model](../08-operating-model) |
-| 09 | AI-Assisted SDLC Capstone | _Coming soon_ | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+| #   | Lesson                    | Video                                                | Example Code                                                    |
+| --- | ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Why Context Engineering   | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | Curate Project Context    | _Coming soon_                                        | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | Instruction Architecture  | _Coming soon_                                        | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Planning Workflows        | _Coming soon_                                        | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | Implementation Workflows  | _Coming soon_                                        | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Tools and Guardrails      | _Coming soon_                                        | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy          | _Coming soon_                                        | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model           | _Coming soon_                                        | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone | _Coming soon_                                        | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>

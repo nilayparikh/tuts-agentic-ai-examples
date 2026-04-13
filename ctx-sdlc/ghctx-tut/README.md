@@ -187,14 +187,14 @@ arc through Lesson 05's "Advanced: Iterative Implementation" to Lesson 06's
 Every lesson contains an `ASSESSMENT.md` that evaluates the Copilot CLI session
 output against a **six-dimension rubric**:
 
-| Dim | Name                    | What It Measures                                         |
-| --- | ----------------------- | -------------------------------------------------------- |
-| CU  | Context Utilization     | Did Copilot reference the provided context files?        |
-| SE  | Session Efficiency      | Duration, tool-call count, and model selection            |
-| PA  | Prompt Alignment        | Did the prompt match the lesson's scenario intent?        |
-| CC  | Change Correctness      | Do changed files and diff patterns match expectations?    |
-| OC  | Objective Completion    | Are the lesson's learning objectives demonstrated?        |
-| BC  | Behavioral Compliance   | Did Copilot follow behavioral constraints (style, scope)? |
+| Dim | Name                  | What It Measures                                          |
+| --- | --------------------- | --------------------------------------------------------- |
+| CU  | Context Utilization   | Did Copilot reference the provided context files?         |
+| SE  | Session Efficiency    | Duration, tool-call count, and model selection            |
+| PA  | Prompt Alignment      | Did the prompt match the lesson's scenario intent?        |
+| CC  | Change Correctness    | Do changed files and diff patterns match expectations?    |
+| OC  | Objective Completion  | Are the lesson's learning objectives demonstrated?        |
+| BC  | Behavioral Compliance | Did Copilot follow behavioral constraints (style, scope)? |
 
 Each dimension is rated **✅ PASS**, **⚠️ PARTIAL**, or **❌ FAIL**.
 A composite verdict summarizes the lesson: all-pass → ✅ PASS; any partial with
@@ -202,17 +202,17 @@ no fail → ⚠️ PASS WITH CAVEATS; any fail → ❌ FAIL.
 
 ### Current Verdicts
 
-| Lesson | Verdict              | Notes                                                   |
-| ------ | -------------------- | ------------------------------------------------------- |
-| 01     | ✅ PASS              | Comparative format (with-context vs without-context)    |
-| 02     | ✅ PASS              | Behavior + knowledge curation demonstrated              |
-| 03     | ✅ PASS              | Instruction layering with applyTo scoping               |
-| 04     | ✅ PASS              | Spec-traced planning, NFR cross-referencing             |
-| 05     | ✅ PASS              | TDD-first workflow, all tool boundaries respected   |
-| 06     | ✅ PASS              | MCP, hooks, file protection all exercised               |
-| 07     | ✅ PASS              | CLI portability verified in 38 s                        |
-| 08     | ✅ PASS              | Audit + anti-pattern detection in 30 s                  |
-| 09     | ✅ PASS              | Full capstone arc across 5 stages                       |
+| Lesson | Verdict | Notes                                                |
+| ------ | ------- | ---------------------------------------------------- |
+| 01     | ✅ PASS | Comparative format (with-context vs without-context) |
+| 02     | ✅ PASS | Behavior + knowledge curation demonstrated           |
+| 03     | ✅ PASS | Instruction layering with applyTo scoping            |
+| 04     | ✅ PASS | Spec-traced planning, NFR cross-referencing          |
+| 05     | ✅ PASS | TDD-first workflow, all tool boundaries respected    |
+| 06     | ✅ PASS | MCP, hooks, file protection all exercised            |
+| 07     | ✅ PASS | CLI portability verified in 38 s                     |
+| 08     | ✅ PASS | Audit + anti-pattern detection in 30 s               |
+| 09     | ✅ PASS | Full capstone arc across 5 stages                    |
 
 Full framework details: [`docs/ASSESSMENT_GUIDE.md`](../../docs/ASSESSMENT_GUIDE.md)
 
@@ -239,8 +239,8 @@ graph TD
 
 ## Videos
 
-| # | Thumbnail | Title | Link |
-|---|-----------|-------|------|
-| 01 | [![Lesson 01](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4) | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01 of 09 | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) |
+| #   | Thumbnail                                                                                                             | Title                                                              | Link                                                 |
+| --- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
+| 01  | [![Lesson 01](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4) | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01 | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>
