@@ -1,5 +1,11 @@
 # Lesson 02 — Curate Project Context
 
+[![Watch: GitHub Copilot: Mastering .github/ and /docs/ | Lesson 02 of 09](https://img.youtube.com/vi/1B90MkDnmhs/maxresdefault.jpg)](https://www.youtube.com/watch?v=1B90MkDnmhs)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">GitHub Copilot: Mastering .github/ and /docs/ | Lesson 02 of 09</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
+
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Building the shared context layer: `.github/` for behavior and `docs/` for knowledge.
 
@@ -14,18 +20,18 @@ python util.py --run
 
 Context has two complementary halves:
 
-| Layer | Location | Contains | Activation |
-| --- | --- | --- | --- |
-| Behavior | `.github/` | How the model should behave | Auto-loaded by Copilot |
-| Knowledge | `docs/` | What the model should know | Read or searched as needed |
+| Layer     | Location   | Contains                    | Activation                 |
+| --------- | ---------- | --------------------------- | -------------------------- |
+| Behavior  | `.github/` | How the model should behave | Auto-loaded by Copilot     |
+| Knowledge | `docs/`    | What the model should know  | Read or searched as needed |
 
 ## Context Files
 
-| Path | Purpose |
-| --- | --- |
-| `.github/copilot-instructions.md` | Project-level behavioral guidance |
-| `docs/architecture.md` | System architecture knowledge |
-| `docs/api-conventions.md` | API design standards |
+| Path                                    | Purpose                                       |
+| --------------------------------------- | --------------------------------------------- |
+| `.github/copilot-instructions.md`       | Project-level behavioral guidance             |
+| `docs/architecture.md`                  | System architecture knowledge                 |
+| `docs/api-conventions.md`               | API design standards                          |
 | `docs/preference-management-example.md` | The concrete lesson-02 target and constraints |
 
 ## Example Goal
@@ -92,3 +98,21 @@ Expected result: the model becomes both style-consistent and architecturally cor
 ```bash
 python util.py --clean
 ```
+
+---
+
+## Series Navigation
+
+| #   | Lesson                    | Video                                                | Example Code                                                    |
+| --- | ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Why Context Engineering   | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | Curate Project Context    | [Watch](https://www.youtube.com/watch?v=1B90MkDnmhs) | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | Instruction Architecture  | _Coming soon_                                        | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Planning Workflows        | _Coming soon_                                        | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | Implementation Workflows  | _Coming soon_                                        | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Tools and Guardrails      | _Coming soon_                                        | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy          | _Coming soon_                                        | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model           | _Coming soon_                                        | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone | _Coming soon_                                        | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+
+Full Course: <https://tuts.localm.dev/ctx-sdlc>

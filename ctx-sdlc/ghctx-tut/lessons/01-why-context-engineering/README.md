@@ -127,7 +127,7 @@ python without-context/util.py --clean
 | #   | Lesson                    | Video                                                | Example Code                                                    |
 | --- | ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
 | 01  | Why Context Engineering   | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) | [01-why-context-engineering](../01-why-context-engineering)     |
-| 02  | Curate Project Context    | _Coming soon_                                        | [02-curate-project-context](../02-curate-project-context)       |
+| 02  | Curate Project Context    | [Watch](https://www.youtube.com/watch?v=1B90MkDnmhs) | [02-curate-project-context](../02-curate-project-context)       |
 | 03  | Instruction Architecture  | _Coming soon_                                        | [03-instruction-architecture](../03-instruction-architecture)   |
 | 04  | Planning Workflows        | _Coming soon_                                        | [04-planning-workflows](../04-planning-workflows)               |
 | 05  | Implementation Workflows  | _Coming soon_                                        | [05-implementation-workflows](../05-implementation-workflows)   |
