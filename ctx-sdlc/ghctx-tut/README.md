@@ -71,7 +71,7 @@ NN-lesson-slug/
 | `01-why-context-engineering/`   | complex  | With vs. without context                | `.github/`, `docs/`                      | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) |
 | `02-curate-project-context/`    | complex  | Behavior + knowledge curation           | `.github/`, `docs/`                      | [Watch](https://www.youtube.com/watch?v=1B90MkDnmhs) |
 | `03-instruction-architecture/`  | complex  | Layered instructions with `applyTo`     | `.github/instructions/`, `docs/`         | [Watch](https://www.youtube.com/watch?v=BS2NbFnyYJY) |
-| `04-planning-workflows/`        | complex  | Specs, NFRs, planning prompts           | `specs/`, `docs/`, feature/bug templates | _Coming soon_                                        |
+| `04-planning-workflows/`        | complex  | Specs, NFRs, planning prompts           | `specs/`, `docs/`, feature/bug templates | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) |
 | `05-implementation-workflows/`  | complex  | Role-separated agents, TDD              | `.github/agents/`, `specs/`, `docs/`     | _Coming soon_                                        |
 | `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection     | `.github/mcp.json`, `scripts/`, `docs/`  | _Coming soon_                                        |
 | `07-surface-strategy/`          | complex  | VS Code, CLI, agent portability         | `.github/`, `cli/`                       | _Coming soon_                                        |
@@ -244,5 +244,6 @@ graph TD
 | 01  | [![Lesson 01](https://img.youtube.com/vi/YBXo_hxr9k4/maxresdefault.jpg)](https://www.youtube.com/watch?v=YBXo_hxr9k4) | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) |
 | 02  | [![Lesson 02](https://img.youtube.com/vi/1B90MkDnmhs/maxresdefault.jpg)](https://www.youtube.com/watch?v=1B90MkDnmhs) | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | [Watch](https://www.youtube.com/watch?v=1B90MkDnmhs) |
 | 03  | [![Lesson 03](https://img.youtube.com/vi/BS2NbFnyYJY/maxresdefault.jpg)](https://www.youtube.com/watch?v=BS2NbFnyYJY) | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | [Watch](https://www.youtube.com/watch?v=BS2NbFnyYJY) |
+| 04  | [![Lesson 04](https://img.youtube.com/vi/KuLgT8Wck_E/maxresdefault.jpg)](https://www.youtube.com/watch?v=KuLgT8Wck_E) | Mastering GitHub Copilot Plan Mode                                        | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>
