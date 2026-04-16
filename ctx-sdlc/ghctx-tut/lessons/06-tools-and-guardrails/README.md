@@ -1,5 +1,10 @@
 # Lesson 06 — Tools and Guardrails
 
+[![Watch: Stop AI Mistakes with GitHub Copilot Hooks & Guardrails](https://img.youtube.com/vi/MBHvkVrEgRk/maxresdefault.jpg)](https://www.youtube.com/watch?v=MBHvkVrEgRk)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=MBHvkVrEgRk" target="_blank" rel="noopener noreferrer">Stop AI Mistakes with GitHub Copilot Hooks & Guardrails</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Hooks, MCP configuration, and runtime scripts that guard against unsafe operations.
 
@@ -124,3 +129,21 @@ payload or context used plus the observed output.
 ```bash
 python util.py --clean
 ```
+
+---
+
+## Series Navigation
+
+| #   | Lesson                                                                    | Video                                                                                                     | Example Code                                                    |
+| --- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Watch</a> | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">Watch</a> | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | <a href="https://www.youtube.com/watch?v=BS2NbFnyYJY" target="_blank" rel="noopener noreferrer">Watch</a> | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Mastering GitHub Copilot Plan Mode                                        | <a href="https://www.youtube.com/watch?v=KuLgT8Wck_E" target="_blank" rel="noopener noreferrer">Watch</a> | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | <a href="https://www.youtube.com/watch?v=ZvclU2Jyx5o" target="_blank" rel="noopener noreferrer">Watch</a> | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | <a href="https://www.youtube.com/watch?v=MBHvkVrEgRk" target="_blank" rel="noopener noreferrer">Watch</a> | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy                                                          | _Coming soon_                                                                                             | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model                                                           | _Coming soon_                                                                                             | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone                                                 | _Coming soon_                                                                                             | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+
+Full Course: <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>

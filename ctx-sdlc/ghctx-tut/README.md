@@ -73,7 +73,7 @@ NN-lesson-slug/
 | `03-instruction-architecture/`  | complex  | Layered instructions with `applyTo`     | `.github/instructions/`, `docs/`         | [Watch](https://www.youtube.com/watch?v=BS2NbFnyYJY) |
 | `04-planning-workflows/`        | complex  | Specs, NFRs, planning prompts           | `specs/`, `docs/`, feature/bug templates | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) |
 | `05-implementation-workflows/`  | complex  | Role-separated agents, TDD              | `.github/agents/`, `specs/`, `docs/`     | [Watch](https://www.youtube.com/watch?v=ZvclU2Jyx5o) |
-| `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection     | `.github/mcp.json`, `scripts/`, `docs/`  | _Coming soon_                                        |
+| `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection     | `.github/mcp.json`, `scripts/`, `docs/`  | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 | `07-surface-strategy/`          | complex  | VS Code, CLI, agent portability         | `.github/`, `cli/`                       | _Coming soon_                                        |
 | `08-operating-model/`           | complex  | Maintenance, measurement, anti-patterns | `scripts/`, `checklists/`, `examples/`   | _Coming soon_                                        |
 | `09-ai-assisted-sdlc-capstone/` | complex  | Progressive context (5 stages)          | `stages/` (cumulative overlays)          | _Coming soon_                                        |
@@ -246,5 +246,6 @@ graph TD
 | 03  | [![Lesson 03](https://img.youtube.com/vi/BS2NbFnyYJY/maxresdefault.jpg)](https://www.youtube.com/watch?v=BS2NbFnyYJY) | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | [Watch](https://www.youtube.com/watch?v=BS2NbFnyYJY) |
 | 04  | [![Lesson 04](https://img.youtube.com/vi/KuLgT8Wck_E/maxresdefault.jpg)](https://www.youtube.com/watch?v=KuLgT8Wck_E) | Mastering GitHub Copilot Plan Mode                                        | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) |
 | 05  | [![Lesson 05](https://img.youtube.com/vi/ZvclU2Jyx5o/maxresdefault.jpg)](https://www.youtube.com/watch?v=ZvclU2Jyx5o) | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | [Watch](https://www.youtube.com/watch?v=ZvclU2Jyx5o) |
+| 06  | [![Lesson 06](https://img.youtube.com/vi/MBHvkVrEgRk/maxresdefault.jpg)](https://www.youtube.com/watch?v=MBHvkVrEgRk) | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>
