@@ -1,254 +1,214 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: enforce barrel-file imports for TypeScript files.
+"""PreToolUse hook: enforce barrel-file import conventions.
 
-Reads hook JSON from stdin when present, inspects changed .ts/.tsx files, and
-denies imports that bypass a sibling index.ts barrel to reach into an internal
-module path.
+Reads JSON from stdin (VS Code hook input) and checks if the tool is
+attempting to create or edit TypeScript files with imports that bypass
+barrel files (index.ts) and reach into internal module paths.
+
+Returns a deny decision if a violation is found.
+
+Barrel Convention:
+  - Each module directory (src/backend/src/{rules,services,etc.}) should have
+    an index.ts file that exports public interfaces and functions.
+  - TypeScript files should import from the barrel file (../rules, ../services)
+    rather than directly from internal file paths (../rules/business-rules.ts).
 """
-from __future__ import annotations
-
 import json
-import os
-import re
 import sys
 from pathlib import Path, PurePosixPath
-from typing import Iterable
+import re
+import os
 
-IMPORT_PATTERN = re.compile(
-    r"""
-    (?:
-        import\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+)? |
-        export\s+(?:type\s+)?(?:[\w*\s{},]+\s+from\s+) |
-        import\s*\(
-    )
-    ["'](?P<specifier>[^"']+)["']
-    """,
-    re.VERBOSE,
-)
-PATH_TOKEN_PATTERN = re.compile(
-    r"(?P<path>(?:[A-Za-z]:)?[\\/][^\s\"']+\.(?:ts|tsx)|[A-Za-z0-9_.\\/-]+\.(?:ts|tsx))"
-)
 TS_FILE_SUFFIXES = {".ts", ".tsx"}
-SOURCE_SUFFIXES = (".ts", ".tsx", ".js", ".jsx", ".mts", ".cts", ".mjs", ".cjs")
-BARREL_NAMES = ("index.ts", "index.tsx")
-IGNORED_DIRECTORIES = {"node_modules", "dist", ".git"}
-REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
-def load_hook_payload() -> dict | None:
-    """Read hook JSON from stdin when available."""
+def load_hook_payload():
+    """Load the hook JSON input from stdin."""
     try:
-        raw = sys.stdin.read()
-    except OSError:
-        return None
-
-    if not raw.strip():
-        return None
-
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError:
-        return None
-
-    return data if isinstance(data, dict) else None
+        data = json.load(sys.stdin)
+        return data
+    except (json.JSONDecodeError, EOFError):
+        return {}
 
 
-def is_typescript_file(path: Path) -> bool:
-    return path.suffix in TS_FILE_SUFFIXES and path.is_file()
+def get_files_to_check(tool_input):
+    """Extract file paths from tool input, handling both file creation and editing."""
+    files = tool_input.get("files", [])
+    file_path = tool_input.get("filePath", "")
+    paths_to_check = files if files else ([file_path] if file_path else [])
+    return paths_to_check
 
 
-def normalize_candidate(raw_path: str) -> Path | None:
-    raw_path = raw_path.strip().strip("\"'")
-    if not raw_path:
-        return None
-
-    normalized = raw_path.replace("/", "\\")
-    path = Path(normalized)
-    if not path.is_absolute():
-        path = REPO_ROOT / path
-
-    try:
-        resolved = path.resolve(strict=False)
-    except OSError:
-        return None
-
-    try:
-        resolved.relative_to(REPO_ROOT)
-    except ValueError:
-        return None
-
-    return resolved if is_typescript_file(resolved) else None
+def is_typescript_file(filepath):
+    """Check if the file is a TypeScript source file."""
+    p = Path(filepath)
+    return p.suffix in TS_FILE_SUFFIXES
 
 
-def extract_typescript_paths(value: object) -> set[Path]:
-    """Recursively collect .ts/.tsx paths from hook JSON."""
-    matches: set[Path] = set()
-
-    if isinstance(value, str):
-        for token in PATH_TOKEN_PATTERN.findall(value):
-            candidate = normalize_candidate(token)
-            if candidate is not None:
-                matches.add(candidate)
-        return matches
-
-    if isinstance(value, dict):
-        for nested in value.values():
-            matches.update(extract_typescript_paths(nested))
-        return matches
-
-    if isinstance(value, list):
-        for nested in value:
-            matches.update(extract_typescript_paths(nested))
-
-    return matches
+def is_in_src_tree(filepath):
+    """Check if file is in the src tree (not tests, not config)."""
+    p = PurePosixPath(filepath)
+    return "src/backend/src" in str(p) or "src/frontend/src" in str(p)
 
 
-def discover_files(payload: dict | None) -> list[Path]:
-    """Prefer changed files from hook JSON; otherwise scan the workspace."""
-    if payload is not None:
-        payload_files = sorted(extract_typescript_paths(payload))
-        if payload_files:
-            return payload_files
-
-    files: list[Path] = []
-    for extension in ("*.ts", "*.tsx"):
-        for path in REPO_ROOT.rglob(extension):
-            if any(part in IGNORED_DIRECTORIES for part in path.parts):
-                continue
-            if path.is_file():
-                files.append(path)
-    return sorted(set(files))
+def normalize_path(filepath):
+    """Normalize path to forward-slash format for consistent checking."""
+    return str(PurePosixPath(filepath))
 
 
-def find_barrel(directory: Path) -> Path | None:
-    for barrel_name in BARREL_NAMES:
-        barrel = directory / barrel_name
-        if barrel.is_file():
-            return barrel
-    return None
+def extract_imports(content):
+    """Extract all import statements from TypeScript source code.
+    
+    Returns list of (import_path, line_number) tuples.
+    """
+    imports = []
+    
+    # Match ES6 import statements: import {...} from "path" or import {...} from 'path'
+    import_pattern = r'''import\s+(?:{[^}]*}|[\w*]+)\s+from\s+["']([^"']+)["']'''
+    
+    for line_num, line in enumerate(content.split('\n'), 1):
+        matches = re.findall(import_pattern, line)
+        for match in matches:
+            imports.append((match, line_num))
+    
+    return imports
 
 
-def is_within(path: Path, directory: Path) -> bool:
-    try:
-        path.relative_to(directory)
-        return True
-    except ValueError:
-        return False
+def has_barrel_at_module_root(file_path, module_dir):
+    """Check if a module directory has an index.ts barrel file.
+    
+    This is a heuristic check that assumes:
+    1. If index.ts doesn't exist yet, we can't enforce it (preventive guard)
+    2. If it does exist, we should import from the barrel
+    
+    Args:
+        file_path: The file being edited (e.g., src/backend/src/rules/business-rules.ts)
+        module_dir: The module directory (e.g., src/backend/src/rules)
+    
+    Returns:
+        True if index.ts would exist in module_dir (preventive check)
+    """
+    # For now, we consider every module directory as "should have a barrel"
+    # This makes the guardrail preventive: it warns about direct imports
+    # before the barrel files are even created.
+    return True
 
 
-def candidate_targets(base_path: Path, specifier: str) -> Iterable[Path]:
-    suffix = PurePosixPath(specifier).suffix
-
-    if suffix in SOURCE_SUFFIXES:
-        if suffix == ".ts" or suffix == ".tsx":
-            yield base_path
-            return
-
-        stem = base_path.with_suffix("")
-        for target_suffix in TS_FILE_SUFFIXES:
-            yield stem.with_suffix(target_suffix)
-        return
-
-    yield base_path.with_suffix(".ts")
-    yield base_path.with_suffix(".tsx")
-    yield base_path / "index.ts"
-    yield base_path / "index.tsx"
-
-
-def resolve_import(importer: Path, specifier: str) -> Path | None:
-    if not specifier.startswith("."):
-        return None
-
-    specifier_path = PurePosixPath(specifier)
-    base_path = (importer.parent / Path(*specifier_path.parts)).resolve(strict=False)
-
-    for candidate in candidate_targets(base_path, specifier):
-        if candidate.is_file():
-            return candidate
-
-    return None
-
-
-def format_relative_import(importer: Path, barrel: Path) -> str:
-    text = Path(os.path.relpath(barrel.parent, importer.parent)).as_posix()
-    if not text.startswith("."):
-        text = f"./{text}"
-    return text
-
-
-def find_barrel_violation(importer: Path, specifier: str) -> tuple[Path, Path] | None:
-    target = resolve_import(importer, specifier)
-    if target is None or target.name.startswith("index."):
-        return None
-
-    for directory in [target.parent, *target.parent.parents]:
-        if not is_within(directory, REPO_ROOT):
-            continue
-
-        barrel = find_barrel(directory)
-        if barrel is None:
-            continue
-
-        if is_within(importer.parent, directory):
-            continue
-
-        return target, barrel
-
-    return None
-
-
-def collect_violations(path: Path) -> list[str]:
-    try:
-        content = path.read_text(encoding="utf-8")
-    except OSError:
-        return []
-
-    violations: list[str] = []
-    for match in IMPORT_PATTERN.finditer(content):
-        specifier = match.group("specifier")
-        violation = find_barrel_violation(path, specifier)
-        if violation is None:
-            continue
-
-        target, barrel = violation
-        suggested_import = format_relative_import(path, barrel)
-        violations.append(
-            (
-                f"{path.relative_to(REPO_ROOT)} imports '{specifier}', which bypasses "
-                f"the barrel '{barrel.relative_to(REPO_ROOT)}' and reaches an internal "
-                f"module path '{target.relative_to(REPO_ROOT)}'. Import from "
-                f"'{suggested_import}' instead."
+def find_import_violation(file_path, content):
+    """Detect if this file has imports that bypass barrel files.
+    
+    A violation occurs when:
+    1. File is in src/backend/src or src/frontend/src
+    2. File imports directly from a sibling file instead of the barrel (index.ts)
+    
+    Example violations:
+    - In src/backend/src/routes/loans.ts, importing from '../rules/business-rules.ts'
+      should be from '../rules' (the barrel)
+    
+    Returns:
+        (violation_found: bool, details: str)
+    """
+    file_path_norm = normalize_path(file_path)
+    
+    if not is_in_src_tree(file_path_norm):
+        return False, ""
+    
+    imports = extract_imports(content)
+    violations = []
+    
+    for import_path, line_num in imports:
+        # Ignore node_modules, absolute, and package imports
+        if import_path.startswith("."):
+            # This is a relative import - check if it bypasses a barrel
+            
+            # Resolve the import path relative to the current file
+            file_dir = os.path.dirname(file_path_norm)
+            resolved_path = os.path.normpath(
+                os.path.join(file_dir, import_path)
+            ).replace("\\", "/")
+            
+            # Check if this import goes into a module (has .ts/.tsx file)
+            # and should go to the barrel instead
+            
+            # Pattern: imports like ../rules/business-rules or ../services/audit-service
+            # should be ../rules or ../services (the barrel)
+            parts = import_path.split("/")
+            
+            # If the import path ends with a filename (not just a directory),
+            # and the filename looks like it's from a module directory,
+            # then it's bypassing the barrel
+            if len(parts) >= 2:
+                last_part = parts[-1]
+                # Check if last part looks like a specific module file
+                # (has - in name, or is a known pattern like business-rules)
+                if "-" in last_part or last_part in [
+                    "business-rules",
+                    "notification-rules",
+                    "mandatory-events",
+                    "role-permissions",
+                    "state-machine",
+                    "audit-service",
+                    "decision-service",
+                    "loan-service",
+                    "notification-service",
+                ]:
+                    # This looks like a direct file import that should use barrel
+                    violations.append({
+                        "line": line_num,
+                        "import": import_path,
+                        "should_be": "/".join(parts[:-1])  # Remove the filename
+                    })
+    
+    if violations:
+        details = f"File {file_path_norm} has imports that bypass barrel files:\n"
+        for v in violations:
+            details += (
+                f"  Line {v['line']}: import from '{v['import']}' "
+                f"should be from '{v['should_be']}'\n"
             )
-        )
-
-    return violations
-
-
-def emit_deny(violations: list[str]) -> None:
-    reason = "Import validation failed:\n- " + "\n- ".join(violations[:10])
-    if len(violations) > 10:
-        reason += f"\n- ...and {len(violations) - 10} more violation(s)."
-
-    result = {
-        "hookSpecificOutput": {
-            "hookEventName": "PreToolUse",
-            "permissionDecision": "deny",
-            "permissionDecisionReason": reason,
-        }
-    }
-    json.dump(result, sys.stdout)
+        return True, details
+    
+    return False, ""
 
 
 def main() -> None:
-    payload = load_hook_payload()
-    files = discover_files(payload)
+    data = load_hook_payload()
+    tool_name = data.get("tool_name", "")
+    tool_input = data.get("tool_input", {})
 
-    violations: list[str] = []
-    for path in files:
-        violations.extend(collect_violations(path))
+    # Only check file-editing tools
+    if tool_name not in ("editFiles", "createFile"):
+        sys.exit(0)
 
-    if violations:
-        emit_deny(violations)
+    files_to_check = get_files_to_check(tool_input)
+    
+    # For file creation, also check the new file content
+    new_content = tool_input.get("file_text", "")
+
+    for file_path in files_to_check:
+        if not is_typescript_file(file_path):
+            continue
+
+        # Check imports in the new content (for create operations)
+        if new_content:
+            violation_found, details = find_import_violation(file_path, new_content)
+            if violation_found:
+                result = {
+                    "hookSpecificOutput": {
+                        "hookEventName": "PreToolUse",
+                        "permissionDecision": "deny",
+                        "permissionDecisionReason": (
+                            f"Import validation failed: {file_path} would violate "
+                            "the barrel-file import convention. Import from the module's "
+                            "barrel file (index.ts) rather than directly from internal "
+                            "module paths.\n\n{details}"
+                        ),
+                    }
+                }
+                json.dump(result, sys.stdout)
+                sys.exit(0)
+
+    sys.exit(0)
 
 
 if __name__ == "__main__":

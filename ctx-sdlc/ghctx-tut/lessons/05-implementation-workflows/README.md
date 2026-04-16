@@ -1,5 +1,10 @@
 # Lesson 05 — Implementation Workflows
 
+[![Watch: How to Build an AI "Dev Team" in GitHub Copilot | Lesson 05 of 09](https://img.youtube.com/vi/ZvclU2Jyx5o/maxresdefault.jpg)](https://www.youtube.com/watch?v=ZvclU2Jyx5o)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=ZvclU2Jyx5o" target="_blank" rel="noopener noreferrer">How to Build an AI "Dev Team" in GitHub Copilot | Lesson 05 of 09</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Specialized agents for implementation, review, and testing with different tool access and responsibilities.
 
@@ -163,16 +168,16 @@ python util.py --clean
 
 ## Series Navigation
 
-| #   | Lesson                    | Video                                                                                                     | Example Code                                                    |
-| --- | ------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| 01  | Why Context Engineering   | <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Watch</a> | [01-why-context-engineering](../01-why-context-engineering)     |
-| 02  | Curate Project Context    | <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">Watch</a> | [02-curate-project-context](../02-curate-project-context)       |
-| 03  | Instruction Architecture  | <a href="https://www.youtube.com/watch?v=BS2NbFnyYJY" target="_blank" rel="noopener noreferrer">Watch</a> | [03-instruction-architecture](../03-instruction-architecture)   |
-| 04  | Planning Workflows        | <a href="https://www.youtube.com/watch?v=KuLgT8Wck_E" target="_blank" rel="noopener noreferrer">Watch</a> | [04-planning-workflows](../04-planning-workflows)               |
-| 05  | Implementation Workflows  | _Coming soon_                                                                                             | [05-implementation-workflows](../05-implementation-workflows)   |
-| 06  | Tools and Guardrails      | _Coming soon_                                                                                             | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
-| 07  | Surface Strategy          | _Coming soon_                                                                                             | [07-surface-strategy](../07-surface-strategy)                   |
-| 08  | Operating Model           | _Coming soon_                                                                                             | [08-operating-model](../08-operating-model)                     |
-| 09  | AI-Assisted SDLC Capstone | _Coming soon_                                                                                             | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+| #   | Lesson                                                                    | Video                                                                                                     | Example Code                                                    |
+| --- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Watch</a> | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">Watch</a> | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | <a href="https://www.youtube.com/watch?v=BS2NbFnyYJY" target="_blank" rel="noopener noreferrer">Watch</a> | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Mastering GitHub Copilot Plan Mode                                        | <a href="https://www.youtube.com/watch?v=KuLgT8Wck_E" target="_blank" rel="noopener noreferrer">Watch</a> | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | <a href="https://www.youtube.com/watch?v=ZvclU2Jyx5o" target="_blank" rel="noopener noreferrer">Watch</a> | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Tools and Guardrails                                                      | _Coming soon_                                                                                             | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy                                                          | _Coming soon_                                                                                             | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model                                                           | _Coming soon_                                                                                             | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone                                                 | _Coming soon_                                                                                             | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
 
 Full Course: <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>

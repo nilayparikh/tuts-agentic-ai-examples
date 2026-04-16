@@ -95,6 +95,36 @@ Expected result: you can see the operational difference between static instructi
 
 For the captured demo run, use `python util.py --demo --model gpt-5.4`.
 
+## Validation
+
+Run the guardrail validation suite to verify that all hooks, scripts, MCP
+config, trust boundaries, and security policy are complete and consistent:
+
+```bash
+python util.py --test
+```
+
+Run the guardrail validation suite. This actually executes each hook script
+with simulated hook payloads — both positive (allow) and negative (deny) cases —
+then generates `VERIFICATION.md` from the results.
+
+```bash
+python util.py --test
+```
+
+The test suite (`tests/test_guardrails.py`) fires real payloads through each script:
+
+| Guardrail         | Deny Cases                                                          | Allow Cases                                     |
+| ----------------- | ------------------------------------------------------------------- | ----------------------------------------------- |
+| File protection   | .env, .env.local, .env.production, feature-flags.ts, connection.ts  | regular route, test file, readFile tool, docs/  |
+| Import validation | direct rule import, direct service import, hyphenated module import | barrel import, package import, non-src file     |
+| MCP config        | —                                                                   | read-only perms, scope exclusions, descriptions |
+| Hook configs      | —                                                                   | valid event types, required fields, script refs |
+| Cross-consistency | —                                                                   | scripts valid Python, no orphans, doc alignment |
+
+`VERIFICATION.md` is auto-generated from JUnit XML — it is not hand-written.
+Every row in that file links back to a test that actually ran the guardrail.
+
 ## Cleanup
 
 ```bash
