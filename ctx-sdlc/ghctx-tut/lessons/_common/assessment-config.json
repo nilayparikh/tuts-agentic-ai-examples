@@ -7,6 +7,7 @@
     "gpt-4.1",
     "gemini-3-pro-preview"
   ],
-  "defaultDemoTimeoutSeconds": 180,
+  "defaultDemoTimeoutSeconds": 600,
+  "defaultDemoIdleTimeoutSeconds": 420,
   "withoutContextDemoTimeoutSeconds": 600
 }

@@ -4,8 +4,8 @@
     "description": "Route file must import the new write rules"
   },
   {
-    "pattern": "validate|validation|preference.write",
-    "description": "Rule must contain preference write validation logic"
+    "pattern": "evaluateNotificationPreferenceWrite|NotificationPreferenceWriteInput|existingPreferences",
+    "description": "Rule must expose explicit-input write validation using existing preferences"
   },
   {
     "pattern": "LEGAL.218|California",
@@ -16,7 +16,7 @@
     "description": "Test file must contain test cases"
   },
   {
-    "pattern": "loanState|existingPreferences|auditAction",
-    "description": "Route wiring should pass contextual inputs and preserve audited write flow"
+    "pattern": "loanState|existingPreferences|nextPreference|auditAction",
+    "description": "Route wiring should pass direct loanState context, explicit write inputs, and preserve audited flow"
   }
 ]

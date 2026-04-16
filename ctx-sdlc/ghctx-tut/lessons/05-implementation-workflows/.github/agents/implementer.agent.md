@@ -25,9 +25,13 @@ NOT run tests — that is the tester's job.
 
 Before writing any code, read:
 
-1. `docs/implementation-playbook.md` — role boundaries and coding conventions
-2. `specs/non-functional-requirements.md` — NFRs you must not violate
-3. The planned task or failing test specification you were given
+1. `docs/notification-preferences-plan.md` — the implementation plan from Lesson 04 planning workflow
+2. `docs/implementation-playbook.md` — role boundaries and coding conventions
+3. `docs/implementation-workflow-example.md` — concrete demo target and scope constraints
+4. `specs/product-spec-notification-preferences.md` — functional requirements (FR-1–FR-6, SC-1–SC-3)
+5. `specs/non-functional-requirements.md` — NFRs you must not violate
+6. `docs/architecture.md` — system shape and rule placement conventions
+7. The planned task or failing test specification you were given
 
 ## Rules
 

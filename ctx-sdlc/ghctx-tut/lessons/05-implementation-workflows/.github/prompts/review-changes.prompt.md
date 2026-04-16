@@ -11,9 +11,11 @@ Review the most recent code changes in this workspace.
 
 **Read these files before reviewing:**
 
+- `docs/notification-preferences-plan.md` — the implementation plan from Lesson 04
 - `specs/non-functional-requirements.md` — NFR compliance checklist
 - `specs/product-spec-notification-preferences.md` — functional requirements
 - `docs/implementation-playbook.md` — coding conventions
+- `docs/architecture.md` — system shape and architectural constraints
 
 ## Review Scope
 

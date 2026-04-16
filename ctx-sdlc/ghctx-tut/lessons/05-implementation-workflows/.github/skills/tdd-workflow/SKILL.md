@@ -52,6 +52,15 @@ describe("feature-name", () => {
 
 Run `npx vitest run` to confirm the tests fail for the right reason.
 
+If a test checks a human-readable error or reason field, prefer semantic
+matching over exact prose. Normalize the text and assert stable business
+markers. Reserve exact string checks for explicit contract identifiers such as
+`LEGAL-218`.
+
+If a test covers a business-rule rejection on an existing route, prefer
+asserting stable semantics over one exact `400` vs `422` choice unless HTTP
+status behavior is itself part of the requirement.
+
 ### 3. Implement (Green)
 
 Hand off to the implementer with:

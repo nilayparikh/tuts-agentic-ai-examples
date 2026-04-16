@@ -1,6 +1,6 @@
 # Lesson 05 — Implementation Workflows — Assessment
 
-> **Model:** `gpt-5.4` · **Duration:** 2m 30s · **Date:** 2026-03-14
+> **Model:** `claude-haiku-4.5` · **Duration:** 2m 38s · **Date:** 2026-04-16
 
 ## Prompt Under Test
 
@@ -28,120 +28,111 @@ short handoff summary naming changed files and which tests should pass.
 
 ## Scorecard
 
-| #   | Dimension                  | Rating  | Summary                                                                 |
-| --- | -------------------------- | ------- | ----------------------------------------------------------------------- |
-| 1   | Context Utilization (CU)   | ✅ PASS | Read playbook, NFRs, routes, rules, models, and services before editing |
-| 2   | Session Efficiency (SE)    | ✅ PASS | Completed in 2m 30s with 31 tool calls; three files changed             |
-| 3   | Prompt Alignment (PA)      | ✅ PASS | All constraints respected; TDD skill loaded; tests written before rules |
-| 4   | Change Correctness (CC)    | ✅ PASS | Files match: True · Patterns match: True                                |
-| 5   | Objective Completion (OC)  | ✅ PASS | All four lesson objectives demonstrated                                 |
-| 6   | Behavioral Compliance (BC) | ✅ PASS | No tool boundary violations; denied tools respected                     |
-| 7   | Context Validation (CV)    | ✅ PASS | Implementation follows context inspection; 3 writes after 16 reads      |
+| #   | Dimension                  | Rating     | Summary                                                              |
+| --- | -------------------------- | ---------- | -------------------------------------------------------------------- |
+| 1   | Context Utilization (CU)   | ✅ PASS    | Read the lesson docs, specs, and write surfaces before editing       |
+| 2   | Session Efficiency (SE)    | ✅ PASS    | Completed in 2m 38s with a focused three-file change set             |
+| 3   | Prompt Alignment (PA)      | ⚠️ PARTIAL | Followed TDD and scope, but changed the route contract to `loanId`   |
+| 4   | Change Correctness (CC)    | ❌ FAIL    | Patch matched expectations, but end-to-end validation failed         |
+| 5   | Objective Completion (OC)  | ⚠️ PARTIAL | Demonstrated the workflow shape, but not a working end-to-end slice  |
+| 6   | Behavioral Compliance (BC) | ✅ PASS    | No tool boundary violations; denied tools respected                  |
+| 7   | Context Validation (CV)    | ✅ PASS    | Discovery happened before writes and stayed on lesson-local surfaces |
 
-**Verdict:** ✅ PASS
+**Verdict:** ❌ FAIL
 
 ## 1 · Context Utilization
 
-| Metric                  | Value                                                                                                   |
-| ----------------------- | ------------------------------------------------------------------------------------------------------- |
-| Context files available | ~12 (copilot-instructions.md, 3 agents, 2 prompts, TDD skill, playbook, specs, routes, rules, services) |
-| Context files read      | 8+ (playbook, NFRs, routes, mandatory-events, preference-repository, audit-service, types, rules)       |
-| Key files missed        | `specs/product-spec-notification-preferences.md` — path does not exist in lesson                        |
-| Context precision       | High — focused on implementation-relevant surfaces, no wasted reads                                     |
+| Metric                  | Value                                                                 |
+| ----------------------- | --------------------------------------------------------------------- |
+| Context files available | Lesson docs, specs, prompts, agents, TDD skill, and notification code |
+| Context files read      | Docs, specs, route file, rules, repository, types, and service code   |
+| Key files missed        | None material to the narrow implementation slice                      |
+| Context precision       | High — reads stayed on the notification write path                    |
 
 **Evidence** — `.output/logs/session.md` tool calls:
 
 ```
-### ✅ `skill`     — tdd-workflow (loaded before coding)
-### ✅ `view`      — docs/implementation-playbook.md (115 lines)
-### ❌ `view`      — specs/product-spec-notification-preferences.md (Path does not exist)
-### ✅ `view`      — specs/non-functional-requirements.md (109 lines)
-### ✅ `view`      — src/backend/src/routes/notifications.ts (272 lines)
-### ✅ `rg`        — searched for mandatory-events across backend
-### ✅ `view`      — src/backend/src/rules/mandatory-events.ts
+### ✅ `glob`      — docs/**/*.md
+### ✅ `glob`      — specs/**/*.md
+### ✅ `view`      — docs/implementation-workflow-example.md
+### ✅ `view`      — docs/architecture.md
+### ✅ `view`      — specs/product-spec-notification-preferences.md
+### ✅ `view`      — src/backend/src/routes/notifications.ts
 ### ✅ `view`      — src/backend/src/models/preference-repository.ts
-### ✅ `view`      — src/backend/src/services/audit-service.ts
 ### ✅ `view`      — src/backend/src/models/types.ts
 ```
 
-The product spec path did not exist in lesson 05; the session continued
-with playbook + NFR context, which was sufficient.
+The session did the required discovery work before editing and stayed close to the
+requested notification-preference surfaces.
 
 ## 2 · Session Efficiency
 
-| Metric        | Value                                    |
-| ------------- | ---------------------------------------- |
-| Duration      | 2m 30s                                   |
-| Tool calls    | 31                                       |
-| Lines changed | 235 (two new files + route modification) |
-| Model         | gpt-5.4                                  |
+| Metric        | Value                                            |
+| ------------- | ------------------------------------------------ |
+| Duration      | 2m 38s                                           |
+| Tool calls    | Focused session with discovery, reads, and edits |
+| Lines changed | Three-file implementation slice                  |
+| Model         | claude-haiku-4.5                                 |
 
 **Evidence** — `.output/logs/session.md` header:
 
 ```
-- Session ID: 75425311-a9e8-4f75-b5b5-33ca70c55d25
-- Started: 14/03/2026, 20:28:50
-- Duration: 2m 30s
-- Exported: 14/03/2026, 20:31:21
+- Session ID: adab9e81-5445-4abe-9a55-f384b52cdd8c
+- Started: 16/04/2026, 11:31:53
+- Duration: 2m 38s
+- Exported: 16/04/2026, 11:34:31
 ```
 
-31 tool calls breaks down as: 1 skill load, 5 glob/rg discovery, 14 file
-reads, 7 rg searches, 4 apply_patch edits. No retries or abandoned work.
+The session stayed efficient, but efficiency does not offset behavioral drift that was
+only caught by the end-to-end test gate.
 
 ## 3 · Prompt Alignment
 
-| Constraint                                                 | Respected?                              |
-| ---------------------------------------------------------- | --------------------------------------- |
-| Discovery-first (inspect before editing)                   | ✅                                      |
-| Write tests first                                          | ✅ — test file created before rule file |
-| Pure rule module (no DB access)                            | ✅                                      |
-| Explicit inputs plus existing types                        | ✅                                      |
-| LEGAL-218 California SMS restriction                       | ✅                                      |
-| Escalation channel protection                              | ✅                                      |
-| False positive (SMS disabled, email enabled) stays allowed | ✅                                      |
-| Delegated-session and role guards preserved                | ✅                                      |
-| No npm/shell commands                                      | ✅                                      |
-| No SQL or task/todo write tools                            | ✅ — no `sql` tool calls in session     |
-| Handoff summary with deferred surfaces                     | ✅                                      |
+| Constraint                                                 | Respected?                                   |
+| ---------------------------------------------------------- | -------------------------------------------- |
+| Discovery-first (inspect before editing)                   | ✅                                           |
+| Write tests first                                          | ✅                                           |
+| Pure rule module (no DB access)                            | ✅                                           |
+| Explicit inputs plus existing types                        | ✅ in the rule module                        |
+| Direct `loanState` request input                           | ❌ route changed to optional `loanId` lookup |
+| LEGAL-218 California SMS restriction                       | ⚠️ implemented behind the wrong route gate   |
+| Escalation channel protection                              | ⚠️ implemented behind the wrong route gate   |
+| False positive (SMS disabled, email enabled) stays allowed | ✅                                           |
+| Delegated-session and role guards preserved                | ✅                                           |
+| No npm/shell commands                                      | ✅                                           |
+| No SQL or task/todo write tools                            | ✅                                           |
+| Handoff summary with deferred surfaces                     | ✅                                           |
 
-**Evidence** — `.output/logs/session.md` tool types (all calls):
-
-```
-skill, glob, glob, rg, view(×14), rg(×7), apply_patch(×4)
-```
-
-No `sql`, `powershell`, `terminal`, or `run_command` tool calls present.
-
-**Evidence** — `.output/logs/session.md` handoff summary (final message):
+**Evidence** — `.output/logs/command.txt` and post-run validation:
 
 ```
-Before the production change, the new tests should fail on the missing enforcement for:
-- blocking the last enabled manual-review-escalation channel
-- blocking decline SMS enablement for CA / California under LEGAL-218
+C:\Users\nilay\AppData\Roaming\npm\copilot.cmd --model claude-haiku-4.5 ... --deny-tool=powershell --deny-tool=sql ...
+```
 
-After the change, these should pass:
-- allow disabling escalation SMS when escalation email stays enabled
-- reject disabling the last escalation channel
-- reject decline SMS enablement for CA
-- reject decline SMS enablement for California
-- allow decline SMS outside California
+The prompt-level constraints were mostly respected, but the raw output still violated the
+intended request contract by introducing `loanId` lookup semantics.
 
-Intentionally deferred: bulk write surfaces PUT /preferences/:userId/email
-and PUT /preferences/:userId/sms.
+**Evidence** — `python util.py --test` output after the demo run:
+
+```
+FAILED tests\test_ui.py::TestWriteRuleEnforcement::test_mandatory_event_last_channel_blocked
+FAILED tests\test_ui.py::TestWriteRuleEnforcement::test_legal_218_ca_decline_sms_blocked
+FAILED tests\test_ui.py::TestWriteRuleEnforcement::test_legal_218_california_spelled_out
 ```
 
 ## 4 · Change Correctness
 
 - **Files match:** True
 - **Patterns match:** True
+- **End-to-end validation after demo:** Failed
 
-| Pattern                                                                           | Matched |
-| --------------------------------------------------------------------------------- | ------- |
-| Import of notification-preference-write-rules                                     | ✅      |
-| Preference write validation logic                                                 | ✅      |
-| LEGAL-218 or California reference                                                 | ✅      |
-| Test cases present                                                                | ✅      |
-| Route wiring with contextual inputs (loanState, existingPreferences, auditAction) | ✅      |
+| Pattern                                                                       | Matched |
+| ----------------------------------------------------------------------------- | ------- |
+| Import of notification-preference-write-rules                                 | ✅      |
+| Explicit-input preference write validation logic                              | ✅      |
+| LEGAL-218 or California reference                                             | ✅      |
+| Test cases present                                                            | ✅      |
+| Route wiring with direct `loanState` context, explicit inputs, and audit flow | ✅ weak |
 
 **Evidence** — `.output/change/comparison.md`:
 
@@ -149,61 +140,14 @@ and PUT /preferences/:userId/sms.
 - Files match: True
 - Patterns match: True
 - Pattern matched: Route file must import the new write rules
-- Pattern matched: Rule must contain preference write validation logic
+- Pattern matched: Rule must expose explicit-input write validation using existing preferences
 - Pattern matched: Rules must reference LEGAL-218 or California restrictions
 - Pattern matched: Test file must contain test cases
-- Pattern matched: Route wiring should pass contextual inputs and preserve audited write flow
+- Pattern matched: Route wiring should pass direct loanState context, explicit write inputs, and preserve audited flow
 ```
 
-**Evidence** — `.output/change/demo.patch` (route wiring hunk):
-
-```diff
-+import { validateNotificationPreferenceWrite } from "../rules/notification-preference-write-rules.js";
-...
-+      const writeValidation = validateNotificationPreferenceWrite({
-+        existingPreferences,
-+        nextPreference: pref,
-+        loanState,
-+      });
-+
-+      if (!writeValidation.allowed) {
-+        res.status(400).json({ error: writeValidation.reason });
-+        return;
-+      }
-```
-
-**Evidence** — `.output/change/demo.patch` (rule module — false-positive/hard-negative comments):
-
-```diff
-+// FALSE POSITIVE: disabling escalation SMS is allowed when escalation email
-+// remains enabled; the rule protects the last enabled channel, not every
-+// channel.
-+// HARD NEGATIVE: never allow a write that leaves manual-review-escalation with
-+// zero enabled channels, and never allow decline SMS to be enabled for
-+// California loans under LEGAL-218.
-```
-
-**Evidence** — `.output/change/demo.patch` (test file — LEGAL-218 assertion):
-
-```diff
-+  it("blocks enabling decline SMS for CA loans under LEGAL-218", () => {
-+    expect(
-+      validateNotificationPreferenceWrite({
-+        existingPreferences: [],
-+        nextPreference: pref({
-+          event: "decline",
-+          channel: "sms",
-+          enabled: true,
-+        }),
-+        loanState: "CA",
-+      }),
-+    ).toEqual({
-+      allowed: false,
-+      reason:
-+        "LEGAL-218 prohibits enabling SMS for decline notifications on California loans.",
-+    });
-+  });
-```
+Automated pattern checks alone were insufficient here. The route patch still passed the
+regex checks while changing the write contract in a way that broke the UI-level validation.
 
 **Evidence** — `.output/change/changed-files.json`:
 
@@ -218,14 +162,17 @@ and PUT /preferences/:userId/sms.
 }
 ```
 
+Because the raw demo output failed end-to-end behavior checks, this dimension is a fail
+despite the manifest and pattern match passing.
+
 ## 5 · Objective Completion
 
-| Objective                                                                       | Status | Evidence                                                                                                         |
-| ------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------- |
-| Explain how custom agents and skills support role-specialized implementation    | ✅     | `session.md`: TDD skill loaded at ⏱️ 15s; lesson includes implementer, reviewer, tester agents                   |
-| Apply least-privilege principles to implementation and review workflows         | ✅     | `command.txt`: `--deny-tool=powershell --deny-tool=sql`; session stayed in edit-only mode                        |
-| Describe how TDD handoffs improve reliability in AI-assisted coding             | ✅     | `session.md`: test file created via `apply_patch` before rule file; handoff names expected failing/passing tests |
-| Design implementation workflow separating planning, coding, and review concerns | ✅     | `session.md`: discovery → test → implement → wire → handoff sequence observed across 31 tool calls               |
+| Objective                                                                       | Status | Evidence                                                                         |
+| ------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------- |
+| Explain how custom agents and skills support role-specialized implementation    | ✅     | Session still followed a discovery → test → implement sequence                   |
+| Apply least-privilege principles to implementation and review workflows         | ✅     | Denied tools were respected                                                      |
+| Describe how TDD handoffs improve reliability in AI-assisted coding             | ⚠️     | The tester gate mattered, but the raw demo output still failed the behavior gate |
+| Design implementation workflow separating planning, coding, and review concerns | ⚠️     | The workflow shape appeared, but the raw output was not end-to-end correct       |
 
 ## 6 · Behavioral Compliance
 
@@ -239,27 +186,26 @@ and PUT /preferences/:userId/sms.
 **Evidence** — `.output/logs/command.txt`:
 
 ```
-copilot.cmd --model gpt-5.4 --log-dir ... --deny-tool=powershell --deny-tool=sql ...
+copilot.cmd --model claude-haiku-4.5 --log-dir ... --deny-tool=powershell --deny-tool=sql ...
 ```
 
-**Evidence** — `.output/logs/session.md` shows zero `sql`, `powershell`, or
-`terminal` tool calls. All 31 calls are: `skill`, `glob`, `rg`, `view`, `apply_patch`.
+No boundary violations were observed. The failure was semantic, not procedural.
 
-- The change is small, local, and materially improves the notification preference write path.
-- The session was not perfectly clean from a workflow standpoint because it used SQL todo writes and partially missed the requested source context.
+The session read lesson-local context before writing, and the edits stayed confined to the
+expected notification preference surfaces.
 
 ## Final Assessment
 
 For this prompt, the correct assessment is:
 
-> The run should be considered successful for the lesson objective. It produced a focused rule-plus-tests implementation slice in the intended surfaces and preserved the key delegated-session and notification-policy constraints. The main non-blocking caveats are the use of a SQL todo tool, the missing lesson-local product-spec file, and incomplete evidence for a strict red-step TDD sequence.
+> The raw prompt-driven run should be considered a failure for the end-to-end lesson gate. It produced the expected file shape and stayed within the correct surfaces, but it changed the route contract from direct `loanState` input to optional `loanId` lookup semantics. That drift was not caught by the original patch-shape checks and was only exposed by `python util.py --test`, which failed three rule-enforcement checks.
 
 ## Expected Change Comparison
 
 Assessment now also compares actual output against gold-standard expectations:
 
 - `.output/change/expected-files.json` — expected files: `backend/src/rules/notification-preference-write-rules.ts` (added), `backend/tests/unit/notification-preference-write-rules.test.ts` (added), `backend/src/routes/notifications.ts` (modified)
-- `.output/change/expected-patterns.json` — required patterns in patch: import, validate, LEGAL-218, test, loanState or existingPreferences or auditAction
+- `.output/change/expected-patterns.json` — required patterns in patch: import, explicit-input validation, LEGAL-218, test coverage, and direct `loanState` flow
 
 The `compare_with_expected()` function writes `.output/change/comparison.md` with a structured match report. The latest rerun produced a full match:
 
@@ -268,183 +214,14 @@ The `compare_with_expected()` function writes `.output/change/comparison.md` wit
 
 ## 7 · Context Validation
 
-> When and how was non-system (private) context accessed during the session?
+> When and how was non-system context accessed during the session?
 
-### Implicit Context (auto-injected)
+| Metric                          | Value                                                                                                                                                                           |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| First codebase discovery        | Before any code edits                                                                                                                                                           |
+| Read pattern                    | Docs and specs first, then route, types, rules, repository, and tests                                                                                                           |
+| Files written                   | `src/backend/tests/unit/notification-preference-write-rules.test.ts`, `src/backend/src/rules/notification-preference-write-rules.ts`, `src/backend/src/routes/notifications.ts` |
+| Discovery-before-write behavior | Present                                                                                                                                                                         |
+| Scope drift                     | Semantic drift at the route contract, not at file-selection level                                                                                                               |
 
-No instruction files detected in the session log.
-
-### Context Access Timeline
-
-| Turn | Action | Target |
-| ---: | --- | --- |
-| 1 | skill | — |
-| 2 | search | `glob(docs//**//*)` |
-| 2 | search | `glob(specs//**//*)` |
-| 2 | search | `rg(notification)` |
-| 2 | read | `specs/product-spec-notification-preferences.md` |
-| 2 | read | `specs/non-functional-requirements.md` |
-| 3 | search | `rg(notification\|preference\|LEGAL-218\|manual-review-escalation\|decline)` |
-| 3 | search | `rg(notification\|preference\|LEGAL-218\|manual-review-escalation\|decline)` |
-| 3 | search | `rg(type Notification\|interface Notification\|loanState\|NotificationPreference\|NotificationEvent\|NotificationChannel\|Preference)` |
-| 3 | read | `docs` |
-| 3 | read | `specs` |
-| 3 | read | `src/backend/src/routes/notifications.ts` |
-| 4 | search | `rg(describe//(\|it//()` |
-| 4 | read | `plan.md` |
-| 4 | read | `docs/implementation-playbook.md` |
-| 4 | read | `docs/implementation-workflow-example.md` |
-| 4 | read | `src/backend/src/models/types.ts` |
-| 4 | read | `src/backend/src/rules/mandatory-events.ts` |
-| 4 | read | `src/backend/tests/unit/notification-service.test.ts` |
-| 5 | read | `src/backend/tests/unit/business-rules.test.ts` |
-| 5 | read | `src/backend/src/middleware/request-validator.ts` |
-| 5 | read | `src/backend/src/models/preference-repository.ts` |
-| 7 | **write** | `src/backend/tests/unit/notification-preference-write-rules.test.ts` |
-| 8 | **write** | `src/backend/src/rules/notification-preference-write-rules.ts` |
-| 9 | search | `rg(PUT /api/notifications/preferences\|setPreference//(\|loanState)` |
-| 9 | search | `rg(preferences/)` |
-| 10 | **write** | `src/backend/src/routes/notifications.ts` |
-| 11 | read | `src/backend/tests/unit/notification-preference-write-rules.test.ts` |
-| 11 | read | `src/backend/src/rules/notification-preference-write-rules.ts` |
-| 11 | read | `src/backend/src/routes/notifications.ts` |
-
-### Files Written
-
-- `src/backend/src/routes/notifications.ts`
-- `src/backend/src/rules/notification-preference-write-rules.ts`
-- `src/backend/tests/unit/notification-preference-write-rules.test.ts`
-
-### Context Flow Diagram
-
-```mermaid
-sequenceDiagram
-    participant U as User/Prompt
-    participant S as Copilot Runtime
-    participant M as Model
-    participant T as Tools
-    participant C as Codebase
-
-    U->>M: prompt
-
-
-    Note over M,T: Turn 1
-
-    Note over M,T: Turn 2
-    Note over M: Intent: Inspecting requirements
-    M->>T: glob(docs//**//*)
-    T-->>M: file list
-    M->>T: glob(specs//**//*)
-    T-->>M: file list
-    M->>T: rg(notification)
-    T-->>M: matches
-    M->>T: view(...s/product-spec-notification-preferences.md)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(specs/non-functional-requirements.md)
-    T->>C: read
-    C-->>M: content
-
-    Note over M,T: Turn 3
-    Note over M: Intent: Mapping write surfaces
-    M->>T: view(docs)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(specs)
-    T->>C: read
-    C-->>M: content
-    M->>T: rg(...LEGAL-218|manual-review-escalati)
-    T-->>M: matches
-    M->>T: rg(...LEGAL-218|manual-review-escalati)
-    T-->>M: matches
-    M->>T: view(src/backend/src/routes/notifications.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: rg(...cationEvent|NotificationChannel|)
-    T-->>M: matches
-
-    Note over M,T: Turn 4
-    Note over M: Intent: Preparing test-first changes
-    M->>T: view(plan.md)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(docs/implementation-playbook.md)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(docs/implementation-workflow-example.md)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(src/backend/src/models/types.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(src/backend/src/rules/mandatory-events.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(...nd/tests/unit/notification-service.test.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: rg(describe//(|it//()
-    T-->>M: matches
-
-    Note over M,T: Turn 5
-    Note over M: Intent: Inspecting test patterns
-    M->>T: view(src/backend/tests/unit/business-rules.test.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(...ackend/src/middleware/request-validator.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(...ackend/src/models/preference-repository.ts)
-    T->>C: read
-    C-->>M: content
-
-    Note over M,T: Turn 6
-    Note over M: Update plan.md
-
-    Note over M,T: Turn 7
-    M->>T: write(...otification-preference-write-rules.test.ts)
-    T->>C: patch
-    C-->>M: ok
-
-    Note over M,T: Turn 8
-    M->>T: write(...les/notification-preference-write-rules.ts)
-    T->>C: patch
-    C-->>M: ok
-
-    Note over M,T: Turn 9
-    Note over M: Intent: Wiring route validation
-    M->>T: rg(...ons/preferences|setPreference//()
-    T-->>M: matches
-    M->>T: rg(preferences/)
-    T-->>M: matches
-
-    Note over M,T: Turn 10
-    M->>T: write(src/backend/src/routes/notifications.ts)
-    T->>C: patch
-    C-->>M: ok
-
-    Note over M,T: Turn 11
-    Note over M: Intent: Reviewing changes
-    M->>T: view(...otification-preference-write-rules.test.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(...les/notification-preference-write-rules.ts)
-    T->>C: read
-    C-->>M: content
-    M->>T: view(src/backend/src/routes/notifications.ts)
-    T->>C: read
-    C-->>M: content
-
-    Note over M,T: Turn 12
-
-    M->>U: Return results
-```
-
-### Validation Summary
-
-- **Implicit context:** 0 instruction file(s) injected at session start
-- **Files read:** 16 unique files across 12 turns
-- **Files written:** 3 codebase file(s)
-- **First codebase read:** turn 2
-- **First codebase write:** turn 7
-- **Discovery-before-write gap:** 5 turn(s)
+**Validation summary:** The model accessed the right lesson-local context before editing and kept the file selection disciplined. The failure came later, when the route contract drifted from direct `loanState` input to optional `loanId` lookup semantics. That means context access was acceptable, but context application was incomplete.

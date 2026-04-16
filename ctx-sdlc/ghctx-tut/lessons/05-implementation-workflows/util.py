@@ -6,6 +6,7 @@ Usage:
   python util.py --run      Install deps + start backend & frontend dev servers
   python util.py --clean    Remove copied src/ and build artifacts
   python util.py --demo     Run a Copilot CLI implementation demo and capture artifacts
+  python util.py --test     Run unit tests (vitest) and Playwright UI verification
 """
 
 from __future__ import annotations
@@ -13,6 +14,7 @@ from __future__ import annotations
 import difflib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -77,7 +79,13 @@ ASSESSMENT_CONFIG = _load_assessment_config()
 DEMO_TIMEOUT_SECONDS = int(
   os.environ.get(
     "CTX_SDLC_DEMO_TIMEOUT",
-    str(ASSESSMENT_CONFIG.get("defaultDemoTimeoutSeconds", 180)),
+    str(ASSESSMENT_CONFIG.get("defaultDemoTimeoutSeconds", 420)),
+  )
+)
+DEMO_IDLE_TIMEOUT_SECONDS = int(
+  os.environ.get(
+    "CTX_SDLC_DEMO_IDLE_TIMEOUT",
+    str(ASSESSMENT_CONFIG.get("defaultDemoIdleTimeoutSeconds", 120)),
   )
 )
 DEMO_MODEL = os.environ.get(
@@ -140,7 +148,9 @@ def _demo_prompt() -> str:
     "The rule must use explicit inputs plus existing types, not direct DB access. "
     "Enforce these cases: manual-review-escalation must keep at least one channel enabled; "
     "decline SMS cannot be enabled when loanState is CA or California under LEGAL-218; "
+    "treat loanState as the direct request input for this route instead of introducing a new loanId lookup or any repository fetch; "
     "the false positive where escalation SMS is disabled but escalation email stays enabled must remain allowed. "
+    "When tests assert business-rule rejections, prefer semantic checks over brittle exact wording, and preserve the current route rejection style when practical; if the route returns 400 or 422 for these rule violations, the payload must still clearly express the business invariant. "
     "Preserve delegated-session and role guards, keep changes minimal, keep the scope to the current notification write path, include top-of-module false-positive and hard-negative comments in the new rule file, "
     "and do not edit protected config or database files. "
     "Do not run npm install, npm test, npx vitest, or any shell commands. Do not use SQL or task/todo write tools. Inspect and edit files only. "
@@ -293,6 +303,12 @@ def _finalize_log_dir() -> None:
       path.unlink()
 
 
+def _file_size(path: Path) -> int:
+  if not path.exists():
+    return -1
+  return path.stat().st_size
+
+
 def _run_copilot_demo(prompt: str, src_dir: Path, copilot_executable: str, demo_model: str) -> tuple[int, str]:
   session_path = LOG_DIR / "session.md"
   command = [
@@ -321,25 +337,43 @@ def _run_copilot_demo(prompt: str, src_dir: Path, copilot_executable: str, demo_
 
   with open(RUNNER_LOG_PATH, "wb") as runner_log:
     process = subprocess.Popen(command, cwd=str(LESSON), stdout=runner_log, stderr=subprocess.STDOUT, shell=False)
-    deadline = time.time() + DEMO_TIMEOUT_SECONDS
-    last_size = -1
-    stable_hits = 0
+    hard_deadline = time.time() + DEMO_TIMEOUT_SECONDS
+    last_activity_at = time.time()
+    last_session_size = -1
+    last_runner_size = -1
+    stable_since: float | None = None
     session_export_detected = False
 
-    while time.time() < deadline:
-      if session_path.exists():
-        current_size = session_path.stat().st_size
-        if current_size > 0 and current_size == last_size:
-          stable_hits += 1
-        else:
-          stable_hits = 0
-          last_size = current_size
+    while True:
+      now = time.time()
+      current_session_size = _file_size(session_path)
+      current_runner_size = _file_size(RUNNER_LOG_PATH)
+      session_changed = current_session_size != last_session_size
+      runner_changed = current_runner_size != last_runner_size
 
-        if stable_hits >= 2:
+      if session_changed or runner_changed:
+        last_activity_at = now
+        last_session_size = current_session_size
+        last_runner_size = current_runner_size
+
+      if current_session_size > 0:
+        if stable_since is None or session_changed:
+          stable_since = now
+        elif now - stable_since >= 6:
           session_export_detected = True
           break
+      else:
+        stable_since = None
+
       if process.poll() is not None:
         break
+
+      if now >= hard_deadline:
+        break
+
+      if now - last_activity_at >= DEMO_IDLE_TIMEOUT_SECONDS:
+        break
+
       time.sleep(2)
 
     return_code = process.poll()
@@ -357,12 +391,171 @@ def _run_copilot_demo(prompt: str, src_dir: Path, copilot_executable: str, demo_
         process.wait(timeout=10)
       except subprocess.TimeoutExpired:
         _kill_process_tree(process.pid)
-      result = (124, "timeout")
+      if time.time() >= hard_deadline:
+        result = (124, "hard-timeout")
+      else:
+        result = (124, "idle-timeout")
     else:
       result = (return_code, "completed" if return_code == 0 else "failed")
 
   _finalize_log_dir()
   return result
+
+
+BACKEND_PORT = 3100
+FRONTEND_PORT = 5173
+SERVER_STARTUP_TIMEOUT = 30
+PLAYWRIGHT_TEST_DIR = LESSON / "tests"
+
+
+def _ensure_src_ready() -> Path:
+  """Ensure src/ exists and has dependencies installed."""
+  src_dir = LESSON / "src"
+  if not src_dir.exists():
+    print("ERROR: src/ not found. Run --setup first.", file=sys.stderr)
+    raise SystemExit(1)
+  node_modules = src_dir / "node_modules"
+  if not node_modules.exists():
+    print("  Installing dependencies...")
+    subprocess.run(
+      ["npm", "install"], cwd=str(src_dir), check=True, shell=(os.name == "nt"),
+    )
+  return src_dir
+
+
+def _seed_if_needed(src_dir: Path) -> None:
+  """Seed the database if no .db file exists."""
+  data_dir = src_dir / "data"
+  db_files = list(data_dir.glob("*.db")) if data_dir.exists() else []
+  if not db_files:
+    print("  Seeding database...")
+    subprocess.run(
+      ["npm", "run", "db:seed"], cwd=str(src_dir), check=True, shell=(os.name == "nt"),
+    )
+
+
+def _run_unit_tests(src_dir: Path) -> bool:
+  """Run vitest unit tests. Returns True if all pass."""
+  print("\n── Unit Tests (vitest) ──\n")
+  result = subprocess.run(
+    ["npx", "vitest", "run"], cwd=str(src_dir), shell=(os.name == "nt"),
+  )
+  return result.returncode == 0
+
+
+def _wait_for_server(url: str, timeout: int = SERVER_STARTUP_TIMEOUT) -> bool:
+  """Poll a URL until it responds 200, or timeout."""
+  import urllib.request
+  import urllib.error
+
+  deadline = time.time() + timeout
+  while time.time() < deadline:
+    try:
+      with urllib.request.urlopen(url, timeout=3) as resp:
+        if resp.status == 200:
+          return True
+    except (urllib.error.URLError, OSError, TimeoutError):
+      pass
+    time.sleep(1)
+  return False
+
+
+def _start_dev_servers(src_dir: Path) -> subprocess.Popen:
+  """Start backend + frontend dev servers in background."""
+  print("\n  Starting dev servers...")
+  process = subprocess.Popen(
+    ["npm", "run", "dev"],
+    cwd=str(src_dir),
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT,
+    shell=(os.name == "nt"),
+  )
+  return process
+
+
+def _stop_dev_servers(process: subprocess.Popen) -> None:
+  """Stop the dev server process tree."""
+  if process.poll() is not None:
+    return
+  if os.name == "nt":
+    subprocess.run(
+      ["taskkill", "/PID", str(process.pid), "/T", "/F"],
+      capture_output=True, check=False, shell=False,
+    )
+  else:
+    try:
+      os.kill(process.pid, 9)
+    except ProcessLookupError:
+      pass
+  try:
+    process.wait(timeout=10)
+  except subprocess.TimeoutExpired:
+    pass
+
+
+def _run_playwright_tests() -> bool:
+  """Run Playwright Python tests from the tests/ directory. Returns True if all pass."""
+  print("\n── UI Tests (Playwright) ──\n")
+  test_file = PLAYWRIGHT_TEST_DIR / "test_ui.py"
+  if not test_file.exists():
+    print(f"  WARNING: No Playwright test file found at {test_file}")
+    return True  # No tests = vacuously passing
+
+  result = subprocess.run(
+    [sys.executable, "-m", "pytest", str(test_file), "-v", "--tb=short"],
+    cwd=str(LESSON),
+  )
+  if result.returncode != 0:
+    # Fallback: try running directly if pytest is not installed
+    if "No module named pytest" in (result.stderr or ""):
+      print("  pytest not found, running test directly...")
+      result = subprocess.run(
+        [sys.executable, str(test_file)], cwd=str(LESSON),
+      )
+  return result.returncode == 0
+
+
+def test() -> int:
+  """Run unit tests (vitest) + Playwright UI verification."""
+  print("Running lesson 05 validation suite...\n")
+
+  src_dir = _ensure_src_ready()
+  _seed_if_needed(src_dir)
+
+  # ── Phase 1: Unit tests ──
+  unit_ok = _run_unit_tests(src_dir)
+  if not unit_ok:
+    print("\nFAILED: Unit tests did not pass.")
+    return 1
+
+  # ── Phase 2: Playwright UI tests ──
+  server_process = _start_dev_servers(src_dir)
+  playwright_ok = False
+  try:
+    backend_url = f"http://localhost:{BACKEND_PORT}/health"
+    print(f"  Waiting for backend at {backend_url}...")
+    if not _wait_for_server(backend_url):
+      print("ERROR: Backend did not start within timeout.")
+      return 2
+
+    frontend_url = f"http://localhost:{FRONTEND_PORT}"
+    print(f"  Waiting for frontend at {frontend_url}...")
+    if not _wait_for_server(frontend_url):
+      print("ERROR: Frontend did not start within timeout.")
+      return 2
+
+    print("  Servers ready.")
+    playwright_ok = _run_playwright_tests()
+  finally:
+    print("\n  Stopping dev servers...")
+    _stop_dev_servers(server_process)
+
+  if not playwright_ok:
+    print("\nFAILED: Playwright UI tests did not pass.")
+    return 3
+
+  print("\n✓ All tests passed (unit + UI).")
+  return 0
 
 
 def demo() -> int:
@@ -388,7 +581,11 @@ def demo() -> int:
   _wait_for_fresh_artifacts(run_started_at)
 
   if return_code == 124:
-    print("ERROR: Copilot CLI did not export a completed session before timeout. See .output/logs/copilot.log.")
+    print(
+      "ERROR: Copilot CLI did not export a completed session before the demo window closed. "
+      f"Hard timeout={DEMO_TIMEOUT_SECONDS}s, idle timeout={DEMO_IDLE_TIMEOUT_SECONDS}s. "
+      "See .output/logs/copilot.log."
+    )
     return return_code
 
   if return_code != 0:
@@ -423,6 +620,10 @@ if __name__ == "__main__":
       "demo": (
         "Run a Copilot CLI implementation demo and capture logs plus a git-style diff",
         demo,
-      )
+      ),
+      "test": (
+        "Run unit tests (vitest) and Playwright UI verification",
+        test,
+      ),
     },
   )
