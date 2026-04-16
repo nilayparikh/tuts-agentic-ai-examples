@@ -70,7 +70,7 @@ For this example, the intended outcome is:
 Create a new guardrail:
 
 ```bash
-copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config in .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script in .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must check that TypeScript files import from barrel files (index.ts) rather than reaching into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Work only inside this lesson folder and treat its local .github directory as the source of truth for hooks, scripts, MCP, and instructions. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config inside this lesson at .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script inside this lesson at .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must read hook JSON from stdin when present, inspect changed .ts/.tsx files, and deny imports that bypass a sibling index.ts barrel and reach into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
 ```
 
 Expected outcome:
@@ -97,16 +97,9 @@ For the captured demo run, use `python util.py --demo --model gpt-5.4`.
 
 ## Validation
 
-Run the guardrail validation suite to verify that all hooks, scripts, MCP
-config, trust boundaries, and security policy are complete and consistent:
-
-```bash
-python util.py --test
-```
-
 Run the guardrail validation suite. This actually executes each hook script
 with simulated hook payloads — both positive (allow) and negative (deny) cases —
-then generates `VERIFICATION.md` from the results.
+then writes a scenario evidence log and generates `VERIFICATION.md` from it.
 
 ```bash
 python util.py --test
@@ -122,8 +115,9 @@ The test suite (`tests/test_guardrails.py`) fires real payloads through each scr
 | Hook configs      | —                                                                   | valid event types, required fields, script refs |
 | Cross-consistency | —                                                                   | scripts valid Python, no orphans, doc alignment |
 
-`VERIFICATION.md` is auto-generated from JUnit XML — it is not hand-written.
-Every row in that file links back to a test that actually ran the guardrail.
+`VERIFICATION.md` is auto-generated from the executed scenarios — it is not hand-written.
+Each row is backed by `.output/evidence/guardrail-evidence.jsonl` and includes the
+payload or context used plus the observed output.
 
 ## Cleanup
 
