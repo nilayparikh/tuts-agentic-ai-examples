@@ -32,30 +32,31 @@ python util.py --test
 
 This runs:
 
-1. **Unit tests** — `vitest run` for all backend unit and integration tests
+1. **Backend tests** — `vitest run` for all backend unit and integration tests
 2. **UI tests** — Playwright Python tests that verify API rule enforcement and frontend rendering
 
 Prerequisites: `pip install playwright pytest` and `python -m playwright install chromium`.
 
 Verified on 2026-04-16:
 
-- `python util.py --demo` completed with the default assessment model `claude-haiku-4.5`
+- `python util.py --demo --model gpt-5.4` completed and wrote the captured artifacts under `.output/`
 - `.output/change/comparison.md` reported `Files match: True` and `Patterns match: True`
-- `python util.py --test` then exposed a contract drift in the raw demo output: the generated route introduced optional `loanId` lookup semantics instead of keeping `loanState` as the direct request input
-- the checked-in `src/` workspace has been restored to the intended `loanState` contract and now passes the full validation suite
+- the captured change set matched the intended three-file implementation slice
+- `python util.py --test` passed on the checked-in workspace with 29 backend tests and 13 UI tests
 
-This is the key lesson: patch-shape comparison is useful, but it is not enough. The `--test`
-gate is what proves the implementation still behaves correctly end to end.
+This is the key lesson: patch-shape comparison is useful, but it is not enough on its
+own. The real gate is the validator. In the current checked-in example, both the patch
+comparison and the end-to-end test suite agree.
 
 ## What This Demonstrates
 
 Three agents with different capabilities form an implementation workflow.
 
-| Agent         | Tools                                   | Role                    |
-| ------------- | --------------------------------------- | ----------------------- |
-| `implementer` | edit, terminal, code search, problems   | Writes and runs code    |
-| `reviewer`    | code search, problems, usages           | Reviews without editing |
-| `tester`      | edit, terminal, tests, failure analysis | Writes and runs tests   |
+| Agent         | Tools                                 | Role                    |
+| ------------- | ------------------------------------- | ----------------------- |
+| `implementer` | edit, terminal, code search, problems | Writes focused code     |
+| `reviewer`    | code search, problems, usages         | Reviews without editing |
+| `tester`      | edit, terminal, tests                 | Writes and runs tests   |
 
 This lesson also includes a TDD skill and prompt files for structured implementation and review.
 
@@ -66,7 +67,7 @@ This lesson should demonstrate a focused implementation slice, not a sprawling f
 For this example, the intended outcome is:
 
 - add one pure notification-preference write rule with explicit edge-case coverage
-- wire the minimal production change into the existing notification route
+- wire the minimal production change into the existing single-write notification route
 - add tests that cover a happy path, a false positive, and a hard negative
 - leave protected config and database files untouched
 
@@ -162,16 +163,16 @@ python util.py --clean
 
 ## Series Navigation
 
-| #   | Lesson                    | Video                                                | Example Code                                                    |
-| --- | ------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
-| 01  | Why Context Engineering   | [Watch](https://www.youtube.com/watch?v=YBXo_hxr9k4) | [01-why-context-engineering](../01-why-context-engineering)     |
-| 02  | Curate Project Context    | [Watch](https://www.youtube.com/watch?v=1B90MkDnmhs) | [02-curate-project-context](../02-curate-project-context)       |
-| 03  | Instruction Architecture  | [Watch](https://www.youtube.com/watch?v=BS2NbFnyYJY) | [03-instruction-architecture](../03-instruction-architecture)   |
-| 04  | Planning Workflows        | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) | [04-planning-workflows](../04-planning-workflows)               |
-| 05  | Implementation Workflows  | _Coming soon_                                        | [05-implementation-workflows](../05-implementation-workflows)   |
-| 06  | Tools and Guardrails      | _Coming soon_                                        | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
-| 07  | Surface Strategy          | _Coming soon_                                        | [07-surface-strategy](../07-surface-strategy)                   |
-| 08  | Operating Model           | _Coming soon_                                        | [08-operating-model](../08-operating-model)                     |
-| 09  | AI-Assisted SDLC Capstone | _Coming soon_                                        | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+| #   | Lesson                    | Video                                                                                                     | Example Code                                                    |
+| --- | ------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Why Context Engineering   | <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Watch</a> | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | Curate Project Context    | <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">Watch</a> | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | Instruction Architecture  | <a href="https://www.youtube.com/watch?v=BS2NbFnyYJY" target="_blank" rel="noopener noreferrer">Watch</a> | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Planning Workflows        | <a href="https://www.youtube.com/watch?v=KuLgT8Wck_E" target="_blank" rel="noopener noreferrer">Watch</a> | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | Implementation Workflows  | _Coming soon_                                                                                             | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Tools and Guardrails      | _Coming soon_                                                                                             | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy          | _Coming soon_                                                                                             | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model           | _Coming soon_                                                                                             | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone | _Coming soon_                                                                                             | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
 
-Full Course: <https://tuts.localm.dev/ctx-sdlc>
+Full Course: <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>

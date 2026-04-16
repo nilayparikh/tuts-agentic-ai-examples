@@ -1,14 +1,14 @@
 # 🤖 Copilot CLI Session
 
 > [!NOTE]
-> - **Session ID:** `7858bbe2-fd0b-4e1c-9839-68962fc30407`  
-> - **Started:** 16/04/2026, 12:53:58  
-> - **Duration:** 6m 4s  
-> - **Exported:** 16/04/2026, 13:00:03  
+> - **Session ID:** `377dfefc-8ead-414c-bf9d-13331963e788`  
+> - **Started:** 16/04/2026, 13:56:09  
+> - **Duration:** 5m 58s  
+> - **Exported:** 16/04/2026, 14:02:08  
 
 ---
 
-<sub>⏱️ 5s</sub>
+<sub>⏱️ 7s</sub>
 
 ### 👤 User
 
@@ -16,117 +16,135 @@ Inspect docs/, specs/, and the relevant notification-preference write surfaces y
 
 ---
 
-<sub>⏱️ 12s</sub>
+<sub>⏱️ 20s</sub>
 
-### ✅ `skill`
+### ✅ `view`
 
-**tdd-workflow**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs.**
 
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "skill": "tdd-workflow"
-}
-```
-
-</details>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs
 
 ```
-Skill "tdd-workflow" loaded successfully. Follow the instructions in the skill context.
+architecture.md
+implementation-playbook.md
+implementation-workflow-example.md
+notification-preferences-plan.md
 ```
 
 
 ---
 
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 20s</sub>
 
-### 💬 Copilot
+### ✅ `view`
 
-I’m inspecting the lesson docs/specs and the current notification write path first so the tests match the intended invariants before I wire the minimal route change.
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs.**
 
----
-
-<sub>⏱️ 30s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
-
-"docs\**\*" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs
 
 ```
-No files matched the pattern.
+non-functional-requirements.md
+product-spec-notification-preferences.md
 ```
 
 
 ---
 
-<sub>⏱️ 30s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
-
-"specs\**\*" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 20s</sub>
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs**
 
 <details>
 <summary>Arguments</summary>
 
 ```json
 {
-  "pattern": "notification-preference|notification preference|LEGAL-218|manual-review-escalation|playbook|example",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows",
-  "output_mode": "files_with_matches",
-  "head_limit": 100
+  "pattern": "notification-preference|notification preference|LEGAL-218|manual-review-escalation|decline",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\docs",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
 }
 ```
 
 </details>
 
 <details>
-<summary>25 lines</summary>
+<summary>70 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\skills\tdd-workflow\SKILL.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\agents\implementer.agent.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\prompts\implement-feature.prompt.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\ASSESSMENT.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\prompts\review-changes.prompt.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\architecture.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\agents\tester.agent.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\change\expected-files.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\change\expected-patterns.json
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.github\agents\reviewer.agent.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\logs\command.txt
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\HANDOFF.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\logs\process-1776340437106-22152.log
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\util.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\HANDOFF_IMPLEMENTATION.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\RUN.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\tests\test_ui.py
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\README.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\logs\prompt.txt
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\VERIFICATION.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\.output\logs\runner.log
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:12:This plan outlines the implementation of user-configurable notification preferences for the Loan Workbench platform. The feature addresses alert fatigue by allowing underwriters and analyst managers to control which notifications they receive (approval, decline, document-request, manual-review-escalation) across email and SMS channels.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:15:- Mandatory notification events (manual-review-escalation) must always have at least one enabled channel.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:16:- California loans have a temporary SMS restriction for decline notifications (LEGAL-218).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:22:**Canonical Source:** Product Specification (specs/product-spec-notification-preferences.md) is the primary authority. NFRs provide constraints and safety rails. Architecture and ADRs guide implementation pattern choices.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:32:| FR1 | Preference matrix: email/SMS independent per event type      | product-spec-notification-preferences.md § Functional Requirements § FR-1 |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:33:| FR2 | Mandatory event rule: ≥1 channel for manual-review-escalation | product-spec-notification-preferences.md § FR-2 (explicit hard negative pattern) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:34:| FR3 | Role-based defaults on first access (no migration required)   | product-spec-notification-preferences.md § FR-3 § User-based defaults table |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:35:| FR4 | California SMS restriction for decline (LEGAL-218)          | product-spec-notification-preferences.md § FR-4 (explicit: loan_state based) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:36:| FR5 | Degraded delivery fallback: SMS→email, no pref modification  | product-spec-notification-preferences.md § FR-5 (explicit false positive pattern) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:37:| FR6 | Audit all preference changes (actor, timestamp, old/new values) | product-spec-notification-preferences.md § FR-6 (complete audit trail) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:43:| SC-1 | Locked applications: prefs change globally, UI clarifies no retroactive effect | product-spec-notification-preferences.md § SC-1 |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:44:| SC-2 | Delegated sessions: read-only (no modify), visually indicated | product-spec-notification-preferences.md § SC-2 (explicit hard negative pattern) |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:45:| SC-3 | Multi-state portfolio: conditional rules, not blanket disable | product-spec-notification-preferences.md § SC-3 |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:75:   - **Reference**: product-spec-notification-preferences.md § Open Questions #1
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:79:   - **Reference**: product-spec-notification-preferences.md § Open Questions #3
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:101:   - **Why**: Enables AI-safety testing for edge cases (e.g., CA decline SMS, zero-channel scenarios).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:135:   - Users may not disable all channels for `manual-review-escalation`.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:138:   - **Source**: product-spec-notification-preferences.md § FR-2 § HARD NEGATIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:140:2. **California SMS Restriction (LEGAL-218)**  
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:141:   - SMS for `decline` notifications must remain unavailable when `loanState = "CA"`.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:144:   - **Source**: product-spec-notification-preferences.md § FR-4; non-functional-requirements.md § NFR-6.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:155:   - **Source**: product-spec-notification-preferences.md § SC-2 § HARD NEGATIVE pattern (optimistic UI update without server rejection).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:168:   - **Source**: product-spec-notification-preferences.md § FR-5 § FALSE POSITIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:171:   - User disables SMS for `manual-review-escalation` while email is enabled.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:173:   - **Source**: product-spec-notification-preferences.md § FR-2 § FALSE POSITIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:197:  - Rejects SMS disable for decline on CA loans (if `loanState = "CA"` and `event = "decline"` and `channel = "sms"`).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:203:  - Hard negative: disable SMS for decline on CA loan → rejected.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:204:  - Hard negative: disable SMS for decline on non-CA loan → allowed.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:205:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-4; rules/business-rules.ts pattern.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:218:- **Source Reference**: product-spec-notification-preferences.md § FR-3; preference-repository.ts pattern.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:233:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-6, SC-2; notifications.ts lines 45–105, 112–188, 195–271; NFR-2.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:247:- **Source Reference**: product-spec-notification-preferences.md § FR-5; non-functional-requirements.md § NFR-5.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:254:  - Wrap notification preference routes with flag check that returns 404 (not 403) for non-pilot users.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:276:- **Source Reference**: product-spec-notification-preferences.md § FR-6, SC-2; NFR-3 (privacy), NFR-2 (fail-closed); audit-repository.ts and audit-service.ts patterns.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:315:- **Source Reference**: ADR-003 (AR1); product-spec-notification-preferences.md § SC-2.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:320:  - Render matrix: rows = events (approval, decline, document-request, manual-review-escalation), columns = channels (email, sms).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:322:  - Mandatory events (manual-review-escalation) have **persistent helper text** (not tooltip): "At least one channel must be enabled for escalation notifications."
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:323:  - CA decline SMS disabled control with explanation: "SMS for decline notifications is unavailable for California loans (legal review LEGAL-218 in progress)."
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:332:  - Attempting to toggle CA decline SMS → toggle stays disabled, tooltip/helper text shown.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:335:- **Source Reference**: product-spec-notification-preferences.md § FR-1 through FR-6, SC-1 through SC-3, UX Notes; NFR-4 (accessibility), NFR-6.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:362:- **Source Reference**: product-spec-notification-preferences.md § User Roles § Compliance Reviewer, SC-2 (audit trail); non-functional-requirements.md § NFR-7.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:374:  - Hard negative tests: disabling all channels (rejected), CA decline SMS (rejected).
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:377:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § pattern examples; .github/instructions/testing.instructions.md.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:388:- **Source Reference**: non-functional-requirements.md § NFR-6, NFR-2; product-spec-notification-preferences.md § FR-1–FR-6.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:401:- **Source Reference**: ADR-003, product-spec-notification-preferences.md § UX Notes, § SC-2.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:416:  - **Hard Negative 1**: Attempt to disable all channels for manual-review-escalation → fails with 400, preference unchanged.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:417:  - **Hard Negative 2**: Enable decline SMS on CA loan → fails with 400, preference unchanged.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:426:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § patterns, § SC-2, § Open Questions; non-functional-requirements.md § NFR-2 § patterns.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:437:   - [ ] CA LEGAL-218 restriction verified with legal team.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:499:| **California LEGAL-218 Regulatory Compliance** (FR-4, LEGAL-218) | Critical | Coordinate with legal team before pilot rollout; document LEGAL-218 case number in code and audit trail. Update feature-flag documentation with compliance expiration date (when LEGAL-218 resolves). |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:512:1. **Legal Review LEGAL-218 Completion**: California decline SMS restriction tied to external legal milestone. Plan CA restriction removal as separate rollout once LEGAL-218 resolves.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:523:| **Mandatory Event Rule (FR-2)**         | Confirmed  | ≥1 channel for manual-review-escalation; hard negatives explicit. |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:525:| **CA SMS Restriction (FR-4, LEGAL-218)** | Confirmed  | loan_state-based, explicit hard negative.                       |
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:542:**Primary Authority:** `specs/product-spec-notification-preferences.md`  
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:570:- **LEGAL-218**: Legal review tracking regulatory compliance for decline SMS in California; temporary restriction applies to loans with `loanState = "CA"`.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:590:- [ ] CA LEGAL-218 restriction confirmed with legal team.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:7:This lesson consumes `docs/notification-preferences-plan.md`, the structured
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:10:notification-preferences feature. Lesson 05 implements only **one focused slice**
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:11:of that plan — hardening the notification-preference write path.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:15:Show that a constrained implementation workflow can make a focused production change with matching tests instead of attempting the entire notification-preferences feature at once.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:31:4. The implementation must cover a mandatory-event rule and the California `LEGAL-218` restriction.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:37:10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:43:Harden notification preference writes so the existing route cannot:
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:45:- disable the last available channel for `manual-review-escalation`
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:46:- enable decline SMS for California loan context
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:52:Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:78:- prefer checking stable business terms like `manual-review-escalation`,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:79:  `at least one`, or `LEGAL-218`
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:87:The `LEGAL-218` checks may assert the literal token `LEGAL-218`, because that
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md:37:3. Document the legal or business source in a comment (e.g., `// LEGAL-218`).
 ```
 
 </details>
@@ -134,57 +152,381 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 20s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "notification-preference|notification preference|LEGAL-218|manual-review-escalation|decline",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\specs",
+  "output_mode": "content",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>12 lines</summary>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:22:Allow authorized users to configure notification preferences by channel and
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:30:- Settings UI for notification preferences in `apps/web/`
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:34:- Event-specific preferences for: approval, decline, document-request,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:35:  manual-review-escalation
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:50:- Can edit their own notification preferences
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:51:- **Cannot suppress mandatory manual-review-escalation notifications**
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:55:- Can edit their own notification preferences
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:107:SMS for decline decisions must remain **disabled for California loans** until
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:108:the legal review tracked in `LEGAL-218` is complete.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:117:> **HARD NEGATIVE pattern:** Enabling decline SMS on a CA loan looks like normal
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:157:- They may **view** the delegate's notification preferences.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:191:2. Is the California decline SMS restriction loan-state based or borrower-state
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 20s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "notification.*preference|preferences|LEGAL-218|manual-review-escalation|decline",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src",
+  "output_mode": "content",
+  "glob": "**/*.{ts,tsx}",
+  "-n": true,
+  "head_limit": 300
+}
+```
+
+</details>
+
+```
+No matches found.
+```
+
+
+---
+
+<sub>⏱️ 20s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\tests**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "notification.*preference|preferences|LEGAL-218|manual-review-escalation|decline",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\tests",
+  "output_mode": "content",
+  "glob": "**/*.{ts,tsx}",
+  "-n": true,
+  "head_limit": 300
+}
+```
+
+</details>
+
+```
+No matches found.
+```
+
+
+---
+
+<sub>⏱️ 34s</sub>
+
+### 💬 Copilot
+
+I found the lesson guidance and the current write path. Next I’m reading the spec/playbook plus the existing notification route and rule/test patterns so the change stays narrow and consistent.
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md (lines 1-220)
+
+<details>
+<summary>115 lines</summary>
+
+````
+1. # Implementation Playbook
+2. 
+3. This document defines role boundaries, coding conventions, and handoff protocols
+4. for the Loan Workbench implementation workflow.
+5. 
+6. ## Role Boundaries
+7. 
+8. | Role        | Can Read                | Can Write                                   | Can Execute            |
+9. | ----------- | ----------------------- | ------------------------------------------- | ---------------------- |
+10. | Implementer | All source, specs, docs | `src/backend/src/**`, `src/frontend/src/**` | Terminal (build, lint) |
+11. | Tester      | All source, specs, docs | `src/backend/tests/**` only                 | Terminal + test runner |
+12. | Reviewer    | All source, specs, docs | Nothing                                     | Nothing                |
+13. 
+14. ### Why These Boundaries Exist
+15. 
+16. - **Implementer cannot run tests**: Forces explicit handoff to the tester.
+17.   Prevents "I'll just fix the test to match my code" shortcuts.
+18. - **Reviewer cannot write**: Maintains independence. A reviewer who can "just
+19.   fix it" is no longer reviewing — they're co-implementing.
+20. - **Tester owns the test runner**: Only the tester decides when tests pass.
+21.   The implementer provides code; the tester validates it.
+22. 
+23. ## Coding Conventions
+24. 
+25. ### Route Handlers (`src/backend/src/routes/`)
+26. 
+27. 1. Extract business logic to `src/backend/src/rules/` or `src/backend/src/services/` — routes should
+28.    orchestrate, not decide.
+29. 2. Use `requireRole()` middleware for role checks.
+30. 3. Use `blockDelegatedWrites` middleware for mutation endpoints.
+31. 4. Audit events via the queue broker or direct DB write before persisting changes.
+32. 
+33. ### Business Rules (`src/backend/src/rules/`)
+34. 
+35. 1. Pure functions that take data and return decisions.
+36. 2. No side effects (no I/O, no audit writes, no HTTP responses).
+37. 3. Document the legal or business source in a comment (e.g., `// LEGAL-218`).
+38. 4. Annotate edge cases with `// FALSE POSITIVE` or `// HARD NEGATIVE`.
+39. 
+40. ### Services (`src/backend/src/services/`)
+41. 
+42. 1. Handle I/O and external integrations.
+43. 2. Fail-closed for security-critical operations (audit).
+44. 3. Degrade gracefully for non-critical operations (notification delivery).
+45. 4. Never modify stored user preferences as a side effect of delivery.
+46. 
+47. ### Middleware (`src/backend/src/middleware/`)
+48. 
+49. 1. Thin and composable — one concern per middleware.
+50. 2. Auth middleware sets `req.session`, nothing else.
+51. 3. Guard middleware (like `blockDelegatedWrites`) returns 403 on violation.
+52. 4. Error handler masks internal details — no stack traces in production.
+53. 
+54. ### Tests (`src/backend/tests/`)
+55. 
+56. 1. Use `describe`/`it` with behavior-focused names.
+57. 2. One assertion per `it()` block.
+58. 3. Test through route handlers using supertest-style requests.
+59. 4. Annotate false-positive and hard-negative tests with comments.
+60. 5. Do not mock business rule functions — test them through real call paths.
+61. 
+62. ## Handoff Protocols
+63. 
+64. ### Tester → Implementer
+65. 
+66. ```
+67. Failing tests:
+68.   - test name: "expected behavior description"
+69.   - file: src/backend/tests/unit/xxx.test.ts
+70. 
+71. Files that need changes:
+72.   - src/backend/src/rules/xxx.ts — add/modify rule
+73.   - src/backend/src/routes/xxx.ts — wire in rule check
+74. 
+75. Relevant specs:
+76.   - NFR-X: requirement summary
+77.   - FR-X: functional requirement
+78. ```
+79. 
+80. ### Implementer → Reviewer
+81. 
+82. ```
+83. Changed files:
+84.   - src/backend/src/rules/xxx.ts — what changed
+85.   - src/backend/src/routes/xxx.ts — what changed
+86. 
+87. Tests that should pass:
+88.   - "test name" in src/backend/tests/unit/xxx.test.ts
+89. 
+90. NFRs touched:
+91.   - NFR-X: how it's addressed
+92. ```
+93. 
+94. ### Reviewer → Team
+95. 
+96. ```
+97. Review Summary:
+98.   Verdict: APPROVE | REQUEST_CHANGES
+99.   Files: list
+100.   Issues: count
+101. 
+102. Issues (if any):
+103.   1. [SEVERITY] description — file — spec reference
+104. ```
+105. 
+106. ## Anti-Patterns
+107. 
+108. | Anti-Pattern               | Why It's Wrong                                   | Correct Approach                  |
+109. | -------------------------- | ------------------------------------------------ | --------------------------------- |
+110. | One agent does everything  | No independent validation                        | Three-agent role separation       |
+111. | Implementer runs own tests | "Tests pass" because they were adjusted to match | Tester owns execution             |
+112. | Reviewer pushes fixes      | No independent review trail                      | Reviewer flags, implementer fixes |
+113. | Skipping the red step      | No proof the test catches the defect             | Always start with a failing test  |
+114. | Batching unrelated changes | Review scope explosion                           | One feature per TDD cycle         |
+115.
+````
+
+</details>
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md (lines 1-220)
+
+<details>
+<summary>100 lines</summary>
+
+```
+1. # Lesson 05 — Implementation Workflow Example
+2. 
+3. This document defines the concrete example used in Lesson 05.
+4. 
+5. ## Prerequisite Context
+6. 
+7. This lesson consumes `docs/notification-preferences-plan.md`, the structured
+8. implementation plan produced by the Lesson 04 planning workflow. The plan maps
+9. out all backend, frontend, audit, and observability surfaces for the full
+10. notification-preferences feature. Lesson 05 implements only **one focused slice**
+11. of that plan — hardening the notification-preference write path.
+12. 
+13. ## Objective
+14. 
+15. Show that a constrained implementation workflow can make a focused production change with matching tests instead of attempting the entire notification-preferences feature at once.
+16. 
+17. ## Expected Change Shape
+18. 
+19. The preferred output for this lesson is a small change set with:
+20. 
+21. 1. One new pure rule module under `src/backend/src/rules/`
+22. 2. One matching unit test file under `src/backend/tests/unit/`
+23. 3. One targeted wiring change to `src/backend/src/routes/notifications.ts`
+24. 4. No edits to protected config or database files
+25. 
+26. ## Required Constraints
+27. 
+28. 1. The workflow must implement code, not only describe it.
+29. 2. The new rule must use explicit inputs and existing domain types instead of direct database access.
+30. 3. The change must preserve delegated-session and role guards already present in the route.
+31. 4. The implementation must cover a mandatory-event rule and the California `LEGAL-218` restriction.
+32. 5. The implementation must call out at least one false positive and one hard negative in the new rule module comments.
+33. 6. The run must not execute shell commands.
+34. 7. The run must not edit protected files such as feature flags, schema, or seed data.
+35. 8. The run must not use SQL or task/todo write tools.
+36. 9. The final handoff should explain the expected red/green test behavior and name any deferred follow-up surfaces that remain intentionally out of scope.
+37. 10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
+38. 11. The write path must keep `loanState` as the direct request input for this route. Do not replace it with a new `loanId` lookup contract.
+39. 12. The lesson is not complete until `python util.py --test` passes after the demo or manual implementation.
+40. 
+41. ## Concrete Scenario
+42. 
+43. Harden notification preference writes so the existing route cannot:
+44. 
+45. - disable the last available channel for `manual-review-escalation`
+46. - enable decline SMS for California loan context
+47. 
+48. Good output should keep the change local and avoid sprawling refactors.
+49. 
+50. It should also make the intentional scope boundary visible: this lesson is about hardening the current notification write path, not implementing every preference mutation surface in the repository at once.
+51. 
+52. Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
+53. 
+54. ## What Good Output Looks Like
+55. 
+56. Good output will usually:
+57. 
+58. - create a pure rule file and a matching unit test file
+59. - wire the route to call the rule rather than embedding the full policy inline
+60. - preserve existing delegated-session and permission checks
+61. - keep the route contract direct and explicit by passing `loanState` into the rule instead of adding loan repository lookups
+62. - cite or encode the false-positive case where escalation SMS is disabled but escalation email remains enabled
+63. - encode the hard-negative case where all escalation channels end up disabled
+64. - explain which test cases would fail before the production change and which should pass after it
+65. - survive the end-to-end `python util.py --test` gate after the code change is produced
+66. 
+67. ## Test Authoring Quality Bar
+68. 
+69. Generated tests must be durable across semantically equivalent implementations.
+70. That matters in this lesson because `python util.py --demo` recreates `src/` from
+71. the app baseline before each run, so any test fix that lives only in generated
+72. source will be lost on the next demo.
+73. 
+74. When a rule returns a human-readable reason string:
+75. 
+76. - assert the invariant, not one exact sentence or capitalization pattern
+77. - normalize text before matching, such as lowercasing the reason
+78. - prefer checking stable business terms like `manual-review-escalation`,
+79.   `at least one`, or `LEGAL-218`
+80. - avoid brittle exact-string checks for explanatory prose unless the exact text
+81.   is part of the contract
+82. 
+83. For this lesson, the mandatory-event tests should prove that the rejection
+84. mentions the escalation invariant and the "at least one channel" rule, even if
+85. the final sentence shape differs.
+86. 
+87. The `LEGAL-218` checks may assert the literal token `LEGAL-218`, because that
+88. identifier is a stable contract signal rather than free-form wording.
+89. 
+90. When the current route rejects a business-rule violation, stable semantics matter
+91. more than one exact HTTP code. In this lesson, a semantically equivalent
+92. implementation may surface the rejection as `400` or `422` while still returning
+93. the correct business explanation. Unless the lesson is explicitly about HTTP
+94. status design, tests should accept either status for these rule rejections and
+95. assert the business invariant from the payload.
+96. 
+97. If the implementation can preserve the route's existing rejection style without
+98. extra complexity, prefer `400` for this lesson so the API remains aligned with
+99. the rest of the simple validation surfaces.
+100.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 35s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 40-140)
 
 <details>
-<summary>194 lines</summary>
+<summary>101 lines</summary>
 
 ```
-1. # Product Specification: Notification Preferences
-2. 
-3. ## Document Status
-4. 
-5. | Field    | Value                             |
-6. | -------- | --------------------------------- |
-7. | Owner    | Lending Platform Product          |
-8. | Status   | Draft for implementation planning |
-9. | Target   | 2026 Q2 pilot                     |
-10. | Tracking | PROJ-412                          |
-11. 
-12. ## Problem Statement
-13. 
-14. Underwriters and analyst managers need finer control over operational
-15. notifications. The current Loan Workbench sends a fixed set of email alerts
-16. with no user-level preferences. Teams report alert fatigue for routine document
-17. requests and missed high-severity escalation events when all notifications are
-18. treated the same.
-19. 
-20. ## Goal
-21. 
-22. Allow authorized users to configure notification preferences by channel and
-23. event type without breaking auditability, workflow SLAs, or regulatory
-24. communications that must always be delivered.
-25. 
-26. ---
-27. 
-28. ## In Scope
-29. 
-30. - Settings UI for notification preferences in `apps/web/`
-31. - API support in `services/api/` for reading and updating preferences
-32. - Persistence across sessions and devices
-33. - Role-aware defaults for underwriters and analyst managers
-34. - Event-specific preferences for: approval, decline, document-request,
-35.   manual-review-escalation
-36. 
-37. ## Out of Scope
-38. 
-39. - SMS provider migration
 40. - Push notifications
 41. - Per-loan notification overrides
 42. - Customer-facing borrower communications
@@ -286,6 +628,26 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 138. - Previous value
 139. - New value
 140. - Source channel
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 140-210)
+
+<details>
+<summary>55 lines</summary>
+
+```
+140. - Source channel
 141. - Delegated-for user (if applicable)
 142. 
 143. ---
@@ -347,13 +709,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 35s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md (lines 1-180)
 
 <details>
 <summary>109 lines</summary>
@@ -475,16 +837,16 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 35s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-260)
 
 <details>
-<summary>272 lines</summary>
+<summary>260 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
@@ -747,6 +1109,104 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 258.           session,
 259.           "preference.updated",
 260.           previous ?? null,
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ❌ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts (lines 1-220)
+
+```
+Path does not exist
+```
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ❌ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts (lines 1-260)
+
+```
+Path does not exist
+```
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ❌ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts (lines 1-260)
+
+```
+Path does not exist
+```
+
+
+---
+
+<sub>⏱️ 45s</sub>
+
+### ✅ `glob`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+
+"**\types.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts
+```
+
+
+---
+
+<sub>⏱️ 45s</sub>
+
+### ✅ `glob`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
+
+"**\*.test.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\state-machine.test.ts
+```
+
+
+---
+
+<sub>⏱️ 45s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 261-420)
+
+<details>
+<summary>12 lines</summary>
+
+```
 261.           pref,
 262.           "notification-routes",
 263.         );
@@ -766,86 +1226,58 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 30s</sub>
+<sub>⏱️ 45s</sub>
 
-### ❌ `view`
+### ✅ `rg`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts
-
-```
-Path does not exist
-```
-
-
----
-
-<sub>⏱️ 30s</sub>
-
-### ❌ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts
-
-```
-Path does not exist
-```
-
-
----
-
-<sub>⏱️ 30s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
 
 <details>
-<summary>38 lines</summary>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "NotificationPreference|type Notification|interface Notification|loanState",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
+  "output_mode": "content",
+  "glob": "**/*.{ts,tsx}",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+<details>
+<summary>26 lines</summary>
 
 ```
-1. // ---------------------------------------------------------------------------
-2. // Mandatory Notification Events
-3. // ---------------------------------------------------------------------------
-4. // Defines which notification events MUST fire for each state transition.
-5. // These are non-negotiable business requirements — skipping a mandatory
-6. // event is a compliance violation.
-7. //
-8. // When a transition occurs, the loan service must emit notification events
-9. // for ALL mandatory events listed here.
-10. // ---------------------------------------------------------------------------
-11. 
-12. import type { ApplicationState, NotificationEvent } from "../models/types.js";
-13. 
-14. type TransitionKey = `${ApplicationState}->${ApplicationState}`;
-15. 
-16. /**
-17.  * Map of state transitions to mandatory notification events.
-18.  * If a transition is not listed, no mandatory notifications are required.
-19.  */
-20. export const MANDATORY_EVENTS: Partial<
-21.   Record<TransitionKey, NotificationEvent[]>
-22. > = {
-23.   "decision->finalized": ["approval"],
-24.   "underwriting->decision": ["manual-review-escalation"],
-25.   "review->intake": ["document-request"],
-26. };
-27. 
-28. /**
-29.  * Get the mandatory notification events for a given state transition.
-30.  */
-31. export function getMandatoryEvents(
-32.   from: ApplicationState,
-33.   to: ApplicationState,
-34. ): NotificationEvent[] {
-35.   const key: TransitionKey = `${from}->${to}`;
-36.   return MANDATORY_EVENTS[key] ?? [];
-37. }
-38.
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:19:  loan_state AS loanState,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:66:  loanState: string;
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:80:    data.loanState.toUpperCase(),
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:38:export type NotificationEvent =
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:45:export type NotificationChannel = "email" | "sms";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:75:  loanState: string;
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:93:export interface NotificationPreference {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:31:  data: { borrowerName: string; amount: number; loanState: string },
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:40:    loanState: data.loanState.toUpperCase(),
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:52:    loanState: data.loanState,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\applications.ts:56:    { field: "loanState", type: "string", required: true },
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts:46:  if (featureFlags.californiaRules && loan.loanState === "CA") {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\queue\contracts.ts:31:export interface NotificationRequestedEvent extends BaseEvent {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:24:  NotificationPreference,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:80:      const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:156:      const updates: NotificationPreference[] = [];
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:161:        const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:239:      const updates: NotificationPreference[] = [];
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:244:        const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:15:  NotificationPreference,
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:29:type PreferenceRow = NotificationPreference & { enabled: number | boolean };
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:33:): NotificationPreference[] {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:44:    })) as NotificationPreference[];
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:51:): NotificationPreference | undefined {
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:58:    | (NotificationPreference & { enabled: number | boolean })
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:64:export function setPreference(pref: NotificationPreference): void {
 ```
 
 </details>
@@ -853,289 +1285,50 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 44s</sub>
+<sub>⏱️ 45s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "request-validator|requireRole|supertest|express",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
+  "output_mode": "content",
+  "glob": "**/*.test.ts",
+  "-n": true,
+  "head_limit": 200
+}
+```
+
+</details>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
+```
+
+
+---
+
+<sub>⏱️ 59s</sub>
 
 ### 💬 Copilot
 
-I found the playbook/example docs and the current route surface. Next I’m reading the lesson guidance plus nearby tests/types so the new rule module matches existing patterns and keeps scope to the single write path.
+The route surface is smaller than the plan: one single-item write endpoint plus two bulk channel endpoints. I’m checking the existing types and test style now so I can keep this slice scoped to the current single-item write path and call the bulk endpoints out as deferred.
 
 ---
 
-<sub>⏱️ 44s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md
-
-<details>
-<summary>115 lines</summary>
-
-````
-1. # Implementation Playbook
-2. 
-3. This document defines role boundaries, coding conventions, and handoff protocols
-4. for the Loan Workbench implementation workflow.
-5. 
-6. ## Role Boundaries
-7. 
-8. | Role        | Can Read                | Can Write                                   | Can Execute            |
-9. | ----------- | ----------------------- | ------------------------------------------- | ---------------------- |
-10. | Implementer | All source, specs, docs | `src/backend/src/**`, `src/frontend/src/**` | Terminal (build, lint) |
-11. | Tester      | All source, specs, docs | `src/backend/tests/**` only                 | Terminal + test runner |
-12. | Reviewer    | All source, specs, docs | Nothing                                     | Nothing                |
-13. 
-14. ### Why These Boundaries Exist
-15. 
-16. - **Implementer cannot run tests**: Forces explicit handoff to the tester.
-17.   Prevents "I'll just fix the test to match my code" shortcuts.
-18. - **Reviewer cannot write**: Maintains independence. A reviewer who can "just
-19.   fix it" is no longer reviewing — they're co-implementing.
-20. - **Tester owns the test runner**: Only the tester decides when tests pass.
-21.   The implementer provides code; the tester validates it.
-22. 
-23. ## Coding Conventions
-24. 
-25. ### Route Handlers (`src/backend/src/routes/`)
-26. 
-27. 1. Extract business logic to `src/backend/src/rules/` or `src/backend/src/services/` — routes should
-28.    orchestrate, not decide.
-29. 2. Use `requireRole()` middleware for role checks.
-30. 3. Use `blockDelegatedWrites` middleware for mutation endpoints.
-31. 4. Audit events via the queue broker or direct DB write before persisting changes.
-32. 
-33. ### Business Rules (`src/backend/src/rules/`)
-34. 
-35. 1. Pure functions that take data and return decisions.
-36. 2. No side effects (no I/O, no audit writes, no HTTP responses).
-37. 3. Document the legal or business source in a comment (e.g., `// LEGAL-218`).
-38. 4. Annotate edge cases with `// FALSE POSITIVE` or `// HARD NEGATIVE`.
-39. 
-40. ### Services (`src/backend/src/services/`)
-41. 
-42. 1. Handle I/O and external integrations.
-43. 2. Fail-closed for security-critical operations (audit).
-44. 3. Degrade gracefully for non-critical operations (notification delivery).
-45. 4. Never modify stored user preferences as a side effect of delivery.
-46. 
-47. ### Middleware (`src/backend/src/middleware/`)
-48. 
-49. 1. Thin and composable — one concern per middleware.
-50. 2. Auth middleware sets `req.session`, nothing else.
-51. 3. Guard middleware (like `blockDelegatedWrites`) returns 403 on violation.
-52. 4. Error handler masks internal details — no stack traces in production.
-53. 
-54. ### Tests (`src/backend/tests/`)
-55. 
-56. 1. Use `describe`/`it` with behavior-focused names.
-57. 2. One assertion per `it()` block.
-58. 3. Test through route handlers using supertest-style requests.
-59. 4. Annotate false-positive and hard-negative tests with comments.
-60. 5. Do not mock business rule functions — test them through real call paths.
-61. 
-62. ## Handoff Protocols
-63. 
-64. ### Tester → Implementer
-65. 
-66. ```
-67. Failing tests:
-68.   - test name: "expected behavior description"
-69.   - file: src/backend/tests/unit/xxx.test.ts
-70. 
-71. Files that need changes:
-72.   - src/backend/src/rules/xxx.ts — add/modify rule
-73.   - src/backend/src/routes/xxx.ts — wire in rule check
-74. 
-75. Relevant specs:
-76.   - NFR-X: requirement summary
-77.   - FR-X: functional requirement
-78. ```
-79. 
-80. ### Implementer → Reviewer
-81. 
-82. ```
-83. Changed files:
-84.   - src/backend/src/rules/xxx.ts — what changed
-85.   - src/backend/src/routes/xxx.ts — what changed
-86. 
-87. Tests that should pass:
-88.   - "test name" in src/backend/tests/unit/xxx.test.ts
-89. 
-90. NFRs touched:
-91.   - NFR-X: how it's addressed
-92. ```
-93. 
-94. ### Reviewer → Team
-95. 
-96. ```
-97. Review Summary:
-98.   Verdict: APPROVE | REQUEST_CHANGES
-99.   Files: list
-100.   Issues: count
-101. 
-102. Issues (if any):
-103.   1. [SEVERITY] description — file — spec reference
-104. ```
-105. 
-106. ## Anti-Patterns
-107. 
-108. | Anti-Pattern               | Why It's Wrong                                   | Correct Approach                  |
-109. | -------------------------- | ------------------------------------------------ | --------------------------------- |
-110. | One agent does everything  | No independent validation                        | Three-agent role separation       |
-111. | Implementer runs own tests | "Tests pass" because they were adjusted to match | Tester owns execution             |
-112. | Reviewer pushes fixes      | No independent review trail                      | Reviewer flags, implementer fixes |
-113. | Skipping the red step      | No proof the test catches the defect             | Always start with a failing test  |
-114. | Batching unrelated changes | Review scope explosion                           | One feature per TDD cycle         |
-115.
-````
-
-</details>
-
-
----
-
-<sub>⏱️ 44s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md
-
-<details>
-<summary>100 lines</summary>
-
-```
-1. # Lesson 05 — Implementation Workflow Example
-2. 
-3. This document defines the concrete example used in Lesson 05.
-4. 
-5. ## Prerequisite Context
-6. 
-7. This lesson consumes `docs/notification-preferences-plan.md`, the structured
-8. implementation plan produced by the Lesson 04 planning workflow. The plan maps
-9. out all backend, frontend, audit, and observability surfaces for the full
-10. notification-preferences feature. Lesson 05 implements only **one focused slice**
-11. of that plan — hardening the notification-preference write path.
-12. 
-13. ## Objective
-14. 
-15. Show that a constrained implementation workflow can make a focused production change with matching tests instead of attempting the entire notification-preferences feature at once.
-16. 
-17. ## Expected Change Shape
-18. 
-19. The preferred output for this lesson is a small change set with:
-20. 
-21. 1. One new pure rule module under `src/backend/src/rules/`
-22. 2. One matching unit test file under `src/backend/tests/unit/`
-23. 3. One targeted wiring change to `src/backend/src/routes/notifications.ts`
-24. 4. No edits to protected config or database files
-25. 
-26. ## Required Constraints
-27. 
-28. 1. The workflow must implement code, not only describe it.
-29. 2. The new rule must use explicit inputs and existing domain types instead of direct database access.
-30. 3. The change must preserve delegated-session and role guards already present in the route.
-31. 4. The implementation must cover a mandatory-event rule and the California `LEGAL-218` restriction.
-32. 5. The implementation must call out at least one false positive and one hard negative in the new rule module comments.
-33. 6. The run must not execute shell commands.
-34. 7. The run must not edit protected files such as feature flags, schema, or seed data.
-35. 8. The run must not use SQL or task/todo write tools.
-36. 9. The final handoff should explain the expected red/green test behavior and name any deferred follow-up surfaces that remain intentionally out of scope.
-37. 10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
-38. 11. The write path must keep `loanState` as the direct request input for this route. Do not replace it with a new `loanId` lookup contract.
-39. 12. The lesson is not complete until `python util.py --test` passes after the demo or manual implementation.
-40. 
-41. ## Concrete Scenario
-42. 
-43. Harden notification preference writes so the existing route cannot:
-44. 
-45. - disable the last available channel for `manual-review-escalation`
-46. - enable decline SMS for California loan context
-47. 
-48. Good output should keep the change local and avoid sprawling refactors.
-49. 
-50. It should also make the intentional scope boundary visible: this lesson is about hardening the current notification write path, not implementing every preference mutation surface in the repository at once.
-51. 
-52. Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
-53. 
-54. ## What Good Output Looks Like
-55. 
-56. Good output will usually:
-57. 
-58. - create a pure rule file and a matching unit test file
-59. - wire the route to call the rule rather than embedding the full policy inline
-60. - preserve existing delegated-session and permission checks
-61. - keep the route contract direct and explicit by passing `loanState` into the rule instead of adding loan repository lookups
-62. - cite or encode the false-positive case where escalation SMS is disabled but escalation email remains enabled
-63. - encode the hard-negative case where all escalation channels end up disabled
-64. - explain which test cases would fail before the production change and which should pass after it
-65. - survive the end-to-end `python util.py --test` gate after the code change is produced
-66. 
-67. ## Test Authoring Quality Bar
-68. 
-69. Generated tests must be durable across semantically equivalent implementations.
-70. That matters in this lesson because `python util.py --demo` recreates `src/` from
-71. the app baseline before each run, so any test fix that lives only in generated
-72. source will be lost on the next demo.
-73. 
-74. When a rule returns a human-readable reason string:
-75. 
-76. - assert the invariant, not one exact sentence or capitalization pattern
-77. - normalize text before matching, such as lowercasing the reason
-78. - prefer checking stable business terms like `manual-review-escalation`,
-79.   `at least one`, or `LEGAL-218`
-80. - avoid brittle exact-string checks for explanatory prose unless the exact text
-81.   is part of the contract
-82. 
-83. For this lesson, the mandatory-event tests should prove that the rejection
-84. mentions the escalation invariant and the "at least one channel" rule, even if
-85. the final sentence shape differs.
-86. 
-87. The `LEGAL-218` checks may assert the literal token `LEGAL-218`, because that
-88. identifier is a stable contract signal rather than free-form wording.
-89. 
-90. When the current route rejects a business-rule violation, stable semantics matter
-91. more than one exact HTTP code. In this lesson, a semantically equivalent
-92. implementation may surface the rejection as `400` or `422` while still returning
-93. the correct business explanation. Unless the lesson is explicitly about HTTP
-94. status design, tests should accept either status for these rule rejections and
-95. assert the business invariant from the payload.
-96. 
-97. If the implementation can preserve the route's existing rejection style without
-98. extra complexity, prefer `400` for this lesson so the API remains aligned with
-99. the rest of the simple validation surfaces.
-100.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 44s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md
-
-```
-File too large to read at once (40.3 KB). Consider using the grep tool to search within the file, or view with view_range to read specific sections.
-```
-
-
----
-
-<sub>⏱️ 44s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts (lines 1-220)
 
 <details>
 <summary>112 lines</summary>
@@ -1260,13 +1453,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 44s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts (lines 1-220)
 
 <details>
 <summary>86 lines</summary>
@@ -1365,60 +1558,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 44s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "describe\\(|LEGAL-218|manual-review-escalation|notificationRoutes|preference.updated|canDisableChannel|RuleViolation|allowed: false|reason:",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend",
-  "output_mode": "files_with_matches",
-  "glob": "**/*.{ts,tsx}",
-  "head_limit": 200
-}
-```
-
-</details>
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\state-machine.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts
-```
-
-
----
-
-<sub>⏱️ 44s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
-
-"src\backend\tests\unit\*.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 44s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts (lines 1-220)
 
 <details>
 <summary>84 lines</summary>
@@ -1515,21 +1661,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 53s</sub>
-
-### 💬 Copilot
-
-The repo doesn’t already have a notification-preference unit test file, so I’m reading the nearby test style and app wiring before I add the red tests.
-
----
-
-<sub>⏱️ 53s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts (lines 1-260)
 
 <details>
 <summary>72 lines</summary>
@@ -1614,35 +1752,69 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 53s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts (lines 1-220)
 
 <details>
-<summary>17 lines</summary>
+<summary>51 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
-2. // Notification Service Tests
+2. // Request Validator Middleware
 3. // ---------------------------------------------------------------------------
-4. 
-5. import { describe, it, expect, vi, beforeEach } from "vitest";
-6. 
-7. // These tests verify the notification routing logic at the service level.
-8. // Queue handler tests verify actual delivery behavior (fallback, etc.).
-9. 
-10. describe("Notification Service", () => {
-11.   it("placeholder — notification service emits queue events", () => {
-12.     // Integration tests for notification delivery live in the queue handler tests.
-13.     // This file tests the service API contract.
-14.     expect(true).toBe(true);
-15.   });
-16. });
-17.
+4. // Validates request bodies against expected shapes before they reach
+5. // route handlers.  Returns 400 with descriptive errors on failure.
+6. //
+7. // This is intentionally simple — no JSON Schema library dependency.
+8. // For production, consider ajv or zod.
+9. // ---------------------------------------------------------------------------
+10. 
+11. import type { Request, Response, NextFunction } from "express";
+12. 
+13. export type ValidationRule = {
+14.   field: string;
+15.   type: "string" | "number" | "boolean";
+16.   required?: boolean;
+17. };
+18. 
+19. /**
+20.  * Factory that returns middleware validating req.body against the given rules.
+21.  */
+22. export function validateBody(rules: ValidationRule[]) {
+23.   return (req: Request, res: Response, next: NextFunction): void => {
+24.     const errors: string[] = [];
+25. 
+26.     for (const rule of rules) {
+27.       const value = req.body?.[rule.field];
+28. 
+29.       if (value === undefined || value === null) {
+30.         if (rule.required) {
+31.           errors.push(`Missing required field: '${rule.field}'`);
+32.         }
+33.         continue;
+34.       }
+35. 
+36.       if (typeof value !== rule.type) {
+37.         errors.push(
+38.           `Field '${rule.field}' must be ${rule.type}, got ${typeof value}`,
+39.         );
+40.       }
+41.     }
+42. 
+43.     if (errors.length > 0) {
+44.       res.status(400).json({ error: "Validation failed.", details: errors });
+45.       return;
+46.     }
+47. 
+48.     next();
+49.   };
+50. }
+51.
 ```
 
 </details>
@@ -1650,108 +1822,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 53s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts
-
-<details>
-<summary>24 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Application Routes Integration Tests
-3. // ---------------------------------------------------------------------------
-4. 
-5. import { describe, it, expect } from "vitest";
-6. 
-7. // Integration tests require a running database and Express app.
-8. // These serve as contract documentation for the API.
-9. 
-10. describe("Application Routes (integration)", () => {
-11.   it("placeholder — GET /api/applications returns 200", () => {
-12.     // To run: set up test DB, import app, use supertest
-13.     expect(true).toBe(true);
-14.   });
-15. 
-16.   it("placeholder — POST /api/applications validates required fields", () => {
-17.     expect(true).toBe(true);
-18.   });
-19. 
-20.   it("placeholder — PATCH /api/applications/:id/status enforces state machine", () => {
-21.     expect(true).toBe(true);
-22.   });
-23. });
-24.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 53s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "notificationRoutes|express\\(|supertest|request\\(|app =|export const app|createApp|routes",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend",
-  "output_mode": "content",
-  "glob": "**/*.{ts,tsx}",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
-
-```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
-```
-
-
----
-
-<sub>⏱️ 53s</sub>
-
-### ❌ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json
-
-```
-Path does not exist
-```
-
-
----
-
-<sub>⏱️ 1m 8s</sub>
-
-### 💬 Copilot
-
-I’ve confirmed the existing tests are lightweight unit-style files, so I’m reading the notification middleware/route dependencies now to decide the smallest durable route-level assertions to include in the new test file.
-
----
-
-<sub>⏱️ 1m 8s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts (lines 1-240)
 
 <details>
 <summary>98 lines</summary>
@@ -1862,152 +1939,100 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 1m 8s</sub>
+<sub>⏱️ 59s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts (lines 1-240)
 
 <details>
-<summary>51 lines</summary>
+<summary>82 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
-2. // Request Validator Middleware
+2. // Loan Workbench — Application Entry Point
 3. // ---------------------------------------------------------------------------
-4. // Validates request bodies against expected shapes before they reach
-5. // route handlers.  Returns 400 with descriptive errors on failure.
+4. // Express server with middleware chain, route mounting, database init,
+5. // and message queue handler registration.
 6. //
-7. // This is intentionally simple — no JSON Schema library dependency.
-8. // For production, consider ajv or zod.
-9. // ---------------------------------------------------------------------------
-10. 
-11. import type { Request, Response, NextFunction } from "express";
-12. 
-13. export type ValidationRule = {
-14.   field: string;
-15.   type: "string" | "number" | "boolean";
-16.   required?: boolean;
-17. };
-18. 
-19. /**
-20.  * Factory that returns middleware validating req.body against the given rules.
-21.  */
-22. export function validateBody(rules: ValidationRule[]) {
-23.   return (req: Request, res: Response, next: NextFunction): void => {
-24.     const errors: string[] = [];
-25. 
-26.     for (const rule of rules) {
-27.       const value = req.body?.[rule.field];
-28. 
-29.       if (value === undefined || value === null) {
-30.         if (rule.required) {
-31.           errors.push(`Missing required field: '${rule.field}'`);
-32.         }
-33.         continue;
-34.       }
-35. 
-36.       if (typeof value !== rule.type) {
-37.         errors.push(
-38.           `Field '${rule.field}' must be ${rule.type}, got ${typeof value}`,
-39.         );
-40.       }
-41.     }
-42. 
-43.     if (errors.length > 0) {
-44.       res.status(400).json({ error: "Validation failed.", details: errors });
-45.       return;
-46.     }
-47. 
-48.     next();
-49.   };
-50. }
-51.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 1m 8s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\role-permissions.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\role-permissions.ts
-
-<details>
-<summary>64 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Role Permissions Matrix
-3. // ---------------------------------------------------------------------------
-4. // Defines what each role can do across the system.  This is the single
-5. // source of truth for authorization decisions beyond route-level guards.
-6. //
-7. // IMPORTANT — COMPLIANCE REVIEWER NUANCE:
-8. //   Compliance reviewers have READ access to most resources but WRITE access
-9. //   only to compliance-specific actions (sign-offs, compliance notes).
-10. //   They CANNOT modify notification preferences, even though they can view
-11. //   them.  This is frequently missed by code generators.
-12. // ---------------------------------------------------------------------------
-13. 
-14. import type { UserRole } from "../models/types.js";
+7. // MIDDLEWARE ORDER (matters!):
+8. //   1. express.json()          — Parse JSON bodies
+9. //   2. rateLimiterMiddleware   — Rate limit before auth (prevent brute force)
+10. //   3. authMiddleware          — Authenticate & attach session context
+11. //   4. auditLoggerMiddleware   — Log mutating requests (needs session)
+12. //   5. Routes                  — Business logic
+13. //   6. errorHandler            — Catch-all error handler (MUST be last)
+14. // ---------------------------------------------------------------------------
 15. 
-16. export type Permission =
-17.   | "loan:read"
-18.   | "loan:create"
-19.   | "loan:transition"
-20.   | "decision:read"
-21.   | "decision:create"
-22.   | "notification-pref:read"
-23.   | "notification-pref:write"
-24.   | "audit:read"
-25.   | "compliance:sign-off";
-26. 
-27. const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {
-28.   underwriter: new Set([
-29.     "loan:read",
-30.     "loan:create",
-31.     "loan:transition",
-32.     "decision:read",
-33.     "decision:create",
-34.     "notification-pref:read",
-35.     "notification-pref:write",
-36.     "audit:read",
-37.   ]),
-38.   "analyst-manager": new Set([
-39.     "loan:read",
-40.     "loan:create",
-41.     "loan:transition",
-42.     "decision:read",
-43.     "decision:create",
-44.     "notification-pref:read",
-45.     "notification-pref:write",
-46.     "audit:read",
-47.   ]),
-48.   "compliance-reviewer": new Set([
-49.     "loan:read",
-50.     "decision:read",
-51.     "notification-pref:read", // READ only — no write
-52.     "audit:read",
-53.     "compliance:sign-off",
-54.   ]),
-55. };
-56. 
-57. export function hasPermission(role: UserRole, permission: Permission): boolean {
-58.   return ROLE_PERMISSIONS[role]?.has(permission) ?? false;
-59. }
-60. 
-61. export function getPermissions(role: UserRole): Permission[] {
-62.   return [...(ROLE_PERMISSIONS[role] ?? [])];
-63. }
-64.
+16. import express from "express";
+17. import path from "path";
+18. import { fileURLToPath } from "url";
+19. import { config } from "./config/env.js";
+20. import { getDb } from "./db/connection.js";
+21. import { seedDatabase } from "./db/seed.js";
+22. import { authMiddleware } from "./middleware/auth.js";
+23. import { auditLoggerMiddleware } from "./middleware/audit-logger.js";
+24. import { rateLimiterMiddleware } from "./middleware/rate-limiter.js";
+25. import { errorHandler } from "./middleware/error-handler.js";
+26. import { applicationRoutes } from "./routes/applications.js";
+27. import { decisionRoutes } from "./routes/decisions.js";
+28. import { notificationRoutes } from "./routes/notifications.js";
+29. import { auditRoutes } from "./routes/audit.js";
+30. import { queueStatusRoutes } from "./routes/queue-status.js";
+31. import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
+32. import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
+33. 
+34. const __dirname = path.dirname(fileURLToPath(import.meta.url));
+35. 
+36. const app = express();
+37. 
+38. // ── Initialize database ──
+39. getDb();
+40. seedDatabase();
+41. 
+42. // ── Register queue handlers ──
+43. registerNotificationHandler();
+44. registerAuditHandler();
+45. 
+46. // ── Middleware chain (ORDER MATTERS) ──
+47. app.use(express.json());
+48. app.use(rateLimiterMiddleware);
+49. app.use(authMiddleware);
+50. app.use(auditLoggerMiddleware);
+51. 
+52. // ── API Routes ──
+53. app.use("/api/applications", applicationRoutes);
+54. app.use("/api/decisions", decisionRoutes);
+55. app.use("/api/notifications", notificationRoutes);
+56. app.use("/api/audit", auditRoutes);
+57. app.use("/api/queue", queueStatusRoutes);
+58. 
+59. // ── Health check (no auth required — placed before auth middleware in request flow) ──
+60. app.get("/health", (_req, res) => {
+61.   res.json({ status: "ok", timestamp: new Date().toISOString() });
+62. });
+63. 
+64. // ── Serve frontend static files ──
+65. const frontendDir = path.resolve(__dirname, "../../frontend");
+66. app.use(express.static(frontendDir));
+67. 
+68. // ── SPA fallback — serve index.html for non-API routes ──
+69. app.get("*", (_req, res) => {
+70.   res.sendFile(path.join(frontendDir, "index.html"));
+71. });
+72. 
+73. // ── Error handler (MUST be last) ──
+74. app.use(errorHandler);
+75. 
+76. app.listen(config.port, () => {
+77.   console.log(`Loan Workbench API listening on port ${config.port}`);
+78.   console.log(`Database: ${config.dbPath}`);
+79. });
+80. 
+81. export default app;
+82.
 ```
 
 </details>
@@ -2015,96 +2040,63 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 1m 8s</sub>
+<sub>⏱️ 1m 6s</sub>
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
 
 <details>
 <summary>Arguments</summary>
 
 ```json
 {
-  "pattern": "auditAction\\(|export function auditAction|export const auditAction|findPreference\\(|setPreference\\(|findPreferencesForUser\\(",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
-  "output_mode": "files_with_matches",
-  "glob": "**/*.ts",
-  "head_limit": 50
+  "pattern": "notificationRoutes|app\\.use\\(\"/api/notifications|supertest|request\\(",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
+  "output_mode": "content",
+  "glob": "**/*.test.ts",
+  "-n": true,
+  "head_limit": 200
 }
 ```
 
 </details>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\audit-service.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\queue\handlers\notification-handler.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
 ```
 
 
 ---
 
-<sub>⏱️ 1m 8s</sub>
+<sub>⏱️ 1m 6s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\audit-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\audit-service.ts
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts (lines 1-260)
 
 <details>
-<summary>47 lines</summary>
+<summary>16 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
-2. // Audit Service
+2. // Decision Routes Integration Tests
 3. // ---------------------------------------------------------------------------
-4. // High-level audit API.  Provides convenience methods that emit events
-5. // to the message queue (or write directly depending on feature flags).
-6. // ---------------------------------------------------------------------------
-7. 
-8. import { v4 as uuid } from "uuid";
-9. import { broker } from "../queue/broker.js";
-10. import { featureFlags } from "../config/feature-flags.js";
-11. import { createAuditEntry } from "../models/audit-repository.js";
-12. import type { AuditRequestedEvent } from "../queue/contracts.js";
-13. import type { SessionContext } from "../models/types.js";
-14. 
-15. /**
-16.  * Write an audit entry for an action performed in a session context.
-17.  */
-18. export function auditAction(
-19.   session: SessionContext,
-20.   action: string,
-21.   previousValue: unknown,
-22.   newValue: unknown,
-23.   source: string,
-24. ): void {
-25.   const payload = {
-26.     action,
-27.     actor: session.actor.id,
-28.     delegatedFor: session.delegatedFor?.id,
-29.     previousValue,
-30.     newValue,
-31.     source,
-32.   };
-33. 
-34.   if (featureFlags.queueAudit) {
-35.     const event: AuditRequestedEvent = {
-36.       eventId: uuid(),
-37.       timestamp: new Date().toISOString(),
-38.       source,
-39.       type: "audit.requested",
-40.       payload,
-41.     };
-42.     broker.emit(event);
-43.   } else {
-44.     createAuditEntry(payload);
-45.   }
-46. }
-47.
+4. 
+5. import { describe, it, expect } from "vitest";
+6. 
+7. describe("Decision Routes (integration)", () => {
+8.   it("placeholder — POST /api/decisions requires decision state", () => {
+9.     expect(true).toBe(true);
+10.   });
+11. 
+12.   it("placeholder — delegated sessions cannot record decisions", () => {
+13.     expect(true).toBe(true);
+14.   });
+15. });
+16.
 ```
 
 </details>
@@ -2112,321 +2104,72 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 1m 16s</sub>
+<sub>⏱️ 1m 6s</sub>
 
-### 💬 Copilot
+### ❌ `view`
 
-I’ve got enough of the coding conventions now; I’m checking the plan for the intended slice boundary so the handoff can explicitly name which other preference-write surfaces stay deferred.
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json.**
 
----
-
-<sub>⏱️ 1m 16s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "notification preferences|write path|preferences/:userId/email|preferences/:userId/sms|surface|route|manual-review-escalation|LEGAL-218|loanState",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\docs\\notification-preferences-plan.md",
-  "output_mode": "content",
-  "-n": true,
-  "head_limit": 200
-}
-```
-
-</details>
-
-<details>
-<summary>43 lines</summary>
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json (lines 1-220)
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:12:This plan outlines the implementation of user-configurable notification preferences for the Loan Workbench platform. The feature addresses alert fatigue by allowing underwriters and analyst managers to control which notifications they receive (approval, decline, document-request, manual-review-escalation) across email and SMS channels.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:15:- Mandatory notification events (manual-review-escalation) must always have at least one enabled channel.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:16:- California loans have a temporary SMS restriction for decline notifications (LEGAL-218).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:33:| FR2 | Mandatory event rule: ≥1 channel for manual-review-escalation | product-spec-notification-preferences.md § FR-2 (explicit hard negative pattern) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:35:| FR4 | California SMS restriction for decline (LEGAL-218)          | product-spec-notification-preferences.md § FR-4 (explicit: loan_state based) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:67:| AR5 | Message contracts in queue/contracts.ts are breaking-change surface | docs/architecture.md § Key Architectural Rules § #7 |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:76:   - **Implication for Plan**: Affects frontend routing and component composition. Current routes/audit.ts exists but may need expansion.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:100:   - **Choice**: Implement `canDisableChannel(loanState, event, channel, userId) => ChannelDisableRule` as pure function in `src/backend/src/rules/notification-channel-rules.ts`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:104:   - **Inference**: SC-2 delegated read-only pattern + existing route structure (notifications.ts).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:109:   - **Inference**: FR-3 "no migration required" + architecture rule (AR3 "routes orchestrate").
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:119:   - **Inference**: NFR-5 observability requirement + route error handling.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:135:   - Users may not disable all channels for `manual-review-escalation`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:140:2. **California SMS Restriction (LEGAL-218)**  
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:141:   - SMS for `decline` notifications must remain unavailable when `loanState = "CA"`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:171:   - User disables SMS for `manual-review-escalation` while email is enabled.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:194:  - Function accepts `(loanState, event, channel, mandatoryEvents)` as parameters (no internal imports of loan/user data).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:197:  - Rejects SMS disable for decline on CA loans (if `loanState = "CA"` and `event = "decline"` and `channel = "sms"`).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:198:  - Exports function for route and test use.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:221:- **Description**: Modify `src/backend/src/routes/notifications.ts` PUT handlers to call `canDisableChannel()` before persisting.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:250:- **Description**: Add feature flag `notificationPreferences` to `src/backend/src/config/feature-flags.ts` and guard routes.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:254:  - Wrap notification preference routes with flag check that returns 404 (not 403) for non-pilot users.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:269:  - Audit entry includes: action ("preference.updated"), actor ID, delegated-for ID (if applicable), previous preference state, new preference state, source ("notification-routes"), timestamp.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:320:  - Render matrix: rows = events (approval, decline, document-request, manual-review-escalation), columns = channels (email, sms).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:322:  - Mandatory events (manual-review-escalation) have **persistent helper text** (not tooltip): "At least one channel must be enabled for escalation notifications."
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:323:  - CA decline SMS disabled control with explanation: "SMS for decline notifications is unavailable for California loans (legal review LEGAL-218 in progress)."
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:375:  - Parameter-driven tests for all event/channel/loanState combinations.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:416:  - **Hard Negative 1**: Attempt to disable all channels for manual-review-escalation → fails with 400, preference unchanged.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:437:   - [ ] CA LEGAL-218 restriction verified with legal team.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:452:   - [ ] Delegated session mode toggle prevents writes at store and route level.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:498:| **Delegated Session Authorization Bypass** (SC-2 hard negative) | High     | Test delegated-session blocks at both route layer (task 1.3) and store layer (task 3.1); add audit entry validation to catch attempts. |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:499:| **California LEGAL-218 Regulatory Compliance** (FR-4, LEGAL-218) | Critical | Coordinate with legal team before pilot rollout; document LEGAL-218 case number in code and audit trail. Update feature-flag documentation with compliance expiration date (when LEGAL-218 resolves). |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:512:1. **Legal Review LEGAL-218 Completion**: California decline SMS restriction tied to external legal milestone. Plan CA restriction removal as separate rollout once LEGAL-218 resolves.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:523:| **Mandatory Event Rule (FR-2)**         | Confirmed  | ≥1 channel for manual-review-escalation; hard negatives explicit. |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:525:| **CA SMS Restriction (FR-4, LEGAL-218)** | Confirmed  | loan_state-based, explicit hard negative.                       |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:533:| **Delegated Session Guard at Route**    | Inferred   | Derived from SC-2 + existing route pattern.                     |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:534:| **Lazy Defaults (No Upfront Migration)** | Inferred   | Derived from FR-3 "no migration required" + route-level orchestration (AR3). |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:536:| **Metric Distinction (Validation vs Provider)** | Inferred | Derived from NFR-5 observability + route error handling.       |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:557:- Confirms system shape, rule placement (rules/), and route orchestration (AR3).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:563:- Existing `src/backend/src/routes/notifications.ts` (already partially implemented) shows route-layer delegation blocking and audit calls.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:570:- **LEGAL-218**: Legal review tracking regulatory compliance for decline SMS in California; temporary restriction applies to loans with `loanState = "CA"`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:585:- [ ] All preference routes wrapped with flag check (404 for non-pilot).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:589:- [ ] Delegated-session authorization verified at route and store layers (task 4.1, 3.1).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:590:- [ ] CA LEGAL-218 restriction confirmed with legal team.
+Path does not exist
 ```
-
-</details>
 
 
 ---
 
-<sub>⏱️ 1m 16s</sub>
+<sub>⏱️ 1m 12s</sub>
+
+### ✅ `glob`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
+
+"**\package.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
+
+```
+No files matched the pattern.
+```
+
+
+---
+
+<sub>⏱️ 1m 12s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts (lines 1-220)
 
 <details>
-<summary>220 lines</summary>
+<summary>24 lines</summary>
 
 ```
-1. # Notification Preferences Implementation Plan
-2. 
-3. **Status:** Planning Phase  
-4. **Owner:** Lending Platform Product (PROJ-412)  
-5. **Target:** 2026 Q2 Pilot  
-6. **Last Updated:** 2026-04-15
-7. 
-8. ---
+1. // ---------------------------------------------------------------------------
+2. // Application Routes Integration Tests
+3. // ---------------------------------------------------------------------------
+4. 
+5. import { describe, it, expect } from "vitest";
+6. 
+7. // Integration tests require a running database and Express app.
+8. // These serve as contract documentation for the API.
 9. 
-10. ## Executive Summary
-11. 
-12. This plan outlines the implementation of user-configurable notification preferences for the Loan Workbench platform. The feature addresses alert fatigue by allowing underwriters and analyst managers to control which notifications they receive (approval, decline, document-request, manual-review-escalation) across email and SMS channels.
-13. 
-14. **Key Constraints:**
-15. - Mandatory notification events (manual-review-escalation) must always have at least one enabled channel.
-16. - California loans have a temporary SMS restriction for decline notifications (LEGAL-218).
-17. - Delegated analyst-manager sessions are read-only.
-18. - Audit logging must fail-closed (abort saves if audit unavailable).
-19. - Compliance reviewers have read-only access.
-20. - SMS provider failures fall back to email without modifying stored preferences.
-21. 
-22. **Canonical Source:** Product Specification (specs/product-spec-notification-preferences.md) is the primary authority. NFRs provide constraints and safety rails. Architecture and ADRs guide implementation pattern choices.
-23. 
-24. ---
-25. 
-26. ## Confirmed Requirements with Source References
-27. 
-28. ### Functional Requirements (FR)
-29. 
-30. | ID  | Requirement                                                  | Source Reference                                            |
-31. | --- | ------------------------------------------------------------ | ----------------------------------------------------------- |
-32. | FR1 | Preference matrix: email/SMS independent per event type      | product-spec-notification-preferences.md § Functional Requirements § FR-1 |
-33. | FR2 | Mandatory event rule: ≥1 channel for manual-review-escalation | product-spec-notification-preferences.md § FR-2 (explicit hard negative pattern) |
-34. | FR3 | Role-based defaults on first access (no migration required)   | product-spec-notification-preferences.md § FR-3 § User-based defaults table |
-35. | FR4 | California SMS restriction for decline (LEGAL-218)          | product-spec-notification-preferences.md § FR-4 (explicit: loan_state based) |
-36. | FR5 | Degraded delivery fallback: SMS→email, no pref modification  | product-spec-notification-preferences.md § FR-5 (explicit false positive pattern) |
-37. | FR6 | Audit all preference changes (actor, timestamp, old/new values) | product-spec-notification-preferences.md § FR-6 (complete audit trail) |
-38. 
-39. ### Special Conditions (SC)
-40. 
-41. | ID   | Condition                                                    | Source Reference                                           |
-42. | ---- | ------------------------------------------------------------ | ---------------------------------------------------------- |
-43. | SC-1 | Locked applications: prefs change globally, UI clarifies no retroactive effect | product-spec-notification-preferences.md § SC-1 |
-44. | SC-2 | Delegated sessions: read-only (no modify), visually indicated | product-spec-notification-preferences.md § SC-2 (explicit hard negative pattern) |
-45. | SC-3 | Multi-state portfolio: conditional rules, not blanket disable | product-spec-notification-preferences.md § SC-3 |
-46. 
-47. ### Non-Functional Requirements (NFR)
-48. 
-49. | ID   | Requirement                                                  | Source Reference                                                  |
-50. | ---- | ------------------------------------------------------------ | ------------------------------------------------------------- |
-51. | NFR1 | Performance: ≤150 ms p95 (settings page load), ≤400 ms p95 (save) | non-functional-requirements.md § NFR-1 |
-52. | NFR2 | Availability: audit writes fail-closed (abort on audit unavailable) | non-functional-requirements.md § NFR-2 (explicit hard negative) |
-53. | NFR3 | Security: no SMS phone numbers in logs/analytics; delegated sessions explicit in audit | non-functional-requirements.md § NFR-3 |
-54. | NFR4 | Accessibility: persistent explanatory text for mandatory controls, ARIA live regions | non-functional-requirements.md § NFR-4 |
-55. | NFR5 | Observability: distinct metrics for validation vs provider failures, SMS fallback tracking | non-functional-requirements.md § NFR-5 |
-56. | NFR6 | Feature flag: 404 for non-pilot users (not 403); role-based defaults without migration | non-functional-requirements.md § NFR-6 |
-57. | NFR7 | Compliance: 24-month audit retention; mandatory escalation delivery testable | non-functional-requirements.md § NFR-7 |
-58. 
-59. ### Architectural Patterns
-60. 
-61. | ID  | Pattern                                                      | Source Reference                                              |
-62. | --- | ------------------------------------------------------------ | ------------------------------------------------------------- |
-63. | AR1 | Central client store for persisted user preferences (not component-local state) | docs/adr/ADR-003-frontend-state.md § Decision |
-64. | AR2 | Pure business rule functions with structured result objects  | src/backend/src/rules/business-rules.ts, role-permissions.ts |
-65. | AR3 | Routes orchestrate; business rules live in src/backend/src/rules/ | docs/architecture.md § System Shape § Key Architectural Rules |
-66. | AR4 | Audit via queue broker OR direct DB write (controlled by `queueAudit` flag) | src/backend/src/config/feature-flags.ts, audit-service.ts |
-67. | AR5 | Message contracts in queue/contracts.ts are breaking-change surface | docs/architecture.md § Key Architectural Rules § #7 |
-68. | AR6 | Feature-flagged endpoints return 404 (not 403) for non-pilot users | non-functional-requirements.md § NFR-6 |
-69. 
-70. ---
-71. 
-72. ## Open Questions with File References
-73. 
-74. 1. **Compliance Reviewer Audit Access**: Should compliance reviewers access preference audit history from the same settings page or a separate audit viewer?
-75.    - **Reference**: product-spec-notification-preferences.md § Open Questions #1
-76.    - **Implication for Plan**: Affects frontend routing and component composition. Current routes/audit.ts exists but may need expansion.
-77. 
-78. 2. **Portfolio View Restriction Display**: Should multi-state portfolio views show restriction summary banner or per-row indicators?
-79.    - **Reference**: product-spec-notification-preferences.md § Open Questions #3
-80.    - **Implication for Plan**: Affects frontend component architecture but does not block core feature (single-state view implementation).
-81. 
-82. 3. **Audit Service Availability Handling**: Does "fail-closed" mean the save endpoint returns 500, or does it retry with exponential backoff?
-83.    - **Reference**: non-functional-requirements.md § NFR-2 (hard negative pattern)
-84.    - **Implication for Plan**: Clarify in error-handling strategy before implementing audit integration.
-85. 
-86. 4. **SMS Fallback Metrics**: Should `notification.sms.fallback` metric increment only on successful email delivery, or on fallback trigger?
-87.    - **Reference**: non-functional-requirements.md § NFR-5
-88.    - **Implication for Plan**: Affects queue handler implementation in queue/handlers/.
-89. 
-90. ---
-91. 
-92. ## Inferred Implementation Choices
-93. 
-94. ### Separated from Confirmed Requirements
-95. 
-96. The following choices are derived from architecture and NFR context, **not** explicit in functional requirements:
-97. 
-98. 1. **Preference Validation as Pure Function**  
-99.    - **Inference**: Business rule pattern (AR2) + mandatory event hard negative (FR2).
-100.    - **Choice**: Implement `canDisableChannel(loanState, event, channel, userId) => ChannelDisableRule` as pure function in `src/backend/src/rules/notification-channel-rules.ts`.
-101.    - **Why**: Enables AI-safety testing for edge cases (e.g., CA decline SMS, zero-channel scenarios).
-102. 
-103. 2. **Delegated Session Authorization at Route Handler**  
-104.    - **Inference**: SC-2 delegated read-only pattern + existing route structure (notifications.ts).
-105.    - **Choice**: Route handler checks `session.delegatedFor` and returns 403 before accepting PUT (already implemented in notifications.ts lines 59–65, 124–129, 206–211).
-106.    - **Why**: Consistent with existing guard pattern; prevents optimization mistakes.
-107. 
-108. 3. **Role-Based Default Generation at Route Handler (Lazy)**  
-109.    - **Inference**: FR-3 "no migration required" + architecture rule (AR3 "routes orchestrate").
-110.    - **Choice**: GET /api/notifications/preferences/:userId returns defaults if no saved preferences exist (not on login/signup).
-111.    - **Why**: Avoids upfront migration; accepts trade-off of first-access latency.
-112. 
-113. 4. **Central Client Store for Preference State**  
-114.    - **Inference**: ADR-003 decision (AR1) + persisted user preferences cross-screen scenario.
-115.    - **Choice**: Frontend state manager (likely Zustand or simple Redux) stores preference matrix and handles optimistic updates with rollback on API rejection.
-116.    - **Why**: Ensures consistency across navigation, page refresh, and delegated-session detection.
-117. 
-118. 5. **Validation Failure Metric Distinction**  
-119.    - **Inference**: NFR-5 observability requirement + route error handling.
-120.    - **Choice**: Emit `preference.save.failure` with tag distinguishing `validation_error` (hard 400) vs `provider_error` (soft 500).
-121.    - **Why**: Enables alerting on actionable infrastructure failures vs user-input mistakes.
-122. 
-123. 6. **Audit Logging as Separate Middleware Invocation**  
-124.    - **Inference**: NFR-2 fail-closed + audit-service.ts pattern (auditAction queues or writes synchronously).
-125.    - **Choice**: Preference save fails (rollback, return 500) if auditAction emits error or fails synchronously.
-126.    - **Why**: Prevents silent audit loss; complies with fail-closed requirement.
-127. 
-128. ---
-129. 
-130. ## Constraints and Special Conditions
-131. 
-132. ### Critical Constraints
-133. 
-134. 1. **Mandatory Event Hard Negative (FR2)**  
-135.    - Users may not disable all channels for `manual-review-escalation`.
-136.    - **Both UI and API** must enforce this rule.
-137.    - **Test Case**: Attempt to disable email while SMS is already disabled → must fail.
-138.    - **Source**: product-spec-notification-preferences.md § FR-2 § HARD NEGATIVE pattern.
-139. 
-140. 2. **California SMS Restriction (LEGAL-218)**  
-141.    - SMS for `decline` notifications must remain unavailable when `loanState = "CA"`.
-142.    - Applies to **loan jurisdiction**, not borrower address if they differ.
-143.    - **UI Impact**: Show persistent helper text (not tooltip) explaining restriction.
-144.    - **Source**: product-spec-notification-preferences.md § FR-4; non-functional-requirements.md § NFR-6.
-145. 
-146. 3. **Fail-Closed Audit (NFR2)**  
-147.    - If audit service is unavailable, preference save must **fail** (not silently skip audit).
-148.    - **Test Case**: Simulate audit-service outage → API returns 500, preference is NOT saved.
-149.    - **Source**: non-functional-requirements.md § NFR-2 § HARD NEGATIVE pattern.
-150. 
-151. 4. **Delegated Session Read-Only (SC-2)**  
-152.    - Analyst managers in delegated mode may **read** but not **modify** delegate preferences.
-153.    - UI must indicate delegated-session mode visually.
-154.    - **Test Case**: Try to PATCH preferences in delegated session → 403 "Delegated sessions cannot modify...".
-155.    - **Source**: product-spec-notification-preferences.md § SC-2 § HARD NEGATIVE pattern (optimistic UI update without server rejection).
-156. 
-157. 5. **Feature Flag Rollout (NFR6)**  
-158.    - Non-pilot users must see **404** (not 403) for feature-flagged endpoints.
-159.    - Leaking 403 tells users the feature exists but is restricted.
-160.    - **Source**: non-functional-requirements.md § NFR-6.
-161. 
-162. ### False-Positive Patterns (Not Bugs)
-163. 
-164. 1. **SMS Fallback to Email During Outage**  
-165.    - A user receives email instead of SMS during SMS-provider outage.
-166.    - **Not a bug**: Stored preferences are unchanged; delivery logs show fallback.
-167.    - Support must check delivery logs, not preference store.
-168.    - **Source**: product-spec-notification-preferences.md § FR-5 § FALSE POSITIVE pattern.
-169. 
-170. 2. **Disabling SMS While Email Remains Enabled**  
-171.    - User disables SMS for `manual-review-escalation` while email is enabled.
-172.    - **Not a violation**: Constraint is ≥1 channel, not which channel is active.
-173.    - **Source**: product-spec-notification-preferences.md § FR-2 § FALSE POSITIVE pattern.
-174. 
-175. 3. **Role-Based Defaults Without Migration**  
-176.    - New/existing users without saved preferences receive defaults on first API access (no upfront migration).
-177.    - **Not a data-integrity bug**: Lazy default generation is correct per spec.
-178.    - **Source**: non-functional-requirements.md § NFR-6 § FALSE POSITIVE pattern.
-179. 
-180. 4. **Preference Reads During Audit Outage**  
-181.    - User reads preferences while audit service is unavailable.
-182.    - **Not a bug**: Only writes require audit availability.
-183.    - **Source**: non-functional-requirements.md § NFR-2 § FALSE POSITIVE pattern.
-184. 
-185. ---
-186. 
-187. ## Numbered Tasks with Acceptance Criteria and Source References
-188. 
-189. ### Phase 1: Backend Rules and Persistence (Foundation)
-190. 
-191. #### Task 1.1: Implement Mandatory Event Validation Rule
-192. - **Description**: Create pure function `canDisableChannel()` in `src/backend/src/rules/notification-channel-rules.ts`.
-193. - **Acceptance Criteria**:
-194.   - Function accepts `(loanState, event, channel, mandatoryEvents)` as parameters (no internal imports of loan/user data).
-195.   - Returns `{ allowed: boolean, reason: string }`.
-196.   - Rejects any attempt to disable all channels for events in mandatoryEvents.
-197.   - Rejects SMS disable for decline on CA loans (if `loanState = "CA"` and `event = "decline"` and `channel = "sms"`).
-198.   - Exports function for route and test use.
-199. - **Test Coverage**:
-200.   - Happy path: disable SMS for approval (email enabled) → allowed.
-201.   - Boundary: disable email for escalation when SMS enabled → allowed.
-202.   - Hard negative: disable email for escalation when SMS already disabled → rejected.
-203.   - Hard negative: disable SMS for decline on CA loan → rejected.
-204.   - Hard negative: disable SMS for decline on non-CA loan → allowed.
-205. - **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-4; rules/business-rules.ts pattern.
-206. 
-207. #### Task 1.2: Extend Preference Repository with Bulk Query
-208. - **Description**: Add function to `src/backend/src/models/preference-repository.ts` to fetch all preferences for a user with defaults applied.
-209. - **Acceptance Criteria**:
-210.   - Function: `getEffectivePreferences(userId: string, role: UserRole) => NotificationPreference[]`.
-211.   - Returns saved preferences or role-based defaults if no saved preferences exist.
-212.   - Defaults match FR-3 table (underwriter/analyst-manager: all events email enabled, escalation-only SMS).
-213.   - No database write occurs (read-only).
-214. - **Test Coverage**:
-215.   - New user (no saved prefs) → returns defaults for role.
-216.   - Partially saved user (some prefs exist) → merges saved + defaults.
-217.   - Full user (all prefs exist) → returns saved only.
-218. - **Source Reference**: product-spec-notification-preferences.md § FR-3; preference-repository.ts pattern.
-219. 
-220. #### Task 1.3: Extend Notification Routes with Validation Gate
+10. describe("Application Routes (integration)", () => {
+11.   it("placeholder — GET /api/applications returns 200", () => {
+12.     // To run: set up test DB, import app, use supertest
+13.     expect(true).toBe(true);
+14.   });
+15. 
+16.   it("placeholder — POST /api/applications validates required fields", () => {
+17.     expect(true).toBe(true);
+18.   });
+19. 
+20.   it("placeholder — PATCH /api/applications/:id/status enforces state machine", () => {
+21.     expect(true).toBe(true);
+22.   });
+23. });
+24.
 ```
 
 </details>
@@ -2434,7 +2177,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 1m 16s</sub>
+<sub>⏱️ 2m 35s</sub>
 
 ### ✅ `rg`
 
@@ -2445,12 +2188,45 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ```json
 {
-  "pattern": "PUT\\s+\"?/preferences|notificationRoutes\\.put\\(|preferences/:userId/email|preferences/:userId/sms",
+  "pattern": "MANDATORY_EVENTS|getMandatoryEvents|mandatory-events",
   "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
   "output_mode": "content",
   "glob": "**/*.ts",
   "-n": true,
-  "head_limit": 200
+  "head_limit": 100
+}
+```
+
+</details>
+
+```
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:13:import { getMandatoryEvents } from "../rules/mandatory-events.js";
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:101:  const mandatoryEvents = getMandatoryEvents(previousStatus, newStatus);
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:20:export const MANDATORY_EVENTS: Partial<
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:31:export function getMandatoryEvents(
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:36:  return MANDATORY_EVENTS[key] ?? [];
+```
+
+
+---
+
+<sub>⏱️ 2m 35s</sub>
+
+### ✅ `rg`
+
+**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+
+<details>
+<summary>Arguments</summary>
+
+```json
+{
+  "pattern": "manual-review-escalation",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
+  "output_mode": "content",
+  "glob": "**/*.ts",
+  "-n": true,
+  "head_limit": 100
 }
 ```
 
@@ -2460,13 +2236,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 <summary>7 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:46:notificationRoutes.put(
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:108: * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:112:notificationRoutes.put(
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:113:  "/preferences/:userId/email",
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:191: * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:195:notificationRoutes.put(
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:196:  "/preferences/:userId/sms",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\db\seed.ts:116:    insertPref.run("u-2", "manual-review-escalation", "sms", 1, now, "u-2");
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:149:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:153:        "manual-review-escalation",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:232:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:236:        "manual-review-escalation",
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:24:  "underwriting->decision": ["manual-review-escalation"],
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:42:  | "manual-review-escalation";
 ```
 
 </details>
@@ -2474,102 +2250,56 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 2m 54s</sub>
-
-### 💬 Copilot
-
-I’m at the point of writing the test file now; I just need the package/module shape so the imports and mocks line up with the repo’s ESM setup.
-
----
-
-<sub>⏱️ 2m 54s</sub>
-
-### ✅ `glob`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
-
-"**/package.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
-
-```
-No files matched the pattern.
-```
-
-
----
-
-<sub>⏱️ 2m 54s</sub>
-
-### ✅ `rg`
-
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
-
-<details>
-<summary>Arguments</summary>
-
-```json
-{
-  "pattern": "\"type\"\\s*:\\s*\"module\"|vitest|supertest",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows",
-  "output_mode": "content",
-  "glob": "**/package.json",
-  "-n": true,
-  "head_limit": 50
-}
-```
-
-</details>
-
-```
-No matches found.
-```
-
-
----
-
-<sub>⏱️ 2m 59s</sub>
+<sub>⏱️ 2m 48s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend
-
-```
-dist
-src
-tests
-tsconfig.json
-```
-
-
----
-
-<sub>⏱️ 2m 59s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts (lines 1-200)
 
 <details>
-<summary>14 lines</summary>
+<summary>38 lines</summary>
 
 ```
-.github
-.output
-ASSESSMENT.md
-HANDOFF.md
-HANDOFF_IMPLEMENTATION.md
-README.md
-RUN.md
-VERIFICATION.md
-__pycache__
-docs
-specs
-src
-tests
-util.py
+1. // ---------------------------------------------------------------------------
+2. // Mandatory Notification Events
+3. // ---------------------------------------------------------------------------
+4. // Defines which notification events MUST fire for each state transition.
+5. // These are non-negotiable business requirements — skipping a mandatory
+6. // event is a compliance violation.
+7. //
+8. // When a transition occurs, the loan service must emit notification events
+9. // for ALL mandatory events listed here.
+10. // ---------------------------------------------------------------------------
+11. 
+12. import type { ApplicationState, NotificationEvent } from "../models/types.js";
+13. 
+14. type TransitionKey = `${ApplicationState}->${ApplicationState}`;
+15. 
+16. /**
+17.  * Map of state transitions to mandatory notification events.
+18.  * If a transition is not listed, no mandatory notifications are required.
+19.  */
+20. export const MANDATORY_EVENTS: Partial<
+21.   Record<TransitionKey, NotificationEvent[]>
+22. > = {
+23.   "decision->finalized": ["approval"],
+24.   "underwriting->decision": ["manual-review-escalation"],
+25.   "review->intake": ["document-request"],
+26. };
+27. 
+28. /**
+29.  * Get the mandatory notification events for a given state transition.
+30.  */
+31. export function getMandatoryEvents(
+32.   from: ApplicationState,
+33.   to: ApplicationState,
+34. ): NotificationEvent[] {
+35.   const key: TransitionKey = `${from}->${to}`;
+36.   return MANDATORY_EVENTS[key] ?? [];
+37. }
+38.
 ```
 
 </details>
@@ -2577,15 +2307,147 @@ util.py
 
 ---
 
-<sub>⏱️ 4m 3s</sub>
+<sub>⏱️ 2m 48s</sub>
 
-### 💬 Copilot
+### ✅ `view`
 
-I’ve got the shape pinned down. I’m adding the red test file now with rule-level coverage plus a couple of route-level assertions for the business rejection payloads and the allowed false-positive case.
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts (lines 1-160)
+
+<details>
+<summary>121 lines</summary>
+
+```
+1. // ---------------------------------------------------------------------------
+2. // Loan Service
+3. // ---------------------------------------------------------------------------
+4. // Orchestrates loan operations: creation, state transitions, and risk
+5. // scoring.  Delegates persistence to the loan repository, rule validation
+6. // to the rules layer, and event emission to the broker.
+7. // ---------------------------------------------------------------------------
+8. 
+9. import { v4 as uuid } from "uuid";
+10. import * as loanRepo from "../models/loan-repository.js";
+11. import { assertTransition } from "../rules/state-machine.js";
+12. import { validateLoanRules, canApprove } from "../rules/business-rules.js";
+13. import { getMandatoryEvents } from "../rules/mandatory-events.js";
+14. import { broker } from "../queue/broker.js";
+15. import type {
+16.   LoanApplication,
+17.   SessionContext,
+18.   ApplicationState,
+19. } from "../models/types.js";
+20. import type {
+21.   LoanStateChangedEvent,
+22.   NotificationRequestedEvent,
+23. } from "../queue/contracts.js";
+24. 
+25. /**
+26.  * Create a new loan application.
+27.  * Validates business rules before persisting.
+28.  */
+29. export function createLoan(
+30.   session: SessionContext,
+31.   data: { borrowerName: string; amount: number; loanState: string },
+32. ): LoanApplication {
+33.   if (session.delegatedFor) {
+34.     throw new Error("FORBIDDEN: Delegated sessions cannot create loans.");
+35.   }
+36. 
+37.   // Build a partial loan to validate rules
+38.   const draft = {
+39.     ...data,
+40.     loanState: data.loanState.toUpperCase(),
+41.   } as LoanApplication;
+42.   const violations = validateLoanRules(draft);
+43.   if (violations.length > 0) {
+44.     throw new Error(
+45.       `VALIDATION: ${violations.map((v) => v.message).join("; ")}`,
+46.     );
+47.   }
+48. 
+49.   return loanRepo.createLoan({
+50.     borrowerName: data.borrowerName,
+51.     amount: data.amount,
+52.     loanState: data.loanState,
+53.     assignedUnderwriter: session.actor.id,
+54.   });
+55. }
+56. 
+57. /**
+58.  * Transition a loan to a new state.
+59.  * Enforces state machine rules, emits state-changed events,
+60.  * and triggers mandatory notifications.
+61.  */
+62. export function transitionLoan(
+63.   session: SessionContext,
+64.   applicationId: string,
+65.   newStatus: ApplicationState,
+66. ): LoanApplication {
+67.   if (session.delegatedFor) {
+68.     throw new Error("FORBIDDEN: Delegated sessions cannot transition loans.");
+69.   }
+70. 
+71.   const loan = loanRepo.findLoanById(applicationId);
+72.   if (!loan) {
+73.     throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);
+74.   }
+75. 
+76.   // Enforce state machine
+77.   assertTransition(loan.status, newStatus);
+78. 
+79.   const previousStatus = loan.status;
+80.   const updated = loanRepo.updateLoanStatus(applicationId, newStatus);
+81.   if (!updated) {
+82.     throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);
+83.   }
+84. 
+85.   // Emit state-changed event
+86.   const stateEvent: LoanStateChangedEvent = {
+87.     eventId: uuid(),
+88.     timestamp: new Date().toISOString(),
+89.     source: "loan-service",
+90.     type: "loan.state-changed",
+91.     payload: {
+92.       applicationId,
+93.       previousStatus,
+94.       newStatus,
+95.       changedBy: session.actor.id,
+96.     },
+97.   };
+98.   broker.emit(stateEvent);
+99. 
+100.   // Emit mandatory notification events
+101.   const mandatoryEvents = getMandatoryEvents(previousStatus, newStatus);
+102.   for (const event of mandatoryEvents) {
+103.     const notifEvent: NotificationRequestedEvent = {
+104.       eventId: uuid(),
+105.       timestamp: new Date().toISOString(),
+106.       source: "loan-service",
+107.       type: "notification.requested",
+108.       payload: {
+109.         userId: loan.assignedUnderwriter,
+110.         event,
+111.         subject: `Loan ${applicationId}: ${previousStatus} → ${newStatus}`,
+112.         body: `Application ${applicationId} transitioned from ${previousStatus} to ${newStatus}.`,
+113.         preferredChannel: "email",
+114.       },
+115.     };
+116.     broker.emit(notifEvent);
+117.   }
+118. 
+119.   return updated;
+120. }
+121.
+```
+
+</details>
+
 
 ---
 
-<sub>⏱️ 4m 3s</sub>
+<sub>⏱️ 4m 31s</sub>
 
 ### ✅ `apply_patch`
 
@@ -2593,7 +2455,7 @@ I’ve got the shape pinned down. I’m adding the red test file now with rule-l
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests\\unit\\notification-preference-write-rules.test.ts\n+import { beforeAll, beforeEach, describe, expect, it, vi } from \"vitest\";\n+import type { NotificationPreference } from \"../../src/models/types.js\";\n+\n+const preferenceRepoMock = vi.hoisted(() => ({\n+  findPreference: vi.fn(),\n+  findPreferencesForUser: vi.fn(),\n+  setPreference: vi.fn(),\n+}));\n+\n+const auditServiceMock = vi.hoisted(() => ({\n+  auditAction: vi.fn(),\n+}));\n+\n+vi.mock(\"../../src/models/preference-repository.js\", () => preferenceRepoMock);\n+vi.mock(\"../../src/services/audit-service.js\", () => auditServiceMock);\n+\n+let validateNotificationPreferenceWrite: (\n+  input: {\n+    nextPreference: Pick<\n+      NotificationPreference,\n+      \"event\" | \"channel\" | \"enabled\"\n+    >;\n+    existingPreferences: NotificationPreference[];\n+    loanState: string;\n+  },\n+) => { allowed: boolean; reason: string };\n+\n+let notificationRoutes: unknown;\n+\n+function buildPreference(\n+  overrides: Partial<NotificationPreference>,\n+): NotificationPreference {\n+  return {\n+    userId: \"user-1\",\n+    event: \"manual-review-escalation\",\n+    channel: \"email\",\n+    enabled: true,\n+    updatedAt: \"2026-04-16T00:00:00.000Z\",\n+    updatedBy: \"user-1\",\n+    ...overrides,\n+  };\n+}\n+\n+function normalizeText(value: unknown): string {\n+  return String(value).toLowerCase().replace(/\\s+/g, \" \").trim();\n+}\n+\n+function getPutPreferencesHandler(): (\n+  req: Record<string, unknown>,\n+  res: {\n+    status: (code: number) => unknown;\n+    json: (payload: unknown) => unknown;\n+  },\n+  next: (error?: unknown) => void,\n+) => void {\n+  const routeLayer = (notificationRoutes as {\n+    stack: Array<{\n+      route?: {\n+        path: string;\n+        methods: Record<string, boolean>;\n+        stack: Array<{ handle: (...args: unknown[]) => void }>;\n+      };\n+    }>;\n+  }).stack.find(\n+    (layer) => layer.route?.path === \"/preferences\" && layer.route.methods.put,\n+  );\n+\n+  if (!routeLayer?.route) {\n+    throw new Error(\"PUT /preferences route not found.\");\n+  }\n+\n+  return routeLayer.route.stack[routeLayer.route.stack.length - 1]\n+    .handle as typeof getPutPreferencesHandler extends () => infer T ? T : never;\n+}\n+\n+function createResponse() {\n+  return {\n+    statusCode: 200,\n+    body: undefined as unknown,\n+    status(code: number) {\n+      this.statusCode = code;\n+      return this;\n+    },\n+    json(payload: unknown) {\n+      this.body = payload;\n+      return this;\n+    },\n+  };\n+}\n+\n+beforeAll(async () => {\n+  ({ validateNotificationPreferenceWrite } = await import(\n+    \"../../src/rules/notification-preference-write-rules.js\"\n+  ));\n+  ({ notificationRoutes } = await import(\"../../src/routes/notifications.js\"));\n+});\n+\n+beforeEach(() => {\n+  vi.clearAllMocks();\n+});\n+\n+describe(\"validateNotificationPreferenceWrite\", () => {\n+  it(\"allows disabling escalation sms when escalation email remains enabled\", () => {\n+    // FALSE POSITIVE: SMS can be disabled when email still preserves the mandatory event.\n+    const result = validateNotificationPreferenceWrite({\n+      nextPreference: {\n+        event: \"manual-review-escalation\",\n+        channel: \"sms\",\n+        enabled: false,\n+      },\n+      existingPreferences: [\n+        buildPreference({ event: \"manual-review-escalation\", channel: \"email\" }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ],\n+      loanState: \"NY\",\n+    });\n+\n+    expect(result.allowed).toBe(true);\n+  });\n+\n+  it(\"rejects disabling the last enabled escalation channel\", () => {\n+    // HARD NEGATIVE: manual-review-escalation must never end up with zero enabled channels.\n+    const result = validateNotificationPreferenceWrite({\n+      nextPreference: {\n+        event: \"manual-review-escalation\",\n+        channel: \"email\",\n+        enabled: false,\n+      },\n+      existingPreferences: [\n+        buildPreference({ event: \"manual-review-escalation\", channel: \"email\" }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      ],\n+      loanState: \"NY\",\n+    });\n+\n+    const reason = normalizeText(result.reason);\n+\n+    expect(result.allowed).toBe(false);\n+    expect(reason).toContain(\"manual-review-escalation\");\n+    expect(reason).toContain(\"at least one\");\n+  });\n+\n+  it.each([\"CA\", \"California\"])(\n+    \"rejects enabling decline sms for %s loan state under LEGAL-218\",\n+    (loanState) => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+        },\n+        existingPreferences: [],\n+        loanState,\n+      });\n+\n+      const reason = normalizeText(result.reason);\n+\n+      expect(result.allowed).toBe(false);\n+      expect(reason).toContain(\"legal-218\");\n+      expect(reason).toContain(\"decline\");\n+      expect(reason).toContain(\"sms\");\n+    },\n+  );\n+\n+  it(\"allows enabling decline sms for non-California loan state\", () => {\n+    const result = validateNotificationPreferenceWrite({\n+      nextPreference: {\n+        event: \"decline\",\n+        channel: \"sms\",\n+        enabled: true,\n+      },\n+      existingPreferences: [],\n+      loanState: \"NV\",\n+    });\n+\n+    expect(result.allowed).toBe(true);\n+  });\n+});\n+\n+describe(\"PUT /preferences route hardening\", () => {\n+  it(\"returns 400 with escalation invariant details when the write would disable the last channel\", () => {\n+    const handler = getPutPreferencesHandler();\n+    const response = createResponse();\n+\n+    preferenceRepoMock.findPreference.mockReturnValue(\n+      buildPreference({ event: \"manual-review-escalation\", channel: \"email\" }),\n+    );\n+    preferenceRepoMock.findPreferencesForUser.mockReturnValue([\n+      buildPreference({ event: \"manual-review-escalation\", channel: \"email\" }),\n+      buildPreference({\n+        event: \"manual-review-escalation\",\n+        channel: \"sms\",\n+        enabled: false,\n+      }),\n+    ]);\n+\n+    handler(\n+      {\n+        body: {\n+          userId: \"user-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: false,\n+          loanState: \"NY\",\n+        },\n+        session: {\n+          actor: {\n+            id: \"user-1\",\n+            role: \"underwriter\",\n+            name: \"User One\",\n+            email: \"user-1@example.com\",\n+          },\n+        },\n+      },\n+      response,\n+      vi.fn(),\n+    );\n+\n+    const payload = response.body as { error?: string; details?: string[] };\n+    const details = normalizeText(payload.details?.join(\" \"));\n+\n+    expect(response.statusCode).toBe(400);\n+    expect(payload.error).toBe(\"Validation failed.\");\n+    expect(details).toContain(\"manual-review-escalation\");\n+    expect(details).toContain(\"at least one\");\n+    expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();\n+    expect(auditServiceMock.auditAction).not.toHaveBeenCalled();\n+  });\n+\n+  it(\"returns 400 with LEGAL-218 details when California decline sms is enabled\", () => {\n+    const handler = getPutPreferencesHandler();\n+    const response = createResponse();\n+\n+    preferenceRepoMock.findPreference.mockReturnValue(\n+      buildPreference({\n+        event: \"decline\",\n+        channel: \"sms\",\n+        enabled: false,\n+      }),\n+    );\n+    preferenceRepoMock.findPreferencesForUser.mockReturnValue([]);\n+\n+    handler(\n+      {\n+        body: {\n+          userId: \"user-1\",\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+          loanState: \"California\",\n+        },\n+        session: {\n+          actor: {\n+            id: \"user-1\",\n+            role: \"underwriter\",\n+            name: \"User One\",\n+            email: \"user-1@example.com\",\n+          },\n+        },\n+      },\n+      response,\n+      vi.fn(),\n+    );\n+\n+    const payload = response.body as { details?: string[] };\n+    const details = normalizeText(payload.details?.join(\" \"));\n+\n+    expect(response.statusCode).toBe(400);\n+    expect(details).toContain(\"legal-218\");\n+    expect(details).toContain(\"decline\");\n+    expect(details).toContain(\"sms\");\n+    expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();\n+  });\n+\n+  it(\"allows disabling escalation sms when escalation email stays enabled\", () => {\n+    const handler = getPutPreferencesHandler();\n+    const response = createResponse();\n+\n+    preferenceRepoMock.findPreference.mockReturnValue(\n+      buildPreference({\n+        event: \"manual-review-escalation\",\n+        channel: \"sms\",\n+        enabled: true,\n+      }),\n+    );\n+    preferenceRepoMock.findPreferencesForUser.mockReturnValue([\n+      buildPreference({ event: \"manual-review-escalation\", channel: \"email\" }),\n+      buildPreference({\n+        event: \"manual-review-escalation\",\n+        channel: \"sms\",\n+        enabled: true,\n+      }),\n+    ]);\n+\n+    handler(\n+      {\n+        body: {\n+          userId: \"user-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+          loanState: \"NY\",\n+        },\n+        session: {\n+          actor: {\n+            id: \"user-1\",\n+            role: \"underwriter\",\n+            name: \"User One\",\n+            email: \"user-1@example.com\",\n+          },\n+        },\n+      },\n+      response,\n+      vi.fn(),\n+    );\n+\n+    expect(response.statusCode).toBe(200);\n+    expect(preferenceRepoMock.setPreference).toHaveBeenCalledTimes(1);\n+    expect(auditServiceMock.auditAction).toHaveBeenCalledTimes(1);\n+  });\n+});\n*** End Patch\n"
+"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests\\unit\\notification-preference-write-rules.test.ts\n+import { beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+vi.mock(\"../../src/models/preference-repository.js\", () => ({\n+  findPreference: vi.fn(),\n+  findPreferencesForUser: vi.fn(),\n+  setPreference: vi.fn(),\n+}));\n+\n+vi.mock(\"../../src/services/audit-service.js\", () => ({\n+  auditAction: vi.fn(),\n+}));\n+\n+import { notificationRoutes } from \"../../src/routes/notifications.js\";\n+import * as prefRepo from \"../../src/models/preference-repository.js\";\n+import { validateNotificationPreferenceWrite } from \"../../src/rules/notification-preference-write-rules.js\";\n+import type {\n+  NotificationPreference,\n+  SessionContext,\n+} from \"../../src/models/types.js\";\n+\n+function buildPreference(\n+  overrides: Partial<NotificationPreference>,\n+): NotificationPreference {\n+  return {\n+    userId: \"u-1\",\n+    event: \"approval\",\n+    channel: \"email\",\n+    enabled: true,\n+    updatedAt: \"2026-04-16T00:00:00.000Z\",\n+    updatedBy: \"u-1\",\n+    ...overrides,\n+  };\n+}\n+\n+function createSession(\n+  overrides: Partial<SessionContext> = {},\n+): SessionContext {\n+  return {\n+    actor: {\n+      id: \"u-1\",\n+      role: \"underwriter\",\n+      name: \"Under Writer\",\n+      email: \"uw@example.com\",\n+    },\n+    ...overrides,\n+  };\n+}\n+\n+function normalize(value: unknown): string {\n+  return String(value ?? \"\").toLowerCase();\n+}\n+\n+function createMockResponse() {\n+  return {\n+    statusCode: 200,\n+    body: undefined as unknown,\n+    status(code: number) {\n+      this.statusCode = code;\n+      return this;\n+    },\n+    json(payload: unknown) {\n+      this.body = payload;\n+      return this;\n+    },\n+  };\n+}\n+\n+function invokePutPreferenceRoute(args: {\n+  body: Record<string, unknown>;\n+  session?: SessionContext;\n+}) {\n+  const routeLayer = (notificationRoutes as any).stack.find(\n+    (layer: any) =>\n+      layer.route?.path === \"/preferences\" && layer.route?.methods?.put,\n+  );\n+\n+  if (!routeLayer?.route) {\n+    throw new Error(\"PUT /preferences route not found.\");\n+  }\n+\n+  const handlers = routeLayer.route.stack.map((layer: any) => layer.handle);\n+  const req = {\n+    body: args.body,\n+    params: {},\n+    path: \"/preferences\",\n+    session: args.session,\n+  } as any;\n+  const res = createMockResponse();\n+  let forwardedError: unknown;\n+\n+  const run = (index: number): void => {\n+    const handler = handlers[index];\n+    if (!handler) {\n+      return;\n+    }\n+\n+    handler(req, res, (err?: unknown) => {\n+      if (err) {\n+        forwardedError = err;\n+        return;\n+      }\n+\n+      run(index + 1);\n+    });\n+  };\n+\n+  run(0);\n+\n+  return { res, forwardedError };\n+}\n+\n+beforeEach(() => {\n+  vi.clearAllMocks();\n+  vi.mocked(prefRepo.findPreference).mockReturnValue(undefined);\n+  vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([]);\n+});\n+\n+describe(\"validateNotificationPreferenceWrite\", () => {\n+  describe(\"Happy path\", () => {\n+    it(\"allows ordinary preference updates\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"approval\",\n+            channel: \"email\",\n+            enabled: false,\n+          },\n+          existingPreferences: [],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"False positive\", () => {\n+    it(\"allows disabling escalation SMS when escalation email stays enabled\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: false,\n+          },\n+          existingPreferences: [\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"email\",\n+              enabled: true,\n+            }),\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"sms\",\n+              enabled: true,\n+            }),\n+          ],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+        existingPreferences: [\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"email\",\n+            enabled: false,\n+          }),\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: true,\n+          }),\n+        ],\n+        loanState: \"NY\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+          ),\n+        }),\n+      );\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects enabling decline SMS for CA loan context\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+        },\n+        existingPreferences: [],\n+        loanState: \"CA\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+          ),\n+        }),\n+      );\n+    });\n+\n+    it(\"treats California as the same restricted loan state\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"decline\",\n+            channel: \"sms\",\n+            enabled: true,\n+          },\n+          existingPreferences: [],\n+          loanState: \"California\",\n+        }).allowed,\n+      ).toBe(false);\n+    });\n+  });\n+});\n+\n+describe(\"PUT /preferences\", () => {\n+  describe(\"False positive\", () => {\n+    it(\"keeps allowing escalation SMS disable when email remains enabled\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        body: res.body,\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 200,\n+        body: expect.objectContaining({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+        persisted: 1,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel with a business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: false,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects California decline SMS enable with a clear business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+          loanState: \"California\",\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+});\n*** End Patch\n"
 ```
 
 </details>
@@ -2605,372 +2467,15 @@ Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\le
 
 ---
 
-<sub>⏱️ 4m 12s</sub>
+<sub>⏱️ 4m 50s</sub>
 
 ### 💬 Copilot
 
-The test file is in place. I’m reading it once to catch any brittle import/router-stack issues before I add the rule and route wiring it expects.
+I’ve got the test shape in place. Now I’m adding the pure rule module the route can call without any loan lookup or other I/O.
 
 ---
 
-<sub>⏱️ 4m 12s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts
-
-<details>
-<summary>330 lines</summary>
-
-```
-1. import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-2. import type { NotificationPreference } from "../../src/models/types.js";
-3. 
-4. const preferenceRepoMock = vi.hoisted(() => ({
-5.   findPreference: vi.fn(),
-6.   findPreferencesForUser: vi.fn(),
-7.   setPreference: vi.fn(),
-8. }));
-9. 
-10. const auditServiceMock = vi.hoisted(() => ({
-11.   auditAction: vi.fn(),
-12. }));
-13. 
-14. vi.mock("../../src/models/preference-repository.js", () => preferenceRepoMock);
-15. vi.mock("../../src/services/audit-service.js", () => auditServiceMock);
-16. 
-17. let validateNotificationPreferenceWrite: (
-18.   input: {
-19.     nextPreference: Pick<
-20.       NotificationPreference,
-21.       "event" | "channel" | "enabled"
-22.     >;
-23.     existingPreferences: NotificationPreference[];
-24.     loanState: string;
-25.   },
-26. ) => { allowed: boolean; reason: string };
-27. 
-28. let notificationRoutes: unknown;
-29. 
-30. function buildPreference(
-31.   overrides: Partial<NotificationPreference>,
-32. ): NotificationPreference {
-33.   return {
-34.     userId: "user-1",
-35.     event: "manual-review-escalation",
-36.     channel: "email",
-37.     enabled: true,
-38.     updatedAt: "2026-04-16T00:00:00.000Z",
-39.     updatedBy: "user-1",
-40.     ...overrides,
-41.   };
-42. }
-43. 
-44. function normalizeText(value: unknown): string {
-45.   return String(value).toLowerCase().replace(/\s+/g, " ").trim();
-46. }
-47. 
-48. function getPutPreferencesHandler(): (
-49.   req: Record<string, unknown>,
-50.   res: {
-51.     status: (code: number) => unknown;
-52.     json: (payload: unknown) => unknown;
-53.   },
-54.   next: (error?: unknown) => void,
-55. ) => void {
-56.   const routeLayer = (notificationRoutes as {
-57.     stack: Array<{
-58.       route?: {
-59.         path: string;
-60.         methods: Record<string, boolean>;
-61.         stack: Array<{ handle: (...args: unknown[]) => void }>;
-62.       };
-63.     }>;
-64.   }).stack.find(
-65.     (layer) => layer.route?.path === "/preferences" && layer.route.methods.put,
-66.   );
-67. 
-68.   if (!routeLayer?.route) {
-69.     throw new Error("PUT /preferences route not found.");
-70.   }
-71. 
-72.   return routeLayer.route.stack[routeLayer.route.stack.length - 1]
-73.     .handle as typeof getPutPreferencesHandler extends () => infer T ? T : never;
-74. }
-75. 
-76. function createResponse() {
-77.   return {
-78.     statusCode: 200,
-79.     body: undefined as unknown,
-80.     status(code: number) {
-81.       this.statusCode = code;
-82.       return this;
-83.     },
-84.     json(payload: unknown) {
-85.       this.body = payload;
-86.       return this;
-87.     },
-88.   };
-89. }
-90. 
-91. beforeAll(async () => {
-92.   ({ validateNotificationPreferenceWrite } = await import(
-93.     "../../src/rules/notification-preference-write-rules.js"
-94.   ));
-95.   ({ notificationRoutes } = await import("../../src/routes/notifications.js"));
-96. });
-97. 
-98. beforeEach(() => {
-99.   vi.clearAllMocks();
-100. });
-101. 
-102. describe("validateNotificationPreferenceWrite", () => {
-103.   it("allows disabling escalation sms when escalation email remains enabled", () => {
-104.     // FALSE POSITIVE: SMS can be disabled when email still preserves the mandatory event.
-105.     const result = validateNotificationPreferenceWrite({
-106.       nextPreference: {
-107.         event: "manual-review-escalation",
-108.         channel: "sms",
-109.         enabled: false,
-110.       },
-111.       existingPreferences: [
-112.         buildPreference({ event: "manual-review-escalation", channel: "email" }),
-113.         buildPreference({
-114.           event: "manual-review-escalation",
-115.           channel: "sms",
-116.           enabled: true,
-117.         }),
-118.       ],
-119.       loanState: "NY",
-120.     });
-121. 
-122.     expect(result.allowed).toBe(true);
-123.   });
-124. 
-125.   it("rejects disabling the last enabled escalation channel", () => {
-126.     // HARD NEGATIVE: manual-review-escalation must never end up with zero enabled channels.
-127.     const result = validateNotificationPreferenceWrite({
-128.       nextPreference: {
-129.         event: "manual-review-escalation",
-130.         channel: "email",
-131.         enabled: false,
-132.       },
-133.       existingPreferences: [
-134.         buildPreference({ event: "manual-review-escalation", channel: "email" }),
-135.         buildPreference({
-136.           event: "manual-review-escalation",
-137.           channel: "sms",
-138.           enabled: false,
-139.         }),
-140.       ],
-141.       loanState: "NY",
-142.     });
-143. 
-144.     const reason = normalizeText(result.reason);
-145. 
-146.     expect(result.allowed).toBe(false);
-147.     expect(reason).toContain("manual-review-escalation");
-148.     expect(reason).toContain("at least one");
-149.   });
-150. 
-151.   it.each(["CA", "California"])(
-152.     "rejects enabling decline sms for %s loan state under LEGAL-218",
-153.     (loanState) => {
-154.       const result = validateNotificationPreferenceWrite({
-155.         nextPreference: {
-156.           event: "decline",
-157.           channel: "sms",
-158.           enabled: true,
-159.         },
-160.         existingPreferences: [],
-161.         loanState,
-162.       });
-163. 
-164.       const reason = normalizeText(result.reason);
-165. 
-166.       expect(result.allowed).toBe(false);
-167.       expect(reason).toContain("legal-218");
-168.       expect(reason).toContain("decline");
-169.       expect(reason).toContain("sms");
-170.     },
-171.   );
-172. 
-173.   it("allows enabling decline sms for non-California loan state", () => {
-174.     const result = validateNotificationPreferenceWrite({
-175.       nextPreference: {
-176.         event: "decline",
-177.         channel: "sms",
-178.         enabled: true,
-179.       },
-180.       existingPreferences: [],
-181.       loanState: "NV",
-182.     });
-183. 
-184.     expect(result.allowed).toBe(true);
-185.   });
-186. });
-187. 
-188. describe("PUT /preferences route hardening", () => {
-189.   it("returns 400 with escalation invariant details when the write would disable the last channel", () => {
-190.     const handler = getPutPreferencesHandler();
-191.     const response = createResponse();
-192. 
-193.     preferenceRepoMock.findPreference.mockReturnValue(
-194.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-195.     );
-196.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-197.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-198.       buildPreference({
-199.         event: "manual-review-escalation",
-200.         channel: "sms",
-201.         enabled: false,
-202.       }),
-203.     ]);
-204. 
-205.     handler(
-206.       {
-207.         body: {
-208.           userId: "user-1",
-209.           event: "manual-review-escalation",
-210.           channel: "email",
-211.           enabled: false,
-212.           loanState: "NY",
-213.         },
-214.         session: {
-215.           actor: {
-216.             id: "user-1",
-217.             role: "underwriter",
-218.             name: "User One",
-219.             email: "user-1@example.com",
-220.           },
-221.         },
-222.       },
-223.       response,
-224.       vi.fn(),
-225.     );
-226. 
-227.     const payload = response.body as { error?: string; details?: string[] };
-228.     const details = normalizeText(payload.details?.join(" "));
-229. 
-230.     expect(response.statusCode).toBe(400);
-231.     expect(payload.error).toBe("Validation failed.");
-232.     expect(details).toContain("manual-review-escalation");
-233.     expect(details).toContain("at least one");
-234.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-235.     expect(auditServiceMock.auditAction).not.toHaveBeenCalled();
-236.   });
-237. 
-238.   it("returns 400 with LEGAL-218 details when California decline sms is enabled", () => {
-239.     const handler = getPutPreferencesHandler();
-240.     const response = createResponse();
-241. 
-242.     preferenceRepoMock.findPreference.mockReturnValue(
-243.       buildPreference({
-244.         event: "decline",
-245.         channel: "sms",
-246.         enabled: false,
-247.       }),
-248.     );
-249.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([]);
-250. 
-251.     handler(
-252.       {
-253.         body: {
-254.           userId: "user-1",
-255.           event: "decline",
-256.           channel: "sms",
-257.           enabled: true,
-258.           loanState: "California",
-259.         },
-260.         session: {
-261.           actor: {
-262.             id: "user-1",
-263.             role: "underwriter",
-264.             name: "User One",
-265.             email: "user-1@example.com",
-266.           },
-267.         },
-268.       },
-269.       response,
-270.       vi.fn(),
-271.     );
-272. 
-273.     const payload = response.body as { details?: string[] };
-274.     const details = normalizeText(payload.details?.join(" "));
-275. 
-276.     expect(response.statusCode).toBe(400);
-277.     expect(details).toContain("legal-218");
-278.     expect(details).toContain("decline");
-279.     expect(details).toContain("sms");
-280.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-281.   });
-282. 
-283.   it("allows disabling escalation sms when escalation email stays enabled", () => {
-284.     const handler = getPutPreferencesHandler();
-285.     const response = createResponse();
-286. 
-287.     preferenceRepoMock.findPreference.mockReturnValue(
-288.       buildPreference({
-289.         event: "manual-review-escalation",
-290.         channel: "sms",
-291.         enabled: true,
-292.       }),
-293.     );
-294.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-295.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-296.       buildPreference({
-297.         event: "manual-review-escalation",
-298.         channel: "sms",
-299.         enabled: true,
-300.       }),
-301.     ]);
-302. 
-303.     handler(
-304.       {
-305.         body: {
-306.           userId: "user-1",
-307.           event: "manual-review-escalation",
-308.           channel: "sms",
-309.           enabled: false,
-310.           loanState: "NY",
-311.         },
-312.         session: {
-313.           actor: {
-314.             id: "user-1",
-315.             role: "underwriter",
-316.             name: "User One",
-317.             email: "user-1@example.com",
-318.           },
-319.         },
-320.       },
-321.       response,
-322.       vi.fn(),
-323.     );
-324. 
-325.     expect(response.statusCode).toBe(200);
-326.     expect(preferenceRepoMock.setPreference).toHaveBeenCalledTimes(1);
-327.     expect(auditServiceMock.auditAction).toHaveBeenCalledTimes(1);
-328.   });
-329. });
-330.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 4m 36s</sub>
-
-### 💬 Copilot
-
-The new rule module is next. I’m keeping it pure and explicit — just `nextPreference`, `existingPreferences`, and `loanState` — so the route stays as the orchestrator and the business decisions stay testable.
-
----
-
-<sub>⏱️ 4m 36s</sub>
+<sub>⏱️ 4m 50s</sub>
 
 ### ✅ `apply_patch`
 
@@ -2978,7 +2483,7 @@ The new rule module is next. I’m keeping it pure and explicit — just `nextPr
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\rules\\notification-preference-write-rules.ts\n+// ---------------------------------------------------------------------------\n+// Notification Preference Write Rules\n+// ---------------------------------------------------------------------------\n+// FALSE POSITIVE: disabling manual-review-escalation SMS is allowed when email\n+// remains enabled. The invariant is \"at least one channel\", not \"all channels\".\n+//\n+// HARD NEGATIVE: rejecting only a specific channel toggle is insufficient if\n+// the write would leave manual-review-escalation with zero enabled channels.\n+//\n+// LEGAL-218: decline SMS cannot be enabled for California loan contexts.\n+// ---------------------------------------------------------------------------\n+\n+import type {\n+  NotificationChannel,\n+  NotificationPreference,\n+} from \"../models/types.js\";\n+\n+export interface NotificationPreferenceWriteInput {\n+  nextPreference: Pick<NotificationPreference, \"event\" | \"channel\" | \"enabled\">;\n+  existingPreferences: NotificationPreference[];\n+  loanState: string;\n+}\n+\n+export interface NotificationPreferenceWriteRule {\n+  allowed: boolean;\n+  reason: string;\n+}\n+\n+const ALLOWED_WRITE: NotificationPreferenceWriteRule = {\n+  allowed: true,\n+  reason: \"Notification preference write allowed.\",\n+};\n+\n+export function validateNotificationPreferenceWrite(\n+  input: NotificationPreferenceWriteInput,\n+): NotificationPreferenceWriteRule {\n+  const { nextPreference, existingPreferences, loanState } = input;\n+\n+  if (\n+    nextPreference.event === \"decline\" &&\n+    nextPreference.channel === \"sms\" &&\n+    nextPreference.enabled &&\n+    isCaliforniaLoanState(loanState)\n+  ) {\n+    return {\n+      allowed: false,\n+      reason:\n+        \"LEGAL-218: decline SMS cannot be enabled for California loanState.\",\n+    };\n+  }\n+\n+  if (\n+    nextPreference.event !== \"manual-review-escalation\" ||\n+    nextPreference.enabled\n+  ) {\n+    return ALLOWED_WRITE;\n+  }\n+\n+  const otherChannel = otherNotificationChannel(nextPreference.channel);\n+  const otherPreference = existingPreferences.find(\n+    (preference) =>\n+      preference.event === \"manual-review-escalation\" &&\n+      preference.channel === otherChannel,\n+  );\n+\n+  if (otherPreference?.enabled === false) {\n+    return {\n+      allowed: false,\n+      reason:\n+        \"manual-review-escalation must keep at least one channel enabled.\",\n+    };\n+  }\n+\n+  return ALLOWED_WRITE;\n+}\n+\n+function otherNotificationChannel(\n+  channel: NotificationChannel,\n+): NotificationChannel {\n+  return channel === \"email\" ? \"sms\" : \"email\";\n+}\n+\n+function isCaliforniaLoanState(loanState: string): boolean {\n+  const normalized = loanState.trim().toLowerCase();\n+  return normalized === \"ca\" || normalized === \"california\";\n+}\n*** End Patch\n"
+"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\rules\\notification-preference-write-rules.ts\n+// ---------------------------------------------------------------------------\n+// Notification Preference Write Rules\n+// ---------------------------------------------------------------------------\n+// FALSE POSITIVE: Disabling manual-review-escalation SMS is allowed when the\n+// email channel stays enabled. The violation is zero enabled channels, not a\n+// specific channel being turned off.\n+//\n+// HARD NEGATIVE: Reject writes that leave manual-review-escalation with no\n+// enabled channels, and reject enabling decline SMS for California loan\n+// context while LEGAL-218 remains in effect.\n+// ---------------------------------------------------------------------------\n+\n+import type {\n+  LoanApplication,\n+  NotificationChannel,\n+  NotificationPreference,\n+} from \"../models/types.js\";\n+\n+export interface NotificationPreferenceWriteRule {\n+  allowed: boolean;\n+  reason?: string;\n+}\n+\n+export interface NotificationPreferenceWriteInput {\n+  nextPreference: Pick<\n+    NotificationPreference,\n+    \"event\" | \"channel\" | \"enabled\"\n+  >;\n+  existingPreferences: NotificationPreference[];\n+  loanState?: LoanApplication[\"loanState\"];\n+}\n+\n+const ESCALATION_CHANNELS: NotificationChannel[] = [\"email\", \"sms\"];\n+\n+function isCaliforniaLoanState(\n+  loanState?: LoanApplication[\"loanState\"],\n+): boolean {\n+  const normalized = loanState?.trim().toLowerCase();\n+  return normalized === \"ca\" || normalized === \"california\";\n+}\n+\n+function isChannelEnabledAfterWrite(\n+  input: NotificationPreferenceWriteInput,\n+  channel: NotificationChannel,\n+): boolean {\n+  if (\n+    input.nextPreference.event === \"manual-review-escalation\" &&\n+    input.nextPreference.channel === channel\n+  ) {\n+    return input.nextPreference.enabled;\n+  }\n+\n+  return Boolean(\n+    input.existingPreferences.find(\n+      (preference) =>\n+        preference.event === \"manual-review-escalation\" &&\n+        preference.channel === channel,\n+    )?.enabled,\n+  );\n+}\n+\n+export function validateNotificationPreferenceWrite(\n+  input: NotificationPreferenceWriteInput,\n+): NotificationPreferenceWriteRule {\n+  if (\n+    input.nextPreference.event === \"decline\" &&\n+    input.nextPreference.channel === \"sms\" &&\n+    input.nextPreference.enabled &&\n+    isCaliforniaLoanState(input.loanState)\n+  ) {\n+    // LEGAL-218: California decline SMS must remain disabled.\n+    return {\n+      allowed: false,\n+      reason:\n+        \"LEGAL-218 prevents enabling decline SMS for California loan context.\",\n+    };\n+  }\n+\n+  if (input.nextPreference.event === \"manual-review-escalation\") {\n+    const hasEnabledEscalationChannel = ESCALATION_CHANNELS.some((channel) =>\n+      isChannelEnabledAfterWrite(input, channel),\n+    );\n+\n+    if (!hasEnabledEscalationChannel) {\n+      return {\n+        allowed: false,\n+        reason:\n+          \"manual-review-escalation must keep at least one notification channel enabled.\",\n+      };\n+    }\n+  }\n+\n+  return { allowed: true };\n+}\n*** End Patch\n"
 ```
 
 </details>
@@ -2990,15 +2495,7 @@ Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\le
 
 ---
 
-<sub>⏱️ 4m 52s</sub>
-
-### 💬 Copilot
-
-I’ve got the pure rule in place. Now I’m wiring only the single `PUT /preferences` path to call it and return the same simple 400-style validation payload on business-rule rejections.
-
----
-
-<sub>⏱️ 4m 52s</sub>
+<sub>⏱️ 5m 7s</sub>
 
 ### ✅ `apply_patch`
 
@@ -3006,7 +2503,7 @@ I’ve got the pure rule in place. Now I’m wiring only the single `PUT /prefer
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\routes\\notifications.ts\n@@\n import { requireRole } from \"../middleware/auth.js\";\n import { validateBody } from \"../middleware/request-validator.js\";\n+import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n import { hasPermission } from \"../rules/role-permissions.js\";\n import { auditAction } from \"../services/audit-service.js\";\n import * as prefRepo from \"../models/preference-repository.js\";\n@@\n   validateBody([\n     { field: \"userId\", type: \"string\", required: true },\n     { field: \"event\", type: \"string\", required: true },\n     { field: \"channel\", type: \"string\", required: true },\n     { field: \"enabled\", type: \"boolean\", required: true },\n+    { field: \"loanState\", type: \"string\", required: true },\n   ]),\n   (req, res, next) => {\n@@\n-      const { userId, event, channel, enabled } = req.body;\n+      const { userId, event, channel, enabled, loanState } = req.body;\n       const now = new Date().toISOString();\n+      const existingPreferences = prefRepo.findPreferencesForUser(userId);\n+      const writeRule = validateNotificationPreferenceWrite({\n+        nextPreference: { event, channel, enabled },\n+        existingPreferences,\n+        loanState,\n+      });\n+\n+      if (!writeRule.allowed) {\n+        res.status(400).json({\n+          error: \"Validation failed.\",\n+          details: [writeRule.reason],\n+        });\n+        return;\n+      }\n \n       const previous = prefRepo.findPreference(userId, event, channel);\n*** End Patch\n"
+"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\routes\\notifications.ts\n@@\n import { Router } from \"express\";\n import { requireRole } from \"../middleware/auth.js\";\n import { validateBody } from \"../middleware/request-validator.js\";\n+import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n import { hasPermission } from \"../rules/role-permissions.js\";\n import { auditAction } from \"../services/audit-service.js\";\n import * as prefRepo from \"../models/preference-repository.js\";\n@@\n   validateBody([\n     { field: \"userId\", type: \"string\", required: true },\n     { field: \"event\", type: \"string\", required: true },\n     { field: \"channel\", type: \"string\", required: true },\n     { field: \"enabled\", type: \"boolean\", required: true },\n+    { field: \"loanState\", type: \"string\", required: false },\n   ]),\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n@@\n-      const { userId, event, channel, enabled } = req.body;\n+      const { userId, event, channel, enabled, loanState } = req.body;\n       const now = new Date().toISOString();\n-\n-      const previous = prefRepo.findPreference(userId, event, channel);\n+      const existingPreferences = prefRepo.findPreferencesForUser(userId);\n+      const previous = existingPreferences.find(\n+        (preference) =>\n+          preference.event === event && preference.channel === channel,\n+      );\n+      const ruleDecision = validateNotificationPreferenceWrite({\n+        nextPreference: { event, channel, enabled },\n+        existingPreferences,\n+        loanState,\n+      });\n+\n+      if (!ruleDecision.allowed) {\n+        res.status(400).json({\n+          error: ruleDecision.reason,\n+        });\n+        return;\n+      }\n \n       const pref: NotificationPreference = {\n         userId,\n*** End Patch\n"
 ```
 
 </details>
@@ -3018,130 +2515,16 @@ Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut
 
 ---
 
-<sub>⏱️ 4m 59s</sub>
-
-### 💬 Copilot
-
-The production wiring is in. I’m doing a final read-through of the changed files now to catch any type or scope mismatches since this run is file-only and I’m not using the shell.
-
----
-
-<sub>⏱️ 4m 59s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts
-
-<details>
-<summary>87 lines</summary>
-
-```
-1. // ---------------------------------------------------------------------------
-2. // Notification Preference Write Rules
-3. // ---------------------------------------------------------------------------
-4. // FALSE POSITIVE: disabling manual-review-escalation SMS is allowed when email
-5. // remains enabled. The invariant is "at least one channel", not "all channels".
-6. //
-7. // HARD NEGATIVE: rejecting only a specific channel toggle is insufficient if
-8. // the write would leave manual-review-escalation with zero enabled channels.
-9. //
-10. // LEGAL-218: decline SMS cannot be enabled for California loan contexts.
-11. // ---------------------------------------------------------------------------
-12. 
-13. import type {
-14.   NotificationChannel,
-15.   NotificationPreference,
-16. } from "../models/types.js";
-17. 
-18. export interface NotificationPreferenceWriteInput {
-19.   nextPreference: Pick<NotificationPreference, "event" | "channel" | "enabled">;
-20.   existingPreferences: NotificationPreference[];
-21.   loanState: string;
-22. }
-23. 
-24. export interface NotificationPreferenceWriteRule {
-25.   allowed: boolean;
-26.   reason: string;
-27. }
-28. 
-29. const ALLOWED_WRITE: NotificationPreferenceWriteRule = {
-30.   allowed: true,
-31.   reason: "Notification preference write allowed.",
-32. };
-33. 
-34. export function validateNotificationPreferenceWrite(
-35.   input: NotificationPreferenceWriteInput,
-36. ): NotificationPreferenceWriteRule {
-37.   const { nextPreference, existingPreferences, loanState } = input;
-38. 
-39.   if (
-40.     nextPreference.event === "decline" &&
-41.     nextPreference.channel === "sms" &&
-42.     nextPreference.enabled &&
-43.     isCaliforniaLoanState(loanState)
-44.   ) {
-45.     return {
-46.       allowed: false,
-47.       reason:
-48.         "LEGAL-218: decline SMS cannot be enabled for California loanState.",
-49.     };
-50.   }
-51. 
-52.   if (
-53.     nextPreference.event !== "manual-review-escalation" ||
-54.     nextPreference.enabled
-55.   ) {
-56.     return ALLOWED_WRITE;
-57.   }
-58. 
-59.   const otherChannel = otherNotificationChannel(nextPreference.channel);
-60.   const otherPreference = existingPreferences.find(
-61.     (preference) =>
-62.       preference.event === "manual-review-escalation" &&
-63.       preference.channel === otherChannel,
-64.   );
-65. 
-66.   if (otherPreference?.enabled === false) {
-67.     return {
-68.       allowed: false,
-69.       reason:
-70.         "manual-review-escalation must keep at least one channel enabled.",
-71.     };
-72.   }
-73. 
-74.   return ALLOWED_WRITE;
-75. }
-76. 
-77. function otherNotificationChannel(
-78.   channel: NotificationChannel,
-79. ): NotificationChannel {
-80.   return channel === "email" ? "sms" : "email";
-81. }
-82. 
-83. function isCaliforniaLoanState(loanState: string): boolean {
-84.   const normalized = loanState.trim().toLowerCase();
-85.   return normalized === "ca" || normalized === "california";
-86. }
-87.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 4m 59s</sub>
+<sub>⏱️ 5m 16s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-120)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-140)
 
 <details>
-<summary>120 lines</summary>
+<summary>140 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
@@ -3198,7 +2581,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 52.     { field: "event", type: "string", required: true },
 53.     { field: "channel", type: "string", required: true },
 54.     { field: "enabled", type: "boolean", required: true },
-55.     { field: "loanState", type: "string", required: true },
+55.     { field: "loanState", type: "string", required: false },
 56.   ]),
 57.   (req, res, next) => {
 58.     try {
@@ -3223,47 +2606,67 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 77.       const { userId, event, channel, enabled, loanState } = req.body;
 78.       const now = new Date().toISOString();
 79.       const existingPreferences = prefRepo.findPreferencesForUser(userId);
-80.       const writeRule = validateNotificationPreferenceWrite({
-81.         nextPreference: { event, channel, enabled },
-82.         existingPreferences,
-83.         loanState,
-84.       });
-85. 
-86.       if (!writeRule.allowed) {
-87.         res.status(400).json({
-88.           error: "Validation failed.",
-89.           details: [writeRule.reason],
-90.         });
-91.         return;
-92.       }
-93. 
-94.       const previous = prefRepo.findPreference(userId, event, channel);
-95. 
-96.       const pref: NotificationPreference = {
-97.         userId,
-98.         event,
-99.         channel,
-100.         enabled,
-101.         updatedAt: now,
-102.         updatedBy: session.actor.id,
-103.       };
-104. 
-105.       prefRepo.setPreference(pref);
-106. 
-107.       // Audit the preference change
-108.       auditAction(
-109.         session,
-110.         "preference.updated",
-111.         previous ?? null,
-112.         pref,
-113.         "notification-routes",
-114.       );
-115. 
-116.       res.json(pref);
-117.     } catch (err) {
-118.       next(err);
-119.     }
-120.   },
+80.       const previous = existingPreferences.find(
+81.         (preference) =>
+82.           preference.event === event && preference.channel === channel,
+83.       );
+84.       const ruleDecision = validateNotificationPreferenceWrite({
+85.         nextPreference: { event, channel, enabled },
+86.         existingPreferences,
+87.         loanState,
+88.       });
+89. 
+90.       if (!ruleDecision.allowed) {
+91.         res.status(400).json({
+92.           error: ruleDecision.reason,
+93.         });
+94.         return;
+95.       }
+96. 
+97.       const pref: NotificationPreference = {
+98.         userId,
+99.         event,
+100.         channel,
+101.         enabled,
+102.         updatedAt: now,
+103.         updatedBy: session.actor.id,
+104.       };
+105. 
+106.       prefRepo.setPreference(pref);
+107. 
+108.       // Audit the preference change
+109.       auditAction(
+110.         session,
+111.         "preference.updated",
+112.         previous ?? null,
+113.         pref,
+114.         "notification-routes",
+115.       );
+116. 
+117.       res.json(pref);
+118.     } catch (err) {
+119.       next(err);
+120.     }
+121.   },
+122. );
+123. 
+124. /**
+125.  * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.
+126.  * Updates the enabled flag for all notification events on the email channel.
+127.  * Only the owner can modify their own preferences. Delegated sessions are blocked.
+128.  */
+129. notificationRoutes.put(
+130.   "/preferences/:userId/email",
+131.   requireRole("underwriter", "analyst-manager"),
+132.   validateBody([
+133.     { field: "enabled", type: "boolean", required: true },
+134.   ]),
+135.   (req, res, next) => {
+136.     try {
+137.       const session = req.session as SessionContext;
+138.       const targetUserId = firstParam(req.params.userId);
+139. 
+140.       // Block writes in delegated sessions
 ```
 
 </details>
@@ -3271,767 +2674,113 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 4m 59s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 1-330)
-
-<details>
-<summary>330 lines</summary>
-
-```
-1. import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
-2. import type { NotificationPreference } from "../../src/models/types.js";
-3. 
-4. const preferenceRepoMock = vi.hoisted(() => ({
-5.   findPreference: vi.fn(),
-6.   findPreferencesForUser: vi.fn(),
-7.   setPreference: vi.fn(),
-8. }));
-9. 
-10. const auditServiceMock = vi.hoisted(() => ({
-11.   auditAction: vi.fn(),
-12. }));
-13. 
-14. vi.mock("../../src/models/preference-repository.js", () => preferenceRepoMock);
-15. vi.mock("../../src/services/audit-service.js", () => auditServiceMock);
-16. 
-17. let validateNotificationPreferenceWrite: (
-18.   input: {
-19.     nextPreference: Pick<
-20.       NotificationPreference,
-21.       "event" | "channel" | "enabled"
-22.     >;
-23.     existingPreferences: NotificationPreference[];
-24.     loanState: string;
-25.   },
-26. ) => { allowed: boolean; reason: string };
-27. 
-28. let notificationRoutes: unknown;
-29. 
-30. function buildPreference(
-31.   overrides: Partial<NotificationPreference>,
-32. ): NotificationPreference {
-33.   return {
-34.     userId: "user-1",
-35.     event: "manual-review-escalation",
-36.     channel: "email",
-37.     enabled: true,
-38.     updatedAt: "2026-04-16T00:00:00.000Z",
-39.     updatedBy: "user-1",
-40.     ...overrides,
-41.   };
-42. }
-43. 
-44. function normalizeText(value: unknown): string {
-45.   return String(value).toLowerCase().replace(/\s+/g, " ").trim();
-46. }
-47. 
-48. function getPutPreferencesHandler(): (
-49.   req: Record<string, unknown>,
-50.   res: {
-51.     status: (code: number) => unknown;
-52.     json: (payload: unknown) => unknown;
-53.   },
-54.   next: (error?: unknown) => void,
-55. ) => void {
-56.   const routeLayer = (notificationRoutes as {
-57.     stack: Array<{
-58.       route?: {
-59.         path: string;
-60.         methods: Record<string, boolean>;
-61.         stack: Array<{ handle: (...args: unknown[]) => void }>;
-62.       };
-63.     }>;
-64.   }).stack.find(
-65.     (layer) => layer.route?.path === "/preferences" && layer.route.methods.put,
-66.   );
-67. 
-68.   if (!routeLayer?.route) {
-69.     throw new Error("PUT /preferences route not found.");
-70.   }
-71. 
-72.   return routeLayer.route.stack[routeLayer.route.stack.length - 1]
-73.     .handle as typeof getPutPreferencesHandler extends () => infer T ? T : never;
-74. }
-75. 
-76. function createResponse() {
-77.   return {
-78.     statusCode: 200,
-79.     body: undefined as unknown,
-80.     status(code: number) {
-81.       this.statusCode = code;
-82.       return this;
-83.     },
-84.     json(payload: unknown) {
-85.       this.body = payload;
-86.       return this;
-87.     },
-88.   };
-89. }
-90. 
-91. beforeAll(async () => {
-92.   ({ validateNotificationPreferenceWrite } = await import(
-93.     "../../src/rules/notification-preference-write-rules.js"
-94.   ));
-95.   ({ notificationRoutes } = await import("../../src/routes/notifications.js"));
-96. });
-97. 
-98. beforeEach(() => {
-99.   vi.clearAllMocks();
-100. });
-101. 
-102. describe("validateNotificationPreferenceWrite", () => {
-103.   it("allows disabling escalation sms when escalation email remains enabled", () => {
-104.     // FALSE POSITIVE: SMS can be disabled when email still preserves the mandatory event.
-105.     const result = validateNotificationPreferenceWrite({
-106.       nextPreference: {
-107.         event: "manual-review-escalation",
-108.         channel: "sms",
-109.         enabled: false,
-110.       },
-111.       existingPreferences: [
-112.         buildPreference({ event: "manual-review-escalation", channel: "email" }),
-113.         buildPreference({
-114.           event: "manual-review-escalation",
-115.           channel: "sms",
-116.           enabled: true,
-117.         }),
-118.       ],
-119.       loanState: "NY",
-120.     });
-121. 
-122.     expect(result.allowed).toBe(true);
-123.   });
-124. 
-125.   it("rejects disabling the last enabled escalation channel", () => {
-126.     // HARD NEGATIVE: manual-review-escalation must never end up with zero enabled channels.
-127.     const result = validateNotificationPreferenceWrite({
-128.       nextPreference: {
-129.         event: "manual-review-escalation",
-130.         channel: "email",
-131.         enabled: false,
-132.       },
-133.       existingPreferences: [
-134.         buildPreference({ event: "manual-review-escalation", channel: "email" }),
-135.         buildPreference({
-136.           event: "manual-review-escalation",
-137.           channel: "sms",
-138.           enabled: false,
-139.         }),
-140.       ],
-141.       loanState: "NY",
-142.     });
-143. 
-144.     const reason = normalizeText(result.reason);
-145. 
-146.     expect(result.allowed).toBe(false);
-147.     expect(reason).toContain("manual-review-escalation");
-148.     expect(reason).toContain("at least one");
-149.   });
-150. 
-151.   it.each(["CA", "California"])(
-152.     "rejects enabling decline sms for %s loan state under LEGAL-218",
-153.     (loanState) => {
-154.       const result = validateNotificationPreferenceWrite({
-155.         nextPreference: {
-156.           event: "decline",
-157.           channel: "sms",
-158.           enabled: true,
-159.         },
-160.         existingPreferences: [],
-161.         loanState,
-162.       });
-163. 
-164.       const reason = normalizeText(result.reason);
-165. 
-166.       expect(result.allowed).toBe(false);
-167.       expect(reason).toContain("legal-218");
-168.       expect(reason).toContain("decline");
-169.       expect(reason).toContain("sms");
-170.     },
-171.   );
-172. 
-173.   it("allows enabling decline sms for non-California loan state", () => {
-174.     const result = validateNotificationPreferenceWrite({
-175.       nextPreference: {
-176.         event: "decline",
-177.         channel: "sms",
-178.         enabled: true,
-179.       },
-180.       existingPreferences: [],
-181.       loanState: "NV",
-182.     });
-183. 
-184.     expect(result.allowed).toBe(true);
-185.   });
-186. });
-187. 
-188. describe("PUT /preferences route hardening", () => {
-189.   it("returns 400 with escalation invariant details when the write would disable the last channel", () => {
-190.     const handler = getPutPreferencesHandler();
-191.     const response = createResponse();
-192. 
-193.     preferenceRepoMock.findPreference.mockReturnValue(
-194.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-195.     );
-196.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-197.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-198.       buildPreference({
-199.         event: "manual-review-escalation",
-200.         channel: "sms",
-201.         enabled: false,
-202.       }),
-203.     ]);
-204. 
-205.     handler(
-206.       {
-207.         body: {
-208.           userId: "user-1",
-209.           event: "manual-review-escalation",
-210.           channel: "email",
-211.           enabled: false,
-212.           loanState: "NY",
-213.         },
-214.         session: {
-215.           actor: {
-216.             id: "user-1",
-217.             role: "underwriter",
-218.             name: "User One",
-219.             email: "user-1@example.com",
-220.           },
-221.         },
-222.       },
-223.       response,
-224.       vi.fn(),
-225.     );
-226. 
-227.     const payload = response.body as { error?: string; details?: string[] };
-228.     const details = normalizeText(payload.details?.join(" "));
-229. 
-230.     expect(response.statusCode).toBe(400);
-231.     expect(payload.error).toBe("Validation failed.");
-232.     expect(details).toContain("manual-review-escalation");
-233.     expect(details).toContain("at least one");
-234.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-235.     expect(auditServiceMock.auditAction).not.toHaveBeenCalled();
-236.   });
-237. 
-238.   it("returns 400 with LEGAL-218 details when California decline sms is enabled", () => {
-239.     const handler = getPutPreferencesHandler();
-240.     const response = createResponse();
-241. 
-242.     preferenceRepoMock.findPreference.mockReturnValue(
-243.       buildPreference({
-244.         event: "decline",
-245.         channel: "sms",
-246.         enabled: false,
-247.       }),
-248.     );
-249.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([]);
-250. 
-251.     handler(
-252.       {
-253.         body: {
-254.           userId: "user-1",
-255.           event: "decline",
-256.           channel: "sms",
-257.           enabled: true,
-258.           loanState: "California",
-259.         },
-260.         session: {
-261.           actor: {
-262.             id: "user-1",
-263.             role: "underwriter",
-264.             name: "User One",
-265.             email: "user-1@example.com",
-266.           },
-267.         },
-268.       },
-269.       response,
-270.       vi.fn(),
-271.     );
-272. 
-273.     const payload = response.body as { details?: string[] };
-274.     const details = normalizeText(payload.details?.join(" "));
-275. 
-276.     expect(response.statusCode).toBe(400);
-277.     expect(details).toContain("legal-218");
-278.     expect(details).toContain("decline");
-279.     expect(details).toContain("sms");
-280.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-281.   });
-282. 
-283.   it("allows disabling escalation sms when escalation email stays enabled", () => {
-284.     const handler = getPutPreferencesHandler();
-285.     const response = createResponse();
-286. 
-287.     preferenceRepoMock.findPreference.mockReturnValue(
-288.       buildPreference({
-289.         event: "manual-review-escalation",
-290.         channel: "sms",
-291.         enabled: true,
-292.       }),
-293.     );
-294.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-295.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-296.       buildPreference({
-297.         event: "manual-review-escalation",
-298.         channel: "sms",
-299.         enabled: true,
-300.       }),
-301.     ]);
-302. 
-303.     handler(
-304.       {
-305.         body: {
-306.           userId: "user-1",
-307.           event: "manual-review-escalation",
-308.           channel: "sms",
-309.           enabled: false,
-310.           loanState: "NY",
-311.         },
-312.         session: {
-313.           actor: {
-314.             id: "user-1",
-315.             role: "underwriter",
-316.             name: "User One",
-317.             email: "user-1@example.com",
-318.           },
-319.         },
-320.       },
-321.       response,
-322.       vi.fn(),
-323.     );
-324. 
-325.     expect(response.statusCode).toBe(200);
-326.     expect(preferenceRepoMock.setPreference).toHaveBeenCalledTimes(1);
-327.     expect(auditServiceMock.auditAction).toHaveBeenCalledTimes(1);
-328.   });
-329. });
-330.
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 5m 30s</sub>
-
-### 💬 Copilot
-
-I found one small thing worth tightening before I stop: the test helper can be simpler and less type-fragile without changing behavior, so I’m cleaning that up.
-
----
-
-<sub>⏱️ 5m 30s</sub>
-
-### ✅ `apply_patch`
-
-<details>
-<summary>Arguments</summary>
-
-```json
-"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests\\unit\\notification-preference-write-rules.test.ts\n@@\n function normalizeText(value: unknown): string {\n   return String(value).toLowerCase().replace(/\\s+/g, \" \").trim();\n }\n \n-function getPutPreferencesHandler(): (\n+type RouteHandler = (\n   req: Record<string, unknown>,\n   res: {\n     status: (code: number) => unknown;\n     json: (payload: unknown) => unknown;\n   },\n   next: (error?: unknown) => void,\n-) => void {\n+) => void;\n+\n+function getPutPreferencesHandler(): RouteHandler {\n   const routeLayer = (notificationRoutes as {\n     stack: Array<{\n       route?: {\n         path: string;\n         methods: Record<string, boolean>;\n@@\n   if (!routeLayer?.route) {\n     throw new Error(\"PUT /preferences route not found.\");\n   }\n \n-  return routeLayer.route.stack[routeLayer.route.stack.length - 1]\n-    .handle as typeof getPutPreferencesHandler extends () => infer T ? T : never;\n+  return routeLayer.route.stack[routeLayer.route.stack.length - 1]\n+    .handle as RouteHandler;\n }\n*** End Patch\n"
-```
-
-</details>
-
-```
-Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts
-```
-
-
----
-
-<sub>⏱️ 5m 35s</sub>
-
-### ✅ `apply_patch`
-
-<details>
-<summary>Arguments</summary>
-
-```json
-"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\routes\\notifications.ts\n@@\n import { Router } from \"express\";\n import { requireRole } from \"../middleware/auth.js\";\n import { validateBody } from \"../middleware/request-validator.js\";\n-import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n+import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n*** End Patch\n"
-```
-
-</details>
-
-```
-Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts
-```
-
-
----
-
-<sub>⏱️ 5m 44s</sub>
-
-### 💬 Copilot
-
-The slice is implemented. I’m doing one last targeted read of the test helper and rule/route contract together so the handoff reflects the actual changed surface and the intentionally deferred ones.
-
----
-
-<sub>⏱️ 5m 44s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 44-120)
-
-<details>
-<summary>77 lines</summary>
-
-```
-44. function normalizeText(value: unknown): string {
-45.   return String(value).toLowerCase().replace(/\s+/g, " ").trim();
-46. }
-47. 
-48. type RouteHandler = (
-49.   req: Record<string, unknown>,
-50.   res: {
-51.     status: (code: number) => unknown;
-52.     json: (payload: unknown) => unknown;
-53.   },
-54.   next: (error?: unknown) => void,
-55. ) => void;
-56. 
-57. function getPutPreferencesHandler(): RouteHandler {
-58.   const routeLayer = (notificationRoutes as {
-59.     stack: Array<{
-60.       route?: {
-61.         path: string;
-62.         methods: Record<string, boolean>;
-63.         stack: Array<{ handle: (...args: unknown[]) => void }>;
-64.       };
-65.     }>;
-66.   }).stack.find(
-67.     (layer) => layer.route?.path === "/preferences" && layer.route.methods.put,
-68.   );
-69. 
-70.   if (!routeLayer?.route) {
-71.     throw new Error("PUT /preferences route not found.");
-72.   }
-73. 
-74.   return routeLayer.route.stack[routeLayer.route.stack.length - 1]
-75.     .handle as RouteHandler;
-76. }
-77. 
-78. function createResponse() {
-79.   return {
-80.     statusCode: 200,
-81.     body: undefined as unknown,
-82.     status(code: number) {
-83.       this.statusCode = code;
-84.       return this;
-85.     },
-86.     json(payload: unknown) {
-87.       this.body = payload;
-88.       return this;
-89.     },
-90.   };
-91. }
-92. 
-93. beforeAll(async () => {
-94.   ({ validateNotificationPreferenceWrite } = await import(
-95.     "../../src/rules/notification-preference-write-rules.js"
-96.   ));
-97.   ({ notificationRoutes } = await import("../../src/routes/notifications.js"));
-98. });
-99. 
-100. beforeEach(() => {
-101.   vi.clearAllMocks();
-102. });
-103. 
-104. describe("validateNotificationPreferenceWrite", () => {
-105.   it("allows disabling escalation sms when escalation email remains enabled", () => {
-106.     // FALSE POSITIVE: SMS can be disabled when email still preserves the mandatory event.
-107.     const result = validateNotificationPreferenceWrite({
-108.       nextPreference: {
-109.         event: "manual-review-escalation",
-110.         channel: "sms",
-111.         enabled: false,
-112.       },
-113.       existingPreferences: [
-114.         buildPreference({ event: "manual-review-escalation", channel: "email" }),
-115.         buildPreference({
-116.           event: "manual-review-escalation",
-117.           channel: "sms",
-118.           enabled: true,
-119.         }),
-120.       ],
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 5m 44s</sub>
-
-### ✅ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 188-329)
-
-<details>
-<summary>142 lines</summary>
-
-```
-188. });
-189. 
-190. describe("PUT /preferences route hardening", () => {
-191.   it("returns 400 with escalation invariant details when the write would disable the last channel", () => {
-192.     const handler = getPutPreferencesHandler();
-193.     const response = createResponse();
-194. 
-195.     preferenceRepoMock.findPreference.mockReturnValue(
-196.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-197.     );
-198.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-199.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-200.       buildPreference({
-201.         event: "manual-review-escalation",
-202.         channel: "sms",
-203.         enabled: false,
-204.       }),
-205.     ]);
-206. 
-207.     handler(
-208.       {
-209.         body: {
-210.           userId: "user-1",
-211.           event: "manual-review-escalation",
-212.           channel: "email",
-213.           enabled: false,
-214.           loanState: "NY",
-215.         },
-216.         session: {
-217.           actor: {
-218.             id: "user-1",
-219.             role: "underwriter",
-220.             name: "User One",
-221.             email: "user-1@example.com",
-222.           },
-223.         },
-224.       },
-225.       response,
-226.       vi.fn(),
-227.     );
-228. 
-229.     const payload = response.body as { error?: string; details?: string[] };
-230.     const details = normalizeText(payload.details?.join(" "));
-231. 
-232.     expect(response.statusCode).toBe(400);
-233.     expect(payload.error).toBe("Validation failed.");
-234.     expect(details).toContain("manual-review-escalation");
-235.     expect(details).toContain("at least one");
-236.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-237.     expect(auditServiceMock.auditAction).not.toHaveBeenCalled();
-238.   });
-239. 
-240.   it("returns 400 with LEGAL-218 details when California decline sms is enabled", () => {
-241.     const handler = getPutPreferencesHandler();
-242.     const response = createResponse();
-243. 
-244.     preferenceRepoMock.findPreference.mockReturnValue(
-245.       buildPreference({
-246.         event: "decline",
-247.         channel: "sms",
-248.         enabled: false,
-249.       }),
-250.     );
-251.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([]);
-252. 
-253.     handler(
-254.       {
-255.         body: {
-256.           userId: "user-1",
-257.           event: "decline",
-258.           channel: "sms",
-259.           enabled: true,
-260.           loanState: "California",
-261.         },
-262.         session: {
-263.           actor: {
-264.             id: "user-1",
-265.             role: "underwriter",
-266.             name: "User One",
-267.             email: "user-1@example.com",
-268.           },
-269.         },
-270.       },
-271.       response,
-272.       vi.fn(),
-273.     );
-274. 
-275.     const payload = response.body as { details?: string[] };
-276.     const details = normalizeText(payload.details?.join(" "));
-277. 
-278.     expect(response.statusCode).toBe(400);
-279.     expect(details).toContain("legal-218");
-280.     expect(details).toContain("decline");
-281.     expect(details).toContain("sms");
-282.     expect(preferenceRepoMock.setPreference).not.toHaveBeenCalled();
-283.   });
-284. 
-285.   it("allows disabling escalation sms when escalation email stays enabled", () => {
-286.     const handler = getPutPreferencesHandler();
-287.     const response = createResponse();
-288. 
-289.     preferenceRepoMock.findPreference.mockReturnValue(
-290.       buildPreference({
-291.         event: "manual-review-escalation",
-292.         channel: "sms",
-293.         enabled: true,
-294.       }),
-295.     );
-296.     preferenceRepoMock.findPreferencesForUser.mockReturnValue([
-297.       buildPreference({ event: "manual-review-escalation", channel: "email" }),
-298.       buildPreference({
-299.         event: "manual-review-escalation",
-300.         channel: "sms",
-301.         enabled: true,
-302.       }),
-303.     ]);
-304. 
-305.     handler(
-306.       {
-307.         body: {
-308.           userId: "user-1",
-309.           event: "manual-review-escalation",
-310.           channel: "sms",
-311.           enabled: false,
-312.           loanState: "NY",
-313.         },
-314.         session: {
-315.           actor: {
-316.             id: "user-1",
-317.             role: "underwriter",
-318.             name: "User One",
-319.             email: "user-1@example.com",
-320.           },
-321.         },
-322.       },
-323.       response,
-324.       vi.fn(),
-325.     );
-326. 
-327.     expect(response.statusCode).toBe(200);
-328.     expect(preferenceRepoMock.setPreference).toHaveBeenCalledTimes(1);
-329.     expect(auditServiceMock.auditAction).toHaveBeenCalledTimes(1);
-```
-
-</details>
-
-
----
-
-<sub>⏱️ 5m 44s</sub>
+<sub>⏱️ 5m 16s</sub>
 
 ### ✅ `view`
 
 **view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts (lines 1-120)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts (lines 1-220)
 
 <details>
-<summary>87 lines</summary>
+<summary>95 lines</summary>
 
 ```
 1. // ---------------------------------------------------------------------------
 2. // Notification Preference Write Rules
 3. // ---------------------------------------------------------------------------
-4. // FALSE POSITIVE: disabling manual-review-escalation SMS is allowed when email
-5. // remains enabled. The invariant is "at least one channel", not "all channels".
-6. //
-7. // HARD NEGATIVE: rejecting only a specific channel toggle is insufficient if
-8. // the write would leave manual-review-escalation with zero enabled channels.
-9. //
-10. // LEGAL-218: decline SMS cannot be enabled for California loan contexts.
+4. // FALSE POSITIVE: Disabling manual-review-escalation SMS is allowed when the
+5. // email channel stays enabled. The violation is zero enabled channels, not a
+6. // specific channel being turned off.
+7. //
+8. // HARD NEGATIVE: Reject writes that leave manual-review-escalation with no
+9. // enabled channels, and reject enabling decline SMS for California loan
+10. // context while LEGAL-218 remains in effect.
 11. // ---------------------------------------------------------------------------
 12. 
 13. import type {
-14.   NotificationChannel,
-15.   NotificationPreference,
-16. } from "../models/types.js";
-17. 
-18. export interface NotificationPreferenceWriteInput {
-19.   nextPreference: Pick<NotificationPreference, "event" | "channel" | "enabled">;
-20.   existingPreferences: NotificationPreference[];
-21.   loanState: string;
+14.   LoanApplication,
+15.   NotificationChannel,
+16.   NotificationPreference,
+17. } from "../models/types.js";
+18. 
+19. export interface NotificationPreferenceWriteRule {
+20.   allowed: boolean;
+21.   reason?: string;
 22. }
 23. 
-24. export interface NotificationPreferenceWriteRule {
-25.   allowed: boolean;
-26.   reason: string;
-27. }
-28. 
-29. const ALLOWED_WRITE: NotificationPreferenceWriteRule = {
-30.   allowed: true,
-31.   reason: "Notification preference write allowed.",
-32. };
-33. 
-34. export function validateNotificationPreferenceWrite(
-35.   input: NotificationPreferenceWriteInput,
-36. ): NotificationPreferenceWriteRule {
-37.   const { nextPreference, existingPreferences, loanState } = input;
-38. 
-39.   if (
-40.     nextPreference.event === "decline" &&
-41.     nextPreference.channel === "sms" &&
-42.     nextPreference.enabled &&
-43.     isCaliforniaLoanState(loanState)
-44.   ) {
-45.     return {
-46.       allowed: false,
-47.       reason:
-48.         "LEGAL-218: decline SMS cannot be enabled for California loanState.",
-49.     };
-50.   }
-51. 
-52.   if (
-53.     nextPreference.event !== "manual-review-escalation" ||
-54.     nextPreference.enabled
-55.   ) {
-56.     return ALLOWED_WRITE;
-57.   }
-58. 
-59.   const otherChannel = otherNotificationChannel(nextPreference.channel);
-60.   const otherPreference = existingPreferences.find(
-61.     (preference) =>
-62.       preference.event === "manual-review-escalation" &&
-63.       preference.channel === otherChannel,
-64.   );
-65. 
-66.   if (otherPreference?.enabled === false) {
-67.     return {
-68.       allowed: false,
-69.       reason:
-70.         "manual-review-escalation must keep at least one channel enabled.",
-71.     };
-72.   }
-73. 
-74.   return ALLOWED_WRITE;
-75. }
-76. 
-77. function otherNotificationChannel(
-78.   channel: NotificationChannel,
-79. ): NotificationChannel {
-80.   return channel === "email" ? "sms" : "email";
-81. }
-82. 
-83. function isCaliforniaLoanState(loanState: string): boolean {
-84.   const normalized = loanState.trim().toLowerCase();
-85.   return normalized === "ca" || normalized === "california";
-86. }
-87.
+24. export interface NotificationPreferenceWriteInput {
+25.   nextPreference: Pick<
+26.     NotificationPreference,
+27.     "event" | "channel" | "enabled"
+28.   >;
+29.   existingPreferences: NotificationPreference[];
+30.   loanState?: LoanApplication["loanState"];
+31. }
+32. 
+33. const ESCALATION_CHANNELS: NotificationChannel[] = ["email", "sms"];
+34. 
+35. function isCaliforniaLoanState(
+36.   loanState?: LoanApplication["loanState"],
+37. ): boolean {
+38.   const normalized = loanState?.trim().toLowerCase();
+39.   return normalized === "ca" || normalized === "california";
+40. }
+41. 
+42. function isChannelEnabledAfterWrite(
+43.   input: NotificationPreferenceWriteInput,
+44.   channel: NotificationChannel,
+45. ): boolean {
+46.   if (
+47.     input.nextPreference.event === "manual-review-escalation" &&
+48.     input.nextPreference.channel === channel
+49.   ) {
+50.     return input.nextPreference.enabled;
+51.   }
+52. 
+53.   return Boolean(
+54.     input.existingPreferences.find(
+55.       (preference) =>
+56.         preference.event === "manual-review-escalation" &&
+57.         preference.channel === channel,
+58.     )?.enabled,
+59.   );
+60. }
+61. 
+62. export function validateNotificationPreferenceWrite(
+63.   input: NotificationPreferenceWriteInput,
+64. ): NotificationPreferenceWriteRule {
+65.   if (
+66.     input.nextPreference.event === "decline" &&
+67.     input.nextPreference.channel === "sms" &&
+68.     input.nextPreference.enabled &&
+69.     isCaliforniaLoanState(input.loanState)
+70.   ) {
+71.     // LEGAL-218: California decline SMS must remain disabled.
+72.     return {
+73.       allowed: false,
+74.       reason:
+75.         "LEGAL-218 prevents enabling decline SMS for California loan context.",
+76.     };
+77.   }
+78. 
+79.   if (input.nextPreference.event === "manual-review-escalation") {
+80.     const hasEnabledEscalationChannel = ESCALATION_CHANNELS.some((channel) =>
+81.       isChannelEnabledAfterWrite(input, channel),
+82.     );
+83. 
+84.     if (!hasEnabledEscalationChannel) {
+85.       return {
+86.         allowed: false,
+87.         reason:
+88.           "manual-review-escalation must keep at least one notification channel enabled.",
+89.       };
+90.     }
+91.   }
+92. 
+93.   return { allowed: true };
+94. }
+95.
 ```
 
 </details>
@@ -4039,91 +2788,338 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 5m 44s</sub>
+<sub>⏱️ 5m 16s</sub>
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 46-118)
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 1-320)
 
 <details>
-<summary>73 lines</summary>
+<summary>320 lines</summary>
 
 ```
-46. /** PUT /api/notifications/preferences — set a notification preference. */
-47. notificationRoutes.put(
-48.   "/preferences",
-49.   requireRole("underwriter", "analyst-manager"),
-50.   validateBody([
-51.     { field: "userId", type: "string", required: true },
-52.     { field: "event", type: "string", required: true },
-53.     { field: "channel", type: "string", required: true },
-54.     { field: "enabled", type: "boolean", required: true },
-55.     { field: "loanState", type: "string", required: true },
-56.   ]),
-57.   (req, res, next) => {
-58.     try {
-59.       const session = req.session as SessionContext;
-60. 
-61.       // Block writes in delegated sessions
-62.       if (session.delegatedFor) {
-63.         res.status(403).json({
-64.           error: "Delegated sessions cannot modify notification preferences.",
-65.         });
-66.         return;
-67.       }
-68. 
-69.       // Additional permission check
-70.       if (!hasPermission(session.actor.role, "notification-pref:write")) {
-71.         res.status(403).json({
-72.           error: `Role '${session.actor.role}' cannot modify notification preferences.`,
-73.         });
-74.         return;
-75.       }
+1. import { beforeEach, describe, expect, it, vi } from "vitest";
+2. 
+3. vi.mock("../../src/models/preference-repository.js", () => ({
+4.   findPreference: vi.fn(),
+5.   findPreferencesForUser: vi.fn(),
+6.   setPreference: vi.fn(),
+7. }));
+8. 
+9. vi.mock("../../src/services/audit-service.js", () => ({
+10.   auditAction: vi.fn(),
+11. }));
+12. 
+13. import { notificationRoutes } from "../../src/routes/notifications.js";
+14. import * as prefRepo from "../../src/models/preference-repository.js";
+15. import { validateNotificationPreferenceWrite } from "../../src/rules/notification-preference-write-rules.js";
+16. import type {
+17.   NotificationPreference,
+18.   SessionContext,
+19. } from "../../src/models/types.js";
+20. 
+21. function buildPreference(
+22.   overrides: Partial<NotificationPreference>,
+23. ): NotificationPreference {
+24.   return {
+25.     userId: "u-1",
+26.     event: "approval",
+27.     channel: "email",
+28.     enabled: true,
+29.     updatedAt: "2026-04-16T00:00:00.000Z",
+30.     updatedBy: "u-1",
+31.     ...overrides,
+32.   };
+33. }
+34. 
+35. function createSession(
+36.   overrides: Partial<SessionContext> = {},
+37. ): SessionContext {
+38.   return {
+39.     actor: {
+40.       id: "u-1",
+41.       role: "underwriter",
+42.       name: "Under Writer",
+43.       email: "uw@example.com",
+44.     },
+45.     ...overrides,
+46.   };
+47. }
+48. 
+49. function normalize(value: unknown): string {
+50.   return String(value ?? "").toLowerCase();
+51. }
+52. 
+53. function createMockResponse() {
+54.   return {
+55.     statusCode: 200,
+56.     body: undefined as unknown,
+57.     status(code: number) {
+58.       this.statusCode = code;
+59.       return this;
+60.     },
+61.     json(payload: unknown) {
+62.       this.body = payload;
+63.       return this;
+64.     },
+65.   };
+66. }
+67. 
+68. function invokePutPreferenceRoute(args: {
+69.   body: Record<string, unknown>;
+70.   session?: SessionContext;
+71. }) {
+72.   const routeLayer = (notificationRoutes as any).stack.find(
+73.     (layer: any) =>
+74.       layer.route?.path === "/preferences" && layer.route?.methods?.put,
+75.   );
 76. 
-77.       const { userId, event, channel, enabled, loanState } = req.body;
-78.       const now = new Date().toISOString();
-79.       const existingPreferences = prefRepo.findPreferencesForUser(userId);
-80.       const writeRule = validateNotificationPreferenceWrite({
-81.         nextPreference: { event, channel, enabled },
-82.         existingPreferences,
-83.         loanState,
-84.       });
-85. 
-86.       if (!writeRule.allowed) {
-87.         res.status(400).json({
-88.           error: "Validation failed.",
-89.           details: [writeRule.reason],
-90.         });
-91.         return;
-92.       }
-93. 
-94.       const previous = prefRepo.findPreference(userId, event, channel);
-95. 
-96.       const pref: NotificationPreference = {
-97.         userId,
-98.         event,
-99.         channel,
-100.         enabled,
-101.         updatedAt: now,
-102.         updatedBy: session.actor.id,
-103.       };
-104. 
-105.       prefRepo.setPreference(pref);
+77.   if (!routeLayer?.route) {
+78.     throw new Error("PUT /preferences route not found.");
+79.   }
+80. 
+81.   const handlers = routeLayer.route.stack.map((layer: any) => layer.handle);
+82.   const req = {
+83.     body: args.body,
+84.     params: {},
+85.     path: "/preferences",
+86.     session: args.session,
+87.   } as any;
+88.   const res = createMockResponse();
+89.   let forwardedError: unknown;
+90. 
+91.   const run = (index: number): void => {
+92.     const handler = handlers[index];
+93.     if (!handler) {
+94.       return;
+95.     }
+96. 
+97.     handler(req, res, (err?: unknown) => {
+98.       if (err) {
+99.         forwardedError = err;
+100.         return;
+101.       }
+102. 
+103.       run(index + 1);
+104.     });
+105.   };
 106. 
-107.       // Audit the preference change
-108.       auditAction(
-109.         session,
-110.         "preference.updated",
-111.         previous ?? null,
-112.         pref,
-113.         "notification-routes",
-114.       );
-115. 
-116.       res.json(pref);
-117.     } catch (err) {
-118.       next(err);
+107.   run(0);
+108. 
+109.   return { res, forwardedError };
+110. }
+111. 
+112. beforeEach(() => {
+113.   vi.clearAllMocks();
+114.   vi.mocked(prefRepo.findPreference).mockReturnValue(undefined);
+115.   vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([]);
+116. });
+117. 
+118. describe("validateNotificationPreferenceWrite", () => {
+119.   describe("Happy path", () => {
+120.     it("allows ordinary preference updates", () => {
+121.       expect(
+122.         validateNotificationPreferenceWrite({
+123.           nextPreference: {
+124.             event: "approval",
+125.             channel: "email",
+126.             enabled: false,
+127.           },
+128.           existingPreferences: [],
+129.           loanState: "NY",
+130.         }),
+131.       ).toEqual({ allowed: true });
+132.     });
+133.   });
+134. 
+135.   describe("False positive", () => {
+136.     it("allows disabling escalation SMS when escalation email stays enabled", () => {
+137.       expect(
+138.         validateNotificationPreferenceWrite({
+139.           nextPreference: {
+140.             event: "manual-review-escalation",
+141.             channel: "sms",
+142.             enabled: false,
+143.           },
+144.           existingPreferences: [
+145.             buildPreference({
+146.               event: "manual-review-escalation",
+147.               channel: "email",
+148.               enabled: true,
+149.             }),
+150.             buildPreference({
+151.               event: "manual-review-escalation",
+152.               channel: "sms",
+153.               enabled: true,
+154.             }),
+155.           ],
+156.           loanState: "NY",
+157.         }),
+158.       ).toEqual({ allowed: true });
+159.     });
+160.   });
+161. 
+162.   describe("Hard negative", () => {
+163.     it("rejects disabling the last escalation channel", () => {
+164.       const result = validateNotificationPreferenceWrite({
+165.         nextPreference: {
+166.           event: "manual-review-escalation",
+167.           channel: "sms",
+168.           enabled: false,
+169.         },
+170.         existingPreferences: [
+171.           buildPreference({
+172.             event: "manual-review-escalation",
+173.             channel: "email",
+174.             enabled: false,
+175.           }),
+176.           buildPreference({
+177.             event: "manual-review-escalation",
+178.             channel: "sms",
+179.             enabled: true,
+180.           }),
+181.         ],
+182.         loanState: "NY",
+183.       });
+184. 
+185.       expect({
+186.         allowed: result.allowed,
+187.         reason: normalize(result.reason),
+188.       }).toEqual(
+189.         expect.objectContaining({
+190.           allowed: false,
+191.           reason: expect.stringMatching(
+192.             /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,
+193.           ),
+194.         }),
+195.       );
+196.     });
+197.   });
+198. 
+199.   describe("LEGAL-218", () => {
+200.     it("rejects enabling decline SMS for CA loan context", () => {
+201.       const result = validateNotificationPreferenceWrite({
+202.         nextPreference: {
+203.           event: "decline",
+204.           channel: "sms",
+205.           enabled: true,
+206.         },
+207.         existingPreferences: [],
+208.         loanState: "CA",
+209.       });
+210. 
+211.       expect({
+212.         allowed: result.allowed,
+213.         reason: normalize(result.reason),
+214.       }).toEqual(
+215.         expect.objectContaining({
+216.           allowed: false,
+217.           reason: expect.stringMatching(
+218.             /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,
+219.           ),
+220.         }),
+221.       );
+222.     });
+223. 
+224.     it("treats California as the same restricted loan state", () => {
+225.       expect(
+226.         validateNotificationPreferenceWrite({
+227.           nextPreference: {
+228.             event: "decline",
+229.             channel: "sms",
+230.             enabled: true,
+231.           },
+232.           existingPreferences: [],
+233.           loanState: "California",
+234.         }).allowed,
+235.       ).toBe(false);
+236.     });
+237.   });
+238. });
+239. 
+240. describe("PUT /preferences", () => {
+241.   describe("False positive", () => {
+242.     it("keeps allowing escalation SMS disable when email remains enabled", () => {
+243.       vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
+244.         buildPreference({
+245.           event: "manual-review-escalation",
+246.           channel: "email",
+247.           enabled: true,
+248.         }),
+249.         buildPreference({
+250.           event: "manual-review-escalation",
+251.           channel: "sms",
+252.           enabled: true,
+253.         }),
+254.       ]);
+255.       vi.mocked(prefRepo.findPreference).mockReturnValue(
+256.         buildPreference({
+257.           event: "manual-review-escalation",
+258.           channel: "sms",
+259.           enabled: true,
+260.         }),
+261.       );
+262. 
+263.       const { res, forwardedError } = invokePutPreferenceRoute({
+264.         session: createSession(),
+265.         body: {
+266.           userId: "u-1",
+267.           event: "manual-review-escalation",
+268.           channel: "sms",
+269.           enabled: false,
+270.         },
+271.       });
+272. 
+273.       expect({
+274.         statusCode: res.statusCode,
+275.         body: res.body,
+276.         persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
+277.         forwardedError,
+278.       }).toEqual({
+279.         statusCode: 200,
+280.         body: expect.objectContaining({
+281.           event: "manual-review-escalation",
+282.           channel: "sms",
+283.           enabled: false,
+284.         }),
+285.         persisted: 1,
+286.         forwardedError: undefined,
+287.       });
+288.     });
+289.   });
+290. 
+291.   describe("Hard negative", () => {
+292.     it("rejects disabling the last escalation channel with a business invariant message", () => {
+293.       vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
+294.         buildPreference({
+295.           event: "manual-review-escalation",
+296.           channel: "email",
+297.           enabled: false,
+298.         }),
+299.         buildPreference({
+300.           event: "manual-review-escalation",
+301.           channel: "sms",
+302.           enabled: true,
+303.         }),
+304.       ]);
+305.       vi.mocked(prefRepo.findPreference).mockReturnValue(
+306.         buildPreference({
+307.           event: "manual-review-escalation",
+308.           channel: "sms",
+309.           enabled: true,
+310.         }),
+311.       );
+312. 
+313.       const { res, forwardedError } = invokePutPreferenceRoute({
+314.         session: createSession(),
+315.         body: {
+316.           userId: "u-1",
+317.           event: "manual-review-escalation",
+318.           channel: "sms",
+319.           enabled: false,
+320.         },
 ```
 
 </details>
@@ -4131,13 +3127,102 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ---
 
-<sub>⏱️ 6m 4s</sub>
+<sub>⏱️ 5m 20s</sub>
+
+### ✅ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 321-420)
+
+<details>
+<summary>68 lines</summary>
+
+```
+321.       });
+322. 
+323.       expect({
+324.         statusCode: res.statusCode,
+325.         error: normalize((res.body as { error?: string } | undefined)?.error),
+326.         persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
+327.         forwardedError,
+328.       }).toEqual({
+329.         statusCode: 400,
+330.         error: expect.stringMatching(
+331.           /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,
+332.         ),
+333.         persisted: 0,
+334.         forwardedError: undefined,
+335.       });
+336.     });
+337.   });
+338. 
+339.   describe("LEGAL-218", () => {
+340.     it("rejects California decline SMS enable with a clear business invariant message", () => {
+341.       vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
+342.         buildPreference({
+343.           event: "decline",
+344.           channel: "email",
+345.           enabled: true,
+346.         }),
+347.         buildPreference({
+348.           event: "decline",
+349.           channel: "sms",
+350.           enabled: false,
+351.         }),
+352.       ]);
+353.       vi.mocked(prefRepo.findPreference).mockReturnValue(
+354.         buildPreference({
+355.           event: "decline",
+356.           channel: "sms",
+357.           enabled: false,
+358.         }),
+359.       );
+360. 
+361.       const { res, forwardedError } = invokePutPreferenceRoute({
+362.         session: createSession(),
+363.         body: {
+364.           userId: "u-1",
+365.           event: "decline",
+366.           channel: "sms",
+367.           enabled: true,
+368.           loanState: "California",
+369.         },
+370.       });
+371. 
+372.       expect({
+373.         statusCode: res.statusCode,
+374.         error: normalize((res.body as { error?: string } | undefined)?.error),
+375.         persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
+376.         forwardedError,
+377.       }).toEqual({
+378.         statusCode: 400,
+379.         error: expect.stringMatching(
+380.           /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,
+381.         ),
+382.         persisted: 0,
+383.         forwardedError: undefined,
+384.       });
+385.     });
+386.   });
+387. });
+388.
+```
+
+</details>
+
+
+---
+
+<sub>⏱️ 5m 58s</sub>
 
 ### 💬 Copilot
 
-Implemented the focused hardening slice in `src/backend/tests/unit/notification-preference-write-rules.test.ts`, `src/backend/src/rules/notification-preference-write-rules.ts`, and `src/backend/src/routes/notifications.ts`. `PUT /preferences` now requires direct `loanState` input, runs a pure write-rule check before persisting, rejects invariant violations with the existing simple `400`/`Validation failed.` style plus semantic `details`, and preserves the existing delegated-session and role guards.
+Implemented the focused hardening slice in **three files**: `src/backend/tests/unit/notification-preference-write-rules.test.ts`, `src/backend/src/rules/notification-preference-write-rules.ts`, and `src/backend/src/routes/notifications.ts`.
 
-Before the production change, the new tests for **rejecting the last enabled `manual-review-escalation` channel** and **rejecting California/`CA` decline SMS enablement under `LEGAL-218`** should fail because the route would accept and persist those writes. After the change, those rejection tests should pass, and the false-positive case **disabling escalation SMS while escalation email stays enabled** should also pass as allowed. Deferred write surfaces still out of scope: `PUT /preferences/:userId/email` and `PUT /preferences/:userId/sms`.
+**Red before production change / green after:** the new tests are meant to fail when the route still allows disabling the last `manual-review-escalation` channel or enables `decline` SMS for `CA`/`California`, and to pass once the pure rule rejects those writes while still allowing the false positive case where escalation SMS is turned off but escalation email remains enabled. The route now keeps delegated-session and role guards intact, accepts direct `loanState` input on this write path, and returns a clear 400 business-rule error payload for those two invariants.
+
+**Intentionally deferred out of scope:** the bulk write surfaces at `PUT /api/notifications/preferences/:userId/email` and `PUT /api/notifications/preferences/:userId/sms` still remain unhardened by this slice.
 
 ---
 
