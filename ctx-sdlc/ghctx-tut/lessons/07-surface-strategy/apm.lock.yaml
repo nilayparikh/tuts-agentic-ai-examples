@@ -2,6 +2,26 @@ lockfile_version: '1'
 generated_at: '2026-04-17T16:26:53.362908+00:00'
 apm_version: 0.8.11
 dependencies:
+- repo_url: DiversioTeam/agent-skills-marketplace
+  host: github.com
+  resolved_commit: 088ef87f743726407b81772c8e560ff75747f349
+  virtual_path: plugins/terraform
+  is_virtual: true
+  package_type: apm_package
+  deployed_files:
+  - .claude/commands/atomic-commit.md
+  - .claude/commands/check-pr.md
+  - .claude/commands/pre-commit.md
+  - .claude/skills/terraform-atomic-commit
+  - .claude/skills/terraform-pr-workflow
+  - .github/prompts/atomic-commit.prompt.md
+  - .github/prompts/check-pr.prompt.md
+  - .github/prompts/pre-commit.prompt.md
+  - .github/skills/terraform-atomic-commit
+  - .github/skills/terraform-pr-workflow
+  content_hash: sha256:d5fc18dba176704fad13873ab9d31bb301acd83817b8fa0f2dfb085c23eedde2
+  discovered_via: agent-skills-marketplace
+  marketplace_plugin_name: terraform
 - repo_url: microsoft/apm-sample-package
   host: github.com
   resolved_commit: fb2851683be0e0e7711421d518bd8dba23b0b1f6

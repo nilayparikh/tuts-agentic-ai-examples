@@ -5,5 +5,6 @@ author: Nilay Parikh
 dependencies:
   apm:
   - microsoft/apm-sample-package
+  - DiversioTeam/agent-skills-marketplace/plugins/terraform
   mcp: []
 scripts: {}
