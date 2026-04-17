@@ -1,5 +1,10 @@
 # Lesson 07 — Surface Strategy
 
+[![Watch: Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex](https://img.youtube.com/vi/XvUSBlrXZoA/maxresdefault.jpg)](https://www.youtube.com/watch?v=XvUSBlrXZoA)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=XvUSBlrXZoA" target="_blank" rel="noopener noreferrer">Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 > **App shape:** Loan Workbench (TypeScript + Express + SQLite)
 > **Teaching goal:** Show how reusable application context feeds multiple
 > coding agents through a clean data/format separation.
@@ -14,22 +19,22 @@ formats for GitHub Copilot, Claude Code, and Codex.
 
 ## What This Demonstrates
 
-| Artifact | Role | Why it matters |
-| --- | --- | --- |
-| `.code.agent/context/*.md` | Reusable application context | All app knowledge lives here — written once, never duplicated |
-| `.code.agent/templates/*.tpl` | Pure format shells | Agent-specific structure with zero application content |
-| `.code.agent/graph.json` | Context-to-output mapping | Declares which context feeds which template to produce which output |
-| `transform.py` | Generation engine | Reads context, applies templates, writes outputs |
-| `AGENTS.md` | Shared projection (Codex/humans) | Generated from `app-identity.md` context |
-| `CLAUDE.md` | Claude bridge | Imports `@AGENTS.md` — no content duplication |
-| `.github/copilot-instructions.md` | Copilot bridge | Generated from `app-identity.md` context |
-| `.github/instructions/*.instructions.md` | Copilot scoped rules | Generated from backend/frontend/testing/api context |
-| `.claude/rules/*.md` | Claude scoped rules | Same context as Copilot, different format |
-| `.github/agents/reviewer.agent.md` | Reviewer agent | Generated from reviewer checklist context |
-| `.github/skills/loan-workbench-delivery/SKILL.md` | Delivery skill | Generated from delivery workflow context |
-| `.github/prompts/implement-loan-workbench-change.prompt.md` | Planning prompt | Generated from change planning context |
-| `.github/hooks/context-guard.json` | Context guard hook | Generated from hook configuration context |
-| `docs/*.md` | Application documentation | Documents the `src/` app — architecture, API, features, data model |
+| Artifact                                                    | Role                             | Why it matters                                                      |
+| ----------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------- |
+| `.code.agent/context/*.md`                                  | Reusable application context     | All app knowledge lives here — written once, never duplicated       |
+| `.code.agent/templates/*.tpl`                               | Pure format shells               | Agent-specific structure with zero application content              |
+| `.code.agent/graph.json`                                    | Context-to-output mapping        | Declares which context feeds which template to produce which output |
+| `transform.py`                                              | Generation engine                | Reads context, applies templates, writes outputs                    |
+| `AGENTS.md`                                                 | Shared projection (Codex/humans) | Generated from `app-identity.md` context                            |
+| `CLAUDE.md`                                                 | Claude bridge                    | Imports `@AGENTS.md` — no content duplication                       |
+| `.github/copilot-instructions.md`                           | Copilot bridge                   | Generated from `app-identity.md` context                            |
+| `.github/instructions/*.instructions.md`                    | Copilot scoped rules             | Generated from backend/frontend/testing/api context                 |
+| `.claude/rules/*.md`                                        | Claude scoped rules              | Same context as Copilot, different format                           |
+| `.github/agents/reviewer.agent.md`                          | Reviewer agent                   | Generated from reviewer checklist context                           |
+| `.github/skills/loan-workbench-delivery/SKILL.md`           | Delivery skill                   | Generated from delivery workflow context                            |
+| `.github/prompts/implement-loan-workbench-change.prompt.md` | Planning prompt                  | Generated from change planning context                              |
+| `.github/hooks/context-guard.json`                          | Context guard hook               | Generated from hook configuration context                           |
+| `docs/*.md`                                                 | Application documentation        | Documents the `src/` app — architecture, API, features, data model  |
 
 ## No Setup Required
 
@@ -105,11 +110,7 @@ Context is DATA — it holds application knowledge in `.code.agent/context/`.
 Templates are FORMAT — they hold agent-specific structural wrappers in
 `.code.agent/templates/`. The two never cross. Templates contain zero
 application knowledge. Context contains zero agent-specific formatting.
-`transform.py` maps one to the other through `graph.json`.
-5. Let Claude import that projection through `CLAUDE.md`.
-6. Let Copilot use `.github/copilot-instructions.md` as its bridge.
-7. Generate skills, prompts, hooks, and scoped rules from the same model.
-8. Keep scoped rules tool-native, but semantically aligned.
+`transform.py` maps one to the other through `graph.json`. 5. Let Claude import that projection through `CLAUDE.md`. 6. Let Copilot use `.github/copilot-instructions.md` as its bridge. 7. Generate skills, prompts, hooks, and scoped rules from the same model. 8. Keep scoped rules tool-native, but semantically aligned.
 
 That is the practical portability lesson. Shared intent matters more than file
 name uniformity.
@@ -126,7 +127,7 @@ Use this order when presenting the example:
 6. Open `.github/copilot-instructions.md` and explain the Copilot bridge.
 7. Compare `.github/instructions/api.instructions.md` with `.claude/rules/api.md`.
 8. Finish with `docs/portability-matrix.md` and
-	 `docs/surface-portability-notes.md`.
+   `docs/surface-portability-notes.md`.
 
 ## What You Should Say Out Loud
 
@@ -135,3 +136,15 @@ Use this order when presenting the example:
 - "Claude imports the shared story. Copilot needs its own bridge."
 - "Scoped rules stay native to each tool, but the semantics match."
 - "Docs carry the explanation so the entry files stay small."
+
+## Series Navigation
+
+| #   | Lesson                                                                    | Video                                       | Example                                                        |
+| --- | ------------------------------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------- |
+| 01  | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | https://www.youtube.com/watch?v=YBXo_hxr9k4 | [01-why-context-engineering](../01-why-context-engineering/)   |
+| 02  | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | https://www.youtube.com/watch?v=1B90MkDnmhs | [02-curate-project-context](../02-curate-project-context/)     |
+| 03  | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | https://www.youtube.com/watch?v=BS2NbFnyYJY | [03-instruction-architecture](../03-instruction-architecture/) |
+| 04  | Mastering GitHub Copilot Plan Mode                                        | https://www.youtube.com/watch?v=KuLgT8Wck_E | [04-planning-workflows](../04-planning-workflows/)             |
+| 05  | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | https://www.youtube.com/watch?v=ZvclU2Jyx5o | [05-implementation-workflows](../05-implementation-workflows/) |
+| 06  | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | https://www.youtube.com/watch?v=MBHvkVrEgRk | [06-tools-and-guardrails](../06-tools-and-guardrails/)         |
+| 07  | Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex       | https://www.youtube.com/watch?v=XvUSBlrXZoA | [07-surface-strategy](./)                                      |

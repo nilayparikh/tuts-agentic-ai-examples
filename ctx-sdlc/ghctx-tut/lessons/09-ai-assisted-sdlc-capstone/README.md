@@ -1,81 +1,112 @@
 # Lesson 09 — AI-Assisted SDLC Capstone
 
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
-> **Topic:** Full SDLC synthesis combining the context-engineering techniques from Lessons 01-08.
+> **Topic:** Hands-on capstone applying context-engineering techniques from Lessons 01–08.
+
+## Overview
+
+This capstone has four exercises. Each targets a different layer of the
+context-engineering delivery loop. You'll configure context, plan with
+agents, implement with role separation, and validate with guardrails —
+all on the same Loan Workbench codebase.
+
+## Prerequisites
+
+- Complete Lessons 01–08 of Context Engineering for GitHub Copilot
+- VS Code with GitHub Copilot extension
+- Node.js 20+ and npm
 
 ## Setup
 
 ```bash
-python util.py --setup
-python util.py --run
+cd src
+npm install
 ```
 
-## What This Demonstrates
+## Exercises
 
-This capstone combines the live context surfaces that are actually present in the lesson into one cross-stack workflow:
+| Exercise | Focus                         | Guide                                                                                                  | Estimated Time |
+| -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------ | -------------- |
+| 1        | Context Foundation            | [exercise-01-context-foundation.md](exercises/exercise-01-context-foundation.md)                       | 30–45 min      |
+| 2        | Planning Workflow             | [exercise-02-planning-workflow.md](exercises/exercise-02-planning-workflow.md)                         | 30–45 min      |
+| 3        | Role-Separated Implementation | [exercise-03-role-separated-implementation.md](exercises/exercise-03-role-separated-implementation.md) | 45–60 min      |
+| 4        | Guardrails & Validation       | [exercise-04-guardrails-and-validation.md](exercises/exercise-04-guardrails-and-validation.md)         | 30–45 min      |
 
-- global project instructions
-- backend-scoped instructions
-- frontend-scoped instructions
-- shared architecture documentation
-- discovered backend and frontend implementation surfaces
+## Exercise Flow
 
-The point of the lesson is not breadth for its own sake. It is to show that a discovery-first workflow can build a credible backend-plus-frontend plan without hardcoding all of the context into the prompt.
+Each exercise builds on the previous one:
 
-## Context Files
-
-| Path | Purpose |
-| --- | --- |
-| `.github/copilot-instructions.md` | Project-wide conventions |
-| `.github/instructions/api.instructions.md` | API-specific patterns |
-| `.github/instructions/frontend.instructions.md` | Frontend-specific patterns |
-| `docs/architecture.md` | System architecture reference |
-| `docs/capstone-example.md` | Concrete lesson-09 demo target and assessment constraints |
-
-## Example Goal
-
-This lesson should demonstrate cross-stack SDLC implementation quality.
-
-For this example, the intended outcome is:
-
-- inspect the capstone's baseline instructions, backend/frontend scoped instructions, architecture doc, and relevant notification-preference code surfaces
-- discover the specific backend route, backend supporting surfaces, frontend page, frontend component, and API-client surfaces instead of relying on a hardcoded read list
-- implement a notification preference event-channel validator with unit tests
-- wire the validator into the existing notification route
-- the changes are assessable via actual vs expected file and pattern comparison
-
-## Copilot CLI Workflow
-
-Use the CLI for a discovery-first capstone implementation:
-
-```bash
-copilot -p "Inspect the capstone lesson's project instructions, backend and frontend scoped instructions, architecture doc, and the relevant backend/frontend notification-preference surfaces you discover before answering. Do not assume a fixed file list beyond those starting points. Then implement a notification preference event-channel validator as a cross-stack hardening slice: 1. Create a pure validation rule module at backend/src/rules/preference-event-channel-validator.ts that validates event-channel combinations are allowed, enforcing that mandatory events cannot have all channels disabled, and respecting LEGAL-218 California SMS restrictions from existing rules. 2. Create unit tests at backend/tests/unit/preference-event-channel-validator.test.ts covering valid combinations, mandatory-event violations, and LEGAL-218 false positive and hard negative cases. 3. Wire the validator import into the existing notification preference write route in backend/src/routes/notifications.ts. Follow the repository conventions you discover. Apply the changes directly in code. Do not run npm install, npm test, or any shell commands. Do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+```
+Exercise 1: Context Foundation
+  └─ Update docs, create vocabulary
+      └─ Exercise 2: Planning Workflow
+          └─ Create prompt file, test planning
+              └─ Exercise 3: Role Separation
+                  └─ Create agents, implement with TDD
+                      └─ Exercise 4: Guardrails
+                          └─ Create hooks, build context inventory
 ```
 
-Expected result:
+## Context Files (Starting Point)
 
-- the CLI creates a validator module and matching tests using discovered conventions
-- the validator is wired into the existing route
-- mandatory-event and LEGAL-218 constraints are enforced
-- `.output/change/demo.patch` contains all file changes
-- `.output/change/comparison.md` shows actual vs expected file and pattern match results
+| Path                                            | Purpose                         |
+| ----------------------------------------------- | ------------------------------- |
+| `.github/copilot-instructions.md`               | Project-wide conventions        |
+| `.github/instructions/api.instructions.md`      | Backend API patterns            |
+| `.github/instructions/frontend.instructions.md` | Frontend SPA patterns           |
+| `docs/architecture.md`                          | System architecture reference   |
+| `docs/VOCAB.md`                                 | Domain vocabulary               |
+| `docs/capstone-example.md`                      | Capstone exercise constraints   |
+| `docs/CONTEXT_MAP.md`                           | Full context map of the project |
 
-## VS Code Chat Workflow
+## What You'll Create
 
-Suggested capstone flow:
+By the end of all four exercises:
 
-1. Start with a planning ask that identifies the backend and frontend surfaces involved.
-2. Open backend files where API instructions activate and refine the backend slice.
-3. Open frontend files where frontend instructions activate and refine the UX slice.
-4. Compare which requirements are globally portable versus scoped to one surface.
-5. Reflect on which earlier lesson patterns are being reused in the capstone.
+- **Updated docs:** Enhanced architecture.md + VOCAB.md (Exercise 1)
+- **Prompt file:** `.github/prompts/feature-plan.prompt.md` (Exercise 2)
+- **Agent files:** `.github/agents/planner.agent.md`, `.github/agents/tester.agent.md` (Exercise 3)
+- **Hook configs:** `.github/hooks/audit-check.json`, `.github/hooks/test-coverage.json` (Exercise 4)
+- **Context inventory:** `docs/CONTEXT_INVENTORY.md` (Exercise 4)
 
-Expected result: learners see how a discovery-first prompt plus scoped instruction activation can produce a practical cross-stack SDLC plan.
+## Codebase Structure
 
-For the captured demo run, use `python util.py --demo --model gpt-5.4`.
+```
+src/
+  backend/
+    src/
+      app.ts                  ← Express entry point
+      config/                 ← Environment config, feature flags
+      db/                     ← SQLite connection, schema, seed
+      middleware/             ← Auth, audit logger, error handler, rate limiter
+      models/                 ← Domain types + repositories
+      queue/                  ← In-process event broker + handlers
+      routes/                 ← HTTP route handlers
+      rules/                  ← Business rules (pure logic, no I/O)
+      services/               ← Business logic orchestration
+    tests/
+      unit/                   ← Unit tests for rules and services
+      integration/            ← API integration tests
+  frontend/
+    src/
+      api/                    ← Typed HTTP client
+      pages/                  ← SPA pages
+      components/             ← Reusable UI components
+```
 
-## Cleanup
+## Key Source Files
 
-```bash
-python util.py --clean
+These files are central to the exercises:
+
+| File                                                      | Relevant To                |
+| --------------------------------------------------------- | -------------------------- |
+| `backend/src/rules/preference-event-channel-validator.ts` | Exercise 1 (understanding) |
+| `backend/src/rules/mandatory-events.ts`                   | Exercise 1 (documentation) |
+| `backend/src/routes/notifications.ts`                     | Exercise 2, 3, 4           |
+| `backend/src/services/audit-service.ts`                   | Exercise 3, 4              |
+| `backend/src/middleware/rate-limiter.ts`                  | Exercise 2 (planning)      |
+| `backend/src/models/types.ts`                             | All exercises              |
+
+```
+
 ```
