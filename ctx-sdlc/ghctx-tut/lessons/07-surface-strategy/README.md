@@ -1,97 +1,137 @@
 # Lesson 07 — Surface Strategy
 
-> **App:** Loan Workbench (TypeScript Express API + SQLite)
-> **Topic:** Tailoring context for different Copilot surfaces and ensuring portability across environments.
+> **App shape:** Loan Workbench (TypeScript + Express + SQLite)
+> **Teaching goal:** Show how reusable application context feeds multiple
+> coding agents through a clean data/format separation.
 
-## Setup
+## Important Framing
 
-```bash
-python util.py --setup
-python util.py --run
-```
+This lesson is not here to run the app.
+
+It is here to show and walk through the context architecture itself — how
+application knowledge lives in one place and gets projected into tool-native
+formats for GitHub Copilot, Claude Code, and Codex.
 
 ## What This Demonstrates
 
-Different Copilot surfaces consume context differently.
+| Artifact | Role | Why it matters |
+| --- | --- | --- |
+| `.code.agent/context/*.md` | Reusable application context | All app knowledge lives here — written once, never duplicated |
+| `.code.agent/templates/*.tpl` | Pure format shells | Agent-specific structure with zero application content |
+| `.code.agent/graph.json` | Context-to-output mapping | Declares which context feeds which template to produce which output |
+| `transform.py` | Generation engine | Reads context, applies templates, writes outputs |
+| `AGENTS.md` | Shared projection (Codex/humans) | Generated from `app-identity.md` context |
+| `CLAUDE.md` | Claude bridge | Imports `@AGENTS.md` — no content duplication |
+| `.github/copilot-instructions.md` | Copilot bridge | Generated from `app-identity.md` context |
+| `.github/instructions/*.instructions.md` | Copilot scoped rules | Generated from backend/frontend/testing/api context |
+| `.claude/rules/*.md` | Claude scoped rules | Same context as Copilot, different format |
+| `.github/agents/reviewer.agent.md` | Reviewer agent | Generated from reviewer checklist context |
+| `.github/skills/loan-workbench-delivery/SKILL.md` | Delivery skill | Generated from delivery workflow context |
+| `.github/prompts/implement-loan-workbench-change.prompt.md` | Planning prompt | Generated from change planning context |
+| `.github/hooks/context-guard.json` | Context guard hook | Generated from hook configuration context |
+| `docs/*.md` | Application documentation | Documents the `src/` app — architecture, API, features, data model |
 
-| Surface            | Context Access                               | Best For                 |
-| ------------------ | -------------------------------------------- | ------------------------ |
-| Agent mode (Chat)  | Full `.github/`, agents, prompts, tools      | Complex multi-step tasks |
-| Inline completions | `.github/instructions/` auto-scoped by file  | Line-by-line generation  |
-| CLI (`copilot`)    | Baseline repo context plus what it discovers | Quick scripted prompting |
-| Other IDEs         | Portable baseline instructions               | Cross-IDE consistency    |
+## No Setup Required
 
-### Cross-Tool File Support
+There is nothing to install for the lesson story.
 
-Different AI coding tools recognize different instruction file names. The portable base remains repository docs and README files.
+You can optionally run `python util.py --summary` to print the walkthrough map,
+but the lesson works by reading files, not by starting services.
 
-| File                              | Tool                | Purpose                               |
-| --------------------------------- | ------------------- | ------------------------------------- |
-| `.github/copilot-instructions.md` | GitHub Copilot      | Repository-wide behavioral rules      |
-| `CLAUDE.md`                       | Claude Code         | Project context for Claude            |
-| `GEMINI.md`                       | Gemini Code Assist  | Project context for Gemini            |
-| `AGENTS.md`                       | Multiple (portable) | Base-level project agent instructions |
-| `/docs/` and `README.md`          | All tools           | Knowledge context (most portable)     |
+If you change the context or templates, run `python transform.py --write` to
+refresh the generated outputs.
 
-### excludeAgent Frontmatter
+## Context Pack Layout
 
-The `excludeAgent` keyword in `.instructions.md` frontmatter controls which agent surfaces an instruction file applies to. Use `excludeAgent: code-review` to prevent verbose development guidance from loading during PR reviews, or `excludeAgent: coding-agent` to exclude autonomous agent runs.
-
-## Context Files
-
-| Path                                       | Purpose                                                   |
-| ------------------------------------------ | --------------------------------------------------------- |
-| `.github/copilot-instructions.md`          | Universal baseline                                        |
-| `.github/instructions/api.instructions.md` | API-scoped rules                                          |
-| `.github/agents/reviewer.agent.md`         | Review agent                                              |
-| `docs/cli-guide.md`                        | CLI usage reference                                       |
-| `docs/portability-matrix.md`               | Surface compatibility reference                           |
-| `docs/surface-strategy-example.md`         | Concrete lesson-07 demo target and assessment constraints |
-
-## Example Goal
-
-This lesson should demonstrate surface-portability analysis through produced artifacts.
-
-For this example, the intended outcome is:
-
-- inspect the lesson's baseline instructions, scoped instructions, agent, and docs
-- discover the relevant portability artifacts instead of relying on a hardcoded read list
-- create a portable-baseline instruction file extracting the cross-surface-portable subset
-- create a surface-portability notes document with risk taxonomy and recommendations
-- the changes are assessable via actual vs expected file and pattern comparison
-
-## Copilot CLI Workflow
-
-Run from the lesson root:
-
-```bash
-copilot -p "Inspect the lesson's surface-strategy artifacts before answering. Discover the relevant baseline instructions, scoped instructions, agents, prompts, MCP, hooks, and docs that exist here rather than assuming a fixed file list. Then create two new files based on your analysis: 1. Create .github/instructions/portable-baseline.instructions.md containing the extracted cross-surface-portable subset of the existing instructions that works on CLI, Chat, inline completions, coding agent, and code review surfaces. Use applyTo: '**' scope. 2. Create docs/surface-portability-notes.md documenting which features are portable vs surface-specific, one concrete portability risk, one false positive, one hard negative, and recommendations for where each kind of guidance should live. Follow the discovered instruction architecture conventions. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+```text
+07-surface-strategy/
+  .code.agent/
+    graph.json
+    context/
+      app-identity.md
+      backend.md
+      frontend.md
+      testing.md
+      api-routes.md
+      delivery-workflow.md
+      change-planning.md
+      reviewer-checklist.md
+      context-guard.md
+    templates/
+      agents.md.tpl
+      claude-bridge.md.tpl
+      copilot-bridge.md.tpl
+      copilot-instruction.md.tpl
+      claude-rule.md.tpl
+      copilot-agent.md.tpl
+      copilot-skill.md.tpl
+      copilot-prompt.md.tpl
+      hook.json.tpl
+  AGENTS.md                          ← generated
+  CLAUDE.md                          ← generated
+  .github/
+    copilot-instructions.md          ← generated
+    instructions/
+      backend.instructions.md        ← generated
+      frontend.instructions.md       ← generated
+      tests.instructions.md          ← generated
+      api.instructions.md            ← generated
+    agents/
+      reviewer.agent.md              ← generated
+    skills/
+      loan-workbench-delivery/
+        SKILL.md                     ← generated
+    prompts/
+      implement-loan-workbench-change.prompt.md  ← generated
+    hooks/
+      context-guard.json             ← generated
+  .claude/
+    rules/
+      backend.md                     ← generated
+      frontend.md                    ← generated
+      tests.md                       ← generated
+      api.md                         ← generated
+  docs/
+    architecture.md
+    api-reference.md
+    feature-map.md
+    data-model.md
+  transform.py
 ```
 
-Expected result:
+## Key Design Principle
 
-- the CLI creates `.github/instructions/portable-baseline.instructions.md` and `docs/surface-portability-notes.md`
-- the portable baseline instruction contains only cross-surface guidance
-- the portability notes document includes risk taxonomy with false positive and hard negative
-- `.output/change/demo.patch` contains the new files
-- `.output/change/comparison.md` shows actual vs expected file and pattern match results
+Context is DATA — it holds application knowledge in `.code.agent/context/`.
+Templates are FORMAT — they hold agent-specific structural wrappers in
+`.code.agent/templates/`. The two never cross. Templates contain zero
+application knowledge. Context contains zero agent-specific formatting.
+`transform.py` maps one to the other through `graph.json`.
+5. Let Claude import that projection through `CLAUDE.md`.
+6. Let Copilot use `.github/copilot-instructions.md` as its bridge.
+7. Generate skills, prompts, hooks, and scoped rules from the same model.
+8. Keep scoped rules tool-native, but semantically aligned.
 
-## VS Code Chat Workflow
+That is the practical portability lesson. Shared intent matters more than file
+name uniformity.
 
-Compare the same repository ask across three surfaces:
+## Walkthrough Order
 
-- Agent mode for full multi-step assistance
-- Inline completions inside an API file for scoped instruction activation
-- Ask mode with explicit file attachments where needed
+Use this order when presenting the example:
 
-Use the portability matrix and ask which guidance belongs in the universal baseline versus scoped instructions.
+1. Start with `AGENTS.md` and explain the shared base.
+2. Open `docs/context-graph.md` and show the graph.
+3. Open `.code.agent/graph.json` and `.code.agent/templates/`.
+4. Open `transform.py` and explain the projection step.
+5. Open `CLAUDE.md` and show the import pattern.
+6. Open `.github/copilot-instructions.md` and explain the Copilot bridge.
+7. Compare `.github/instructions/api.instructions.md` with `.claude/rules/api.md`.
+8. Finish with `docs/portability-matrix.md` and
+	 `docs/surface-portability-notes.md`.
 
-Expected result: you see why some guidance must live in `copilot-instructions.md`, while more specialized rules should remain scoped.
+## What You Should Say Out Loud
 
-For the captured demo run, use `python util.py --demo --model gpt-5.4`.
-
-## Cleanup
-
-```bash
-python util.py --clean
-```
+- "This repo is a context specimen, not a runnable app demo."
+- "AGENTS.md is the shared story."
+- "Claude imports the shared story. Copilot needs its own bridge."
+- "Scoped rules stay native to each tool, but the semantics match."
+- "Docs carry the explanation so the entry files stay small."

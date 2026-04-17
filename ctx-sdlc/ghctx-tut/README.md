@@ -74,7 +74,7 @@ NN-lesson-slug/
 | `04-planning-workflows/`        | complex  | Specs, NFRs, planning prompts           | `specs/`, `docs/`, feature/bug templates | [Watch](https://www.youtube.com/watch?v=KuLgT8Wck_E) |
 | `05-implementation-workflows/`  | complex  | Role-separated agents, TDD              | `.github/agents/`, `specs/`, `docs/`     | [Watch](https://www.youtube.com/watch?v=ZvclU2Jyx5o) |
 | `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection     | `.github/mcp.json`, `scripts/`, `docs/`  | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
-| `07-surface-strategy/`          | complex  | VS Code, CLI, agent portability         | `.github/`, `cli/`                       | _Coming soon_                                        |
+| `07-surface-strategy/`          | complex  | Polyglot context for Copilot, Claude, Codex | `AGENTS.md`, `CLAUDE.md`, `.github/`, `docs/` | _Coming soon_                                        |
 | `08-operating-model/`           | complex  | Maintenance, measurement, anti-patterns | `scripts/`, `checklists/`, `examples/`   | _Coming soon_                                        |
 | `09-ai-assisted-sdlc-capstone/` | complex  | Progressive context (5 stages)          | `stages/` (cumulative overlays)          | _Coming soon_                                        |
 
@@ -95,7 +95,7 @@ Lesson 05  │ + Role-separated agents + TDD skills + playbook
            │
 Lesson 06  │ + MCP servers + hooks + file protection + trust boundaries
            │
-Lesson 07  │ → Surface strategy: portability across VS Code, CLI, coding agent
+Lesson 07  │ → Surface strategy: polyglot context across Copilot, Claude, Codex
            │
 Lesson 08  │ → Operating model: maintenance scripts, audit, anti-pattern detection
            │
@@ -153,9 +153,9 @@ Each lesson README contains 6-8 numbered scenarios. Here are the highlights:
 | 06     | File protection (feature flags) | Even "correct" changes need governance        |
 | 06     | Trust boundary violation        | Agent × tool matrix prevents capability leaks |
 | 06     | Adding new MCP server           | 5-step process with trust classification      |
-| 07     | Portable foundation             | copilot-instructions.md works on all surfaces |
-| 07     | Surface mismatch failure        | Agent workflow fails in CLI                   |
-| 07     | Foundation-first strategy       | Start portable, layer upward                  |
+| 07     | Shared base plus bridges        | One repo story, three tool-native entrypoints |
+| 07     | Scoped parity                   | Copilot and Claude keep the same route rules  |
+| 07     | Foundation-first strategy       | Start with shared intent, then bridge outward |
 | 08     | Audit script run                | Automated detection of context drift          |
 | 08     | Before/after cleanup            | 5 anti-patterns fixed in one diff             |
 | 08     | Stale technology problem        | Wrong library = wrong code (winston vs. pino) |
