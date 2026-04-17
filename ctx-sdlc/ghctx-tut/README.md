@@ -75,7 +75,7 @@ NN-lesson-slug/
 | `05-implementation-workflows/`  | complex  | Role-separated agents, TDD                  | `.github/agents/`, `specs/`, `docs/`          | [Watch](https://www.youtube.com/watch?v=ZvclU2Jyx5o) |
 | `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection         | `.github/mcp.json`, `scripts/`, `docs/`       | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 | `07-surface-strategy/`          | complex  | Polyglot context for Copilot, Claude, Codex | `AGENTS.md`, `CLAUDE.md`, `.github/`, `docs/` | [Watch](https://www.youtube.com/watch?v=XvUSBlrXZoA) |
-| `08-operating-model/`           | complex  | Maintenance, measurement, anti-patterns     | `scripts/`, `checklists/`, `examples/`        | _Coming soon_                                        |
+| `08-operating-model/`           | complex  | Maintenance, measurement, anti-patterns     | `scripts/`, `checklists/`, `examples/`        | [Watch](https://www.youtube.com/watch?v=7XBVtDGi87I) |
 | `09-ai-assisted-sdlc-capstone/` | complex  | Progressive context (5 stages)              | `stages/` (cumulative overlays)               | _Coming soon_                                        |
 
 ## Progressive Context Stack
@@ -248,5 +248,6 @@ graph TD
 | 05  | [![Lesson 05](https://img.youtube.com/vi/ZvclU2Jyx5o/maxresdefault.jpg)](https://www.youtube.com/watch?v=ZvclU2Jyx5o) | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | [Watch](https://www.youtube.com/watch?v=ZvclU2Jyx5o) |
 | 06  | [![Lesson 06](https://img.youtube.com/vi/MBHvkVrEgRk/maxresdefault.jpg)](https://www.youtube.com/watch?v=MBHvkVrEgRk) | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 | 07  | [![Lesson 07](https://img.youtube.com/vi/XvUSBlrXZoA/maxresdefault.jpg)](https://www.youtube.com/watch?v=XvUSBlrXZoA) | Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex       | [Watch](https://www.youtube.com/watch?v=XvUSBlrXZoA) |
+| 08  | [![Lesson 08](https://img.youtube.com/vi/7XBVtDGi87I/maxresdefault.jpg)](https://www.youtube.com/watch?v=7XBVtDGi87I) | Beyond Vibe Coding: Context Operating Model                               | [Watch](https://www.youtube.com/watch?v=7XBVtDGi87I) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>
