@@ -1,5 +1,8 @@
 # Lesson 09 — AI-Assisted SDLC Capstone
 
+[![Watch: The GitHub Copilot Capstone: Putting Every Lesson Into Practice](https://img.youtube.com/vi/AQEzRSVYf0c/maxresdefault.jpg)](https://www.youtube.com/watch?v=AQEzRSVYf0c)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=AQEzRSVYf0c" target="_blank" rel="noopener noreferrer">The GitHub Copilot Capstone: Putting Every Lesson Into Practice</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 > <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
 
@@ -118,6 +121,16 @@ These files are central to the exercises:
 | `backend/src/middleware/rate-limiter.ts`                  | Exercise 2 (planning)      |
 | `backend/src/models/types.ts`                             | All exercises              |
 
-```
+## Series Navigation
 
-```
+| #   | Lesson                                                                    | Video                                       | Example                                                        |
+| --- | ------------------------------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------- |
+| 01  | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | https://www.youtube.com/watch?v=YBXo_hxr9k4 | [01-why-context-engineering](../01-why-context-engineering/)   |
+| 02  | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | https://www.youtube.com/watch?v=1B90MkDnmhs | [02-curate-project-context](../02-curate-project-context/)     |
+| 03  | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | https://www.youtube.com/watch?v=BS2NbFnyYJY | [03-instruction-architecture](../03-instruction-architecture/) |
+| 04  | Mastering GitHub Copilot Plan Mode                                        | https://www.youtube.com/watch?v=KuLgT8Wck_E | [04-planning-workflows](../04-planning-workflows/)             |
+| 05  | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | https://www.youtube.com/watch?v=ZvclU2Jyx5o | [05-implementation-workflows](../05-implementation-workflows/) |
+| 06  | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | https://www.youtube.com/watch?v=MBHvkVrEgRk | [06-tools-and-guardrails](../06-tools-and-guardrails/)         |
+| 07  | Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex       | https://www.youtube.com/watch?v=XvUSBlrXZoA | [07-surface-strategy](../07-surface-strategy/)                 |
+| 08  | Beyond Vibe Coding: Context Operating Model                               | https://www.youtube.com/watch?v=7XBVtDGi87I | [08-operating-model](../08-operating-model/)                   |
+| 09  | The GitHub Copilot Capstone: Putting Every Lesson Into Practice           | https://www.youtube.com/watch?v=AQEzRSVYf0c | [09-ai-assisted-sdlc-capstone](./)                             |

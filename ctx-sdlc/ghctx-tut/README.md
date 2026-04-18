@@ -76,7 +76,7 @@ NN-lesson-slug/
 | `06-tools-and-guardrails/`      | complex  | MCP servers, hooks, file protection         | `.github/mcp.json`, `scripts/`, `docs/`       | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 | `07-surface-strategy/`          | complex  | Polyglot context for Copilot, Claude, Codex | `AGENTS.md`, `CLAUDE.md`, `.github/`, `docs/` | [Watch](https://www.youtube.com/watch?v=XvUSBlrXZoA) |
 | `08-operating-model/`           | complex  | Maintenance, measurement, anti-patterns     | `scripts/`, `checklists/`, `examples/`        | [Watch](https://www.youtube.com/watch?v=7XBVtDGi87I) |
-| `09-ai-assisted-sdlc-capstone/` | complex  | Progressive context (5 stages)              | `stages/` (cumulative overlays)               | _Coming soon_                                        |
+| `09-ai-assisted-sdlc-capstone/` | complex  | Progressive context (5 stages)              | `stages/` (cumulative overlays)               | [Watch](https://www.youtube.com/watch?v=AQEzRSVYf0c) |
 
 ## Progressive Context Stack
 
@@ -249,5 +249,6 @@ graph TD
 | 06  | [![Lesson 06](https://img.youtube.com/vi/MBHvkVrEgRk/maxresdefault.jpg)](https://www.youtube.com/watch?v=MBHvkVrEgRk) | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | [Watch](https://www.youtube.com/watch?v=MBHvkVrEgRk) |
 | 07  | [![Lesson 07](https://img.youtube.com/vi/XvUSBlrXZoA/maxresdefault.jpg)](https://www.youtube.com/watch?v=XvUSBlrXZoA) | Context Engineering the Multi-Agent Era: Copilot, Claude, and Codex       | [Watch](https://www.youtube.com/watch?v=XvUSBlrXZoA) |
 | 08  | [![Lesson 08](https://img.youtube.com/vi/7XBVtDGi87I/maxresdefault.jpg)](https://www.youtube.com/watch?v=7XBVtDGi87I) | Beyond Vibe Coding: Context Operating Model                               | [Watch](https://www.youtube.com/watch?v=7XBVtDGi87I) |
+| 09  | [![Lesson 09](https://img.youtube.com/vi/AQEzRSVYf0c/maxresdefault.jpg)](https://www.youtube.com/watch?v=AQEzRSVYf0c) | The GitHub Copilot Capstone: Putting Every Lesson Into Practice           | [Watch](https://www.youtube.com/watch?v=AQEzRSVYf0c) |
 
 Full Course: <https://tuts.localm.dev/ctx-sdlc>
