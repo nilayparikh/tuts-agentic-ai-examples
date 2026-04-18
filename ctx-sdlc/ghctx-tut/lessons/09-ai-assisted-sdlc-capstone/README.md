@@ -1,7 +1,18 @@
 # Lesson 09 — AI-Assisted SDLC Capstone
 
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
+
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Hands-on capstone applying context-engineering techniques from Lessons 01–08.
+
+## Setup
+
+```bash
+python util.py --setup
+```
+
+If a generic lesson template shows `Run: python util.py --run`, ignore it for this example. This lesson uses `util.py --setup` only.
 
 ## Overview
 
