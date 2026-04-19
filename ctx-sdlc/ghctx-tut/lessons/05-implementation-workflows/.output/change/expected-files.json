@@ -1,0 +1,10 @@
+{
+  "added": [
+    "backend/src/rules/notification-preference-write-rules.ts",
+    "backend/tests/unit/notification-preference-write-rules.test.ts"
+  ],
+  "modified": [
+    "backend/src/routes/notifications.ts"
+  ],
+  "deleted": []
+}

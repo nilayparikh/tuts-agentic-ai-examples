@@ -1,0 +1,102 @@
+--- a/backend/src/routes/applications.ts
++++ b/backend/src/routes/applications.ts
+@@ -91,3 +91,21 @@
+     }
+   },
+ );
++
++/** POST /api/applications/:id/manual-review — request manual review escalation. */
++applicationRoutes.post(
++  "/:id/manual-review",
++  requireRole("analyst-manager"),
++  (req, res, next) => {
++    try {
++      const session = req.session as SessionContext;
++      const result = loanService.requestManualReview(
++        session,
++        firstParam(req.params.id),
++      );
++      res.json(result);
++    } catch (err) {
++      next(err);
++    }
++  },
++);
+
+--- a/backend/src/services/loan-service.ts
++++ b/backend/src/services/loan-service.ts
+@@ -12,6 +12,8 @@
+ import { validateLoanRules, canApprove } from "../rules/business-rules.js";
+ import { getMandatoryEvents } from "../rules/mandatory-events.js";
+ import { broker } from "../queue/broker.js";
++import { auditAction } from "./audit-service.js";
++import { featureFlags } from "../config/feature-flags.js";
+ import type {
+   LoanApplication,
+   SessionContext,
+@@ -118,3 +120,65 @@
+ 
+   return updated;
+ }
++
++/**
++ * Request manual review escalation for a loan application.
++ * Emits a notification.requested event and audits the action.
++ * Does not change the loan's lifecycle status.
++ */
++export function requestManualReview(
++  session: SessionContext,
++  applicationId: string,
++): { ok: boolean; applicationId: string; notificationEventId: string } {
++  if (session.delegatedFor) {
++    throw new Error("FORBIDDEN: Delegated sessions cannot request manual review.");
++  }
++
++  const loan = loanRepo.findLoanById(applicationId);
++  if (!loan) {
++    throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);
++  }
++
++  const eventId = uuid();
++
++  // Build notification subject with California high-risk prefix if applicable
++  let subject = "Manual Review Escalation Requested";
++  if (
++    featureFlags.californiaRules &&
++    loan.loanState === "CA" &&
++    loan.amount >= 1000000
++  ) {
++    subject = "[CA-HighRisk] " + subject;
++  }
++
++  // Emit notification event
++  const notifEvent: NotificationRequestedEvent = {
++    eventId,
++    timestamp: new Date().toISOString(),
++    source: "loan-service",
++    type: "notification.requested",
++    payload: {
++      userId: loan.assignedUnderwriter,
++      event: "manual-review-escalation",
++      subject,
++      body: `Manual review has been requested for loan application ${applicationId} (${loan.borrowerName}, $${loan.amount.toLocaleString()}).`,
++      preferredChannel: "email",
++    },
++  };
++  broker.emit(notifEvent);
++
++  // Audit the action
++  auditAction(
++    session,
++    "loan.manual-review-requested",
++    null,
++    { applicationId, initiatedBy: session.actor.id },
++    "loan-service",
++  );
++
++  return {
++    ok: true,
++    applicationId,
++    notificationEventId: eventId,
++  };
++}

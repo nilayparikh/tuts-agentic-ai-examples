@@ -1,0 +1,19 @@
+# Loan Workbench Change Planning
+
+Plan an application change for Loan Workbench.
+
+## Rules
+
+- Start from the real `src/` application structure.
+- Identify impacted backend, frontend, and test surfaces.
+- Call out API contract changes when backend and frontend must move together.
+- Keep the plan scoped to the requested behavior.
+- Do not introduce architectural changes that were not requested.
+
+## Required Output
+
+1. Impacted files or directories
+2. Backend changes
+3. Frontend changes
+4. Test changes
+5. Risks or compatibility notes

@@ -1,5 +1,14 @@
 # Lesson 13 — Claude Agent SDK (Loan Validation via A2A)
 
+[![Watch: A2A with Claude Style Agents](https://img.youtube.com/vi/e5E-iN2lFvg/maxresdefault.jpg)](https://www.youtube.com/watch?v=e5E-iN2lFvg)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with OpenAI Agents SDK](../12-openai-agents-sdk/)
+- Next lesson: [Multi-Agent System Deep Dive](../14-multi-agent-deep-dive/)
+
 An `OrchestratorAgent` built with Claude-style agent patterns uses
 **Kimi-K2-Thinking** (Azure AI Foundry) to pre-screen residential mortgage
 loan applications. Instead of relying on a framework's agent abstractions,

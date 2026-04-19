@@ -1,0 +1,16 @@
+{
+  "added": [
+    "backend/src/models/escalation-repository.ts",
+    "backend/src/queue/handlers/escalation-handler.ts",
+    "backend/src/routes/escalation.ts",
+    "backend/src/services/escalation-service.ts"
+  ],
+  "modified": [
+    "backend/src/app.ts",
+    "backend/src/db/seed.ts",
+    "backend/src/models/types.ts",
+    "backend/src/queue/contracts.ts",
+    "backend/src/rules/role-permissions.ts"
+  ],
+  "deleted": []
+}

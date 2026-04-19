@@ -1,5 +1,14 @@
 # Lesson 11 — A2A with CrewAI
 
+[![Watch: A2A with CrewAI](https://img.youtube.com/vi/JSa8Vd9kpFM/maxresdefault.jpg)](https://www.youtube.com/watch?v=JSa8Vd9kpFM)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/crewai" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with LangGraph](../10-langgraph/)
+- Next lesson: [A2A with OpenAI Agents SDK](../12-openai-agents-sdk/)
+
 This folder contains the working example for Lesson 11 of the A2A tutorial.
 
 ## What It Does
@@ -102,6 +111,7 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking
 ```
 crewai>=0.100.0
 ```
+
 ## Sample Output
 
 Running `python client.py` produces (requires active Azure AI Foundry endpoint):
@@ -150,4 +160,5 @@ Applicant: Carol Martinez (APP-2024-003)
 
 > **Note:** Requires the Kimi-K2-Thinking deployment on Azure AI Foundry to be available
 > with sufficient quota. The CrewAI agent runs two sequential crew tasks (compliance analyst
-> + senior underwriter) per applicant.
+>
+> - senior underwriter) per applicant.

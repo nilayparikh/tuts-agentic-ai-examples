@@ -1,0 +1,52 @@
+lockfile_version: '1'
+generated_at: '2026-04-17T16:26:53.362908+00:00'
+apm_version: 0.8.11
+dependencies:
+- repo_url: DiversioTeam/agent-skills-marketplace
+  host: github.com
+  resolved_commit: 088ef87f743726407b81772c8e560ff75747f349
+  virtual_path: plugins/terraform
+  is_virtual: true
+  package_type: apm_package
+  deployed_files:
+  - .claude/commands/atomic-commit.md
+  - .claude/commands/check-pr.md
+  - .claude/commands/pre-commit.md
+  - .claude/skills/terraform-atomic-commit
+  - .claude/skills/terraform-pr-workflow
+  - .github/prompts/atomic-commit.prompt.md
+  - .github/prompts/check-pr.prompt.md
+  - .github/prompts/pre-commit.prompt.md
+  - .github/skills/terraform-atomic-commit
+  - .github/skills/terraform-pr-workflow
+  content_hash: sha256:d5fc18dba176704fad13873ab9d31bb301acd83817b8fa0f2dfb085c23eedde2
+  discovered_via: agent-skills-marketplace
+  marketplace_plugin_name: terraform
+- repo_url: microsoft/apm-sample-package
+  host: github.com
+  resolved_commit: fb2851683be0e0e7711421d518bd8dba23b0b1f6
+  package_type: apm_package
+  deployed_files:
+  - .claude/agents/design-reviewer.md
+  - .claude/commands/accessibility-audit.md
+  - .claude/commands/design-review.md
+  - .claude/rules/design-standards.md
+  - .claude/skills/style-checker
+  - .github/agents/design-reviewer.agent.md
+  - .github/instructions/design-standards.instructions.md
+  - .github/prompts/accessibility-audit.prompt.md
+  - .github/prompts/design-review.prompt.md
+  - .github/skills/style-checker
+  content_hash: sha256:744cca54cc8ff7ca90aa1dd621c2f98c6291cd793815afe8518001cc94b8aba9
+- repo_url: github/awesome-copilot
+  host: github.com
+  resolved_commit: 8fbf6c4a798df51d1d1d8fd37a1aa7e94203109c
+  virtual_path: skills/review-and-refactor
+  is_virtual: true
+  depth: 2
+  resolved_by: microsoft/apm-sample-package
+  package_type: claude_skill
+  deployed_files:
+  - .claude/skills/review-and-refactor
+  - .github/skills/review-and-refactor
+  content_hash: sha256:9236d06a1500089ddb46975b866e9a63478e502afe7095b1980c618678a7c7fe

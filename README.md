@@ -4,9 +4,10 @@ Code examples for LocalM tutorial courses. Each sub-folder maps to one published
 
 ## Courses
 
-| Folder                  | Course                        | Status                           |
-| ----------------------- | ----------------------------- | -------------------------------- |
-| [`a2a/`](a2a/README.md) | Agent-to-Agent (A2A) Protocol | Active — lessons 05–14 available |
+| Folder                        | Course                        | Status                               |
+| ----------------------------- | ----------------------------- | ------------------------------------ |
+| [`agents/`](agents/README.md) | AI Agent Design Patterns      | Active - Part 1 and Part 2 published |
+| [`a2a/`](a2a/README.md)       | Agent-to-Agent (A2A) Protocol | Active — lessons 05–14 available     |
 
 ## Model Providers
 
@@ -21,12 +22,12 @@ graph LR
 
 ### GitHub Models
 
-- Get a free token at [github.com/settings/tokens](https://github.com/settings/tokens) (no scopes needed)
+- Get a free token at <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">github.com/settings/tokens</a> (no scopes needed)
 - Add `GITHUB_TOKEN=ghp_...` to `.env`
 
 ### AI Toolkit LocalFoundry
 
-- Install the [VS Code AI Toolkit extension](https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio)
+- Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-windows-ai-studio.windows-ai-studio" target="_blank" rel="noopener noreferrer">VS Code AI Toolkit extension</a>
 - Load any compatible model (e.g. `qwen2.5-0.5b-instruct-generic-gpu:4`) — server starts on port 5272
 
 ```python

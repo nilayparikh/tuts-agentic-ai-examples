@@ -1,0 +1,48 @@
+# API Route Contract
+
+## Scope
+
+`src/backend/src/routes/**/*.ts`
+
+## Handler Pattern
+
+```typescript
+router.post(
+  "/path",
+  requireRole("role"),
+  validateBody(schema),
+  async (req, res, next) => {
+    try {
+      const result = await service.process(req.body);
+      await auditService.record({ action: "action_name", ...result });
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+```
+
+## Middleware Chain
+
+Applied per-route in this order:
+
+1. `requireRole(role)` — role-based access control
+2. `validateBody(schema)` — request body validation
+3. Handler — validates, delegates to rules/services, responds
+
+## Error Responses
+
+- Validation: 400 `{ error: string }`
+- Not found: 404 `{ error: string }`
+- Unauthorized: 401 `{ error: "Unauthorized" }`
+- Forbidden: 403 `{ error: string }`
+- Feature flag disabled: 404 `{ error: string }`
+
+## Route Surfaces
+
+- `applications.ts` — loan application CRUD and state transitions
+- `decisions.ts` — approval and rejection workflows
+- `notifications.ts` — notification delivery status
+- `audit.ts` — audit log queries
+- `queue-status.ts` — async queue monitoring

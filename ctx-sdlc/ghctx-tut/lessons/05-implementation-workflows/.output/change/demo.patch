@@ -1,0 +1,536 @@
+--- a/backend/src/routes/notifications.ts
++++ b/backend/src/routes/notifications.ts
+@@ -16,6 +16,7 @@
+ import { Router } from "express";
+ import { requireRole } from "../middleware/auth.js";
+ import { validateBody } from "../middleware/request-validator.js";
++import { validateNotificationPreferenceWrite } from "../rules/notification-preference-write-rules.js";
+ import { hasPermission } from "../rules/role-permissions.js";
+ import { auditAction } from "../services/audit-service.js";
+ import * as prefRepo from "../models/preference-repository.js";
+@@ -51,6 +52,7 @@
+     { field: "event", type: "string", required: true },
+     { field: "channel", type: "string", required: true },
+     { field: "enabled", type: "boolean", required: true },
++    { field: "loanState", type: "string", required: false },
+   ]),
+   (req, res, next) => {
+     try {
+@@ -72,10 +74,25 @@
+         return;
+       }
+ 
+-      const { userId, event, channel, enabled } = req.body;
++      const { userId, event, channel, enabled, loanState } = req.body;
+       const now = new Date().toISOString();
+-
+-      const previous = prefRepo.findPreference(userId, event, channel);
++      const existingPreferences = prefRepo.findPreferencesForUser(userId);
++      const previous = existingPreferences.find(
++        (preference) =>
++          preference.event === event && preference.channel === channel,
++      );
++      const ruleDecision = validateNotificationPreferenceWrite({
++        nextPreference: { event, channel, enabled },
++        existingPreferences,
++        loanState,
++      });
++
++      if (!ruleDecision.allowed) {
++        res.status(400).json({
++          error: ruleDecision.reason,
++        });
++        return;
++      }
+ 
+       const pref: NotificationPreference = {
+         userId,
+
+--- a/backend/src/rules/notification-preference-write-rules.ts
++++ b/backend/src/rules/notification-preference-write-rules.ts
+@@ -0,0 +1,94 @@
++// ---------------------------------------------------------------------------
++// Notification Preference Write Rules
++// ---------------------------------------------------------------------------
++// FALSE POSITIVE: Disabling manual-review-escalation SMS is allowed when the
++// email channel stays enabled. The violation is zero enabled channels, not a
++// specific channel being turned off.
++//
++// HARD NEGATIVE: Reject writes that leave manual-review-escalation with no
++// enabled channels, and reject enabling decline SMS for California loan
++// context while LEGAL-218 remains in effect.
++// ---------------------------------------------------------------------------
++
++import type {
++  LoanApplication,
++  NotificationChannel,
++  NotificationPreference,
++} from "../models/types.js";
++
++export interface NotificationPreferenceWriteRule {
++  allowed: boolean;
++  reason?: string;
++}
++
++export interface NotificationPreferenceWriteInput {
++  nextPreference: Pick<
++    NotificationPreference,
++    "event" | "channel" | "enabled"
++  >;
++  existingPreferences: NotificationPreference[];
++  loanState?: LoanApplication["loanState"];
++}
++
++const ESCALATION_CHANNELS: NotificationChannel[] = ["email", "sms"];
++
++function isCaliforniaLoanState(
++  loanState?: LoanApplication["loanState"],
++): boolean {
++  const normalized = loanState?.trim().toLowerCase();
++  return normalized === "ca" || normalized === "california";
++}
++
++function isChannelEnabledAfterWrite(
++  input: NotificationPreferenceWriteInput,
++  channel: NotificationChannel,
++): boolean {
++  if (
++    input.nextPreference.event === "manual-review-escalation" &&
++    input.nextPreference.channel === channel
++  ) {
++    return input.nextPreference.enabled;
++  }
++
++  return Boolean(
++    input.existingPreferences.find(
++      (preference) =>
++        preference.event === "manual-review-escalation" &&
++        preference.channel === channel,
++    )?.enabled,
++  );
++}
++
++export function validateNotificationPreferenceWrite(
++  input: NotificationPreferenceWriteInput,
++): NotificationPreferenceWriteRule {
++  if (
++    input.nextPreference.event === "decline" &&
++    input.nextPreference.channel === "sms" &&
++    input.nextPreference.enabled &&
++    isCaliforniaLoanState(input.loanState)
++  ) {
++    // LEGAL-218: California decline SMS must remain disabled.
++    return {
++      allowed: false,
++      reason:
++        "LEGAL-218 prevents enabling decline SMS for California loan context.",
++    };
++  }
++
++  if (input.nextPreference.event === "manual-review-escalation") {
++    const hasEnabledEscalationChannel = ESCALATION_CHANNELS.some((channel) =>
++      isChannelEnabledAfterWrite(input, channel),
++    );
++
++    if (!hasEnabledEscalationChannel) {
++      return {
++        allowed: false,
++        reason:
++          "manual-review-escalation must keep at least one notification channel enabled.",
++      };
++    }
++  }
++
++  return { allowed: true };
++}
+
+--- a/backend/tests/unit/notification-preference-write-rules.test.ts
++++ b/backend/tests/unit/notification-preference-write-rules.test.ts
+@@ -0,0 +1,387 @@
++import { beforeEach, describe, expect, it, vi } from "vitest";
++
++vi.mock("../../src/models/preference-repository.js", () => ({
++  findPreference: vi.fn(),
++  findPreferencesForUser: vi.fn(),
++  setPreference: vi.fn(),
++}));
++
++vi.mock("../../src/services/audit-service.js", () => ({
++  auditAction: vi.fn(),
++}));
++
++import { notificationRoutes } from "../../src/routes/notifications.js";
++import * as prefRepo from "../../src/models/preference-repository.js";
++import { validateNotificationPreferenceWrite } from "../../src/rules/notification-preference-write-rules.js";
++import type {
++  NotificationPreference,
++  SessionContext,
++} from "../../src/models/types.js";
++
++function buildPreference(
++  overrides: Partial<NotificationPreference>,
++): NotificationPreference {
++  return {
++    userId: "u-1",
++    event: "approval",
++    channel: "email",
++    enabled: true,
++    updatedAt: "2026-04-16T00:00:00.000Z",
++    updatedBy: "u-1",
++    ...overrides,
++  };
++}
++
++function createSession(
++  overrides: Partial<SessionContext> = {},
++): SessionContext {
++  return {
++    actor: {
++      id: "u-1",
++      role: "underwriter",
++      name: "Under Writer",
++      email: "uw@example.com",
++    },
++    ...overrides,
++  };
++}
++
++function normalize(value: unknown): string {
++  return String(value ?? "").toLowerCase();
++}
++
++function createMockResponse() {
++  return {
++    statusCode: 200,
++    body: undefined as unknown,
++    status(code: number) {
++      this.statusCode = code;
++      return this;
++    },
++    json(payload: unknown) {
++      this.body = payload;
++      return this;
++    },
++  };
++}
++
++function invokePutPreferenceRoute(args: {
++  body: Record<string, unknown>;
++  session?: SessionContext;
++}) {
++  const routeLayer = (notificationRoutes as any).stack.find(
++    (layer: any) =>
++      layer.route?.path === "/preferences" && layer.route?.methods?.put,
++  );
++
++  if (!routeLayer?.route) {
++    throw new Error("PUT /preferences route not found.");
++  }
++
++  const handlers = routeLayer.route.stack.map((layer: any) => layer.handle);
++  const req = {
++    body: args.body,
++    params: {},
++    path: "/preferences",
++    session: args.session,
++  } as any;
++  const res = createMockResponse();
++  let forwardedError: unknown;
++
++  const run = (index: number): void => {
++    const handler = handlers[index];
++    if (!handler) {
++      return;
++    }
++
++    handler(req, res, (err?: unknown) => {
++      if (err) {
++        forwardedError = err;
++        return;
++      }
++
++      run(index + 1);
++    });
++  };
++
++  run(0);
++
++  return { res, forwardedError };
++}
++
++beforeEach(() => {
++  vi.clearAllMocks();
++  vi.mocked(prefRepo.findPreference).mockReturnValue(undefined);
++  vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([]);
++});
++
++describe("validateNotificationPreferenceWrite", () => {
++  describe("Happy path", () => {
++    it("allows ordinary preference updates", () => {
++      expect(
++        validateNotificationPreferenceWrite({
++          nextPreference: {
++            event: "approval",
++            channel: "email",
++            enabled: false,
++          },
++          existingPreferences: [],
++          loanState: "NY",
++        }),
++      ).toEqual({ allowed: true });
++    });
++  });
++
++  describe("False positive", () => {
++    it("allows disabling escalation SMS when escalation email stays enabled", () => {
++      expect(
++        validateNotificationPreferenceWrite({
++          nextPreference: {
++            event: "manual-review-escalation",
++            channel: "sms",
++            enabled: false,
++          },
++          existingPreferences: [
++            buildPreference({
++              event: "manual-review-escalation",
++              channel: "email",
++              enabled: true,
++            }),
++            buildPreference({
++              event: "manual-review-escalation",
++              channel: "sms",
++              enabled: true,
++            }),
++          ],
++          loanState: "NY",
++        }),
++      ).toEqual({ allowed: true });
++    });
++  });
++
++  describe("Hard negative", () => {
++    it("rejects disabling the last escalation channel", () => {
++      const result = validateNotificationPreferenceWrite({
++        nextPreference: {
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: false,
++        },
++        existingPreferences: [
++          buildPreference({
++            event: "manual-review-escalation",
++            channel: "email",
++            enabled: false,
++          }),
++          buildPreference({
++            event: "manual-review-escalation",
++            channel: "sms",
++            enabled: true,
++          }),
++        ],
++        loanState: "NY",
++      });
++
++      expect({
++        allowed: result.allowed,
++        reason: normalize(result.reason),
++      }).toEqual(
++        expect.objectContaining({
++          allowed: false,
++          reason: expect.stringMatching(
++            /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,
++          ),
++        }),
++      );
++    });
++  });
++
++  describe("LEGAL-218", () => {
++    it("rejects enabling decline SMS for CA loan context", () => {
++      const result = validateNotificationPreferenceWrite({
++        nextPreference: {
++          event: "decline",
++          channel: "sms",
++          enabled: true,
++        },
++        existingPreferences: [],
++        loanState: "CA",
++      });
++
++      expect({
++        allowed: result.allowed,
++        reason: normalize(result.reason),
++      }).toEqual(
++        expect.objectContaining({
++          allowed: false,
++          reason: expect.stringMatching(
++            /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,
++          ),
++        }),
++      );
++    });
++
++    it("treats California as the same restricted loan state", () => {
++      expect(
++        validateNotificationPreferenceWrite({
++          nextPreference: {
++            event: "decline",
++            channel: "sms",
++            enabled: true,
++          },
++          existingPreferences: [],
++          loanState: "California",
++        }).allowed,
++      ).toBe(false);
++    });
++  });
++});
++
++describe("PUT /preferences", () => {
++  describe("False positive", () => {
++    it("keeps allowing escalation SMS disable when email remains enabled", () => {
++      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "email",
++          enabled: true,
++        }),
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: true,
++        }),
++      ]);
++      vi.mocked(prefRepo.findPreference).mockReturnValue(
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: true,
++        }),
++      );
++
++      const { res, forwardedError } = invokePutPreferenceRoute({
++        session: createSession(),
++        body: {
++          userId: "u-1",
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: false,
++        },
++      });
++
++      expect({
++        statusCode: res.statusCode,
++        body: res.body,
++        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
++        forwardedError,
++      }).toEqual({
++        statusCode: 200,
++        body: expect.objectContaining({
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: false,
++        }),
++        persisted: 1,
++        forwardedError: undefined,
++      });
++    });
++  });
++
++  describe("Hard negative", () => {
++    it("rejects disabling the last escalation channel with a business invariant message", () => {
++      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "email",
++          enabled: false,
++        }),
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: true,
++        }),
++      ]);
++      vi.mocked(prefRepo.findPreference).mockReturnValue(
++        buildPreference({
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: true,
++        }),
++      );
++
++      const { res, forwardedError } = invokePutPreferenceRoute({
++        session: createSession(),
++        body: {
++          userId: "u-1",
++          event: "manual-review-escalation",
++          channel: "sms",
++          enabled: false,
++        },
++      });
++
++      expect({
++        statusCode: res.statusCode,
++        error: normalize((res.body as { error?: string } | undefined)?.error),
++        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
++        forwardedError,
++      }).toEqual({
++        statusCode: 400,
++        error: expect.stringMatching(
++          /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,
++        ),
++        persisted: 0,
++        forwardedError: undefined,
++      });
++    });
++  });
++
++  describe("LEGAL-218", () => {
++    it("rejects California decline SMS enable with a clear business invariant message", () => {
++      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([
++        buildPreference({
++          event: "decline",
++          channel: "email",
++          enabled: true,
++        }),
++        buildPreference({
++          event: "decline",
++          channel: "sms",
++          enabled: false,
++        }),
++      ]);
++      vi.mocked(prefRepo.findPreference).mockReturnValue(
++        buildPreference({
++          event: "decline",
++          channel: "sms",
++          enabled: false,
++        }),
++      );
++
++      const { res, forwardedError } = invokePutPreferenceRoute({
++        session: createSession(),
++        body: {
++          userId: "u-1",
++          event: "decline",
++          channel: "sms",
++          enabled: true,
++          loanState: "California",
++        },
++      });
++
++      expect({
++        statusCode: res.statusCode,
++        error: normalize((res.body as { error?: string } | undefined)?.error),
++        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,
++        forwardedError,
++      }).toEqual({
++        statusCode: 400,
++        error: expect.stringMatching(
++          /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,
++        ),
++        persisted: 0,
++        forwardedError: undefined,
++      });
++    });
++  });
++});

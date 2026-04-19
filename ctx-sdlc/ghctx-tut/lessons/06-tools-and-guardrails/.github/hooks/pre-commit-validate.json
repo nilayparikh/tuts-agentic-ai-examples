@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python .github/scripts/validate_commit.py",
+        "timeout": 60
+      }
+    ]
+  }
+}

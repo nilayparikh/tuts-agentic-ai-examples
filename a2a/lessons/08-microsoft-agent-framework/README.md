@@ -1,5 +1,14 @@
 # Lesson 08 — A2A with Microsoft Agent Framework
 
+[![Watch: A2A with Microsoft Agent Framework](https://img.youtube.com/vi/oGwg0VwGyY8/maxresdefault.jpg)](https://www.youtube.com/watch?v=oGwg0VwGyY8)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A Client Fundamentals](../07-a2a-client/)
+- Next lesson: [A2A with Google ADK](../09-google-adk/)
+
 This folder contains the working example for Lesson 08 of the A2A tutorial.
 
 ## What It Does
@@ -185,8 +194,6 @@ UNDERWRITER CONDITIONS:
 
 --- Done ---
 ```
-
-
 
 1. **Server start** — OrchestratorAgent is wrapped in `A2AStarletteApplication` on port 10008
 2. **Agent discovery** — Client fetches `GET /.well-known/agent-card.json` to discover capabilities

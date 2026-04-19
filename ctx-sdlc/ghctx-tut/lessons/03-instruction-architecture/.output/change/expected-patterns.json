@@ -1,0 +1,22 @@
+[
+  {
+    "pattern": "LEGAL.218|California",
+    "description": "Rule must reference LEGAL-218 California restriction"
+  },
+  {
+    "pattern": "mandatory.event|getMandatoryEvents",
+    "description": "Rule must reference mandatory events"
+  },
+  {
+    "pattern": "FALSE.POSITIVE|false.positive",
+    "description": "Rule or tests should annotate false positive cases"
+  },
+  {
+    "pattern": "HARD.NEGATIVE|hard.negative",
+    "description": "Rule or tests should annotate hard negative cases"
+  },
+  {
+    "pattern": "describe|test|it\\(|expect",
+    "description": "Test file must contain test cases"
+  }
+]

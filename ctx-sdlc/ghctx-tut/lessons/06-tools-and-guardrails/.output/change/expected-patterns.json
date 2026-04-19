@@ -1,0 +1,18 @@
+[
+  {
+    "pattern": "PreToolUse",
+    "description": "Hook config must use PreToolUse event type"
+  },
+  {
+    "pattern": "validate_imports\\.py",
+    "description": "Hook or script must reference validate_imports.py"
+  },
+  {
+    "pattern": "import",
+    "description": "Validation script must contain import-related logic"
+  },
+  {
+    "pattern": "barrel|index\\.ts|internal module path",
+    "description": "Validation script should reference barrel-file or index.ts convention"
+  }
+]

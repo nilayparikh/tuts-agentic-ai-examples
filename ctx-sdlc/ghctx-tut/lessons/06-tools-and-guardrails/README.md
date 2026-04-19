@@ -1,0 +1,149 @@
+# Lesson 06 — Tools and Guardrails
+
+[![Watch: Stop AI Mistakes with GitHub Copilot Hooks & Guardrails](https://img.youtube.com/vi/MBHvkVrEgRk/maxresdefault.jpg)](https://www.youtube.com/watch?v=MBHvkVrEgRk)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=MBHvkVrEgRk" target="_blank" rel="noopener noreferrer">Stop AI Mistakes with GitHub Copilot Hooks & Guardrails</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
+> **App:** Loan Workbench (TypeScript Express API + SQLite)
+> **Topic:** Hooks, MCP configuration, and runtime scripts that guard against unsafe operations.
+
+## Setup
+
+```bash
+python util.py --setup
+python util.py --run
+```
+
+## What This Demonstrates
+
+Hooks intercept Copilot tool calls at runtime to enforce guardrails.
+
+| Hook File                  | Event       | Purpose                                    |
+| -------------------------- | ----------- | ------------------------------------------ |
+| `file-protection.json`     | PreToolUse  | Blocks edits to protected files            |
+| `post-save-format.json`    | PostToolUse | Auto-formats files after writes            |
+| `pre-commit-validate.json` | PreToolUse  | Validates changes before commit operations |
+
+### Available Hook Event Types
+
+As of early 2026, VS Code Copilot exposes eight lifecycle events:
+
+| Event            | Fires When                             | Common Use Cases                                |
+| ---------------- | -------------------------------------- | ----------------------------------------------- |
+| SessionStart     | A new chat or agent session begins     | Log session metadata, set environment variables |
+| UserPromptSubmit | The user submits a message to chat     | Validate prompt content, inject boilerplate     |
+| PreToolUse       | Before an agent invokes a tool         | Deny protected paths, block destructive cmds    |
+| PostToolUse      | After a tool completes                 | Auto-format edited files, lint, schema checks   |
+| PreCompact       | Before the context window is compacted | Preserve critical context entries               |
+| SubagentStart    | Before a subagent is invoked           | Audit delegation, enforce allowed-agent lists   |
+| SubagentStop     | After a subagent returns               | Log subagent output, validate handoff results   |
+| Stop             | The agent session terminates           | Final validation, generate session summary      |
+
+Hooks can also be **agent-scoped** using the `agents` list in the hook config, restricting a hook to fire only for specific agents.
+
+This lesson also includes MCP configuration for extending tool capabilities.
+
+## Example Goal
+
+This lesson should demonstrate guardrail implementation, not just analysis.
+
+For this example, the intended outcome is:
+
+- inspect the hook, MCP, and policy files to discover existing guardrail patterns
+- create a new import-validation guardrail (hook config + validation script) that follows those patterns
+- the new guardrail must enforce barrel-file import conventions for TypeScript files
+- the change is assessable via actual vs expected file and pattern comparison
+
+## Context Files
+
+| Path                                       | Purpose                                                   |
+| ------------------------------------------ | --------------------------------------------------------- |
+| `.github/hooks/file-protection.json`       | PreToolUse hook                                           |
+| `.github/hooks/post-save-format.json`      | PostToolUse hook                                          |
+| `.github/hooks/pre-commit-validate.json`   | PreToolUse hook                                           |
+| `.github/scripts/check_protected_files.py` | File protection script                                    |
+| `.github/scripts/format_file.py`           | Formatter script                                          |
+| `.github/scripts/validate_commit.py`       | Commit validation script                                  |
+| `.github/mcp.json`                         | MCP server configuration                                  |
+| `docs/security-policy.md`                  | Security policy                                           |
+| `docs/tool-trust-boundaries.md`            | Tool trust boundaries                                     |
+| `docs/guardrail-audit-example.md`          | Concrete lesson-06 demo target and assessment constraints |
+
+## Copilot CLI Workflow
+
+Create a new guardrail:
+
+```bash
+copilot -p "Inspect the lesson's guardrail-related instructions, hook configs, scripts, MCP config, and policy docs before answering. Work only inside this lesson folder and treat its local .github directory as the source of truth for hooks, scripts, MCP, and instructions. Discover the relevant files rather than assuming a fixed list. Then implement a new import-validation guardrail that enforces the project's barrel-file import convention during pre-commit. Create the hook config inside this lesson at .github/hooks/import-validation.json following the pattern of the existing hook configs. Create the validation script inside this lesson at .github/scripts/validate_imports.py following the pattern of the existing guardrail scripts. The hook must use PreToolUse event type and invoke the Python validation script. The validation script must read hook JSON from stdin when present, inspect changed .ts/.tsx files, and deny imports that bypass a sibling index.ts barrel and reach into internal module paths. Apply the changes directly in files. Do not run shell commands and do not use SQL." --allow-all-tools --deny-tool=powershell --deny-tool=sql
+```
+
+Expected outcome:
+
+- the CLI creates `.github/hooks/import-validation.json` and `.github/scripts/validate_imports.py`
+- the hook config uses `PreToolUse` event type following existing patterns
+- the validation script enforces barrel-file imports
+- `.output/change/demo.patch` contains the new files
+- `.output/change/comparison.md` shows actual vs expected file and pattern match results
+
+## VS Code Chat Workflow
+
+Ask Copilot to perform edits that should trigger hooks.
+
+Examples:
+
+- ask it to edit a protected file and observe the block
+- ask it to create or update a normal source file and observe post-save formatting
+- inspect the GitHub Copilot output logs to confirm hook execution
+
+Expected result: you can see the operational difference between static instructions and runtime guardrails.
+
+For the captured demo run, use `python util.py --demo --model gpt-5.4`.
+
+## Validation
+
+Run the guardrail validation suite. This actually executes each hook script
+with simulated hook payloads — both positive (allow) and negative (deny) cases —
+then writes a scenario evidence log and generates `VERIFICATION.md` from it.
+
+```bash
+python util.py --test
+```
+
+The test suite (`tests/test_guardrails.py`) fires real payloads through each script:
+
+| Guardrail         | Deny Cases                                                          | Allow Cases                                     |
+| ----------------- | ------------------------------------------------------------------- | ----------------------------------------------- |
+| File protection   | .env, .env.local, .env.production, feature-flags.ts, connection.ts  | regular route, test file, readFile tool, docs/  |
+| Import validation | direct rule import, direct service import, hyphenated module import | barrel import, package import, non-src file     |
+| MCP config        | —                                                                   | read-only perms, scope exclusions, descriptions |
+| Hook configs      | —                                                                   | valid event types, required fields, script refs |
+| Cross-consistency | —                                                                   | scripts valid Python, no orphans, doc alignment |
+
+`VERIFICATION.md` is auto-generated from the executed scenarios — it is not hand-written.
+Each row is backed by `.output/evidence/guardrail-evidence.jsonl` and includes the
+payload or context used plus the observed output.
+
+## Cleanup
+
+```bash
+python util.py --clean
+```
+
+---
+
+## Series Navigation
+
+| #   | Lesson                                                                    | Video                                                                                                     | Example Code                                                    |
+| --- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 01  | Context Engineering for GitHub Copilot [Course Intro] \| Lesson 01        | <a href="https://www.youtube.com/watch?v=YBXo_hxr9k4" target="_blank" rel="noopener noreferrer">Watch</a> | [01-why-context-engineering](../01-why-context-engineering)     |
+| 02  | GitHub Copilot: Mastering .github/ and /docs/ \| Lesson 02 of 09          | <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">Watch</a> | [02-curate-project-context](../02-curate-project-context)       |
+| 03  | The 3-Axis Model: Precision Context for GitHub Copilot \| Lesson 03 of 09 | <a href="https://www.youtube.com/watch?v=BS2NbFnyYJY" target="_blank" rel="noopener noreferrer">Watch</a> | [03-instruction-architecture](../03-instruction-architecture)   |
+| 04  | Mastering GitHub Copilot Plan Mode                                        | <a href="https://www.youtube.com/watch?v=KuLgT8Wck_E" target="_blank" rel="noopener noreferrer">Watch</a> | [04-planning-workflows](../04-planning-workflows)               |
+| 05  | How to Build an AI "Dev Team" in GitHub Copilot \| Lesson 05 of 09        | <a href="https://www.youtube.com/watch?v=ZvclU2Jyx5o" target="_blank" rel="noopener noreferrer">Watch</a> | [05-implementation-workflows](../05-implementation-workflows)   |
+| 06  | Stop AI Mistakes with GitHub Copilot Hooks & Guardrails                   | <a href="https://www.youtube.com/watch?v=MBHvkVrEgRk" target="_blank" rel="noopener noreferrer">Watch</a> | [06-tools-and-guardrails](../06-tools-and-guardrails)           |
+| 07  | Surface Strategy                                                          | _Coming soon_                                                                                             | [07-surface-strategy](../07-surface-strategy)                   |
+| 08  | Operating Model                                                           | _Coming soon_                                                                                             | [08-operating-model](../08-operating-model)                     |
+| 09  | AI-Assisted SDLC Capstone                                                 | _Coming soon_                                                                                             | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
+
+Full Course: <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>

@@ -1,0 +1,36 @@
+{
+  "name": "loan-workbench",
+  "version": "1.0.0",
+  "description": "Loan Workbench — commercial loan processing platform with backend API, embedded message queue, SQLite database, and web frontend.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "npm install",
+    "dev": "concurrently -n api,web -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "tsx watch backend/src/app.ts",
+    "dev:frontend": "vite frontend --port 5173",
+    "start": "node backend/dist/app.js",
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:seed": "tsx backend/src/db/seed.ts",
+    "lint": "eslint backend/src/ frontend/src/"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "express": "^4.21.0",
+    "loan-workbench": "file:",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
+    "concurrently": "^9.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
+  }
+}

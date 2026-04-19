@@ -1,5 +1,14 @@
 # Lesson 10 — A2A with LangGraph
 
+[![Watch: A2A with LangGraph](https://img.youtube.com/vi/Nt9eENHhGX8/maxresdefault.jpg)](https://www.youtube.com/watch?v=Nt9eENHhGX8)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/langgraph" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with Google ADK](../09-google-adk/)
+- Next lesson: [A2A with CrewAI](../11-crewai/)
+
 This folder contains the working example for Lesson 10 of the A2A tutorial.
 
 ## What It Does

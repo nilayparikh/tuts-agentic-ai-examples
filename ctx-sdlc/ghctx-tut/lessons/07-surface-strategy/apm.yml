@@ -1,0 +1,10 @@
+name: 07-surface-strategy
+version: 1.0.0
+description: APM project for 07-surface-strategy
+author: Nilay Parikh
+dependencies:
+  apm:
+  - microsoft/apm-sample-package
+  - DiversioTeam/agent-skills-marketplace/plugins/terraform
+  mcp: []
+scripts: {}

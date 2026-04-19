@@ -1,0 +1,13 @@
+{
+  "_commentDefaultAssessmentModel": "Default assessment model unless overridden by util.py --model or CTX_SDLC_COPILOT_MODEL.",
+  "defaultAssessmentModel": "claude-haiku-4.5",
+  "_commentOtherModelOptions": [
+    "claude-sonnet-4.6",
+    "gpt-5.4",
+    "gpt-4.1",
+    "gemini-3-pro-preview"
+  ],
+  "defaultDemoTimeoutSeconds": 600,
+  "defaultDemoIdleTimeoutSeconds": 420,
+  "withoutContextDemoTimeoutSeconds": 600
+}

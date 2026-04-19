@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><defs>
+  <style>
+    .tech-text { font-family: 'Share Tech Mono', 'Consolas', 'Courier New', monospace; }
+    .sans-text { font-family: 'Outfit', 'Segoe UI', Roboto, Arial, sans-serif; }
+  </style>
+  <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#00F5FF"/>
+    <stop offset="35%" stop-color="#2932FF"/>
+    <stop offset="70%" stop-color="#A838FF"/>
+    <stop offset="100%" stop-color="#FF9A44"/>
+  </linearGradient>
+  <linearGradient id="left-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#00E1FF"/>
+    <stop offset="100%" stop-color="#FFB03A"/>
+  </linearGradient>
+  <linearGradient id="slash-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+    <stop offset="0%" stop-color="#A838FF"/>
+    <stop offset="100%" stop-color="#4FACFE"/>
+  </linearGradient>
+  <linearGradient id="right-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#00FFB2"/>
+    <stop offset="100%" stop-color="#9D00FF"/>
+  </linearGradient>
+  <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="2.3" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <!-- gradient mark — dark-filled circle, neon strokes -->
+  <g id="logo-mark">
+    <circle cx="100" cy="100" r="96" fill="#0B0B0F" stroke="url(#border-grad)" stroke-width="4"/>
+    <g stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#neon-glow)">
+      <path d="M 65 65 L 35 100 L 65 135" stroke="url(#left-grad)"/>
+      <path d="M 112 63 L 82 137" stroke="url(#slash-grad)"/>
+      <path d="M 135 65 L 165 100 L 135 135" stroke="url(#right-grad)"/>
+    </g>
+  </g>
+  <!-- monochrome white — transparent fill, white strokes -->
+  <g id="logo-mark-white">
+    <circle cx="100" cy="100" r="96" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+    <g stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="#FFFFFF">
+      <path d="M 65 65 L 35 100 L 65 135"/>
+      <path d="M 112 63 L 82 137"/>
+      <path d="M 135 65 L 165 100 L 135 135"/>
+    </g>
+  </g>
+  <!-- monochrome dark — transparent fill, dark strokes -->
+  <g id="logo-mark-dark">
+    <circle cx="100" cy="100" r="96" fill="none" stroke="#0F172A" stroke-width="4"/>
+    <g stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke="#0F172A">
+      <path d="M 65 65 L 35 100 L 65 135"/>
+      <path d="M 112 63 L 82 137"/>
+      <path d="M 135 65 L 165 100 L 135 135"/>
+    </g>
+  </g>
+  <!-- favicon mark — shifted up to allow embedded text -->
+  <g id="favicon-mark">
+    <circle cx="100" cy="100" r="96" fill="#0B0B0F" stroke="url(#border-grad)" stroke-width="4"/>
+    <g stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#neon-glow)">
+      <path d="M 65 50 L 35 85 L 65 120" stroke="url(#left-grad)"/>
+      <path d="M 112 48 L 82 122" stroke="url(#slash-grad)"/>
+      <path d="M 135 50 L 165 85 L 135 120" stroke="url(#right-grad)"/>
+    </g>
+  </g>
+  <!-- favicon with embedded "localm" wordmark -->
+  <g id="favicon-full">
+    <use xlink:href="#favicon-mark" href="#favicon-mark"/>
+    <text class="tech-text" x="100" y="162" fill="#F8FAFC" font-size="26"
+          font-weight="bold" text-anchor="middle" letter-spacing="2">
+      localm<tspan font-size="11" fill="#3B82F6" dy="-12"
+                   font-family="Outfit, Arial, sans-serif">™</tspan>
+    </text>
+  </g>
+</defs><use xlink:href="#logo-mark" href="#logo-mark"/></svg>

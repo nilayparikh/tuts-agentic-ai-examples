@@ -1,0 +1,61 @@
+# Backend Application Contract
+
+## Scope
+
+`src/backend/src/**/*.ts`
+
+## Entrypoint
+
+`src/backend/src/app.ts` is the backend entrypoint.
+
+## Middleware Order
+
+Middleware order in `app.ts` matters. Keep it stable:
+
+1. `express.json()`
+2. `rateLimiterMiddleware`
+3. `authMiddleware`
+4. `auditLoggerMiddleware`
+5. API route mounts
+6. `errorHandler`
+
+## Layering Rules
+
+- Route files in `src/backend/src/routes/` handle HTTP and delegate.
+- Business rules in `src/backend/src/rules/` contain domain logic.
+- Services in `src/backend/src/services/` orchestrate persistence and side effects.
+- Queue handlers in `src/backend/src/queue/` manage async delivery.
+
+## Service Boundaries
+
+- `loanService` — loan lifecycle
+- `decision-service` — approval and rejection
+- `notification-service` — async notifications via queue
+- `audit-service` — audit trail recording
+
+## Route Conventions
+
+- Role checks: `requireRole(...)` from `middleware/auth.js`
+- Request validation: `validateBody(...)` from `middleware/request-validator.js`
+- Do not force new handler styles unless explicitly requested.
+- When backend behavior changes, check whether frontend API types need updating.
+
+## Error Handling
+
+- API errors are shaped like `{ error: string }`.
+- The centralized error handler maps prefixes: `FORBIDDEN:`, `INVALID_STATE:`,
+  `NOT_FOUND:`, `VALIDATION:`.
+- Preserve the existing error style unless a migration is requested.
+
+## Logging
+
+- The app uses `console.log` and `console.error`.
+- Do not introduce a different logger unless explicitly requested.
+
+## Key Route Files
+
+- `applications.ts`
+- `decisions.ts`
+- `notifications.ts`
+- `audit.ts`
+- `queue-status.ts`

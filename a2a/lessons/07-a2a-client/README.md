@@ -1,5 +1,14 @@
 # Lesson 07 — A2A Client Fundamentals
 
+[![Watch: A2A Client Fundamentals](https://img.youtube.com/vi/aTqo4ssrz4U/maxresdefault.jpg)](https://www.youtube.com/watch?v=aTqo4ssrz4U)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [Wrapping Agents as A2A Servers](../06-a2a-server/)
+- Next lesson: [A2A with Microsoft Agent Framework](../08-microsoft-agent-framework/)
+
 Build an A2A client that **discovers**, **calls**, and **streams** from the QAAgent server.
 
 ## Prerequisites
@@ -46,16 +55,17 @@ Build an A2A client that **discovers**, **calls**, and **streams** from the QAAg
 
 ## Architecture
 
-```
-Client Notebook
-    │
-    ├─ A2ACardResolver → GET /.well-known/agent-card.json
-    │                    └─ Returns AgentCard
-    ├─ A2AClient
-    │   ├─ send_message()    → POST / (message/send)
-    │   └─ send_message_streaming() → POST / (message/stream)
-    │
-    └─ Response Parsing
-        ├─ Task → status, messages, artifacts
-        └─ Parts → kind: text, text: "..."
+```mermaid
+flowchart TB
+    Notebook["Client Notebook"] --> Resolver["A2ACardResolver"]
+    Resolver --> Card["GET /.well-known/agent-card.json"]
+    Card --> AgentCard["Agent Card"]
+
+    Notebook --> Client["A2AClient"]
+    Client --> Blocking["send_message()"]
+    Client --> Streaming["send_message_streaming()"]
+    Blocking --> Rpc["POST / message/send"]
+    Streaming --> StreamRpc["POST / message/stream"]
+    Rpc --> Parsing["Task / Message / Parts parsing"]
+    StreamRpc --> Parsing
 ```

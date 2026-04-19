@@ -1,0 +1,8 @@
+{
+  "added": [],
+  "modified": [
+    "backend/src/routes/applications.ts",
+    "backend/src/services/loan-service.ts"
+  ],
+  "deleted": []
+}

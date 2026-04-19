@@ -1,0 +1,121 @@
+{
+  "context": {
+    "app_identity": ".code.agent/context/app-identity.md",
+    "backend": ".code.agent/context/backend.md",
+    "frontend": ".code.agent/context/frontend.md",
+    "testing": ".code.agent/context/testing.md",
+    "api_routes": ".code.agent/context/api-routes.md",
+    "delivery_workflow": ".code.agent/context/delivery-workflow.md",
+    "change_planning": ".code.agent/context/change-planning.md",
+    "reviewer_checklist": ".code.agent/context/reviewer-checklist.md",
+    "context_guard": ".code.agent/context/context-guard.md"
+  },
+  "templates": {
+    "agents": ".code.agent/templates/agents.md.tpl",
+    "claude_bridge": ".code.agent/templates/claude-bridge.md.tpl",
+    "copilot_bridge": ".code.agent/templates/copilot-bridge.md.tpl",
+    "copilot_instruction": ".code.agent/templates/copilot-instruction.md.tpl",
+    "claude_rule": ".code.agent/templates/claude-rule.md.tpl",
+    "copilot_agent": ".code.agent/templates/copilot-agent.md.tpl",
+    "copilot_skill": ".code.agent/templates/copilot-skill.md.tpl",
+    "copilot_prompt": ".code.agent/templates/copilot-prompt.md.tpl",
+    "hook": ".code.agent/templates/hook.json.tpl"
+  },
+  "outputs": [
+    {
+      "path": "AGENTS.md",
+      "template": "agents",
+      "content": ["app_identity"]
+    },
+    {
+      "path": "CLAUDE.md",
+      "template": "claude_bridge",
+      "content": []
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "template": "copilot_bridge",
+      "content": ["app_identity"]
+    },
+    {
+      "path": ".github/instructions/backend.instructions.md",
+      "template": "copilot_instruction",
+      "content": ["backend"],
+      "vars": { "SCOPE": "src/backend/src/**" }
+    },
+    {
+      "path": ".github/instructions/frontend.instructions.md",
+      "template": "copilot_instruction",
+      "content": ["frontend"],
+      "vars": { "SCOPE": "src/frontend/src/**" }
+    },
+    {
+      "path": ".github/instructions/tests.instructions.md",
+      "template": "copilot_instruction",
+      "content": ["testing"],
+      "vars": { "SCOPE": "src/backend/tests/**" }
+    },
+    {
+      "path": ".github/instructions/api.instructions.md",
+      "template": "copilot_instruction",
+      "content": ["api_routes"],
+      "vars": { "SCOPE": "src/backend/src/routes/**" }
+    },
+    {
+      "path": ".claude/rules/backend.md",
+      "template": "claude_rule",
+      "content": ["backend"],
+      "vars": { "SCOPE": "src/backend/src/**/*.ts" }
+    },
+    {
+      "path": ".claude/rules/frontend.md",
+      "template": "claude_rule",
+      "content": ["frontend"],
+      "vars": { "SCOPE": "src/frontend/src/**/*.ts" }
+    },
+    {
+      "path": ".claude/rules/tests.md",
+      "template": "claude_rule",
+      "content": ["testing"],
+      "vars": { "SCOPE": "src/backend/tests/**/*.ts" }
+    },
+    {
+      "path": ".claude/rules/api.md",
+      "template": "claude_rule",
+      "content": ["api_routes"],
+      "vars": { "SCOPE": "src/backend/src/routes/**/*.ts" }
+    },
+    {
+      "path": ".github/agents/reviewer.agent.md",
+      "template": "copilot_agent",
+      "content": ["reviewer_checklist"],
+      "vars": {
+        "AGENT_NAME": "reviewer",
+        "AGENT_DESCRIPTION": "Reviews Loan Workbench changes for context alignment and application consistency."
+      }
+    },
+    {
+      "path": ".github/skills/loan-workbench-delivery/SKILL.md",
+      "template": "copilot_skill",
+      "content": ["delivery_workflow"],
+      "vars": {
+        "SKILL_NAME": "loan-workbench-delivery",
+        "SKILL_DESCRIPTION": "Workflow for changing Loan Workbench application behavior in src/."
+      }
+    },
+    {
+      "path": ".github/prompts/implement-loan-workbench-change.prompt.md",
+      "template": "copilot_prompt",
+      "content": ["change_planning"],
+      "vars": {
+        "PROMPT_AGENT": "Plan",
+        "PROMPT_DESCRIPTION": "Plan a Loan Workbench application change."
+      }
+    },
+    {
+      "path": ".github/hooks/context-guard.json",
+      "template": "hook",
+      "content": ["context_guard"]
+    }
+  ]
+}

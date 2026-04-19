@@ -1,5 +1,14 @@
 # Lesson 12 — A2A with OpenAI Agents SDK
 
+[![Watch: A2A with OpenAI Agents SDK](https://img.youtube.com/vi/I0C8xFZpJdQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=I0C8xFZpJdQ)
+
+## Quick Links
+
+- <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
+- <a href="https://tuts.localm.dev/a2a/openai-agents-sdk" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: [A2A with CrewAI](../11-crewai/)
+- Next lesson: [A2A with Claude Style Agents](../13-claude-agent-sdk/)
+
 This folder contains the working example for Lesson 12 of the A2A tutorial.
 
 ## What It Does
