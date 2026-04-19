@@ -1,0 +1,33 @@
+# Loan Workbench Delivery Workflow
+
+## When To Use
+
+Use this workflow when changing application behavior in `src/`.
+
+## Steps
+
+1. Classify the change: backend-only, frontend-only, or cross-cutting.
+2. Read relevant context and inspect affected source files.
+3. If backend changes: check routes, services, rules, and tests.
+4. If frontend changes: check API types, pages, components, and styles.
+5. If the API contract changes: update backend and frontend together.
+6. Write or update tests with the smallest scope that proves the behavior.
+
+## Hotspots
+
+- `src/backend/src/app.ts` — entrypoint and middleware chain
+- `src/backend/src/routes/` — HTTP layer
+- `src/backend/src/services/` — orchestration layer
+- `src/backend/src/rules/` — domain logic
+- `src/backend/tests/unit/` — rule tests
+- `src/backend/tests/integration/` — route contract tests
+- `src/frontend/src/api/` — HTTP client and types
+- `src/frontend/src/pages/` — route screens
+- `src/frontend/src/components/` — reusable UI
+
+## Anti-Patterns
+
+- Changing backend response shapes without updating frontend types
+- Moving business logic into route handlers
+- Introducing framework migrations that were not requested
+- Skipping test updates when rules or routes change

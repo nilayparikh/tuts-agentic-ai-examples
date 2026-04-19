@@ -1,0 +1,129 @@
+--- a/backend/src/routes/notifications.ts
++++ b/backend/src/routes/notifications.ts
+@@ -30,6 +30,36 @@
+   return Array.isArray(value) ? value[0] : value;
+ }
+ 
++/**
++ * Check authorization for preference write operations.
++ * Throws FORBIDDEN error if:
++ * - Session is delegated (x-delegated-for header)
++ * - Actor does not have write permission
++ * - Actor is not the owner (targetUserId must match session.actor.id)
++ */
++function checkWriteAuthorization(
++  session: SessionContext,
++  targetUserId: string,
++): void {
++  if (session.delegatedFor) {
++    throw new Error(
++      "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
++    );
++  }
++
++  if (session.actor.id !== targetUserId) {
++    throw new Error(
++      "FORBIDDEN: Users can only modify their own notification preferences.",
++    );
++  }
++
++  if (!hasPermission(session.actor.role, "notification-pref:write")) {
++    throw new Error(
++      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
++    );
++  }
++}
++
+ /** GET /api/notifications/preferences/:userId — get preferences for a user. */
+ notificationRoutes.get(
+   "/preferences/:userId",
+@@ -55,24 +85,10 @@
+   (req, res, next) => {
+     try {
+       const session = req.session as SessionContext;
+-
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Additional permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
+-
+       const { userId, event, channel, enabled } = req.body;
++
++      checkWriteAuthorization(session, userId);
++
+       const now = new Date().toISOString();
+ 
+       const previous = prefRepo.findPreference(userId, event, channel);
+@@ -120,29 +136,7 @@
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+ 
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+-        });
+-        return;
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
++      checkWriteAuthorization(session, targetUserId);
+ 
+       const { enabled } = req.body;
+       const now = new Date().toISOString();
+@@ -203,29 +197,7 @@
+       const session = req.session as SessionContext;
+       const targetUserId = firstParam(req.params.userId);
+ 
+-      // Block writes in delegated sessions
+-      if (session.delegatedFor) {
+-        res.status(403).json({
+-          error: "FORBIDDEN: Delegated sessions cannot modify notification preferences.",
+-        });
+-        return;
+-      }
+-
+-      // Enforce owner-only writes
+-      if (session.actor.id !== targetUserId) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Users can only modify their own notification preferences.`,
+-        });
+-        return;
+-      }
+-
+-      // Permission check
+-      if (!hasPermission(session.actor.role, "notification-pref:write")) {
+-        res.status(403).json({
+-          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,
+-        });
+-        return;
+-      }
++      checkWriteAuthorization(session, targetUserId);
+ 
+       const { enabled } = req.body;
+       const now = new Date().toISOString();

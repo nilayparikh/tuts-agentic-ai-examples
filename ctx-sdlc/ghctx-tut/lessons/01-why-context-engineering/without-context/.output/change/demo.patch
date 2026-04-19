@@ -1,0 +1,558 @@
+--- a/backend/src/app.ts
++++ b/backend/src/app.ts
+@@ -28,8 +28,10 @@
+ import { notificationRoutes } from "./routes/notifications.js";
+ import { auditRoutes } from "./routes/audit.js";
+ import { queueStatusRoutes } from "./routes/queue-status.js";
++import { createEscalationRoutes } from "./routes/escalation.js";
+ import { registerNotificationHandler } from "./queue/handlers/notification-handler.js";
+ import { registerAuditHandler } from "./queue/handlers/audit-handler.js";
++import { registerEscalationHandler } from "./queue/handlers/escalation-handler.js";
+ 
+ const __dirname = path.dirname(fileURLToPath(import.meta.url));
+ 
+@@ -42,6 +44,7 @@
+ // ── Register queue handlers ──
+ registerNotificationHandler();
+ registerAuditHandler();
++registerEscalationHandler(broker);
+ 
+ // ── Middleware chain (ORDER MATTERS) ──
+ app.use(express.json());
+@@ -55,6 +58,7 @@
+ app.use("/api/notifications", notificationRoutes);
+ app.use("/api/audit", auditRoutes);
+ app.use("/api/queue", queueStatusRoutes);
++app.use("/api/escalations", createEscalationRoutes(getDb(), broker));
+ 
+ // ── Health check (no auth required — placed before auth middleware in request flow) ──
+ app.get("/health", (_req, res) => {
+
+--- a/backend/src/db/seed.ts
++++ b/backend/src/db/seed.ts
+@@ -34,6 +34,11 @@
+ 
+   const insertAudit = db.prepare(
+     `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)
++     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
++  );
++
++  const insertEscalation = db.prepare(
++    `INSERT OR IGNORE INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+   );
+ 
+@@ -157,6 +162,28 @@
+       JSON.stringify({ applicationId: "app-4", type: "approved" }),
+       "seed-script",
+     );
++
++    // ── Escalations ──
++    insertEscalation.run(
++      "esc-1",
++      "app-1",
++      "u-1",
++      "u-2",
++      "Unusual loan structure requires higher-level review before proceeding to decision",
++      "pending",
++      now,
++      now,
++    );
++    insertEscalation.run(
++      "esc-2",
++      "app-3",
++      "u-2",
++      "u-3",
++      "High-value loan ($2M) requires compliance review sign-off",
++      "pending",
++      now,
++      now,
++    );
+   });
+ 
+   seedAll();
+
+--- a/backend/src/models/escalation-repository.ts
++++ b/backend/src/models/escalation-repository.ts
+@@ -0,0 +1,85 @@
++import { Database } from "sqlite";
++import { Escalation } from "./types";
++
++export async function findEscalationById(
++  db: Database,
++  id: string
++): Promise<Escalation | null> {
++  const stmt = db.prepare(
++    "SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE id = ?"
++  );
++  const row = stmt.get(id) as any;
++  return row || null;
++}
++
++export async function findEscalationsByApplication(
++  db: Database,
++  applicationId: string
++): Promise<Escalation[]> {
++  const stmt = db.prepare(
++    "SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE application_id = ? ORDER BY created_at DESC"
++  );
++  const rows = stmt.all(applicationId) as any[];
++  return rows || [];
++}
++
++export async function findEscalationsByStatus(
++  db: Database,
++  status: string
++): Promise<Escalation[]> {
++  const stmt = db.prepare(
++    "SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE status = ? ORDER BY created_at DESC"
++  );
++  const rows = stmt.all(status) as any[];
++  return rows || [];
++}
++
++export async function findEscalationsByRecipient(
++  db: Database,
++  userId: string
++): Promise<Escalation[]> {
++  const stmt = db.prepare(
++    "SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE escalated_to = ? AND status = 'pending' ORDER BY created_at DESC"
++  );
++  const rows = stmt.all(userId) as any[];
++  return rows || [];
++}
++
++export async function createEscalation(
++  db: Database,
++  data: {
++    id: string;
++    applicationId: string;
++    escalatedBy: string;
++    escalatedTo: string;
++    reason: string;
++  }
++): Promise<Escalation> {
++  const stmt = db.prepare(
++    "INSERT INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))"
++  );
++  stmt.run(
++    data.id,
++    data.applicationId,
++    data.escalatedBy,
++    data.escalatedTo,
++    data.reason
++  );
++  const result = await findEscalationById(db, data.id);
++  if (!result) throw new Error("Failed to create escalation");
++  return result;
++}
++
++export async function updateEscalationStatus(
++  db: Database,
++  id: string,
++  status: string
++): Promise<Escalation> {
++  const stmt = db.prepare(
++    "UPDATE escalations SET status = ?, updated_at = datetime('now') WHERE id = ?"
++  );
++  stmt.run(status, id);
++  const result = await findEscalationById(db, id);
++  if (!result) throw new Error("Failed to update escalation");
++  return result;
++}
+
+--- a/backend/src/models/types.ts
++++ b/backend/src/models/types.ts
+@@ -109,3 +109,19 @@
+   newValue: string | null;
+   source: string;
+ }
++
++export interface Escalation {
++  id: string;
++  applicationId: string;
++  escalatedBy: string;
++  escalatedTo: string;
++  reason: string;
++  status: "pending" | "resolved" | "cancelled";
++  createdAt: string;
++  updatedAt: string;
++}
++
++export interface Session {
++  userId: string;
++  delegated?: boolean;
++}
+
+--- a/backend/src/queue/contracts.ts
++++ b/backend/src/queue/contracts.ts
+@@ -63,10 +63,23 @@
+   };
+ }
+ 
++/** Emitted when a review escalation is requested. */
++export interface EscalationRequestedEvent extends BaseEvent {
++  type: "escalation.requested";
++  payload: {
++    escalationId: string;
++    applicationId: string;
++    escalatedBy: string;
++    escalatedTo: string;
++    reason: string;
++  };
++}
++
+ /** Union of all event types the broker can handle. */
+ export type BrokerEvent =
+   | NotificationRequestedEvent
+   | AuditRequestedEvent
+-  | LoanStateChangedEvent;
++  | LoanStateChangedEvent
++  | EscalationRequestedEvent;
+ 
+ export type EventType = BrokerEvent["type"];
+
+--- a/backend/src/queue/handlers/escalation-handler.ts
++++ b/backend/src/queue/handlers/escalation-handler.ts
+@@ -0,0 +1,18 @@
++import { BrokerClient, BrokerEvent } from "../broker";
++
++export async function registerEscalationHandler(
++  broker: BrokerClient
++): Promise<void> {
++  broker.on("escalation.requested", async (event: BrokerEvent) => {
++    if (event.type !== "escalation.requested") return;
++    const payload = (event as any).payload;
++    console.log(`[escalation-handler] Escalation requested:`, {
++      escalationId: payload.escalationId,
++      applicationId: payload.applicationId,
++      escalatedBy: payload.escalatedBy,
++      escalatedTo: payload.escalatedTo,
++      reason: payload.reason,
++      timestamp: new Date().toISOString(),
++    });
++  });
++}
+
+--- a/backend/src/routes/escalation.ts
++++ b/backend/src/routes/escalation.ts
+@@ -0,0 +1,118 @@
++import { Router, Response } from "express";
++import { Database } from "sqlite";
++import { BrokerClient } from "../broker";
++import {
++  escalateReview,
++  resolveEscalation,
++  getEscalationsForApplication,
++  getPendingEscalationsForUser,
++} from "../services/escalation-service";
++import { requireRole } from "../middleware/auth";
++import { AuthenticatedRequest } from "../middleware/types";
++
++export function createEscalationRoutes(
++  db: Database,
++  broker: BrokerClient
++): Router {
++  const router = Router();
++
++  // GET /api/escalations/application/:applicationId
++  router.get(
++    "/application/:applicationId",
++    requireRole(["underwriter", "analyst-manager", "compliance-reviewer"]),
++    async (req: AuthenticatedRequest, res: Response) => {
++      try {
++        const { applicationId } = req.params;
++        const escalations = await getEscalationsForApplication(db, applicationId);
++        res.json(escalations);
++      } catch (error) {
++        res.status(400).json({
++          error:
++            error instanceof Error ? error.message : "Failed to get escalations",
++        });
++      }
++    }
++  );
++
++  // GET /api/escalations/pending
++  router.get(
++    "/pending",
++    requireRole(["underwriter", "analyst-manager", "compliance-reviewer"]),
++    async (req: AuthenticatedRequest, res: Response) => {
++      try {
++        const escalations = await getPendingEscalationsForUser(
++          db,
++          req.user!.id
++        );
++        res.json(escalations);
++      } catch (error) {
++        res.status(400).json({
++          error:
++            error instanceof Error ? error.message : "Failed to get escalations",
++        });
++      }
++    }
++  );
++
++  // POST /api/escalations
++  router.post(
++    "/",
++    requireRole(["underwriter", "analyst-manager"]),
++    async (req: AuthenticatedRequest, res: Response) => {
++      try {
++        const { applicationId, escalatedToUserId, reason } = req.body;
++
++        if (!applicationId || !escalatedToUserId || !reason) {
++          res.status(400).json({
++            error:
++              "Missing required fields: applicationId, escalatedToUserId, reason",
++          });
++          return;
++        }
++
++        const escalation = await escalateReview(
++          db,
++          broker,
++          req.session!,
++          applicationId,
++          escalatedToUserId,
++          reason
++        );
++
++        res.status(201).json(escalation);
++      } catch (error) {
++        res.status(400).json({
++          error:
++            error instanceof Error ? error.message : "Failed to create escalation",
++        });
++      }
++    }
++  );
++
++  // PATCH /api/escalations/:id/resolve
++  router.patch(
++    "/:id/resolve",
++    requireRole(["underwriter", "analyst-manager", "compliance-reviewer"]),
++    async (req: AuthenticatedRequest, res: Response) => {
++      try {
++        const { id } = req.params;
++
++        const escalation = await resolveEscalation(
++          db,
++          broker,
++          req.session!,
++          id
++        );
++
++        res.json(escalation);
++      } catch (error) {
++        res.status(400).json({
++          error:
++            error instanceof Error ? error.message : "Failed to resolve escalation",
++        });
++      }
++    }
++  );
++
++  return router;
++}
+
+--- a/backend/src/rules/role-permissions.ts
++++ b/backend/src/rules/role-permissions.ts
+@@ -22,7 +22,10 @@
+   | "notification-pref:read"
+   | "notification-pref:write"
+   | "audit:read"
+-  | "compliance:sign-off";
++  | "compliance:sign-off"
++  | "escalation:create"
++  | "escalation:read"
++  | "escalation:resolve";
+ 
+ const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {
+   underwriter: new Set([
+@@ -34,6 +37,9 @@
+     "notification-pref:read",
+     "notification-pref:write",
+     "audit:read",
++    "escalation:create",
++    "escalation:read",
++    "escalation:resolve",
+   ]),
+   "analyst-manager": new Set([
+     "loan:read",
+@@ -44,6 +50,9 @@
+     "notification-pref:read",
+     "notification-pref:write",
+     "audit:read",
++    "escalation:create",
++    "escalation:read",
++    "escalation:resolve",
+   ]),
+   "compliance-reviewer": new Set([
+     "loan:read",
+@@ -51,6 +60,8 @@
+     "notification-pref:read", // READ only — no write
+     "audit:read",
+     "compliance:sign-off",
++    "escalation:read",
++    "escalation:resolve",
+   ]),
+ };
+ 
+
+--- a/backend/src/services/escalation-service.ts
++++ b/backend/src/services/escalation-service.ts
+@@ -0,0 +1,153 @@
++import { Database } from "sqlite";
++import { BrokerClient } from "../broker";
++import {
++  findEscalationById,
++  findEscalationsByApplication,
++  findEscalationsByRecipient,
++  createEscalation as createEscalationDb,
++  updateEscalationStatus,
++} from "../models/escalation-repository";
++import { findApplicationById } from "../models/loan-repository";
++import { findUserById } from "../models/user-repository";
++import { Escalation, Session } from "../models/types";
++import { nanoid } from "nanoid";
++
++export async function escalateReview(
++  db: Database,
++  broker: BrokerClient,
++  session: Session,
++  applicationId: string,
++  escalatedToUserId: string,
++  reason: string
++): Promise<Escalation> {
++  // Validate: delegated sessions cannot create escalations
++  if (session.delegated) {
++    throw new Error("Delegated sessions cannot create escalations");
++  }
++
++  // Validate: application exists and is in valid state
++  const application = await findApplicationById(db, applicationId);
++  if (!application) {
++    throw new Error("Application not found");
++  }
++  if (!["underwriting", "decision"].includes(application.state)) {
++    throw new Error(
++      `Cannot escalate application in '${application.state}' state. Must be in 'underwriting' or 'decision' state`
++    );
++  }
++
++  // Validate: recipient exists
++  const recipient = await findUserById(db, escalatedToUserId);
++  if (!recipient) {
++    throw new Error("Escalation recipient not found");
++  }
++
++  // Validate: reason not empty
++  if (!reason || reason.trim().length === 0) {
++    throw new Error("Escalation reason cannot be empty");
++  }
++
++  const escalationId = nanoid();
++  const escalation = await createEscalationDb(db, {
++    id: escalationId,
++    applicationId,
++    escalatedBy: session.userId,
++    escalatedTo: escalatedToUserId,
++    reason: reason.trim(),
++  });
++
++  // Emit events
++  broker.emit({
++    type: "audit.requested",
++    payload: {
++      userId: session.userId,
++      action: "escalation.created",
++      resourceType: "escalation",
++      resourceId: escalationId,
++      details: {
++        applicationId,
++        escalatedTo: escalatedToUserId,
++        reason: reason.trim(),
++      },
++    },
++  });
++
++  broker.emit({
++    type: "notification.requested",
++    payload: {
++      userId: escalatedToUserId,
++      type: "escalation_assigned",
++      message: `You have been assigned an escalation for application ${applicationId}`,
++      details: {
++        escalationId,
++        applicationId,
++        reason: reason.trim(),
++      },
++    },
++  });
++
++  broker.emit({
++    type: "escalation.requested",
++    payload: {
++      escalationId,
++      applicationId,
++      escalatedBy: session.userId,
++      escalatedTo: escalatedToUserId,
++      reason: reason.trim(),
++    },
++  });
++
++  return escalation;
++}
++
++export async function resolveEscalation(
++  db: Database,
++  broker: BrokerClient,
++  session: Session,
++  escalationId: string
++): Promise<Escalation> {
++  const escalation = await findEscalationById(db, escalationId);
++  if (!escalation) {
++    throw new Error("Escalation not found");
++  }
++
++  if (escalation.status !== "pending") {
++    throw new Error(`Cannot resolve escalation in '${escalation.status}' status`);
++  }
++
++  // Validate: only recipient can resolve
++  if (escalation.escalatedTo !== session.userId) {
++    throw new Error("Only the escalation recipient can resolve it");
++  }
++
++  const updated = await updateEscalationStatus(db, escalationId, "resolved");
++
++  broker.emit({
++    type: "audit.requested",
++    payload: {
++      userId: session.userId,
++      action: "escalation.resolved",
++      resourceType: "escalation",
++      resourceId: escalationId,
++      details: {
++        applicationId: escalation.applicationId,
++      },
++    },
++  });
++
++  return updated;
++}
++
++export async function getEscalationsForApplication(
++  db: Database,
++  applicationId: string
++): Promise<Escalation[]> {
++  return findEscalationsByApplication(db, applicationId);
++}
++
++export async function getPendingEscalationsForUser(
++  db: Database,
++  userId: string
++): Promise<Escalation[]> {
++  return findEscalationsByRecipient(db, userId);
++}

@@ -1,0 +1,3 @@
+<!-- {{GENERATED_NOTICE}} -->
+
+{{CONTENT}}

@@ -1,0 +1,22 @@
+[
+  {
+    "pattern": "import.*notification-preference-write-rules",
+    "description": "Route file must import the new write rules"
+  },
+  {
+    "pattern": "evaluateNotificationPreferenceWrite|NotificationPreferenceWriteInput|existingPreferences",
+    "description": "Rule must expose explicit-input write validation using existing preferences"
+  },
+  {
+    "pattern": "LEGAL.218|California",
+    "description": "Rules must reference LEGAL-218 or California restrictions"
+  },
+  {
+    "pattern": "describe|test|it\\(|expect",
+    "description": "Test file must contain test cases"
+  },
+  {
+    "pattern": "loanState|existingPreferences|nextPreference|auditAction",
+    "description": "Route wiring should pass direct loanState context, explicit write inputs, and preserve audited flow"
+  }
+]
