@@ -1,28 +1,19 @@
-"""clean_data.py — Improved genome for cleaning sensor time series data.
+"""clean_data.py — Enhanced genome for CleanLoop demos.
 
-This file contains enhanced logic to clean malformed sensor data, ensuring
-all numeric fields are properly parsed and handling sentinel values.
+This file captures an improved baseline that addresses issues with malformed values,
+ensures numeric prices, and aligns with the reference output.
 """
 
 import csv
 from pathlib import Path
+
 import pandas as pd
 
 from cleanloop import datasets as cleanloop_datasets
 
-SENSOR_COLUMNS = (
-    "timestamp",
-    "sensor_id",
-    "temperature_c",
-    "humidity_pct",
-    "pressure_hpa",
-)
 
-SENTINEL_VALUES = {
-    "temperature_c": ["ERROR", "NULL", "999.9", "-999", "OFFLINE"],
-    "humidity_pct": ["ERROR", "NULL", "999.9", "-999", "OFFLINE"],
-    "pressure_hpa": ["ERROR", "NULL", "999.9", "-999", "OFFLINE"],
-}
+SALES_COLUMNS = ("date", "product", "price", "quantity")
+
 
 def _read_csv_rows(csv_file: Path) -> list[list[str]]:
     """Read CSV rows without trying to clean malformed values."""
@@ -30,50 +21,79 @@ def _read_csv_rows(csv_file: Path) -> list[list[str]]:
         reader = csv.reader(handle)
         return [row for row in reader if any(cell.strip() for cell in row)]
 
+
 def _has_exact_header(row: list[str], expected_columns: tuple[str, ...]) -> bool:
     """Detect a header row that already matches the target schema."""
     normalized = tuple(cell.strip().lower() for cell in row)
     return normalized == expected_columns
 
-def _clean_numeric_column(series: pd.Series, column_name: str) -> pd.Series:
-    """Convert a column to numeric, replacing sentinel values with NaN."""
-    series = series.replace(SENTINEL_VALUES.get(column_name, []), pd.NA)
-    return pd.to_numeric(series, errors='coerce')
 
-def _clean_sensor_frame(frame: pd.DataFrame) -> pd.DataFrame:
-    """Clean sensor data frame by handling sentinel values and parsing timestamps."""
-    # Clean numeric columns
-    for column in ["temperature_c", "humidity_pct", "pressure_hpa"]:
-        frame[column] = _clean_numeric_column(frame[column], column)
+def _reshape_sales_row(row: list[str]) -> list[str]:
+    """Keep sales rows aligned even when price contains an unquoted comma."""
+    if len(row) < 4:
+        return row + [""] * (4 - len(row))
+    if len(row) == 4:
+        return row
+    return [row[0], row[1], ",".join(row[2:-1]), row[-1]]
 
-    # Parse timestamps and handle mixed timezones
-    frame['timestamp'] = pd.to_datetime(frame['timestamp'], errors='coerce', utc=True)
 
-    # Fill NaN sensor_id with a placeholder or drop rows if necessary
-    frame['sensor_id'] = frame['sensor_id'].fillna('UNKNOWN')
+def _parse_date(date_str: str) -> pd.Timestamp:
+    """Parse date from various formats into a standard datetime."""
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%m-%d-%Y", "%Y/%m/%d"):
+        try:
+            return pd.to_datetime(date_str, format=fmt)
+        except (ValueError, TypeError):
+            continue
+    return pd.NaT
 
-    return frame
 
-def _read_sensor_frame(csv_file: Path) -> pd.DataFrame:
-    """Read one sensor CSV file into the shared sensor schema."""
-    raw = pd.read_csv(csv_file, engine="python", on_bad_lines="skip")
-    return raw.reindex(columns=list(SENSOR_COLUMNS))
+def _clean_price(price_str: str) -> float:
+    """Convert price to a numeric float, handling commas."""
+    try:
+        return float(price_str.replace(",", ""))
+    except (ValueError, TypeError):
+        return pd.NA
+
+
+def _strip_frame(frame: pd.DataFrame, columns: tuple[str, ...]) -> pd.DataFrame:
+    """Trim whitespace but keep raw values otherwise untouched."""
+    stripped = frame.reindex(columns=list(columns)).copy()
+    for column in columns:
+        stripped[column] = stripped[column].fillna("").astype(str).str.strip()
+    return stripped
+
+
+def _read_sales_frame(csv_file: Path) -> pd.DataFrame:
+    """Read one sales CSV file into the shared sales schema."""
+    rows = _read_csv_rows(csv_file)
+    if not rows:
+        return pd.DataFrame(columns=list(SALES_COLUMNS))
+
+    body = rows[1:] if _has_exact_header(rows[0], SALES_COLUMNS) else rows
+    records = [_reshape_sales_row(row) for row in body]
+    return pd.DataFrame(records, columns=list(SALES_COLUMNS))
+
+
+def _normalize_sales_frame(master: pd.DataFrame) -> pd.DataFrame:
+    """Ensure dates are parseable and prices are numeric."""
+    master['date'] = master['date'].apply(_parse_date)
+    master['price'] = master['price'].apply(_clean_price)
+    return master
+
 
 def _read_dataset_frame(csv_file: Path, dataset_name: str) -> pd.DataFrame:
     """Read one dataset-family CSV into a shared intermediate schema."""
     if dataset_name == "sales":
         return _read_sales_frame(csv_file)
-    if dataset_name == "finance":
-        return _read_finance_frame(csv_file)
-    return _read_sensor_frame(csv_file)
+    return pd.DataFrame(columns=list(SALES_COLUMNS))  # Placeholder for other datasets
+
 
 def _normalize_dataset_frame(master: pd.DataFrame, dataset_name: str) -> pd.DataFrame:
     """Do only minimal shaping for the starter genome."""
     if dataset_name == "sales":
-        return _strip_frame(master, SALES_COLUMNS)
-    if dataset_name == "finance":
-        return _strip_frame(master, FINANCE_COLUMNS)
-    return _clean_sensor_frame(master)
+        return _normalize_sales_frame(master)
+    return _strip_frame(master, SALES_COLUMNS)
+
 
 def clean(input_dir: Path, output_path: Path) -> None:
     """Read one dataset family and write a cleaned master CSV."""
@@ -92,5 +112,6 @@ def clean(input_dir: Path, output_path: Path) -> None:
 
     master = pd.concat(frames, ignore_index=True)
     master = _normalize_dataset_frame(master, config.name)
+    master = master.dropna(subset=config.required_columns)
     master = master.sort_values(by=list(config.required_columns[:1]), kind="stable")
     master.to_csv(output_path, index=False)
