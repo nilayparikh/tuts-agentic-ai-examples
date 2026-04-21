@@ -76,6 +76,9 @@ def _normalize_finance_frame(master: pd.DataFrame) -> pd.DataFrame:
     normalized['value'] = normalized['value'].apply(lambda x: value_pattern.sub('', x))
     normalized['value'] = pd.to_numeric(normalized['value'], errors='coerce')
 
+    # Fill NaN values in date with a placeholder or drop them
+    normalized['date'] = normalized['date'].fillna('1900-01-01')
+
     # Ensure no NaN values in entity
     normalized = normalized[normalized["entity"] != ""]
     normalized = normalized.dropna(subset=["entity"])
