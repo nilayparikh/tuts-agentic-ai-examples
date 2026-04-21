@@ -1,7 +1,8 @@
-"""clean_data.py — Enhanced genome for CleanLoop demos.
+"""clean_data_starter.py — Immutable starter genome for CleanLoop demos.
 
-This file captures an improved baseline that addresses issues with malformed values,
-ensures numeric prices, and aligns with the reference output.
+This file captures the intentionally weak baseline that every teaching run
+should begin from. `loop.py` copies this file over `clean_data.py` at the start
+of each run so learners always see the same improvement process.
 """
 
 import csv
@@ -13,6 +14,16 @@ from cleanloop import datasets as cleanloop_datasets
 
 
 SALES_COLUMNS = ("date", "product", "price", "quantity")
+FINANCE_COLUMNS = ("date", "entity", "value", "category")
+SENSOR_COLUMNS = (
+    "timestamp",
+    "sensor_id",
+    "temperature_c",
+    "humidity_pct",
+    "pressure_hpa",
+)
+SENSOR_NUMERIC_COLUMNS = ("temperature_c", "humidity_pct", "pressure_hpa")
+SENSOR_TEXT_SENTINELS = frozenset({"", "null", "none", "nan", "error", "offline"})
 
 
 def _read_csv_rows(csv_file: Path) -> list[list[str]]:
@@ -37,22 +48,20 @@ def _reshape_sales_row(row: list[str]) -> list[str]:
     return [row[0], row[1], ",".join(row[2:-1]), row[-1]]
 
 
-def _parse_date(date_str: str) -> pd.Timestamp:
-    """Parse date from various formats into a standard datetime."""
-    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%m-%d-%Y", "%Y/%m/%d"):
-        try:
-            return pd.to_datetime(date_str, format=fmt)
-        except (ValueError, TypeError):
-            continue
-    return pd.NaT
+def _reshape_finance_row(row: list[str], header_length: int) -> list[str]:
+    """Keep finance rows aligned even when amount contains an unquoted comma."""
+    if len(row) < header_length:
+        return row + [""] * (header_length - len(row))
+    if len(row) == header_length:
+        return row
 
-
-def _clean_price(price_str: str) -> float:
-    """Convert price to a numeric float, handling commas."""
-    try:
-        return float(price_str.replace(",", ""))
-    except (ValueError, TypeError):
-        return pd.NA
+    trailing_count = header_length - 3
+    amount_end = len(row) - trailing_count
+    amount = ",".join(row[2:amount_end])
+    rebuilt = row[:2] + [amount] + row[amount_end:]
+    if len(rebuilt) < header_length:
+        rebuilt.extend([""] * (header_length - len(rebuilt)))
+    return rebuilt[:header_length]
 
 
 def _strip_frame(frame: pd.DataFrame, columns: tuple[str, ...]) -> pd.DataFrame:
@@ -61,6 +70,48 @@ def _strip_frame(frame: pd.DataFrame, columns: tuple[str, ...]) -> pd.DataFrame:
     for column in columns:
         stripped[column] = stripped[column].fillna("").astype(str).str.strip()
     return stripped
+
+
+def _normalize_sensor_scalar(value: object) -> str:
+    """Coerce one sensor cell to text without assuming pandas kept it as a string."""
+    if pd.isna(value):
+        return ""
+    return str(value).strip()
+
+
+def _normalize_sensor_timestamp(series: pd.Series) -> pd.Series:
+    """Convert mixed sensor timestamps into one parseable UTC-normalized format."""
+    text_values = series.map(_normalize_sensor_scalar)
+    parsed = pd.to_datetime(text_values, errors="coerce", format="mixed", utc=True)
+    normalized = parsed.dt.tz_convert(None).dt.strftime("%Y-%m-%d %H:%M:%S")
+    return normalized.fillna("")
+
+
+def _normalize_sensor_numeric(series: pd.Series) -> pd.Series:
+    """Convert sensor readings to numeric values while handling text sentinels safely."""
+    text_values = series.map(_normalize_sensor_scalar)
+    cleaned = text_values.where(
+        ~text_values.str.lower().isin(SENSOR_TEXT_SENTINELS),
+        "",
+    )
+    return pd.to_numeric(cleaned, errors="coerce")
+
+
+def _normalize_sensor_frame(master: pd.DataFrame) -> pd.DataFrame:
+    """Apply starter-grade cleanup so sensor output clears obvious parse failures."""
+    normalized = master.reindex(columns=list(SENSOR_COLUMNS)).copy()
+    normalized["timestamp"] = _normalize_sensor_timestamp(normalized["timestamp"])
+    normalized["sensor_id"] = normalized["sensor_id"].map(_normalize_sensor_scalar)
+
+    for column in SENSOR_NUMERIC_COLUMNS:
+        normalized[column] = _normalize_sensor_numeric(normalized[column])
+
+    normalized = normalized.replace({"timestamp": {"": pd.NA}, "sensor_id": {"": pd.NA}})
+    normalized = normalized.dropna(
+        subset=["timestamp", "sensor_id", *SENSOR_NUMERIC_COLUMNS],
+    )
+    normalized["sensor_id"] = normalized["sensor_id"].astype(str)
+    return normalized.reset_index(drop=True)
 
 
 def _read_sales_frame(csv_file: Path) -> pd.DataFrame:
@@ -74,29 +125,55 @@ def _read_sales_frame(csv_file: Path) -> pd.DataFrame:
     return pd.DataFrame(records, columns=list(SALES_COLUMNS))
 
 
-def _normalize_sales_frame(master: pd.DataFrame) -> pd.DataFrame:
-    """Ensure dates are parseable and prices are numeric."""
-    master['date'] = master['date'].apply(_parse_date)
-    master['price'] = master['price'].apply(_clean_price)
-    return master
+def _read_finance_frame(csv_file: Path) -> pd.DataFrame:
+    """Read one finance CSV file into the shared finance schema."""
+    rows = _read_csv_rows(csv_file)
+    if not rows:
+        return pd.DataFrame(columns=list(FINANCE_COLUMNS))
+
+    header = rows[0]
+    body = rows[1:]
+    records: list[dict[str, str]] = []
+    for row in body:
+        rebuilt = _reshape_finance_row(row, len(header))
+        raw = dict(zip(header, rebuilt))
+        records.append(
+            {
+                "date": raw.get("issued", ""),
+                "entity": raw.get("customer", ""),
+                "value": raw.get("amount", ""),
+                "category": raw.get("status", csv_file.stem),
+            }
+        )
+    return pd.DataFrame(records, columns=list(FINANCE_COLUMNS))
+
+
+def _read_sensor_frame(csv_file: Path) -> pd.DataFrame:
+    """Read one sensor CSV file into the shared sensor schema."""
+    raw = pd.read_csv(csv_file, engine="python", on_bad_lines="skip")
+    return raw.reindex(columns=list(SENSOR_COLUMNS))
 
 
 def _read_dataset_frame(csv_file: Path, dataset_name: str) -> pd.DataFrame:
     """Read one dataset-family CSV into a shared intermediate schema."""
     if dataset_name == "sales":
         return _read_sales_frame(csv_file)
-    return pd.DataFrame(columns=list(SALES_COLUMNS))  # Placeholder for other datasets
+    if dataset_name == "finance":
+        return _read_finance_frame(csv_file)
+    return _read_sensor_frame(csv_file)
 
 
 def _normalize_dataset_frame(master: pd.DataFrame, dataset_name: str) -> pd.DataFrame:
     """Do only minimal shaping for the starter genome."""
     if dataset_name == "sales":
-        return _normalize_sales_frame(master)
-    return _strip_frame(master, SALES_COLUMNS)
+        return _strip_frame(master, SALES_COLUMNS)
+    if dataset_name == "finance":
+        return _strip_frame(master, FINANCE_COLUMNS)
+    return _normalize_sensor_frame(master)
 
 
 def clean(input_dir: Path, output_path: Path) -> None:
-    """Read one dataset family and write a cleaned master CSV."""
+    """Read one dataset family and write a weak starter master CSV."""
     output_path.parent.mkdir(exist_ok=True)
     config = cleanloop_datasets.detect_dataset_from_output_path(output_path)
 
@@ -112,6 +189,5 @@ def clean(input_dir: Path, output_path: Path) -> None:
 
     master = pd.concat(frames, ignore_index=True)
     master = _normalize_dataset_frame(master, config.name)
-    master = master.dropna(subset=config.required_columns)
     master = master.sort_values(by=list(config.required_columns[:1]), kind="stable")
     master.to_csv(output_path, index=False)
