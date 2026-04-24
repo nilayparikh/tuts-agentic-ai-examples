@@ -1,0 +1,38 @@
+{
+  "slug": "closing",
+  "label": "Closing Behavior",
+  "description": "How the reply should close the loop at the end.",
+  "options": [
+    {
+      "slug": "confirm_back",
+      "label": "Confirm Back",
+      "instruction": "Ask the customer to confirm the one detail needed for the next step.",
+      "signals": [
+        "please reply",
+        "confirm the booking",
+        "send me"
+      ]
+    },
+    {
+      "slug": "open_door",
+      "label": "Open Door",
+      "instruction": "Close by inviting one follow-up question if the issue is still unclear.",
+      "signals": [
+        "if anything is unclear",
+        "happy to clarify",
+        "feel free to reply"
+      ]
+    },
+    {
+      "slug": "staff_handoff",
+      "label": "Staff Handoff",
+      "instruction": "Close by naming the staff owner who will take the next action.",
+      "signals": [
+        "membership lead",
+        "program coordinator",
+        "care lead",
+        "front desk"
+      ]
+    }
+  ]
+}

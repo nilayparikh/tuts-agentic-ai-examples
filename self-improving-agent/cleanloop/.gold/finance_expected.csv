@@ -1,0 +1,61 @@
+date,entity,value,category
+2024-01-03,Soylent Foods,0.0,active
+2024-01-05,Acme Manufacturing,15800.0,paid
+2024-01-06,Northwind Labs,12500.0,paid
+2024-01-07,Northwind Labs,7800.0,paid
+2024-01-08,Northwind Labs,6400.0,paid
+2024-01-15,Acme Manufacturing,15000.0,paid
+2024-01-18,Globex Retail,8500.5,paid
+2024-01-20,Initech Systems,22000.0,overdue
+2024-02-05,Globex Retail,-2500.0,credit_note
+2024-02-06,Blue Yonder,14250.6,paid
+2024-02-07,Blue Yonder,9200.0,overdue
+2024-02-08,Blue Yonder,12100.0,paid
+2024-02-20,Umbrella Bio,-500.0,refund
+2024-03-05,Globex Retail,9100.75,paid
+2024-03-06,Fabrikam GmbH,18900.0,overdue
+2024-03-07,Fabrikam GmbH,12500.0,overdue
+2024-03-08,Fabrikam GmbH,15550.0,review
+2024-03-15,Umbrella Bio,6400.0,paid
+2024-04-05,Initech Systems,22500.0,paid
+2024-04-06,Contoso Retail,0.0,active
+2024-04-07,Contoso Retail,0.0,disputed
+2024-04-08,Contoso Retail,0.0,active
+2024-04-12,Umbrella Bio,3200.0,review
+2024-04-25,Acme Manufacturing,4100.0,paid
+2024-05-06,Wide World Importers,8500.0,paid
+2024-05-07,Wide World Importers,-150.0,refund
+2024-05-08,Globex Retail,8800.0,paid
+2024-05-08,Wide World Importers,-225.0,refund
+2024-05-13,Acme Manufacturing,4225.1,paid
+2024-05-14,Globex Retail,-0.01,adjustment
+2024-05-15,Soylent Foods,0.0,void
+2024-05-15,Initech Systems,31250.0,paid
+2024-05-17,Soylent Foods,1250.0,paid
+2024-06-05,Umbrella Bio,-1200.0,refund
+2024-06-07,Fabrikam GmbH,22000.0,paid
+2024-06-07,Northwind Labs,0.0,void
+2024-06-13,Fabrikam GmbH,19110.0,paid
+2024-06-13,Contoso Retail,4999.0,paid
+2024-06-15,Wide World Importers,9001.4,paid
+2024-07-05,Soylent Foods,7450.2,paid
+2024-07-06,Blue Yonder,-750.0,refund
+2024-07-07,Blue Yonder,10100.25,paid
+2024-07-08,Blue Yonder,12100.0,paid
+2024-07-12,Fabrikam GmbH,13500.0,paid
+2024-07-14,Contoso Retail,4999.99,paid
+2024-07-15,Wide World Importers,10450.0,paid
+2024-08-05,Acme Manufacturing,0.0,active
+2024-08-08,Fabrikam GmbH,17990.0,paid
+2024-08-10,Northwind Labs,6550.0,paid
+2024-08-13,Fabrikam GmbH,16110.0,paid
+2024-08-14,Contoso Retail,6020.4,paid
+2024-08-15,Wide World Importers,8700.0,paid
+2024-09-06,Contoso Retail,4410.15,paid
+2024-10-07,Wide World Importers,7800.0,paid
+2024-10-08,Wide World Importers,999999.0,review
+2024-11-05,Umbrella Bio,9999999.0,escalated
+2024-11-06,Northwind Labs,12999.95,paid
+2024-11-07,Northwind Labs,8300.0,paid
+2024-12-03,Globex Retail,12750.0,paid
+2024-12-05,Soylent Foods,0.0,void

@@ -1,0 +1,34 @@
+{
+  "slug": "structure",
+  "label": "Structure",
+  "description": "How the response should be organized.",
+  "options": [
+    {
+      "slug": "bullets",
+      "label": "Bullets",
+      "instruction": "Use a short bullet list so the action items are obvious.",
+      "signals": [
+        "- ",
+        "* ",
+        "1. "
+      ]
+    },
+    {
+      "slug": "short_paragraphs",
+      "label": "Short Paragraphs",
+      "instruction": "Use two or three short paragraphs instead of a list.",
+      "signals": [
+        "\n\n"
+      ]
+    },
+    {
+      "slug": "checklist",
+      "label": "Checklist",
+      "instruction": "Format the response like a small checklist.",
+      "signals": [
+        "- [ ]",
+        "[ ]"
+      ]
+    }
+  ]
+}

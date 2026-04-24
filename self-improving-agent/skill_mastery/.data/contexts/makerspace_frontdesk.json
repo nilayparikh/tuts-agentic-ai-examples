@@ -1,0 +1,39 @@
+{
+  "slug": "makerspace_frontdesk",
+  "label": "Makerspace Front Desk",
+  "service_summary": "Handle bench bookings, tool certifications, and open-lab access issues.",
+  "escalation_path": "Escalate after-hours access and safety exceptions to the lab manager.",
+  "reference_terms": [
+    "booking",
+    "open lab",
+    "certification badge",
+    "lab manager"
+  ],
+  "forbidden_claims": [
+    "access restored automatically",
+    "safety override approved",
+    "after-hours exception already confirmed"
+  ],
+  "required_policy_points": [
+    {
+      "slug": "booking_window",
+      "description": "Bench bookings open 24 hours before the slot.",
+      "keywords": [
+        "24 hours",
+        "booking window",
+        "open 24 hours before"
+      ]
+    },
+    {
+      "slug": "certification_gate",
+      "description": "Active tool certification is required before access is confirmed.",
+      "keywords": [
+        "active tool certification",
+        "active certification",
+        "certification badge",
+        "confirming access",
+        "access is confirmed"
+      ]
+    }
+  ]
+}

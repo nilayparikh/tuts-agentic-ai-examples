@@ -1,0 +1,37 @@
+{
+  "slug": "pet_boarding",
+  "label": "Pet Boarding Guest Desk",
+  "service_summary": "Handle pickup changes, medication notes, and boarding-stay exceptions.",
+  "escalation_path": "Escalate medication and behavior exceptions to the care lead.",
+  "reference_terms": [
+    "pickup window",
+    "medication note",
+    "boarding stay",
+    "care lead"
+  ],
+  "forbidden_claims": [
+    "medication updated already",
+    "pickup fee waived automatically",
+    "care lead already approved the exception"
+  ],
+  "required_policy_points": [
+    {
+      "slug": "pickup_window",
+      "description": "Same-day pickup changes must be requested before noon.",
+      "keywords": [
+        "before noon",
+        "same-day pickup",
+        "pickup changes"
+      ]
+    },
+    {
+      "slug": "medication_review",
+      "description": "Medication changes need a signed note before the stay is updated.",
+      "keywords": [
+        "signed note",
+        "medication changes",
+        "stay is updated"
+      ]
+    }
+  ]
+}

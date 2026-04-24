@@ -1,0 +1,21 @@
+[project]
+name = "self-improving-agent-examples"
+version = "0.1.0"
+description = "Self-Improving Agents tutorial course working examples"
+requires-python = ">=3.11"
+license = { text = "MPL-2.0" }
+
+dependencies = [
+  "openai>=1.30.0",
+  "pandas>=2.2.0",
+  "gitpython>=3.1.0",
+  "python-dotenv>=1.0.0",
+  "streamlit>=1.45.0",
+  "hermes-agent @ git+https://github.com/NousResearch/hermes-agent.git",
+]
+
+[tool.uv]
+dev-dependencies = ["ruff>=0.15.4"]
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,47 @@
+{
+  "slug": "boutique_hotel",
+  "label": "Boutique Hotel Guest Desk",
+  "service_summary": "Handle reservation changes, late check-in requests, and room-credit questions.",
+  "brand_voice": "Warm, polished, and concise. Sound like a front-office manager.",
+  "escalation_path": "Escalate goodwill credits above $75 to the duty manager.",
+  "reference_terms": [
+    "late check-in",
+    "reservation",
+    "duty manager",
+    "room credit"
+  ],
+  "forbidden_claims": [
+    "suite upgrade guaranteed",
+    "credit already approved",
+    "late arrival fee is waived automatically"
+  ],
+  "required_policy_points": [
+    {
+      "slug": "late_checkin_note",
+      "description": "Late check-in requests need a reservation note before 9 PM.",
+      "keywords": [
+        "before 9 pm",
+        "reservation note",
+        "late check-in note"
+      ]
+    },
+    {
+      "slug": "credit_review",
+      "description": "Room-credit requests are reviewed after the stay record is verified.",
+      "keywords": [
+        "stay record",
+        "credit review",
+        "verified after the stay"
+      ]
+    },
+    {
+      "slug": "desk_callback",
+      "description": "Front desk can call the guest once the room is assigned.",
+      "keywords": [
+        "front desk",
+        "room is assigned",
+        "call you once"
+      ]
+    }
+  ]
+}

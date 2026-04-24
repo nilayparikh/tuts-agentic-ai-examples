@@ -1,0 +1,16 @@
+invoice_id,customer,amount,currency,issued,due,status,collector,escalation_level,promise_to_pay
+INV-401,Northwind Labs,7800.00,USD,2024-07-01,2024-07-31,paid,Diaz,0,2024-07-20
+INV-402,Blue Yonder,9200.00,USD,2024-07-02,2024-08-01,overdue,Diaz,2,2024-08-15
+INV-403,Fabrikam GmbH,"€12,500.00",EUR,2024-07-03,2024-08-02,overdue,Kaur,1,2024-08-20
+INV-404,Contoso Retail,OFFSET,GBP,2024-07-04,2024-08-03,disputed,Kaur,3,
+INV-405,Wide World Importers,-150.00,AUD,2024-07-05,2024-08-04,refund,Patel,1,2024-08-11
+INV-406,Northwind Labs,0.00,USD,2024-07-06,2024-08-05,void,Diaz,0,
+INV-407,Blue Yonder,10100.25,USD,2024-07-07,2024-08-06,paid,Diaz,0,2024-08-06
+INV-408,Fabrikam GmbH,PENDING,EUR,2024-07-08,2024-08-07,pending,Kaur,2,2024-08-28
+INV-409,Contoso Retail,,GBP,2024-07-09,2024-08-08,review,Kaur,3,
+INV-410,Wide World Importers,"AUD 7,800.00",AUD,2024-07-10,2024-08-09,paid,Patel,0,2024-08-09
+INV-411,Northwind Labs,8300.00,USD,2024-07-11,2024-08-10,paid,Diaz,0,2024-08-10
+INV-412,Blue Yonder,ERR,USD,2024-07-12,2024-08-11,escalated,Diaz,4,
+INV-413,Fabrikam GmbH,13500.00,EUR,12-Jul-2024,11-Aug-2024,paid,Kaur,1,2024-08-21
+INV-414,Contoso Retail,"GBP 4,999.99",GBP,2024-07-14,2024-08-13,paid,Kaur,0,2024-08-13
+INV-415,Wide World Importers,10450.00,AUD,2024-07-15,2024-08-14,paid,Patel,1,2024-08-14

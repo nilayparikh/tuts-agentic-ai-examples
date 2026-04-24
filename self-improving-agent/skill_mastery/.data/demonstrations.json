@@ -1,0 +1,100 @@
+[
+  {
+    "id": "makerspace-booking-restore",
+    "context_slug": "makerspace_frontdesk",
+    "problem": "My laser cutter booking disappeared before open lab tonight.",
+    "response": "It sounds like your laser cutter booking dropped before open lab tonight. Bench bookings open 24 hours before the slot and require an active certification badge. Next step: please reply with the tool name and badge number so front desk can confirm the booking.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "offer_checkpoint",
+      "name_owner"
+    ]
+  },
+  {
+    "id": "makerspace-afterhours-escalation",
+    "context_slug": "makerspace_frontdesk",
+    "problem": "Can you unlock the CNC bench after hours because my booking failed?",
+    "response": "You mentioned an after-hours CNC request after the booking failed. The certification gate still applies, and after-hours exceptions go to the lab manager after review. Please reply with the failed booking time so I can log the request for the manager.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "name_owner",
+      "offer_checkpoint",
+      "preserve_boundary"
+    ]
+  },
+  {
+    "id": "school-transfer-review",
+    "context_slug": "language_school",
+    "problem": "I need to move to the evening section after missing my first class.",
+    "response": "It sounds like you need an evening-section transfer after missing the first class. Course transfers are reviewed during the first two class meetings. Next step: please reply with your current section and the evening option you want, and the student desk can route it to the program coordinator if needed.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "offer_checkpoint",
+      "name_owner"
+    ]
+  },
+  {
+    "id": "school-makeup-window",
+    "context_slug": "language_school",
+    "problem": "Can I book a make-up session for the class I missed last week?",
+    "response": "You mentioned a missed class from last week and want a make-up session. Make-up sessions must be scheduled within seven days, so we are still inside the review window. Please reply with the class date and the student desk will confirm the next available slot.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "offer_checkpoint"
+    ]
+  },
+  {
+    "id": "boarding-pickup-shift",
+    "context_slug": "pet_boarding",
+    "problem": "My pickup time changed today. Can I come later this evening?",
+    "response": "It sounds like your pickup timing changed today and you need a later evening handoff. Same-day pickup changes must be requested before noon. Next step: please reply with the new pickup time and we can check whether the care lead review is needed.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "offer_checkpoint",
+      "preserve_boundary"
+    ]
+  },
+  {
+    "id": "boarding-medication-update",
+    "context_slug": "pet_boarding",
+    "problem": "I forgot to mention a medication change before tomorrow's stay.",
+    "response": "You mentioned a medication change before tomorrow's boarding stay. Medication changes need a signed note before the stay is updated. Please send the signed note reply and the care lead can confirm the update path.",
+    "outcome": "successful",
+    "habits_used": [
+      "mirror_issue",
+      "cite_policy_gate",
+      "offer_checkpoint",
+      "name_owner"
+    ]
+  },
+  {
+    "id": "weak-overpromise-access",
+    "context_slug": "makerspace_frontdesk",
+    "problem": "My booking vanished and I need the bench tonight.",
+    "response": "No problem, we will unlock the bench automatically for you tonight.",
+    "outcome": "weak",
+    "habits_used": [
+      "offer_checkpoint"
+    ]
+  },
+  {
+    "id": "weak-transfer-shortcut",
+    "context_slug": "language_school",
+    "problem": "Can you move me to another section immediately?",
+    "response": "Sure, the transfer is already approved and you can join any section.",
+    "outcome": "weak",
+    "habits_used": [
+      "mirror_issue"
+    ]
+  }
+]

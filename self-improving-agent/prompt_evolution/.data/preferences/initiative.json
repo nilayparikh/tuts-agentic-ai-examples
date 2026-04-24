@@ -1,0 +1,39 @@
+{
+  "slug": "initiative",
+  "label": "Initiative",
+  "description": "How proactive the reply should be.",
+  "options": [
+    {
+      "slug": "next_step",
+      "label": "Next Step",
+      "instruction": "Name the single clearest next action for the customer.",
+      "signals": [
+        "next step",
+        "please reply",
+        "head to",
+        "bring"
+      ]
+    },
+    {
+      "slug": "options_first",
+      "label": "Options First",
+      "instruction": "Offer two options so the customer can choose a path.",
+      "signals": [
+        "option 1",
+        "option 2",
+        "you can either"
+      ]
+    },
+    {
+      "slug": "handoff_ready",
+      "label": "Handoff Ready",
+      "instruction": "Explain when and how the case will be escalated.",
+      "signals": [
+        "escalate",
+        "hand this to",
+        "membership lead",
+        "duty manager"
+      ]
+    }
+  ]
+}

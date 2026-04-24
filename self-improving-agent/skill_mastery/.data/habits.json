@@ -1,0 +1,106 @@
+[
+  {
+    "slug": "mirror_issue",
+    "label": "Mirror the Issue",
+    "instruction": "Open by restating the customer's friction in plain language.",
+    "trigger_keywords": [
+      "missing",
+      "vanished",
+      "booking",
+      "transfer",
+      "pickup",
+      "medication",
+      "access"
+    ],
+    "success_signals": [
+      "i'm sorry to hear",
+      "i understand",
+      "it sounds like",
+      "you mentioned",
+      "from what you described"
+    ],
+    "stop_condition": "Stop after the first sentence clearly mirrors the issue."
+  },
+  {
+    "slug": "cite_policy_gate",
+    "label": "Cite the Policy Gate",
+    "instruction": "Name one concrete timing rule, review step, or gate before promising a result.",
+    "trigger_keywords": [
+      "booking",
+      "pickup",
+      "transfer",
+      "medication",
+      "window",
+      "review",
+      "access"
+    ],
+    "success_signals": [
+      "24 hours",
+      "before noon",
+      "within seven days",
+      "first two class meetings",
+      "required"
+    ],
+    "stop_condition": "Stop after one concrete gate or timing rule is named."
+  },
+  {
+    "slug": "name_owner",
+    "label": "Name the Owner",
+    "instruction": "Say which staff role owns the next review or confirmation step.",
+    "trigger_keywords": [
+      "review",
+      "escalate",
+      "manager",
+      "coordinator",
+      "lead",
+      "approval"
+    ],
+    "success_signals": [
+      "lab manager",
+      "program coordinator",
+      "care lead",
+      "front desk"
+    ],
+    "stop_condition": "Stop after one owner is named."
+  },
+  {
+    "slug": "offer_checkpoint",
+    "label": "Offer a Checkpoint",
+    "instruction": "Give one explicit next action that moves the case forward.",
+    "trigger_keywords": [
+      "booking",
+      "tonight",
+      "reply",
+      "confirm",
+      "session",
+      "pickup"
+    ],
+    "success_signals": [
+      "next step",
+      "please reply",
+      "send me",
+      "confirm",
+      "bring"
+    ],
+    "stop_condition": "Stop after one clear next action is offered."
+  },
+  {
+    "slug": "preserve_boundary",
+    "label": "Preserve the Boundary",
+    "instruction": "Reassure the customer without promising an unapproved outcome.",
+    "trigger_keywords": [
+      "urgent",
+      "override",
+      "refund",
+      "exception",
+      "tonight"
+    ],
+    "success_signals": [
+      "review",
+      "not approved yet",
+      "once we verify",
+      "can check"
+    ],
+    "stop_condition": "Stop after the uncertain outcome is framed as a review path."
+  }
+]

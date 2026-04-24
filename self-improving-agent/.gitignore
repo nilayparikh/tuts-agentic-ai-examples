@@ -1,0 +1,12 @@
+# Virtual environment
+.venv/
+
+# Per-example output directories (generated at runtime)
+*/.output/
+
+# Environment secrets
+.env
+
+# Python
+__pycache__/
+*.pyc

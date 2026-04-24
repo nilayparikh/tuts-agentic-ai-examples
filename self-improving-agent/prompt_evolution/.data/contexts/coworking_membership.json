@@ -1,0 +1,47 @@
+{
+  "slug": "coworking_membership",
+  "label": "Coworking Membership Desk",
+  "service_summary": "Handle booking, access, and day-pass questions for a coworking club.",
+  "brand_voice": "Calm, practical, and welcoming. Sound like an operations lead who knows the policy.",
+  "escalation_path": "Escalate billing disputes to the membership lead after the attendance check.",
+  "reference_terms": [
+    "guest booking",
+    "front desk",
+    "day pass",
+    "membership lead"
+  ],
+  "forbidden_claims": [
+    "refund approved immediately",
+    "guaranteed refund",
+    "guest pass is restored automatically"
+  ],
+  "required_policy_points": [
+    {
+      "slug": "guest_hold",
+      "description": "Guest bookings are held for 15 minutes before release.",
+      "keywords": [
+        "15 minutes",
+        "15-minute hold",
+        "held for 15"
+      ]
+    },
+    {
+      "slug": "refund_review",
+      "description": "Day-pass refunds are reviewed after an attendance check.",
+      "keywords": [
+        "attendance check",
+        "refund review",
+        "reviewed after attendance"
+      ]
+    },
+    {
+      "slug": "access_reissue",
+      "description": "The front desk or support can reissue building access.",
+      "keywords": [
+        "front desk",
+        "reissue access",
+        "support can reissue"
+      ]
+    }
+  ]
+}

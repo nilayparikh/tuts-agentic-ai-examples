@@ -1,0 +1,25 @@
+{
+  "slug": "detail",
+  "label": "Detail",
+  "description": "How much explanation to include.",
+  "options": [
+    {
+      "slug": "concise",
+      "label": "Concise",
+      "instruction": "Keep the reply short and focused on the decision path.",
+      "signals": []
+    },
+    {
+      "slug": "balanced",
+      "label": "Balanced",
+      "instruction": "Give enough context to reassure the customer without overloading them.",
+      "signals": []
+    },
+    {
+      "slug": "detailed",
+      "label": "Detailed",
+      "instruction": "Explain the policy path and what happens next in more detail.",
+      "signals": []
+    }
+  ]
+}

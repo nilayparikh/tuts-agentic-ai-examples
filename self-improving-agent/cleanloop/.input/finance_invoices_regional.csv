@@ -1,0 +1,16 @@
+invoice_id,customer,amount,currency,issued,due,status,region,business_unit,tax_zone
+INV-301,Northwind Labs,12500.00,USD,2024-06-01,2024-07-01,paid,NA,Diagnostics,TX-NA
+INV-302,Blue Yonder,14250.60,USD,2024-06-02,2024-07-02,paid,NA,Logistics,TX-NA
+INV-303,Fabrikam GmbH,"EUR 18,900.00",EUR,2024-06-03,2024-07-03,overdue,EMEA,Cloud,TX-EU
+INV-304,Contoso Retail,FREE TRIAL,GBP,2024-06-04,2024-07-04,active,EMEA,Retail,TX-UK
+INV-305,Wide World Importers,8500.00,AUD,2024-06-05,2024-07-05,paid,APAC,Wholesale,TX-AU
+INV-306,Northwind Labs,N/A,USD,2024-06-06,2024-07-06,review,NA,Diagnostics,TX-NA
+INV-307,Blue Yonder,-750.00,USD,2024-06-07,2024-07-07,refund,NA,Logistics,TX-NA
+INV-308,Fabrikam GmbH,22000.00,EUR,07-06-2024,07-07-2024,paid,EMEA,Cloud,TX-EU
+INV-309,Contoso Retail,"£4,410.15",GBP,2024-06-09,2024-07-09,paid,EMEA,Retail,TX-UK
+INV-310,Wide World Importers,,AUD,2024-06-10,2024-07-10,cancelled,APAC,Wholesale,TX-AU
+INV-311,Northwind Labs,12999.95,USD,2024-06-11,2024-07-11,paid,NA,Diagnostics,TX-NA
+INV-312,Blue Yonder,CHARGEBACK,USD,2024-06-12,2024-07-12,disputed,NA,Logistics,TX-NA
+INV-313,Fabrikam GmbH,19110.00,EUR,2024-06-13,2024-07-13,paid,EMEA,Cloud,TX-EU
+INV-314,Contoso Retail,4999.00,GBP,13/06/2024,13/07/2024,paid,EMEA,Retail,TX-UK
+INV-315,Wide World Importers,"AUD 9,001.40",AUD,2024-06-15,2024-07-15,paid,APAC,Wholesale,TX-AU

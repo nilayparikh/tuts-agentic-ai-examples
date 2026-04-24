@@ -1,0 +1,16 @@
+invoice_id,customer,amount,currency,issued,due,status,risk_flag,review_code
+INV-201,Acme Manufacturing,15800.00,USD,2024-05-01,2024-05-31,paid,low,RVW-01
+INV-202,Globex Retail,"USD 9,100.75",USD,2024-05-03,2024-06-02,paid,medium,RVW-02
+INV-203,Initech Systems,TBD,EUR,2024-05-05,2024-06-04,pending,high,RVW-09
+INV-204,Umbrella Bio,-1200.00,USD,2024-05-06,2024-06-05,refund,high,RVW-12
+INV-205,Soylent Foods,"€7,450.20",EUR,2024-05-07,2024-06-06,paid,medium,RVW-07
+INV-206,Acme Manufacturing,COMPLIMENTARY,USD,2024-05-08,2024-06-07,active,high,RVW-15
+INV-207,Globex Retail,8800.00,USD,08/05/2024,07/06/2024,paid,low,RVW-03
+INV-208,Initech Systems,ERROR,EUR,2024-05-10,2024-06-09,review,critical,RVW-20
+INV-209,Umbrella Bio,9999999,USD,2024-05-11,2024-06-10,escalated,critical,RVW-21
+INV-210,Soylent Foods,0,USD,2024-05-12,,void,low,RVW-05
+INV-211,Acme Manufacturing,"$4,225.10",USD,2024-05-13,2024-06-12,paid,low,RVW-06
+INV-212,Globex Retail,-0.01,USD,2024-05-14,2024-06-13,adjustment,medium,RVW-08
+INV-213,Initech Systems,31250.00,EUR,2024-05-15,2024-06-14,paid,high,RVW-11
+INV-214,Umbrella Bio,,USD,2024-05-16,2024-06-15,disputed,critical,RVW-25
+INV-215,Soylent Foods,"CHF 1,250.00",CHF,2024-05-17,2024-06-16,paid,medium,RVW-14

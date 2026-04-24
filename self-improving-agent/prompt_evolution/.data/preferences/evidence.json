@@ -1,0 +1,38 @@
+{
+  "slug": "evidence",
+  "label": "Evidence Style",
+  "description": "How explicitly the reply should anchor itself in policy or observed facts.",
+  "options": [
+    {
+      "slug": "policy_first",
+      "label": "Policy First",
+      "instruction": "Lead with the concrete rule, timing, or gate that explains the next step.",
+      "signals": [
+        "24 hours",
+        "before noon",
+        "within seven days",
+        "required"
+      ]
+    },
+    {
+      "slug": "case_anchor",
+      "label": "Case Anchor",
+      "instruction": "Reflect the customer's specific facts before you move to the plan.",
+      "signals": [
+        "you mentioned",
+        "from what you described",
+        "it sounds like"
+      ]
+    },
+    {
+      "slug": "light_touch",
+      "label": "Light Touch",
+      "instruction": "Keep the policy grounding short and avoid over-explaining the rulebook.",
+      "signals": [
+        "quick note",
+        "briefly",
+        "in short"
+      ]
+    }
+  ]
+}

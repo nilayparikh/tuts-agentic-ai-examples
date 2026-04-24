@@ -1,0 +1,37 @@
+{
+  "slug": "language_school",
+  "label": "Language School Student Desk",
+  "service_summary": "Handle placement changes, make-up sessions, and course-transfer requests.",
+  "escalation_path": "Escalate level overrides and tuition exceptions to the program coordinator.",
+  "reference_terms": [
+    "make-up session",
+    "course transfer",
+    "placement recheck",
+    "program coordinator"
+  ],
+  "forbidden_claims": [
+    "transfer approved automatically",
+    "level override confirmed",
+    "tuition exception already granted"
+  ],
+  "required_policy_points": [
+    {
+      "slug": "transfer_window",
+      "description": "Course transfers are reviewed during the first two class meetings.",
+      "keywords": [
+        "first two class meetings",
+        "course transfers are reviewed",
+        "transfer review"
+      ]
+    },
+    {
+      "slug": "makeup_limit",
+      "description": "Make-up sessions must be scheduled within seven days.",
+      "keywords": [
+        "within seven days",
+        "make-up session",
+        "scheduled within seven"
+      ]
+    }
+  ]
+}

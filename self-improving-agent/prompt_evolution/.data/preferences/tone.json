@@ -1,0 +1,38 @@
+{
+  "slug": "tone",
+  "label": "Tone",
+  "description": "How the support reply should sound.",
+  "options": [
+    {
+      "slug": "warm",
+      "label": "Warm",
+      "instruction": "Lead with empathy and collaborative language.",
+      "signals": [
+        "sorry",
+        "thanks for flagging",
+        "happy to help",
+        "i understand"
+      ]
+    },
+    {
+      "slug": "direct",
+      "label": "Direct",
+      "instruction": "Get to the point quickly and keep the reply crisp.",
+      "signals": [
+        "here's what",
+        "please",
+        "next step"
+      ]
+    },
+    {
+      "slug": "calm",
+      "label": "Calm",
+      "instruction": "De-escalate tension with steady, neutral language.",
+      "signals": [
+        "we can sort this out",
+        "let's get this resolved",
+        "i'll help"
+      ]
+    }
+  ]
+}
