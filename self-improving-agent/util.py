@@ -7,7 +7,7 @@ route per-demo commands:
     python util.py verify                             Verify environment
     python util.py status                             Show full inventory
 
-    python util.py --example cleanloop evaluate       Run referee
+    python util.py --example cleanloop evaluate        Run referee
     python util.py --example cleanloop loop            Karpathy Loop
     python util.py --example cleanloop loop --rerank   Best-of-N
     python util.py --example cleanloop dashboard       Streamlit UI
