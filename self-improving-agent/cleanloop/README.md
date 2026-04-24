@@ -1,5 +1,10 @@
 # CleanLoop Agenda
 
+[![Watch: AI That Improves Itself: The "Bounded Recipe" for Agents](https://img.youtube.com/vi/loYCwyRU_tM/maxresdefault.jpg)](https://www.youtube.com/watch?v=loYCwyRU_tM)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=loYCwyRU_tM" target="_blank" rel="noopener noreferrer">AI That Improves Itself: The "Bounded Recipe" for Agents</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 ## Goal
 
 Merge the five finance invoice CSVs into one normalized receivables table with
@@ -34,3 +39,9 @@ date, entity, value, category
 - You may only modify the `clean` function in `clean_data.py`.
 - Do not change function signatures or imports.
 - Do not modify `cleanloop/prepare.py`, `cleanloop/datasets.py`, or this file.
+
+## Series Navigation
+
+| Lesson | Video                                                                                                   | Example Folder  |
+| ------ | ------------------------------------------------------------------------------------------------------- | --------------- |
+| 01     | [AI That Improves Itself: The "Bounded Recipe" for Agents](https://www.youtube.com/watch?v=loYCwyRU_tM) | [cleanloop](./) |

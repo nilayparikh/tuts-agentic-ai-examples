@@ -1,14 +1,14 @@
 # Self-Improving Agents — Example Project
 
 This repo now ships three runnable demos for the
-<a href="https://tuts.localm.ai/self-improving-agents" target="_blank" rel="noopener noreferrer">Self-Improving Agents</a>
+<a href="https://tuts.localm.dev/self-improving-agents" target="_blank" rel="noopener noreferrer">Self-Improving Agents</a>
 course.
 
-| Example              | Domain                    | What It Teaches                                                          |
-| -------------------- | ------------------------- | ------------------------------------------------------------------------ |
-| **CleanLoop**        | Data engineering          | The core Karpathy loop on one finance invoice arena                      |
-| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   |
-| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition |
+| Example              | Domain                    | What It Teaches                                                          | Video                                                |
+| -------------------- | ------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
+| **CleanLoop**        | Data engineering          | The core Karpathy loop on one finance invoice arena                      | [Watch](https://www.youtube.com/watch?v=loYCwyRU_tM) |
+| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                    |
+| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                    |
 
 CleanLoop is the teaching path. It uses one finance-only arena, one gold
 reference, one output file, and one reset path. Every fresh run copies
@@ -30,6 +30,12 @@ session, it also shows the intermediate best reply and keeps collecting user
 feedback until the user accepts the output. It now also prints verbose round
 logs, records LLM request metadata, and ships a dashboard for inspecting reply
 diffs.
+
+## Videos
+
+| Lesson | Thumbnail                                                                                                                                                                   | Watch                                                                                                   | Example                 |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------- |
+| 01     | [![Watch: AI That Improves Itself: The "Bounded Recipe" for Agents](https://img.youtube.com/vi/loYCwyRU_tM/maxresdefault.jpg)](https://www.youtube.com/watch?v=loYCwyRU_tM) | [AI That Improves Itself: The "Bounded Recipe" for Agents](https://www.youtube.com/watch?v=loYCwyRU_tM) | [cleanloop](cleanloop/) |
 
 ## Quick Start
 
