@@ -346,28 +346,30 @@ def _check_input_files() -> bool:
 
 
 def _check_credentials() -> bool:
-    endpoint = os.getenv("AZURE_ENDPOINT")
-    api_key = os.getenv("AZURE_API_KEY")
+    config = _resolve_llm_env()
+    endpoint = config["endpoint"]
+    api_key = config["api_key"]
     if endpoint and api_key:
         masked_endpoint = endpoint[:30] + "..." if len(endpoint) > 30 else endpoint
         masked_key = _mask_secret(api_key)
         log_ok(f"Endpoint: {masked_endpoint}")
         log_ok(f"API Key:  {masked_key}")
-        model = os.getenv("MODEL_NAME", "gpt-4o")
+        model = config["model"]
         log_info(f"Model:    {model}")
         return True
     if not endpoint:
-        log_fail("AZURE_ENDPOINT not set in .env")
+        log_fail(f"{config['endpoint_var']} not set in .env")
     if not api_key:
-        log_fail("AZURE_API_KEY not set in .env")
+        log_fail(f"{config['api_key_var']} not set in .env")
     return False
 
 
 def _check_llm() -> bool:
-    endpoint = os.getenv("AZURE_ENDPOINT")
-    api_key = os.getenv("AZURE_API_KEY")
-    model = os.getenv("MODEL_NAME", "gpt-4o")
-    api_version = os.getenv("AZURE_API_VERSION", "2024-12-01-preview")
+    config = _resolve_llm_env()
+    endpoint = config["endpoint"]
+    api_key = config["api_key"]
+    model = config["model"]
+    api_version = config["api_version"]
     if not endpoint or not api_key:
         log_warn("Skipped — configure credentials first")
         return True  # Non-blocking
@@ -1160,11 +1162,55 @@ def _load_env() -> None:
         load_dotenv(ENV_FILE, override=True)
 
 
+def _resolve_llm_env() -> dict[str, str]:
+    """Resolve OpenAI-compatible endpoint settings from shared environment names."""
+    endpoint = (
+        os.getenv("LLM_ENDPOINT")
+        or os.getenv("OPENAI_BASE_URL")
+        or os.getenv("AZURE_ENDPOINT")
+        or ""
+    )
+    api_key = (
+        os.getenv("LLM_API_KEY")
+        or os.getenv("OPENAI_API_KEY")
+        or os.getenv("AZURE_API_KEY")
+        or ""
+    )
+    model = os.getenv("MODEL_NAME", "gpt-4o")
+    api_version = os.getenv("LLM_API_VERSION") or os.getenv("AZURE_API_VERSION", "2024-12-01-preview")
+    if os.getenv("LLM_ENDPOINT"):
+        endpoint_var = "LLM_ENDPOINT"
+    elif os.getenv("OPENAI_BASE_URL"):
+        endpoint_var = "OPENAI_BASE_URL"
+    else:
+        endpoint_var = "AZURE_ENDPOINT"
+    if os.getenv("LLM_API_KEY"):
+        api_key_var = "LLM_API_KEY"
+    elif os.getenv("OPENAI_API_KEY"):
+        api_key_var = "OPENAI_API_KEY"
+    else:
+        api_key_var = "AZURE_API_KEY"
+    return {
+        "endpoint": endpoint,
+        "api_key": api_key,
+        "model": model,
+        "api_version": api_version,
+        "endpoint_var": endpoint_var,
+        "api_key_var": api_key_var,
+    }
+
+
+def resolve_llm_env() -> dict[str, str]:
+    """Return the shared OpenAI-compatible endpoint configuration."""
+    return _resolve_llm_env()
+
+
 def _show_env_summary() -> None:
     """Print a masked summary of .env config."""
     _load_env()
-    endpoint = os.getenv("AZURE_ENDPOINT", "")
-    model = os.getenv("MODEL_NAME", "gpt-4o")
+    config = _resolve_llm_env()
+    endpoint = config["endpoint"]
+    model = config["model"]
     if endpoint:
         masked = endpoint[:30] + "..." if len(endpoint) > 30 else endpoint
         log_info(f"Endpoint: {masked}")
@@ -1278,6 +1324,11 @@ def _build_llm_client(endpoint: str, api_key: str, api_version: str):
     from openai import OpenAI
 
     return OpenAI(base_url=normalized_endpoint, api_key=api_key, max_retries=1)
+
+
+def build_llm_client(endpoint: str, api_key: str, api_version: str):
+    """Build an OpenAI-compatible client from shared endpoint settings."""
+    return _build_llm_client(endpoint, api_key, api_version)
 
 
 def _chat_completion_options(max_tokens: int, temperature: float | None = None) -> dict:

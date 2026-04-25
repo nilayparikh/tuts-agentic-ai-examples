@@ -9,6 +9,8 @@ from contextlib import redirect_stderr, redirect_stdout
 from dataclasses import dataclass
 from typing import Any
 
+import util
+
 
 def _is_azure_openai_endpoint(endpoint: str) -> bool:
     """Return whether the endpoint targets an Azure OpenAI resource."""
@@ -65,10 +67,12 @@ class HermesAgentRunner:
     @classmethod
     def from_env(cls) -> "HermesAgentRunner":
         """Build a runner from the shared example environment variables."""
-        model = os.getenv("MODEL_NAME", "gpt-4o")
-        endpoint = os.getenv("AZURE_ENDPOINT") or os.getenv("OPENAI_BASE_URL")
-        api_key = os.getenv("AZURE_API_KEY") or os.getenv("OPENAI_API_KEY")
-        return cls(model=model, base_url=_normalize_endpoint(endpoint), api_key=api_key)
+        config = util.resolve_llm_env()
+        return cls(
+            model=config["model"],
+            base_url=_normalize_endpoint(config["endpoint"]),
+            api_key=config["api_key"],
+        )
 
     def _build_agent(self):
         """Construct a fresh Hermes AIAgent instance for one conversation."""

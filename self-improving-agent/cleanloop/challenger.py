@@ -14,17 +14,23 @@ Usage:
     python -m cleanloop.challenger --difficulty 3 --count 4
 
 Environment variables (from .env):
-    AZURE_ENDPOINT  — Azure AI Foundry or Foundry Local endpoint
-    AZURE_API_KEY   — API key
-    MODEL_NAME      — Model deployment name (default: gpt-4o)
+    LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
+    LLM_API_KEY     — Agnostic API key
+    MODEL_NAME      — Model deployment or model name
+    LLM_API_VERSION — Optional provider-specific API version
+    OPENAI_BASE_URL — Legacy fallback
+    OPENAI_API_KEY  — Legacy fallback
+    AZURE_ENDPOINT  — Legacy fallback
+    AZURE_API_KEY   — Legacy fallback
 """
 
 import argparse
-import os
 from pathlib import Path
+from typing import Any
 
 from dotenv import load_dotenv
-from openai import OpenAI
+
+import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
@@ -88,7 +94,7 @@ DIFFICULTY_LEVELS: dict[int, str] = {
 # =====================================================================
 
 def generate_messy_csv(
-    client: OpenAI,
+    client: Any,
     model: str,
     difficulty: int,
 ) -> str:
@@ -137,11 +143,13 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    client = OpenAI(
-        base_url=os.environ["AZURE_ENDPOINT"],
-        api_key=os.environ["AZURE_API_KEY"],
+    llm_config = util.resolve_llm_env()
+    client = util.build_llm_client(
+        llm_config["endpoint"],
+        llm_config["api_key"],
+        llm_config["api_version"],
     )
-    model = os.getenv("MODEL_NAME", "gpt-4o")
+    model = llm_config["model"]
 
     print(
         f"Generating {args.count} adversarial CSVs "

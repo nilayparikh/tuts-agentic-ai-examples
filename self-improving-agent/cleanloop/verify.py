@@ -10,16 +10,22 @@ Usage:
     python -m cleanloop.verify
 
 Environment variables (from .env):
-    AZURE_ENDPOINT  — Azure AI Foundry or Foundry Local endpoint
-    AZURE_API_KEY   — API key
-    MODEL_NAME      — Model deployment name (default: gpt-4o)
+    LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
+    LLM_API_KEY     — Agnostic API key
+    MODEL_NAME      — Model deployment or model name
+    LLM_API_VERSION — Optional provider-specific API version
+    OPENAI_BASE_URL — Legacy fallback
+    OPENAI_API_KEY  — Legacy fallback
+    AZURE_ENDPOINT  — Legacy fallback
+    AZURE_API_KEY   — Legacy fallback
 """
 
-import os
 import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
@@ -65,8 +71,9 @@ def check_packages() -> bool:
 
 def check_credentials() -> bool:
     """Verify API credentials are configured in .env."""
-    endpoint = os.getenv("AZURE_ENDPOINT")
-    api_key = os.getenv("AZURE_API_KEY")
+    config = util.resolve_llm_env()
+    endpoint = config["endpoint"]
+    api_key = config["api_key"]
 
     if endpoint and api_key:
         masked = endpoint[:35] + "..." if len(endpoint) > 35 else endpoint
@@ -77,25 +84,25 @@ def check_credentials() -> bool:
     if not env_path.exists():
         print(f"  [FAIL] No .env file. Copy .env.example to .env")
     elif not endpoint:
-        print("  [FAIL] AZURE_ENDPOINT not set in .env")
+        print(f"  [FAIL] {config['endpoint_var']} not set in .env")
     else:
-        print("  [FAIL] AZURE_API_KEY not set in .env")
+        print(f"  [FAIL] {config['api_key_var']} not set in .env")
     return False
 
 
 def check_llm_call() -> bool:
     """Verify an end-to-end LLM call works."""
-    endpoint = os.getenv("AZURE_ENDPOINT")
-    api_key = os.getenv("AZURE_API_KEY")
-    model = os.getenv("MODEL_NAME", "gpt-4o")
+    config = util.resolve_llm_env()
+    endpoint = config["endpoint"]
+    api_key = config["api_key"]
+    model = config["model"]
 
     if not endpoint or not api_key:
         print("  [SKIP] No credentials — configure .env first")
         return True  # Non-blocking
 
     try:
-        from openai import OpenAI  # pylint: disable=import-outside-toplevel
-        client = OpenAI(base_url=endpoint, api_key=api_key)
+        client = util.build_llm_client(endpoint, api_key, config["api_version"])
         response = client.chat.completions.create(
             model=model,
             messages=[

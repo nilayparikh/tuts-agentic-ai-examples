@@ -1,5 +1,6 @@
 import io
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -182,6 +183,26 @@ class EndpointSelectionTests(unittest.TestCase):
             "https://tuts.openai.azure.com/openai/v1",
         )
 
+    def test_resolves_agnostic_llm_env_names(self) -> None:
+        """Accept provider-agnostic LLM_* credentials for OpenAI-compatible providers."""
+        with mock.patch.dict(
+            util.os.environ,
+            {
+                "LLM_ENDPOINT": "https://models.github.ai/inference",
+                "LLM_API_KEY": "github-demo-key",
+                "MODEL_NAME": "openai/gpt-4.1-mini",
+            },
+            clear=True,
+        ):
+            resolved = util._resolve_llm_env()
+
+        self.assertEqual(resolved["endpoint"], "https://models.github.ai/inference")
+        self.assertEqual(resolved["api_key"], "github-demo-key")
+        self.assertEqual(resolved["model"], "openai/gpt-4.1-mini")
+        self.assertEqual(resolved["api_version"], "2024-12-01-preview")
+        self.assertEqual(resolved["endpoint_var"], "LLM_ENDPOINT")
+        self.assertEqual(resolved["api_key_var"], "LLM_API_KEY")
+
 
 class ProbeResponseTests(unittest.TestCase):
     """Verify the LLM health probe handles sparse response payloads."""
@@ -264,6 +285,65 @@ class Utf8TextLoadingTests(unittest.TestCase):
 
 class LoopResilienceTests(unittest.TestCase):
     """Verify the loop can start from a broken genome."""
+
+    def test_run_loop_accepts_agnostic_llm_env_names(self) -> None:
+        """Use LLM_* credentials when provider-branded names are absent."""
+        baseline = {
+            "passed": ["can_read_output", "has_required_columns"],
+            "failed": ["matches_reference_output: matched=10, missing=5, unexpected=3"],
+            "score": 2,
+            "total": 3,
+            "metrics": {
+                "reference_rows": 15,
+                "output_rows": 13,
+                "matched_rows": 10,
+                "missing_rows": 5,
+                "unexpected_rows": 3,
+                "cleanliness_score": 0.666667,
+                "output_precision": 0.769231,
+            },
+        }
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            genome_path = temp_root / "clean_data.py"
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return None\n",
+                encoding="utf-8",
+            )
+
+            with mock.patch.dict(
+                os.environ,
+                {
+                    "LLM_ENDPOINT": "https://models.github.ai/inference",
+                    "LLM_API_KEY": "demo-key",
+                    "MODEL_NAME": "demo-model",
+                },
+                clear=True,
+            ):
+                with mock.patch.object(
+                    cleanloop_loop.util,
+                    "_build_llm_client",
+                    return_value=object(),
+                ):
+                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"):
+                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                            with mock.patch.object(
+                                cleanloop_loop,
+                                "_run_and_evaluate",
+                                return_value=baseline,
+                            ):
+                                with mock.patch.object(
+                                    cleanloop_loop,
+                                    "_propose_fix",
+                                    return_value=(None, "hold steady", {}),
+                                ):
+                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
+                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                            history = cleanloop_loop.run_loop(max_iterations=1)
+
+        self.assertEqual(len(history), 1)
+        self.assertEqual(history[0]["action"], "skip")
 
     def test_extract_usage_stats_reads_response_token_counts(self) -> None:
         """Capture prompt, completion, and total token counts from an LLM response."""

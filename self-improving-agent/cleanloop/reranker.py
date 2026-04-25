@@ -14,14 +14,18 @@ Usage:
     python -m cleanloop.reranker --candidates 5
 
 Environment variables (from .env):
-    AZURE_ENDPOINT  — Azure AI Foundry or Foundry Local endpoint
-    AZURE_API_KEY   — API key
-    MODEL_NAME      — Model deployment name (default: gpt-4o)
+    LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
+    LLM_API_KEY     — Agnostic API key
+    MODEL_NAME      — Model deployment or model name
+    LLM_API_VERSION — Optional provider-specific API version
+    OPENAI_BASE_URL — Legacy fallback
+    OPENAI_API_KEY  — Legacy fallback
+    AZURE_ENDPOINT  — Legacy fallback
+    AZURE_API_KEY   — Legacy fallback
 """
 
 import argparse
 import importlib.util
-import os
 import sys
 import tempfile
 from pathlib import Path
@@ -197,12 +201,13 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    client = util._build_llm_client(
-        os.environ["AZURE_ENDPOINT"],
-        os.environ["AZURE_API_KEY"],
-        os.getenv("AZURE_API_VERSION", "2024-12-01-preview"),
+    llm_config = util.resolve_llm_env()
+    client = util.build_llm_client(
+        llm_config["endpoint"],
+        llm_config["api_key"],
+        llm_config["api_version"],
     )
-    model = os.getenv("MODEL_NAME", "gpt-4o")
+    model = llm_config["model"]
 
     genome_code = GENOME_PATH.read_text(encoding="utf-8")
 

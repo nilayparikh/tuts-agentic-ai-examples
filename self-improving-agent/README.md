@@ -203,11 +203,47 @@ Skill Mastery commands:
 - `python util.py -e skill_mastery dashboard`
 - `python util.py -e skill_mastery reset`
 
-| Provider         | Endpoint                          | Model           |
-| ---------------- | --------------------------------- | --------------- |
-| Azure AI Foundry | `https://<name>.openai.azure.com` | `Kimi-K2`       |
-| Foundry Local    | `http://localhost:5272/v1`        | `qwen2.5-coder` |
-| OpenAI Direct    | `https://api.openai.com/v1`       | `gpt-4o`        |
+## Configure Your LLM Endpoint
+
+Use one neutral config block in `.env`. This project only needs the endpoint,
+the API key, the model name, and sometimes an API version. Any provider that
+offers an OpenAI-compatible chat-completions API can fit behind that shape.
+
+Minimal shape:
+
+```dotenv
+LLM_ENDPOINT=https://api.openai.com/v1
+LLM_API_KEY=your-api-key
+MODEL_NAME=gpt-4o
+```
+
+Optional only when your provider requires it:
+
+```dotenv
+LLM_API_VERSION=2024-12-01-preview
+```
+
+If you already have older configs that use `OPENAI_BASE_URL`, `OPENAI_API_KEY`,
+`AZURE_ENDPOINT`, or `AZURE_API_KEY`, they still work as fallbacks. The primary
+contract for this repo is now `LLM_*`.
+
+Providers you can use with this project:
+
+| Provider                         | Who provides it         | `LLM_ENDPOINT` example                          | Model example                 |
+| -------------------------------- | ----------------------- | ----------------------------------------------- | ----------------------------- |
+| OpenAI Direct                    | OpenAI                  | `https://api.openai.com/v1`                     | `gpt-4o`                      |
+| GitHub Models                    | GitHub                  | `https://models.github.ai/inference`            | `openai/gpt-4.1-mini`         |
+| NVIDIA NIM free endpoint         | NVIDIA                  | `https://integrate.api.nvidia.com/v1`           | `meta/llama-3.1-70b-instruct` |
+| Azure AI Foundry or Azure OpenAI | Microsoft               | `https://<resource>.openai.azure.com/openai/v1` | `gpt-4o`                      |
+| Foundry Local                    | Microsoft local runtime | `http://localhost:5272/v1`                      | `qwen2.5-coder`               |
+| Other OpenAI-compatible gateways | Provider-specific       | provider-specific `/v1` base URL                | provider-specific             |
+
+Notes:
+
+- GitHub Models is useful for quick free experiments if your GitHub plan gives you access.
+- NVIDIA's hosted NIM catalog often exposes a free OpenAI-compatible endpoint for supported models.
+- Azure AI Foundry and Azure OpenAI both work when you use the OpenAI-compatible `/openai/v1` base URL.
+- Any provider that exposes an OpenAI-compatible chat-completions API should work if the model name matches that provider.
 
 ## Lesson → Code Map
 
