@@ -23,7 +23,7 @@ Environment variables (from .env):
 import sys
 from pathlib import Path
 
-import util
+from cleanloop import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 util.load_env()
@@ -46,6 +46,8 @@ def check_python_version() -> bool:
 def check_packages() -> bool:
     """Verify all required packages are importable."""
     required = {
+        "autogen_agentchat": "autogen-agentchat",
+        "autogen_ext": "autogen-ext[openai,azure]",
         "pandas": "pandas",
         "git": "gitpython",
         "openai": "openai",
@@ -78,9 +80,9 @@ def check_credentials() -> bool:
         print(f"  [OK] Endpoint: {masked}")
         return True
 
-    env_path = PROJECT_ROOT / ".env"
+    env_path = util.ENV_FILE
     if not env_path.exists():
-        print("  [FAIL] No .env file. Copy .env.example to .env")
+        print("  [FAIL] No cleanloop/.env file. Copy cleanloop/.env.example to cleanloop/.env")
     elif not endpoint:
         print(f"  [FAIL] {config['endpoint_var']} not set in .env")
     else:
@@ -93,7 +95,6 @@ def check_llm_call() -> bool:
     config = util.resolve_llm_env()
     endpoint = config["endpoint"]
     api_key = config["api_key"]
-    model = config["model"]
 
     if not endpoint or not api_key:
         print("  [SKIP] No credentials — configure .env first")
@@ -101,14 +102,12 @@ def check_llm_call() -> bool:
 
     try:
         client = util.build_llm_client(endpoint, api_key, config["api_version"])
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {"role": "user", "content": "Reply with only: hello"}
-            ],
+        reply = util.create_text_completion(
+            client,
+            system_prompt="Reply with only the word hello.",
+            user_prompt="Say hello.",
             max_tokens=10,
         )
-        reply = response.choices[0].message.content.strip()
         print(f"  [OK] LLM replied: {reply}")
         return True
     except Exception as exc:  # pylint: disable=broad-exception-caught

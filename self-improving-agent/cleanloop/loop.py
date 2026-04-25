@@ -40,7 +40,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import util
+from cleanloop import autogen_runtime, util
 from cleanloop import dashboard_metrics
 from cleanloop import datasets as cleanloop_datasets
 
@@ -644,17 +644,11 @@ def run_loop(
         if use_reranker:
             # Lesson 10 — Best-of-N: generate multiple candidates
             from cleanloop import reranker  # pylint: disable=import-outside-toplevel
-            new_code, hypothesis = reranker.propose(
+            new_code, hypothesis, llm_diagnostics = reranker.propose(
                 client, model, genome_code,
                 results["failed"], n_candidates,
             )
-            llm_diagnostics = {
-                "selected_attempt": "reranker",
-                "attempts": [],
-                "prompt_tokens": None,
-                "completion_tokens": None,
-                "total_tokens": None,
-            }
+            _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
         else:
             # Standard single-shot proposal
             try:
@@ -864,75 +858,15 @@ def _propose_fix(
         dataset_name,
         metacognition,
     )
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt},
-    ]
-
-    response = util.create_chat_completion_with_backoff(
+    code, hypothesis, attempt = autogen_runtime.propose_single_mutation(
         client,
-        model=model,
-        messages=messages,
-        retry_label="CleanLoop proposal",
+        model,
+        system_prompt,
+        user_prompt,
+        label="AutoGen proposer",
         max_tokens=PROPOSAL_MAX_TOKENS,
-        reasoning_effort="low",
-        temperature=0.3,
     )
-    text = response.choices[0].message.content or ""
-    code = _extract_code(text)
-    hypothesis = _extract_hypothesis(text)
-    attempts = [
-        _build_attempt_diagnostic(
-            "CleanLoop proposal",
-            model,
-            messages,
-            response,
-            text,
-            code,
-            hypothesis,
-            PROPOSAL_MAX_TOKENS,
-        )
-    ]
-
-    if code:
-        return code, hypothesis, _summarize_attempts(attempts)
-
-    retry_system_prompt, retry_user_prompt = _build_compact_retry_prompts(
-        genome_code,
-        results,
-    )
-    retry_messages = [
-        {"role": "system", "content": retry_system_prompt},
-        {"role": "user", "content": retry_user_prompt},
-    ]
-    retry_response = util.create_chat_completion_with_backoff(
-        client,
-        model=model,
-        messages=retry_messages,
-        retry_label="CleanLoop compact retry",
-        max_tokens=COMPACT_RETRY_MAX_TOKENS,
-        reasoning_effort="low",
-        temperature=0.2,
-    )
-    retry_text = retry_response.choices[0].message.content or ""
-    retry_code = _extract_code(retry_text)
-    retry_hypothesis = _extract_hypothesis(retry_text)
-    attempts.append(
-        _build_attempt_diagnostic(
-            "CleanLoop compact retry",
-            model,
-            retry_messages,
-            retry_response,
-            retry_text,
-            retry_code,
-            retry_hypothesis,
-            COMPACT_RETRY_MAX_TOKENS,
-        )
-    )
-    if retry_code:
-        return retry_code, retry_hypothesis, _summarize_attempts(attempts)
-
-    return code, hypothesis, _summarize_attempts(attempts)
+    return code, hypothesis, autogen_runtime.summarize_attempts([attempt])
 
 
 def _build_compact_retry_prompts(genome_code: str, results: dict) -> tuple[str, str]:

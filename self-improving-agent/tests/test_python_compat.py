@@ -153,6 +153,89 @@ class InteractiveReviewLoopTests(unittest.TestCase):
         self.assertIn("are you happy", rendered)
 
 
+class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
+    """Verify the CleanLoop example owns its AutoGen runtime boundary."""
+
+    def test_propose_fix_delegates_to_autogen_runtime(self) -> None:
+        """Keep the loop contract stable while routing proposal generation through AutoGen."""
+        attempt = {
+            "label": "AutoGen proposer",
+            "model": "demo-model",
+            "max_tokens": 2200,
+            "code_found": True,
+            "hypothesis": "Normalize invoice values before merge",
+            "usage": {
+                "prompt_tokens": 11,
+                "completion_tokens": 22,
+                "total_tokens": 33,
+            },
+            "prompt_chars": 120,
+            "response_chars": 240,
+            "messages": [],
+            "response_preview": "Structured mutation proposal",
+        }
+
+        with mock.patch.object(
+            cleanloop_loop.autogen_runtime,
+            "propose_single_mutation",
+            return_value=(
+                "def clean(input_dir, output_path):\n    return None",
+                "Normalize invoice values before merge",
+                attempt,
+            ),
+        ) as propose_single_mutation:
+            code, hypothesis, diagnostics = cleanloop_loop._propose_fix(
+                client=object(),
+                model="demo-model",
+                system_prompt="system",
+                genome_code="def clean(input_dir, output_path):\n    pass\n",
+                results={"failed": ["value_is_numeric: bad row"], "passed": []},
+                history=[],
+                dataset_name="finance",
+                metacognition={"focus_area": "value_normalization"},
+            )
+
+        self.assertEqual(code, "def clean(input_dir, output_path):\n    return None")
+        self.assertEqual(hypothesis, "Normalize invoice values before merge")
+        self.assertEqual(diagnostics["selected_attempt"], "AutoGen proposer")
+        self.assertEqual(diagnostics["total_tokens"], 33)
+        attempt_diagnostics = cast(list[dict[str, object]], diagnostics["attempts"])
+        self.assertEqual(len(attempt_diagnostics), 1)
+        self.assertTrue(attempt_diagnostics[0]["code_found"])
+        propose_single_mutation.assert_called_once()
+
+    def test_cleanloop_local_util_prefers_example_env_file(self) -> None:
+        """Load CleanLoop credentials from the example-local .env before falling back upward."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            env_path = temp_root / ".env"
+            env_path.write_text(
+                "LLM_ENDPOINT=https://models.github.ai/inference\n"
+                "LLM_API_KEY=local-demo-key\n"
+                "MODEL_NAME=demo-model\n",
+                encoding="utf-8",
+            )
+            fallback_env_path = temp_root / "fallback.env"
+            fallback_env_path.write_text(
+                "LLM_ENDPOINT=https://example.openai.azure.com\n"
+                "LLM_API_KEY=fallback-key\n"
+                "MODEL_NAME=fallback-model\n",
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(cleanloop_local_util, "ENV_FILE", env_path):
+                with mock.patch.object(cleanloop_local_util, "FALLBACK_ENV_FILE", fallback_env_path):
+                    with mock.patch.dict(os.environ, {}, clear=True):
+                        cleanloop_local_util.load_env()
+                        config = cleanloop_local_util.resolve_llm_env()
+
+        self.assertEqual(config["endpoint"], "https://models.github.ai/inference")
+        self.assertEqual(config["api_key"], "local-demo-key")
+        self.assertEqual(config["model"], "demo-model")
+
+
 class ExampleDashboardRoutingTests(unittest.TestCase):
     """Verify non-CleanLoop examples expose their own dashboard routes."""
 
@@ -376,33 +459,31 @@ class LoopResilienceTests(unittest.TestCase):
     def test_propose_fix_returns_attempt_diagnostics(self) -> None:
         """Return code, hypothesis, and per-attempt LLM diagnostics."""
 
-        class Usage:
-            """Stub token usage payload."""
-
-            prompt_tokens = 10
-            completion_tokens = 20
-            total_tokens = 30
-
-        class Message:
-            """Stub chat message."""
-
-            content = "Hypothesis: normalize rows\n```python\ndef clean(x, y):\n    return None\n```"
-
-        class Choice:
-            """Stub completion choice."""
-
-            message = Message()
-
-        class Response:
-            """Stub completion response."""
-
-            usage = Usage()
-            choices = [Choice()]
+        attempt = {
+            "label": "AutoGen proposer",
+            "model": "demo-model",
+            "max_tokens": 2200,
+            "code_found": True,
+            "hypothesis": "Normalize rows",
+            "usage": {
+                "prompt_tokens": 10,
+                "completion_tokens": 20,
+                "total_tokens": 30,
+            },
+            "prompt_chars": 100,
+            "response_chars": 180,
+            "messages": [],
+            "response_preview": "Structured mutation proposal",
+        }
 
         with mock.patch.object(
-            util,
-            "_create_chat_completion_with_backoff",
-            return_value=Response(),
+            cleanloop_loop.autogen_runtime,
+            "propose_single_mutation",
+            return_value=(
+                "def clean(x, y):\n    return None",
+                "Normalize rows",
+                attempt,
+            ),
         ):
             code, hypothesis, diagnostics = cleanloop_loop._propose_fix(
                 client=object(),
@@ -415,8 +496,8 @@ class LoopResilienceTests(unittest.TestCase):
             )
 
         self.assertEqual(code, "def clean(x, y):\n    return None")
-        self.assertEqual(hypothesis, "Hypothesis: normalize rows")
-        self.assertEqual(diagnostics["selected_attempt"], "CleanLoop proposal")
+        self.assertEqual(hypothesis, "Normalize rows")
+        self.assertEqual(diagnostics["selected_attempt"], "AutoGen proposer")
         self.assertEqual(diagnostics["total_tokens"], 30)
         attempt_diagnostics = cast(list[dict[str, object]], diagnostics["attempts"])
         self.assertEqual(len(attempt_diagnostics), 1)
@@ -1278,48 +1359,37 @@ class CleanLoopDatasetTests(unittest.TestCase):
         self.assertEqual(rows[1]["Total Tokens"], 4144)
 
     def test_propose_fix_uses_reduced_completion_budgets(self) -> None:
-        """Use smaller completion budgets so one round does not burn two 5000-token attempts."""
-
-        class Message:
-            """Stub chat message."""
-
-            def __init__(self, content: str) -> None:
-                self.content = content
-
-        class Choice:
-            """Stub chat choice."""
-
-            def __init__(self, content: str) -> None:
-                self.message = Message(content)
-
-        class Usage:
-            """Stub usage block."""
-
-            prompt_tokens = 10
-            completion_tokens = 20
-            total_tokens = 30
-
-        class Response:
-            """Stub chat completion response."""
-
-            def __init__(self, content: str) -> None:
-                self.choices = [Choice(content)]
-                self.usage = Usage()
-
+        """Use smaller completion budgets so one round does not over-request model output."""
         calls: list[int] = []
 
-        def fake_completion(*_args, **kwargs):
+        def fake_proposal(*_args, **kwargs):
             calls.append(kwargs["max_tokens"])
-            if len(calls) == 1:
-                return Response("Hypothesis: try again")
-            return Response(
-                "Hypothesis: compact retry\n```python\ndef clean(x, y):\n    return None\n```"
+            attempt = {
+                "label": "AutoGen proposer",
+                "model": "demo-model",
+                "max_tokens": kwargs["max_tokens"],
+                "code_found": True,
+                "hypothesis": "Compact AutoGen proposal",
+                "usage": {
+                    "prompt_tokens": 10,
+                    "completion_tokens": 20,
+                    "total_tokens": 30,
+                },
+                "prompt_chars": 100,
+                "response_chars": 180,
+                "messages": [],
+                "response_preview": "Structured mutation proposal",
+            }
+            return (
+                "def clean(x, y):\n    return None",
+                "Compact AutoGen proposal",
+                attempt,
             )
 
         with mock.patch.object(
-            util,
-            "_create_chat_completion_with_backoff",
-            side_effect=fake_completion,
+            cleanloop_loop.autogen_runtime,
+            "propose_single_mutation",
+            side_effect=fake_proposal,
         ):
             code, hypothesis, diagnostics = cleanloop_loop._propose_fix(
                 client=object(),
@@ -1331,10 +1401,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 dataset_name="finance",
             )
 
-        self.assertEqual(calls, [2200, 1200])
+        self.assertEqual(calls, [2200])
         self.assertEqual(code, "def clean(x, y):\n    return None")
-        self.assertEqual(hypothesis, "Hypothesis: compact retry")
-        self.assertEqual(diagnostics["selected_attempt"], "CleanLoop compact retry")
+        self.assertEqual(hypothesis, "Compact AutoGen proposal")
+        self.assertEqual(diagnostics["selected_attempt"], "AutoGen proposer")
 
     def test_parser_does_not_expose_cleanloop_dataset_flag(self) -> None:
         """Finance-only CleanLoop no longer accepts per-dataset CLI routing."""

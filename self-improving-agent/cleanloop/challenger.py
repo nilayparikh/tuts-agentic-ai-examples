@@ -12,6 +12,7 @@ Lesson references:
 Usage:
     python -m cleanloop.challenger
     python -m cleanloop.challenger --difficulty 3 --count 4
+    python -m cleanloop.challenger --levels 1 2 3
 
 Environment variables (from .env):
     LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
@@ -28,7 +29,7 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-import util
+from cleanloop import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 util.load_env()
@@ -93,22 +94,19 @@ DIFFICULTY_LEVELS: dict[int, str] = {
 
 def generate_messy_csv(
     client: Any,
-    model: str,
+    _model: str,
     difficulty: int,
 ) -> str:
     """Generate one adversarial CSV file at the given difficulty level."""
     difficulty = max(1, min(5, difficulty))
 
-    response = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": DIFFICULTY_LEVELS[difficulty]},
-        ],
+    content = util.create_text_completion(
+        client,
+        system_prompt=SYSTEM_PROMPT,
+        user_prompt=DIFFICULTY_LEVELS[difficulty],
         temperature=0.8,
         max_tokens=500,
     )
-    content = (response.choices[0].message.content or "").strip()
 
     # Strip markdown fences if the LLM added them
     if content.startswith("```"):
@@ -132,6 +130,10 @@ def main() -> None:
         description="Challenger — Adversarial CSV generator"
     )
     parser.add_argument(
+        "--levels", type=int, nargs="+",
+        help="Generate one adversarial CSV for each listed difficulty level",
+    )
+    parser.add_argument(
         "--difficulty", type=int, default=2,
         help="Difficulty 1-5 (default: 2)",
     )
@@ -149,18 +151,28 @@ def main() -> None:
     )
     model = llm_config["model"]
 
-    print(
-        f"Generating {args.count} adversarial CSVs "
-        f"at difficulty {args.difficulty}"
-    )
-
     INPUT_DIR.mkdir(exist_ok=True)
-    for i in range(1, args.count + 1):
-        csv_content = generate_messy_csv(client, model, args.difficulty)
-        filename = f"adversarial_d{args.difficulty}_{i:02d}.csv"
-        path = INPUT_DIR / filename
-        path.write_text(csv_content, encoding="utf-8")
-        print(f"  Created: {path.name}")
+    levels = [max(1, min(5, level)) for level in (args.levels or [args.difficulty])]
+
+    if args.levels:
+        print(f"Generating {len(levels)} adversarial CSVs across levels: {levels}")
+        for level in levels:
+            csv_content = generate_messy_csv(client, model, level)
+            filename = f"adversarial_d{level}_01.csv"
+            path = INPUT_DIR / filename
+            path.write_text(csv_content, encoding="utf-8")
+            print(f"  Created: {path.name}")
+    else:
+        print(
+            f"Generating {args.count} adversarial CSVs "
+            f"at difficulty {args.difficulty}"
+        )
+        for i in range(1, args.count + 1):
+            csv_content = generate_messy_csv(client, model, args.difficulty)
+            filename = f"adversarial_d{args.difficulty}_{i:02d}.csv"
+            path = INPUT_DIR / filename
+            path.write_text(csv_content, encoding="utf-8")
+            print(f"  Created: {path.name}")
 
     print("\nDone. Run `python -m cleanloop.loop` to test the genome against new data.")
 

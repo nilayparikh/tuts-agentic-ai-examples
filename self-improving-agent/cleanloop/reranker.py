@@ -31,7 +31,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-import util
+from cleanloop import autogen_runtime, util
 from cleanloop import datasets as cleanloop_datasets
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -58,7 +58,7 @@ def propose(
     genome_code: str,
     failed_assertions: list[str],
     n_candidates: int = 3,
-) -> tuple[str | None, str]:
+) -> tuple[str | None, str, dict[str, object]]:
     """Generate N candidates and return the best (code, hypothesis).
 
     Called by loop.py as a drop-in replacement for _propose_fix.
@@ -80,46 +80,15 @@ def propose(
         "Fix the code so all assertions pass."
     )
 
-    best_code: str | None = None
-    best_score = -1
-    best_hypothesis = "no hypothesis"
-
     print(f"  Reranker: generating {n_candidates} candidates...")
-
-    for i in range(1, n_candidates + 1):
-        # Spread temperature: 0.3, 0.5, 0.7, ...
-        temp = 0.3 + (i - 1) * 0.2
-
-        response = util.create_chat_completion_with_backoff(
-            client,
-            model=model,
-            messages=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-            retry_label=f"Reranker candidate {i}",
-            max_tokens=5000,
-            reasoning_effort="low",
-            temperature=min(temp, 1.0),
-        )
-        text = response.choices[0].message.content or ""
-        code = _extract_code(text)
-
-        if not code:
-            print(f"    Candidate {i}: SKIP (no code block)")
-            continue
-
-        # Evaluate this candidate in isolation
-        score, total = _evaluate_candidate(code)
-        hypothesis = _extract_hypothesis(text)
-        print(f"    Candidate {i} (t={temp:.1f}): {score}/{total}")
-
-        if score > best_score:
-            best_score = score
-            best_code = code
-            best_hypothesis = hypothesis
-
-    return best_code, best_hypothesis
+    return autogen_runtime.propose_reranked_mutation(
+        client,
+        model,
+        system,
+        user,
+        n_candidates=n_candidates,
+        evaluate_candidate=_evaluate_candidate,
+    )
 
 
 # =====================================================================
@@ -224,7 +193,7 @@ def main() -> None:
     results = prepare.evaluate(output)
 
     print(f"Baseline: {results['score']}/{results['total']}")
-    code, hyp = propose(
+    code, hyp, diagnostics = propose(
         client, model, genome_code,
         results["failed"], args.candidates,
     )
@@ -234,6 +203,7 @@ def main() -> None:
         out.write_text(code, encoding="utf-8")
         print(f"\nBest candidate saved to {out}")
         print(f"Hypothesis: {hyp}")
+        print(f"Selected attempt: {diagnostics['selected_attempt']}")
     else:
         print("No candidate improved over baseline.")
 
