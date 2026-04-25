@@ -1,3 +1,7 @@
+# pyright: reportMissingImports=false, reportMissingModuleSource=false, reportPrivateUsage=false
+# mypy: disable-error-code=import-not-found
+# pylint: disable=protected-access
+
 import io
 import json
 import os
@@ -7,16 +11,16 @@ import unittest
 from contextlib import redirect_stdout
 from importlib import import_module
 from pathlib import Path
-from typing import cast
+from typing import Any, cast
 from unittest import mock
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import loop as cleanloop_loop
-from cleanloop import datasets as cleanloop_datasets
-import util
+cleanloop_loop = cast(Any, import_module("cleanloop.loop"))
+cleanloop_datasets = cast(Any, import_module("cleanloop.datasets"))
+util = cast(Any, import_module("util"))
 
 
 class SupportedPythonVersionTests(unittest.TestCase):
@@ -428,7 +432,7 @@ class LoopResilienceTests(unittest.TestCase):
 
     def test_starter_genome_handles_shipped_input_without_crashing(self) -> None:
         """The shipped starter genome should produce an output file, not raise on row shape issues."""
-        from cleanloop import clean_data
+        clean_data = cast(Any, import_module("cleanloop.clean_data"))
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_path = Path(tmp_dir) / "master.csv"
@@ -501,8 +505,6 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
     def test_dashboard_launches_streamlit_without_interactive_prompt(self) -> None:
         """Launch Streamlit in headless mode with usage stats disabled."""
-        config = cleanloop_datasets.get_dataset_config()
-
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_dir = Path(tmp_dir)
             history_path = cleanloop_datasets.get_history_path(output_dir)
@@ -566,7 +568,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
             genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
 
             with mock.patch.dict(
-                cleanloop_loop.os.environ,
+                os.environ,
                 {
                     "AZURE_ENDPOINT": "https://example.openai.azure.com",
                     "AZURE_API_KEY": "demo-key",
@@ -765,7 +767,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
             output_dir = temp_root / ".output"
 
             with mock.patch.dict(
-                cleanloop_loop.os.environ,
+                os.environ,
                 {
                     "AZURE_ENDPOINT": "https://example.openai.azure.com",
                     "AZURE_API_KEY": "demo-key",
@@ -821,7 +823,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
             genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
 
             with mock.patch.dict(
-                cleanloop_loop.os.environ,
+                os.environ,
                 {
                     "AZURE_ENDPOINT": "https://example.openai.azure.com",
                     "AZURE_API_KEY": "demo-key",
@@ -912,7 +914,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 return candidate
 
             with mock.patch.dict(
-                cleanloop_loop.os.environ,
+                os.environ,
                 {
                     "AZURE_ENDPOINT": "https://example.openai.azure.com",
                     "AZURE_API_KEY": "demo-key",
@@ -1035,7 +1037,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
             try:
                 with mock.patch.dict(
-                    cleanloop_loop.os.environ,
+                    os.environ,
                     {
                         "AZURE_ENDPOINT": "https://example.openai.azure.com",
                         "AZURE_API_KEY": "demo-key",
@@ -1170,7 +1172,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
             stream = io.StringIO()
 
             with mock.patch.dict(
-                cleanloop_loop.os.environ,
+                os.environ,
                 {
                     "AZURE_ENDPOINT": "https://example.openai.azure.com",
                     "AZURE_API_KEY": "demo-key",
@@ -1387,7 +1389,7 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
     def test_finance_reference_output_passes_referee(self) -> None:
         """The canonical finance output should fully satisfy the immutable judge."""
-        from cleanloop import prepare
+        prepare = cast(Any, import_module("cleanloop.prepare"))
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_path = Path(tmp_dir) / "finance_master.csv"
@@ -1400,7 +1402,8 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
     def test_finance_starter_genome_requires_improvement(self) -> None:
         """The shipped starter genome should fail the stronger finance judge."""
-        from cleanloop import clean_data, prepare
+        clean_data = cast(Any, import_module("cleanloop.clean_data"))
+        prepare = cast(Any, import_module("cleanloop.prepare"))
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_path = Path(tmp_dir) / "finance_master.csv"

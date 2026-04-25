@@ -23,12 +23,10 @@ Environment variables (from .env):
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
-
 import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+util.load_env()
 
 
 # =====================================================================
@@ -82,7 +80,7 @@ def check_credentials() -> bool:
 
     env_path = PROJECT_ROOT / ".env"
     if not env_path.exists():
-        print(f"  [FAIL] No .env file. Copy .env.example to .env")
+        print("  [FAIL] No .env file. Copy .env.example to .env")
     elif not endpoint:
         print(f"  [FAIL] {config['endpoint_var']} not set in .env")
     else:
@@ -113,7 +111,7 @@ def check_llm_call() -> bool:
         reply = response.choices[0].message.content.strip()
         print(f"  [OK] LLM replied: {reply}")
         return True
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         print(f"  [FAIL] {exc}")
         return False
 

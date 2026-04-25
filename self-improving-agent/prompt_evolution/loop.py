@@ -10,9 +10,13 @@ from pathlib import Path
 import re
 from typing import Any, Callable
 
-from dotenv import load_dotenv
+import util
 
-from prompt_evolution.config import PolicyPoint, PromptEvolutionCatalog, SelectionProfile
+from prompt_evolution.config import (
+    PolicyPoint,
+    PromptEvolutionCatalog,
+    SelectionProfile,
+)
 from prompt_evolution.evaluator import EvaluationResult, evaluate_response
 from prompt_evolution.hermes_client import HermesAgentRunner
 
@@ -22,7 +26,7 @@ DATA_DIR = EXAMPLE_ROOT / ".data"
 OUTPUT_DIR = EXAMPLE_ROOT / ".output"
 README_PATH = EXAMPLE_ROOT / "README.md"
 
-load_dotenv(PROJECT_ROOT / ".env", override=False)
+util.load_env()
 
 LogSink = Callable[[str], None]
 
@@ -302,11 +306,15 @@ def load_mutable_instructions(readme_path: Path = README_PATH) -> str:
             captured.append(line)
 
     if not captured:
-        raise ValueError("Could not find a fenced mutable instruction block in README.md")
+        raise ValueError(
+            "Could not find a fenced mutable instruction block in README.md"
+        )
     return "\n".join(captured).strip()
 
 
-def _preference_brief(profile: SelectionProfile, catalog: PromptEvolutionCatalog) -> str:
+def _preference_brief(
+    profile: SelectionProfile, catalog: PromptEvolutionCatalog
+) -> str:
     """Render selected preferences as instruction bullets."""
     return "\n".join(profile.preference_lines(catalog))
 
@@ -359,14 +367,14 @@ def build_user_feedback_guide(
         "What you can ask to improve next:\n"
         "- Preference fit: ask it to stay closer to "
         f"{example_preference_line}.\n"
-        "  If you say \"make it warmer\", expect softer wording and more empathy.\n"
+        '  If you say "make it warmer", expect softer wording and more empathy.\n'
         "- Structure: ask for bullets, short paragraphs, or a checklist.\n"
-        "  If you say \"switch to bullets\", expect the next draft to change layout first.\n"
+        '  If you say "switch to bullets", expect the next draft to change layout first.\n'
         f"- Context grounding: ask it to mention policy or service terms such as {context_terms}.\n"
-        "  If you say \"mention "
-        f"{first_policy.lower()} earlier\", expect that policy to move closer to the top.\n"
+        '  If you say "mention '
+        f'{first_policy.lower()} earlier", expect that policy to move closer to the top.\n'
         "- Closing move: ask for one direct question, one next step, or a named owner.\n"
-        "  If you say \"end with one clear question\", expect a stronger closing action.\n"
+        '  If you say "end with one clear question", expect a stronger closing action.\n'
         "You can also give feedback like: make it shorter, sound more direct, "
         "cite tool certification earlier, or offer two options."
     )

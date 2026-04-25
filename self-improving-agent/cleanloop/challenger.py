@@ -28,12 +28,10 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
-
 import util
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+util.load_env()
 
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 
@@ -164,10 +162,7 @@ def main() -> None:
         path.write_text(csv_content, encoding="utf-8")
         print(f"  Created: {path.name}")
 
-    print(
-        f"\nDone. Run `python -m cleanloop.loop` "
-        f"to test the genome against new data."
-    )
+    print("\nDone. Run `python -m cleanloop.loop` to test the genome against new data.")
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from dotenv import load_dotenv
+import util
 
 from prompt_evolution.hermes_client import HermesAgentRunner
 from skill_mastery.config import SkillMasteryCatalog, SkillMasteryProfile
@@ -21,7 +21,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXAMPLE_ROOT = PROJECT_ROOT / "skill_mastery"
 OUTPUT_DIR = EXAMPLE_ROOT / ".output"
 
-load_dotenv(PROJECT_ROOT / ".env", override=False)
+util.load_env()
 
 LogSink = Callable[[str], None]
 
@@ -160,14 +160,14 @@ def build_user_feedback_guide(
     return (
         "What you can ask to improve next:\n"
         f"- Habit emphasis: ask it to lean harder on habits such as {habit_names}.\n"
-        "  If you ask \"lead with the problem\", expect the mirror habit to show up earlier.\n"
+        '  If you ask "lead with the problem", expect the mirror habit to show up earlier.\n'
         f"- Policy grounding: ask it to name rules such as {first_policy.lower()}.\n"
-        "  If you ask \"mention certification earlier\", expect the gate or "
+        '  If you ask "mention certification earlier", expect the gate or '
         "review rule sooner.\n"
         "- Closing move: ask for one confirmation question, one checkpoint, or one named owner.\n"
-        "  If you ask \"end with one clear question\", expect a tighter next step.\n"
+        '  If you ask "end with one clear question", expect a tighter next step.\n'
         "- Tone and brevity: ask it to be calmer, more direct, shorter, or more reassuring.\n"
-        "  If you ask \"make it shorter and more direct\", expect less preamble "
+        '  If you ask "make it shorter and more direct", expect less preamble '
         "and a faster action line.\n"
         "You can also provide feedback like: sound more human, cite the policy "
         "first, ask one clarifying question, or avoid sounding too formal."
@@ -189,7 +189,9 @@ def build_revision_user_prompt(
 ) -> str:
     """Build the revision brief for a follow-up reply attempt."""
     issues = "\n".join(f"- {issue}" for issue in evaluation.issues) or "- None"
-    habits = "\n".join(f"- {habit.label}: {habit.instruction}" for habit in selected_habits)
+    habits = "\n".join(
+        f"- {habit.label}: {habit.instruction}" for habit in selected_habits
+    )
     feedback_block = ""
     if user_feedback:
         feedback_block = f"User feedback:\n- {user_feedback}\n\n"

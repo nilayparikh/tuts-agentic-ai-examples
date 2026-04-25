@@ -160,7 +160,7 @@ def log_cmd(cmd: str) -> None:
 # Command: setup — create .venv and install dependencies
 # =====================================================================
 
-def cmd_setup(args: argparse.Namespace) -> int:
+def cmd_setup(_args: argparse.Namespace) -> int:
     """Set up virtual environment and install dependencies."""
     log_header("CleanLoop — Environment Setup")
     total_steps = 4
@@ -205,7 +205,10 @@ def cmd_setup(args: argparse.Namespace) -> int:
     log_cmd(f"{pip} install -r requirements.txt")
     result = subprocess.run(
         [str(pip), "install", "-r", str(req_file)],
-        capture_output=True, text=True, cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        cwd=str(ROOT),
+        check=False,
     )
     if result.returncode == 0:
         # Count installed packages
@@ -237,7 +240,7 @@ def cmd_setup(args: argparse.Namespace) -> int:
             return 1
 
     log_header("Setup Complete")
-    print(f"\n  Next steps:")
+    print("\n  Next steps:")
     print(f"  {C.CYAN}1.{C.RESET} Edit {C.BOLD}.env{C.RESET} with your credentials")
     print(f"  {C.CYAN}2.{C.RESET} Run: {C.BOLD}python util.py verify{C.RESET}")
     print(
@@ -251,7 +254,7 @@ def cmd_setup(args: argparse.Namespace) -> int:
 # Command: verify — check environment, credentials, LLM connectivity
 # =====================================================================
 
-def cmd_verify(args: argparse.Namespace) -> int:
+def cmd_verify(_args: argparse.Namespace) -> int:
     """Verify environment is ready for the loop."""
     log_header("CleanLoop — Environment Verification")
     _load_env()
@@ -323,7 +326,7 @@ def _check_packages() -> bool:
 
 def _check_input_files() -> bool:
     if not INPUT_DIR.exists():
-        log_fail(f"input/ directory not found")
+        log_fail("input/ directory not found")
         return False
     csv_files = sorted(INPUT_DIR.glob("*.csv"))
     if not csv_files:
@@ -389,7 +392,7 @@ def _check_llm() -> bool:
         reply = _normalize_probe_reply(response.choices[0].message.content)
         log_ok(f"LLM replied: \"{reply}\" ({elapsed:.1f}s)")
         return True
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         log_fail(_format_llm_exception(exc))
         return False
 
@@ -638,7 +641,7 @@ def _should_offer_interactive_review() -> bool:
     return sys.stdin.isatty() and sys.stdout.isatty()
 
 
-def cmd_prompt_evolution_catalog(args: argparse.Namespace) -> int:
+def cmd_prompt_evolution_catalog(_args: argparse.Namespace) -> int:
     """List the shipped context packs and preference axes."""
     config_module, catalog = _prompt_evolution_catalog()
     log_header("Prompt Evolution — Catalog")
@@ -647,7 +650,7 @@ def cmd_prompt_evolution_catalog(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_skill_mastery_catalog(args: argparse.Namespace) -> int:
+def cmd_skill_mastery_catalog(_args: argparse.Namespace) -> int:
     """List the shipped Skill Mastery contexts and habit seeds."""
     config_module, catalog = _skill_mastery_catalog()
     log_header("Skill Mastery — Catalog")
@@ -853,7 +856,7 @@ def _run_example_dashboard(
     return 0
 
 
-def cmd_prompt_evolution_dashboard(args: argparse.Namespace) -> int:
+def cmd_prompt_evolution_dashboard(_args: argparse.Namespace) -> int:
     """Launch the Prompt Evolution dashboard."""
     return _run_example_dashboard(
         dashboard_path=_prompt_evolution_root() / "dashboard.py",
@@ -863,7 +866,7 @@ def cmd_prompt_evolution_dashboard(args: argparse.Namespace) -> int:
     )
 
 
-def cmd_skill_mastery_dashboard(args: argparse.Namespace) -> int:
+def cmd_skill_mastery_dashboard(_args: argparse.Namespace) -> int:
     """Launch the Skill Mastery dashboard."""
     return _run_example_dashboard(
         dashboard_path=_skill_mastery_root() / "dashboard.py",
@@ -990,12 +993,12 @@ def _cmd_reset(example: str) -> int:
     return 0
 
 
-def cmd_reset_cleanloop(args: argparse.Namespace) -> int:
+def cmd_reset_cleanloop(_args: argparse.Namespace) -> int:
     """Reset CleanLoop."""
     return _cmd_reset("cleanloop")
 
 
-def cmd_reset_prompt_evolution(args: argparse.Namespace) -> int:
+def cmd_reset_prompt_evolution(_args: argparse.Namespace) -> int:
     """Reset Prompt Evolution outputs."""
     log_header("Prompt Evolution — Reset")
     loop_module = importlib.import_module("prompt_evolution.loop")
@@ -1012,7 +1015,7 @@ def cmd_reset_prompt_evolution(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_reset_skill_mastery(args: argparse.Namespace) -> int:
+def cmd_reset_skill_mastery(_args: argparse.Namespace) -> int:
     """Reset Skill Mastery outputs."""
     log_header("Skill Mastery — Reset")
     loop_module = importlib.import_module("skill_mastery.loop")
@@ -1033,7 +1036,7 @@ def cmd_reset_skill_mastery(args: argparse.Namespace) -> int:
 # Command: status — show project overview
 # =====================================================================
 
-def cmd_status(args: argparse.Namespace) -> int:
+def cmd_status(_args: argparse.Namespace) -> int:
     """Show project status and file inventory."""
     log_header("Self-Improving Agent — Project Status")
 
@@ -1158,8 +1161,14 @@ def cmd_status(args: argparse.Namespace) -> int:
 def _load_env() -> None:
     """Load .env file if it exists."""
     if ENV_FILE.exists():
-        from dotenv import load_dotenv
+        dotenv_module = importlib.import_module("dotenv")
+        load_dotenv = getattr(dotenv_module, "load_dotenv")
         load_dotenv(ENV_FILE, override=True)
+
+
+def load_env() -> None:
+    """Load the shared example .env file into the current process."""
+    _load_env()
 
 
 def _resolve_llm_env() -> dict[str, str]:
@@ -1177,7 +1186,11 @@ def _resolve_llm_env() -> dict[str, str]:
         or ""
     )
     model = os.getenv("MODEL_NAME", "gpt-4o")
-    api_version = os.getenv("LLM_API_VERSION") or os.getenv("AZURE_API_VERSION", "2024-12-01-preview")
+    api_version = (
+        os.getenv("LLM_API_VERSION")
+        or os.getenv("AZURE_API_VERSION")
+        or "2024-12-01-preview"
+    )
     if os.getenv("LLM_ENDPOINT"):
         endpoint_var = "LLM_ENDPOINT"
     elif os.getenv("OPENAI_BASE_URL"):
@@ -1291,7 +1304,7 @@ def _create_chat_completion_with_backoff(
     for attempt in range(1, max_attempts + 1):
         try:
             return client.chat.completions.create(**kwargs)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
             last_exc = exc
             if not _is_capacity_error(exc) or attempt >= max_attempts:
                 raise
@@ -1310,25 +1323,47 @@ def _create_chat_completion_with_backoff(
 def _build_llm_client(endpoint: str, api_key: str, api_version: str):
     """Build the correct OpenAI client for the configured endpoint."""
     normalized_endpoint = _normalize_endpoint(endpoint)
+    openai_module = importlib.import_module("openai")
 
     if _is_azure_openai_endpoint(normalized_endpoint) and "/openai/v1" not in normalized_endpoint:
-        from openai import AzureOpenAI
+        azure_openai_client = getattr(openai_module, "AzureOpenAI")
 
-        return AzureOpenAI(
+        return azure_openai_client(
             azure_endpoint=normalized_endpoint,
             api_key=api_key,
             api_version=api_version,
             max_retries=1,
         )
 
-    from openai import OpenAI
+    openai_client = getattr(openai_module, "OpenAI")
 
-    return OpenAI(base_url=normalized_endpoint, api_key=api_key, max_retries=1)
+    return openai_client(base_url=normalized_endpoint, api_key=api_key, max_retries=1)
 
 
 def build_llm_client(endpoint: str, api_key: str, api_version: str):
     """Build an OpenAI-compatible client from shared endpoint settings."""
     return _build_llm_client(endpoint, api_key, api_version)
+
+
+def format_llm_exception(exc: Exception) -> str:
+    """Convert raw LLM exceptions into clearer operator-facing messages."""
+    return _format_llm_exception(exc)
+
+
+def create_chat_completion_with_backoff(
+    client: Any,
+    **kwargs: Any,
+) -> Any:
+    """Run a chat completion with bounded retries for transient capacity errors."""
+    return _create_chat_completion_with_backoff(client, **kwargs)
+
+
+def chat_completion_options(
+    max_tokens: int,
+    temperature: float | None = None,
+) -> dict[str, object]:
+    """Return shared completion options tuned for reasoning-heavy models."""
+    return _chat_completion_options(max_tokens, temperature)
 
 
 def _chat_completion_options(max_tokens: int, temperature: float | None = None) -> dict:
@@ -1549,9 +1584,9 @@ def main() -> None:
     if not args.command:
         parser.print_help()
         print(f"\n  {C.CYAN}Quick start:{C.RESET}")
-        print(f"    python util.py setup")
-        print(f"    python util.py verify")
-        print(f"    python util.py -e cleanloop loop\n")
+        print("    python util.py setup")
+        print("    python util.py verify")
+        print("    python util.py -e cleanloop loop\n")
         sys.exit(0)
 
     # Shared commands (no --example needed)

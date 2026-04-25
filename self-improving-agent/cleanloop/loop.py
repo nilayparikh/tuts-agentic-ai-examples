@@ -40,15 +40,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
-
 import util
 from cleanloop import dashboard_metrics
 from cleanloop import datasets as cleanloop_datasets
 
 # Resolve paths relative to project root (one level up from cleanloop/)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+util.load_env()
 
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 STARTER_GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data_starter.py"
@@ -665,10 +663,10 @@ def run_loop(
                     genome_code, results, history, config.name, metacognition,
                 )
                 _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
                 error_message = str(exc)
                 if "Endpoint busy (429 capacity)" not in error_message:
-                    error_message = util._format_llm_exception(exc)
+                    error_message = util.format_llm_exception(exc)
                 print(f"WARNING: {error_message}")
                 _append_log(round_logs, "LLM_PROPOSAL_UNAVAILABLE", error_message)
                 history.append({
@@ -751,7 +749,7 @@ def run_loop(
             importlib.reload(clean_data)
             _append_log(round_logs, "RE_EVALUATE_MUTATION", "Re-running the mutated genome against the referee")
             new_results = _run_and_evaluate(clean_data, prepare, INPUT_DIR, output_path)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
             failure_message = f"can_run_genome: {exc}"
             _append_log(round_logs, "MUTATION_EXECUTION_FAILED", failure_message)
             new_results = {
@@ -838,7 +836,7 @@ def _run_and_evaluate(clean_data_module, prepare_module, input_dir: Path, output
     """Run the genome and convert execution errors into structured failures."""
     try:
         clean_data_module.clean(input_dir, output_path)
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
         return {
             "passed": [],
             "failed": [f"can_run_genome: {exc}"],
@@ -871,12 +869,14 @@ def _propose_fix(
         {"role": "user", "content": user_prompt},
     ]
 
-    response = util._create_chat_completion_with_backoff(
+    response = util.create_chat_completion_with_backoff(
         client,
         model=model,
         messages=messages,
         retry_label="CleanLoop proposal",
-        **util._chat_completion_options(max_tokens=PROPOSAL_MAX_TOKENS, temperature=0.3),
+        max_tokens=PROPOSAL_MAX_TOKENS,
+        reasoning_effort="low",
+        temperature=0.3,
     )
     text = response.choices[0].message.content or ""
     code = _extract_code(text)
@@ -905,12 +905,14 @@ def _propose_fix(
         {"role": "system", "content": retry_system_prompt},
         {"role": "user", "content": retry_user_prompt},
     ]
-    retry_response = util._create_chat_completion_with_backoff(
+    retry_response = util.create_chat_completion_with_backoff(
         client,
         model=model,
         messages=retry_messages,
         retry_label="CleanLoop compact retry",
-        **util._chat_completion_options(max_tokens=COMPACT_RETRY_MAX_TOKENS, temperature=0.2),
+        max_tokens=COMPACT_RETRY_MAX_TOKENS,
+        reasoning_effort="low",
+        temperature=0.2,
     )
     retry_text = retry_response.choices[0].message.content or ""
     retry_code = _extract_code(retry_text)

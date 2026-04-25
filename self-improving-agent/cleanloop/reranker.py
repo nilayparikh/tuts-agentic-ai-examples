@@ -29,15 +29,13 @@ import importlib.util
 import sys
 import tempfile
 from pathlib import Path
-
-from dotenv import load_dotenv
-from openai import OpenAI
+from typing import Any
 
 import util
 from cleanloop import datasets as cleanloop_datasets
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+util.load_env()
 
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
@@ -55,7 +53,7 @@ INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 # =====================================================================
 
 def propose(
-    client: OpenAI,
+    client: Any,
     model: str,
     genome_code: str,
     failed_assertions: list[str],
@@ -92,7 +90,7 @@ def propose(
         # Spread temperature: 0.3, 0.5, 0.7, ...
         temp = 0.3 + (i - 1) * 0.2
 
-        response = util._create_chat_completion_with_backoff(
+        response = util.create_chat_completion_with_backoff(
             client,
             model=model,
             messages=[
@@ -100,7 +98,9 @@ def propose(
                 {"role": "user", "content": user},
             ],
             retry_label=f"Reranker candidate {i}",
-            **util._chat_completion_options(max_tokens=5000, temperature=min(temp, 1.0)),
+            max_tokens=5000,
+            reasoning_effort="low",
+            temperature=min(temp, 1.0),
         )
         text = response.choices[0].message.content or ""
         code = _extract_code(text)
@@ -146,10 +146,12 @@ def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
             spec = importlib.util.spec_from_file_location(
                 "candidate_genome", genome_file,
             )
+            if spec is None or spec.loader is None:
+                return 0, 8
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
             mod.clean(INPUT_DIR, output_file)
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             return 0, 8  # Total assertion count
 
         # Evaluate with the real referee
