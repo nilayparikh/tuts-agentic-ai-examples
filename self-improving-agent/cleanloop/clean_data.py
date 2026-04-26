@@ -1,4 +1,4 @@
-"""clean_data.py — Mutable entrypoint for the CleanLoop finance cleaner."""
+"""clean_data_starter.py — Starter genome for the CleanLoop finance cleaner."""
 
 from __future__ import annotations
 
