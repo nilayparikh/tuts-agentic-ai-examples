@@ -246,6 +246,7 @@ def create_text_completion(
     system_prompt: str | None,
     user_prompt: str,
     max_tokens: int,
+    timeout_seconds: int | None = None,
     temperature: float | None = None,
 ) -> str:
     """Run one plain-text completion through the AutoGen model client."""
@@ -262,7 +263,8 @@ def create_text_completion(
         create_args["temperature"] = temperature
 
     response = _run_coro(
-        client.create(messages=messages, extra_create_args=create_args)
+        client.create(messages=messages, extra_create_args=create_args),
+        timeout_seconds=timeout_seconds,
     )
     content = getattr(response, "content", "")
     if isinstance(content, str):
@@ -270,9 +272,12 @@ def create_text_completion(
     raise RuntimeError(f"Expected a text response, received {type(content).__name__}.")
 
 
-def _run_coro(coro: Any) -> Any:
+def _run_coro(coro: Any, timeout_seconds: int | None = None) -> Any:
     """Run a coroutine from the synchronous lesson modules."""
     import asyncio
+
+    if timeout_seconds is not None:
+        coro = asyncio.wait_for(coro, timeout=timeout_seconds)
 
     try:
         asyncio.get_running_loop()

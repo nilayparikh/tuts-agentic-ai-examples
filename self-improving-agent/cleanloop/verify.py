@@ -111,6 +111,16 @@ def check_credentials() -> bool:
     return False
 
 
+def _resolve_verify_timeout_seconds() -> int:
+    """Return the live LLM timeout budget for the verify command."""
+    raw_value = util.os.getenv("CLEANLOOP_VERIFY_TIMEOUT_SECONDS", "20")
+    try:
+        timeout_seconds = int(raw_value)
+    except ValueError:
+        return 20
+    return max(timeout_seconds, 1)
+
+
 def check_llm_call() -> bool:
     """Verify an end-to-end LLM call works."""
     config = _safe_resolve_llm_env()
@@ -120,6 +130,7 @@ def check_llm_call() -> bool:
 
     endpoint = config["endpoint"]
     api_key = config["api_key"]
+    timeout_seconds = _resolve_verify_timeout_seconds()
 
     if not endpoint or not api_key:
         print("  [SKIP] No credentials — configure .env first")
@@ -139,9 +150,13 @@ def check_llm_call() -> bool:
                 system_prompt="Reply with only the word hello.",
                 user_prompt="Say hello.",
                 max_tokens=10,
+                timeout_seconds=timeout_seconds,
             )
         print(f"  [OK] LLM replied: {reply}")
         return True
+    except TimeoutError:
+        print(f"  [FAIL] LLM call timed out after {timeout_seconds}s")
+        return False
     except Exception as exc:  # pylint: disable=broad-exception-caught
         print(f"  [FAIL] {exc}")
         return False

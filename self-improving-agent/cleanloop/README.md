@@ -127,6 +127,13 @@ pip install -r ../requirements.txt
 python util.py verify
 ```
 
+If you are using a slower OpenAI-compatible endpoint such as NVIDIA, you can
+raise the verify-only timeout in `cleanloop/.env`:
+
+```dotenv
+CLEANLOOP_VERIFY_TIMEOUT_SECONDS=45
+```
+
 Then use the local `util.py` wrapper for the lesson commands:
 
 ```bash

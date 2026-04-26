@@ -124,6 +124,41 @@ class CleanLoopVerifyTests(unittest.TestCase):
         self.assertIn("[OK] LLM replied: hello", stdout.getvalue())
         self.assertEqual("", stderr.getvalue())
 
+    def test_check_llm_call_passes_verify_timeout_to_completion(self) -> None:
+        """Forward the verify timeout budget into the live completion helper."""
+        stdout = io.StringIO()
+        config = {
+            "endpoint": "https://integrate.api.nvidia.com/v1",
+            "api_key": "secret",
+            "api_version": "2024-06-01",
+            "model": "deepseek-ai/deepseek-v4-pro",
+        }
+
+        with redirect_stdout(stdout):
+            with mock.patch.dict(
+                cleanloop_util.os.environ,
+                {"CLEANLOOP_VERIFY_TIMEOUT_SECONDS": "12"},
+                clear=False,
+            ):
+                with mock.patch.object(
+                    verify.util, "resolve_llm_env", return_value=config
+                ):
+                    with mock.patch.object(
+                        verify.util, "build_llm_client", return_value=object()
+                    ):
+                        with mock.patch.object(
+                            verify.util,
+                            "create_text_completion",
+                            return_value="hello",
+                        ) as create_completion:
+                            result = verify.check_llm_call()
+
+        self.assertTrue(result)
+        self.assertEqual(
+            12,
+            create_completion.call_args.kwargs["timeout_seconds"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
