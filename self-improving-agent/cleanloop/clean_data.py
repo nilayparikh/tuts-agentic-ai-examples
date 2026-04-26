@@ -1,6 +1,7 @@
-"""clean_data.py — Mutable genome for finance-only CleanLoop.
+"""clean_data_starter.py — Immutable starter genome for finance-only CleanLoop.
 
-This file is modified during the teaching run to improve the finance baseline.
+This file is copied over clean_data.py at the start of every teaching run so
+the learner always begins from the same weak but runnable finance baseline.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ from pathlib import Path
 import pandas as pd
 
 from cleanloop import datasets as cleanloop_datasets
+
 
 FINANCE_COLUMNS = ("date", "entity", "value", "category")
 
@@ -64,7 +66,7 @@ def _normalize_finance_frame(master: pd.DataFrame) -> pd.DataFrame:
         normalized[column] = normalized[column].fillna("").astype(str).str.strip()
     normalized = normalized[normalized["entity"] != ""]
     
-    # Convert 'value' to numeric, coercing errors to NaN, then fill NaN with 0
+    # Convert 'value' to numeric, coercing errors to NaN, then fill NaNs with 0
     normalized["value"] = pd.to_numeric(normalized["value"], errors='coerce').fillna(0)
     
     return normalized.reset_index(drop=True)
