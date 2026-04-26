@@ -102,54 +102,44 @@ Result:
 Result:
 
 - command worked
-- the starter-genome baseline scored `5/8`
-- three deterministic judge checks failed:
-  - `value_is_numeric`
-  - `no_nan_value`
-  - `matches_reference_output`
+- the starter-genome baseline now scores `11/11`
+- the deterministic master export matches the canonical finance reference
+- both mutation sidecars are present and readable
 
 Snippet:
 
 ```text
-CleanLoop Evaluation: 5/8
-FAILED: value_is_numeric, no_nan_value, matches_reference_output
+CleanLoop Evaluation: 11/11
 ```
 
 `python util.py loop --max-iterations 1`
 
-Result after repair:
+Result after the three-export refresh:
 
-- command worked
-- AutoGen proposal path executed successfully
-- one proposal was returned
-- the candidate wrote invalid Python and failed execution
-- the mutation scored `0/1` on the execution gate and was reverted
+- this command has not been revalidated since the starter genome reached `11/11`
+- on the shipped finance arena, a fresh loop run now exits immediately unless you
+  first add new anomalies or remove part of the mutation playbook
 
-Snippet:
+Recommended next step:
 
 ```text
-[LLM_ATTEMPT] Attempt 1/1: AutoGen proposer
-[MUTATION_EXECUTION_FAILED] can_run_genome: invalid syntax (clean_data.py, line 1)
-[MUTATION_SCORE] Candidate scored 0/1
-[REVERT_MUTATION] Reverted mutation with score 0/1
+python util.py challenge --levels 1
+python util.py loop --max-iterations 1
 ```
 
 `python util.py loop --max-iterations 1 --rerank --candidates 2`
 
-Result after repair:
+Result after the three-export refresh:
 
-- command worked
-- reranker generated two candidates
-- the selected candidate improved the round score from `5/8` to `7/8`
-- the improved mutation was committed for that run
+- this command has not been revalidated since the starter genome reached `11/11`
+- reranking is still useful after you generate harder anomalies with `challenge`
+  or intentionally simplify the shipped mutation playbook
 
-Snippet:
+Recommended next step:
 
 ```text
-[LLM_ATTEMPT] Attempt 1/2: AutoGen candidate 1: conservative
-[LLM_ATTEMPT] Attempt 2/2: AutoGen candidate 2: value-first
-[MUTATION_SCORE] Candidate scored 7/8
-[COMMIT_MUTATION] Committed improved mutation at 7/8
+python util.py challenge --levels 1 2
+python util.py loop --max-iterations 1 --rerank --candidates 2
 ```
 
 `python util.py challenge --levels 1`
@@ -242,6 +232,7 @@ The example now handles those three cases.
 
 After validation, the example was cleaned back to a neutral state:
 
-- `cleanloop/.output/` was cleared via `python util.py reset`
-- `cleanloop/clean_data.py` was restored from `clean_data_starter.py`
-- the temporary adversarial CSV generated during validation was removed
+- `cleanloop/.output/` now contains the refreshed three-export baseline from the
+  current starter genome
+- `cleanloop/clean_data.py` and `cleanloop/clean_data_starter.py` are aligned
+  on the deterministic-plus-mutation export contract

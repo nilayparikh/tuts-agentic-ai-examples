@@ -146,6 +146,14 @@ def _load_reference_df() -> pd.DataFrame:
     return pd.read_csv(reference_path)
 
 
+def _load_optional_output(output_path: Path) -> tuple[pd.DataFrame | None, str | None]:
+    """Load one output CSV and return an error string instead of raising."""
+    try:
+        return pd.read_csv(output_path), None
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        return None, str(exc)
+
+
 def _row_counter(df: pd.DataFrame, required_columns: tuple[str, ...]) -> Counter:
     """Build a multiset of normalized row tuples for reference comparison."""
     comparable = df.loc[:, list(required_columns)].fillna("").astype(str)
@@ -179,7 +187,11 @@ def _build_reference_metrics(
     }
 
 
-def _build_checks(df: pd.DataFrame, metrics: EvaluationMetrics) -> list[CheckEntry]:
+def _build_checks(
+    df: pd.DataFrame,
+    metrics: EvaluationMetrics,
+    mutation_success_df: pd.DataFrame | None,
+) -> list[CheckEntry]:
     """Build the finance-only assertion checks for one output DataFrame."""
     config = cleanloop_datasets.get_dataset_config()
     checks: list[CheckEntry] = [
@@ -189,6 +201,14 @@ def _build_checks(df: pd.DataFrame, metrics: EvaluationMetrics) -> list[CheckEnt
             df,
         )
     ]
+    if mutation_success_df is not None:
+        checks.append(
+            (
+                "mutation_success_has_required_columns",
+                lambda d: assert_has_required_columns(d, config.required_columns),
+                mutation_success_df,
+            )
+        )
     checks.extend(
         [
             ("value_is_numeric", lambda d: assert_numeric_column(d, "value"), df),
@@ -253,7 +273,29 @@ def evaluate(master_csv: Path) -> EvaluationResults:
         return results
 
     results["passed"].append("can_read_output")
-    _get_dataset_for_output(master_csv)
+    config = _get_dataset_for_output(master_csv)
+
+    mutation_success_df, mutation_success_error = _load_optional_output(
+        cleanloop_datasets.get_mutation_success_path(master_csv.parent, config.name)
+    )
+    if mutation_success_error is None:
+        results["passed"].append("can_read_mutation_success_output")
+    else:
+        results["failed"].append(
+            f"can_read_mutation_success_output: {mutation_success_error}"
+        )
+
+    mutation_failures_df, mutation_failures_error = _load_optional_output(
+        cleanloop_datasets.get_mutation_failures_path(master_csv.parent, config.name)
+    )
+    if mutation_failures_error is None:
+        results["passed"].append("can_read_mutation_failures_output")
+    else:
+        results["failed"].append(
+            f"can_read_mutation_failures_output: {mutation_failures_error}"
+        )
+
+    _ = mutation_failures_df
 
     # Gate 2: the fixed reference must load before row-level metrics are meaningful.
     try:
@@ -271,7 +313,7 @@ def evaluate(master_csv: Path) -> EvaluationResults:
 
     # Run the type, null, and row-match assertions on one stable snapshot so
     # every round compares against identical judge semantics.
-    checks = _build_checks(df, metrics)
+    checks = _build_checks(df, metrics, mutation_success_df)
 
     for name, fn, data in checks:
         passed, detail = fn(data)

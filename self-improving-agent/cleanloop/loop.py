@@ -168,10 +168,18 @@ def _artifact_manifest(
 ) -> dict[str, object]:
     """Describe the main files involved in one dataset run."""
     strategy_path = output_path.parent / STRATEGY_FILENAME
+    mutation_success_path = cleanloop_datasets.get_mutation_success_path(
+        output_path.parent, config.name
+    )
+    mutation_failures_path = cleanloop_datasets.get_mutation_failures_path(
+        output_path.parent, config.name
+    )
     return {
         "dataset": config.name,
         "input_files": list(config.input_filenames),
         "output_csv": _path_for_history(output_path),
+        "mutation_success_csv": _path_for_history(mutation_success_path),
+        "mutation_failures_csv": _path_for_history(mutation_failures_path),
         "history_json": _path_for_history(history_path),
         "genome_path": _path_for_history(GENOME_PATH),
         "strategy_json": _path_for_history(strategy_path),
@@ -322,7 +330,10 @@ def _prepare_fresh_run(
     )
 
     removed_artifacts: list[str] = []
-    for artifact in [output_path, history_path]:
+    for artifact in [
+        *cleanloop_datasets.get_output_artifact_paths(output_path.parent, config.name),
+        history_path,
+    ]:
         if artifact.exists():
             artifact.unlink()
             removed_artifacts.append(artifact.name)
@@ -349,21 +360,26 @@ def _prepare_fresh_run(
     return logs
 
 
-def _capture_output_snapshot(output_path: Path) -> str | None:
-    """Capture the last known-good output artifact so a revert can restore it."""
-    if not output_path.exists():
-        return None
-    return output_path.read_text(encoding="utf-8")
+def _capture_output_snapshot(output_dir: Path) -> dict[str, str | None]:
+    """Capture all export artifacts so a revert can restore the full contract."""
+    snapshots: dict[str, str | None] = {}
+    for path in cleanloop_datasets.get_output_artifact_paths(output_dir):
+        snapshots[path.name] = (
+            path.read_text(encoding="utf-8") if path.exists() else None
+        )
+    return snapshots
 
 
-def _restore_output_snapshot(output_path: Path, snapshot: str | None) -> None:
-    """Restore the last known-good output artifact after a candidate is reverted."""
-    if snapshot is None:
-        if output_path.exists():
-            output_path.unlink()
-        return
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(snapshot, encoding="utf-8")
+def _restore_output_snapshot(output_dir: Path, snapshot: dict[str, str | None]) -> None:
+    """Restore all export artifacts after a candidate is reverted."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for path in cleanloop_datasets.get_output_artifact_paths(output_dir):
+        content = snapshot.get(path.name)
+        if content is None:
+            if path.exists():
+                path.unlink()
+            continue
+        path.write_text(content, encoding="utf-8")
 
 
 def _restore_genome_snapshot(genome_path: Path, snapshot: str) -> None:
@@ -472,6 +488,10 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         cleanloop_datasets.build_assertion_registry(config.name),
         indent=2,
     )
+    playbook = json.dumps(
+        cleanloop_datasets.build_mutation_playbook(config.name),
+        indent=2,
+    )
     finance_scalar_guardrail = (
         "- Values may already be floats or NaN after pandas parsing.\n"
         "- Amount strings may include currency symbols or accounting markers "
@@ -486,6 +506,12 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         f"{agenda}\n\n"
         "## Assertion Registry\n"
         f"{registry}\n\n"
+        "## Export Contract\n"
+        "- finance_master.csv stores deterministic rows plus mutation-fixed rows.\n"
+        "- finance_mutation_success.csv stores only the rows fixed by the mutation playbook.\n"
+        "- finance_mutation_failures.csv stores unresolved anomaly rows for review.\n\n"
+        "## Mutation Playbook\n"
+        f"{playbook}\n\n"
         "## Rules\n"
         "- You may ONLY modify the `clean` function in clean_data.py.\n"
         "- Do NOT change function signatures or imports.\n"
@@ -611,7 +637,7 @@ def run_loop(
         genome_before = _read_utf8_text(GENOME_PATH)
         score = results["score"]
         total = results["total"]
-        baseline_output_snapshot = _capture_output_snapshot(output_path)
+        baseline_output_snapshot = _capture_output_snapshot(output_path.parent)
         # Persist a tiny strategy summary beside the output so the dashboard and
         # the next proposal can both see what failure pattern currently matters.
         metacognition = _build_metacognition_snapshot(history, results)
@@ -849,7 +875,7 @@ def run_loop(
         else:
             _git_revert()
             _restore_genome_snapshot(GENOME_PATH, genome_before)
-            _restore_output_snapshot(output_path, baseline_output_snapshot)
+            _restore_output_snapshot(output_path.parent, baseline_output_snapshot)
             importlib.reload(clean_data)
             action = "revert"
             print(f"  Reverted: no improvement ({new_score}/{new_total})")

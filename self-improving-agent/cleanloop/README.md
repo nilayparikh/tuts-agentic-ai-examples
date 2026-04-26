@@ -7,8 +7,9 @@
 
 ## Goal
 
-Merge the five finance invoice CSVs into one normalized receivables table with
-parseable dates and numeric values.
+Run a deterministic finance cleaning pass first, then route mutation-fixed rows
+and unresolved anomalies into separate export reports beside the canonical
+master CSV.
 
 ## What This Example Shows
 
@@ -19,17 +20,19 @@ loop.
 
 The example demonstrates:
 
-1. Code mutation: the proposer suggests a concrete replacement for the
-   `clean` function.
-2. Genome improvement: the loop only commits a mutation when the referee score
-   improves.
-3. Orchestrator loop: the bounded run resets the starter genome, evaluates the
-   current candidate, proposes a mutation, and re-evaluates it.
-4. Loop observability: each round records attempt diagnostics, token usage, and
+1. Deterministic pass: numeric-like rows are normalized directly into the
+   canonical finance schema.
+2. Mutation fallback: known textual anomalies are fixed into
+   `finance_mutation_success.csv`, then merged into `finance_master.csv`.
+3. Failure routing: unresolved anomalies are dumped into
+   `finance_mutation_failures.csv` for later mutation review.
+4. Genome improvement: the loop still mutates `clean_data.py`, but now it does
+   so against an explicit export contract instead of a single loose CSV.
+5. Loop observability: each round records attempt diagnostics, token usage, and
    log rows for the dashboard.
-5. Judge: the finance referee remains the hard gate for score and pass/fail
+6. Judge: the finance referee remains the hard gate for score and pass/fail
    assertions.
-6. Re-ranking: best-of-N candidate generation is available before the final
+7. Re-ranking: best-of-N candidate generation is available before the final
    mutation is selected.
 
 ## Course Alignment
@@ -83,13 +86,31 @@ You are cleaning one progressive invoice arena, not choosing between datasets.
 
 date, entity, value, category
 
+## Output Files
+
+- `finance_master.csv` — all deterministic rows plus mutation-fixed rows
+- `finance_mutation_success.csv` — only rows fixed by the shipped mutation playbook
+- `finance_mutation_failures.csv` — unresolved anomaly dump for review
+
 ## Requirements
 
 1. Use only the five finance\_\*.csv inputs.
-2. Normalize every file into date, entity, value, category.
-3. Preserve good rows even when amount strings contain symbols, sentinels, or notes.
-4. Handle mixed date formats without inventing or dropping records.
-5. Match the canonical finance reference in cleanloop/.gold/finance_expected.csv.
+2. Write `finance_master.csv` with the canonical columns `date, entity, value, category`.
+3. Write `finance_mutation_success.csv` with the same canonical schema.
+4. Write `finance_mutation_failures.csv` as the unresolved anomaly dump.
+5. Preserve good rows even when amount strings contain symbols, sentinels, or notes.
+6. Handle mixed date formats without inventing or dropping records.
+7. Match the canonical finance reference in cleanloop/.gold/finance_expected.csv.
+
+## Mutation Playbook
+
+The shipped starter genome uses a tiny mutation playbook for the known textual
+amount tokens in this arena.
+
+- `FREE TRIAL` → write `0.0`, preserve the current category, and report the row in `finance_mutation_success.csv`
+- `COMPLIMENTARY` → write `0.0`, preserve the current category, and report the row in `finance_mutation_success.csv`
+- `OFFSET` → write `0.0`, preserve the `disputed` category, and report the row in `finance_mutation_success.csv`
+- `PENDING`, `TBD`, `ERROR`, `ERR`, `CHARGEBACK`, `REVERSAL`, blank values, and other unmapped tokens → dump the row in `finance_mutation_failures.csv`
 
 ## Constraints
 
@@ -167,17 +188,22 @@ For normal usage in this example repo, prefer the local `util.py` wrapper in
 `cleanloop/` because it loads `cleanloop/.env` first and keeps every lesson
 command runnable from the example folder itself.
 
+The shipped starter genome now satisfies the built-in finance arena. If you
+want to see fresh mutation rounds, generate new adversarial inputs with
+`python util.py challenge --levels ...` or deliberately simplify the mutation
+playbook in `clean_data.py` before running `loop`.
+
 ## Validation Commands
 
 The full validated command set for this example is documented in
 `cleanloop/EXAMPLE.md`.
 
-The current validated snapshot starts from the weak starter genome at `5/8` on
-`evaluate`, then reaches `7/8` on the reranked one-iteration loop before reset.
-Use `EXAMPLE.md` for the exact command outputs from the latest validation pass.
+Use `evaluate` to verify the master export plus both mutation sidecars before
+you run the loop. Use `EXAMPLE.md` for command surface notes and any refreshed
+validation snippets.
 
 - `verify` checks package imports, finance input files, credentials, and one live LLM call.
-- `evaluate` runs the deterministic referee on the current output file.
+- `evaluate` checks `finance_master.csv` plus the two mutation sidecars.
 - `loop` runs one bounded mutation loop.
 - `loop --rerank` runs best-of-N proposal generation plus AutoGen judge selection.
 - `challenge` generates adversarial CSV files through the AutoGen model client path.
@@ -191,6 +217,9 @@ Use `EXAMPLE.md` for the exact command outputs from the latest validation pass.
 The loop persists round history and log artifacts so you can inspect what the
 agent tried instead of treating the mutation as a black box.
 
+- Master export: `cleanloop/.output/finance_master.csv`
+- Mutation success report: `cleanloop/.output/finance_mutation_success.csv`
+- Mutation failure dump: `cleanloop/.output/finance_mutation_failures.csv`
 - Round history: `cleanloop/.output/finance_eval_history.json`
 - Dashboard logs: surfaced through `cleanloop/dashboard.py`
 - Attempt diagnostics: prompt size, response size, token counts, selected

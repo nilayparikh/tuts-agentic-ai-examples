@@ -24,6 +24,8 @@ class DatasetConfig:
     input_filenames: tuple[str, ...]
     reference_filename: str
     output_filename: str
+    mutation_success_filename: str
+    mutation_failures_filename: str
     history_filename: str
     required_columns: tuple[str, ...]
     row_count_range: tuple[int, int]
@@ -43,16 +45,20 @@ FINANCE_CONFIG = DatasetConfig(
     ),
     reference_filename="finance_expected.csv",
     output_filename="finance_master.csv",
+    mutation_success_filename="finance_mutation_success.csv",
+    mutation_failures_filename="finance_mutation_failures.csv",
     history_filename="finance_eval_history.json",
     required_columns=("date", "entity", "value", "category"),
     row_count_range=(50, 120),
     goal=(
-        "Merge the five finance invoice CSVs into one normalized receivables table "
-        "with parseable dates and numeric values."
+        "Run a deterministic finance cleaning pass, then export mutation successes "
+        "and unresolved failures beside the canonical master CSV."
     ),
     requirements=(
         "Use only the five finance_*.csv inputs.",
-        "Normalize every file into date, entity, value, category.",
+        "Write finance_master.csv with date, entity, value, category.",
+        "Write finance_mutation_success.csv with the same canonical schema.",
+        "Write finance_mutation_failures.csv as the unresolved anomaly dump.",
         "Preserve good rows even when amount strings contain symbols, sentinels, or notes.",
         "Handle mixed date formats without inventing or dropping records.",
         "Match the canonical finance reference in cleanloop/.gold/finance_expected.csv.",
@@ -97,6 +103,33 @@ def get_output_path(output_dir: Path, dataset_name: str | None = None) -> Path:
     return output_dir / config.output_filename
 
 
+def get_mutation_success_path(
+    output_dir: Path, dataset_name: str | None = None
+) -> Path:
+    """Return the finance mutation-success report path."""
+    config = get_dataset_config(dataset_name)
+    return output_dir / config.mutation_success_filename
+
+
+def get_mutation_failures_path(
+    output_dir: Path, dataset_name: str | None = None
+) -> Path:
+    """Return the finance mutation-failure report path."""
+    config = get_dataset_config(dataset_name)
+    return output_dir / config.mutation_failures_filename
+
+
+def get_output_artifact_paths(
+    output_dir: Path, dataset_name: str | None = None
+) -> tuple[Path, Path, Path]:
+    """Return the finance master plus both mutation sidecar paths."""
+    return (
+        get_output_path(output_dir, dataset_name),
+        get_mutation_success_path(output_dir, dataset_name),
+        get_mutation_failures_path(output_dir, dataset_name),
+    )
+
+
 def get_history_path(output_dir: Path, dataset_name: str | None = None) -> Path:
     """Return the finance eval-history path."""
     config = get_dataset_config(dataset_name)
@@ -119,6 +152,21 @@ def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, 
     """Return the finance assertion registry used in prompts and docs."""
     _ = get_dataset_config(dataset_name)
     return [
+        {
+            "name": "can_read_mutation_success_output",
+            "severity": "critical",
+            "description": "Mutation success report exists and is valid CSV",
+        },
+        {
+            "name": "mutation_success_has_required_columns",
+            "severity": "critical",
+            "description": "Mutation success report uses date, entity, value, category",
+        },
+        {
+            "name": "can_read_mutation_failures_output",
+            "severity": "critical",
+            "description": "Mutation failure dump exists and is valid CSV",
+        },
         {
             "name": "can_read_output",
             "severity": "critical",
@@ -161,5 +209,32 @@ def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, 
                 "Output should match the canonical cleaned finance reference without "
                 "dropping or inventing rows."
             ),
+        },
+    ]
+
+
+def build_mutation_playbook(dataset_name: str | None = None) -> list[dict[str, str]]:
+    """Return the shipped mutation rules for known finance amount anomalies."""
+    _ = get_dataset_config(dataset_name)
+    return [
+        {
+            "token": "FREE TRIAL",
+            "route": "finance_mutation_success.csv",
+            "action": "Write value 0.0 and preserve the existing active category.",
+        },
+        {
+            "token": "COMPLIMENTARY",
+            "route": "finance_mutation_success.csv",
+            "action": "Write value 0.0 and preserve the existing active category.",
+        },
+        {
+            "token": "OFFSET",
+            "route": "finance_mutation_success.csv",
+            "action": "Write value 0.0 and preserve the disputed category.",
+        },
+        {
+            "token": "PENDING / TBD / ERROR / ERR / CHARGEBACK / REVERSAL",
+            "route": "finance_mutation_failures.csv",
+            "action": "Dump the unresolved row for later mutation review when no rule applies.",
         },
     ]

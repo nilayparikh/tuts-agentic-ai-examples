@@ -44,6 +44,11 @@ GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 
 
+def _expected_total_assertions() -> int:
+    """Return the current finance referee assertion count."""
+    return len(cleanloop_datasets.build_assertion_registry()) + 1
+
+
 # =====================================================================
 # SECTION: Best-of-N Candidate Proposal
 # Lesson 08 — Generate N candidate fixes with increasing temperature.
@@ -122,12 +127,12 @@ def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
                 genome_file,
             )
             if spec is None or spec.loader is None:
-                return 0, 8
+                return 0, _expected_total_assertions()
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
             mod.clean(INPUT_DIR, output_file)
         except Exception:  # pylint: disable=broad-exception-caught
-            return 0, 8  # Total assertion count
+            return 0, _expected_total_assertions()
 
         # Evaluate with the real referee
         sys.path.insert(0, str(PROJECT_ROOT / "cleanloop"))
