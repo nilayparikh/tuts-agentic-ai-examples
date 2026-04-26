@@ -5,13 +5,17 @@ Runs the genome (clean_data.py) in an isolated subprocess with:
   - Separate process memory (genome can't access loop state)
   - Captured stdout/stderr for logging
 
-Lesson references:
-  - Lesson 11: Lines 25-90   (run_sandboxed — the isolation wrapper)
-  - Lesson 11: Lines 93-135  (standalone demo — run + evaluate)
+Course alignment:
+    - Lesson 09: safety and autonomy
 
 Usage:
-    python -m cleanloop.sandbox
-    python -m cleanloop.sandbox --timeout 10
+    Preferred from cleanloop/:
+        python util.py sandbox
+        python util.py sandbox --timeout 10
+
+    Direct module alternative:
+        python -m cleanloop.sandbox
+        python -m cleanloop.sandbox --timeout 10
 
 No environment variables required.
 """
@@ -32,7 +36,7 @@ OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 
 # =====================================================================
 # SECTION: Sandboxed Execution
-# Lesson 11 — The genome runs in a SEPARATE Python process.
+# Lesson 09 — The genome runs in a separate Python process.
 # This means:
 #   1. It can't access the loop's memory or variables
 #   2. If it crashes, the loop survives
@@ -44,6 +48,7 @@ OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 # dangerous modules, enter infinite loops, or corrupt shared state.
 # Process isolation is the only reliable defense.
 # =====================================================================
+
 
 def run_sandboxed(
     genome_path: Path,
@@ -57,7 +62,8 @@ def run_sandboxed(
     return_code, timed_out.
     """
     # Build a minimal runner script that imports and calls the genome
-    runner = textwrap.dedent(f"""\
+    runner = textwrap.dedent(
+        f"""\
         import sys
         sys.path.insert(0, r"{genome_path.parent.parent}")
         from pathlib import Path
@@ -70,7 +76,8 @@ def run_sandboxed(
         spec.loader.exec_module(mod)
         mod.clean(Path(r"{input_dir}"), Path(r"{output_path}"))
         print("SANDBOX_OK")
-    """)
+    """
+    )
 
     try:
         result = subprocess.run(
@@ -79,13 +86,11 @@ def run_sandboxed(
             text=True,
             timeout=timeout,
             cwd=str(PROJECT_ROOT),
+            check=False,
         )
 
         return {
-            "success": (
-                result.returncode == 0
-                and "SANDBOX_OK" in result.stdout
-            ),
+            "success": (result.returncode == 0 and "SANDBOX_OK" in result.stdout),
             "stdout": result.stdout,
             "stderr": result.stderr,
             "return_code": result.returncode,
@@ -101,7 +106,7 @@ def run_sandboxed(
             "timed_out": True,
         }
 
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         return {
             "success": False,
             "stdout": "",
@@ -113,18 +118,18 @@ def run_sandboxed(
 
 # =====================================================================
 # SECTION: Standalone Demo
-# Lesson 11 — Run the genome in the sandbox and show results.
-# Then evaluate the output with the referee to show the full
-# sandbox -> evaluate pipeline.
+# Run the sandbox directly to demonstrate the safety shell end to end:
+# isolated execution first, deterministic referee second.
 # =====================================================================
+
 
 def main() -> None:
     """Run sandbox demo."""
-    parser = argparse.ArgumentParser(
-        description="Sandbox — Isolated genome execution"
-    )
+    parser = argparse.ArgumentParser(description="Sandbox — Isolated genome execution")
     parser.add_argument(
-        "--timeout", type=int, default=30,
+        "--timeout",
+        type=int,
+        default=30,
         help="Timeout in seconds (default: 30)",
     )
     args = parser.parse_args()
@@ -153,6 +158,7 @@ def main() -> None:
     # Evaluate if output was produced
     if result["success"] and output_path.exists():
         from cleanloop import prepare  # pylint: disable=import-outside-toplevel
+
         eval_result = prepare.evaluate(output_path)
         prepare.print_results(eval_result)
 

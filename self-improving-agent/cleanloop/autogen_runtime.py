@@ -1,11 +1,13 @@
 """AutoGen-backed proposal, judge, and observability helpers for CleanLoop."""
 
+# pylint: disable=too-many-arguments,too-many-locals
+
 from __future__ import annotations
 
 import asyncio
 import importlib
 import json
-from typing import Any, Callable, TypedDict, cast
+from typing import Any, Callable, TypeVar, TypedDict
 
 from pydantic import BaseModel, Field
 
@@ -37,6 +39,9 @@ class CandidateRecord(TypedDict):
     hypothesis: str
     code: str
     attempt: dict[str, object]
+
+
+StructuredOutputT = TypeVar("StructuredOutputT", bound=BaseModel)
 
 
 def summarize_attempts(
@@ -91,8 +96,10 @@ def propose_single_mutation(
     *,
     label: str = "AutoGen proposer",
     max_tokens: int = 2200,
-) -> tuple[str | None, str, dict[str, object]]:
+) -> tuple[str | None, str, dict[str, object]]:  # pylint: disable=too-many-arguments
     """Generate one structured mutation proposal with AutoGen."""
+    # Keep the proposer path strongly typed so the loop can safely read the
+    # structured fields instead of treating every response as a generic blob.
     proposal, events, usage = _run_structured_agent(
         client=client,
         system_prompt=system_prompt,
@@ -142,7 +149,7 @@ def propose_reranked_mutation(
     n_candidates: int,
     evaluate_candidate: Callable[[str], tuple[int, int]],
 ) -> tuple[str | None, str, dict[str, object]]:
-    """Generate multiple candidates, score them, and use an AutoGen judge to break ties."""
+    """Generate multiple candidates, score them, and judge the best survivor."""
     candidate_styles = [
         (
             "conservative",
@@ -156,10 +163,14 @@ def propose_reranked_mutation(
             "reconciliation-first",
             "Prioritize missing and unexpected row reconciliation first.",
         ),
-        ("date-first", "Prioritize mixed date parsing and stable row retention first."),
+        (
+            "date-first",
+            "Prioritize mixed date parsing and stable row retention first.",
+        ),
         (
             "bold",
-            "Allow a broader refactor inside clean() if it improves correctness without touching imports.",
+            "Allow a broader refactor inside clean() if it improves correctness "
+            "without touching imports.",
         ),
     ]
     attempts: list[dict[str, object]] = []
@@ -212,11 +223,14 @@ def propose_reranked_mutation(
         if candidate["score"] == selected["score"]
     ]
     if len(tied_candidates) > 1:
+        # Deterministic score gets candidates to the tie. The judge only breaks
+        # ties between equally scoring mutations by preferring the safer change.
         judge_decision, events, usage = _run_structured_agent(
             client=client,
             system_prompt=(
-                "You are the CleanLoop judge. Pick the safest mutation with the best score. "
-                "Favor higher fixed-evaluation score first, then prefer the narrower hypothesis."
+                "You are the CleanLoop judge. Pick the safest mutation with "
+                "the best score. Favor higher fixed-evaluation score first, "
+                "then prefer the narrower hypothesis."
             ),
             task=_build_judge_task(tied_candidates),
             output_type=CandidateSelection,
@@ -238,7 +252,7 @@ def propose_reranked_mutation(
             "events": events,
         }
 
-    selected_attempt = cast(dict[str, object], selected["attempt"])
+    selected_attempt = selected["attempt"]
     diagnostics = summarize_attempts(
         attempts,
         selected_label=str(selected_attempt.get("label", "none")),
@@ -255,14 +269,18 @@ def _build_judge_task(candidates: list[CandidateRecord]) -> str:
     """Build the selection task for the AutoGen judge agent."""
     lines = [
         "Pick the best candidate using 1-based indexing.",
-        "Favor higher fixed judge score first. Break ties using the safer, narrower mutation.",
+        "Favor higher fixed judge score first. Break ties using the safer, "
+        "narrower mutation.",
         "",
         "Candidates:",
     ]
     for candidate in candidates:
         lines.append(
-            f"- {candidate['index']}: style={candidate['style']}, score={candidate['score']}/{candidate['total']}, "
-            f"hypothesis={candidate['hypothesis']}"
+            (
+                f"- {candidate['index']}: style={candidate['style']}, "
+                f"score={candidate['score']}/{candidate['total']}, "
+                f"hypothesis={candidate['hypothesis']}"
+            )
         )
     return "\n".join(lines)
 
@@ -272,10 +290,10 @@ def _run_structured_agent(
     client: Any,
     system_prompt: str,
     task: str,
-    output_type: type[BaseModel],
+    output_type: type[StructuredOutputT],
     agent_name: str,
-) -> tuple[BaseModel, list[dict[str, object]], dict[str, int | None]]:
-    """Run one AutoGen agent task and return the structured output plus observability data."""
+) -> tuple[StructuredOutputT, list[dict[str, object]], dict[str, int | None]]:
+    """Run one AutoGen agent task and return structured output plus observability."""
     return _run_coro(
         _run_structured_agent_async(
             client=client,
@@ -292,9 +310,9 @@ async def _run_structured_agent_async(
     client: Any,
     system_prompt: str,
     task: str,
-    output_type: type[BaseModel],
+    output_type: type[StructuredOutputT],
     agent_name: str,
-) -> tuple[BaseModel, list[dict[str, object]], dict[str, int | None]]:
+) -> tuple[StructuredOutputT, list[dict[str, object]], dict[str, int | None]]:
     """Async worker for one structured AutoGen task."""
     assistant_agent_class, structured_message_class = _require_autogen_types()
     agent = assistant_agent_class(
@@ -347,10 +365,10 @@ async def _run_json_object_fallback(
     client: Any,
     system_prompt: str,
     task: str,
-    output_type: type[BaseModel],
+    output_type: type[StructuredOutputT],
     agent_name: str,
     original_error: Exception,
-) -> tuple[BaseModel, list[dict[str, object]], dict[str, int | None]]:
+) -> tuple[StructuredOutputT, list[dict[str, object]], dict[str, int | None]]:
     """Fallback to model-client JSON mode when provider rejects json_schema output."""
     models_module = importlib.import_module("autogen_core.models")
     system_message_class = getattr(models_module, "SystemMessage")
@@ -398,8 +416,8 @@ def _require_autogen_types() -> tuple[Any, Any]:
         messages_module = importlib.import_module("autogen_agentchat.messages")
     except ImportError as exc:
         raise RuntimeError(
-            "AutoGen dependencies are not installed. Run pip install -r requirements.txt "
-            "from _examples/self-improving-agent."
+            "AutoGen dependencies are not installed. Run pip install -r ../requirements.txt "
+            "from cleanloop/, or python ../util.py setup from the example root."
         ) from exc
 
     return getattr(agents_module, "AssistantAgent"), getattr(

@@ -3,11 +3,16 @@
 Run this before starting the hands-on lessons to confirm your
 Python version, packages, credentials, and LLM connectivity.
 
-Lesson references:
-  - Lesson 05: Lines 20-95  (all four verification checks)
+Course alignment:
+    - Run this before the CleanLoop build lessons so environment failures are
+        caught before you start the loop, dashboard, challenger, or reranker.
 
 Usage:
-    python -m cleanloop.verify
+    Preferred from cleanloop/:
+        python util.py verify
+
+    Direct module alternative:
+        python -m cleanloop.verify
 
 Environment variables (from .env):
     LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
@@ -21,6 +26,7 @@ Environment variables (from .env):
 """
 
 import sys
+import warnings
 from pathlib import Path
 
 from cleanloop import util
@@ -31,9 +37,10 @@ util.load_env()
 
 # =====================================================================
 # SECTION: Verification Checks
-# Lesson 05 — Four checks that confirm the environment is ready.
+# Four checks that confirm the local CleanLoop runtime is ready.
 # Each check prints [OK], [FAIL], or [SKIP] with details.
 # =====================================================================
+
 
 def check_python_version() -> bool:
     """Verify Python 3.11+ is installed."""
@@ -69,9 +76,21 @@ def check_packages() -> bool:
     return True
 
 
+def _safe_resolve_llm_env() -> dict[str, str] | None:
+    """Resolve LLM config without crashing the learner-facing verify flow."""
+    try:
+        return util.resolve_llm_env()
+    except RuntimeError as exc:
+        print(f"  [FAIL] {exc}")
+        return None
+
+
 def check_credentials() -> bool:
     """Verify API credentials are configured in .env."""
-    config = util.resolve_llm_env()
+    config = _safe_resolve_llm_env()
+    if config is None:
+        return False
+
     endpoint = config["endpoint"]
     api_key = config["api_key"]
 
@@ -82,7 +101,9 @@ def check_credentials() -> bool:
 
     env_path = util.ENV_FILE
     if not env_path.exists():
-        print("  [FAIL] No cleanloop/.env file. Copy cleanloop/.env.example to cleanloop/.env")
+        print(
+            "  [FAIL] No cleanloop/.env file. Copy cleanloop/.env.example to cleanloop/.env"
+        )
     elif not endpoint:
         print(f"  [FAIL] {config['endpoint_var']} not set in .env")
     else:
@@ -92,7 +113,11 @@ def check_credentials() -> bool:
 
 def check_llm_call() -> bool:
     """Verify an end-to-end LLM call works."""
-    config = util.resolve_llm_env()
+    config = _safe_resolve_llm_env()
+    if config is None:
+        print("  [SKIP] No credentials — configure .env first")
+        return True
+
     endpoint = config["endpoint"]
     api_key = config["api_key"]
 
@@ -102,12 +127,19 @@ def check_llm_call() -> bool:
 
     try:
         client = util.build_llm_client(endpoint, api_key, config["api_version"])
-        reply = util.create_text_completion(
-            client,
-            system_prompt="Reply with only the word hello.",
-            user_prompt="Say hello.",
-            max_tokens=10,
-        )
+        # Suppress the known AutoGen model-alias warning so verify stays readable.
+        with warnings.catch_warnings():
+            warnings.filterwarnings(
+                "ignore",
+                message=r"Resolved model mismatch: .*",
+                category=UserWarning,
+            )
+            reply = util.create_text_completion(
+                client,
+                system_prompt="Reply with only the word hello.",
+                user_prompt="Say hello.",
+                max_tokens=10,
+            )
         print(f"  [OK] LLM replied: {reply}")
         return True
     except Exception as exc:  # pylint: disable=broad-exception-caught
@@ -137,7 +169,7 @@ def main() -> None:
     print(f"Result: {passed}/{total} checks passed.")
 
     if all(results):
-        print("\nReady for Lesson 06.")
+        print("\nReady for: python util.py loop")
     else:
         print("\nFix failing checks before proceeding.")
         sys.exit(1)

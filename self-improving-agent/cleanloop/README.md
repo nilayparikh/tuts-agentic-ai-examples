@@ -32,6 +32,26 @@ The example demonstrates:
 6. Re-ranking: best-of-N candidate generation is available before the final
    mutation is selected.
 
+## Course Alignment
+
+Use this map when you move between the runnable example, the canonical course
+plan in `content/ai/self-improving-agents/course/`, and the current slide deck
+topics.
+
+| Course lesson | Topic                 | Primary example anchor                                                               |
+| ------------- | --------------------- | ------------------------------------------------------------------------------------ |
+| 03            | Arena and baseline    | `.input/`, `.gold/`, `prepare.py`, `clean_data_starter.py`                           |
+| 04            | Orchestrator loop     | `loop.py`                                                                            |
+| 05            | Genome improvement    | `clean_data.py`                                                                      |
+| 06            | Loop observability    | `dashboard.py`, `.output/finance_eval_history.json`, `.output/finance_strategy.json` |
+| 07            | Self-challenging loop | `challenger.py`                                                                      |
+| 08            | Test-time search      | `reranker.py`                                                                        |
+| 09            | Safety and autonomy   | `sandbox.py`, `autonomy.py`                                                          |
+
+The slide topics for self-challenging, test-time search, and production safety
+cover the same extension path as lessons 07-09 in the course plan, even when
+the deck numbering is on an older sequence.
+
 ## AutoGen Architecture
 
 The AutoGen integration is intentionally narrow.
@@ -94,50 +114,60 @@ Supported endpoint families in the local runtime:
 
 ## Setup
 
-1. Install dependencies from the example root.
+1. Install dependencies from the example root, or use the parent `requirements.txt`
+   when you stay inside `cleanloop/`.
 2. Fill `cleanloop/.env` with your endpoint, API key, model, and optional API version.
 3. Run the verifier before the loop so credential and package issues fail early.
 
-The public command surface for this example is the project-level CLI:
+If you are working inside `_examples/self-improving-agent/cleanloop/`, install
+dependencies like this:
 
 ```bash
+pip install -r ../requirements.txt
 python util.py verify
-python util.py -e cleanloop evaluate
-python util.py -e cleanloop loop --max-iterations 5
-python util.py -e cleanloop loop --max-iterations 5 --rerank --candidates 3
-python util.py -e cleanloop challenge --levels 1 2 3
-python util.py -e cleanloop sandbox --timeout 10
-python util.py -e cleanloop autonomy --rounds 10
-python util.py -e cleanloop dashboard
-python util.py -e cleanloop reset
 ```
 
+Then use the local `util.py` wrapper for the lesson commands:
+
 ```bash
-pip install -r requirements.txt
-python -m cleanloop.verify
+python util.py status
+python util.py verify
+python util.py evaluate
+python util.py loop --max-iterations 5
+python util.py loop --max-iterations 5 --rerank --candidates 3
+python util.py challenge --levels 1 2 3
+python util.py sandbox --timeout 10
+python util.py autonomy --rounds 10
+python util.py dashboard
+python util.py reset
 ```
 
 ## Running the Loop
 
-You can call the modules directly during local development:
+Use the local wrapper for loop runs as well:
 
 ```bash
-python -m cleanloop.loop --rounds 5
+python util.py loop --max-iterations 5
 ```
 
 Use reranking when you want best-of-N candidate selection before commit:
 
 ```bash
-python -m cleanloop.loop --rounds 5 --use-reranker
+python util.py loop --max-iterations 5 --rerank --candidates 3
 ```
 
-For normal usage in this example repo, prefer the `util.py` wrapper because it
-keeps the command names aligned with the rest of the course examples.
+For normal usage in this example repo, prefer the local `util.py` wrapper in
+`cleanloop/` because it loads `cleanloop/.env` first and keeps every lesson
+command runnable from the example folder itself.
 
 ## Validation Commands
 
 The full validated command set for this example is documented in
 `cleanloop/EXAMPLE.md`.
+
+The current validated snapshot starts from the weak starter genome at `5/8` on
+`evaluate`, then reaches `7/8` on the reranked one-iteration loop before reset.
+Use `EXAMPLE.md` for the exact command outputs from the latest validation pass.
 
 - `verify` checks package imports, finance input files, credentials, and one live LLM call.
 - `evaluate` runs the deterministic referee on the current output file.

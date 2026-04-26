@@ -62,7 +62,7 @@ Observed warning:
 
 ## Command Validation
 
-All commands below were run on 2026-04-25 from the example root.
+All commands below were run on 2026-04-26 from the `cleanloop/` folder.
 
 ### Shared Commands
 
@@ -70,18 +70,19 @@ All commands below were run on 2026-04-25 from the example root.
 
 Result:
 
-- passed `5/5`
+- passed `4/4`
 - verified Python `3.11.9`
-- verified all required packages
+- verified all 7 required packages
 - verified all five finance input files
 - verified endpoint and model resolution
-- live LLM check returned `"Hello"`
+- live LLM check returned `"hello"`
 
 Snippet:
 
 ```text
-Verification Passed - 5/5
-Ready for: python util.py -e cleanloop loop
+Result: 4/4 checks passed.
+
+Ready for: python util.py loop
 ```
 
 `python util.py status`
@@ -90,45 +91,50 @@ Result:
 
 - completed successfully
 - reported Python `3.11.9`
-- reported `.venv` and `.env` present
-- reported current CleanLoop, Prompt Evolution, and Skill Mastery artifacts
+- reported `cleanloop/.env` present
+- reported the finance arena with all five input files
+- reported `.output` as missing in the reset baseline state
 
 ### CleanLoop Commands
 
-`python util.py -e cleanloop evaluate`
+`python util.py evaluate`
 
 Result:
 
 - command worked
-- the current saved output at validation time scored `7/8`
-- one deterministic judge check still failed: `matches_reference_output`
+- the starter-genome baseline scored `5/8`
+- three deterministic judge checks failed:
+  - `value_is_numeric`
+  - `no_nan_value`
+  - `matches_reference_output`
 
 Snippet:
 
 ```text
-Score: 7/8 - 1 Failing
-Run: python util.py -e cleanloop loop to fix automatically
+CleanLoop Evaluation: 5/8
+FAILED: value_is_numeric, no_nan_value, matches_reference_output
 ```
 
-`python util.py -e cleanloop loop --max-iterations 1`
+`python util.py loop --max-iterations 1`
 
 Result after repair:
 
 - command worked
 - AutoGen proposal path executed successfully
 - one proposal was returned
-- the candidate scored `5/8` and was reverted because it did not improve the baseline
+- the candidate wrote invalid Python and failed execution
+- the mutation scored `0/1` on the execution gate and was reverted
 
 Snippet:
 
 ```text
 [LLM_ATTEMPT] Attempt 1/1: AutoGen proposer
-[CODE_FOUND] yes
-[MUTATION_SCORE] Candidate scored 5/8
-[REVERT_MUTATION] Reverted mutation with score 5/8
+[MUTATION_EXECUTION_FAILED] can_run_genome: invalid syntax (clean_data.py, line 1)
+[MUTATION_SCORE] Candidate scored 0/1
+[REVERT_MUTATION] Reverted mutation with score 0/1
 ```
 
-`python util.py -e cleanloop loop --max-iterations 1 --rerank --candidates 2`
+`python util.py loop --max-iterations 1 --rerank --candidates 2`
 
 Result after repair:
 
@@ -146,7 +152,7 @@ Snippet:
 [COMMIT_MUTATION] Committed improved mutation at 7/8
 ```
 
-`python util.py -e cleanloop challenge --levels 1`
+`python util.py challenge --levels 1`
 
 Result after repair:
 
@@ -160,39 +166,41 @@ Generating 1 adversarial CSVs across levels: [1]
 Created: adversarial_d1_01.csv
 ```
 
-`python util.py -e cleanloop sandbox --timeout 10`
+`python util.py sandbox --timeout 10`
 
 Result:
 
 - command worked
 - genome completed in an isolated subprocess
 - sandboxed output scored `7/8`
+- one deterministic judge check still failed: `matches_reference_output`
 
 Snippet:
 
 ```text
-OK: Genome completed successfully
-NOTE: Score: 7/8
+[OK] Genome completed successfully
+CleanLoop Evaluation: 7/8
 ```
 
-`python util.py -e cleanloop autonomy --rounds 3`
+`python util.py autonomy --rounds 3`
 
 Result:
 
 - command worked
-- simulation finished in `SUPERVISED` mode with final score `0.40`
+- simulation finished in `SUPERVISED` mode with final score `0.27`
 
 Snippet:
 
 ```text
-Final: SUPERVISED (score: 0.40)
+Final: SUPERVISED (score: 0.27)
 ```
 
-`python util.py -e cleanloop dashboard`
+`python util.py dashboard`
 
 Result:
 
 - command worked
+- Streamlit showed the optional first-run email prompt once
 - Streamlit launched successfully
 - dashboard exposed a local URL on port `8501`
 
@@ -202,7 +210,7 @@ Snippet:
 Local URL: http://localhost:8501
 ```
 
-`python util.py -e cleanloop reset`
+`python util.py reset`
 
 Result:
 
@@ -213,8 +221,8 @@ Result:
 Snippet:
 
 ```text
-OK: Deleted cleanloop\.output
-OK: Restored cleanloop/clean_data.py from clean_data_starter.py
+Deleted cleanloop/.output
+Restored cleanloop/clean_data.py from clean_data_starter.py
 ```
 
 ## Validation Repairs Applied
@@ -225,7 +233,7 @@ The validation pass surfaced and fixed these issues:
    not support the structured-output path used by the loop.
 2. Some OpenAI-compatible providers rejected AutoGen `json_schema` structured
    output even though plain JSON mode worked.
-3. `python util.py -e cleanloop challenge --levels ...` did not match the
+3. `python util.py challenge --levels ...` did not match the
    actual challenger CLI.
 
 The example now handles those three cases.
@@ -234,6 +242,6 @@ The example now handles those three cases.
 
 After validation, the example was cleaned back to a neutral state:
 
-- `cleanloop/.output/` was cleared via `python util.py -e cleanloop reset`
+- `cleanloop/.output/` was cleared via `python util.py reset`
 - `cleanloop/clean_data.py` was restored from `clean_data_starter.py`
 - the temporary adversarial CSV generated during validation was removed

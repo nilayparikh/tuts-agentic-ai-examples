@@ -4,15 +4,19 @@ Uses an LLM to generate progressively harder messy CSV files that
 target the genome's known weaknesses. This creates an auto-curriculum:
 as the cleaner improves, the challenger makes harder data.
 
-Lesson references:
-  - Lesson 09: Lines 25-55   (difficulty ladder — 5 levels of messiness)
-  - Lesson 09: Lines 58-100  (generate function — LLM creates adversarial data)
-  - Lesson 09: Lines 103-140 (main — batch generation with difficulty ratchet)
+Course alignment:
+    - Lesson 07: self-challenging loop extension
 
 Usage:
-    python -m cleanloop.challenger
-    python -m cleanloop.challenger --difficulty 3 --count 4
-    python -m cleanloop.challenger --levels 1 2 3
+    Preferred from cleanloop/:
+        python util.py challenge
+        python util.py challenge --difficulty 3 --count 4
+        python util.py challenge --levels 1 2 3
+
+    Direct module alternative:
+        python -m cleanloop.challenger
+        python -m cleanloop.challenger --difficulty 3 --count 4
+        python -m cleanloop.challenger --levels 1 2 3
 
 Environment variables (from .env):
     LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
@@ -24,6 +28,8 @@ Environment variables (from .env):
     AZURE_ENDPOINT  — Legacy fallback
     AZURE_API_KEY   — Legacy fallback
 """
+
+# pylint: disable=duplicate-code
 
 import argparse
 from pathlib import Path
@@ -50,7 +56,7 @@ Rules:
 
 # =====================================================================
 # SECTION: Difficulty Ladder
-# Lesson 09 — Five levels of adversarial data generation.
+# Lesson 07 — Five levels of adversarial data generation.
 # Level 1 is mild (currency symbols). Level 5 is nightmare
 # (BOM chars, embedded newlines, scientific notation).
 # The auto-curriculum ratchets up difficulty as the genome improves.
@@ -86,11 +92,12 @@ DIFFICULTY_LEVELS: dict[int, str] = {
 
 # =====================================================================
 # SECTION: Adversarial Generation
-# Lesson 09 — The challenger asks the LLM to generate messy data
+# Lesson 07 — The challenger asks the LLM to generate messy data
 # at the specified difficulty level. Higher temperature (0.8) gives
 # more diverse outputs. The code strips markdown fences in case the
 # LLM wraps the output.
 # =====================================================================
+
 
 def generate_messy_csv(
     client: Any,
@@ -119,10 +126,10 @@ def generate_messy_csv(
 
 # =====================================================================
 # SECTION: Batch Generation CLI
-# Lesson 09 — Generate a batch of adversarial files and save them
-# directly to the input/ folder. Then re-run the loop to see if
-# the genome can handle the new challenges.
+# Generate a batch of adversarial files and save them directly to input/ so the
+# next loop run faces targeted pressure instead of repeating easy fixtures.
 # =====================================================================
+
 
 def main() -> None:
     """Generate adversarial CSV files and save to input/."""
@@ -130,15 +137,21 @@ def main() -> None:
         description="Challenger — Adversarial CSV generator"
     )
     parser.add_argument(
-        "--levels", type=int, nargs="+",
+        "--levels",
+        type=int,
+        nargs="+",
         help="Generate one adversarial CSV for each listed difficulty level",
     )
     parser.add_argument(
-        "--difficulty", type=int, default=2,
+        "--difficulty",
+        type=int,
+        default=2,
         help="Difficulty 1-5 (default: 2)",
     )
     parser.add_argument(
-        "--count", type=int, default=2,
+        "--count",
+        type=int,
+        default=2,
         help="Number of files to generate (default: 2)",
     )
     args = parser.parse_args()
@@ -174,7 +187,7 @@ def main() -> None:
             path.write_text(csv_content, encoding="utf-8")
             print(f"  Created: {path.name}")
 
-    print("\nDone. Run `python -m cleanloop.loop` to test the genome against new data.")
+    print("\nDone. Run `python util.py loop` to test the genome against new data.")
 
 
 if __name__ == "__main__":

@@ -4,14 +4,17 @@ Generates multiple candidate code fixes, evaluates each against the
 assertion suite, and selects the best one. This is the "System 2"
 upgrade to the standard single-shot proposal in loop.py.
 
-Lesson references:
-  - Lesson 10: Lines 30-80   (propose function — parallel candidate generation)
-  - Lesson 10: Lines 83-130  (evaluate_candidate — isolated eval per candidate)
-  - Lesson 10: Lines 133-175 (standalone reranking demo)
+Course alignment:
+    - Lesson 08: test-time search and reranking
 
 Usage:
-    python -m cleanloop.reranker
-    python -m cleanloop.reranker --candidates 5
+    Preferred from cleanloop/:
+        python util.py loop --rerank
+        python util.py loop --rerank --candidates 5
+
+    Direct module alternative:
+        python -m cleanloop.reranker
+        python -m cleanloop.reranker --candidates 5
 
 Environment variables (from .env):
     LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
@@ -43,7 +46,7 @@ INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 
 # =====================================================================
 # SECTION: Best-of-N Candidate Proposal
-# Lesson 10 — Generate N candidate fixes with increasing temperature.
+# Lesson 08 — Generate N candidate fixes with increasing temperature.
 # Low temperature (0.3) gives conservative fixes. High temperature
 # (0.9) gives creative but risky rewrites. The diversity helps us
 # explore the solution space more broadly.
@@ -51,6 +54,7 @@ INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 # This function is called by loop.py when --use-reranker is set.
 # It replaces the standard single-shot _propose_fix.
 # =====================================================================
+
 
 def propose(
     client: Any,
@@ -93,11 +97,12 @@ def propose(
 
 # =====================================================================
 # SECTION: Isolated Candidate Evaluation
-# Lesson 10 — Each candidate is evaluated in a temp directory so
+# Lesson 08 — Each candidate is evaluated in a temp directory so
 # it can't corrupt the real genome. We dynamically load the candidate
 # module, run it against the real input data, and evaluate with the
 # real referee. This is the "judge" in generate-then-judge.
 # =====================================================================
+
 
 def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
     """Evaluate a candidate genome in an isolated temp directory."""
@@ -113,7 +118,8 @@ def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
         # Load and run the candidate in isolation
         try:
             spec = importlib.util.spec_from_file_location(
-                "candidate_genome", genome_file,
+                "candidate_genome",
+                genome_file,
             )
             if spec is None or spec.loader is None:
                 return 0, 8
@@ -127,6 +133,7 @@ def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
         sys.path.insert(0, str(PROJECT_ROOT / "cleanloop"))
         try:
             from cleanloop import prepare  # pylint: disable=import-outside-toplevel
+
             results = prepare.evaluate(output_file)
             return results["score"], results["total"]
         finally:
@@ -158,16 +165,21 @@ def _extract_hypothesis(text: str) -> str:
 
 # =====================================================================
 # SECTION: Standalone Demo
-# Lesson 10 — Run reranking independently to see candidates scored.
+# Run reranking independently so you can inspect baseline failures,
+# candidate generation, and the selected survivor without running the
+# full mutation loop.
 # =====================================================================
 
+
 def main() -> None:
-    """Run Best-of-N reranking as a standalone demo."""
+    """Run Best-of-N reranking as a standalone demo."""  # pylint: disable=too-many-locals
     parser = argparse.ArgumentParser(
         description="Reranker — Best-of-N candidate selection"
     )
     parser.add_argument(
-        "--candidates", type=int, default=3,
+        "--candidates",
+        type=int,
+        default=3,
         help="Number of candidates (default: 3)",
     )
     args = parser.parse_args()
@@ -184,18 +196,22 @@ def main() -> None:
 
     # Get current failures
     from cleanloop import prepare, clean_data  # pylint: disable=import-outside-toplevel
+
     importlib.reload(clean_data)
-    OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    output_dir = PROJECT_ROOT / "cleanloop" / ".output"
+    output_dir.mkdir(exist_ok=True)
     config = cleanloop_datasets.get_dataset_config()
-    output = OUTPUT_DIR / config.output_filename
+    output = output_dir / config.output_filename
     clean_data.clean(INPUT_DIR, output)
     results = prepare.evaluate(output)
 
     print(f"Baseline: {results['score']}/{results['total']}")
     code, hyp, diagnostics = propose(
-        client, model, genome_code,
-        results["failed"], args.candidates,
+        client,
+        model,
+        genome_code,
+        results["failed"],
+        args.candidates,
     )
 
     if code:

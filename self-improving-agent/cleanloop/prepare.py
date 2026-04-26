@@ -3,19 +3,25 @@
 Evaluates the genome's output against binary assertions.
 This file is LOCKED — the agent must never modify it.
 
-Lesson references:
-  - Lesson 03: Lines 25-70   (assertion functions — the arena pattern)
-  - Lesson 06: Lines 72-110  (evaluate entrypoint — called by loop.py)
-  - Lesson 08: Lines 112-140 (result formatting — eval-driven development)
+Course alignment:
+    - Arena contract: deterministic checks that define correctness
+    - Orchestrator loop: the evaluation hook used after every mutation
+    - Observability: stable metrics consumed by the dashboard and history log
 
 Usage:
-    python -m cleanloop.prepare                  # standalone eval
-    python -m cleanloop.prepare cleanloop/.output/finance_master.csv
+    Preferred from cleanloop/:
+        python util.py evaluate                  # standalone eval
+        python util.py evaluate cleanloop/.output/finance_master.csv
+
+    Direct module alternative:
+        python -m cleanloop.prepare
+        python -m cleanloop.prepare cleanloop/.output/finance_master.csv
 """
 
 import sys
 from collections import Counter
 from pathlib import Path
+from typing import Callable, TypedDict
 
 import pandas as pd
 
@@ -29,6 +35,33 @@ DEFAULT_DATASET = cleanloop_datasets.get_dataset_config()
 OUTPUT_PATH = cleanloop_datasets.get_output_path(OUTPUT_DIR)
 
 
+class EvaluationMetrics(TypedDict):
+    """Row-level quality metrics that stay stable across loop rounds."""
+
+    reference_rows: int
+    output_rows: int
+    matched_rows: int
+    missing_rows: int
+    unexpected_rows: int
+    cleanliness_score: float
+    output_precision: float
+
+
+class EvaluationResults(TypedDict):
+    """Structured referee result used by the loop, dashboard, and tests."""
+
+    passed: list[str]
+    failed: list[str]
+    metrics: EvaluationMetrics
+    score: int
+    total: int
+
+
+CheckResult = tuple[bool, str]
+DataFrameCheck = Callable[[pd.DataFrame], CheckResult]
+CheckEntry = tuple[str, DataFrameCheck, pd.DataFrame]
+
+
 # =====================================================================
 # SECTION: Binary Assertions
 # Lesson 03 — Each assertion is a pure function: data in, bool out.
@@ -37,6 +70,7 @@ OUTPUT_PATH = cleanloop_datasets.get_output_path(OUTPUT_DIR)
 # ungameable. A soft metric like "data quality score" would let the
 # agent optimize for the metric instead of actual correctness.
 # =====================================================================
+
 
 def assert_has_required_columns(
     df: pd.DataFrame,
@@ -69,7 +103,7 @@ def assert_datetime_column(df: pd.DataFrame, column: str) -> tuple[bool, str]:
     try:
         pd.to_datetime(df[column], format="mixed", dayfirst=True)
         return True, f"all {column} values parseable"
-    except Exception as exc:
+    except (TypeError, ValueError) as exc:
         return False, f"parse error: {exc}"
 
 
@@ -83,7 +117,7 @@ def assert_no_nan(df: pd.DataFrame, col: str) -> tuple[bool, str]:
     return False, f"{nan_count} NaN values in {col}"
 
 
-def assert_matches_reference(metrics: dict[str, float | int]) -> tuple[bool, str]:
+def assert_matches_reference(metrics: EvaluationMetrics) -> tuple[bool, str]:
     """Check that the output exactly matches the canonical reference rows."""
     missing_rows = int(metrics.get("missing_rows", 0))
     unexpected_rows = int(metrics.get("unexpected_rows", 0))
@@ -122,7 +156,7 @@ def _build_reference_metrics(
     df: pd.DataFrame,
     reference_df: pd.DataFrame,
     required_columns: tuple[str, ...],
-) -> dict[str, float | int]:
+) -> EvaluationMetrics:
     """Compute row-level match metrics against the canonical reference output."""
     output_counter = _row_counter(df, required_columns)
     reference_counter = _row_counter(reference_df, required_columns)
@@ -145,10 +179,10 @@ def _build_reference_metrics(
     }
 
 
-def _build_checks(df: pd.DataFrame, metrics: dict[str, float | int]):
+def _build_checks(df: pd.DataFrame, metrics: EvaluationMetrics) -> list[CheckEntry]:
     """Build the finance-only assertion checks for one output DataFrame."""
     config = cleanloop_datasets.get_dataset_config()
-    checks = [
+    checks: list[CheckEntry] = [
         (
             "has_required_columns",
             lambda d: assert_has_required_columns(d, config.required_columns),
@@ -177,41 +211,66 @@ def _build_checks(df: pd.DataFrame, metrics: dict[str, float | int]):
 
 # =====================================================================
 # SECTION: Evaluation Entrypoint
-# Lesson 06 — loop.py calls this function every iteration.
-# It reads the genome's output CSV and runs every assertion.
-# Returns a structured result dict that the loop uses for:
+# The orchestrator calls this after every genome run.
+# It reads the current output CSV, applies the fixed judge, and returns a
+# stable result shape that the loop can log, diff, and compare across rounds.
+# The returned structure matters because three other surfaces depend on it:
 #   1. Deciding commit vs. revert
 #   2. Building the next LLM prompt with failure details
 #   3. Logging to dataset-specific history files for the dashboard
 # =====================================================================
 
-def evaluate(master_csv: Path) -> dict:
+
+def evaluate(master_csv: Path) -> EvaluationResults:
     """Run all binary assertions against the output CSV.
 
     Returns dict with 'passed' and 'failed' lists, plus 'score'.
     """
-    results: dict[str, object] = {"passed": [], "failed": [], "metrics": {}}
+    empty_metrics: EvaluationMetrics = {
+        "reference_rows": 0,
+        "output_rows": 0,
+        "matched_rows": 0,
+        "missing_rows": 0,
+        "unexpected_rows": 0,
+        "cleanliness_score": 0.0,
+        "output_precision": 0.0,
+    }
+    results: EvaluationResults = {
+        "passed": [],
+        "failed": [],
+        "metrics": empty_metrics,
+        "score": 0,
+        "total": 0,
+    }
 
-    # Gate check: can we even read the file?
+    # Gate 1: if the output CSV is unreadable, the rest of the judge does not matter.
     try:
         df = pd.read_csv(master_csv)
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         results["failed"].append(f"can_read_output: {exc}")
-        return {**results, "score": 0, "total": 1}
+        results["score"] = 0
+        results["total"] = 1
+        return results
 
     results["passed"].append("can_read_output")
     _get_dataset_for_output(master_csv)
 
+    # Gate 2: the fixed reference must load before row-level metrics are meaningful.
     try:
         reference_df = _load_reference_df()
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         results["failed"].append(f"can_load_reference: {exc}")
-        return {**results, "score": len(results["passed"]), "total": len(results["passed"]) + len(results["failed"])}
+        results["score"] = len(results["passed"])
+        results["total"] = len(results["passed"]) + len(results["failed"])
+        return results
 
-    metrics = _build_reference_metrics(df, reference_df, DEFAULT_DATASET.required_columns)
+    metrics = _build_reference_metrics(
+        df, reference_df, DEFAULT_DATASET.required_columns
+    )
     results["metrics"] = metrics
 
-    # Run each assertion
+    # Run the type, null, and row-match assertions on one stable snapshot so
+    # every round compares against identical judge semantics.
     checks = _build_checks(df, metrics)
 
     for name, fn, data in checks:
@@ -229,12 +288,13 @@ def evaluate(master_csv: Path) -> dict:
 
 # =====================================================================
 # SECTION: Result Formatting
-# Lesson 08 — Eval-driven development: how to read and interpret
-# assertion results. This output format is designed for both
-# human reading (terminal) and machine consumption (JSON).
+# This output is intentionally dual-purpose: readable enough for a learner in
+# the terminal, but still simple enough that the loop and dashboard can reuse
+# the same result object without a second formatting pass.
 # =====================================================================
 
-def print_results(results: dict) -> None:
+
+def print_results(results: EvaluationResults) -> None:
     """Print evaluation results in a human-readable format."""
     score = results.get("score", 0)
     total = results.get("total", 0)
@@ -269,6 +329,7 @@ if __name__ == "__main__":
         OUTPUT_DIR.mkdir(exist_ok=True)
         sys.path.insert(0, str(Path(__file__).parent))
         from cleanloop import clean_data  # pylint: disable=import-outside-toplevel
+
         clean_data.clean(INPUT_DIR, OUTPUT_PATH)
         print(f"Ran genome. Output: {OUTPUT_PATH}")
 

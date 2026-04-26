@@ -129,7 +129,9 @@ class InteractiveReviewLoopTests(unittest.TestCase):
         }
         refine_once = mock.Mock(return_value=second_round)
 
-        with mock.patch("builtins.input", side_effect=["n", "Make the next step clearer.", "y"]):
+        with mock.patch(
+            "builtins.input", side_effect=["n", "Make the next step clearer.", "y"]
+        ):
             stream = io.StringIO()
             with redirect_stdout(stream):
                 history = util._interactive_review_loop(
@@ -155,6 +157,35 @@ class InteractiveReviewLoopTests(unittest.TestCase):
 
 class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
     """Verify the CleanLoop example owns its AutoGen runtime boundary."""
+
+    def test_cleanloop_local_cli_accepts_verify_command(self) -> None:
+        """Expose a CleanLoop-local verify command from cleanloop/util.py."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        args = cleanloop_local_util.build_parser().parse_args(["verify"])
+
+        self.assertEqual(args.command, "verify")
+
+    def test_cleanloop_local_cli_bootstraps_to_parent_venv(self) -> None:
+        """Reuse the shared example venv when launched from the cleanloop folder."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            venv_dir = temp_root / ".venv"
+            scripts_dir = venv_dir / "Scripts"
+            scripts_dir.mkdir(parents=True)
+            python_path = scripts_dir / "python.exe"
+            python_path.write_text("", encoding="utf-8")
+
+            with mock.patch.object(cleanloop_local_util, "VENV_DIR", venv_dir):
+                with mock.patch("platform.system", return_value="Windows"):
+                    should_bootstrap = cleanloop_local_util._should_bootstrap_to_venv(
+                        ["util.py", "verify"],
+                        current_python=Path("C:/Python311/python.exe"),
+                    )
+
+        self.assertTrue(should_bootstrap)
 
     def test_propose_fix_delegates_to_autogen_runtime(self) -> None:
         """Keep the loop contract stable while routing proposal generation through AutoGen."""
@@ -226,7 +257,9 @@ class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
             )
 
             with mock.patch.object(cleanloop_local_util, "ENV_FILE", env_path):
-                with mock.patch.object(cleanloop_local_util, "FALLBACK_ENV_FILE", fallback_env_path):
+                with mock.patch.object(
+                    cleanloop_local_util, "FALLBACK_ENV_FILE", fallback_env_path
+                ):
                     with mock.patch.dict(os.environ, {}, clear=True):
                         cleanloop_local_util.load_env()
                         config = cleanloop_local_util.resolve_llm_env()
@@ -241,8 +274,12 @@ class ExampleDashboardRoutingTests(unittest.TestCase):
 
     def test_parser_accepts_prompt_evolution_and_skill_mastery_dashboards(self) -> None:
         """Route the shared dashboard command to the example-specific dashboard handlers."""
-        prompt_args = util.build_parser().parse_args(["-e", "prompt_evolution", "dashboard"])
-        mastery_args = util.build_parser().parse_args(["-e", "skill_mastery", "dashboard"])
+        prompt_args = util.build_parser().parse_args(
+            ["-e", "prompt_evolution", "dashboard"]
+        )
+        mastery_args = util.build_parser().parse_args(
+            ["-e", "skill_mastery", "dashboard"]
+        )
 
         self.assertEqual(prompt_args.example, "prompt_evolution")
         self.assertEqual(prompt_args.command, "dashboard")
@@ -313,7 +350,9 @@ class CapacityRetryTests(unittest.TestCase):
                 self.status_code = 429
 
         response = object()
-        create = mock.Mock(side_effect=[CapacityError("maximum concurrent capacity"), response])
+        create = mock.Mock(
+            side_effect=[CapacityError("maximum concurrent capacity"), response]
+        )
         completions = mock.Mock(create=create)
         client = mock.Mock()
         client.chat.completions = completions
@@ -342,7 +381,9 @@ class CapacityRetryTests(unittest.TestCase):
                 super().__init__(message)
                 self.status_code = 429
 
-        message = util._format_llm_exception(CapacityError("Server at maximum concurrent capacity (8). Try again later."))
+        message = util._format_llm_exception(
+            CapacityError("Server at maximum concurrent capacity (8). Try again later.")
+        )
 
         self.assertIn("Endpoint busy (429 capacity)", message)
         self.assertIn("Server at maximum concurrent capacity", message)
@@ -413,8 +454,12 @@ class LoopResilienceTests(unittest.TestCase):
                     "_build_llm_client",
                     return_value=object(),
                 ):
-                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                    with mock.patch.object(
+                        cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"
+                    ):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "_run_and_evaluate",
@@ -425,9 +470,15 @@ class LoopResilienceTests(unittest.TestCase):
                                     "_propose_fix",
                                     return_value=(None, "hold steady", {}),
                                 ):
-                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
-                                            history = cleanloop_loop.run_loop(max_iterations=1)
+                                    with mock.patch.object(
+                                        cleanloop_loop, "_git_commit"
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_revert"
+                                        ):
+                                            history = cleanloop_loop.run_loop(
+                                                max_iterations=1
+                                            )
 
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0]["action"], "skip")
@@ -537,7 +588,12 @@ class LoopResilienceTests(unittest.TestCase):
 
             @staticmethod
             def evaluate(_output_path):
-                return {"passed": ["can_read_output"], "failed": [], "score": 1, "total": 1}
+                return {
+                    "passed": ["can_read_output"],
+                    "failed": [],
+                    "score": 1,
+                    "total": 1,
+                }
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             results = cleanloop_loop._run_and_evaluate(
@@ -594,7 +650,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
             args = mock.Mock()
             with mock.patch.object(util, "_ensure_in_venv"):
                 with mock.patch.object(util, "_output_dir", return_value=output_dir):
-                    with mock.patch.object(util, "_get_bin_path", return_value=Path("streamlit.exe")):
+                    with mock.patch.object(
+                        util, "_get_bin_path", return_value=Path("streamlit.exe")
+                    ):
                         with mock.patch.object(util.os, "execve") as execve_mock:
                             util.cmd_dashboard(args)
 
@@ -646,7 +704,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return None\n",
+                encoding="utf-8",
+            )
 
             with mock.patch.dict(
                 os.environ,
@@ -657,9 +718,15 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 },
                 clear=False,
             ):
-                with mock.patch.object(cleanloop_loop.util, "_build_llm_client", return_value=object()):
-                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(
+                        cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"
+                    ):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "_run_and_evaluate",
@@ -680,14 +747,22 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                         },
                                     ),
                                 ):
-                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                    with mock.patch.object(
+                                        cleanloop_loop, "_git_commit"
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_revert"
+                                        ):
                                             with mock.patch.object(
                                                 cleanloop_loop,
                                                 "_artifact_manifest",
-                                                return_value={"output_csv": "cleanloop/.output/finance_master.csv"},
+                                                return_value={
+                                                    "output_csv": "cleanloop/.output/finance_master.csv"
+                                                },
                                             ):
-                                                history = cleanloop_loop.run_loop(max_iterations=1)
+                                                history = cleanloop_loop.run_loop(
+                                                    max_iterations=1
+                                                )
 
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0]["before_metrics"]["missing_rows"], 5)
@@ -750,7 +825,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                 "label": "CleanLoop proposal",
                                 "code_found": False,
                                 "response_chars": 0,
-                                "usage": {"completion_tokens": 2200, "total_tokens": 2600},
+                                "usage": {
+                                    "completion_tokens": 2200,
+                                    "total_tokens": 2600,
+                                },
                             }
                         ]
                     },
@@ -761,7 +839,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["Round"], 1)
-        self.assertEqual(rows[0]["Diagnosis"], "token budget exhausted before code output")
+        self.assertEqual(
+            rows[0]["Diagnosis"], "token budget exhausted before code output"
+        )
 
     def test_dashboard_builds_mutable_genome_diff_rows(self) -> None:
         """Render a unified diff for the mutable genome on each mutation round."""
@@ -844,7 +924,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return None\n",
+                encoding="utf-8",
+            )
             output_dir = temp_root / ".output"
 
             with mock.patch.dict(
@@ -856,9 +939,13 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 },
                 clear=False,
             ):
-                with mock.patch.object(cleanloop_loop.util, "_build_llm_client", return_value=object()):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
                     with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", output_dir):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "_run_and_evaluate",
@@ -869,14 +956,22 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                     "_propose_fix",
                                     return_value=(None, "hold steady", llm_diagnostics),
                                 ):
-                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
-                                            history = cleanloop_loop.run_loop(max_iterations=1)
+                                    with mock.patch.object(
+                                        cleanloop_loop, "_git_commit"
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_revert"
+                                        ):
+                                            history = cleanloop_loop.run_loop(
+                                                max_iterations=1
+                                            )
 
             strategy_path = output_dir / "finance_strategy.json"
             snapshot = json.loads(strategy_path.read_text(encoding="utf-8"))
 
-        self.assertEqual(history[0]["metacognition"]["focus_area"], "value_normalization")
+        self.assertEqual(
+            history[0]["metacognition"]["focus_area"], "value_normalization"
+        )
         self.assertEqual(snapshot["focus_area"], "value_normalization")
         self.assertIn("recent_failures", snapshot)
 
@@ -901,7 +996,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return None\n",
+                encoding="utf-8",
+            )
 
             with mock.patch.dict(
                 os.environ,
@@ -912,9 +1010,15 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 },
                 clear=False,
             ):
-                with mock.patch.object(cleanloop_loop.util, "_build_llm_client", return_value=object()):
-                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(
+                        cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"
+                    ):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "_run_and_evaluate",
@@ -923,16 +1027,26 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                 with mock.patch.object(
                                     cleanloop_loop,
                                     "_propose_fix",
-                                    side_effect=RuntimeError("Endpoint busy (429 capacity): demo saturation"),
+                                    side_effect=RuntimeError(
+                                        "Endpoint busy (429 capacity): demo saturation"
+                                    ),
                                 ):
-                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                    with mock.patch.object(
+                                        cleanloop_loop, "_git_commit"
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_revert"
+                                        ):
                                             with mock.patch.object(
                                                 cleanloop_loop,
                                                 "_artifact_manifest",
-                                                return_value={"output_csv": "cleanloop/.output/finance_master.csv"},
+                                                return_value={
+                                                    "output_csv": "cleanloop/.output/finance_master.csv"
+                                                },
                                             ):
-                                                history = cleanloop_loop.run_loop(max_iterations=1)
+                                                history = cleanloop_loop.run_loop(
+                                                    max_iterations=1
+                                                )
 
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0]["action"], "skip")
@@ -975,7 +1089,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            baseline_genome_text = "def clean(input_dir, output_path):\n    return None\n"
+            baseline_genome_text = (
+                "def clean(input_dir, output_path):\n    return None\n"
+            )
             genome_path.write_text(baseline_genome_text, encoding="utf-8")
             starter_path = temp_root / "clean_data_starter.py"
             starter_path.write_text(baseline_genome_text, encoding="utf-8")
@@ -991,7 +1107,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
                     output_path.parent.mkdir(parents=True, exist_ok=True)
                     output_path.write_text(baseline_output_text, encoding="utf-8")
                     return baseline
-                output_path.write_text("date,product,price,quantity\n", encoding="utf-8")
+                output_path.write_text(
+                    "date,product,price,quantity\n", encoding="utf-8"
+                )
                 return candidate
 
             with mock.patch.dict(
@@ -1003,9 +1121,13 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 },
                 clear=False,
             ):
-                with mock.patch.object(cleanloop_loop.util, "_build_llm_client", return_value=object()):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
                     with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", output_dir):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "STARTER_GENOME_PATH",
@@ -1036,8 +1158,12 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                             "reload",
                                             return_value=None,
                                         ):
-                                            with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                                with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                            with mock.patch.object(
+                                                cleanloop_loop, "_git_commit"
+                                            ):
+                                                with mock.patch.object(
+                                                    cleanloop_loop, "_git_revert"
+                                                ):
                                                     with mock.patch.object(
                                                         cleanloop_loop,
                                                         "_artifact_manifest",
@@ -1045,7 +1171,11 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                                             "output_csv": "cleanloop/.output/finance_master.csv"
                                                         },
                                                     ):
-                                                        history = cleanloop_loop.run_loop(max_iterations=1)
+                                                        history = (
+                                                            cleanloop_loop.run_loop(
+                                                                max_iterations=1
+                                                            )
+                                                        )
 
             restored_output = baseline_output_path.read_text(encoding="utf-8")
             restored_genome = genome_path.read_text(encoding="utf-8")
@@ -1085,7 +1215,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            baseline_genome_text = "def clean(input_dir, output_path):\n    return None\n"
+            baseline_genome_text = (
+                "def clean(input_dir, output_path):\n    return None\n"
+            )
             genome_path.write_text(baseline_genome_text, encoding="utf-8")
             starter_path = temp_root / "clean_data_starter.py"
             starter_path.write_text(baseline_genome_text, encoding="utf-8")
@@ -1095,7 +1227,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 "date,entity,value,category\n"
                 "2024-01-15,Acme Manufacturing,15000.0,paid\n"
             )
-            broken_code = "def clean(input_dir, output_path):\n    return 'unterminated\n"
+            broken_code = (
+                "def clean(input_dir, output_path):\n    return 'unterminated\n"
+            )
 
             cleanloop_package = import_module("cleanloop")
             original_clean_data = getattr(cleanloop_package, "clean_data", None)
@@ -1106,7 +1240,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
             )
             self.assertIsNotNone(clean_data_spec)
             self.assertIsNotNone(clean_data_spec.loader)
-            temp_clean_data = cleanloop_loop.importlib.util.module_from_spec(clean_data_spec)
+            temp_clean_data = cleanloop_loop.importlib.util.module_from_spec(
+                clean_data_spec
+            )
             clean_data_spec.loader.exec_module(temp_clean_data)
             sys.modules["cleanloop.clean_data"] = temp_clean_data
             setattr(cleanloop_package, "clean_data", temp_clean_data)
@@ -1131,8 +1267,12 @@ class CleanLoopDatasetTests(unittest.TestCase):
                         "_build_llm_client",
                         return_value=object(),
                     ):
-                        with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", output_dir):
-                            with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                        with mock.patch.object(
+                            cleanloop_loop, "OUTPUT_DIR", output_dir
+                        ):
+                            with mock.patch.object(
+                                cleanloop_loop, "GENOME_PATH", genome_path
+                            ):
                                 with mock.patch.object(
                                     cleanloop_loop,
                                     "STARTER_GENOME_PATH",
@@ -1152,8 +1292,12 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                                 llm_diagnostics,
                                             ),
                                         ):
-                                            with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                                with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                            with mock.patch.object(
+                                                cleanloop_loop, "_git_commit"
+                                            ):
+                                                with mock.patch.object(
+                                                    cleanloop_loop, "_git_revert"
+                                                ):
                                                     with mock.patch.object(
                                                         cleanloop_loop,
                                                         "_artifact_manifest",
@@ -1161,8 +1305,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                                             "output_csv": "cleanloop/.output/finance_master.csv"
                                                         },
                                                     ):
-                                                        history = cleanloop_loop.run_loop(
-                                                            max_iterations=1
+                                                        history = (
+                                                            cleanloop_loop.run_loop(
+                                                                max_iterations=1
+                                                            )
                                                         )
             finally:
                 if original_clean_data_module is None:
@@ -1249,7 +1395,10 @@ class CleanLoopDatasetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             temp_root = Path(tmp_dir)
             genome_path = temp_root / "clean_data.py"
-            genome_path.write_text("def clean(input_dir, output_path):\n    return None\n", encoding="utf-8")
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return None\n",
+                encoding="utf-8",
+            )
             stream = io.StringIO()
 
             with mock.patch.dict(
@@ -1261,9 +1410,15 @@ class CleanLoopDatasetTests(unittest.TestCase):
                 },
                 clear=False,
             ):
-                with mock.patch.object(cleanloop_loop.util, "_build_llm_client", return_value=object()):
-                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"):
-                        with mock.patch.object(cleanloop_loop, "GENOME_PATH", genome_path):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(
+                        cleanloop_loop, "OUTPUT_DIR", temp_root / ".output"
+                    ):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
                             with mock.patch.object(
                                 cleanloop_loop,
                                 "_run_and_evaluate",
@@ -1272,26 +1427,44 @@ class CleanLoopDatasetTests(unittest.TestCase):
                                 with mock.patch.object(
                                     cleanloop_loop,
                                     "_propose_fix",
-                                    return_value=(None, "no hypothesis", llm_diagnostics),
+                                    return_value=(
+                                        None,
+                                        "no hypothesis",
+                                        llm_diagnostics,
+                                    ),
                                 ):
-                                    with mock.patch.object(cleanloop_loop, "_git_commit"):
-                                        with mock.patch.object(cleanloop_loop, "_git_revert"):
+                                    with mock.patch.object(
+                                        cleanloop_loop, "_git_commit"
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_revert"
+                                        ):
                                             with mock.patch.object(
                                                 cleanloop_loop,
                                                 "_artifact_manifest",
-                                                return_value={"output_csv": "cleanloop/.output/finance_master.csv"},
+                                                return_value={
+                                                    "output_csv": "cleanloop/.output/finance_master.csv"
+                                                },
                                             ):
                                                 with redirect_stdout(stream):
-                                                    cleanloop_loop.run_loop(max_iterations=1)
+                                                    cleanloop_loop.run_loop(
+                                                        max_iterations=1
+                                                    )
 
         output = stream.getvalue()
         self.assertIn("[REQUESTING_LLM_PROPOSAL]", output)
         self.assertIn("[LLM_ATTEMPT] Attempt 1/2: CleanLoop proposal", output)
-        self.assertIn("[ATTEMPT_DIAGNOSIS] token budget exhausted before code output", output)
+        self.assertIn(
+            "[ATTEMPT_DIAGNOSIS] token budget exhausted before code output", output
+        )
         self.assertIn("[LLM_ATTEMPT] Attempt 2/2: CleanLoop compact retry", output)
-        self.assertIn("[NO_CODE_RETURNED] No candidate code returned after 2 attempts", output)
+        self.assertIn(
+            "[NO_CODE_RETURNED] No candidate code returned after 2 attempts", output
+        )
 
-    def test_prepare_fresh_run_restores_starter_genome_and_clears_finance_artifacts(self) -> None:
+    def test_prepare_fresh_run_restores_starter_genome_and_clears_finance_artifacts(
+        self,
+    ) -> None:
         """Reset each loop run to the starter genome and remove stale finance artifacts."""
         config = cleanloop_datasets.get_dataset_config()
 
@@ -1302,8 +1475,14 @@ class CleanLoopDatasetTests(unittest.TestCase):
             output_path = temp_root / "finance_master.csv"
             history_path = temp_root / "finance_eval_history.json"
 
-            starter_path.write_text("def clean(input_dir, output_path):\n    return 'starter'\n", encoding="utf-8")
-            genome_path.write_text("def clean(input_dir, output_path):\n    return 'mutated'\n", encoding="utf-8")
+            starter_path.write_text(
+                "def clean(input_dir, output_path):\n    return 'starter'\n",
+                encoding="utf-8",
+            )
+            genome_path.write_text(
+                "def clean(input_dir, output_path):\n    return 'mutated'\n",
+                encoding="utf-8",
+            )
             output_path.write_text("stale-output", encoding="utf-8")
             history_path.write_text("stale-history", encoding="utf-8")
 
@@ -1418,7 +1597,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
         """The CLI should route CleanLoop, Prompt Evolution, and Skill Mastery."""
         parser = util.build_parser()
 
-        example_action = next(action for action in parser._actions if action.dest == "example")
+        example_action = next(
+            action for action in parser._actions if action.dest == "example"
+        )
 
         self.assertEqual(
             list(example_action.choices),
@@ -1488,7 +1669,9 @@ class CleanLoopDatasetTests(unittest.TestCase):
         """Treat every CleanLoop output as the finance arena after the simplification."""
         output_path = Path("finance_master.csv")
 
-        self.assertEqual(cleanloop_datasets.detect_dataset_from_output_path(output_path), "finance")
+        self.assertEqual(
+            cleanloop_datasets.detect_dataset_from_output_path(output_path), "finance"
+        )
 
 
 if __name__ == "__main__":

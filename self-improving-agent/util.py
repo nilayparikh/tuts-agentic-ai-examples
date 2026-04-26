@@ -91,18 +91,21 @@ def _is_supported_python(version_info) -> bool:
 # Logging helpers — coloured, timestamped, learner-friendly
 # =====================================================================
 
+
 class _Colors:
     """ANSI colour codes (disabled when NO_COLOR is set or not a TTY)."""
+
     _enabled = sys.stdout.isatty() and "NO_COLOR" not in os.environ
-    RESET  = "\033[0m"  if _enabled else ""
-    BOLD   = "\033[1m"  if _enabled else ""
-    GREEN  = "\033[92m" if _enabled else ""
+    RESET = "\033[0m" if _enabled else ""
+    BOLD = "\033[1m" if _enabled else ""
+    GREEN = "\033[92m" if _enabled else ""
     YELLOW = "\033[93m" if _enabled else ""
-    RED    = "\033[91m" if _enabled else ""
-    CYAN   = "\033[96m" if _enabled else ""
-    DIM    = "\033[2m"  if _enabled else ""
-    BLUE   = "\033[94m" if _enabled else ""
+    RED = "\033[91m" if _enabled else ""
+    CYAN = "\033[96m" if _enabled else ""
+    DIM = "\033[2m" if _enabled else ""
+    BLUE = "\033[94m" if _enabled else ""
     MAGENTA = "\033[95m" if _enabled else ""
+
 
 C = _Colors
 
@@ -160,6 +163,7 @@ def log_cmd(cmd: str) -> None:
 # Command: setup — create .venv and install dependencies
 # =====================================================================
 
+
 def cmd_setup(_args: argparse.Namespace) -> int:
     """Set up virtual environment and install dependencies."""
     log_header("CleanLoop — Environment Setup")
@@ -190,7 +194,8 @@ def cmd_setup(_args: argparse.Namespace) -> int:
         log_cmd(f"python -m venv {VENV_DIR}")
         subprocess.run(
             [sys.executable, "-m", "venv", str(VENV_DIR)],
-            check=True, cwd=str(ROOT),
+            check=True,
+            cwd=str(ROOT),
         )
         log_ok(f"Created .venv at {VENV_DIR}")
 
@@ -212,7 +217,11 @@ def cmd_setup(_args: argparse.Namespace) -> int:
     )
     if result.returncode == 0:
         # Count installed packages
-        lines = [l for l in result.stdout.splitlines() if "Successfully" in l or "already satisfied" in l]
+        lines = [
+            l
+            for l in result.stdout.splitlines()
+            if "Successfully" in l or "already satisfied" in l
+        ]
         log_ok("All dependencies installed")
         for line in lines[:3]:
             log_info(line.strip())
@@ -233,6 +242,7 @@ def cmd_setup(_args: argparse.Namespace) -> int:
             log_warn(".env not found — copying from .env.example")
             log_info("Edit .env with your Azure AI Foundry credentials")
             import shutil
+
             shutil.copy(example, ENV_FILE)
             log_ok("Created .env from .env.example")
         else:
@@ -253,6 +263,7 @@ def cmd_setup(_args: argparse.Namespace) -> int:
 # =====================================================================
 # Command: verify — check environment, credentials, LLM connectivity
 # =====================================================================
+
 
 def cmd_verify(_args: argparse.Namespace) -> int:
     """Verify environment is ready for the loop."""
@@ -277,14 +288,13 @@ def cmd_verify(_args: argparse.Namespace) -> int:
     print()
     if all(results):
         log_header(f"Verification Passed — {passed}/{total}")
-        print(
-            f"\n  Ready for: "
-            f"{C.BOLD}python util.py -e cleanloop loop{C.RESET}\n"
-        )
+        print(f"\n  Ready for: " f"{C.BOLD}python util.py -e cleanloop loop{C.RESET}\n")
         return 0
     else:
         log_header(f"Verification: {passed}/{total} passed")
-        print(f"\n  Fix the failing checks, then re-run: {C.BOLD}python util.py verify{C.RESET}\n")
+        print(
+            f"\n  Fix the failing checks, then re-run: {C.BOLD}python util.py verify{C.RESET}\n"
+        )
         return 1
 
 
@@ -348,8 +358,20 @@ def _check_input_files() -> bool:
     return True
 
 
+def _safe_resolve_llm_env() -> dict[str, str] | None:
+    """Resolve LLM config without aborting the guided verify flow."""
+    try:
+        return _resolve_llm_env()
+    except RuntimeError as exc:
+        log_fail(str(exc))
+        return None
+
+
 def _check_credentials() -> bool:
-    config = _resolve_llm_env()
+    config = _safe_resolve_llm_env()
+    if config is None:
+        return False
+
     endpoint = config["endpoint"]
     api_key = config["api_key"]
     if endpoint and api_key:
@@ -368,7 +390,11 @@ def _check_credentials() -> bool:
 
 
 def _check_llm() -> bool:
-    config = _resolve_llm_env()
+    config = _safe_resolve_llm_env()
+    if config is None:
+        log_warn("Skipped — configure credentials first")
+        return True
+
     endpoint = config["endpoint"]
     api_key = config["api_key"]
     model = config["model"]
@@ -390,7 +416,7 @@ def _check_llm() -> bool:
         )
         elapsed = time.time() - start
         reply = _normalize_probe_reply(response.choices[0].message.content)
-        log_ok(f"LLM replied: \"{reply}\" ({elapsed:.1f}s)")
+        log_ok(f'LLM replied: "{reply}" ({elapsed:.1f}s)')
         return True
     except Exception as exc:  # pylint: disable=broad-exception-caught
         log_fail(_format_llm_exception(exc))
@@ -400,6 +426,7 @@ def _check_llm() -> bool:
 # =====================================================================
 # Command: evaluate — run referee on current output
 # =====================================================================
+
 
 def cmd_evaluate(args: argparse.Namespace) -> int:
     """Run the referee against the genome's output."""
@@ -417,6 +444,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
         log_cmd(f"cleanloop.clean_data.clean(input/, .output/{output_path.name})")
         cl_out.mkdir(parents=True, exist_ok=True)
         from cleanloop import clean_data
+
         clean_data.clean(INPUT_DIR, output_path)
         log_ok(f"Output generated: {output_path}")
     else:
@@ -426,6 +454,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
     # Evaluate
     log_step(2, 2, "Running binary assertions")
     from cleanloop import prepare
+
     results = prepare.evaluate(output_path)
 
     # Detailed results
@@ -453,6 +482,7 @@ def cmd_evaluate(args: argparse.Namespace) -> int:
 # Command: loop — run the self-improving Karpathy Loop
 # =====================================================================
 
+
 def cmd_loop(args: argparse.Namespace) -> int:
     """Run the self-improving loop."""
     config = _activate_cleanloop_dataset(args)
@@ -475,6 +505,7 @@ def cmd_loop(args: argparse.Namespace) -> int:
     print()
 
     from cleanloop.loop import run_loop
+
     history = run_loop(
         max_iterations=max_iter,
         use_reranker=rerank,
@@ -630,7 +661,9 @@ def _interactive_review_loop(
             _mark_selected_history_round(history, current_round)
             break
 
-        updated_round = refine_once(feedback, current_round, int(current_round["round"]) + 1)
+        updated_round = refine_once(
+            feedback, current_round, int(current_round["round"]) + 1
+        )
         history.append(updated_round)
 
     return history
@@ -672,7 +705,9 @@ def cmd_prompt_evolution_loop(args: argparse.Namespace) -> int:
         return 1
 
     log_info(f"Context: {profile.context.label}")
-    log_info(f"Preferences: {', '.join(f'{k}={v}' for k, v in profile.selected_preferences.items())}")
+    log_info(
+        f"Preferences: {', '.join(f'{k}={v}' for k, v in profile.selected_preferences.items())}"
+    )
     log_info(f"Max iterations: {getattr(args, 'max_iterations', 3)}")
 
     loop_module = importlib.import_module("prompt_evolution.loop")
@@ -711,7 +746,9 @@ def cmd_prompt_evolution_loop(args: argparse.Namespace) -> int:
     log_header(
         f"Prompt Evolution Complete — {best['score']}/{best['total']} in {len(history)} rounds"
     )
-    print(f"\n  Best response: {C.BOLD}prompt_evolution/.output/best_response.md{C.RESET}")
+    print(
+        f"\n  Best response: {C.BOLD}prompt_evolution/.output/best_response.md{C.RESET}"
+    )
     print(
         f"  Best instructions: {C.BOLD}prompt_evolution/.output/best_instructions.md"
         f"{C.RESET}\n"
@@ -773,8 +810,12 @@ def cmd_skill_mastery_loop(args: argparse.Namespace) -> int:
     log_header(
         f"Skill Mastery Complete — {best['score']}/{best['total']} in {len(history)} rounds"
     )
-    print(f"\n  Learned habits: {C.BOLD}skill_mastery/.output/learned_habits.json{C.RESET}")
-    print(f"  Selected habits: {C.BOLD}skill_mastery/.output/selected_habits.md{C.RESET}")
+    print(
+        f"\n  Learned habits: {C.BOLD}skill_mastery/.output/learned_habits.json{C.RESET}"
+    )
+    print(
+        f"  Selected habits: {C.BOLD}skill_mastery/.output/selected_habits.md{C.RESET}"
+    )
     print(f"  Best response: {C.BOLD}skill_mastery/.output/best_response.md{C.RESET}\n")
     return 0
 
@@ -782,6 +823,7 @@ def cmd_skill_mastery_loop(args: argparse.Namespace) -> int:
 # =====================================================================
 # Command: dashboard — launch Streamlit monitoring
 # =====================================================================
+
 
 def cmd_dashboard(args: argparse.Namespace) -> int:
     """Launch the Streamlit dashboard."""
@@ -792,9 +834,7 @@ def cmd_dashboard(args: argparse.Namespace) -> int:
     history_file = cleanloop_datasets.get_history_path(_output_dir("cleanloop"))
     if not history_file.exists():
         log_warn(f"No {history_file.name} found — run the loop first")
-        log_info(
-            f"Run: {C.BOLD}python util.py -e cleanloop loop{C.RESET}"
-        )
+        log_info(f"Run: {C.BOLD}python util.py -e cleanloop loop{C.RESET}")
         return 1
 
     dashboard_path = ROOT / "cleanloop" / "dashboard.py"
@@ -880,6 +920,7 @@ def cmd_skill_mastery_dashboard(_args: argparse.Namespace) -> int:
 # Command: challenge — generate adversarial test data
 # =====================================================================
 
+
 def cmd_challenge(args: argparse.Namespace) -> int:
     """Generate adversarial data at specified difficulty levels."""
     levels = getattr(args, "levels", [1, 2, 3])
@@ -891,6 +932,7 @@ def cmd_challenge(args: argparse.Namespace) -> int:
     # Delegate to challenger module
     sys.argv = ["cleanloop.challenger", "--levels"] + [str(l) for l in levels]
     from cleanloop import challenger
+
     challenger.main()
     return 0
 
@@ -898,6 +940,7 @@ def cmd_challenge(args: argparse.Namespace) -> int:
 # =====================================================================
 # Command: sandbox — run genome in isolated subprocess
 # =====================================================================
+
 
 def cmd_sandbox(args: argparse.Namespace) -> int:
     """Run genome in sandboxed subprocess."""
@@ -933,6 +976,7 @@ def cmd_sandbox(args: argparse.Namespace) -> int:
     if result["success"] and output_path.exists():
         log_step(2, 2, "Evaluating sandboxed output")
         from cleanloop import prepare
+
         eval_result = prepare.evaluate(output_path)
         score = eval_result["score"]
         total = eval_result["total"]
@@ -947,12 +991,14 @@ def cmd_sandbox(args: argparse.Namespace) -> int:
 # Command: autonomy — simulate graduated trust
 # =====================================================================
 
+
 def cmd_autonomy(args: argparse.Namespace) -> int:
     """Run the autonomy trust ladder simulation."""
     rounds = getattr(args, "rounds", 10)
     log_header(f"CleanLoop — Autonomy Simulation ({rounds} rounds)")
 
     from cleanloop.autonomy import simulate
+
     simulate(n_rounds=rounds)
     return 0
 
@@ -978,6 +1024,7 @@ def _cmd_reset(example: str) -> int:
     # 1. Remove .output/ directory
     if out_dir.exists():
         import shutil
+
         shutil.rmtree(out_dir)
         log_ok(f"Deleted {out_dir.relative_to(ROOT)}")
     else:
@@ -1036,6 +1083,7 @@ def cmd_reset_skill_mastery(_args: argparse.Namespace) -> int:
 # Command: status — show project overview
 # =====================================================================
 
+
 def cmd_status(_args: argparse.Namespace) -> int:
     """Show project status and file inventory."""
     log_header("Self-Improving Agent — Project Status")
@@ -1047,7 +1095,7 @@ def cmd_status(_args: argparse.Namespace) -> int:
     if INPUT_DIR.exists():
         print(f"    {config.name:<10} {config.label}")
         for f in cleanloop_datasets.get_input_paths(INPUT_DIR):
-            lines = len(f.read_text(encoding='utf-8').strip().splitlines()) - 1
+            lines = len(f.read_text(encoding="utf-8").strip().splitlines()) - 1
             size_kb = f.stat().st_size / 1024
             print(
                 f"      {C.GREEN}●{C.RESET} {f.name:<28} {lines:>4} rows  {size_kb:.1f} KB"
@@ -1060,14 +1108,14 @@ def cmd_status(_args: argparse.Namespace) -> int:
     cleanloop_out = _output_dir("cleanloop")
     master = cleanloop_datasets.get_output_path(cleanloop_out)
     if master.exists():
-        lines = len(master.read_text(encoding='utf-8').strip().splitlines()) - 1
+        lines = len(master.read_text(encoding="utf-8").strip().splitlines()) - 1
         print(f"    {C.GREEN}●{C.RESET} {master.name}  ({lines} rows)")
     else:
         print(f"    {C.DIM}●{C.RESET} No cleanloop output yet")
 
     history = cleanloop_datasets.get_history_path(cleanloop_out)
     if history.exists():
-        data = json.loads(history.read_text(encoding='utf-8'))
+        data = json.loads(history.read_text(encoding="utf-8"))
         last = data[-1] if data else {}
         print(
             f"    {C.GREEN}●{C.RESET} {history.name}  "
@@ -1090,7 +1138,7 @@ def cmd_status(_args: argparse.Namespace) -> int:
     else:
         print(f"    {C.DIM}●{C.RESET} No prompt evolution instructions yet")
     if latest_session.exists():
-        payload = json.loads(latest_session.read_text(encoding='utf-8'))
+        payload = json.loads(latest_session.read_text(encoding="utf-8"))
         print(
             f"    {C.GREEN}●{C.RESET} latest_session.json  "
             f"(best round: {payload.get('best_round', '?')})"
@@ -1117,7 +1165,7 @@ def cmd_status(_args: argparse.Namespace) -> int:
     else:
         print(f"    {C.DIM}●{C.RESET} No Skill Mastery response yet")
     if mastery_session.exists():
-        payload = json.loads(mastery_session.read_text(encoding='utf-8'))
+        payload = json.loads(mastery_session.read_text(encoding="utf-8"))
         print(
             f"    {C.GREEN}●{C.RESET} latest_session.json  "
             f"(best round: {payload.get('best_round', '?')})"
@@ -1144,11 +1192,11 @@ def cmd_status(_args: argparse.Namespace) -> int:
         print(f"    {C.GREEN}●{C.RESET} cleanloop/clean_data.py  ({lines} lines)")
     prompt_readme = _prompt_evolution_root() / "README.md"
     if prompt_readme.exists():
-        lines = len(prompt_readme.read_text(encoding='utf-8').strip().splitlines())
+        lines = len(prompt_readme.read_text(encoding="utf-8").strip().splitlines())
         print(f"    {C.GREEN}●{C.RESET} prompt_evolution/README.md  ({lines} lines)")
     mastery_readme = _skill_mastery_root() / "README.md"
     if mastery_readme.exists():
-        lines = len(mastery_readme.read_text(encoding='utf-8').strip().splitlines())
+        lines = len(mastery_readme.read_text(encoding="utf-8").strip().splitlines())
         print(f"    {C.GREEN}●{C.RESET} skill_mastery/README.md  ({lines} lines)")
     print()
     return 0
@@ -1157,6 +1205,7 @@ def cmd_status(_args: argparse.Namespace) -> int:
 # =====================================================================
 # Utility helpers
 # =====================================================================
+
 
 def _load_env() -> None:
     """Load .env file if it exists."""
@@ -1304,7 +1353,9 @@ def _create_chat_completion_with_backoff(
     for attempt in range(1, max_attempts + 1):
         try:
             return client.chat.completions.create(**kwargs)
-        except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+        except (
+            Exception
+        ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
             last_exc = exc
             if not _is_capacity_error(exc) or attempt >= max_attempts:
                 raise
@@ -1325,7 +1376,10 @@ def _build_llm_client(endpoint: str, api_key: str, api_version: str):
     normalized_endpoint = _normalize_endpoint(endpoint)
     openai_module = importlib.import_module("openai")
 
-    if _is_azure_openai_endpoint(normalized_endpoint) and "/openai/v1" not in normalized_endpoint:
+    if (
+        _is_azure_openai_endpoint(normalized_endpoint)
+        and "/openai/v1" not in normalized_endpoint
+    ):
         azure_openai_client = getattr(openai_module, "AzureOpenAI")
 
         return azure_openai_client(
@@ -1397,7 +1451,9 @@ def _venv_is_ready() -> bool:
     return _get_python_path().exists() and _get_pip_path().exists()
 
 
-def _should_bootstrap_to_venv(argv: list[str], current_python: Path | None = None) -> bool:
+def _should_bootstrap_to_venv(
+    argv: list[str], current_python: Path | None = None
+) -> bool:
     """Return whether the current command should be re-executed inside .venv."""
     if len(argv) < 2:
         return False
@@ -1445,6 +1501,7 @@ def _activation_cmd() -> str:
 # CLI argument parser
 # =====================================================================
 
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the argument parser with ``--example`` routing."""
     parser = argparse.ArgumentParser(
@@ -1477,8 +1534,9 @@ Per-example commands (--example / -e required):
     )
 
     parser.add_argument(
-        "--example", "-e",
-                choices=["cleanloop", "prompt_evolution", "skill_mastery"],
+        "--example",
+        "-e",
+        choices=["cleanloop", "prompt_evolution", "skill_mastery"],
         help="Example project to operate on",
     )
 
@@ -1504,25 +1562,33 @@ Per-example commands (--example / -e required):
         default=[],
         help="Preference in axis=value form; repeat for multiple choices",
     )
-    p_loop.add_argument("--problem", help="Problem statement for prompt or habit composition")
+    p_loop.add_argument(
+        "--problem", help="Problem statement for prompt or habit composition"
+    )
 
     sub.add_parser("dashboard", help="Launch Streamlit monitoring")
 
     p_challenge = sub.add_parser(
-        "challenge", help="Generate adversarial data",
+        "challenge",
+        help="Generate adversarial data",
     )
     p_challenge.add_argument(
-        "--levels", type=int, nargs="+", default=[1, 2, 3],
+        "--levels",
+        type=int,
+        nargs="+",
+        default=[1, 2, 3],
         help="Difficulty levels for CleanLoop challenger runs",
     )
 
     p_sandbox = sub.add_parser(
-        "sandbox", help="Run genome in isolated subprocess",
+        "sandbox",
+        help="Run genome in isolated subprocess",
     )
     p_sandbox.add_argument("--timeout", type=int, default=30)
 
     p_autonomy = sub.add_parser(
-        "autonomy", help="Simulate graduated trust ladder",
+        "autonomy",
+        help="Simulate graduated trust ladder",
     )
     p_autonomy.add_argument("--rounds", type=int, default=10)
 
@@ -1598,8 +1664,7 @@ def main() -> None:
     example = getattr(args, "example", None)
     if not example:
         print(
-            f"\n  {C.RED}ERROR:{C.RESET} "
-            f"'{args.command}' requires --example / -e\n"
+            f"\n  {C.RED}ERROR:{C.RESET} " f"'{args.command}' requires --example / -e\n"
         )
         print(f"  Example: python util.py -e cleanloop {args.command}")
         sys.exit(1)

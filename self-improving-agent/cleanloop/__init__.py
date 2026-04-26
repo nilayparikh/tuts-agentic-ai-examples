@@ -4,19 +4,23 @@ This is the complete example project for the Self-Improving Agents course.
 CleanLoop autonomously cleans messy CSV files by iteratively rewriting its
 own code until all binary assertions pass.
 
-Lesson 03 introduces the arena pattern.
-Lesson 06 builds the full loop.
-Lesson 07 adds the dashboard.
-Lesson 09 adds the challenger.
-Lesson 10 adds the reranker.
-Lesson 11 adds safety controls.
+Course alignment:
+    - Lesson 03: arena and baseline (`.input/`, `.gold/`, `prepare.py`)
+    - Lesson 04: orchestrator loop (`loop.py`)
+    - Lesson 05: genome improvement (`clean_data.py`)
+    - Lesson 06: observability (`dashboard.py`, history artifacts)
+    - Lesson 07: self-challenging (`challenger.py`)
+    - Lesson 08: test-time search (`reranker.py`)
+    - Lesson 09: safety and autonomy (`sandbox.py`, `autonomy.py`)
 
 Usage:
-    python -m cleanloop.loop              # Run the self-improving loop
-    python -m cleanloop.prepare           # Generate messy data + evaluate
-    streamlit run cleanloop/dashboard.py  # Launch monitoring dashboard
-    python -m cleanloop.challenger        # Generate adversarial data
-    python -m cleanloop.reranker          # Best-of-N candidate selection
-    python -m cleanloop.sandbox           # Run genome in isolation
-    python -m cleanloop.autonomy          # Graduated trust simulation
+    cd cleanloop
+    python util.py verify                 # Verify local environment + LLM access
+    python util.py loop                   # Run the self-improving loop
+    python util.py evaluate               # Evaluate the current genome output
+    python util.py challenge --levels 1   # Generate adversarial data
+    python util.py dashboard              # Launch monitoring dashboard
+    python util.py sandbox --timeout 10   # Run genome in isolation
+    python util.py autonomy --rounds 5    # Graduated trust simulation
+    python util.py reset                  # Restore the starter genome
 """

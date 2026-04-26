@@ -9,17 +9,21 @@ The core self-improving loop. Each iteration:
   6. Re-evaluate
   7. If score improved: git commit. Else: git revert.
 
-Lesson references:
-  - Lesson 04: Lines 55-85   (system prompt — how we constrain the LLM)
-  - Lesson 06: Lines 88-195  (the main loop — the Karpathy Loop itself)
-  - Lesson 06: Lines 130-160 (commit-or-revert — Git as selection pressure)
-  - Lesson 08: Lines 88-120  (eval history — how failures compound context)
-  - Lesson 10: Lines 88-195  (where reranker.propose() plugs in)
+Course alignment:
+    - Orchestrator loop: the bounded mutation engine
+    - Observability: history, strategy snapshots, and attempt diagnostics
+    - Test-time search: optional reranker path before commit/revert selection
 
 Usage:
-    python -m cleanloop.loop
-    python -m cleanloop.loop --max-iterations 10
-    python -m cleanloop.loop --use-reranker --candidates 5
+    Preferred from cleanloop/:
+        python util.py loop
+        python util.py loop --max-iterations 10
+        python util.py loop --max-iterations 10 --rerank --candidates 5
+
+    Direct module alternative:
+        python -m cleanloop.loop
+        python -m cleanloop.loop --max-iterations 10
+        python -m cleanloop.loop --use-reranker --candidates 5
 
 Environment variables (from .env):
     LLM_ENDPOINT    — Agnostic OpenAI-compatible endpoint
@@ -31,6 +35,9 @@ Environment variables (from .env):
     AZURE_ENDPOINT  — Legacy fallback
     AZURE_API_KEY   — Legacy fallback
 """
+
+# pylint: disable=too-many-lines,too-many-arguments
+# pylint: disable=too-many-positional-arguments,too-many-locals,too-many-statements
 
 import argparse
 import importlib
@@ -103,7 +110,9 @@ def _build_attempt_diagnostic(
     code: str | None,
     hypothesis: str,
     max_tokens: int,
-) -> dict[str, object]:
+) -> dict[
+    str, object
+]:  # pylint: disable=too-many-arguments,too-many-positional-arguments
     """Record one LLM attempt for later dashboard inspection."""
     usage = _extract_usage_stats(response)
     return {
@@ -132,7 +141,9 @@ def _summarize_attempts(attempts: list[dict[str, object]]) -> dict[str, object]:
         usage = attempt.get("usage", {})
         attempt_total = usage.get("total_tokens") if isinstance(usage, dict) else None
         attempt_prompt = usage.get("prompt_tokens") if isinstance(usage, dict) else None
-        attempt_completion = usage.get("completion_tokens") if isinstance(usage, dict) else None
+        attempt_completion = (
+            usage.get("completion_tokens") if isinstance(usage, dict) else None
+        )
         if attempt_total is not None:
             total_tokens += int(attempt_total)
             saw_usage = True
@@ -152,7 +163,9 @@ def _summarize_attempts(attempts: list[dict[str, object]]) -> dict[str, object]:
     }
 
 
-def _artifact_manifest(config, output_path: Path, history_path: Path) -> dict[str, object]:
+def _artifact_manifest(
+    config, output_path: Path, history_path: Path
+) -> dict[str, object]:
     """Describe the main files involved in one dataset run."""
     strategy_path = output_path.parent / STRATEGY_FILENAME
     return {
@@ -201,18 +214,24 @@ def _guidance_for_focus_area(focus_area: str) -> str:
             "Normalize currency symbols, accounting markers, and sentinels before "
             "numeric coercion."
         ),
-        "date_normalization": "Unify mixed invoice date formats before sorting or filtering rows.",
+        "date_normalization": (
+            "Unify mixed invoice date formats before sorting or filtering rows."
+        ),
         "entity_cleanup": "Preserve valid customer names while trimming whitespace and blanks.",
         "row_reconciliation": (
             "Compare missing and unexpected rows to see which transformations are still "
             "dropping or inventing records."
         ),
-        "baseline_stability": "Keep the genome runnable while you reduce the remaining judge failures.",
+        "baseline_stability": (
+            "Keep the genome runnable while you reduce the remaining judge failures."
+        ),
     }
     return guidance[focus_area]
 
 
-def _build_metacognition_snapshot(history: list[dict], results: dict) -> dict[str, object]:
+def _build_metacognition_snapshot(
+    history: list[dict], results: dict
+) -> dict[str, object]:
     """Summarize recurring failure patterns into a small strategy snapshot."""
     recent_failures: list[str] = []
     for entry in history[-2:]:
@@ -244,7 +263,9 @@ def _build_metacognition_snapshot(history: list[dict], results: dict) -> dict[st
         "row_reconciliation",
         "baseline_stability",
     ]
-    focus_area = max(priority, key=lambda item: (counts.get(item, 0), -priority.index(item)))
+    focus_area = max(
+        priority, key=lambda item: (counts.get(item, 0), -priority.index(item))
+    )
     return {
         "focus_area": focus_area,
         "repeated_failure_count": counts.get(focus_area, 0),
@@ -253,7 +274,9 @@ def _build_metacognition_snapshot(history: list[dict], results: dict) -> dict[st
     }
 
 
-def _write_metacognition_snapshot(output_dir: Path, snapshot: dict[str, object]) -> Path:
+def _write_metacognition_snapshot(
+    output_dir: Path, snapshot: dict[str, object]
+) -> Path:
     """Persist the current strategy snapshot beside the other loop artifacts."""
     output_dir.mkdir(parents=True, exist_ok=True)
     strategy_path = output_dir / STRATEGY_FILENAME
@@ -269,7 +292,7 @@ def _append_log(
     prompt_tokens: int | None = None,
     completion_tokens: int | None = None,
     total_tokens: int | None = None,
-) -> None:
+) -> None:  # pylint: disable=too-many-arguments
     """Append one structured log entry and print it in teaching format."""
     entry: dict[str, object] = {"tag": tag, "message": message}
     if prompt_tokens is not None:
@@ -375,7 +398,9 @@ def _print_llm_attempt_trace_to_logs(
     llm_diagnostics: dict[str, object],
 ) -> None:
     """Record and print a compact learning trace for each recorded LLM attempt."""
-    attempts = llm_diagnostics.get("attempts") if isinstance(llm_diagnostics, dict) else None
+    attempts = (
+        llm_diagnostics.get("attempts") if isinstance(llm_diagnostics, dict) else None
+    )
     if not isinstance(attempts, list) or not attempts:
         _append_log(logs, "NO_LLM_ATTEMPTS_RECORDED", "No LLM attempts recorded")
         return
@@ -423,18 +448,21 @@ def _print_llm_attempt_trace_to_logs(
             "LLM_SUMMARY",
             f"prompt={summary_prompt}, completion={summary_completion}, total={summary_total}",
             prompt_tokens=summary_prompt if isinstance(summary_prompt, int) else None,
-            completion_tokens=summary_completion if isinstance(summary_completion, int) else None,
+            completion_tokens=(
+                summary_completion if isinstance(summary_completion, int) else None
+            ),
             total_tokens=summary_total,
         )
 
 
 # =====================================================================
 # SECTION: LLM Prompt Construction
-# Lesson 04 — The system prompt defines the agent's constraints.
-# Notice how we feed it the agenda (README.md), the dataset-specific
-# assertion registry, and strict rules about what it can modify.
-# This is "Software 3.0" — programming via natural language constraints.
+# The system prompt carries the fixed operating contract into every mutation.
+# It tells the proposer what dataset is active, which assertions define success,
+# and which file boundaries are immutable. That keeps the LLM acting like a
+# bounded mutation operator instead of a free-form refactor agent.
 # =====================================================================
+
 
 def build_system_prompt(dataset_name: str | None = None) -> str:
     """Build the system prompt with agenda and assertion context."""
@@ -446,7 +474,8 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
     )
     finance_scalar_guardrail = (
         "- Values may already be floats or NaN after pandas parsing.\n"
-        "- Amount strings may include currency symbols or accounting markers like USD, EUR, or CR.\n"
+        "- Amount strings may include currency symbols or accounting markers "
+        "like USD, EUR, or CR.\n"
         "- Never call .strip() on raw pandas scalars; coerce safely before trimming.\n"
     )
 
@@ -516,24 +545,24 @@ def build_user_prompt(
 
 # =====================================================================
 # SECTION: The Karpathy Loop
-# Lesson 06 — This is the heart of the course. The loop:
+# This is the bounded mutation engine. Each round:
 #   1. Runs the genome and evaluates it
 #   2. Asks the LLM for a fix (with failure context)
 #   3. Writes the new code
 #   4. Re-evaluates
 #   5. Commits if better, reverts if not
 #
-# The key insight: Git acts as selection pressure. Good mutations
-# survive (commit). Bad mutations die (revert). Over iterations,
-# the genome evolves toward correctness — just like biological
-# evolution, but with an LLM as the mutation operator.
+# The key insight is selection pressure. Better mutations survive. Regressions
+# are reverted. Over time the loop learns only if the judge stays fixed and the
+# mutation path keeps feeding back the right failure evidence.
 # =====================================================================
+
 
 def run_loop(
     max_iterations: int = 5,
     use_reranker: bool = False,
     n_candidates: int = 3,
-) -> list[dict]:
+) -> list[dict]:  # pylint: disable=too-many-locals,too-many-statements
     """Execute the self-improving loop.
 
     Returns the eval history for dashboard consumption.
@@ -556,7 +585,8 @@ def run_loop(
 
     # Import genome module for reloading
     from cleanloop import (  # pylint: disable=import-outside-toplevel
-        clean_data, prepare,
+        clean_data,
+        prepare,
     )
 
     for i in range(1, max_iterations + 1):
@@ -582,6 +612,8 @@ def run_loop(
         score = results["score"]
         total = results["total"]
         baseline_output_snapshot = _capture_output_snapshot(output_path)
+        # Persist a tiny strategy summary beside the output so the dashboard and
+        # the next proposal can both see what failure pattern currently matters.
         metacognition = _build_metacognition_snapshot(history, results)
         _write_metacognition_snapshot(output_path.parent, metacognition)
         print(f"Score: {score}/{total}")
@@ -601,31 +633,33 @@ def run_loop(
                 f"Dataset {config.name} already satisfies every assertion",
             )
             _git_commit(f"loop: round {i} -- all {total} assertions pass")
-            history.append({
-                "round": i,
-                "dataset": config.name,
-                "model": model,
-                "score": score,
-                "total": total,
-                "before_score": score,
-                "score_delta": 0,
-                "metrics": _result_metrics_snapshot(results),
-                "before_metrics": _result_metrics_snapshot(results),
-                "hypothesis": "all passed",
-                "action": "done",
-                "failed": results.get("failed", []),
-                "passed": results.get("passed", []),
-                "before_failed": results.get("failed", []),
-                "before_passed": results.get("passed", []),
-                "started_at": round_started_at,
-                "finished_at": _iso_now(),
-                "artifacts": _artifact_manifest(config, output_path, history_path),
-                "metacognition": metacognition,
-                "genome_before": genome_before,
-                "genome_after": genome_before,
-                "llm": _summarize_attempts([]),
-                "logs": round_logs,
-            })
+            history.append(
+                {
+                    "round": i,
+                    "dataset": config.name,
+                    "model": model,
+                    "score": score,
+                    "total": total,
+                    "before_score": score,
+                    "score_delta": 0,
+                    "metrics": _result_metrics_snapshot(results),
+                    "before_metrics": _result_metrics_snapshot(results),
+                    "hypothesis": "all passed",
+                    "action": "done",
+                    "failed": results.get("failed", []),
+                    "passed": results.get("passed", []),
+                    "before_failed": results.get("failed", []),
+                    "before_passed": results.get("passed", []),
+                    "started_at": round_started_at,
+                    "finished_at": _iso_now(),
+                    "artifacts": _artifact_manifest(config, output_path, history_path),
+                    "metacognition": metacognition,
+                    "genome_before": genome_before,
+                    "genome_after": genome_before,
+                    "llm": _summarize_attempts([]),
+                    "logs": round_logs,
+                }
+            )
             break
 
         for f in results["failed"]:
@@ -642,28 +676,94 @@ def run_loop(
         llm_diagnostics: dict[str, object]
 
         if use_reranker:
-            # Lesson 10 — Best-of-N: generate multiple candidates
+            # Test-time search widens one proposal into a small candidate set,
+            # then lets the deterministic judge decide which survivor is worth
+            # the expensive commit-or-revert step.
             from cleanloop import reranker  # pylint: disable=import-outside-toplevel
+
             new_code, hypothesis, llm_diagnostics = reranker.propose(
-                client, model, genome_code,
-                results["failed"], n_candidates,
+                client,
+                model,
+                genome_code,
+                results["failed"],
+                n_candidates,
             )
             _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
         else:
             # Standard single-shot proposal
             try:
                 new_code, hypothesis, llm_diagnostics = _propose_fix(
-                    client, model, system_prompt,
-                    genome_code, results, history, config.name, metacognition,
+                    client,
+                    model,
+                    system_prompt,
+                    genome_code,
+                    results,
+                    history,
+                    config.name,
+                    metacognition,
                 )
                 _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
-            except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+            except (
+                Exception
+            ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
                 error_message = str(exc)
                 if "Endpoint busy (429 capacity)" not in error_message:
                     error_message = util.format_llm_exception(exc)
                 print(f"WARNING: {error_message}")
                 _append_log(round_logs, "LLM_PROPOSAL_UNAVAILABLE", error_message)
-                history.append({
+                history.append(
+                    {
+                        "round": i,
+                        "dataset": config.name,
+                        "model": model,
+                        "score": score,
+                        "total": total,
+                        "before_score": score,
+                        "score_delta": 0,
+                        "metrics": _result_metrics_snapshot(results),
+                        "before_metrics": _result_metrics_snapshot(results),
+                        "hypothesis": "llm proposal unavailable",
+                        "action": "skip",
+                        "failed": results.get("failed", []),
+                        "passed": results.get("passed", []),
+                        "before_failed": results.get("failed", []),
+                        "before_passed": results.get("passed", []),
+                        "started_at": round_started_at,
+                        "finished_at": _iso_now(),
+                        "artifacts": _artifact_manifest(
+                            config, output_path, history_path
+                        ),
+                        "metacognition": metacognition,
+                        "genome_before": genome_before,
+                        "genome_after": genome_before,
+                        "llm": {
+                            "selected_attempt": "none",
+                            "attempts": [],
+                            "prompt_tokens": None,
+                            "completion_tokens": None,
+                            "total_tokens": None,
+                            "error": error_message,
+                        },
+                        "logs": round_logs,
+                    }
+                )
+                continue
+
+        if not new_code:
+            attempts = (
+                llm_diagnostics.get("attempts", [])
+                if isinstance(llm_diagnostics, dict)
+                else []
+            )
+            attempt_count = len(attempts) if isinstance(attempts, list) else 0
+            warning_message = (
+                f"No candidate code returned after {attempt_count} attempts. "
+                "Skipping round."
+            )
+            print(f"WARNING: {warning_message}")
+            _append_log(round_logs, "NO_CODE_RETURNED", warning_message)
+            history.append(
+                {
                     "round": i,
                     "dataset": config.name,
                     "model": model,
@@ -673,7 +773,7 @@ def run_loop(
                     "score_delta": 0,
                     "metrics": _result_metrics_snapshot(results),
                     "before_metrics": _result_metrics_snapshot(results),
-                    "hypothesis": "llm proposal unavailable",
+                    "hypothesis": hypothesis,
                     "action": "skip",
                     "failed": results.get("failed", []),
                     "passed": results.get("passed", []),
@@ -685,65 +785,34 @@ def run_loop(
                     "metacognition": metacognition,
                     "genome_before": genome_before,
                     "genome_after": genome_before,
-                    "llm": {
-                        "selected_attempt": "none",
-                        "attempts": [],
-                        "prompt_tokens": None,
-                        "completion_tokens": None,
-                        "total_tokens": None,
-                        "error": error_message,
-                    },
+                    "llm": llm_diagnostics,
                     "logs": round_logs,
-                })
-                continue
-
-        if not new_code:
-            attempts = llm_diagnostics.get("attempts", []) if isinstance(llm_diagnostics, dict) else []
-            attempt_count = len(attempts) if isinstance(attempts, list) else 0
-            warning_message = (
-                f"No candidate code returned after {attempt_count} attempts. Skipping round."
+                }
             )
-            print(f"WARNING: {warning_message}")
-            _append_log(round_logs, "NO_CODE_RETURNED", warning_message)
-            history.append({
-                "round": i,
-                "dataset": config.name,
-                "model": model,
-                "score": score,
-                "total": total,
-                "before_score": score,
-                "score_delta": 0,
-                "metrics": _result_metrics_snapshot(results),
-                "before_metrics": _result_metrics_snapshot(results),
-                "hypothesis": hypothesis,
-                "action": "skip",
-                "failed": results.get("failed", []),
-                "passed": results.get("passed", []),
-                "before_failed": results.get("failed", []),
-                "before_passed": results.get("passed", []),
-                "started_at": round_started_at,
-                "finished_at": _iso_now(),
-                "artifacts": _artifact_manifest(config, output_path, history_path),
-                "metacognition": metacognition,
-                "genome_before": genome_before,
-                "genome_after": genome_before,
-                "llm": llm_diagnostics,
-                "logs": round_logs,
-            })
             continue
 
         print(f"Hypothesis: {hypothesis}")
         _append_log(round_logs, "HYPOTHESIS_SELECTED", hypothesis)
 
         # Step 4: Write new genome and re-evaluate
-        _append_log(round_logs, "WRITE_MUTATED_GENOME", f"Writing candidate mutation to {GENOME_PATH.name}")
+        _append_log(
+            round_logs,
+            "WRITE_MUTATED_GENOME",
+            f"Writing candidate mutation to {GENOME_PATH.name}",
+        )
         try:
             _validate_candidate_code(new_code, GENOME_PATH)
             GENOME_PATH.write_text(new_code, encoding="utf-8")
             importlib.reload(clean_data)
-            _append_log(round_logs, "RE_EVALUATE_MUTATION", "Re-running the mutated genome against the referee")
+            _append_log(
+                round_logs,
+                "RE_EVALUATE_MUTATION",
+                "Re-running the mutated genome against the referee",
+            )
             new_results = _run_and_evaluate(clean_data, prepare, INPUT_DIR, output_path)
-        except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+        except (
+            Exception
+        ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
             failure_message = f"can_run_genome: {exc}"
             _append_log(round_logs, "MUTATION_EXECUTION_FAILED", failure_message)
             new_results = {
@@ -754,15 +823,16 @@ def run_loop(
             }
         new_score = new_results["score"]
         new_total = new_results["total"]
-        _append_log(round_logs, "MUTATION_SCORE", f"Candidate scored {new_score}/{new_total}")
+        _append_log(
+            round_logs, "MUTATION_SCORE", f"Candidate scored {new_score}/{new_total}"
+        )
 
         # ─────────────────────────────────────────────────────────
-        # SECTION: Commit or Revert (Git as Selection Pressure)
-        # Lesson 06 — This is the selection mechanism.
-        # If the new code scores higher: commit (mutation survives).
-        # If not: revert to last known good (mutation dies).
-        # This prevents the genome from regressing — it can only
-        # improve or stay the same, never get worse.
+        # SECTION: Commit or Revert (Selection Pressure)
+        # This is the survival rule of the loop. A mutation only survives if it
+        # improves the fixed score. Otherwise the loop restores the previous
+        # genome and output artifact so the next round starts from a known-good
+        # baseline instead of compounding regressions.
         # ─────────────────────────────────────────────────────────
         if new_score > score:
             _git_commit(
@@ -789,31 +859,33 @@ def run_loop(
                 f"Reverted mutation with score {new_score}/{new_total}",
             )
 
-        history.append({
-            "round": i,
-            "dataset": config.name,
-            "model": model,
-            "score": new_score,
-            "total": new_total,
-            "before_score": score,
-            "score_delta": new_score - score,
-            "metrics": _result_metrics_snapshot(new_results),
-            "before_metrics": _result_metrics_snapshot(results),
-            "hypothesis": hypothesis,
-            "action": action,
-            "failed": new_results.get("failed", []),
-            "passed": new_results.get("passed", []),
-            "before_failed": results.get("failed", []),
-            "before_passed": results.get("passed", []),
-            "started_at": round_started_at,
-            "finished_at": _iso_now(),
-            "artifacts": _artifact_manifest(config, output_path, history_path),
-            "metacognition": metacognition,
-            "genome_before": genome_before,
-            "genome_after": new_code,
-            "llm": llm_diagnostics,
-            "logs": round_logs,
-        })
+        history.append(
+            {
+                "round": i,
+                "dataset": config.name,
+                "model": model,
+                "score": new_score,
+                "total": new_total,
+                "before_score": score,
+                "score_delta": new_score - score,
+                "metrics": _result_metrics_snapshot(new_results),
+                "before_metrics": _result_metrics_snapshot(results),
+                "hypothesis": hypothesis,
+                "action": action,
+                "failed": new_results.get("failed", []),
+                "passed": new_results.get("passed", []),
+                "before_failed": results.get("failed", []),
+                "before_passed": results.get("passed", []),
+                "started_at": round_started_at,
+                "finished_at": _iso_now(),
+                "artifacts": _artifact_manifest(config, output_path, history_path),
+                "metacognition": metacognition,
+                "genome_before": genome_before,
+                "genome_after": new_code,
+                "llm": llm_diagnostics,
+                "logs": round_logs,
+            }
+        )
 
     # Save history for dashboard
     history_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
@@ -826,7 +898,9 @@ def _read_utf8_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def _run_and_evaluate(clean_data_module, prepare_module, input_dir: Path, output_path: Path) -> dict:
+def _run_and_evaluate(
+    clean_data_module, prepare_module, input_dir: Path, output_path: Path
+) -> dict:
     """Run the genome and convert execution errors into structured failures."""
     try:
         clean_data_module.clean(input_dir, output_path)
@@ -849,7 +923,9 @@ def _propose_fix(
     history: list[dict],
     dataset_name: str | None = None,
     metacognition: dict[str, object] | None = None,
-) -> tuple[str | None, str, dict[str, object]]:
+) -> tuple[
+    str | None, str, dict[str, object]
+]:  # pylint: disable=too-many-arguments,too-many-positional-arguments
     """Ask the LLM for a single code fix. Returns (code, hypothesis)."""
     user_prompt = build_user_prompt(
         genome_code,
@@ -915,20 +991,25 @@ def _extract_hypothesis(text: str) -> str:
 
 # =====================================================================
 # SECTION: Git Operations
-# Lesson 06 — Git is the selection mechanism. We use subprocess
-# calls to stage, commit, and revert the genome file.
+# Git is the persistence layer for the selection rule above. The loop only
+# writes history for mutations that beat the current baseline.
 # =====================================================================
+
 
 def _git_commit(message: str) -> None:
     """Stage the genome file and commit with a descriptive message."""
     try:
         subprocess.run(
             ["git", "add", str(GENOME_PATH)],
-            check=True, capture_output=True, cwd=str(PROJECT_ROOT),
+            check=True,
+            capture_output=True,
+            cwd=str(PROJECT_ROOT),
         )
         subprocess.run(
             ["git", "commit", "-m", message],
-            check=True, capture_output=True, cwd=str(PROJECT_ROOT),
+            check=True,
+            capture_output=True,
+            cwd=str(PROJECT_ROOT),
         )
     except subprocess.CalledProcessError:
         pass  # Git not initialized — skip silently
@@ -939,7 +1020,9 @@ def _git_revert() -> None:
     try:
         subprocess.run(
             ["git", "checkout", "--", str(GENOME_PATH)],
-            check=True, capture_output=True, cwd=str(PROJECT_ROOT),
+            check=True,
+            capture_output=True,
+            cwd=str(PROJECT_ROOT),
         )
     except subprocess.CalledProcessError:
         pass  # Git not initialized — skip silently
@@ -949,21 +1032,27 @@ def _git_revert() -> None:
 # SECTION: CLI Entry Point
 # =====================================================================
 
+
 def main() -> None:
     """Parse arguments and run the loop."""
     parser = argparse.ArgumentParser(
         description="CleanLoop — Self-Improving Data Engineer"
     )
     parser.add_argument(
-        "--max-iterations", type=int, default=5,
+        "--max-iterations",
+        type=int,
+        default=5,
         help="Maximum loop iterations (default: 5)",
     )
     parser.add_argument(
-        "--use-reranker", action="store_true",
-        help="Use Best-of-N reranking (Lesson 10)",
+        "--use-reranker",
+        action="store_true",
+        help="Use Best-of-N reranking (test-time search extension)",
     )
     parser.add_argument(
-        "--candidates", type=int, default=3,
+        "--candidates",
+        type=int,
+        default=3,
         help="Number of reranker candidates (default: 3)",
     )
     args = parser.parse_args()

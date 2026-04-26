@@ -4,13 +4,8 @@ Tabbed dashboard that visualizes the self-improving loop in
 real time. Reads the dataset-specific history log to show
 iteration-by-iteration progress.
 
-Lesson references:
-  - Lesson 07: Lines 30-55   (Streamlit layout — page config + panels)
-  - Lesson 07: Lines 58-90   (Panel 1 — score line chart)
-  - Lesson 07: Lines 93-120  (Panel 2 — assertion detail table)
-  - Lesson 07: Lines 123-145 (Panel 3 — Git timeline)
-  - Lesson 07: Lines 148-160 (Panel 4 — current genome code viewer)
-  - Lesson 07: Lines 163-180 (Sidebar — summary metrics)
+Course alignment:
+    - Lesson 06: loop observability and operator feedback
 
 Usage:
     streamlit run cleanloop/dashboard.py
@@ -43,7 +38,8 @@ HISTORY_PATH = cleanloop_datasets.get_history_path(OUTPUT_DIR, DATASET_CONFIG.na
 
 # =====================================================================
 # SECTION: Streamlit Page Configuration
-# Lesson 07 — We use wide layout for the 4-panel dashboard.
+# Lesson 06 — Use a wide layout so the operator can compare history,
+# failures, artifacts, and the current genome without losing context.
 # set_page_config must be the first Streamlit command.
 # =====================================================================
 
@@ -155,10 +151,7 @@ def _show_failure_list(title: str, failures: list[str]) -> None:
 history = load_history()
 
 if not history:
-    st.warning(
-        f"No {HISTORY_PATH.name} found. "
-        "Run `python util.py -e cleanloop loop` first."
-    )
+    st.warning(f"No {HISTORY_PATH.name} found. " "Run `python util.py loop` first.")
     st.stop()
 
 
@@ -185,8 +178,12 @@ if history:
     st.sidebar.metric("Skipped", skipped_count)
     st.sidebar.metric("Total Tokens", _total_tokens(history))
     if latest_judge:
-        st.sidebar.metric("Latest Recall", f"{latest_judge['cleanliness_score'] * 100:.1f}%")
-        st.sidebar.metric("Latest Precision", f"{latest_judge['output_precision'] * 100:.1f}%")
+        st.sidebar.metric(
+            "Latest Recall", f"{latest_judge['cleanliness_score'] * 100:.1f}%"
+        )
+        st.sidebar.metric(
+            "Latest Precision", f"{latest_judge['output_precision'] * 100:.1f}%"
+        )
         st.sidebar.metric("Missing Rows", int(latest_judge["missing_rows"]))
         st.sidebar.metric("Unexpected Rows", int(latest_judge["unexpected_rows"]))
     st.sidebar.caption(f"History: {HISTORY_PATH.relative_to(PROJECT_ROOT)}")
@@ -198,19 +195,27 @@ if history:
 # =====================================================================
 
 tab_score, tab_blueprint, tab_data, tab_logs, tab_diag = st.tabs(
-    ["Score Timeline", "Round Blueprint", "Data Quality", "Execution Logs", "Diagnostics"],
+    [
+        "Score Timeline",
+        "Round Blueprint",
+        "Data Quality",
+        "Execution Logs",
+        "Diagnostics",
+    ],
 )
 
 # --- Tab 1: Score Over Time ---
 with tab_score:
-    score_df = pd.DataFrame([
-        {
-            "Round": entry["round"],
-            "Passed": entry["score"],
-            "Failed": entry["total"] - entry["score"],
-        }
-        for entry in history
-    ])
+    score_df = pd.DataFrame(
+        [
+            {
+                "Round": entry["round"],
+                "Passed": entry["score"],
+                "Failed": entry["total"] - entry["score"],
+            }
+            for entry in history
+        ]
+    )
     st.line_chart(
         score_df.set_index("Round")[["Passed", "Failed"]],
         color=["#4ecdc4", "#ff6b6b"],
@@ -218,7 +223,9 @@ with tab_score:
 
     attempt_df = pd.DataFrame(_attempt_rows(history))
     if not attempt_df.empty and attempt_df["Total Tokens"].notna().any():
-        token_chart = attempt_df.groupby("Round", dropna=False)["Total Tokens"].sum(min_count=1)
+        token_chart = attempt_df.groupby("Round", dropna=False)["Total Tokens"].sum(
+            min_count=1
+        )
         st.subheader("Token Usage by Round")
         st.bar_chart(token_chart)
 
@@ -306,12 +313,14 @@ with tab_data:
             col3.metric("Nulls", int(df.isnull().sum().sum()))
 
             st.markdown("**Column Summary**")
-            summary = pd.DataFrame({
-                "Column": df.columns,
-                "Dtype": [str(d) for d in df.dtypes],
-                "Non-Null": [int(df[c].notna().sum()) for c in df.columns],
-                "Unique": [int(df[c].nunique()) for c in df.columns],
-            })
+            summary = pd.DataFrame(
+                {
+                    "Column": df.columns,
+                    "Dtype": [str(d) for d in df.dtypes],
+                    "Non-Null": [int(df[c].notna().sum()) for c in df.columns],
+                    "Unique": [int(df[c].nunique()) for c in df.columns],
+                }
+            )
             st.dataframe(summary, width="stretch", hide_index=True)
 
             st.markdown("**Sample Rows**")
@@ -327,7 +336,9 @@ with tab_data:
 # --- Tab 4: Execution Logs ---
 with tab_logs:
     st.subheader("Execution Logs")
-    st.caption("Every structured teaching log emitted during the loop, including token usage.")
+    st.caption(
+        "Every structured teaching log emitted during the loop, including token usage."
+    )
     logs_df = pd.DataFrame(dashboard_metrics.build_log_rows(history))
     if logs_df.empty:
         st.info("No execution logs have been recorded yet.")
@@ -351,7 +362,10 @@ with tab_logs:
                     prompt_tokens = log.get("prompt_tokens")
                     completion_tokens = log.get("completion_tokens")
                     total_tokens = log.get("total_tokens")
-                    if any(isinstance(value, int) for value in [prompt_tokens, completion_tokens, total_tokens]):
+                    if any(
+                        isinstance(value, int)
+                        for value in [prompt_tokens, completion_tokens, total_tokens]
+                    ):
                         line += (
                             f" | prompt={prompt_tokens}"
                             f" | completion={completion_tokens}"
@@ -362,7 +376,9 @@ with tab_logs:
 # --- Tab 5: Diagnostics ---
 with tab_diag:
     st.subheader("LLM Call Diagnostics")
-    st.caption("Every recorded LLM attempt, including token counts and response previews.")
+    st.caption(
+        "Every recorded LLM attempt, including token counts and response previews."
+    )
 
     attempt_df = pd.DataFrame(_attempt_rows(history))
     attempt_outcome_df = pd.DataFrame(

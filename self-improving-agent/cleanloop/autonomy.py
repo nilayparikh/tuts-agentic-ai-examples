@@ -10,14 +10,17 @@ Levels:
   2 = AUTONOMOUS   — auto-applied, human reviews async
   3 = FULL_AUTO    — no human in the loop
 
-Lesson references:
-  - Lesson 11: Lines 30-50   (trust levels + promotion thresholds)
-  - Lesson 11: Lines 53-120  (TrustState class — the autonomy ladder)
-  - Lesson 11: Lines 123-185 (simulation — watch trust evolve over rounds)
+Course alignment:
+    - Lesson 09: safety and autonomy
 
 Usage:
-    python -m cleanloop.autonomy
-    python -m cleanloop.autonomy --rounds 20
+    Preferred from cleanloop/:
+        python util.py autonomy
+        python util.py autonomy --rounds 20
+
+    Direct module alternative:
+        python -m cleanloop.autonomy
+        python -m cleanloop.autonomy --rounds 20
 
 No environment variables required (uses simulated data).
 """
@@ -29,7 +32,7 @@ from dataclasses import dataclass, field
 
 # =====================================================================
 # SECTION: Trust Configuration
-# Lesson 11 — Four levels of autonomy. The thresholds are the
+# Lesson 09 — Four levels of autonomy. The thresholds are the
 # minimum rolling pass rate needed to advance to the next level.
 # These are deliberately conservative — it's easy to earn trust
 # and very easy to lose it (any critical failure resets to L0).
@@ -44,9 +47,9 @@ TRUST_LEVELS: dict[int, str] = {
 
 # Rolling pass rate thresholds for promotion
 PROMOTE_THRESHOLDS: dict[int, float] = {
-    0: 0.70,   # SUPERVISED -> MONITORED: need 70% pass rate
-    1: 0.85,   # MONITORED -> AUTONOMOUS: need 85% pass rate
-    2: 0.95,   # AUTONOMOUS -> FULL_AUTO: need 95% pass rate
+    0: 0.70,  # SUPERVISED -> MONITORED: need 70% pass rate
+    1: 0.85,  # MONITORED -> AUTONOMOUS: need 85% pass rate
+    2: 0.95,  # AUTONOMOUS -> FULL_AUTO: need 95% pass rate
 }
 
 # Minimum rounds at current level before eligible for promotion
@@ -58,7 +61,7 @@ WINDOW_SIZE = 5
 
 # =====================================================================
 # SECTION: TrustState — The Autonomy Ladder
-# Lesson 11 — This class tracks the agent's trust level and
+# Lesson 09 — This class tracks the agent's trust level and
 # makes promotion/demotion decisions based on performance.
 #
 # Key design decisions:
@@ -69,6 +72,7 @@ WINDOW_SIZE = 5
 #   3. Minimum tenure — must spend N rounds at a level before
 #      promotion, even if pass rate is high (prevents lucky streaks)
 # =====================================================================
+
 
 @dataclass
 class TrustState:
@@ -135,10 +139,11 @@ class TrustState:
 
 # =====================================================================
 # SECTION: Simulation
-# Lesson 11 — Simulates 10-20 rounds of the loop with realistic
-# pass rates to demonstrate how trust evolves. Includes occasional
-# critical failures to show the demotion mechanism.
+# This demo makes the trust policy concrete. The pass rate trends upward,
+# but occasional failures still force the ladder to prove that promotion is
+# earned and that demotion happens immediately when safety evidence regresses.
 # =====================================================================
+
 
 def simulate(n_rounds: int = 10) -> None:
     """Simulate loop iterations with graduated autonomy."""
@@ -146,10 +151,7 @@ def simulate(n_rounds: int = 10) -> None:
 
     print("Graduated Autonomy Simulation")
     print("=" * 65)
-    print(
-        f"{'Round':<7} {'Rate':<8} {'Level':<14} "
-        f"{'Action':<32} {'Mode'}"
-    )
+    print(f"{'Round':<7} {'Rate':<8} {'Level':<14} " f"{'Action':<32} {'Mode'}")
     print("-" * 65)
 
     for i in range(1, n_rounds + 1):
@@ -174,10 +176,7 @@ def simulate(n_rounds: int = 10) -> None:
         else:
             mode = ""
 
-        print(
-            f"  {i:<5} {rate:<8.2f} {trust.level_name:<14} "
-            f"{action:<32} {mode}"
-        )
+        print(f"  {i:<5} {rate:<8.2f} {trust.level_name:<14} " f"{action:<32} {mode}")
 
     print("-" * 65)
     print(f"\nFinal: {trust.level_name} (score: {trust.rolling_score:.2f})")
@@ -189,7 +188,9 @@ def main() -> None:
         description="Autonomy — Graduated trust simulation"
     )
     parser.add_argument(
-        "--rounds", type=int, default=10,
+        "--rounds",
+        type=int,
+        default=10,
         help="Number of rounds (default: 10)",
     )
     args = parser.parse_args()
