@@ -1,16 +1,13 @@
-invoice_id,customer,amount,currency,issued,due,status
-INV-101,Acme Manufacturing,15000.00,USD,2024-01-15,2024-02-14,paid
-INV-102,Globex Retail,"$8,500.50",USD,2024-01-18,2024-02-17,paid
-INV-103,Initech Systems,22000.00,EUR,2024-01-20,2024-03-20,overdue
-INV-104,Umbrella Bio,-500.00,USD,2024-02-20,2024-03-21,refund
-INV-105,Soylent Foods,FREE TRIAL,,2024-03-01,2024-03-31,active
-INV-106,Acme Manufacturing,N/A,USD,2024-03-10,2024-04-09,disputed
-INV-107,Globex Retail,12750.00,JPY,2024-03-12,2024-04-11,paid
-INV-108,Initech Systems,PENDING,EUR,2024-03-20,2024-04-19,pending
-INV-109,Umbrella Bio,6400.00,USD,15/03/2024,14/04/2024,paid
-INV-110,Soylent Foods,,USD,2024-04-10,2024-05-10,cancelled
-INV-111,Acme Manufacturing,4100.00,CHF,2024-04-25,2024-05-25,paid
-INV-112,Globex Retail,-2500.00,USD,2024-05-02,2024-06-01,credit_note
-INV-113,Initech Systems,"EUR 22,500.00",EUR,2024-05-04,2024-06-03,paid
-INV-114,Umbrella Bio,3200 CR,USD,April 12 2024,2024-05-12,review
-INV-115,Soylent Foods,0.00,USD,2024-05-15,,void
+invoice_id,customer,amount,currency,issued,due,status,resolution_amount,resolution_flag,resolution_note
+INV-101,Acme Manufacturing,15000.00,USD,2024-01-15,2024-02-14,paid,,,
+INV-102,Globex Retail,"$8,500.50",USD,2024-01-18,2024-02-17,paid,,,
+INV-103,Initech Systems,22000.00,EUR,2024-01-20,2024-03-20,overdue,,,
+INV-104,Umbrella Bio,-500.00,USD,2024-02-20,2024-03-21,refund,,,
+INV-105,Soylent Foods,FREE   TRIAL 🎁,USD,2024-03-15,2024-04-14,active,,,
+INV-106,Acme Manufacturing,N/A // board-approved,USD,2024-03-18,2024-04-17,disputed,15420.00,approved,credit committee reinstated partial amount
+INV-107,Blue Yonder,"USD 9,200.00",USD,07/02/2024,2024-03-08,overdue,,,
+INV-108,Initech Systems, pending  ✅ ,EUR,2024-03-20,2024-04-19,pending,21450.00,approved,po matched after queue release
+INV-109,Umbrella Bio,complimentary ✨,USD,2024-04-01,2024-05-01,active,,,
+INV-110,Northwind Labs,TBD   // ready,USD,2024-04-02,2024-05-02,review,12950.00,approved,ops approved the reviewed amount
+INV-111,Acme Manufacturing,"CHF 4,100.00",CHF,2024-04-25,2024-05-25,paid,,,
+INV-112,Fabrikam GmbH,SEE PDF 📎,EUR,2024-04-10,2024-05-10,review,,,

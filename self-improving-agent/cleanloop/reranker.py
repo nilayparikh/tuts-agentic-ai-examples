@@ -34,10 +34,13 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from cleanloop import autogen_runtime, util
 from cleanloop import datasets as cleanloop_datasets
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
 util.load_env()
 
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
@@ -67,6 +70,8 @@ def propose(
     genome_code: str,
     failed_assertions: list[str],
     n_candidates: int = 3,
+    *,
+    timeout_seconds: int | None = None,
 ) -> tuple[str | None, str, dict[str, object]]:
     """Generate N candidates and return the best (code, hypothesis).
 
@@ -97,6 +102,7 @@ def propose(
         user,
         n_candidates=n_candidates,
         evaluate_candidate=_evaluate_candidate,
+        timeout_seconds=timeout_seconds,
     )
 
 

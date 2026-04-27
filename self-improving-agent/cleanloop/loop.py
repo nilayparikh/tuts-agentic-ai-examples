@@ -42,18 +42,28 @@ Environment variables (from .env):
 import argparse
 import importlib
 import json
+import os
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from cleanloop import autogen_runtime, util
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from cleanloop import autogen_runtime
+from cleanloop import util as cleanloop_util
 from cleanloop import dashboard_metrics
 from cleanloop import datasets as cleanloop_datasets
+from cleanloop.tracing import TraceRecorder
+
+# Preserve the historical module alias used by tests and older call sites.
+util = cleanloop_util
 
 # Resolve paths relative to project root (one level up from cleanloop/)
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-util.load_env()
+cleanloop_util.load_env()
 
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 STARTER_GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data_starter.py"
@@ -62,6 +72,7 @@ OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 PROPOSAL_MAX_TOKENS = 2200
 COMPACT_RETRY_MAX_TOKENS = 1200
 STRATEGY_FILENAME = "finance_strategy.json"
+DEFAULT_LLM_TIMEOUT_SECONDS = 90
 
 
 def _iso_now() -> str:
@@ -174,6 +185,15 @@ def _artifact_manifest(
     mutation_failures_path = cleanloop_datasets.get_mutation_failures_path(
         output_path.parent, config.name
     )
+    run_events_path = cleanloop_datasets.get_run_events_path(output_path.parent)
+    row_decisions_path = cleanloop_datasets.get_row_decisions_path(output_path.parent)
+    proposal_events_path = cleanloop_datasets.get_proposal_events_path(
+        output_path.parent
+    )
+    exported_logs_path = cleanloop_datasets.get_exported_logs_path(
+        output_path.parent,
+        config.name,
+    )
     return {
         "dataset": config.name,
         "input_files": list(config.input_filenames),
@@ -183,7 +203,24 @@ def _artifact_manifest(
         "history_json": _path_for_history(history_path),
         "genome_path": _path_for_history(GENOME_PATH),
         "strategy_json": _path_for_history(strategy_path),
+        "run_events_jsonl": _path_for_history(run_events_path),
+        "row_decisions_jsonl": _path_for_history(row_decisions_path),
+        "proposal_events_jsonl": _path_for_history(proposal_events_path),
+        "exported_logs_jsonl": _path_for_history(exported_logs_path),
     }
+
+
+def _resolve_loop_timeout_seconds() -> int:
+    """Return the timeout budget for one loop proposal request."""
+    raw_value = os.getenv(
+        "CLEANLOOP_LLM_TIMEOUT_SECONDS",
+        str(DEFAULT_LLM_TIMEOUT_SECONDS),
+    )
+    try:
+        timeout_seconds = int(raw_value)
+    except ValueError:
+        return DEFAULT_LLM_TIMEOUT_SECONDS
+    return max(timeout_seconds, 1)
 
 
 def _path_for_history(path: Path) -> str:
@@ -290,6 +327,45 @@ def _write_metacognition_snapshot(
     strategy_path = output_dir / STRATEGY_FILENAME
     strategy_path.write_text(json.dumps(snapshot, indent=2), encoding="utf-8")
     return strategy_path
+
+
+def _write_exported_logs(
+    output_dir: Path,
+    history: list[dict],
+    dataset_name: str | None = None,
+) -> Path:
+    """Export structured round logs to JSONL for the dashboard."""
+    logs_path = cleanloop_datasets.get_exported_logs_path(output_dir, dataset_name)
+    logs_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with logs_path.open("w", encoding="utf-8") as handle:
+        for history_entry in history:
+            logs = (
+                history_entry.get("logs") if isinstance(history_entry, dict) else None
+            )
+            if not isinstance(logs, list):
+                continue
+            for index, log in enumerate(logs, start=1):
+                if not isinstance(log, dict):
+                    continue
+                payload = {
+                    "dataset": history_entry.get("dataset"),
+                    "round": history_entry.get("round"),
+                    "action": history_entry.get("action"),
+                    "score": history_entry.get("score"),
+                    "total": history_entry.get("total"),
+                    "started_at": history_entry.get("started_at"),
+                    "finished_at": history_entry.get("finished_at"),
+                    "log_index": index,
+                    "tag": log.get("tag"),
+                    "message": log.get("message"),
+                    "prompt_tokens": log.get("prompt_tokens"),
+                    "completion_tokens": log.get("completion_tokens"),
+                    "total_tokens": log.get("total_tokens"),
+                }
+                handle.write(json.dumps(payload, sort_keys=True) + "\n")
+
+    return logs_path
 
 
 def _append_log(
@@ -492,11 +568,22 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         cleanloop_datasets.build_mutation_playbook(config.name),
         indent=2,
     )
+    export_contract = "\n".join(
+        f"- {line}" for line in cleanloop_datasets.build_export_contract(config.name)
+    )
     finance_scalar_guardrail = (
         "- Values may already be floats or NaN after pandas parsing.\n"
         "- Amount strings may include currency symbols or accounting markers "
         "like USD, EUR, or CR.\n"
         "- Never call .strip() on raw pandas scalars; coerce safely before trimming.\n"
+    )
+    multi_step_repair_guardrail = (
+        "- Prefer a two-stage repair strategy: deterministic normalization first, "
+        "then a narrow mutation playbook for the leftover anomalies.\n"
+        "- When a mutation depends on local finance context, use nearby fields such as "
+        "adjusted_amount, approval_flag, or cancellation status instead of inventing values.\n"
+        "- Route rows with enough business context into finance_mutation_success.csv; "
+        "leave truly unresolved rows in finance_mutation_failures.csv with diagnostics.\n"
     )
 
     return (
@@ -507,9 +594,7 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         "## Assertion Registry\n"
         f"{registry}\n\n"
         "## Export Contract\n"
-        "- finance_master.csv stores deterministic rows plus mutation-fixed rows.\n"
-        "- finance_mutation_success.csv stores only the rows fixed by the mutation playbook.\n"
-        "- finance_mutation_failures.csv stores unresolved anomaly rows for review.\n\n"
+        f"{export_contract}\n\n"
         "## Mutation Playbook\n"
         f"{playbook}\n\n"
         "## Rules\n"
@@ -517,6 +602,7 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         "- Do NOT change function signatures or imports.\n"
         "- Do NOT modify prepare.py, datasets.py, or README.md.\n"
         f"{finance_scalar_guardrail}"
+        f"{multi_step_repair_guardrail}"
         "- Return ONLY the complete file content for clean_data.py.\n"
         "- Wrap your response in a ```python code block.\n"
         "- Before the code block, write a ONE-LINE hypothesis.\n"
@@ -596,17 +682,33 @@ def run_loop(
     config = cleanloop_datasets.get_dataset_config()
     output_path = cleanloop_datasets.get_output_path(OUTPUT_DIR)
     history_path = cleanloop_datasets.get_history_path(OUTPUT_DIR)
-    llm_config = util.resolve_llm_env()
-    client = util.build_llm_client(
+    llm_config = cleanloop_util.resolve_llm_env()
+    client = cleanloop_util.build_llm_client(
         llm_config["endpoint"],
         llm_config["api_key"],
         llm_config["api_version"],
     )
     model = llm_config["model"]
+    timeout_seconds = _resolve_loop_timeout_seconds()
     system_prompt = build_system_prompt(config.name)
     history: list[dict] = []
+    accepted_improvement = False
+
+    pre_run_genome_snapshot = _read_utf8_text(GENOME_PATH)
+    pre_run_output_snapshot = _capture_output_snapshot(output_path.parent)
+    final_genome_snapshot = pre_run_genome_snapshot
+    final_output_snapshot = dict(pre_run_output_snapshot)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+    trace = TraceRecorder(output_dir=OUTPUT_DIR, component="loop")
+    trace.record_run_event(
+        stage="loop-start",
+        decision="begin",
+        dataset=config.name,
+        max_iterations=max_iterations,
+        use_reranker=use_reranker,
+        candidate_count=n_candidates,
+    )
     pre_run_logs = _prepare_fresh_run(config, output_path, history_path)
 
     # Import genome module for reloading
@@ -620,6 +722,12 @@ def run_loop(
         round_logs = list(pre_run_logs) if i == 1 else []
         print(f"\n--- Round {i}/{max_iterations} ---")
         print(f"Dataset: {config.name}")
+        trace.record_run_event(
+            stage="round-start",
+            decision="begin",
+            round=i,
+            dataset=config.name,
+        )
         _append_log(
             round_logs,
             "ROUND_START",
@@ -653,6 +761,13 @@ def run_loop(
         # Step 2: Check if done
         if not results["failed"]:
             print("All assertions passed.")
+            trace.record_proposal_event(
+                stage="round-result",
+                decision="all_assertions_passed",
+                round=i,
+                score=score,
+                total=total,
+            )
             _append_log(
                 round_logs,
                 "ALL_ASSERTIONS_PASSED",
@@ -686,6 +801,7 @@ def run_loop(
                     "logs": round_logs,
                 }
             )
+            accepted_improvement = True
             break
 
         for f in results["failed"]:
@@ -713,6 +829,7 @@ def run_loop(
                 genome_code,
                 results["failed"],
                 n_candidates,
+                timeout_seconds=timeout_seconds,
             )
             _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
         else:
@@ -727,15 +844,29 @@ def run_loop(
                     history,
                     config.name,
                     metacognition,
+                    timeout_seconds=timeout_seconds,
                 )
                 _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
             except (
-                Exception
-            ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+                AttributeError,
+                ImportError,
+                KeyError,
+                OSError,
+                RuntimeError,
+                TimeoutError,
+                TypeError,
+                ValueError,
+            ) as exc:
                 error_message = str(exc)
                 if "Endpoint busy (429 capacity)" not in error_message:
-                    error_message = util.format_llm_exception(exc)
+                    error_message = cleanloop_util.format_llm_exception(exc)
                 print(f"WARNING: {error_message}")
+                trace.record_proposal_event(
+                    stage="proposal-unavailable",
+                    decision="skip",
+                    round=i,
+                    error=error_message,
+                )
                 _append_log(round_logs, "LLM_PROPOSAL_UNAVAILABLE", error_message)
                 history.append(
                     {
@@ -787,6 +918,12 @@ def run_loop(
                 "Skipping round."
             )
             print(f"WARNING: {warning_message}")
+            trace.record_proposal_event(
+                stage="proposal-empty",
+                decision="skip",
+                round=i,
+                attempt_count=attempt_count,
+            )
             _append_log(round_logs, "NO_CODE_RETURNED", warning_message)
             history.append(
                 {
@@ -818,6 +955,12 @@ def run_loop(
             continue
 
         print(f"Hypothesis: {hypothesis}")
+        trace.record_proposal_event(
+            stage="proposal-selected",
+            decision="candidate_generated",
+            round=i,
+            hypothesis=hypothesis,
+        )
         _append_log(round_logs, "HYPOTHESIS_SELECTED", hypothesis)
 
         # Step 4: Write new genome and re-evaluate
@@ -837,8 +980,16 @@ def run_loop(
             )
             new_results = _run_and_evaluate(clean_data, prepare, INPUT_DIR, output_path)
         except (
-            Exception
-        ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+            AttributeError,
+            ImportError,
+            KeyError,
+            OSError,
+            RuntimeError,
+            SyntaxError,
+            TimeoutError,
+            TypeError,
+            ValueError,
+        ) as exc:
             failure_message = f"can_run_genome: {exc}"
             _append_log(round_logs, "MUTATION_EXECUTION_FAILED", failure_message)
             new_results = {
@@ -866,6 +1017,7 @@ def run_loop(
                 f"(+{new_score - score}) {hypothesis[:40]}"
             )
             action = "commit"
+            accepted_improvement = True
             print(f"  Committed: {new_score}/{new_total}")
             _append_log(
                 round_logs,
@@ -877,6 +1029,8 @@ def run_loop(
             _restore_genome_snapshot(GENOME_PATH, genome_before)
             _restore_output_snapshot(output_path.parent, baseline_output_snapshot)
             importlib.reload(clean_data)
+            final_genome_snapshot = genome_before
+            final_output_snapshot = dict(baseline_output_snapshot)
             action = "revert"
             print(f"  Reverted: no improvement ({new_score}/{new_total})")
             _append_log(
@@ -884,6 +1038,14 @@ def run_loop(
                 "REVERT_MUTATION",
                 f"Reverted mutation with score {new_score}/{new_total}",
             )
+        trace.record_proposal_event(
+            stage="round-result",
+            decision=action,
+            round=i,
+            before_score=score,
+            after_score=new_score,
+            total=new_total,
+        )
 
         history.append(
             {
@@ -915,6 +1077,19 @@ def run_loop(
 
     # Save history for dashboard
     history_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
+    _write_exported_logs(output_path.parent, history, config.name)
+
+    if not accepted_improvement:
+        _restore_genome_snapshot(GENOME_PATH, final_genome_snapshot)
+        _restore_output_snapshot(output_path.parent, final_output_snapshot)
+
+    trace.record_run_event(
+        stage="loop-finish",
+        decision="completed",
+        accepted_improvement=accepted_improvement,
+        rounds=len(history),
+    )
+
     print(f"\nHistory saved to {history_path}")
     return history
 
@@ -930,7 +1105,17 @@ def _run_and_evaluate(
     """Run the genome and convert execution errors into structured failures."""
     try:
         clean_data_module.clean(input_dir, output_path)
-    except Exception as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+    except (
+        AttributeError,
+        ImportError,
+        KeyError,
+        OSError,
+        RuntimeError,
+        SyntaxError,
+        TimeoutError,
+        TypeError,
+        ValueError,
+    ) as exc:
         return {
             "passed": [],
             "failed": [f"can_run_genome: {exc}"],
@@ -949,10 +1134,14 @@ def _propose_fix(
     history: list[dict],
     dataset_name: str | None = None,
     metacognition: dict[str, object] | None = None,
+    timeout_seconds: int | None = None,
 ) -> tuple[
     str | None, str, dict[str, object]
 ]:  # pylint: disable=too-many-arguments,too-many-positional-arguments
     """Ask the LLM for a single code fix. Returns (code, hypothesis)."""
+    effective_timeout_seconds = (
+        _resolve_loop_timeout_seconds() if timeout_seconds is None else timeout_seconds
+    )
     user_prompt = build_user_prompt(
         genome_code,
         results,
@@ -967,6 +1156,7 @@ def _propose_fix(
         user_prompt,
         label="AutoGen proposer",
         max_tokens=PROPOSAL_MAX_TOKENS,
+        timeout_seconds=effective_timeout_seconds,
     )
     return code, hypothesis, autogen_runtime.summarize_attempts([attempt])
 

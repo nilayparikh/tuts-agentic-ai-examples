@@ -32,12 +32,16 @@ Environment variables (from .env):
 # pylint: disable=duplicate-code
 
 import argparse
+import sys
 from pathlib import Path
 from typing import Any
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from cleanloop import util
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
 util.load_env()
 
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
@@ -101,7 +105,6 @@ DIFFICULTY_LEVELS: dict[int, str] = {
 
 def generate_messy_csv(
     client: Any,
-    _model: str,
     difficulty: int,
 ) -> str:
     """Generate one adversarial CSV file at the given difficulty level."""
@@ -162,7 +165,6 @@ def main() -> None:
         llm_config["api_key"],
         llm_config["api_version"],
     )
-    model = llm_config["model"]
 
     INPUT_DIR.mkdir(exist_ok=True)
     levels = [max(1, min(5, level)) for level in (args.levels or [args.difficulty])]
@@ -170,7 +172,10 @@ def main() -> None:
     if args.levels:
         print(f"Generating {len(levels)} adversarial CSVs across levels: {levels}")
         for level in levels:
-            csv_content = generate_messy_csv(client, model, level)
+            csv_content = generate_messy_csv(
+                client,
+                level,
+            )
             filename = f"adversarial_d{level}_01.csv"
             path = INPUT_DIR / filename
             path.write_text(csv_content, encoding="utf-8")
@@ -181,7 +186,10 @@ def main() -> None:
             f"at difficulty {args.difficulty}"
         )
         for i in range(1, args.count + 1):
-            csv_content = generate_messy_csv(client, model, args.difficulty)
+            csv_content = generate_messy_csv(
+                client,
+                args.difficulty,
+            )
             filename = f"adversarial_d{args.difficulty}_{i:02d}.csv"
             path = INPUT_DIR / filename
             path.write_text(csv_content, encoding="utf-8")

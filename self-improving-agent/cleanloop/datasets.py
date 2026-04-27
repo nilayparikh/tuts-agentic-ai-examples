@@ -8,11 +8,115 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import cast
 
 
 CLEANLOOP_DATASET_ENV = "CLEANLOOP_DATASET"
 DEFAULT_DATASET = "finance"
 AGENDA_PATH = Path(__file__).resolve().parent / "README.md"
+TRACES_DIRNAME = "traces"
+LOGS_DIRNAME = "logs"
+RUN_EVENTS_FILENAME = "run-events.jsonl"
+ROW_DECISIONS_FILENAME = "row-decisions.jsonl"
+PROPOSAL_EVENTS_FILENAME = "proposal-events.jsonl"
+
+FINANCE_COLUMNS = ("date", "entity", "currency", "value", "category")
+FAILURE_COLUMNS = (
+    "source_file",
+    "invoice_id",
+    "customer",
+    "raw_date",
+    "raw_amount",
+    "currency",
+    "status",
+    "anomaly_reason",
+    "mutation_hint",
+)
+MUTATION_RULES = (
+    {
+        "token": "FREE TRIAL",
+        "route": "finance_mutation_success.csv",
+        "strategy": "zero_value",
+        "action": "Write value 0.0 and preserve the existing active category.",
+        "mutation_hint": (
+            "Map the promotional invoice to 0.0 and preserve the status."
+        ),
+    },
+    {
+        "token": "COMPLIMENTARY",
+        "route": "finance_mutation_success.csv",
+        "strategy": "zero_value",
+        "action": "Write value 0.0 and preserve the existing active category.",
+        "mutation_hint": (
+            "Map the complimentary invoice to 0.0 and preserve the status."
+        ),
+    },
+    {
+        "token": "OFFSET",
+        "route": "finance_mutation_success.csv",
+        "strategy": "zero_value",
+        "action": "Write value 0.0 and preserve the disputed category.",
+        "mutation_hint": "Map the offset entry to 0.0 and preserve the status.",
+    },
+    {
+        "token": "DISCOUNTED",
+        "route": "finance_mutation_success.csv",
+        "strategy": "adjusted_amount",
+        "action": (
+            "Use adjusted_amount as the final numeric value when the adjustment is approved."
+        ),
+        "mutation_hint": (
+            "Read adjusted_amount and approval_flag to recover the approved discounted value."
+        ),
+    },
+    {
+        "token": "FX HOLD",
+        "route": "finance_mutation_success.csv",
+        "strategy": "adjusted_amount",
+        "action": (
+            "Use adjusted_amount as the final numeric value when the FX update is approved."
+        ),
+        "mutation_hint": (
+            "Read adjusted_amount and approval_flag to recover the approved FX-adjusted value."
+        ),
+    },
+    {
+        "token": "REVERSAL",
+        "route": "finance_mutation_success.csv",
+        "strategy": "adjusted_amount",
+        "action": (
+            "Use adjusted_amount as the signed reversal value when the adjustment is approved."
+        ),
+        "mutation_hint": (
+            "Read adjusted_amount and approval_flag to recover the approved signed reversal value."
+        ),
+    },
+    {
+        "token": "RESOLUTION_AMOUNT",
+        "route": "finance_mutation_success.csv",
+        "strategy": "resolution_amount",
+        "action": (
+            "Use resolution_amount as the final numeric value when resolution_flag is approved."
+        ),
+        "mutation_hint": (
+            "Read resolution_amount and resolution_flag to recover the analyst-approved amount."
+        ),
+    },
+    {
+        "token": "BLANK_CANCELLED_OR_VOID",
+        "route": "finance_mutation_success.csv",
+        "strategy": "zero_value",
+        "statuses": ("cancelled", "void"),
+        "action": (
+            "Write value 0.0 when amount is blank and the invoice status is cancelled or void."
+        ),
+        "mutation_hint": (
+            "Map blank cancelled or void invoices to 0.0 and preserve the status."
+        ),
+    },
+)
+UNRESOLVED_MUTATION_TOKEN_GROUP = "PENDING / TBD / ERROR / ERR / CHARGEBACK"
+UNRESOLVED_MUTATION_ACTION = "Dump the unresolved row for later mutation review when no shipped rule or resolution metadata applies."
 
 
 @dataclass(frozen=True)
@@ -48,15 +152,15 @@ FINANCE_CONFIG = DatasetConfig(
     mutation_success_filename="finance_mutation_success.csv",
     mutation_failures_filename="finance_mutation_failures.csv",
     history_filename="finance_eval_history.json",
-    required_columns=("date", "entity", "value", "category"),
-    row_count_range=(50, 120),
+    required_columns=FINANCE_COLUMNS,
+    row_count_range=(55, 60),
     goal=(
         "Run a deterministic finance cleaning pass, then export mutation successes "
         "and unresolved failures beside the canonical master CSV."
     ),
     requirements=(
         "Use only the five finance_*.csv inputs.",
-        "Write finance_master.csv with date, entity, value, category.",
+        "Write finance_master.csv with date, entity, currency, value, category.",
         "Write finance_mutation_success.csv with the same canonical schema.",
         "Write finance_mutation_failures.csv as the unresolved anomaly dump.",
         "Preserve good rows even when amount strings contain symbols, sentinels, or notes.",
@@ -136,6 +240,37 @@ def get_history_path(output_dir: Path, dataset_name: str | None = None) -> Path:
     return output_dir / config.history_filename
 
 
+def get_traces_dir(output_dir: Path) -> Path:
+    """Return the shared trace export directory."""
+    return output_dir / TRACES_DIRNAME
+
+
+def get_run_events_path(output_dir: Path) -> Path:
+    """Return the run-level trace export path."""
+    return get_traces_dir(output_dir) / RUN_EVENTS_FILENAME
+
+
+def get_row_decisions_path(output_dir: Path) -> Path:
+    """Return the row-decision trace export path."""
+    return get_traces_dir(output_dir) / ROW_DECISIONS_FILENAME
+
+
+def get_proposal_events_path(output_dir: Path) -> Path:
+    """Return the proposal-event trace export path."""
+    return get_traces_dir(output_dir) / PROPOSAL_EVENTS_FILENAME
+
+
+def get_logs_dir(output_dir: Path) -> Path:
+    """Return the exported loop-log directory."""
+    return output_dir / LOGS_DIRNAME
+
+
+def get_exported_logs_path(output_dir: Path, dataset_name: str | None = None) -> Path:
+    """Return the raw loop-log export path used by the dashboard."""
+    config = get_dataset_config(dataset_name)
+    return get_logs_dir(output_dir) / f"{config.name}_round_logs.jsonl"
+
+
 def get_reference_path(reference_dir: Path, dataset_name: str | None = None) -> Path:
     """Return the finance reference CSV path."""
     config = get_dataset_config(dataset_name)
@@ -146,6 +281,29 @@ def build_program_text(dataset_name: str | None = None) -> str:
     """Load the CleanLoop agenda text from the example README."""
     _ = get_dataset_config(dataset_name)
     return AGENDA_PATH.read_text(encoding="utf-8").strip()
+
+
+def get_failure_columns() -> tuple[str, ...]:
+    """Return the canonical mutation-failure dump schema."""
+    return FAILURE_COLUMNS
+
+
+def get_mutation_rule_lookup() -> dict[str, dict[str, object]]:
+    """Return the shipped mutation rules keyed by raw amount token."""
+    return {cast(str, rule["token"]): dict(rule) for rule in MUTATION_RULES}
+
+
+def build_export_contract(dataset_name: str | None = None) -> tuple[str, ...]:
+    """Return the stable export-contract lines used by prompts and docs."""
+    config = get_dataset_config(dataset_name)
+    return (
+        f"{config.output_filename} stores deterministic rows plus mutation-fixed rows.",
+        (
+            f"{config.mutation_success_filename} stores only the rows fixed by the "
+            "mutation playbook."
+        ),
+        f"{config.mutation_failures_filename} stores unresolved anomaly rows for review.",
+    )
 
 
 def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, str]]:
@@ -160,12 +318,35 @@ def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, 
         {
             "name": "mutation_success_has_required_columns",
             "severity": "critical",
-            "description": "Mutation success report uses date, entity, value, category",
+            "description": (
+                "Mutation success report uses date, entity, currency, value, category"
+            ),
+        },
+        {
+            "name": "mutation_success_rows_in_master",
+            "severity": "critical",
+            "description": (
+                "Every mutation-success row is also present in finance_master.csv"
+            ),
         },
         {
             "name": "can_read_mutation_failures_output",
             "severity": "critical",
             "description": "Mutation failure dump exists and is valid CSV",
+        },
+        {
+            "name": "mutation_failures_has_required_columns",
+            "severity": "critical",
+            "description": (
+                "Mutation failure dump uses the canonical failure-sidecar schema"
+            ),
+        },
+        {
+            "name": "mutation_failures_have_diagnostics",
+            "severity": "high",
+            "description": (
+                "Mutation failure rows keep source, invoice, amount, and anomaly details"
+            ),
         },
         {
             "name": "can_read_output",
@@ -175,7 +356,7 @@ def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, 
         {
             "name": "has_required_columns",
             "severity": "critical",
-            "description": "Output has date, entity, value, category columns",
+            "description": "Output has date, entity, currency, value, category columns",
         },
         {
             "name": "value_is_numeric",
@@ -216,25 +397,19 @@ def build_assertion_registry(dataset_name: str | None = None) -> list[dict[str, 
 def build_mutation_playbook(dataset_name: str | None = None) -> list[dict[str, str]]:
     """Return the shipped mutation rules for known finance amount anomalies."""
     _ = get_dataset_config(dataset_name)
-    return [
+    playbook: list[dict[str, str]] = [
         {
-            "token": "FREE TRIAL",
-            "route": "finance_mutation_success.csv",
-            "action": "Write value 0.0 and preserve the existing active category.",
-        },
-        {
-            "token": "COMPLIMENTARY",
-            "route": "finance_mutation_success.csv",
-            "action": "Write value 0.0 and preserve the existing active category.",
-        },
-        {
-            "token": "OFFSET",
-            "route": "finance_mutation_success.csv",
-            "action": "Write value 0.0 and preserve the disputed category.",
-        },
-        {
-            "token": "PENDING / TBD / ERROR / ERR / CHARGEBACK / REVERSAL",
-            "route": "finance_mutation_failures.csv",
-            "action": "Dump the unresolved row for later mutation review when no rule applies.",
-        },
+            "token": cast(str, rule["token"]),
+            "route": cast(str, rule["route"]),
+            "action": cast(str, rule["action"]),
+        }
+        for rule in MUTATION_RULES
     ]
+    playbook.append(
+        {
+            "token": UNRESOLVED_MUTATION_TOKEN_GROUP,
+            "route": "finance_mutation_failures.csv",
+            "action": UNRESOLVED_MUTATION_ACTION,
+        }
+    )
+    return playbook

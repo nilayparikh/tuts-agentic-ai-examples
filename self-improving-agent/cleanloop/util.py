@@ -6,11 +6,10 @@ import argparse
 import importlib
 import os
 import platform
-import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXAMPLE_ROOT = Path(__file__).resolve().parent
@@ -52,19 +51,25 @@ def load_env() -> None:
 
 def _resolve_llm_env() -> dict[str, str]:
     """Resolve the provider-agnostic LLM configuration for CleanLoop."""
-    if os.getenv("LLM_ENDPOINT"):
-        endpoint_var = "LLM_ENDPOINT"
-    elif os.getenv("AZURE_OPENAI_ENDPOINT"):
+    azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT") or ""
+    generic_endpoint = os.getenv("LLM_ENDPOINT") or ""
+
+    if azure_endpoint:
         endpoint_var = "AZURE_OPENAI_ENDPOINT"
+    elif generic_endpoint:
+        endpoint_var = "LLM_ENDPOINT"
     elif os.getenv("OPENAI_BASE_URL"):
         endpoint_var = "OPENAI_BASE_URL"
     else:
         endpoint_var = "AZURE_ENDPOINT"
 
-    if os.getenv("LLM_API_KEY"):
-        api_key_var = "LLM_API_KEY"
-    elif os.getenv("AZURE_OPENAI_API_KEY"):
+    azure_api_key = os.getenv("AZURE_OPENAI_API_KEY") or ""
+    generic_api_key = os.getenv("LLM_API_KEY") or ""
+
+    if azure_endpoint and azure_api_key:
         api_key_var = "AZURE_OPENAI_API_KEY"
+    elif generic_api_key:
+        api_key_var = "LLM_API_KEY"
     elif os.getenv("OPENAI_API_KEY"):
         api_key_var = "OPENAI_API_KEY"
     elif os.getenv("GITHUB_TOKEN"):
@@ -73,25 +78,28 @@ def _resolve_llm_env() -> dict[str, str]:
         api_key_var = "AZURE_API_KEY"
 
     endpoint = (
-        os.getenv("LLM_ENDPOINT")
-        or os.getenv("AZURE_OPENAI_ENDPOINT")
+        azure_endpoint
+        or generic_endpoint
         or os.getenv("OPENAI_BASE_URL")
         or os.getenv("AZURE_ENDPOINT")
         or ""
     )
     api_key = (
-        os.getenv("LLM_API_KEY")
-        or os.getenv("AZURE_OPENAI_API_KEY")
+        (azure_api_key if azure_endpoint else "")
+        or generic_api_key
         or os.getenv("OPENAI_API_KEY")
         or os.getenv("AZURE_API_KEY")
         or os.getenv("GITHUB_TOKEN")
         or ""
     )
-    model = (
-        os.getenv("MODEL_NAME")
-        or os.getenv("AZURE_OPENAI_DEPLOY_NAME")
-        or DEFAULT_MODEL
-    )
+    if azure_endpoint and os.getenv("AZURE_OPENAI_DEPLOY_NAME"):
+        model = os.getenv("AZURE_OPENAI_DEPLOY_NAME") or DEFAULT_MODEL
+    else:
+        model = (
+            os.getenv("MODEL_NAME")
+            or os.getenv("AZURE_OPENAI_DEPLOY_NAME")
+            or DEFAULT_MODEL
+        )
     api_version = (
         os.getenv("LLM_API_VERSION")
         or os.getenv("AZURE_OPENAI_API_VERSION")
@@ -227,6 +235,8 @@ def _is_capacity_error(exc: Exception) -> bool:
 
 def _format_llm_exception(exc: Exception) -> str:
     """Convert provider errors into clearer learner-facing messages."""
+    if isinstance(exc, TimeoutError):
+        return f"LLM request timed out: {exc}"
     if _is_capacity_error(exc):
         return (
             "Endpoint busy (429 capacity): "
@@ -238,6 +248,19 @@ def _format_llm_exception(exc: Exception) -> str:
 def format_llm_exception(exc: Exception) -> str:
     """Convert provider errors into clearer learner-facing messages."""
     return _format_llm_exception(exc)
+
+
+def _build_text_completion_create_args(
+    *,
+    max_tokens: int,
+    temperature: float | None,
+) -> dict[str, object]:
+    """Build provider-specific request args for plain text completions."""
+    create_args: dict[str, object] = {"max_tokens": max_tokens}
+    if temperature is not None:
+        create_args["temperature"] = temperature
+
+    return create_args
 
 
 def create_text_completion(
@@ -258,9 +281,10 @@ def create_text_completion(
         messages.append(system_message_class(content=system_prompt))
     messages.append(user_message_class(content=user_prompt, source="user"))
 
-    create_args: dict[str, object] = {"max_tokens": max_tokens}
-    if temperature is not None:
-        create_args["temperature"] = temperature
+    create_args = _build_text_completion_create_args(
+        max_tokens=max_tokens,
+        temperature=temperature,
+    )
 
     response = _run_coro(
         client.create(messages=messages, extra_create_args=create_args),
@@ -300,6 +324,11 @@ def _get_python_path() -> Path:
     return VENV_DIR / "bin" / "python"
 
 
+def get_python_path() -> Path:
+    """Return the Python interpreter path used by public CleanLoop wrappers."""
+    return _get_python_path()
+
+
 def _venv_is_ready() -> bool:
     """Return whether the shared example venv exists and is runnable."""
     return _get_python_path().exists()
@@ -317,6 +346,13 @@ def _should_bootstrap_to_venv(
     return _get_python_path().resolve() != active_python.resolve()
 
 
+def should_bootstrap_to_venv(
+    argv: list[str], current_python: Path | None = None
+) -> bool:
+    """Return whether a public CleanLoop wrapper should re-exec in the venv."""
+    return _should_bootstrap_to_venv(argv, current_python=current_python)
+
+
 def _run_module_main(module_name: str, argv: list[str]) -> int:
     """Import a CleanLoop module and invoke its main() with temporary argv."""
     module = importlib.import_module(module_name)
@@ -332,29 +368,26 @@ def _run_module_main(module_name: str, argv: list[str]) -> int:
 
 def _cmd_status(_args: argparse.Namespace) -> int:
     """Print the local CleanLoop dataset and environment status."""
-    from cleanloop import (
-        datasets as cleanloop_datasets,
+    from cleanloop.status_snapshot import (
+        build_status_snapshot,
     )  # pylint: disable=import-outside-toplevel
 
-    load_env()
-    config = cleanloop_datasets.get_dataset_config()
-    model = (
-        os.getenv("MODEL_NAME")
-        or os.getenv("AZURE_OPENAI_DEPLOY_NAME")
-        or DEFAULT_MODEL
-    )
+    # Keep the CLI output simple while delegating the fact-gathering into a
+    # small helper that lesson docs can point to directly.
+    snapshot = build_status_snapshot(INPUT_DIR)
 
     print("CleanLoop — Project Status")
     print("\nInput Files:")
-    for path in cleanloop_datasets.get_input_paths(INPUT_DIR):
-        print(f"  {path.name:<32} {_count_data_rows(path):>4} rows")
+    input_rows = cast(dict[str, int], snapshot["input_rows"])
+    for name, row_count in input_rows.items():
+        print(f"  {name:<32} {int(row_count):>4} rows")
 
     print("\nEnvironment:")
-    print(f"  Python:   {sys.version.split()[0]}")
-    print(f"  .env:     {'exists' if ENV_FILE.exists() else 'missing'}")
-    print(f"  Model:    {model}")
-    print(f"  Output:   {'exists' if OUTPUT_DIR.exists() else 'missing'}")
-    print(f"  Dataset:  {config.name}")
+    print(f"  Python:   {snapshot['python']}")
+    print(f"  .env:     {'exists' if snapshot['env_exists'] else 'missing'}")
+    print(f"  Model:    {snapshot['model']}")
+    print(f"  Output:   {'exists' if snapshot['output_exists'] else 'missing'}")
+    print(f"  Dataset:  {snapshot['dataset']}")
     return 0
 
 
@@ -376,7 +409,8 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
         if args.output_csv
         else datasets.get_output_path(OUTPUT_DIR)
     )
-    if not target.exists():
+    should_refresh_output = args.output_csv is None
+    if should_refresh_output or not target.exists():
         OUTPUT_DIR.mkdir(exist_ok=True)
         clean_data.clean(INPUT_DIR, target)
         print(f"Ran genome. Output: {target}")
@@ -432,19 +466,18 @@ def _cmd_dashboard(_args: argparse.Namespace) -> int:
 
 
 def _cmd_reset(_args: argparse.Namespace) -> int:
-    """Clear output artifacts and restore the starter genome."""
-    if OUTPUT_DIR.exists():
-        shutil.rmtree(OUTPUT_DIR)
-        print("Deleted cleanloop/.output")
-    else:
-        print("No cleanloop/.output directory to delete")
+    """Restore the starter genome without deleting the shipped sample outputs."""
+    from cleanloop.reset_workflow import (
+        reset_to_starter,
+    )  # pylint: disable=import-outside-toplevel
 
-    GENOME_PATH.write_text(
-        STARTER_GENOME_PATH.read_text(encoding="utf-8"), encoding="utf-8"
+    # Reset stays explicit so learners can see the trust-recovery path in one
+    # place instead of hunting through a lesson-specific wrapper package.
+    return reset_to_starter(
+        output_dir=OUTPUT_DIR,
+        genome_path=GENOME_PATH,
+        starter_genome_path=STARTER_GENOME_PATH,
     )
-    print("Restored cleanloop/clean_data.py from clean_data_starter.py")
-    print("\nReady to re-run: python util.py loop\n")
-    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:

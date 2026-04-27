@@ -24,6 +24,33 @@ from cleanloop import util as cleanloop_util
 class CleanLoopVerifyTests(unittest.TestCase):
     """Keep learner-facing verify output stable and actionable."""
 
+    def test_check_llm_call_uses_generic_completion_signature(self) -> None:
+        """Verify should not pass provider-specific kwargs into plain text completion."""
+        stdout = io.StringIO()
+        config = {
+            "endpoint": "https://example.services.ai.azure.com/models",
+            "api_key": "secret",
+            "api_version": "2024-06-01",
+            "model": "microsoft/Phi-4",
+        }
+
+        with redirect_stdout(stdout):
+            with mock.patch.object(verify.util, "resolve_llm_env", return_value=config):
+                with mock.patch.object(
+                    verify.util, "build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(
+                        verify.util,
+                        "create_text_completion",
+                        return_value="hello",
+                    ) as create_completion:
+                        result = verify.check_llm_call()
+
+        self.assertTrue(result)
+        self.assertNotIn("endpoint", create_completion.call_args.kwargs)
+        self.assertNotIn("api_key", create_completion.call_args.kwargs)
+        self.assertNotIn("model", create_completion.call_args.kwargs)
+
     def test_build_llm_client_adds_model_info_for_openai_compatible_v1(self) -> None:
         """Pass model_info for non-OpenAI models behind a standard /v1 endpoint."""
         captured_kwargs: dict[str, object] = {}
@@ -41,10 +68,10 @@ class CleanLoopVerifyTests(unittest.TestCase):
             cleanloop_util,
             "_resolve_llm_env",
             return_value={
-                "endpoint": "https://integrate.api.nvidia.com/v1",
+                "endpoint": "https://example.openai.compat/v1",
                 "api_key": "secret",
                 "api_version": "2024-06-01",
-                "model": "deepseek-ai/deepseek-v4-pro",
+                "model": "microsoft/Phi-4",
                 "endpoint_var": "LLM_ENDPOINT",
                 "api_key_var": "LLM_API_KEY",
             },
@@ -55,14 +82,14 @@ class CleanLoopVerifyTests(unittest.TestCase):
                 return_value=fake_openai_module,
             ):
                 cleanloop_util._build_llm_client(
-                    "https://integrate.api.nvidia.com/v1",
+                    "https://example.openai.compat/v1",
                     "secret",
                     "2024-06-01",
                 )
 
         self.assertEqual(
             captured_kwargs["base_url"],
-            "https://integrate.api.nvidia.com/v1",
+            "https://example.openai.compat/v1",
         )
         self.assertIn("model_info", captured_kwargs)
         self.assertIsInstance(captured_kwargs["model_info"], dict)
@@ -128,10 +155,10 @@ class CleanLoopVerifyTests(unittest.TestCase):
         """Forward the verify timeout budget into the live completion helper."""
         stdout = io.StringIO()
         config = {
-            "endpoint": "https://integrate.api.nvidia.com/v1",
+            "endpoint": "https://example.services.ai.azure.com/models",
             "api_key": "secret",
             "api_version": "2024-06-01",
-            "model": "deepseek-ai/deepseek-v4-pro",
+            "model": "microsoft/Phi-4",
         }
 
         with redirect_stdout(stdout):

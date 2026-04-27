@@ -4,7 +4,7 @@ CleanLoop now uses one finance arena. The genome always reads these five CSVs
 and writes one master file with this schema:
 
 ```text
-date, entity, value, category
+date, entity, currency, value, category
 ```
 
 ## Files

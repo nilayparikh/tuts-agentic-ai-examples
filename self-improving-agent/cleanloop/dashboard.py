@@ -16,12 +16,14 @@ Reads from:
     git log                                         — commit history
 """
 
-import json
+# pyright: reportMissingImports=false, reportMissingModuleSource=false
+# pylint: disable=import-error,redefined-outer-name
+
 import sys
 from pathlib import Path
 
-import pandas as pd
-import streamlit as st
+import pandas as pd  # type: ignore[import-not-found, import-untyped]
+import streamlit as st  # type: ignore[import-not-found]
 
 # ─── PATHS ────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -29,7 +31,9 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from cleanloop import datasets as cleanloop_datasets
+from cleanloop import dashboard_artifacts
 from cleanloop import dashboard_metrics
+from cleanloop.history_store import load_history as load_history_file
 
 OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 DATASET_CONFIG = cleanloop_datasets.get_dataset_config()
@@ -52,21 +56,23 @@ st.title(f"CleanLoop — {DATASET_CONFIG.label} Dashboard")
 st.caption(f"Selected dataset: {DATASET_CONFIG.name}")
 
 OUTPUT_CSV = cleanloop_datasets.get_output_path(OUTPUT_DIR, DATASET_CONFIG.name)
+EXPORTED_LOGS_PATH = cleanloop_datasets.get_exported_logs_path(
+    OUTPUT_DIR,
+    DATASET_CONFIG.name,
+)
 ATTEMPT_TOKEN_BUDGET = 2200
 
 
 def load_history() -> list[dict]:
     """Load eval history from the JSON log file."""
-    if not HISTORY_PATH.exists():
-        return []
-    return json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
+    return load_history_file(HISTORY_PATH)
 
 
-def _llm_info(entry: dict) -> dict:
+def _llm_info(history_entry: dict) -> dict:
     """Return normalized LLM diagnostics for one history entry."""
-    llm = entry.get("llm")
-    if isinstance(llm, dict):
-        return llm
+    llm_info = history_entry.get("llm")
+    if isinstance(llm_info, dict):
+        return llm_info
     return {
         "selected_attempt": "none",
         "attempts": [],
@@ -80,24 +86,24 @@ def _blueprint_rows(history_rows: list[dict]) -> list[dict[str, object]]:
     """Build a compact per-round blueprint table."""
     rows: list[dict[str, object]] = []
     judge_rows = dashboard_metrics.build_judge_metric_rows(history_rows)
-    for entry, judge_row in zip(history_rows, judge_rows):
-        llm = _llm_info(entry)
+    for history_entry, judge_row in zip(history_rows, judge_rows):
+        llm_info = _llm_info(history_entry)
         rows.append(
             {
-                "Round": entry.get("round"),
-                "Action": entry.get("action", ""),
-                "Before": f"{entry.get('before_score', entry.get('score', '?'))}/{entry.get('total', '?')}",
-                "After": f"{entry.get('score', '?')}/{entry.get('total', '?')}",
-                "Delta": entry.get("score_delta", 0),
-                "LLM Path": llm.get("selected_attempt", "none"),
-                "Tokens": llm.get("total_tokens"),
+                "Round": history_entry.get("round"),
+                "Action": history_entry.get("action", ""),
+                "Before": f"{history_entry.get('before_score', history_entry.get('score', '?'))}/{history_entry.get('total', '?')}",
+                "After": f"{history_entry.get('score', '?')}/{history_entry.get('total', '?')}",
+                "Delta": history_entry.get("score_delta", 0),
+                "LLM Path": llm_info.get("selected_attempt", "none"),
+                "Tokens": llm_info.get("total_tokens"),
                 "Recall %": judge_row.get("After Recall %"),
                 "Precision %": judge_row.get("After Precision %"),
                 "Missing": judge_row.get("Missing Rows"),
                 "Unexpected": judge_row.get("Unexpected Rows"),
-                "Hypothesis": entry.get("hypothesis", ""),
-                "Started": entry.get("started_at", ""),
-                "Finished": entry.get("finished_at", ""),
+                "Hypothesis": history_entry.get("hypothesis", ""),
+                "Started": history_entry.get("started_at", ""),
+                "Finished": history_entry.get("finished_at", ""),
             }
         )
     return rows
@@ -106,22 +112,26 @@ def _blueprint_rows(history_rows: list[dict]) -> list[dict[str, object]]:
 def _attempt_rows(history_rows: list[dict]) -> list[dict[str, object]]:
     """Flatten all LLM attempts across rounds for diagnostics tables."""
     rows: list[dict[str, object]] = []
-    for entry in history_rows:
-        llm = _llm_info(entry)
-        for attempt in llm.get("attempts", []):
-            usage = attempt.get("usage", {}) if isinstance(attempt, dict) else {}
+    for history_entry in history_rows:
+        llm_info = _llm_info(history_entry)
+        for attempt_record in llm_info.get("attempts", []):
+            usage = (
+                attempt_record.get("usage", {})
+                if isinstance(attempt_record, dict)
+                else {}
+            )
             rows.append(
                 {
-                    "Round": entry.get("round"),
-                    "Label": attempt.get("label"),
-                    "Model": attempt.get("model"),
-                    "Code Found": attempt.get("code_found"),
+                    "Round": history_entry.get("round"),
+                    "Label": attempt_record.get("label"),
+                    "Model": attempt_record.get("model"),
+                    "Code Found": attempt_record.get("code_found"),
                     "Prompt Tokens": usage.get("prompt_tokens"),
                     "Completion Tokens": usage.get("completion_tokens"),
                     "Total Tokens": usage.get("total_tokens"),
-                    "Prompt Chars": attempt.get("prompt_chars"),
-                    "Response Chars": attempt.get("response_chars"),
-                    "Hypothesis": attempt.get("hypothesis"),
+                    "Prompt Chars": attempt_record.get("prompt_chars"),
+                    "Response Chars": attempt_record.get("response_chars"),
+                    "Hypothesis": attempt_record.get("hypothesis"),
                 }
             )
     return rows
@@ -130,8 +140,8 @@ def _attempt_rows(history_rows: list[dict]) -> list[dict[str, object]]:
 def _total_tokens(history_rows: list[dict]) -> int:
     """Sum total LLM tokens across all rounds when available."""
     total = 0
-    for entry in history_rows:
-        value = _llm_info(entry).get("total_tokens")
+    for history_entry in history_rows:
+        value = _llm_info(history_entry).get("total_tokens")
         if isinstance(value, int):
             total += value
     return total
@@ -149,6 +159,10 @@ def _show_failure_list(title: str, failures: list[str]) -> None:
 
 # Load data
 history = load_history()
+artifact_bundle = dashboard_artifacts.load_dashboard_artifacts(
+    OUTPUT_DIR,
+    DATASET_CONFIG.name,
+)
 
 if not history:
     st.warning(f"No {HISTORY_PATH.name} found. " "Run `python util.py loop` first.")
@@ -188,6 +202,11 @@ if history:
         st.sidebar.metric("Unexpected Rows", int(latest_judge["unexpected_rows"]))
     st.sidebar.caption(f"History: {HISTORY_PATH.relative_to(PROJECT_ROOT)}")
     st.sidebar.caption(f"Output: {OUTPUT_CSV.relative_to(PROJECT_ROOT)}")
+    st.sidebar.caption(
+        "Traces: "
+        f"{cleanloop_datasets.get_traces_dir(OUTPUT_DIR).relative_to(PROJECT_ROOT)}"
+    )
+    st.sidebar.caption(f"Logs: {EXPORTED_LOGS_PATH.relative_to(PROJECT_ROOT)}")
 
 
 # =====================================================================
@@ -209,11 +228,11 @@ with tab_score:
     score_df = pd.DataFrame(
         [
             {
-                "Round": entry["round"],
-                "Passed": entry["score"],
-                "Failed": entry["total"] - entry["score"],
+                "Round": history_entry["round"],
+                "Passed": history_entry["score"],
+                "Failed": history_entry["total"] - history_entry["score"],
             }
-            for entry in history
+            for history_entry in history
         ]
     )
     st.line_chart(
@@ -246,15 +265,15 @@ with tab_blueprint:
         st.dataframe(judge_df, width="stretch", hide_index=True)
 
     st.subheader("Round-by-Round Blueprint")
-    for entry in history:
-        llm = _llm_info(entry)
-        before_metrics = entry.get("before_metrics", {})
-        after_metrics = entry.get("metrics", {})
+    for history_entry in history:
+        llm_info = _llm_info(history_entry)
+        before_metrics = history_entry.get("before_metrics", {})
+        after_metrics = history_entry.get("metrics", {})
         label = (
-            f"Round {entry.get('round', '?')} | {entry.get('action', '?')} | "
-            f"{entry.get('before_score', entry.get('score', '?'))}/"
-            f"{entry.get('total', '?')} -> {entry.get('score', '?')}/"
-            f"{entry.get('total', '?')}"
+            f"Round {history_entry.get('round', '?')} | {history_entry.get('action', '?')} | "
+            f"{history_entry.get('before_score', history_entry.get('score', '?'))}/"
+            f"{history_entry.get('total', '?')} -> {history_entry.get('score', '?')}/"
+            f"{history_entry.get('total', '?')}"
         )
         with st.expander(label):
             left, right = st.columns(2)
@@ -262,15 +281,17 @@ with tab_blueprint:
                 st.markdown("**Execution**")
                 st.write(
                     {
-                        "dataset": entry.get("dataset"),
-                        "model": entry.get("model"),
-                        "started_at": entry.get("started_at"),
-                        "finished_at": entry.get("finished_at"),
-                        "hypothesis": entry.get("hypothesis"),
-                        "llm_path": llm.get("selected_attempt"),
+                        "dataset": history_entry.get("dataset"),
+                        "model": history_entry.get("model"),
+                        "started_at": history_entry.get("started_at"),
+                        "finished_at": history_entry.get("finished_at"),
+                        "hypothesis": history_entry.get("hypothesis"),
+                        "llm_path": llm_info.get("selected_attempt"),
                     }
                 )
-                _show_failure_list("Failures Before", entry.get("before_failed", []))
+                _show_failure_list(
+                    "Failures Before", history_entry.get("before_failed", [])
+                )
             with right:
                 st.markdown("**Judge Metrics**")
                 st.write(
@@ -280,17 +301,19 @@ with tab_blueprint:
                     }
                 )
                 st.markdown("**Artifacts**")
-                st.json(entry.get("artifacts", {}))
-                _show_failure_list("Failures After", entry.get("failed", []))
-                logs_df = pd.DataFrame(dashboard_metrics.build_log_rows([entry]))
+                st.json(history_entry.get("artifacts", {}))
+                _show_failure_list("Failures After", history_entry.get("failed", []))
+                logs_df = pd.DataFrame(
+                    dashboard_metrics.build_log_rows([history_entry])
+                )
                 if not logs_df.empty:
                     st.markdown("**Execution Logs**")
                     st.dataframe(logs_df, width="stretch", hide_index=True)
             st.markdown("**Mutable Genome Diff**")
             st.code(
                 dashboard_metrics.build_mutation_diff(
-                    entry.get("genome_before"),
-                    entry.get("genome_after"),
+                    history_entry.get("genome_before"),
+                    history_entry.get("genome_after"),
                 ),
                 language="diff",
             )
@@ -328,7 +351,12 @@ with tab_data:
 
             st.markdown("**Input Files**")
             st.write(list(DATASET_CONFIG.input_filenames))
-        except Exception as exc:
+        except (
+            OSError,
+            ValueError,
+            pd.errors.ParserError,
+            pd.errors.EmptyDataError,
+        ) as exc:
             st.error(f"Could not read CSV: {exc}")
     else:
         st.info(f"No {OUTPUT_CSV.name} yet — run the loop first.")
@@ -339,20 +367,28 @@ with tab_logs:
     st.caption(
         "Every structured teaching log emitted during the loop, including token usage."
     )
+    exported_logs_df = pd.DataFrame(artifact_bundle["exported_logs"])
+    if exported_logs_df.empty:
+        st.info("No exported loop-log JSONL file has been written yet.")
+    else:
+        st.markdown("**Exported Log Stream**")
+        st.dataframe(exported_logs_df, width="stretch", hide_index=True)
+
     logs_df = pd.DataFrame(dashboard_metrics.build_log_rows(history))
     if logs_df.empty:
         st.info("No execution logs have been recorded yet.")
     else:
+        st.markdown("**History-Backed Round Logs**")
         st.dataframe(logs_df, width="stretch", hide_index=True)
 
         st.subheader("Round Log Streams")
-        for entry in reversed(history):
-            round_logs = entry.get("logs", [])
+        for history_entry in reversed(history):
+            round_logs = history_entry.get("logs", [])
             if not isinstance(round_logs, list) or not round_logs:
                 continue
             label = (
-                f"Round {entry.get('round', '?')} | {entry.get('action', '?')} | "
-                f"{entry.get('score', '?')}/{entry.get('total', '?')}"
+                f"Round {history_entry.get('round', '?')} | {history_entry.get('action', '?')} | "
+                f"{history_entry.get('score', '?')}/{history_entry.get('total', '?')}"
             )
             with st.expander(label):
                 for log in round_logs:
@@ -396,38 +432,65 @@ with tab_diag:
     else:
         st.dataframe(attempt_df, width="stretch", hide_index=True)
 
+    st.subheader("Trace Exports")
+    trace_counts = st.columns(3)
+    trace_counts[0].metric("Run Events", len(artifact_bundle["run_events"]))
+    trace_counts[1].metric("Proposal Events", len(artifact_bundle["proposal_events"]))
+    trace_counts[2].metric("Row Decisions", len(artifact_bundle["row_decisions"]))
+
+    run_events_df = pd.DataFrame(artifact_bundle["run_events"])
+    if run_events_df.empty:
+        st.info("No run-event traces have been exported yet.")
+    else:
+        st.markdown("**Run Events**")
+        st.dataframe(run_events_df, width="stretch", hide_index=True)
+
+    proposal_events_df = pd.DataFrame(artifact_bundle["proposal_events"])
+    if proposal_events_df.empty:
+        st.info("No proposal-event traces have been exported yet.")
+    else:
+        st.markdown("**Proposal Events**")
+        st.dataframe(proposal_events_df, width="stretch", hide_index=True)
+
+    row_decisions_df = pd.DataFrame(artifact_bundle["row_decisions"])
+    if row_decisions_df.empty:
+        st.info("No row-decision traces have been exported yet.")
+    else:
+        st.markdown("**Row Decisions**")
+        st.dataframe(row_decisions_df, width="stretch", hide_index=True)
+
     st.subheader("Full Round Logs")
-    for entry in reversed(history):
+    for history_entry in reversed(history):
         label = (
-            f"Round {entry.get('round', '?')} | {entry.get('action', '?')} | "
-            f"{entry.get('score', '?')}/{entry.get('total', '?')}"
+            f"Round {history_entry.get('round', '?')} | {history_entry.get('action', '?')} | "
+            f"{history_entry.get('score', '?')}/{history_entry.get('total', '?')}"
         )
         with st.expander(label):
-            llm = _llm_info(entry)
+            llm_info = _llm_info(history_entry)
             st.markdown("**Round Record**")
-            st.json(entry)
-            llm_error = llm.get("error") if isinstance(llm, dict) else None
+            st.json(history_entry)
+            llm_error = llm_info.get("error") if isinstance(llm_info, dict) else None
             if llm_error:
                 st.error(llm_error)
-            attempts = llm.get("attempts", [])
+            attempts = llm_info.get("attempts", [])
             if attempts:
                 st.markdown("**Attempt Breakdown**")
-                for attempt in attempts:
+                for attempt_record in attempts:
                     st.write(
                         {
-                            "label": attempt.get("label"),
-                            "model": attempt.get("model"),
-                            "code_found": attempt.get("code_found"),
-                            "usage": attempt.get("usage"),
-                            "prompt_chars": attempt.get("prompt_chars"),
-                            "response_chars": attempt.get("response_chars"),
-                            "hypothesis": attempt.get("hypothesis"),
+                            "label": attempt_record.get("label"),
+                            "model": attempt_record.get("model"),
+                            "code_found": attempt_record.get("code_found"),
+                            "usage": attempt_record.get("usage"),
+                            "prompt_chars": attempt_record.get("prompt_chars"),
+                            "response_chars": attempt_record.get("response_chars"),
+                            "hypothesis": attempt_record.get("hypothesis"),
                         }
                     )
                     st.markdown("**Messages**")
-                    st.json(attempt.get("messages", []))
+                    st.json(attempt_record.get("messages", []))
                     st.markdown("**Response Preview**")
-                    st.code(attempt.get("response_preview", ""))
+                    st.code(attempt_record.get("response_preview", ""))
 
 
 if __name__ == "__main__":

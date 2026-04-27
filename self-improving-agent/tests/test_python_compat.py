@@ -8,6 +8,9 @@ import os
 import sys
 import tempfile
 import unittest
+import argparse
+import types
+from contextlib import redirect_stderr
 from contextlib import redirect_stdout
 from importlib import import_module
 from pathlib import Path
@@ -21,6 +24,25 @@ if str(PROJECT_ROOT) not in sys.path:
 cleanloop_loop = cast(Any, import_module("cleanloop.loop"))
 cleanloop_datasets = cast(Any, import_module("cleanloop.datasets"))
 util = cast(Any, import_module("util"))
+CLEANLOOP_GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
+_MODULE_STATE: dict[str, str | None] = {"original_cleanloop_genome": None}
+
+
+def setUpModule() -> None:
+    """Preserve the shipped cleanloop genome so tests do not dirty the workspace."""
+    _MODULE_STATE["original_cleanloop_genome"] = CLEANLOOP_GENOME_PATH.read_text(
+        encoding="utf-8"
+    )
+
+
+def tearDownModule() -> None:
+    """Restore the shipped cleanloop genome after the compatibility suite finishes."""
+    original_genome = _MODULE_STATE["original_cleanloop_genome"]
+    if original_genome is not None:
+        CLEANLOOP_GENOME_PATH.write_text(
+            original_genome,
+            encoding="utf-8",
+        )
 
 
 class SupportedPythonVersionTests(unittest.TestCase):
@@ -235,6 +257,162 @@ class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
         self.assertTrue(attempt_diagnostics[0]["code_found"])
         propose_single_mutation.assert_called_once()
 
+    def test_propose_fix_passes_loop_timeout_to_autogen_runtime(self) -> None:
+        """Bound the proposal call so stalled providers do not hang the loop forever."""
+        attempt = {
+            "label": "AutoGen proposer",
+            "model": "demo-model",
+            "max_tokens": 2200,
+            "code_found": False,
+            "hypothesis": "no hypothesis",
+            "usage": {},
+            "prompt_chars": 120,
+            "response_chars": 0,
+            "messages": [],
+            "response_preview": "",
+        }
+
+        with mock.patch.dict(os.environ, {"CLEANLOOP_LLM_TIMEOUT_SECONDS": "17"}):
+            with mock.patch.object(
+                cleanloop_loop.autogen_runtime,
+                "propose_single_mutation",
+                return_value=(None, "no hypothesis", attempt),
+            ) as propose_single_mutation:
+                cleanloop_loop._propose_fix(
+                    client=object(),
+                    model="demo-model",
+                    system_prompt="system",
+                    genome_code="def clean(input_dir, output_path):\n    pass\n",
+                    results={
+                        "failed": ["matches_reference_output: bad row"],
+                        "passed": [],
+                    },
+                    history=[],
+                    dataset_name="finance",
+                    metacognition={"focus_area": "row_reconciliation"},
+                )
+
+        self.assertEqual(
+            17,
+            propose_single_mutation.call_args.kwargs["timeout_seconds"],
+        )
+
+    def test_propose_single_mutation_strips_markdown_wrappers(self) -> None:
+        """Extract plain Python when the structured code field still contains markdown fences."""
+        autogen_runtime = cast(Any, import_module("cleanloop.autogen_runtime"))
+        proposal = autogen_runtime.MutationProposal(
+            hypothesis="Normalize invoice values before merge",
+            clean_data_py=(
+                "Here is the updated clean_data.py:\n"
+                "```python\n"
+                "def clean(input_dir, output_path):\n"
+                "    return None\n"
+                "```"
+            ),
+            mutation_summary="Wrap deterministic and mutation handling in one clean entrypoint.",
+        )
+
+        with mock.patch.object(
+            autogen_runtime,
+            "_run_structured_agent",
+            return_value=(
+                proposal,
+                [{"type": "StructuredMessage", "source": "cleanloop_proposer"}],
+                {"prompt_tokens": 11, "completion_tokens": 22, "total_tokens": 33},
+            ),
+        ):
+            code, hypothesis, attempt = autogen_runtime.propose_single_mutation(
+                client=object(),
+                model="demo-model",
+                system_prompt="system",
+                user_prompt="user",
+            )
+
+        self.assertEqual(
+            code,
+            "def clean(input_dir, output_path):\n    return None",
+        )
+        self.assertEqual(hypothesis, "Normalize invoice values before merge")
+        self.assertTrue(attempt["code_found"])
+
+    def test_json_object_fallback_suppresses_model_alias_warning(self) -> None:
+        """Hide the known provider alias warning so loop output stays readable."""
+        autogen_runtime = cast(Any, import_module("cleanloop.autogen_runtime"))
+        stderr = io.StringIO()
+
+        class _Message:
+            def __init__(self, *, content: str, source: str | None = None) -> None:
+                self.content = content
+                self.source = source
+
+        class _Response:
+            def __init__(self, content: str) -> None:
+                self.content = content
+                self.usage = None
+
+        async def _fake_create(**_kwargs: object) -> object:
+            warnings_module = __import__("warnings")
+            warnings_module.warn(
+                (
+                    "Resolved model mismatch: microsoft/Phi-4 != phi4. "
+                    "Model mapping in autogen_ext.models.openai may be incorrect."
+                ),
+                UserWarning,
+                stacklevel=1,
+            )
+            return _Response(
+                json.dumps(
+                    {
+                        "hypothesis": "Normalize invoice values before merge",
+                        "clean_data_py": "def clean(input_dir, output_path):\n    return None",
+                        "mutation_summary": "Use the shipped runtime entrypoint.",
+                    }
+                )
+            )
+
+        client = types.SimpleNamespace(create=_fake_create)
+        fake_models_module = types.SimpleNamespace(
+            SystemMessage=_Message,
+            UserMessage=_Message,
+        )
+        real_import_module = autogen_runtime.importlib.import_module
+
+        def _fake_import_module(name: str) -> object:
+            if name == "autogen_core.models":
+                return fake_models_module
+            return real_import_module(name)
+
+        with redirect_stderr(stderr):
+            with mock.patch.object(
+                autogen_runtime.importlib,
+                "import_module",
+                side_effect=_fake_import_module,
+            ):
+                proposal, _events, usage = autogen_runtime._run_coro(
+                    autogen_runtime._run_json_object_fallback(
+                        client=client,
+                        system_prompt="system",
+                        task="user",
+                        output_type=autogen_runtime.MutationProposal,
+                        agent_name="cleanloop_proposer",
+                        original_error=RuntimeError("json_schema unsupported"),
+                    )
+                )
+
+        self.assertEqual("", stderr.getvalue())
+        self.assertEqual(
+            proposal.clean_data_py,
+            "def clean(input_dir, output_path):\n    return None",
+        )
+        self.assertEqual(
+            usage,
+            {
+                "prompt_tokens": None,
+                "completion_tokens": None,
+                "total_tokens": None,
+            },
+        )
+
     def test_cleanloop_local_util_prefers_example_env_file(self) -> None:
         """Load CleanLoop credentials from the example-local .env before falling back upward."""
         cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
@@ -267,6 +445,125 @@ class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
         self.assertEqual(config["endpoint"], "https://models.github.ai/inference")
         self.assertEqual(config["api_key"], "local-demo-key")
         self.assertEqual(config["model"], "demo-model")
+
+    def test_cleanloop_local_util_prefers_azure_deployment_over_fallback_model(
+        self,
+    ) -> None:
+        """Use the CleanLoop Azure deployment name when a parent env injects MODEL_NAME."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        with mock.patch.dict(
+            os.environ,
+            {
+                "AZURE_OPENAI_ENDPOINT": "https://tuts.openai.azure.com",
+                "AZURE_OPENAI_API_KEY": "azure-demo-key",
+                "AZURE_OPENAI_DEPLOY_NAME": "Kimi-K2.6-1",
+                "MODEL_NAME": "microsoft/Phi-4",
+            },
+            clear=True,
+        ):
+            config = cleanloop_local_util.resolve_llm_env()
+
+        self.assertEqual(config["endpoint"], "https://tuts.openai.azure.com")
+        self.assertEqual(config["api_key"], "azure-demo-key")
+        self.assertEqual(config["model"], "Kimi-K2.6-1")
+
+    def test_cleanloop_local_reset_preserves_sample_output_artifacts(self) -> None:
+        """Keep the shipped sample outputs in cleanloop/.output when reset restores the starter genome."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            output_dir = temp_root / ".output"
+            output_dir.mkdir(parents=True)
+            master_path = output_dir / "finance_master.csv"
+            success_path = output_dir / "finance_mutation_success.csv"
+            failure_path = output_dir / "finance_mutation_failures.csv"
+            master_path.write_text("master-sample", encoding="utf-8")
+            success_path.write_text("success-sample", encoding="utf-8")
+            failure_path.write_text("failure-sample", encoding="utf-8")
+
+            genome_path = temp_root / "clean_data.py"
+            starter_path = temp_root / "clean_data_starter.py"
+            genome_path.write_text("evolved", encoding="utf-8")
+            starter_path.write_text("starter", encoding="utf-8")
+
+            with mock.patch.object(cleanloop_local_util, "OUTPUT_DIR", output_dir):
+                with mock.patch.object(
+                    cleanloop_local_util, "GENOME_PATH", genome_path
+                ):
+                    with mock.patch.object(
+                        cleanloop_local_util,
+                        "STARTER_GENOME_PATH",
+                        starter_path,
+                    ):
+                        exit_code = cleanloop_local_util._cmd_reset(
+                            argparse.Namespace()
+                        )
+
+                        self.assertEqual(exit_code, 0)
+                        self.assertEqual(
+                            genome_path.read_text(encoding="utf-8"), "starter"
+                        )
+                        self.assertTrue(output_dir.exists())
+                        self.assertEqual(
+                            master_path.read_text(encoding="utf-8"), "master-sample"
+                        )
+                        self.assertEqual(
+                            success_path.read_text(encoding="utf-8"),
+                            "success-sample",
+                        )
+                        self.assertEqual(
+                            failure_path.read_text(encoding="utf-8"),
+                            "failure-sample",
+                        )
+
+    def test_cleanloop_local_evaluate_refreshes_default_output(self) -> None:
+        """Re-run the genome for the default output path instead of grading stale artifacts."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+        clean_data = cast(Any, import_module("cleanloop.clean_data"))
+        prepare = cast(Any, import_module("cleanloop.prepare"))
+        datasets = cast(Any, import_module("cleanloop.datasets"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            output_dir = temp_root / ".output"
+            output_dir.mkdir(parents=True)
+            target = datasets.get_output_path(output_dir)
+            target.write_text("stale-output", encoding="utf-8")
+
+            fake_results = {
+                "passed": ["matches_reference_output: matched all 55 reference rows"],
+                "failed": [],
+                "metrics": {
+                    "reference_rows": 55,
+                    "output_rows": 55,
+                    "matched_rows": 55,
+                    "missing_rows": 0,
+                    "unexpected_rows": 0,
+                    "cleanliness_score": 1.0,
+                    "output_precision": 1.0,
+                },
+                "score": 14,
+                "total": 14,
+            }
+
+            with mock.patch.object(cleanloop_local_util, "OUTPUT_DIR", output_dir):
+                with mock.patch.object(clean_data, "clean") as clean_mock:
+                    with mock.patch.object(
+                        prepare,
+                        "evaluate",
+                        return_value=fake_results,
+                    ) as evaluate_mock:
+                        with mock.patch.object(prepare, "print_results") as print_mock:
+                            exit_code = cleanloop_local_util._cmd_evaluate(
+                                argparse.Namespace(output_csv=None)
+                            )
+
+        self.assertEqual(exit_code, 0)
+        clean_mock.assert_called_once_with(cleanloop_local_util.INPUT_DIR, target)
+        evaluate_mock.assert_called_once_with(target)
+        print_mock.assert_called_once_with(fake_results)
 
 
 class ExampleDashboardRoutingTests(unittest.TestCase):
@@ -483,6 +780,116 @@ class LoopResilienceTests(unittest.TestCase):
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0]["action"], "skip")
 
+    def test_run_loop_restores_pre_run_state_after_timeout_unavailable(self) -> None:
+        """Keep the last known-good genome and outputs when the proposal request times out."""
+        baseline = {
+            "passed": ["can_read_output", "has_required_columns"],
+            "failed": [
+                "matches_reference_output: matched=53, missing=11, unexpected=0"
+            ],
+            "score": 13,
+            "total": 14,
+            "metrics": {
+                "reference_rows": 64,
+                "output_rows": 53,
+                "matched_rows": 53,
+                "missing_rows": 11,
+                "unexpected_rows": 0,
+                "cleanliness_score": 0.828125,
+                "output_precision": 1.0,
+            },
+        }
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            genome_path = temp_root / "clean_data.py"
+            starter_path = temp_root / "clean_data_starter.py"
+            output_dir = temp_root / ".output"
+            output_dir.mkdir(parents=True)
+            master_path = output_dir / "finance_master.csv"
+            success_path = output_dir / "finance_mutation_success.csv"
+            failure_path = output_dir / "finance_mutation_failures.csv"
+
+            original_genome = (
+                "def clean(input_dir, output_path):\n    return 'evolved'\n"
+            )
+            starter_genome = (
+                "def clean(input_dir, output_path):\n    return 'starter'\n"
+            )
+            genome_path.write_text(original_genome, encoding="utf-8")
+            starter_path.write_text(starter_genome, encoding="utf-8")
+            master_path.write_text("evolved-master", encoding="utf-8")
+            success_path.write_text("evolved-success", encoding="utf-8")
+            failure_path.write_text("evolved-failure", encoding="utf-8")
+
+            def fake_prepare_fresh_run(_config, _output_path, _history_path):
+                master_path.unlink(missing_ok=True)
+                success_path.unlink(missing_ok=True)
+                failure_path.unlink(missing_ok=True)
+                genome_path.write_text(starter_genome, encoding="utf-8")
+                return [
+                    {"tag": "FRESH_START", "message": "test reset"},
+                ]
+
+            with mock.patch.dict(
+                os.environ,
+                {
+                    "AZURE_OPENAI_ENDPOINT": "https://tuts.openai.azure.com",
+                    "AZURE_OPENAI_API_KEY": "demo-key",
+                    "AZURE_OPENAI_DEPLOY_NAME": "Kimi-K2.6-1",
+                },
+                clear=True,
+            ):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", output_dir):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
+                            with mock.patch.object(
+                                cleanloop_loop,
+                                "STARTER_GENOME_PATH",
+                                starter_path,
+                            ):
+                                with mock.patch.object(
+                                    cleanloop_loop,
+                                    "_prepare_fresh_run",
+                                    side_effect=fake_prepare_fresh_run,
+                                ):
+                                    with mock.patch.object(
+                                        cleanloop_loop,
+                                        "_run_and_evaluate",
+                                        return_value=baseline,
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop,
+                                            "_propose_fix",
+                                            side_effect=TimeoutError(
+                                                "AutoGen request timed out after 1s"
+                                            ),
+                                        ):
+                                            with mock.patch.object(
+                                                cleanloop_loop, "_git_commit"
+                                            ):
+                                                with mock.patch.object(
+                                                    cleanloop_loop, "_git_revert"
+                                                ):
+                                                    history = cleanloop_loop.run_loop(
+                                                        max_iterations=1
+                                                    )
+
+            self.assertEqual(len(history), 1)
+            self.assertEqual(history[0]["action"], "skip")
+            self.assertEqual(genome_path.read_text(encoding="utf-8"), original_genome)
+            self.assertEqual(master_path.read_text(encoding="utf-8"), "evolved-master")
+            self.assertEqual(
+                success_path.read_text(encoding="utf-8"), "evolved-success"
+            )
+            self.assertEqual(
+                failure_path.read_text(encoding="utf-8"), "evolved-failure"
+            )
+
     def test_extract_usage_stats_reads_response_token_counts(self) -> None:
         """Capture prompt, completion, and total token counts from an LLM response."""
 
@@ -636,8 +1043,11 @@ class CleanLoopDatasetTests(unittest.TestCase):
     """Verify CleanLoop now operates as a single finance arena."""
 
     def _copy_reference_output(self, dataset_name: str, target_path: Path) -> None:
-        """Copy one canonical gold output into a temp output path."""
+        """Copy the canonical master output and regenerate matching sidecars."""
         source = PROJECT_ROOT / "cleanloop" / ".gold" / f"{dataset_name}_expected.csv"
+        clean_data_runtime = cast(Any, import_module("cleanloop.clean_data_runtime"))
+
+        clean_data_runtime.clean(PROJECT_ROOT / "cleanloop" / ".input", target_path)
         target_path.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
 
     def test_dashboard_launches_streamlit_without_interactive_prompt(self) -> None:
@@ -1537,6 +1947,145 @@ class CleanLoopDatasetTests(unittest.TestCase):
         self.assertEqual(rows[1]["Completion Tokens"], 2200)
         self.assertEqual(rows[1]["Total Tokens"], 4144)
 
+    def test_run_loop_exports_trace_and_log_artifacts_for_dashboard(self) -> None:
+        """Write raw trace JSONL files and a raw log export beside the loop history."""
+        baseline = {
+            "passed": ["can_read_output", "has_required_columns"],
+            "failed": ["matches_reference_output: matched=10, missing=5, unexpected=3"],
+            "score": 2,
+            "total": 3,
+            "metrics": {
+                "reference_rows": 15,
+                "output_rows": 13,
+                "matched_rows": 10,
+                "missing_rows": 5,
+                "unexpected_rows": 3,
+                "cleanliness_score": 0.666667,
+                "output_precision": 0.769231,
+            },
+        }
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            genome_path = temp_root / "clean_data.py"
+            starter_path = temp_root / "clean_data_starter.py"
+            output_dir = temp_root / ".output"
+            genome_text = "def clean(input_dir, output_path):\n    return None\n"
+            genome_path.write_text(genome_text, encoding="utf-8")
+            starter_path.write_text(genome_text, encoding="utf-8")
+
+            with mock.patch.dict(
+                os.environ,
+                {
+                    "AZURE_ENDPOINT": "https://example.openai.azure.com",
+                    "AZURE_API_KEY": "demo-key",
+                    "MODEL_NAME": "demo-model",
+                },
+                clear=False,
+            ):
+                with mock.patch.object(
+                    cleanloop_loop.util, "_build_llm_client", return_value=object()
+                ):
+                    with mock.patch.object(cleanloop_loop, "OUTPUT_DIR", output_dir):
+                        with mock.patch.object(
+                            cleanloop_loop, "GENOME_PATH", genome_path
+                        ):
+                            with mock.patch.object(
+                                cleanloop_loop,
+                                "STARTER_GENOME_PATH",
+                                starter_path,
+                            ):
+                                with mock.patch.object(
+                                    cleanloop_loop,
+                                    "_run_and_evaluate",
+                                    return_value=baseline,
+                                ):
+                                    with mock.patch.object(
+                                        cleanloop_loop,
+                                        "_propose_fix",
+                                        return_value=(
+                                            None,
+                                            "hold steady",
+                                            {
+                                                "selected_attempt": "none",
+                                                "attempts": [],
+                                                "prompt_tokens": None,
+                                                "completion_tokens": None,
+                                                "total_tokens": None,
+                                            },
+                                        ),
+                                    ):
+                                        with mock.patch.object(
+                                            cleanloop_loop, "_git_commit"
+                                        ):
+                                            with mock.patch.object(
+                                                cleanloop_loop, "_git_revert"
+                                            ):
+                                                history = cleanloop_loop.run_loop(
+                                                    max_iterations=1
+                                                )
+
+            traces_dir = cleanloop_datasets.get_traces_dir(output_dir)
+            logs_path = cleanloop_datasets.get_exported_logs_path(output_dir)
+
+            self.assertEqual(len(history), 1)
+            self.assertTrue((traces_dir / "run-events.jsonl").exists())
+            self.assertTrue((traces_dir / "proposal-events.jsonl").exists())
+            self.assertTrue(logs_path.exists())
+
+            exported_log_rows = [
+                json.loads(line)
+                for line in logs_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+
+        self.assertTrue(any(row["tag"] == "FRESH_START" for row in exported_log_rows))
+        self.assertTrue(
+            any(row["tag"] == "NO_CODE_RETURNED" for row in exported_log_rows)
+        )
+
+    def test_dashboard_artifacts_load_exported_traces_and_logs(self) -> None:
+        """Load the exported trace JSONL files and raw loop logs for dashboard rendering."""
+        dashboard_artifacts = import_module("cleanloop.dashboard_artifacts")
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_dir = Path(tmp_dir)
+            traces_dir = cleanloop_datasets.get_traces_dir(output_dir)
+            traces_dir.mkdir(parents=True)
+            run_events_path = traces_dir / "run-events.jsonl"
+            row_decisions_path = traces_dir / "row-decisions.jsonl"
+            proposal_events_path = traces_dir / "proposal-events.jsonl"
+            logs_path = cleanloop_datasets.get_exported_logs_path(output_dir)
+            logs_path.parent.mkdir(parents=True, exist_ok=True)
+
+            run_events_path.write_text(
+                json.dumps({"component": "loop", "decision": "begin"}) + "\n",
+                encoding="utf-8",
+            )
+            row_decisions_path.write_text(
+                json.dumps({"invoice_id": "INV-105", "decision": "mutation_fixed"})
+                + "\n",
+                encoding="utf-8",
+            )
+            proposal_events_path.write_text(
+                json.dumps({"round": 1, "decision": "candidate_generated"}) + "\n",
+                encoding="utf-8",
+            )
+            logs_path.write_text(
+                json.dumps({"round": 1, "tag": "ROUND_START", "message": "Round 1"})
+                + "\n",
+                encoding="utf-8",
+            )
+
+            bundle = dashboard_artifacts.load_dashboard_artifacts(output_dir)
+
+        self.assertEqual(bundle["run_events"][0]["decision"], "begin")
+        self.assertEqual(bundle["row_decisions"][0]["invoice_id"], "INV-105")
+        self.assertEqual(
+            bundle["proposal_events"][0]["decision"], "candidate_generated"
+        )
+        self.assertEqual(bundle["exported_logs"][0]["tag"], "ROUND_START")
+
     def test_propose_fix_uses_reduced_completion_budgets(self) -> None:
         """Use smaller completion budgets so one round does not over-request model output."""
         calls: list[int] = []
@@ -1653,13 +2202,13 @@ class CleanLoopDatasetTests(unittest.TestCase):
 
     def test_finance_starter_genome_requires_improvement(self) -> None:
         """The shipped starter genome should fail the stronger finance judge."""
-        clean_data = cast(Any, import_module("cleanloop.clean_data"))
+        clean_data_starter = cast(Any, import_module("cleanloop.clean_data_starter"))
         prepare = cast(Any, import_module("cleanloop.prepare"))
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_path = Path(tmp_dir) / "finance_master.csv"
 
-            clean_data.clean(PROJECT_ROOT / "cleanloop" / ".input", output_path)
+            clean_data_starter.clean(PROJECT_ROOT / "cleanloop" / ".input", output_path)
             results = prepare.evaluate(output_path)
 
         self.assertGreater(len(results["failed"]), 0)

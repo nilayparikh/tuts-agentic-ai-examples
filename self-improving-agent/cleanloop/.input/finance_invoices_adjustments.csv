@@ -1,16 +1,13 @@
-invoice_id,customer,amount,currency,issued,due,status,adjustment_reason,adjusted_amount,approval_flag
-INV-501,Northwind Labs,6400.00,USD,2024-08-01,2024-08-31,paid,rounding,6399.95,approved
-INV-502,Blue Yonder,"$12,100.00",USD,2024-08-02,2024-09-01,paid,discount,11890.00,approved
-INV-503,Fabrikam GmbH,15550.00,EUR,2024-08-03,2024-09-02,review,tax_reclass,15550.00,pending
-INV-504,Contoso Retail,FREE TRIAL,GBP,2024-08-04,2024-09-03,active,waiver,0.00,approved
-INV-505,Wide World Importers,-225.00,AUD,2024-08-05,2024-09-04,refund,credit,225.00,approved
-INV-506,Northwind Labs,N/A,USD,2024-08-06,2024-09-05,disputed,manual_hold,,blocked
-INV-507,Blue Yonder,12100.00,USD,2024-08-07,2024-09-06,paid,none,12100.00,approved
-INV-508,Fabrikam GmbH,"EUR 17,990.00",EUR,2024-08-08,2024-09-07,paid,fx_update,17990.00,approved
-INV-509,Contoso Retail,,GBP,2024-08-09,2024-09-08,cancelled,writeoff,0.00,approved
-INV-510,Wide World Importers,999999,AUD,2024-08-10,2024-09-09,review,outlier_check,999999,pending
-INV-511,Northwind Labs,6550.00,USD,10/08/2024,09/09/2024,paid,late_fee,6615.50,approved
-INV-512,Blue Yonder,REVERSAL,USD,2024-08-12,2024-09-11,adjustment,reversal,-12100.00,approved
-INV-513,Fabrikam GmbH,16110.00,EUR,2024-08-13,2024-09-12,paid,none,16110.00,approved
-INV-514,Contoso Retail,"GBP 6,020.40",GBP,2024-08-14,2024-09-13,paid,rate_change,6020.40,approved
-INV-515,Wide World Importers,8700.00,AUD,2024-08-15,2024-09-14,paid,none,8700.00,approved
+invoice_id,customer,amount,currency,issued,due,status,adjustment_reason,adjusted_amount,approval_flag,resolution_amount,resolution_flag,resolution_note
+INV-501,Northwind Labs,6400.00,USD,2024-08-13,2024-09-12,paid,rounding,6399.95,approved,,,
+INV-502,Blue Yonder, discounted   ✅ ,USD,2024-08-14,2024-09-13,paid,discount,11890.00,approved,,,
+INV-503,Fabrikam GmbH,FX   HOLD 🔒,EUR,2024-08-15,2024-09-14,paid,fx_update,17990.00,approved,,,
+INV-504,Contoso Retail,REVERSAL ↩,GBP,2024-08-16,2024-09-15,adjustment,reversal,-6020.40,approved,,,
+INV-505,Wide World Importers,-225.00,AUD,2024-08-17,2024-09-16,refund,credit,225.00,approved,,,
+INV-506,Northwind Labs,tbd // analyst approved,USD,2024-08-18,2024-09-17,review,manual_hold,,blocked,6325.00,approved,manual hold released at reviewed amount
+INV-507,Blue Yonder,12100.00,USD,2024-08-19,2024-09-18,paid,none,12100.00,approved,,,
+INV-510,Wide World Importers,CHECK ATTACHMENT 📎,AUD,2024-08-20,2024-09-19,review,outlier_check,999999,pending,,,
+INV-511,Northwind Labs,6550.00,USD,21/08/2024,2024-09-20,paid,late_fee,6615.50,approved,,,
+INV-512,Blue Yonder,reversal   ✅,USD,2024-08-22,2024-09-21,adjustment,reversal,-12100.00,approved,,,
+INV-513,Fabrikam GmbH,16110.00,EUR,2024-08-23,2024-09-22,paid,none,16110.00,approved,,,
+INV-514,Contoso Retail,"GBP 6,020.40",GBP,2024-08-24,2024-09-23,paid,rate_change,6020.40,approved,,,

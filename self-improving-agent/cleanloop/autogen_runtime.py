@@ -1,15 +1,18 @@
 """AutoGen-backed proposal, judge, and observability helpers for CleanLoop."""
 
+# pyright: reportMissingImports=false, reportMissingModuleSource=false
 # pylint: disable=too-many-arguments,too-many-locals
+# pylint: disable=import-error
 
 from __future__ import annotations
 
 import asyncio
 import importlib
 import json
+import warnings
 from typing import Any, Callable, TypeVar, TypedDict
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field  # type: ignore[import-not-found]
 
 
 class MutationProposal(BaseModel):
@@ -42,6 +45,32 @@ class CandidateRecord(TypedDict):
 
 
 StructuredOutputT = TypeVar("StructuredOutputT", bound=BaseModel)
+
+
+def _sanitize_python_source(source: str) -> str:
+    """Return plain Python source from a model response that may include wrappers."""
+    stripped = source.strip()
+    if "```" not in stripped:
+        return stripped
+
+    start = stripped.find("```")
+    end = stripped.find("```", start + 3)
+    if start == -1 or end == -1:
+        return stripped
+
+    fenced = stripped[start + 3 : end].lstrip()
+    if fenced.startswith("python"):
+        fenced = fenced[len("python") :]
+    return fenced.lstrip("\r\n").rstrip()
+
+
+def _ignore_known_model_alias_warning() -> None:
+    """Suppress the noisy AutoGen model-alias warning for OpenAI-compatible endpoints."""
+    warnings.filterwarnings(
+        "ignore",
+        message=r"Resolved model mismatch: .*",
+        category=UserWarning,
+    )
 
 
 def summarize_attempts(
@@ -96,6 +125,7 @@ def propose_single_mutation(
     *,
     label: str = "AutoGen proposer",
     max_tokens: int = 2200,
+    timeout_seconds: int | None = None,
 ) -> tuple[str | None, str, dict[str, object]]:  # pylint: disable=too-many-arguments
     """Generate one structured mutation proposal with AutoGen."""
     # Keep the proposer path strongly typed so the loop can safely read the
@@ -106,8 +136,9 @@ def propose_single_mutation(
         task=user_prompt,
         output_type=MutationProposal,
         agent_name="cleanloop_proposer",
+        timeout_seconds=timeout_seconds,
     )
-    code = proposal.clean_data_py.strip() or None
+    code = _sanitize_python_source(proposal.clean_data_py) or None
     hypothesis = proposal.hypothesis.strip() or "no hypothesis"
     response_preview = proposal.model_dump_json(indent=2)
     attempt = {
@@ -148,6 +179,7 @@ def propose_reranked_mutation(
     *,
     n_candidates: int,
     evaluate_candidate: Callable[[str], tuple[int, int]],
+    timeout_seconds: int | None = None,
 ) -> tuple[str | None, str, dict[str, object]]:
     """Generate multiple candidates, score them, and judge the best survivor."""
     candidate_styles = [
@@ -185,6 +217,7 @@ def propose_reranked_mutation(
             f"{system_prompt}\n\n## Candidate Style\n{style_instruction}",
             user_prompt,
             label=f"AutoGen candidate {index}: {style_name}",
+            timeout_seconds=timeout_seconds,
         )
         if not code:
             attempts.append(attempt)
@@ -235,6 +268,7 @@ def propose_reranked_mutation(
             task=_build_judge_task(tied_candidates),
             output_type=CandidateSelection,
             agent_name="cleanloop_judge",
+            timeout_seconds=timeout_seconds,
         )
         judge_winner = next(
             (
@@ -292,6 +326,7 @@ def _run_structured_agent(
     task: str,
     output_type: type[StructuredOutputT],
     agent_name: str,
+    timeout_seconds: int | None = None,
 ) -> tuple[StructuredOutputT, list[dict[str, object]], dict[str, int | None]]:
     """Run one AutoGen agent task and return structured output plus observability."""
     return _run_coro(
@@ -301,7 +336,8 @@ def _run_structured_agent(
             task=task,
             output_type=output_type,
             agent_name=agent_name,
-        )
+        ),
+        timeout_seconds=timeout_seconds,
     )
 
 
@@ -326,10 +362,12 @@ async def _run_structured_agent_async(
     events: list[dict[str, object]] = []
     final_task_result = None
     try:
-        async for message in agent.run_stream(task=task):
-            events.append(_serialize_stream_event(message))
-            if message.__class__.__name__ == "TaskResult":
-                final_task_result = message
+        with warnings.catch_warnings():
+            _ignore_known_model_alias_warning()
+            async for message in agent.run_stream(task=task):
+                events.append(_serialize_stream_event(message))
+                if message.__class__.__name__ == "TaskResult":
+                    final_task_result = message
     except Exception as exc:  # pylint: disable=broad-exception-caught
         if _requires_json_object_fallback(exc):
             return await _run_json_object_fallback(
@@ -380,13 +418,15 @@ async def _run_json_object_fallback(
         "Do not wrap it in markdown fences.\n\n"
         f"JSON Schema:\n{schema}"
     )
-    response = await client.create(
-        messages=[
-            system_message_class(content=system_prompt),
-            user_message_class(content=fallback_prompt, source="user"),
-        ],
-        extra_create_args={"response_format": {"type": "json_object"}},
-    )
+    with warnings.catch_warnings():
+        _ignore_known_model_alias_warning()
+        response = await client.create(
+            messages=[
+                system_message_class(content=system_prompt),
+                user_message_class(content=fallback_prompt, source="user"),
+            ],
+            extra_create_args={"response_format": {"type": "json_object"}},
+        )
     content = getattr(response, "content", "")
     if not isinstance(content, str):
         raise RuntimeError(
@@ -500,12 +540,19 @@ def _preview_content(content: Any) -> str:
     return str(content)
 
 
-def _run_coro(coro: Any) -> Any:
+def _run_coro(coro: Any, timeout_seconds: int | None = None) -> Any:
     """Run an async coroutine from the synchronous lesson runtime."""
+    if timeout_seconds is not None:
+        coro = asyncio.wait_for(coro, timeout=timeout_seconds)
     try:
         asyncio.get_running_loop()
     except RuntimeError:
-        return asyncio.run(coro)
+        try:
+            return asyncio.run(coro)
+        except TimeoutError as exc:
+            raise TimeoutError(
+                f"AutoGen request timed out after {timeout_seconds}s"
+            ) from exc
     raise RuntimeError(
         "CleanLoop AutoGen helpers cannot run inside an existing event loop."
     )

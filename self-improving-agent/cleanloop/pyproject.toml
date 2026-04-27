@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleanloop-self-evolving-data-engineer"
+version = "0.1.0"
+description = "Self-sufficient CleanLoop project for Building the Self-Evolving Data Engineer"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MPL-2.0" }
+dependencies = [
+  "autogen-agentchat>=0.7.5",
+  "autogen-ext[openai,azure]>=0.7.5",
+  "openai>=1.30.0",
+  "pandas>=2.2.0",
+  "gitpython>=3.1.0",
+  "python-dotenv>=1.0.0",
+  "streamlit>=1.45.0",
+]
+
+[project.scripts]
+cleanloop = "util:main"
+cleanloop-verify = "cleanloop_console:verify_main"
+cleanloop-challenge = "cleanloop_console:challenge_main"
+cleanloop-sandbox = "cleanloop_console:sandbox_main"
+cleanloop-autonomy = "cleanloop_console:autonomy_main"
+
+[tool.setuptools]
+py-modules = [
+  "__init__",
+  "autogen_runtime",
+  "autonomy",
+  "challenger",
+  "cleanloop_console",
+  "clean_data",
+  "clean_data_runtime",
+  "clean_data_starter",
+  "dashboard",
+  "dashboard_metrics",
+  "dataset_contract",
+  "date_normalizer",
+  "datasets",
+  "export_writer",
+  "history_store",
+  "input_loader",
+  "loop",
+  "mutation_playbook",
+  "prepare",
+  "reset_workflow",
+  "reranker",
+  "sandbox",
+  "status_snapshot",
+  "tracing",
+  "util",
+  "verify",
+]
+
+[tool.uv]
+dev-dependencies = ["ruff>=0.15.4", "mypy>=1.10.0"]
+
+[tool.ruff]
+line-length = 100

@@ -18,12 +18,19 @@ Usage:
         python -m cleanloop.prepare cleanloop/.output/finance_master.csv
 """
 
+# pyright: reportMissingImports=false, reportMissingModuleSource=false
+# pylint: disable=import-error
+
 import sys
 from collections import Counter
 from pathlib import Path
 from typing import Callable, TypedDict
 
-import pandas as pd
+import pandas as pd  # type: ignore[import-not-found, import-untyped]
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from cleanloop import datasets as cleanloop_datasets
 
@@ -117,6 +124,48 @@ def assert_no_nan(df: pd.DataFrame, col: str) -> tuple[bool, str]:
     return False, f"{nan_count} NaN values in {col}"
 
 
+def assert_non_empty_columns(
+    df: pd.DataFrame,
+    columns: tuple[str, ...],
+) -> tuple[bool, str]:
+    """Check that required diagnostic columns are present and non-blank."""
+    missing_columns = [column for column in columns if column not in df.columns]
+    if missing_columns:
+        return False, f"missing columns: {set(missing_columns)}"
+
+    blank_counts: list[str] = []
+    for column in columns:
+        blank_mask = df[column].fillna("").astype(str).str.strip() == ""
+        blank_count = int(blank_mask.sum())
+        if blank_count:
+            blank_counts.append(f"{column}={blank_count}")
+
+    if blank_counts:
+        return False, "blank diagnostic fields: " + ", ".join(blank_counts)
+    return True, "all diagnostic fields populated"
+
+
+def assert_rows_subset_of(
+    df: pd.DataFrame,
+    superset_df: pd.DataFrame,
+    required_columns: tuple[str, ...],
+) -> tuple[bool, str]:
+    """Check that every canonical row from one frame appears in another frame."""
+    required = set(required_columns)
+    if not required.issubset(df.columns):
+        return False, f"subset missing columns: {required - set(df.columns)}"
+    if not required.issubset(superset_df.columns):
+        return False, f"superset missing columns: {required - set(superset_df.columns)}"
+
+    subset_counter = _row_counter(df, required_columns)
+    superset_counter = _row_counter(superset_df, required_columns)
+    missing_rows = sum((subset_counter - superset_counter).values())
+    if missing_rows:
+        return False, f"{missing_rows} mutation-success rows missing from master"
+
+    return True, "mutation-success rows are folded into master"
+
+
 def assert_matches_reference(metrics: EvaluationMetrics) -> tuple[bool, str]:
     """Check that the output exactly matches the canonical reference rows."""
     missing_rows = int(metrics.get("missing_rows", 0))
@@ -191,9 +240,10 @@ def _build_checks(
     df: pd.DataFrame,
     metrics: EvaluationMetrics,
     mutation_success_df: pd.DataFrame | None,
+    mutation_failures_df: pd.DataFrame | None,
+    config: cleanloop_datasets.DatasetConfig,
 ) -> list[CheckEntry]:
     """Build the finance-only assertion checks for one output DataFrame."""
-    config = cleanloop_datasets.get_dataset_config()
     checks: list[CheckEntry] = [
         (
             "has_required_columns",
@@ -207,6 +257,39 @@ def _build_checks(
                 "mutation_success_has_required_columns",
                 lambda d: assert_has_required_columns(d, config.required_columns),
                 mutation_success_df,
+            )
+        )
+        checks.append(
+            (
+                "mutation_success_rows_in_master",
+                lambda d: assert_rows_subset_of(d, df, config.required_columns),
+                mutation_success_df,
+            )
+        )
+    if mutation_failures_df is not None:
+        checks.append(
+            (
+                "mutation_failures_has_required_columns",
+                lambda d: assert_has_required_columns(
+                    d,
+                    cleanloop_datasets.get_failure_columns(),
+                ),
+                mutation_failures_df,
+            )
+        )
+        checks.append(
+            (
+                "mutation_failures_have_diagnostics",
+                lambda d: assert_non_empty_columns(
+                    d,
+                    (
+                        "source_file",
+                        "invoice_id",
+                        "anomaly_reason",
+                        "mutation_hint",
+                    ),
+                ),
+                mutation_failures_df,
             )
         )
     checks.extend(
@@ -295,8 +378,6 @@ def evaluate(master_csv: Path) -> EvaluationResults:
             f"can_read_mutation_failures_output: {mutation_failures_error}"
         )
 
-    _ = mutation_failures_df
-
     # Gate 2: the fixed reference must load before row-level metrics are meaningful.
     try:
         reference_df = _load_reference_df()
@@ -313,7 +394,13 @@ def evaluate(master_csv: Path) -> EvaluationResults:
 
     # Run the type, null, and row-match assertions on one stable snapshot so
     # every round compares against identical judge semantics.
-    checks = _build_checks(df, metrics, mutation_success_df)
+    checks = _build_checks(
+        df,
+        metrics,
+        mutation_success_df,
+        mutation_failures_df,
+        config,
+    )
 
     for name, fn, data in checks:
         passed, detail = fn(data)
