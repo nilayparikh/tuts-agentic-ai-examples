@@ -1,8 +1,8 @@
 # CleanLoop
 
-[![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/FQ05GVTLHKE/maxresdefault.jpg)](https://www.youtube.com/watch?v=FQ05GVTLHKE)
+[![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/yx6aB5heI9o/maxresdefault.jpg)](https://www.youtube.com/watch?v=yx6aB5heI9o)
 
-> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=FQ05GVTLHKE" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=yx6aB5heI9o" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
@@ -123,4 +123,4 @@ code.
 
 | Lesson | Video                                                                                                                               | Example Folder  |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| 01     | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=FQ05GVTLHKE) | [cleanloop](./) |
+| 01     | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o) | [cleanloop](./) |
