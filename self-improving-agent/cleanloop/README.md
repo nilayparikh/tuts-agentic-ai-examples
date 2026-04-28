@@ -1,5 +1,10 @@
 # CleanLoop
 
+[![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/FQ05GVTLHKE/maxresdefault.jpg)](https://www.youtube.com/watch?v=FQ05GVTLHKE)
+
+> <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=FQ05GVTLHKE" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
+> <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
+
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
 
 It teaches one bounded self-improving loop over a finance data-cleaning pipeline.
@@ -116,6 +121,6 @@ code.
 
 ## Series Navigation
 
-| Lesson | Video                                                                                                   | Example Folder  |
-| ------ | ------------------------------------------------------------------------------------------------------- | --------------- |
-| 01     | [AI That Improves Itself: The "Bounded Recipe" for Agents](https://www.youtube.com/watch?v=loYCwyRU_tM) | [cleanloop](./) |
+| Lesson | Video                                                                                                                               | Example Folder  |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| 01     | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=FQ05GVTLHKE) | [cleanloop](./) |

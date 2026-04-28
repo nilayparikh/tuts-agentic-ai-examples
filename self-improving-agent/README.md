@@ -6,7 +6,7 @@ course.
 
 | Example              | Domain                    | What It Teaches                                                          | Video                                                |
 | -------------------- | ------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
-| **CleanLoop**        | Data engineering          | The core Karpathy loop on one finance invoice arena                      | [Watch](https://www.youtube.com/watch?v=loYCwyRU_tM) |
+| **CleanLoop**        | Data engineering          | The core bounded mutation loop on one finance invoice arena              | [Watch](https://www.youtube.com/watch?v=FQ05GVTLHKE) |
 | **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                    |
 | **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                    |
 
@@ -33,9 +33,9 @@ diffs.
 
 ## Videos
 
-| Lesson | Thumbnail                                                                                                                                                                   | Watch                                                                                                   | Example                 |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------- |
-| 01     | [![Watch: AI That Improves Itself: The "Bounded Recipe" for Agents](https://img.youtube.com/vi/loYCwyRU_tM/maxresdefault.jpg)](https://www.youtube.com/watch?v=loYCwyRU_tM) | [AI That Improves Itself: The "Bounded Recipe" for Agents](https://www.youtube.com/watch?v=loYCwyRU_tM) | [cleanloop](cleanloop/) |
+| Lesson | Thumbnail                                                                                                                                                                                          | Watch                                                                                                                               | Example                 |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| 01     | [![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/FQ05GVTLHKE/maxresdefault.jpg)](https://www.youtube.com/watch?v=FQ05GVTLHKE) | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=FQ05GVTLHKE) | [cleanloop](cleanloop/) |
 
 ## Quick Start
 
