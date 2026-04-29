@@ -2,6 +2,70 @@
 
 Lesson 06 explains how best-of-N mutation search works.
 
+The loop does not need a better trained model to search better. It can spend
+more inference-time budget on the same round by generating several bounded
+candidates, scoring each one, and selecting the best survivor.
+
+## Search Diagram
+
+![Lesson 06 canonical diagram](./diagrams/06-test-time-search-map.png)
+
+```mermaid
+flowchart LR
+	failures[failed assertions]
+	genome[genome code]
+	propose[reranker propose\nN candidates]
+	temp[temp directory\nper candidate]
+	run[run candidate genome]
+	judge[prepare.py\nfixed referee]
+	board[scoreboard\nscore + total]
+	select[select best candidate]
+	loop[loop commit or revert]
+
+	failures --> propose
+	genome --> propose
+	propose --> temp --> run --> judge --> board --> select --> loop
+```
+
+## Theory To Learn
+
+### 1. Test-time search spends compute on selection, not training
+
+Best-of-N reranking does not teach the model new weights. It gives the loop a
+chance to compare multiple candidate mutations inside one round before it makes
+a survival decision.
+
+### 2. Isolation is part of the search contract
+
+Each candidate is run in a temp directory. That matters because the search
+process should not corrupt the real genome or leak partial artifacts into the
+working output directory.
+
+### 3. The fixed referee makes reranking meaningful
+
+If every candidate is scored by the same judge, the winner is selected by a
+stable contract rather than by the model's own preference for its prose or
+style.
+
+For the search-path architecture slice, see
+[execution-flow.md](../architecture/execution-flow.md) under
+`Lesson 06 Slice — Re-Ranker Search Path`.
+
+### 4. Search width trades token cost for better odds
+
+More candidates can improve the chance of finding a better mutation, but they
+also cost more time and tokens. Lesson 06 teaches that search width is an
+engineering knob, not free magic.
+
+## What Best-of-N Is Teaching You
+
+When reranking helps, it reveals that the first candidate was not the only
+plausible move.
+
+- Candidate diversity can uncover a better fix in the same round.
+- The scoreboard exposes whether the extra search budget paid off.
+- The winner still has to survive the same judge as every rejected option.
+
 ## Core Idea
 
 Instead of trusting the first candidate, the loop can generate several proposals and compare them before commit.
@@ -25,6 +89,41 @@ code, hyp, diagnostics = propose(
 ```
 
 That call matters because test-time search is still bounded. The loop asks for several candidates, but the fixed judge still decides which one survives.
+
+## Run
+
+### Commands
+
+```powershell
+python util.py status
+python util.py verify
+python util.py reset
+python util.py evaluate
+python util.py loop --max-iterations 1 --rerank --candidates 2
+```
+
+### Output
+
+```text
+$ python util.py loop --max-iterations 1 --rerank --candidates 2
+[FRESH_START] Starting from the immutable starter genome for dataset finance
+[CURRENT_SCORE] Score 13/14
+[FAILED_ASSERTION] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+[REQUESTING_LLM_PROPOSAL] Requesting mutation proposal from model microsoft/Phi-4
+	Reranker: generating 2 candidates...
+[LLM_ATTEMPT] Attempt 1/2: AutoGen candidate 1: conservative
+[LLM_ATTEMPT] Attempt 2/2: AutoGen candidate 2: value-first
+[HYPOTHESIS_SELECTED] Enhance the deterministic cleaning process to ensure all expected rows are processed and output.
+[MUTATION_SCORE] Candidate scored 13/14
+[REVERT_MUTATION] Reverted mutation with score 13/14
+History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_eval_history.json
+```
+
+### Explanation
+
+1. The preflight, reset, and evaluate steps recreate the same baseline that Lesson 03 used. That keeps the search comparison fair.
+2. `python util.py loop --max-iterations 1 --rerank --candidates 2` spends extra inference budget on two candidates in the same round. Validate that the output explicitly says `Reranker: generating 2 candidates...` and shows both attempt labels.
+3. The important result is that the selected candidate still scored only `13/14`, so the loop reverted it. That is the test-time search lesson: more candidates can improve odds, but they still have to beat the same fixed judge.
 
 ## Hands-On Exercises
 

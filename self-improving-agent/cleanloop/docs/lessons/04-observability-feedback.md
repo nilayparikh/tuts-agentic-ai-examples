@@ -2,6 +2,69 @@
 
 Lesson 04 explains how CleanLoop turns hidden state into visible artifacts.
 
+The example does not rely on intuition or console noise. It writes history,
+
+For the artifact-focused slice that maps runtime events to the stored files, see
+[execution-flow.md](../architecture/execution-flow.md) under `Lesson 04 Slice — Artifact Feedback`.
+strategy, and trace artifacts so the learner can inspect not only whether a run
+improved, but also why specific rows and proposals took the paths they did.
+
+## Feedback Diagram
+
+![Lesson 04 canonical diagram](./diagrams/04-observability-feedback-map.png)
+
+```mermaid
+flowchart LR
+	runtime[clean_data_runtime.py]
+	loop[loop.py]
+	traces[trace artifacts\nrun-events.jsonl\nrow-decisions.jsonl\nproposal-events.jsonl]
+	history[history artifacts\nfinance_eval_history.json\nfinance_strategy.json]
+	dashboard[dashboard.py]
+	operator[operator]
+
+	runtime --> traces
+	loop --> traces
+	loop --> history
+	traces --> dashboard
+	history --> dashboard
+	dashboard --> operator
+```
+
+## Theory To Learn
+
+### 1. Observability is external memory
+
+The loop and runtime make many small decisions. If those decisions stay only in
+process memory, the learner cannot audit them after the run ends. Structured
+artifacts turn ephemeral control flow into something durable and inspectable.
+
+### 2. Score and trace answer different questions
+
+The score answers, "Did this run improve?" The trace answers, "What actually
+happened to this row or proposal?" You need both. Score without trace is blind.
+Trace without score is noise.
+
+### 3. Row-level traces make the pipeline legible
+
+A row decision record shows where a record was scanned, normalized, repaired,
+or rejected. That means the learner can follow one invoice through the pipeline
+instead of guessing from the final CSV alone.
+
+### 4. Missing artifacts are also feedback
+
+If history or traces are absent, that tells you the run never reached the stage
+you expected. Observability is useful even when the answer is, "this part never
+executed."
+
+## What The Feedback Signal Is Teaching You
+
+When two runs have the same score, they can still teach different lessons.
+
+- One run may be stuck in the same failure mode again.
+- One run may fix a row type but regress elsewhere.
+- One trace file can reveal whether the pipeline is deterministic, repairable,
+  or still routing rows into failure.
+
 ## What To Inspect
 
 - `.output/finance_eval_history.json`
@@ -31,6 +94,40 @@ trace.record_row_decision(
 ```
 
 That trace call is what turns one hidden row decision into a durable teaching artifact.
+
+## Run
+
+### Commands
+
+```powershell
+python util.py status
+python util.py verify
+python util.py reset
+python util.py loop --max-iterations 1
+python util.py dashboard
+```
+
+### Output
+
+```text
+$ python util.py loop --max-iterations 1
+[FRESH_START] Starting from the immutable starter genome for dataset finance
+[CURRENT_SCORE] Score 13/14
+[METACOGNITION] Focus row_reconciliation: Compare missing and unexpected rows to see which transformations are still dropping or inventing records.
+[REVERT_MUTATION] Reverted mutation with score 0/1
+
+History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_eval_history.json
+
+$ python util.py dashboard
+	You can now view your Streamlit app in your browser.
+	Local URL: http://localhost:8501
+```
+
+### Explanation
+
+1. `python util.py loop --max-iterations 1` is the artifact-producing step for this lesson. Validate that it finishes with `History saved to ...finance_eval_history.json` because that file feeds the dashboard and history views.
+2. `python util.py dashboard` does not mutate the genome. It launches the observability surface. Validate that Streamlit prints a local URL, then inspect the history and trace tabs in the browser.
+3. If the dashboard opens but tables are empty, the loop likely did not write the expected artifacts yet. That absence is itself the feedback signal Lesson 04 is teaching.
 
 ## Hands-On Exercises
 

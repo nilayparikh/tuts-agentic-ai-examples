@@ -2,6 +2,70 @@
 
 Lesson 05 explains why the fixed judge and the challenger belong together.
 
+These two parts do opposite jobs on purpose. The judge stabilizes selection
+pressure. The challenger raises difficulty. Together they create a loop that
+can improve against harder data without letting the model redefine success.
+
+## Pressure Diagram
+
+![Lesson 05 canonical diagram](./diagrams/05-judge-self-challenging-map.png)
+
+```mermaid
+flowchart LR
+	challenger[challenger.py\ngenerate harder anomaly CSVs]
+	arena[.input/*.csv\ncurrent data arena]
+	genome[clean_data.py\ncurrent genome]
+	outputs[clean exports]
+	judge[prepare.py\nfixed referee]
+	gold[.gold/finance_expected.csv\nreference contract]
+	score[score + failed assertions]
+	next[selection pressure for next round]
+
+	challenger --> arena
+	arena --> genome --> outputs --> judge
+	gold --> judge
+	judge --> score --> next
+```
+
+## Theory To Learn
+
+### 1. The judge and challenger are not the same tool
+
+The judge decides whether the current output satisfies the contract. The
+challenger creates new messy inputs that target known weaknesses. If one tool
+did both jobs, it would be too easy to confuse "harder data" with "easier
+grading."
+
+### 2. Fixed selection pressure is what makes improvement meaningful
+
+`prepare.py` and the reference output stay fixed while the genome changes. That
+means score improvements still mean something even after the data becomes more
+adversarial.
+
+### 3. Good challenge data is targeted, not random
+
+The challenger is useful when it creates realistic anomalies that stress the
+current repair rules. Random corruption is easy to generate, but it teaches far
+less than a precise finance-flavored failure mode.
+
+For the architecture slice that separates fixed judging from harder input
+generation, see [execution-flow.md](../architecture/execution-flow.md) under
+`Lesson 05 Slice — Fixed Judge And Harder Arena`.
+
+### 4. Self-challenging creates curriculum pressure
+
+As the genome gets better, easy fixtures stop teaching much. Harder anomaly
+sets restore learning pressure without changing the success contract.
+
+## What This Pairing Is Teaching You
+
+When challenge inputs get harder but the judge stays fixed, the loop reveals two
+separate facts.
+
+- How robust the genome already is.
+- Which failure modes the current playbook still misses.
+- Whether score changes reflect real capability rather than looser grading.
+
 ## Judge Rule
 
 The model does not grade itself. `prepare.py` and the reference export stay fixed.
@@ -22,6 +86,43 @@ results = prepare.evaluate(output)
 ```
 
 That line matters because the loop never grades itself. The scorer stays fixed, even when the genome changes.
+
+## Run
+
+### Commands
+
+```powershell
+python util.py status
+python util.py verify
+python util.py reset
+python util.py evaluate
+python util.py challenge --difficulty 1 --count 1
+Remove-Item ".input\adversarial_d1_01.csv"
+```
+
+### Output
+
+```text
+$ python util.py evaluate
+Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
+	CleanLoop Evaluation: 13/14
+	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+
+$ python util.py challenge --difficulty 1 --count 1
+Generating 1 adversarial CSVs at difficulty 1
+C:\Program Files\Python311\Lib\asyncio\events.py:84: UserWarning: Resolved model mismatch: microsoft/Phi-4 != phi4. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to phi4 to enhance token/cost estimation and suppress this warning.
+	Created: adversarial_d1_01.csv
+Done. Run `python util.py loop` to test the genome against new data.
+
+$ Remove-Item ".input\adversarial_d1_01.csv"
+```
+
+### Explanation
+
+1. Re-run the baseline judge first. Validate that the starter genome still scores `13/14` against the unchanged referee before you make the arena harder.
+2. `python util.py challenge --difficulty 1 --count 1` exercises the challenger without changing the judge. Validate that it creates `adversarial_d1_01.csv` and notice that the output recommends the next step: run the loop against the harder arena.
+3. The model-mismatch warning is diagnostic noise from client metadata, not a failed challenge generation. The useful signal is the created CSV.
+4. Remove the generated adversarial file before Lesson 06 if you want the reranker transcript to stay on the original shipped finance fixture.
 
 ## Hands-On Exercises
 

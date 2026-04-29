@@ -2,6 +2,73 @@
 
 Lesson 01 explains the local command surface, provider resolution, and the verify gate.
 
+This lesson is the preflight contract for the whole example. Before the learner
+judges genome quality, CleanLoop first proves that the local runtime, package
+set, credentials, and live model path are actually usable.
+
+## Readiness Diagram
+
+![Lesson 01 canonical diagram](./diagrams/01-mutation-engine-overview.png)
+
+![Lesson 01 AutoGen arena diagram](./diagrams/autogen-arena-contract.png)
+
+```mermaid
+flowchart LR
+		env[cleanloop/.env]
+		fallback[parent .env fallback]
+		loader[util.load_env]
+		status[status_snapshot.py\ncurrent facts]
+		verify[verify.py\npreflight gate]
+		checks[Python + packages + credentials + live LLM call]
+		ready[ready for loop]
+		stop[stop and fix environment]
+
+		env --> loader
+		fallback --> loader
+		loader --> status
+		loader --> verify
+		verify --> checks
+		checks -->|all pass| ready
+		checks -->|any fail| stop
+		status --> operator[operator sees baseline state]
+```
+
+## Theory To Learn
+
+### 1. Environment trust comes before mutation trust
+
+If the local runtime is broken, later failures are ambiguous. You cannot tell
+whether the genome is weak or the machine is misconfigured. Lesson 01 keeps
+that uncertainty out of the loop.
+
+### 2. `status` and `verify` solve different problems
+
+`status` is descriptive. It tells you what dataset, model, Python version, and
+row counts the example sees right now. `verify` is a gate. It decides whether
+the environment is healthy enough to start the real lessons.
+
+### 3. Provider resolution is part of the teaching surface
+
+CleanLoop loads `cleanloop/.env` first and only falls back to the shared
+example `.env` if needed. That keeps the example self-contained and makes the
+active endpoint choice inspectable instead of hidden in global shell state.
+
+### 4. A live LLM call is the only meaningful final check
+
+Installed packages do not prove that the endpoint works. Correct credentials do
+not prove that the provider will answer. The verify flow closes that gap with
+one small completion request before the learner spends time in the mutation
+loop.
+
+## What This Gate Is Teaching You
+
+When `verify` fails, the result is already a useful diagnosis.
+
+- Python or package failures mean the runtime is not ready yet.
+- Credential failures mean the loop would fail before any genome reasoning.
+- LLM connectivity failures mean the example contract is incomplete even if the
+  code imports cleanly.
+
 ## Code Anchors
 
 - [Status snapshot builder](../../status_snapshot.py#L16)
@@ -25,6 +92,49 @@ That one line gives the learner a stable view of row counts, Python version, mod
 1. Start at [status_snapshot.py#L16](../../status_snapshot.py#L16) to see which facts the CLI gathers.
 2. Then read [util.py#L357](../../util.py#L357) to see how those facts are rendered for the learner.
 3. Finish at [verify.py#L168](../../verify.py#L168) to see the hard gate before the loop starts.
+
+## Run
+
+### Commands
+
+```powershell
+python util.py status
+python util.py verify
+```
+
+### Output
+
+```text
+$ python util.py status
+Input Files:
+	finance_invoices.csv               12 rows
+	...
+	finance_invoices_adjustments.csv   12 rows
+
+Environment:
+	Python:   3.11.9
+	.env:     exists
+	Model:    microsoft/Phi-4
+	Dataset:  finance
+
+$ python util.py verify
+Required packages:
+	[OK] All 7 packages installed
+API credentials:
+	[OK] Endpoint: https://models.github.ai/inference
+LLM connectivity:
+	[OK] LLM replied: hello
+
+Result: 4/4 checks passed.
+
+Ready for: python util.py loop
+```
+
+### Explanation
+
+1. `python util.py status` confirms that the five finance fixture files are present, the local `.env` was found, and the example is pointed at a concrete model.
+2. `python util.py verify` proves the preflight contract end to end. Validate that all four checks pass and that the final line says `Ready for: python util.py loop`.
+3. If either command fails here, stop and fix the runtime before you study mutation behavior. Lesson 01 is about removing environment ambiguity first.
 
 ## Hands-On Exercises
 
