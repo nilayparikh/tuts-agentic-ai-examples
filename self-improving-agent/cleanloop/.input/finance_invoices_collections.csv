@@ -2,12 +2,12 @@ invoice_id,customer,amount,currency,issued,due,status,collector,escalation_level
 INV-401,Northwind Labs,7800.00,USD,2024-07-15,2024-08-14,paid,Diaz,0,2024-08-20,,,
 INV-402,Blue Yonder,9200.00,USD,2024-07-16,2024-08-15,overdue,Diaz,2,2024-08-22,,,
 INV-403,Fabrikam GmbH,"€12,500.00",EUR,2024-07-17,2024-08-16,overdue,Kaur,1,2024-08-23,,,
-INV-404,Contoso Retail,offset zero  🧾,GBP,2024-07-18,2024-08-17,disputed,Kaur,3,,,
+INV-404,Contoso Retail,offset zero  🧾,GBP,2024-07-18,2024-08-17,disputed,Kaur,3,,-4410.15,approved,collector matched the offset memo to the disputed balance
 INV-405,Wide World Importers,-150.00,AUD,2024-07-19,2024-08-18,refund,Patel,1,2024-08-24,,,
 INV-406,Northwind Labs,PENDING // collector ok,USD,2024-07-20,2024-08-19,pending,Diaz,1,2024-08-26,8150.00,approved,collector attached confirmed remittance
-INV-407,Blue Yonder,complimentary ✨,USD,2024-07-21,2024-08-20,active,Diaz,0,2024-08-27,,,
+INV-407,Blue Yonder,complimentary ✨,USD,2024-07-21,2024-08-20,active,Diaz,0,2024-08-27,3840.00,approved,complimentary window expired and billing was reinstated
 INV-408,Fabrikam GmbH,err // payment plan approved,EUR,2024-07-22,2024-08-21,review,Kaur,2,2024-08-28,12495.00,approved,promise converted to confirmed payment
-INV-409,Contoso Retail,trial  free,GBP,2024-07-23,2024-08-22,active,Kaur,2,2024-08-29,,,
+INV-409,Contoso Retail,trial  free,GBP,2024-07-23,2024-08-22,active,Kaur,2,2024-08-29,4525.00,approved,trial order converted to a committed retail invoice
 INV-410,Wide World Importers,"AUD 7,800.00",AUD,2024-07-24,2024-08-23,paid,Patel,0,2024-08-30,,,
 INV-411,Northwind Labs,8300.00,USD,2024-07-25,2024-08-24,paid,Diaz,0,2024-08-31,,,
 INV-412,Blue Yonder,ESCALATE TO TREASURY 🚫,USD,2024-07-26,2024-08-25,escalated,Diaz,4,,,

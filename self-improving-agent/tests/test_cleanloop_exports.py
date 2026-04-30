@@ -13,7 +13,6 @@ import unittest
 from importlib import import_module
 from pathlib import Path
 
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -187,21 +186,21 @@ class CleanLoopExportContractTests(unittest.TestCase):
                         "2024-03-15",
                         "Soylent Foods",
                         "USD",
-                        "0.0",
+                        "7800.0",
                         "active",
+                    ),
+                    (
+                        "2024-07-18",
+                        "Contoso Retail",
+                        "GBP",
+                        "-4410.15",
+                        "disputed",
                     ),
                     (
                         "2024-03-18",
                         "Acme Manufacturing",
                         "USD",
                         "15420.0",
-                        "disputed",
-                    ),
-                    (
-                        "2024-07-18",
-                        "Contoso Retail",
-                        "GBP",
-                        "0.0",
                         "disputed",
                     ),
                     (
@@ -247,7 +246,9 @@ class CleanLoopExportContractTests(unittest.TestCase):
                 ("INV-312", "CHARGEBACK ⚠", "unmapped_amount_token"),
                 failure_lookup,
             )
-            self.assertTrue(any(row["value"] != "0.0" for row in success_rows))
+            for row in success_rows:
+                if row["value"] == "0.0":
+                    self.assertIn(row["category"], {"cancelled", "void"})
 
             self.assertEqual(
                 failure_lookup,

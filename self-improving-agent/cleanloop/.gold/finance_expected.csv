@@ -4,43 +4,43 @@ date,entity,currency,value,category
 2024-01-20,Initech Systems,EUR,22000.0,overdue
 2024-02-07,Blue Yonder,USD,9200.0,overdue
 2024-02-20,Umbrella Bio,USD,-500.0,refund
-2024-03-15,Soylent Foods,USD,0.0,active
+2024-03-15,Soylent Foods,USD,7800.0,active
 2024-03-18,Acme Manufacturing,USD,15420.0,disputed
 2024-03-20,Initech Systems,EUR,21450.0,pending
-2024-04-01,Umbrella Bio,USD,0.0,active
+2024-04-01,Umbrella Bio,USD,1425.0,active
 2024-04-02,Northwind Labs,USD,12950.0,review
 2024-04-25,Acme Manufacturing,CHF,4100.0,paid
 2024-05-13,Acme Manufacturing,USD,15800.0,paid
 2024-05-14,Globex Retail,USD,9100.75,paid
 2024-05-15,Initech Systems,EUR,30980.0,pending
 2024-05-16,Umbrella Bio,USD,-1200.0,refund
-2024-05-17,Soylent Foods,EUR,0.0,active
-2024-05-18,Acme Manufacturing,USD,0.0,active
+2024-05-17,Soylent Foods,EUR,2350.0,active
+2024-05-18,Acme Manufacturing,USD,6400.0,active
 2024-05-19,Globex Retail,USD,8800.0,paid
 2024-05-20,Initech Systems,EUR,3180.0,review
 2024-05-21,Umbrella Bio,USD,9999999.0,escalated
-2024-05-22,Soylent Foods,USD,0.0,active
+2024-05-22,Soylent Foods,USD,4100.0,active
 2024-05-23,Acme Manufacturing,USD,4225.1,paid
 2024-06-13,Northwind Labs,USD,12500.0,paid
 2024-06-14,Blue Yonder,USD,14250.6,paid
 2024-06-15,Fabrikam GmbH,EUR,18900.0,overdue
-2024-06-16,Contoso Retail,GBP,0.0,active
+2024-06-16,Contoso Retail,GBP,4575.25,active
 2024-06-17,Wide World Importers,AUD,8500.0,paid
 2024-06-18,Northwind Labs,USD,12950.0,review
 2024-06-19,Blue Yonder,USD,14110.0,pending
-2024-06-20,Fabrikam GmbH,EUR,0.0,active
+2024-06-20,Fabrikam GmbH,EUR,12680.0,active
 2024-06-21,Contoso Retail,GBP,4410.15,paid
-2024-06-22,Wide World Importers,AUD,0.0,active
+2024-06-22,Wide World Importers,AUD,2750.0,active
 2024-06-23,Northwind Labs,USD,12999.95,paid
 2024-07-15,Northwind Labs,USD,7800.0,paid
 2024-07-16,Blue Yonder,USD,9200.0,overdue
 2024-07-17,Fabrikam GmbH,EUR,12500.0,overdue
-2024-07-18,Contoso Retail,GBP,0.0,disputed
+2024-07-18,Contoso Retail,GBP,-4410.15,disputed
 2024-07-19,Wide World Importers,AUD,-150.0,refund
 2024-07-20,Northwind Labs,USD,8150.0,pending
-2024-07-21,Blue Yonder,USD,0.0,active
+2024-07-21,Blue Yonder,USD,3840.0,active
 2024-07-22,Fabrikam GmbH,EUR,12495.0,review
-2024-07-23,Contoso Retail,GBP,0.0,active
+2024-07-23,Contoso Retail,GBP,4525.0,active
 2024-07-24,Wide World Importers,AUD,7800.0,paid
 2024-07-25,Northwind Labs,USD,8300.0,paid
 2024-08-13,Northwind Labs,USD,6400.0,paid

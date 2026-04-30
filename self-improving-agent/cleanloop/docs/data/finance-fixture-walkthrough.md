@@ -36,7 +36,9 @@ That row becomes:
 INV-404,Contoso Retail,offset zero  🧾,GBP,2024-07-18,...,disputed
 ```
 
-The playbook canonicalizes `offset zero  🧾` to `OFFSET`, writes `0.0`, and preserves the category.
+The playbook canonicalizes `offset zero  🧾` to `OFFSET`, then reads the
+approved `resolution_amount` so the exported row keeps a real signed amount
+instead of a placeholder zero.
 
 ### Failure Row
 
@@ -46,4 +48,6 @@ That row is copied into `finance_mutation_failures.csv` for later mutation work.
 
 ## Why This Fixture Works For Teaching
 
-The example is realistic because mutation success is caused by noisy signals, not by blank core fields.
+The example is realistic because mutation success is caused by noisy signals,
+not by blank core fields, and every shipped mutation-success row is recoverable
+from local business metadata such as `resolution_amount` or `adjusted_amount`.

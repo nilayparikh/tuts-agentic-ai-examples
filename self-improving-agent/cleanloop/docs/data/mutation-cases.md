@@ -2,9 +2,10 @@
 
 The shipped playbook repairs known anomaly families without letting the model invent a new data pipeline every round.
 
-## Zero Map Cases
+## Contextual Recovery Cases
 
-These tokens become `0.0` while preserving status and currency.
+These tokens require local business metadata so the playbook can recover a real
+numeric amount instead of writing a placeholder zero.
 
 - `FREE TRIAL`
 - `COMPLIMENTARY`
@@ -34,6 +35,9 @@ INV-502,Blue Yonder, discounted   ✅ ,USD,...,paid,discount,11890.00,approved
 
 These rows read `resolution_amount` when `resolution_flag=approved`.
 
+- `FREE TRIAL`
+- `COMPLIMENTARY`
+- `OFFSET`
 - `N/A`
 - `PENDING`
 - `TBD`

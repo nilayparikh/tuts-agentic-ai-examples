@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import cast
 
-
 CLEANLOOP_DATASET_ENV = "CLEANLOOP_DATASET"
 DEFAULT_DATASET = "finance"
 AGENDA_PATH = Path(__file__).resolve().parent / "README.md"
@@ -36,27 +35,41 @@ MUTATION_RULES = (
     {
         "token": "FREE TRIAL",
         "route": "finance_mutation_success.csv",
-        "strategy": "zero_value",
-        "action": "Write value 0.0 and preserve the existing active category.",
+        "strategy": "resolution_amount",
+        "action": (
+            "Use resolution_amount as the final numeric value when the trial "
+            "conversion is approved."
+        ),
         "mutation_hint": (
-            "Map the promotional invoice to 0.0 and preserve the status."
+            "Read resolution_amount and resolution_flag to recover the approved "
+            "post-trial invoice value."
         ),
     },
     {
         "token": "COMPLIMENTARY",
         "route": "finance_mutation_success.csv",
-        "strategy": "zero_value",
-        "action": "Write value 0.0 and preserve the existing active category.",
+        "strategy": "resolution_amount",
+        "action": (
+            "Use resolution_amount as the final numeric value when the "
+            "complimentary invoice is reclassified and approved."
+        ),
         "mutation_hint": (
-            "Map the complimentary invoice to 0.0 and preserve the status."
+            "Read resolution_amount and resolution_flag to recover the approved "
+            "billable amount."
         ),
     },
     {
         "token": "OFFSET",
         "route": "finance_mutation_success.csv",
-        "strategy": "zero_value",
-        "action": "Write value 0.0 and preserve the disputed category.",
-        "mutation_hint": "Map the offset entry to 0.0 and preserve the status.",
+        "strategy": "resolution_amount",
+        "action": (
+            "Use resolution_amount as the signed offset value when the dispute "
+            "resolution is approved."
+        ),
+        "mutation_hint": (
+            "Read resolution_amount and resolution_flag to recover the approved "
+            "offset amount."
+        ),
     },
     {
         "token": "DISCOUNTED",
