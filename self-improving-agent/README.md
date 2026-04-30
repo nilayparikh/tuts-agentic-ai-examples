@@ -4,11 +4,11 @@ This repo now ships three runnable demos for the
 <a href="https://tuts.localm.dev/self-improving-agents" target="_blank" rel="noopener noreferrer">Self-Improving Agents</a>
 course.
 
-| Example              | Domain                    | What It Teaches                                                          | Video                                                |
-| -------------------- | ------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------- |
-| **CleanLoop**        | Data engineering          | The core bounded mutation loop on one finance invoice arena              | [Watch](https://www.youtube.com/watch?v=yx6aB5heI9o) |
-| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                    |
-| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                    |
+| Example              | Domain                    | What It Teaches                                                          | Video                                                                                                               |
+| -------------------- | ------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| **CleanLoop**        | Data engineering          | The core bounded mutation loop on one finance invoice arena              | [Lesson 01](https://www.youtube.com/watch?v=yx6aB5heI9o) · [Lesson 02](https://www.youtube.com/watch?v=8Y7MEbEw8wc) |
+| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                                                                                   |
+| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                                                                                   |
 
 CleanLoop is the teaching path. It uses one finance-only arena, one gold
 reference, one output file, and one reset path. Every fresh run copies
@@ -36,6 +36,7 @@ diffs.
 | Lesson | Thumbnail                                                               | Watch                                                                                                                    | Example                                                                                                                             |
 | ------ | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
 | 01     | [![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/yx6aB5heI9o/maxresdefault.jpg)](https://www.youtube.com/watch?v=yx6aB5heI9o) | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o) | [cleanloop](cleanloop/) |
+| 02     | [![Watch: One File to Rule the Loop: Engineering the Pipeline Genome    | Lesson 02 of 07](https://img.youtube.com/vi/8Y7MEbEw8wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=8Y7MEbEw8wc) | [One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07](https://www.youtube.com/watch?v=8Y7MEbEw8wc)    | [cleanloop](cleanloop/) |
 
 ## Quick Start
 
