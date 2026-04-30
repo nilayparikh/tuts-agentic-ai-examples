@@ -5,13 +5,13 @@ CleanLoop autonomously cleans messy CSV files by iteratively rewriting its
 own code until all binary assertions pass.
 
 Course alignment:
-    - Lesson 03: arena and baseline (`.input/`, `.gold/`, `prepare.py`)
-    - Lesson 04: orchestrator loop (`loop.py`)
-    - Lesson 05: genome improvement (`clean_data.py`)
-    - Lesson 06: observability (`dashboard.py`, history artifacts)
-    - Lesson 07: self-challenging (`challenger.py`)
-    - Lesson 08: test-time search (`reranker.py`)
-    - Lesson 09: safety and autonomy (`sandbox.py`, `autonomy.py`)
+    - Lesson 01: mutation engine (`util.py`, `verify.py`, `status_snapshot.py`)
+    - Lesson 02: pipeline genome (`clean_data.py`, `clean_data_runtime.py`)
+    - Lesson 03: orchestrator loop (`loop.py`)
+    - Lesson 04: observability (`dashboard.py`, history artifacts)
+    - Lesson 05: fixed judge and self-challenging (`prepare.py`, `challenger.py`)
+    - Lesson 06: test-time search (`reranker.py`)
+    - Lesson 07: production safety (`sandbox.py`, `autonomy.py`, `reset_workflow.py`)
 
 Usage:
     cd cleanloop

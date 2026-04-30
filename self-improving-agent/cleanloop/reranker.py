@@ -5,7 +5,7 @@ assertion suite, and selects the best one. This is the "System 2"
 upgrade to the standard single-shot proposal in loop.py.
 
 Course alignment:
-    - Lesson 08: test-time search and reranking
+    - Lesson 06: test-time search and reranking
 
 Usage:
     Preferred from cleanloop/:
@@ -38,8 +38,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import autogen_runtime, util
-from cleanloop import datasets as cleanloop_datasets
+from cleanloop import autogen_runtime, util  # noqa: E402
+from cleanloop import datasets as cleanloop_datasets  # noqa: E402
 
 util.load_env()
 
@@ -54,7 +54,7 @@ def _expected_total_assertions() -> int:
 
 # =====================================================================
 # SECTION: Best-of-N Candidate Proposal
-# Lesson 08 — Generate N candidate fixes with increasing temperature.
+# Lesson 06 — Generate N candidate fixes with increasing temperature.
 # Low temperature (0.3) gives conservative fixes. High temperature
 # (0.9) gives creative but risky rewrites. The diversity helps us
 # explore the solution space more broadly.
@@ -108,7 +108,7 @@ def propose(
 
 # =====================================================================
 # SECTION: Isolated Candidate Evaluation
-# Lesson 08 — Each candidate is evaluated in a temp directory so
+# Lesson 06 — Each candidate is evaluated in a temp directory so
 # it can't corrupt the real genome. We dynamically load the candidate
 # module, run it against the real input data, and evaluate with the
 # real referee. This is the "judge" in generate-then-judge.
@@ -143,7 +143,7 @@ def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
         # Evaluate with the real referee
         sys.path.insert(0, str(PROJECT_ROOT / "cleanloop"))
         try:
-            from cleanloop import prepare  # pylint: disable=import-outside-toplevel
+            from cleanloop import prepare
 
             results = prepare.evaluate(output_file)
             return results["score"], results["total"]
@@ -206,7 +206,7 @@ def main() -> None:
     genome_code = GENOME_PATH.read_text(encoding="utf-8")
 
     # Get current failures
-    from cleanloop import prepare, clean_data  # pylint: disable=import-outside-toplevel
+    from cleanloop import prepare, clean_data
 
     importlib.reload(clean_data)
     output_dir = PROJECT_ROOT / "cleanloop" / ".output"

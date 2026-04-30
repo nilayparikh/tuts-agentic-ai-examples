@@ -11,11 +11,11 @@
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
 
 It teaches one bounded self-improving loop over a finance data-cleaning pipeline.
-The shipped fixture contains 60 rows across five CSV files and currently produces:
+The shipped fixture contains 87 rows across five CSV files and currently produces:
 
-- 55 rows in `finance_master.csv`
-- 25 rows in `finance_mutation_success.csv`
-- 5 rows in `finance_mutation_failures.csv`
+- 78 rows in `finance_master.csv`
+- 48 rows in `finance_mutation_success.csv`
+- 9 rows in `finance_mutation_failures.csv`
 
 ## Start Here
 
@@ -44,6 +44,10 @@ All documentation now lives under `docs/`.
 Each lesson note under `docs/lessons/` now ends with a hands-on exercise block.
 Those exercises point at real files, include hints, and give a clear done state
 so the learner can move from reading to changing the example.
+
+The core course notes run from Lesson 01 through Lesson 07. Lesson 08 and
+Lesson 09 are companion deep dives for dashboard oversight and the autonomy
+ladder.
 
 Recommended reading order:
 

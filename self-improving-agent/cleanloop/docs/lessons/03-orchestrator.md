@@ -67,6 +67,23 @@ When one candidate is rejected, that is still progress.
 - The revert path proved the loop can stay bounded after a bad idea.
 - The history record preserves why the loop focused where it did.
 
+## What Learners Follow
+
+- start from the reset baseline instead of a drifting genome
+- run one judged round against the same fixed referee
+- compress the current failures into one focus area
+- inspect the candidate proposal path and the selected hypothesis
+- verify that commit or revert kept the loop bounded
+- read the saved history and logs as the durable record of that round
+
+## Actual Artifacts To Trace
+
+- `.output/finance_eval_history.json`
+- `.output/finance_strategy.json`
+- `.output/logs/finance_round_logs.jsonl`
+- `.output/traces/proposal-events.jsonl`
+- `.output/traces/run-events.jsonl`
+
 ## Core Loop Steps
 
 1. run genome
@@ -77,9 +94,12 @@ When one candidate is rejected, that is still progress.
 
 ## Code Anchors
 
-- [Loop entrypoint](../../loop.py#L617)
-- [Metacognition snapshot](../../loop.py#L260)
-- [Attempt summary](../../loop.py#L139)
+- [Loop entrypoint](../../loop.py#L702)
+- [Artifact manifest](../../loop.py#L177)
+- [Metacognition snapshot](../../loop.py#L277)
+- [Exported round logs](../../loop.py#L332)
+- [Structured console log appender](../../loop.py#L371)
+- [Fresh-run reset](../../loop.py#L392)
 
 The orchestration stays bounded on purpose. One genome changes. One judge scores it. One loop decides whether the candidate survives.
 
@@ -94,6 +114,13 @@ loop.run_loop(
 ```
 
 That call is the whole bounded recipe. The important teaching move is not more abstraction. It is understanding the order of decisions around one candidate.
+
+## Read This In Order
+
+1. Read [loop.py#L702](../../loop.py#L702) to see the full round order.
+2. Step into [loop.py#L277](../../loop.py#L277) to see how repeated failures are compressed into one focus area.
+3. Read [loop.py#L392](../../loop.py#L392) to see how every run is reset to a known baseline first.
+4. Finish with [loop.py#L332](../../loop.py#L332) so you can connect one round to the saved history and logs.
 
 ## Run
 
@@ -113,7 +140,7 @@ python util.py loop --max-iterations 1
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ python util.py loop --max-iterations 1
 [FRESH_START] Starting from the immutable starter genome for dataset finance
@@ -130,7 +157,7 @@ History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\
 
 1. The first four commands recreate the baseline from Lesson 02 so the round starts from a known `13/14` score.
 2. `python util.py loop --max-iterations 1` runs one full controlled experiment. Validate the order: baseline run, metacognition focus, one LLM proposal, candidate re-evaluation, then explicit revert.
-3. The important end-state check is not success. It is bounded control. Validate that the run writes `finance_eval_history.json` and that the candidate was rejected because it failed to improve the judged score.
+3. The important end-state check is not success. It is bounded control. Validate that the run writes `finance_eval_history.json`, `finance_strategy.json`, and `finance_round_logs.jsonl` and that the candidate was rejected because it failed to improve the judged score.
 
 ## Hands-On Exercises
 

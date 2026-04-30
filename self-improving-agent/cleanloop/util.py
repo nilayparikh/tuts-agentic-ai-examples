@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import argparse
 import importlib
+import importlib.util
 import os
 import platform
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -370,7 +372,7 @@ def _cmd_status(_args: argparse.Namespace) -> int:
     """Print the local CleanLoop dataset and environment status."""
     from cleanloop.status_snapshot import (
         build_status_snapshot,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     # Keep the CLI output simple while delegating the fact-gathering into a
     # small helper that lesson docs can point to directly.
@@ -402,7 +404,7 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
         clean_data,
         datasets,
         prepare,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     target = (
         Path(args.output_csv).resolve()
@@ -422,12 +424,13 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
 
 def _cmd_loop(args: argparse.Namespace) -> int:
     """Run the local self-improving loop."""
-    from cleanloop import loop  # pylint: disable=import-outside-toplevel
+    from cleanloop import loop
 
     loop.run_loop(
         max_iterations=args.max_iterations,
         use_reranker=args.rerank,
         n_candidates=args.candidates,
+        named_instance=args.named_instance,
     )
     return 0
 
@@ -449,7 +452,7 @@ def _cmd_sandbox(args: argparse.Namespace) -> int:
 
 def _cmd_autonomy(args: argparse.Namespace) -> int:
     """Run the local autonomy simulation."""
-    from cleanloop import autonomy  # pylint: disable=import-outside-toplevel
+    from cleanloop import autonomy
 
     autonomy.simulate(n_rounds=args.rounds)
     return 0
@@ -457,19 +460,66 @@ def _cmd_autonomy(args: argparse.Namespace) -> int:
 
 def _cmd_dashboard(_args: argparse.Namespace) -> int:
     """Launch the Streamlit dashboard from the local CleanLoop folder."""
+    command = _streamlit_run_command(EXAMPLE_ROOT / "dashboard.py")
+    if command is None:
+        print(
+            "ERROR: Streamlit is not installed and uvx is unavailable. "
+            "Run `python -m pip install streamlit pandas` and retry."
+        )
+        return 1
     result = subprocess.run(
-        [sys.executable, "-m", "streamlit", "run", str(EXAMPLE_ROOT / "dashboard.py")],
+        command,
         cwd=str(PROJECT_ROOT),
+        env=_streamlit_env(),
         check=False,
     )
     return int(result.returncode)
+
+
+def _streamlit_env() -> dict[str, str]:
+    """Return environment variables for non-interactive Streamlit launch."""
+    streamlit_env = dict(os.environ)
+    streamlit_env["STREAMLIT_SERVER_HEADLESS"] = "true"
+    streamlit_env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
+    streamlit_env["STREAMLIT_CLIENT_TOOLBAR_MODE"] = "minimal"
+    return streamlit_env
+
+
+def _streamlit_run_args(dashboard_path: Path) -> list[str]:
+    """Return the shared Streamlit dashboard arguments."""
+    return [
+        "run",
+        str(dashboard_path),
+        "--server.headless=true",
+        "--browser.gatherUsageStats=false",
+        "--client.toolbarMode=minimal",
+    ]
+
+
+def _streamlit_run_command(dashboard_path: Path) -> list[str] | None:
+    """Return a Streamlit launch command, falling back to uvx when needed."""
+    if importlib.util.find_spec("streamlit") is not None:
+        return [sys.executable, "-m", "streamlit", *_streamlit_run_args(dashboard_path)]
+
+    uvx_path = shutil.which("uvx")
+    if uvx_path:
+        return [
+            uvx_path,
+            "--with",
+            "pandas>=2.2.0",
+            "--from",
+            "streamlit>=1.45.0",
+            "streamlit",
+            *_streamlit_run_args(dashboard_path),
+        ]
+    return None
 
 
 def _cmd_reset(_args: argparse.Namespace) -> int:
     """Restore the starter genome without deleting the shipped sample outputs."""
     from cleanloop.reset_workflow import (
         reset_to_starter,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     # Reset stays explicit so learners can see the trust-recovery path in one
     # place instead of hunting through a lesson-specific wrapper package.
@@ -512,6 +562,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=3,
         help="Number of reranker candidates (default: 3)",
+    )
+    loop_parser.add_argument(
+        "--named-instance",
+        default=None,
+        help="Optional run-instance name for per-run logs, traces, and diagnostics",
     )
 
     challenge_parser = subparsers.add_parser(

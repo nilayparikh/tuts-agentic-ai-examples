@@ -66,6 +66,22 @@ separate facts.
 - Which failure modes the current playbook still misses.
 - Whether score changes reflect real capability rather than looser grading.
 
+## What Learners Follow
+
+- re-run the fixed judge before making the arena harder
+- separate judge logic from challenger logic instead of treating both as one surface
+- inspect which assertion fails first on the harder arena
+- remove temporary adversarial files when you want to return to the shipped fixture
+- compare harder input pressure against the same reference contract
+
+## Actual Files To Trace
+
+- `.gold/finance_expected.csv`
+- `.input/finance_*.csv`
+- `.input/adversarial_d1_01.csv`
+- `.output/finance_master.csv`
+- `.output/finance_mutation_failures.csv`
+
 ## Judge Rule
 
 The model does not grade itself. `prepare.py` and the reference export stay fixed.
@@ -76,8 +92,12 @@ The challenger generates harder anomaly inputs when the loop becomes too comfort
 
 ## Code Anchors
 
-- [Fixed referee](../../prepare.py#L324)
+- [Fixed referee](../../prepare.py#L327)
+- [Reference metrics](../../prepare.py#L212)
+- [Binary checks registry](../../prepare.py#L239)
+- [Difficulty ladder](../../challenger.py#L69)
 - [Challenger generator](../../challenger.py#L106)
+- [Challenger CLI](../../challenger.py#L137)
 
 ## Inline Coding
 
@@ -86,6 +106,13 @@ results = prepare.evaluate(output)
 ```
 
 That line matters because the loop never grades itself. The scorer stays fixed, even when the genome changes.
+
+## Read This In Order
+
+1. Read [prepare.py#L327](../../prepare.py#L327) to see the fixed evaluation entrypoint.
+2. Step into [prepare.py#L239](../../prepare.py#L239) so you can see the exact assertions the genome cannot move.
+3. Read [challenger.py#L69](../../challenger.py#L69) to understand the difficulty ladder before you generate new files.
+4. Finish with [challenger.py#L106](../../challenger.py#L106) and [challenger.py#L137](../../challenger.py#L137) so you can connect the prompt surface to the generated CSVs.
 
 ## Run
 
@@ -106,7 +133,7 @@ Remove-Item ".input\adversarial_d1_01.csv"
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ python util.py challenge --difficulty 1 --count 1
 Generating 1 adversarial CSVs at difficulty 1
@@ -122,7 +149,7 @@ $ Remove-Item ".input\adversarial_d1_01.csv"
 1. Re-run the baseline judge first. Validate that the starter genome still scores `13/14` against the unchanged referee before you make the arena harder.
 2. `python util.py challenge --difficulty 1 --count 1` exercises the challenger without changing the judge. Validate that it creates `adversarial_d1_01.csv` and notice that the output recommends the next step: run the loop against the harder arena.
 3. The model-mismatch warning is diagnostic noise from client metadata, not a failed challenge generation. The useful signal is the created CSV.
-4. Remove the generated adversarial file before Lesson 06 if you want the reranker transcript to stay on the original shipped finance fixture.
+4. Remove the generated adversarial file before Lesson 06 if you want the reranker transcript to stay on the original shipped finance fixture and keep the reference comparison stable.
 
 ## Hands-On Exercises
 

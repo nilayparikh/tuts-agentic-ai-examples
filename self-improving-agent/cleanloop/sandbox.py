@@ -6,7 +6,7 @@ Runs the genome (clean_data.py) in an isolated subprocess with:
   - Captured stdout/stderr for logging
 
 Course alignment:
-    - Lesson 09: safety and autonomy
+    - Lesson 07: safety and autonomy
 
 Usage:
     Preferred from cleanloop/:
@@ -30,7 +30,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import datasets as cleanloop_datasets
+from cleanloop import datasets as cleanloop_datasets  # noqa: E402
 
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
@@ -39,7 +39,7 @@ OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 
 # =====================================================================
 # SECTION: Sandboxed Execution
-# Lesson 09 — The genome runs in a separate Python process.
+# Lesson 07 — The genome runs in a separate Python process.
 # This means:
 #   1. It can't access the loop's memory or variables
 #   2. If it crashes, the loop survives
@@ -65,8 +65,7 @@ def run_sandboxed(
     return_code, timed_out.
     """
     # Build a minimal runner script that imports and calls the genome
-    runner = textwrap.dedent(
-        f"""\
+    runner = textwrap.dedent(f"""\
         import sys
         sys.path.insert(0, r"{genome_path.parent.parent}")
         from pathlib import Path
@@ -79,8 +78,7 @@ def run_sandboxed(
         spec.loader.exec_module(mod)
         mod.clean(Path(r"{input_dir}"), Path(r"{output_path}"))
         print("SANDBOX_OK")
-    """
-    )
+    """)
 
     try:
         result = subprocess.run(
@@ -160,7 +158,7 @@ def main() -> None:
 
     # Evaluate if output was produced
     if result["success"] and output_path.exists():
-        from cleanloop import prepare  # pylint: disable=import-outside-toplevel
+        from cleanloop import prepare
 
         eval_result = prepare.evaluate(output_path)
         prepare.print_results(eval_result)

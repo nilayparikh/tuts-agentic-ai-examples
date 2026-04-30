@@ -6,6 +6,10 @@ The loop does not need a better trained model to search better. It can spend
 more inference-time budget on the same round by generating several bounded
 candidates, scoring each one, and selecting the best survivor.
 
+After you run reranked rounds, use [Lesson 08](./08-dashboard-human-oversight.md)
+to inspect candidate width, token cost, and selected-attempt diagnostics from
+the saved artifacts.
+
 ## Search Diagram
 
 ![Lesson 06 canonical diagram](./diagrams/06-test-time-search-map.png)
@@ -66,6 +70,21 @@ plausible move.
 - The scoreboard exposes whether the extra search budget paid off.
 - The winner still has to survive the same judge as every rejected option.
 
+## What Learners Follow
+
+- keep the baseline judge and genome state fixed before widening search
+- generate several bounded candidates from the same failure list
+- score each candidate in isolation instead of trusting LLM prose
+- inspect the selected hypothesis and the rejected scores together
+- treat search width as an engineering budget knob, not a magic setting
+
+## Actual Artifacts To Trace
+
+- `.output/finance_eval_history.json`
+- `.output/logs/finance_round_logs.jsonl`
+- `.output/traces/proposal-events.jsonl`
+- temp candidate directories created by the reranker run
+
 ## Core Idea
 
 Instead of trusting the first candidate, the loop can generate several proposals and compare them before commit.
@@ -73,8 +92,9 @@ Instead of trusting the first candidate, the loop can generate several proposals
 ## Code Anchors
 
 - [Best-of-N proposal](../../reranker.py#L67)
-- [Candidate evaluation](../../reranker.py#L118)
-- [Loop caller](../../loop.py#L617)
+- [Loop caller](../../loop.py#L702)
+- [Attempt summary](../../loop.py#L139)
+- [Candidate evaluation entry](../../prepare.py#L327)
 
 ## Inline Coding
 
@@ -89,6 +109,13 @@ code, hyp, diagnostics = propose(
 ```
 
 That call matters because test-time search is still bounded. The loop asks for several candidates, but the fixed judge still decides which one survives.
+
+## Read This In Order
+
+1. Read [reranker.py#L67](../../reranker.py#L67) to see how multiple candidates are produced from one failure list.
+2. Step into [prepare.py#L327](../../prepare.py#L327) because every candidate still goes through the same referee.
+3. Read [loop.py#L702](../../loop.py#L702) to see where reranking plugs into the normal commit-or-revert flow.
+4. Finish with [loop.py#L139](../../loop.py#L139) so you can connect the winning candidate to the saved attempt diagnostics.
 
 ## Run
 
@@ -108,7 +135,7 @@ python util.py loop --max-iterations 1 --rerank --candidates 2
 $ python util.py loop --max-iterations 1 --rerank --candidates 2
 [FRESH_START] Starting from the immutable starter genome for dataset finance
 [CURRENT_SCORE] Score 13/14
-[FAILED_ASSERTION] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+[FAILED_ASSERTION] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 [REQUESTING_LLM_PROPOSAL] Requesting mutation proposal from model microsoft/Phi-4
 	Reranker: generating 2 candidates...
 [LLM_ATTEMPT] Attempt 1/2: AutoGen candidate 1: conservative
@@ -124,6 +151,7 @@ History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\
 1. The preflight, reset, and evaluate steps recreate the same baseline that Lesson 03 used. That keeps the search comparison fair.
 2. `python util.py loop --max-iterations 1 --rerank --candidates 2` spends extra inference budget on two candidates in the same round. Validate that the output explicitly says `Reranker: generating 2 candidates...` and shows both attempt labels.
 3. The important result is that the selected candidate still scored only `13/14`, so the loop reverted it. That is the test-time search lesson: more candidates can improve odds, but they still have to beat the same fixed judge.
+4. After the run, inspect `finance_eval_history.json` or `finance_round_logs.jsonl` so you can see which attempt label won and how wide the search really was.
 
 ## Hands-On Exercises
 

@@ -18,17 +18,17 @@ CleanLoop runs one bounded pipeline against the finance fixture.
 
 ## Actual Fixture Shape
 
-The shipped sample contains 60 input rows across five files.
+The shipped sample contains 87 input rows across five files.
 
 - 30 rows succeed in the deterministic pass.
-- 25 rows succeed through the shipped mutation playbook.
-- 5 rows stay unresolved and remain in the failure dump.
+- 48 rows succeed through the shipped mutation playbook.
+- 9 rows stay unresolved and remain in the failure dump.
 
 That means the expected outputs are:
 
-- `finance_master.csv`: 55 rows
-- `finance_mutation_success.csv`: 25 rows
-- `finance_mutation_failures.csv`: 5 rows
+- `finance_master.csv`: 78 rows
+- `finance_mutation_success.csv`: 48 rows
+- `finance_mutation_failures.csv`: 9 rows
 
 ## Representative Records
 
@@ -79,7 +79,7 @@ Ready for: python util.py loop
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
    CleanLoop Evaluation: 13/14
-   [FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+   [FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ python util.py loop --max-iterations 1
 [CURRENT_SCORE] Score 13/14
@@ -91,6 +91,6 @@ History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\
 ### Explanation
 
 1. The first two commands are the same readiness gate used in [Lesson 01](../lessons/01-mutation-engine.md). Validate the fixture shape and provider health before you reason about architecture.
-2. `python util.py evaluate` recreates the baseline described in [Lesson 02](../lessons/02-pipeline-genome.md): the starter genome writes a real export but still misses 25 reference rows.
+2. `python util.py evaluate` recreates the baseline described in [Lesson 02](../lessons/02-pipeline-genome.md): the starter genome writes a real export but still misses 48 reference rows.
 3. `python util.py loop --max-iterations 1` exercises the round-level control path from [Lesson 03](../lessons/03-orchestrator.md). The key architecture check is that the loop records history and reverts a non-improving candidate.
 4. If you need the function-by-function path behind those lines, continue into [execution-flow.md](execution-flow.md).

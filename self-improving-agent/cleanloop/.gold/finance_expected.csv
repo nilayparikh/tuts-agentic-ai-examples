@@ -9,6 +9,7 @@ date,entity,currency,value,category
 2024-03-20,Initech Systems,EUR,21450.0,pending
 2024-04-01,Umbrella Bio,USD,1425.0,active
 2024-04-02,Northwind Labs,USD,12950.0,review
+2024-04-11,Contoso Retail,GBP,3050.0,review
 2024-04-25,Acme Manufacturing,CHF,4100.0,paid
 2024-05-13,Acme Manufacturing,USD,15800.0,paid
 2024-05-14,Globex Retail,USD,9100.75,paid
@@ -54,3 +55,25 @@ date,entity,currency,value,category
 2024-08-22,Blue Yonder,USD,-12100.0,adjustment
 2024-08-23,Fabrikam GmbH,EUR,16110.0,paid
 2024-08-24,Contoso Retail,GBP,6020.4,paid
+2024-08-25,Soylent Foods,USD,8450.0,paid
+2024-08-26,Acme Manufacturing,USD,-1320.0,adjustment
+2024-08-27,Tailspin Energy,USD,5120.0,active
+2024-08-28,Humongous Insurance,USD,2890.0,active
+2024-08-29,Alpine Ski House,GBP,7340.5,review
+2024-08-30,Coho Winery,USD,4860.0,disputed
+2024-08-31,Adventure Works,EUR,2715.0,review
+2024-09-01,Lucerne Publishing,GBP,9180.0,pending
+2024-09-02,Consolidated Messenger,USD,3760.0,active
+2024-09-03,Fourth Coffee,USD,2105.0,active
+2024-09-04,A Datum,GBP,6540.0,review
+2024-09-05,Margies Travel,USD,5985.25,active
+2024-09-06,Relecloud,EUR,11240.0,pending
+2024-09-07,Southridge Video,AUD,1995.0,active
+2024-09-08,Woodgrove Bank,USD,-2880.0,disputed
+2024-09-09,Oceanic Airlines,GBP,6675.0,review
+2024-09-10,Trey Research,EUR,5225.0,active
+2024-09-11,Litware,AUD,1840.0,active
+2024-09-12,Wide World Importers,USD,7425.0,paid
+2024-09-13,Contoso Retail,GBP,5388.75,paid
+2024-09-14,Fabrikam GmbH,EUR,9200.0,paid
+2024-09-15,Tailspin Energy,USD,-2450.0,adjustment

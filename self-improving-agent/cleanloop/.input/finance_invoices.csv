@@ -11,3 +11,9 @@ INV-109,Umbrella Bio,complimentary ✨,USD,2024-04-01,2024-05-01,active,1425.00,
 INV-110,Northwind Labs,TBD   // ready,USD,2024-04-02,2024-05-02,review,12950.00,approved,ops approved the reviewed amount
 INV-111,Acme Manufacturing,"CHF 4,100.00",CHF,2024-04-25,2024-05-25,paid,,,
 INV-112,Fabrikam GmbH,SEE PDF 📎,EUR,2024-04-10,2024-05-10,review,,,
+INV-113,Contoso Retail,PRO FORMA 🧾,GBP,2024-04-11,2024-05-11,review,3050.00,approved,pro forma invoice converted after finance sign-off
+INV-114,Tailspin Energy,TRIAL FREE,USD,2024-08-27,2024-09-26,active,5120.00,approved,trial converted after procurement sign-off
+INV-115,Humongous Insurance,COMPLIMENTARY ✅,USD,2024-08-28,2024-09-27,active,2890.00,approved,goodwill credit converted to a billed advisory fee
+INV-116,Alpine Ski House,PRO-FORMA 📄,GBP,2024-08-29,2024-09-28,review,7340.50,approved,pro forma invoice was confirmed by finance
+INV-117,Coho Winery,N/A // legal cleared,USD,2024-08-30,2024-09-29,disputed,4860.00,approved,legal review restored the disputed invoice amount
+INV-118,Graphic Design Institute,VOICE NOTE ONLY 🎙,USD,2024-09-16,2024-10-16,review,,,

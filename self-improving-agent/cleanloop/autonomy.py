@@ -11,7 +11,7 @@ Levels:
   3 = FULL_AUTO    — no human in the loop
 
 Course alignment:
-    - Lesson 09: safety and autonomy
+    - Lesson 07: safety and autonomy
 
 Usage:
     Preferred from cleanloop/:
@@ -29,10 +29,9 @@ import argparse
 import random
 from dataclasses import dataclass, field
 
-
 # =====================================================================
 # SECTION: Trust Configuration
-# Lesson 09 — Four levels of autonomy. The thresholds are the
+# Lesson 07 — Four levels of autonomy. The thresholds are the
 # minimum rolling pass rate needed to advance to the next level.
 # These are deliberately conservative — it's easy to earn trust
 # and very easy to lose it (any critical failure resets to L0).
@@ -61,7 +60,7 @@ WINDOW_SIZE = 5
 
 # =====================================================================
 # SECTION: TrustState — The Autonomy Ladder
-# Lesson 09 — This class tracks the agent's trust level and
+# Lesson 07 — This class tracks the agent's trust level and
 # makes promotion/demotion decisions based on performance.
 #
 # Key design decisions:

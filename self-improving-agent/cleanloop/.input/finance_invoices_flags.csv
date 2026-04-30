@@ -11,3 +11,8 @@ INV-209,Umbrella Bio,9999999,USD,2024-05-21,2024-06-20,escalated,critical,RVW-21
 INV-210,Soylent Foods,TRIAL FREE,USD,2024-05-22,2024-06-21,active,low,RVW-05,4100.00,approved,trial usage converted to a paid pilot invoice
 INV-211,Acme Manufacturing,"$4,225.10",USD,2024-05-23,2024-06-22,paid,low,RVW-06,,,
 INV-214,Umbrella Bio,MANUAL ONLY 🧾,USD,2024-05-26,2024-06-25,disputed,critical,RVW-25,,,
+INV-215,Adventure Works,ERROR -- cleared,EUR,2024-08-31,2024-09-30,review,high,RVW-31,2715.00,approved,manual exception was cleared by the review board
+INV-216,Lucerne Publishing,TBD // committee approved,GBP,2024-09-01,2024-10-01,pending,medium,RVW-32,9180.00,approved,committee approved the pending renewal amount
+INV-217,Consolidated Messenger,free-trial,USD,2024-09-02,2024-10-02,active,medium,RVW-33,3760.00,approved,free trial converted into a recurring courier plan
+INV-218,Fourth Coffee,complimentary ✅,USD,2024-09-03,2024-10-03,active,low,RVW-34,2105.00,approved,complimentary launch credits were converted to a paid package
+INV-219,Proseware,ATTACH CALL LOG 📞,EUR,2024-09-17,2024-10-17,review,critical,RVW-35,,,

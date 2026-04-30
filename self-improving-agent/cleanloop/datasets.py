@@ -15,9 +15,16 @@ DEFAULT_DATASET = "finance"
 AGENDA_PATH = Path(__file__).resolve().parent / "README.md"
 TRACES_DIRNAME = "traces"
 LOGS_DIRNAME = "logs"
+RUNS_DIRNAME = "runs"
 RUN_EVENTS_FILENAME = "run-events.jsonl"
 ROW_DECISIONS_FILENAME = "row-decisions.jsonl"
 PROPOSAL_EVENTS_FILENAME = "proposal-events.jsonl"
+OTEL_SPANS_FILENAME = "otel-spans.jsonl"
+OTEL_EVENTS_FILENAME = "otel-events.jsonl"
+OTEL_LOGS_FILENAME = "otel-logs.jsonl"
+RUN_MANIFEST_FILENAME = "run-manifest.json"
+RUN_DIAGNOSTICS_FILENAME = "run-diagnostics.json"
+STRATEGY_FILENAME = "finance_strategy.json"
 
 FINANCE_COLUMNS = ("date", "entity", "currency", "value", "category")
 FAILURE_COLUMNS = (
@@ -105,6 +112,31 @@ MUTATION_RULES = (
         ),
     },
     {
+        "token": "HOLDBACK RELEASE",
+        "route": "finance_mutation_success.csv",
+        "strategy": "adjusted_amount",
+        "action": (
+            "Use adjusted_amount as the final billed value when the holdback release is approved."
+        ),
+        "mutation_hint": (
+            "Read adjusted_amount and approval_flag to recover the approved "
+            "holdback release amount."
+        ),
+    },
+    {
+        "token": "CREDIT SWAP",
+        "route": "finance_mutation_success.csv",
+        "strategy": "adjusted_amount",
+        "action": (
+            "Use adjusted_amount as the signed reclassification value when the "
+            "credit swap is approved."
+        ),
+        "mutation_hint": (
+            "Read adjusted_amount and approval_flag to recover the approved "
+            "signed credit-swap value."
+        ),
+    },
+    {
         "token": "RESOLUTION_AMOUNT",
         "route": "finance_mutation_success.csv",
         "strategy": "resolution_amount",
@@ -113,6 +145,18 @@ MUTATION_RULES = (
         ),
         "mutation_hint": (
             "Read resolution_amount and resolution_flag to recover the analyst-approved amount."
+        ),
+    },
+    {
+        "token": "PRO FORMA",
+        "route": "finance_mutation_success.csv",
+        "strategy": "resolution_amount",
+        "action": (
+            "Use resolution_amount as the final numeric value when the pro forma "
+            "invoice is approved."
+        ),
+        "mutation_hint": (
+            "Read resolution_amount and resolution_flag to recover the approved pro forma amount."
         ),
     },
     {
@@ -129,7 +173,10 @@ MUTATION_RULES = (
     },
 )
 UNRESOLVED_MUTATION_TOKEN_GROUP = "PENDING / TBD / ERROR / ERR / CHARGEBACK"
-UNRESOLVED_MUTATION_ACTION = "Dump the unresolved row for later mutation review when no shipped rule or resolution metadata applies."
+UNRESOLVED_MUTATION_ACTION = (
+    "Dump the unresolved row for later mutation review when no shipped rule or "
+    "resolution metadata applies."
+)
 
 
 @dataclass(frozen=True)
@@ -166,7 +213,7 @@ FINANCE_CONFIG = DatasetConfig(
     mutation_failures_filename="finance_mutation_failures.csv",
     history_filename="finance_eval_history.json",
     required_columns=FINANCE_COLUMNS,
-    row_count_range=(55, 60),
+    row_count_range=(78, 80),
     goal=(
         "Run a deterministic finance cleaning pass, then export mutation successes "
         "and unresolved failures beside the canonical master CSV."
@@ -253,24 +300,146 @@ def get_history_path(output_dir: Path, dataset_name: str | None = None) -> Path:
     return output_dir / config.history_filename
 
 
+def get_strategy_path(output_dir: Path, dataset_name: str | None = None) -> Path:
+    """Return the finance strategy snapshot path."""
+    _ = get_dataset_config(dataset_name)
+    return output_dir / STRATEGY_FILENAME
+
+
+def get_runs_dir(output_dir: Path) -> Path:
+    """Return the directory that stores per-run snapshots."""
+    return output_dir / RUNS_DIRNAME
+
+
+def get_run_instance_dir(output_dir: Path, run_instance: str) -> Path:
+    """Return the storage directory for one run instance."""
+    return get_runs_dir(output_dir) / run_instance
+
+
+def get_run_manifest_path(output_dir: Path, run_instance: str) -> Path:
+    """Return the manifest path for one run instance."""
+    return get_run_instance_dir(output_dir, run_instance) / RUN_MANIFEST_FILENAME
+
+
+def get_run_diagnostics_path(output_dir: Path, run_instance: str) -> Path:
+    """Return the diagnostics path for one run instance."""
+    return get_run_instance_dir(output_dir, run_instance) / RUN_DIAGNOSTICS_FILENAME
+
+
+def get_run_history_path(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> Path:
+    """Return the per-run eval-history snapshot path."""
+    config = get_dataset_config(dataset_name)
+    return get_run_instance_dir(output_dir, run_instance) / config.history_filename
+
+
+def get_run_strategy_path(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> Path:
+    """Return the per-run strategy snapshot path."""
+    _ = get_dataset_config(dataset_name)
+    return get_run_instance_dir(output_dir, run_instance) / STRATEGY_FILENAME
+
+
+def get_run_output_path(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> Path:
+    """Return the per-run master CSV snapshot path."""
+    config = get_dataset_config(dataset_name)
+    return get_run_instance_dir(output_dir, run_instance) / config.output_filename
+
+
+def get_run_mutation_success_path(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> Path:
+    """Return the per-run mutation-success snapshot path."""
+    config = get_dataset_config(dataset_name)
+    return (
+        get_run_instance_dir(output_dir, run_instance)
+        / config.mutation_success_filename
+    )
+
+
+def get_run_mutation_failures_path(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> Path:
+    """Return the per-run mutation-failure snapshot path."""
+    config = get_dataset_config(dataset_name)
+    return (
+        get_run_instance_dir(output_dir, run_instance)
+        / config.mutation_failures_filename
+    )
+
+
+def get_run_output_artifact_paths(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> tuple[Path, Path, Path]:
+    """Return per-run master, mutation-success, and mutation-failure paths."""
+    return (
+        get_run_output_path(output_dir, run_instance, dataset_name),
+        get_run_mutation_success_path(output_dir, run_instance, dataset_name),
+        get_run_mutation_failures_path(output_dir, run_instance, dataset_name),
+    )
+
+
 def get_traces_dir(output_dir: Path) -> Path:
     """Return the shared trace export directory."""
     return output_dir / TRACES_DIRNAME
 
 
-def get_run_events_path(output_dir: Path) -> Path:
+def get_run_traces_dir(output_dir: Path, run_instance: str) -> Path:
+    """Return the per-run trace export directory."""
+    return get_run_instance_dir(output_dir, run_instance) / TRACES_DIRNAME
+
+
+def _trace_file_path(output_dir: Path, filename: str, run_instance: str | None) -> Path:
+    """Return one global or per-run trace file path."""
+    if run_instance is not None:
+        return get_run_traces_dir(output_dir, run_instance) / filename
+    return get_traces_dir(output_dir) / filename
+
+
+def get_run_events_path(output_dir: Path, run_instance: str | None = None) -> Path:
     """Return the run-level trace export path."""
-    return get_traces_dir(output_dir) / RUN_EVENTS_FILENAME
+    return _trace_file_path(output_dir, RUN_EVENTS_FILENAME, run_instance)
 
 
-def get_row_decisions_path(output_dir: Path) -> Path:
+def get_row_decisions_path(output_dir: Path, run_instance: str | None = None) -> Path:
     """Return the row-decision trace export path."""
-    return get_traces_dir(output_dir) / ROW_DECISIONS_FILENAME
+    return _trace_file_path(output_dir, ROW_DECISIONS_FILENAME, run_instance)
 
 
-def get_proposal_events_path(output_dir: Path) -> Path:
+def get_proposal_events_path(output_dir: Path, run_instance: str | None = None) -> Path:
     """Return the proposal-event trace export path."""
-    return get_traces_dir(output_dir) / PROPOSAL_EVENTS_FILENAME
+    return _trace_file_path(output_dir, PROPOSAL_EVENTS_FILENAME, run_instance)
+
+
+def get_otel_spans_path(output_dir: Path, run_instance: str | None = None) -> Path:
+    """Return the OTEL-style span export path."""
+    return _trace_file_path(output_dir, OTEL_SPANS_FILENAME, run_instance)
+
+
+def get_otel_events_path(output_dir: Path, run_instance: str | None = None) -> Path:
+    """Return the OTEL-style event export path."""
+    return _trace_file_path(output_dir, OTEL_EVENTS_FILENAME, run_instance)
+
+
+def get_otel_logs_path(output_dir: Path, run_instance: str | None = None) -> Path:
+    """Return the OTEL-style log export path."""
+    return _trace_file_path(output_dir, OTEL_LOGS_FILENAME, run_instance)
 
 
 def get_logs_dir(output_dir: Path) -> Path:
@@ -278,10 +447,19 @@ def get_logs_dir(output_dir: Path) -> Path:
     return output_dir / LOGS_DIRNAME
 
 
-def get_exported_logs_path(output_dir: Path, dataset_name: str | None = None) -> Path:
+def get_exported_logs_path(
+    output_dir: Path,
+    dataset_name: str | None = None,
+    run_instance: str | None = None,
+) -> Path:
     """Return the raw loop-log export path used by the dashboard."""
     config = get_dataset_config(dataset_name)
-    return get_logs_dir(output_dir) / f"{config.name}_round_logs.jsonl"
+    logs_dir = (
+        get_run_instance_dir(output_dir, run_instance) / LOGS_DIRNAME
+        if run_instance is not None
+        else get_logs_dir(output_dir)
+    )
+    return logs_dir / f"{config.name}_round_logs.jsonl"
 
 
 def get_reference_path(reference_dir: Path, dataset_name: str | None = None) -> Path:

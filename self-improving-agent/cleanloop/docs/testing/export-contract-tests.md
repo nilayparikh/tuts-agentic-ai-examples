@@ -7,7 +7,7 @@ The export contract tests prove that the current finance fixture is teaching the
 - master export uses canonical columns only
 - mutation success rows keep required business fields populated
 - unresolved failures preserve raw diagnostics
-- the output counts remain `55 / 25 / 5`
+- the output counts remain `78 / 48 / 9`
 
 ## Representative Rows Used By Tests
 

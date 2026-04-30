@@ -11,3 +11,8 @@ INV-409,Contoso Retail,trial  free,GBP,2024-07-23,2024-08-22,active,Kaur,2,2024-
 INV-410,Wide World Importers,"AUD 7,800.00",AUD,2024-07-24,2024-08-23,paid,Patel,0,2024-08-30,,,
 INV-411,Northwind Labs,8300.00,USD,2024-07-25,2024-08-24,paid,Diaz,0,2024-08-31,,,
 INV-412,Blue Yonder,ESCALATE TO TREASURY 🚫,USD,2024-07-26,2024-08-25,escalated,Diaz,4,,,
+INV-413,Woodgrove Bank,offset zero 🧾,USD,2024-09-08,2024-10-08,disputed,Diaz,2,,-2880.00,approved,collection offset was matched against the disputed balance
+INV-414,Oceanic Airlines,err // collector cleared,GBP,2024-09-09,2024-10-09,review,Kaur,1,2024-10-15,6675.00,approved,collector verified the payment-plan amount
+INV-415,Trey Research,trial free,EUR,2024-09-10,2024-10-10,active,Patel,0,2024-10-16,5225.00,approved,trial account converted to a paid research subscription
+INV-416,Litware,complimentary ✨,AUD,2024-09-11,2024-10-11,active,Patel,0,2024-10-17,1840.00,approved,complimentary onboarding converted to a billed pilot amount
+INV-417,Blue Sky Studios,TALK TO LEGAL 📎,USD,2024-09-19,2024-10-19,escalated,Diaz,4,,,

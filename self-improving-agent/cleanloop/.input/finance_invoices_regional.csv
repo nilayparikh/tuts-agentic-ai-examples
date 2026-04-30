@@ -11,3 +11,8 @@ INV-309,Contoso Retail,"£4,410.15",GBP,21/06/2024,21/07/2024,paid,EMEA,Retail,T
 INV-310,Wide World Importers,COMPLIMENTARY ✅,AUD,2024-06-22,2024-07-22,active,APAC,Wholesale,TX-AU,2750.00,approved,intro shipment converted to a billed pilot order
 INV-311,Northwind Labs,12999.95,USD,2024-06-23,2024-07-23,paid,NA,Diagnostics,TX-NA,,,
 INV-312,Blue Yonder,CHARGEBACK ⚠,USD,2024-06-24,2024-07-24,disputed,NA,Logistics,TX-NA,,,
+INV-313,A Datum,PRO FORMA,GBP,2024-09-04,2024-10-04,review,EMEA,Advisory,TX-UK,6540.00,approved,regional pro forma invoice was approved for export
+INV-314,Margies Travel,FREE-TRIAL 🎉,USD,2024-09-05,2024-10-05,active,NA,Travel,TX-NA,5985.25,approved,trial booking window converted to a paid support plan
+INV-315,Relecloud,pending // tax cleared,EUR,2024-09-06,2024-10-06,pending,EMEA,Cloud,TX-EU,11240.00,approved,tax validation released the pending cloud invoice
+INV-316,Southridge Video,COMPLIMENTARY ✅,AUD,2024-09-07,2024-10-07,active,APAC,Media,TX-AU,1995.00,approved,regional promo credits converted to a billed media package
+INV-317,City Power and Light,LEDGER IMAGE ONLY 🖼,EUR,2024-09-18,2024-10-18,review,EMEA,Utilities,TX-EU,,,

@@ -11,6 +11,8 @@ judge stay fixed. That boundary is what makes the system explainable.
 
 ## Boundary Diagram
 
+![Lesson 01 AutoGen arena diagram](./diagrams/autogen-arena-contract.png)
+
 ![Lesson 02 canonical diagram](./diagrams/02-pipeline-genome-map.png)
 
 ```mermaid
@@ -122,7 +124,7 @@ checks are not just red lights. They are a map of missing behavior.
 - [Numeric normalization decision](../../mutation_playbook.py#L106)
 - [Mutation playbook repair](../../mutation_playbook.py#L144)
 - [Stable export writer](../../export_writer.py#L12)
-- [Fixed referee](../../prepare.py#L324)
+- [Fixed referee](../../prepare.py#L327)
 
 ## Inline Coding
 
@@ -173,14 +175,14 @@ Ready to re-run: python util.py loop
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 ```
 
 ### Explanation
 
 1. Re-run the Lesson 01 preflight commands first so you know the dataset and provider state are unchanged.
 2. `python util.py reset` restores the starter genome. Validate that it says the sample artifacts were preserved and that `clean_data.py` came from `clean_data_starter.py`.
-3. `python util.py evaluate` is the key Lesson 02 command. Validate that the starter genome scores `13/14` and that the only failing assertion is `matches_reference_output` with `missing=25`. That is the visible boundary between deterministic handling and rows that still need the mutation playbook.
+3. `python util.py evaluate` is the key Lesson 02 command. Validate that the starter genome scores `13/14` and that the only failing assertion is `matches_reference_output` with `missing=48`. That is the visible boundary between deterministic handling and rows that still need the mutation playbook.
 
 ## Hands-On Exercises
 

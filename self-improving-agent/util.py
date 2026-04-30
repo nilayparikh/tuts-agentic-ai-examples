@@ -10,6 +10,7 @@ route per-demo commands:
     python util.py --example cleanloop evaluate        Run referee
     python util.py --example cleanloop loop            Karpathy Loop
     python util.py --example cleanloop loop --rerank   Best-of-N
+    python util.py -e cleanloop loop --named-instance nightly
     python util.py --example cleanloop dashboard       Streamlit UI
     python util.py --example cleanloop challenge       Adversarial data
     python util.py --example cleanloop sandbox         Subprocess isolation
@@ -24,13 +25,17 @@ Environment:
     Supports Azure AI Foundry, Foundry Local, and OpenAI endpoints.
 """
 
+# pylint: disable=too-many-lines
+
 from __future__ import annotations
 
 import argparse
 import importlib
+import importlib.util
 import json
 import os
 import platform
+import shutil
 import subprocess
 import sys
 import time
@@ -40,7 +45,7 @@ from typing import Any, Callable
 
 CommandHandler = Callable[[argparse.Namespace], int]
 
-from cleanloop import datasets as cleanloop_datasets
+from cleanloop import datasets as cleanloop_datasets  # noqa: E402
 
 # ─── Project root: directory containing util.py ─────────────────────
 ROOT = Path(__file__).resolve().parent
@@ -139,18 +144,22 @@ def log_step(step: int, total: int, msg: str) -> None:
 
 
 def log_ok(msg: str) -> None:
+    """Print a success message."""
     print(f"  {C.GREEN}{_status_prefix('ok')}{C.RESET} {msg}")
 
 
 def log_warn(msg: str) -> None:
+    """Print a warning message."""
     print(f"  {C.YELLOW}{_status_prefix('warn')}{C.RESET} {msg}")
 
 
 def log_fail(msg: str) -> None:
+    """Print a failure message."""
     print(f"  {C.RED}{_status_prefix('fail')}{C.RESET} {msg}")
 
 
 def log_info(msg: str) -> None:
+    """Print an informational message."""
     print(f"  {C.DIM}{_status_prefix('info')}{C.RESET} {msg}")
 
 
@@ -187,8 +196,6 @@ def cmd_setup(_args: argparse.Namespace) -> int:
         log_ok(f".venv already exists at {VENV_DIR}")
     else:
         if VENV_DIR.exists():
-            import shutil
-
             log_warn("Existing .venv is incomplete — recreating it")
             shutil.rmtree(VENV_DIR)
         log_cmd(f"python -m venv {VENV_DIR}")
@@ -218,9 +225,9 @@ def cmd_setup(_args: argparse.Namespace) -> int:
     if result.returncode == 0:
         # Count installed packages
         lines = [
-            l
-            for l in result.stdout.splitlines()
-            if "Successfully" in l or "already satisfied" in l
+            line
+            for line in result.stdout.splitlines()
+            if "Successfully" in line or "already satisfied" in line
         ]
         log_ok("All dependencies installed")
         for line in lines[:3]:
@@ -241,8 +248,6 @@ def cmd_setup(_args: argparse.Namespace) -> int:
         if example.exists():
             log_warn(".env not found — copying from .env.example")
             log_info("Edit .env with your Azure AI Foundry credentials")
-            import shutil
-
             shutil.copy(example, ENV_FILE)
             log_ok("Created .env from .env.example")
         else:
@@ -489,6 +494,7 @@ def cmd_loop(args: argparse.Namespace) -> int:
     rerank = getattr(args, "rerank", False)
     max_iter = getattr(args, "max_iterations", 5)
     candidates = getattr(args, "candidates", 3)
+    named_instance = getattr(args, "named_instance", None)
 
     mode = "Best-of-N Reranking" if rerank else "Standard"
     log_header(f"CleanLoop — Karpathy Loop ({config.label}, {mode})")
@@ -497,6 +503,8 @@ def cmd_loop(args: argparse.Namespace) -> int:
 
     log_info(f"Dataset: {config.name}")
     log_info(f"Max iterations: {max_iter}")
+    if named_instance:
+        log_info(f"Run instance: {named_instance}")
     log_info(f"Model: {os.getenv('MODEL_NAME', 'gpt-4o')}")
     if rerank:
         log_info(f"Candidates per round: {candidates}")
@@ -510,6 +518,7 @@ def cmd_loop(args: argparse.Namespace) -> int:
         max_iterations=max_iter,
         use_reranker=rerank,
         n_candidates=candidates,
+        named_instance=named_instance,
     )
 
     # Summary
@@ -837,27 +846,65 @@ def cmd_dashboard(args: argparse.Namespace) -> int:
         log_info(f"Run: {C.BOLD}python util.py -e cleanloop loop{C.RESET}")
         return 1
 
-    dashboard_path = ROOT / "cleanloop" / "dashboard.py"
-    streamlit_exe = _get_bin_path("streamlit")
-    argv = [
-        str(streamlit_exe),
+    argv = _streamlit_run_command(ROOT / "cleanloop" / "dashboard.py")
+    if argv is None:
+        _log_missing_streamlit()
+        return 1
+    env = _streamlit_env()
+
+    log_step(1, 1, "Launching Streamlit")
+    log_cmd(" ".join(argv))
+    print()
+
+    os.execve(argv[0], argv, env)
+    return 0  # unreachable after execv
+
+
+def _streamlit_env() -> dict[str, str]:
+    """Return environment variables for non-interactive Streamlit launch."""
+    env = os.environ.copy()
+    env["STREAMLIT_SERVER_HEADLESS"] = "true"
+    env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
+    env["STREAMLIT_CLIENT_TOOLBAR_MODE"] = "minimal"
+    return env
+
+
+def _streamlit_run_args(dashboard_path: Path) -> list[str]:
+    """Return the shared Streamlit dashboard arguments."""
+    return [
         "run",
         str(dashboard_path),
         "--server.headless=true",
         "--browser.gatherUsageStats=false",
         "--client.toolbarMode=minimal",
     ]
-    env = os.environ.copy()
-    env["STREAMLIT_SERVER_HEADLESS"] = "true"
-    env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
-    env["STREAMLIT_CLIENT_TOOLBAR_MODE"] = "minimal"
 
-    log_step(1, 1, "Launching Streamlit")
-    log_cmd(" ".join(argv[1:]))
-    print()
 
-    os.execve(str(streamlit_exe), argv, env)
-    return 0  # unreachable after execv
+def _streamlit_run_command(dashboard_path: Path) -> list[str] | None:
+    """Return a Streamlit launch command, falling back to uvx when needed."""
+    streamlit_exe = _get_bin_path("streamlit")
+    if streamlit_exe.exists():
+        return [str(streamlit_exe), *_streamlit_run_args(dashboard_path)]
+    if importlib.util.find_spec("streamlit") is not None:
+        return [sys.executable, "-m", "streamlit", *_streamlit_run_args(dashboard_path)]
+    uvx_path = shutil.which("uvx")
+    if uvx_path:
+        return [
+            uvx_path,
+            "--with",
+            "pandas>=2.2.0",
+            "--from",
+            "streamlit>=1.45.0",
+            "streamlit",
+            *_streamlit_run_args(dashboard_path),
+        ]
+    return None
+
+
+def _log_missing_streamlit() -> None:
+    """Print the dashboard dependency recovery command."""
+    log_fail("Streamlit is not installed and uvx is unavailable")
+    log_info("Run: python -m pip install streamlit pandas")
 
 
 def _run_example_dashboard(
@@ -876,23 +923,15 @@ def _run_example_dashboard(
         log_info(f"Run: {C.BOLD}{rerun_cmd}{C.RESET}")
         return 1
 
-    streamlit_exe = _get_bin_path("streamlit")
-    argv = [
-        str(streamlit_exe),
-        "run",
-        str(dashboard_path),
-        "--server.headless=true",
-        "--browser.gatherUsageStats=false",
-        "--client.toolbarMode=minimal",
-    ]
-    env = os.environ.copy()
-    env["STREAMLIT_SERVER_HEADLESS"] = "true"
-    env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
-    env["STREAMLIT_CLIENT_TOOLBAR_MODE"] = "minimal"
+    argv = _streamlit_run_command(dashboard_path)
+    if argv is None:
+        _log_missing_streamlit()
+        return 1
+    env = _streamlit_env()
     log_step(1, 1, "Launching Streamlit")
-    log_cmd(" ".join(argv[1:]))
+    log_cmd(" ".join(argv))
     print()
-    os.execve(str(streamlit_exe), argv, env)
+    os.execve(argv[0], argv, env)
     return 0
 
 
@@ -930,7 +969,7 @@ def cmd_challenge(args: argparse.Namespace) -> int:
 
     log_step(1, 1, "Generating adversarial CSV files")
     # Delegate to challenger module
-    sys.argv = ["cleanloop.challenger", "--levels"] + [str(l) for l in levels]
+    sys.argv = ["cleanloop.challenger", "--levels"] + [str(level) for level in levels]
     from cleanloop import challenger
 
     challenger.main()
@@ -1023,8 +1062,6 @@ def _cmd_reset(example: str) -> int:
 
     # 1. Remove .output/ directory
     if out_dir.exists():
-        import shutil
-
         shutil.rmtree(out_dir)
         log_ok(f"Deleted {out_dir.relative_to(ROOT)}")
     else:
@@ -1355,7 +1392,7 @@ def _create_chat_completion_with_backoff(
             return client.chat.completions.create(**kwargs)
         except (
             Exception
-        ) as exc:  # noqa: BLE001  # pylint: disable=broad-exception-caught
+        ) as exc:  # pylint: disable=broad-exception-caught  # noqa: BLE001
             last_exc = exc
             if not _is_capacity_error(exc) or attempt >= max_attempts:
                 raise
@@ -1555,6 +1592,11 @@ Per-example commands (--example / -e required):
     p_loop.add_argument("--max-iterations", type=int, default=5)
     p_loop.add_argument("--rerank", action="store_true", help="Use Best-of-N")
     p_loop.add_argument("--candidates", type=int, default=3)
+    p_loop.add_argument(
+        "--named-instance",
+        default=None,
+        help="Optional CleanLoop run-instance name for saved logs, traces, and diagnostics",
+    )
     p_loop.add_argument("--context", help="Example context slug")
     p_loop.add_argument(
         "--preference",

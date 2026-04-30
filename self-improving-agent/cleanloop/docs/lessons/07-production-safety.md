@@ -6,6 +6,9 @@ This lesson makes one practical claim: a self-improving loop is only usable if
 it can contain bad code, scale trust gradually, and recover to a known baseline
 without destroying the evidence that explains what happened.
 
+For a focused deep dive on the trust policy itself, continue to
+[Lesson 09](./09-autonomy-ladder.md) after you finish this lesson.
+
 ## Safety Diagram
 
 ![Lesson 07 canonical diagram](./diagrams/07-production-safety-map.png)
@@ -65,10 +68,28 @@ readable state.
 - Trust policy tells you how much autonomy a result has earned.
 - Reset gives you a clean starting point without wiping the evidence.
 
+## What Learners Follow
+
+- run the genome in a subprocess before trusting it in the main loop
+- separate timeout, crash, and judged failure as different outcomes
+- inspect the trust ladder as a policy surface, not just a printed table
+- verify that reset restores the starter genome without deleting `.output/`
+- treat recovery artifacts as evidence you may need after a bad candidate
+
+## Actual Artifacts To Trace
+
+- `.output/finance_master.csv`
+- `.output/finance_mutation_success.csv`
+- `.output/finance_mutation_failures.csv`
+- `clean_data.py`
+- `clean_data_starter.py`
+
 ## Controls
 
 - [Sandbox runner](../../sandbox.py#L56) isolates the genome in a subprocess.
+- [Sandbox CLI](../../sandbox.py#L129) exposes timeout control from the command line.
 - [Autonomy simulator](../../autonomy.py#L148) models the trust ladder.
+- [Trust state](../../autonomy.py#L78) holds the policy logic that drives review, notify, and auto modes.
 - [Reset workflow](../../reset_workflow.py#L9) restores the starter genome without deleting the shipped sample outputs.
 
 ## Why Recovery Matters
@@ -86,6 +107,13 @@ return reset_to_starter(
 ```
 
 That call keeps recovery explicit. The learner can see the exact handoff from the CLI to the reset logic.
+
+## Read This In Order
+
+1. Read [sandbox.py#L56](../../sandbox.py#L56) to see the containment boundary.
+2. Step into [sandbox.py#L129](../../sandbox.py#L129) to connect the timeout flag to the actual subprocess run.
+3. Read [autonomy.py#L78](../../autonomy.py#L78) and [autonomy.py#L148](../../autonomy.py#L148) to see how trust policy is computed and demonstrated.
+4. Finish with [reset_workflow.py#L9](../../reset_workflow.py#L9) so the recovery path is explicit before you trust the loop.
 
 ## Run
 
@@ -107,7 +135,7 @@ $ python util.py sandbox --timeout 10
 Running genome in sandbox for finance (timeout=10s)...
 	[OK] Genome completed successfully
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ python util.py autonomy --rounds 5
 Graduated Autonomy Simulation
@@ -126,6 +154,7 @@ Ready to re-run: python util.py loop
 1. `python util.py sandbox --timeout 10` validates containment. The useful check is that the genome ran in isolation and the process returned a normal result instead of crashing or hanging.
 2. `python util.py autonomy --rounds 5` demonstrates the trust ladder. Validate that the simulation keeps the system in `SUPERVISED` mode and ends with an explicit final score.
 3. Finish with `python util.py reset`. Validate that recovery restores the starter genome while preserving `.output`. Lesson 07 is complete only when you can both inspect the evidence and return to a known safe baseline.
+4. After reset, verify both `clean_data.py` and the three exported CSVs. Safe recovery is not only a console message. It is a file-system state you can inspect.
 
 ## Hands-On Exercises
 

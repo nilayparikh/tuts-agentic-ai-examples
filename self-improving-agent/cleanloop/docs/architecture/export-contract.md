@@ -66,7 +66,7 @@ Ready to re-run: python util.py loop
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ Get-Content ".output\finance_master.csv" -TotalCount 3
 date,entity,currency,value,category

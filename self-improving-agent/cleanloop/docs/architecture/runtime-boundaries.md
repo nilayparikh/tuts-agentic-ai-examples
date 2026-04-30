@@ -57,7 +57,7 @@ $ python util.py sandbox --timeout 10
 Running genome in sandbox for finance (timeout=10s)...
 	[OK] Genome completed successfully
 	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 ```
 
 ### Explanation

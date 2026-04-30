@@ -19,7 +19,6 @@ Usage:
 """
 
 # pyright: reportMissingImports=false, reportMissingModuleSource=false
-# pylint: disable=import-error
 
 import sys
 from collections import Counter
@@ -32,7 +31,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import datasets as cleanloop_datasets
+from cleanloop import datasets as cleanloop_datasets  # noqa: E402
 
 # ─── PATHS ────────────────────────────────────────────────────────────
 INPUT_DIR = Path(__file__).parent / ".input"
@@ -71,7 +70,7 @@ CheckEntry = tuple[str, DataFrameCheck, pd.DataFrame]
 
 # =====================================================================
 # SECTION: Binary Assertions
-# Lesson 03 — Each assertion is a pure function: data in, bool out.
+# Lesson 05 — Each assertion is a pure function: data in, bool out.
 # The referee defines WHAT is correct. The genome defines HOW to get there.
 # Key principle: assertions are unambiguous, machine-verifiable, and
 # ungameable. A soft metric like "data quality score" would let the
@@ -457,7 +456,7 @@ if __name__ == "__main__":
         # No output yet — run the genome to create one
         OUTPUT_DIR.mkdir(exist_ok=True)
         sys.path.insert(0, str(Path(__file__).parent))
-        from cleanloop import clean_data  # pylint: disable=import-outside-toplevel
+        from cleanloop import clean_data
 
         clean_data.clean(INPUT_DIR, OUTPUT_PATH)
         print(f"Ran genome. Output: {OUTPUT_PATH}")

@@ -5,7 +5,7 @@ target the genome's known weaknesses. This creates an auto-curriculum:
 as the cleaner improves, the challenger makes harder data.
 
 Course alignment:
-    - Lesson 07: self-challenging loop extension
+    - Lesson 05: self-challenging loop extension
 
 Usage:
     Preferred from cleanloop/:
@@ -40,7 +40,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import util
+from cleanloop import util  # noqa: E402
 
 util.load_env()
 
@@ -60,7 +60,7 @@ Rules:
 
 # =====================================================================
 # SECTION: Difficulty Ladder
-# Lesson 07 — Five levels of adversarial data generation.
+# Lesson 05 — Five levels of adversarial data generation.
 # Level 1 is mild (currency symbols). Level 5 is nightmare
 # (BOM chars, embedded newlines, scientific notation).
 # The auto-curriculum ratchets up difficulty as the genome improves.
@@ -96,7 +96,7 @@ DIFFICULTY_LEVELS: dict[int, str] = {
 
 # =====================================================================
 # SECTION: Adversarial Generation
-# Lesson 07 — The challenger asks the LLM to generate messy data
+# Lesson 05 — The challenger asks the LLM to generate messy data
 # at the specified difficulty level. Higher temperature (0.8) gives
 # more diverse outputs. The code strips markdown fences in case the
 # LLM wraps the output.

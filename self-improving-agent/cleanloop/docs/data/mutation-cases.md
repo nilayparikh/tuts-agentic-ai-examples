@@ -24,6 +24,8 @@ These rows read `adjusted_amount` when `approval_flag=approved`.
 - `DISCOUNTED`
 - `FX HOLD`
 - `REVERSAL`
+- `HOLDBACK RELEASE`
+- `CREDIT SWAP`
 
 Representative row:
 
@@ -38,6 +40,7 @@ These rows read `resolution_amount` when `resolution_flag=approved`.
 - `FREE TRIAL`
 - `COMPLIMENTARY`
 - `OFFSET`
+- `PRO FORMA`
 - `N/A`
 - `PENDING`
 - `TBD`

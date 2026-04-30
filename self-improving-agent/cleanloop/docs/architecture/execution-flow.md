@@ -14,15 +14,8 @@ It is grounded in these files:
 
 ## Reference Runs Used In This Diagram
 
-- Starter baseline runtime: `dc729b9ec5574972b551e92bfc452c80`
-  - `allow_mutations=false`
-  - `30` `deterministic_row`
-  - `30` `requires_mutation_playbook`
-- Successful full runtime: `bcbafd7446364124808b4280c7865c36`
-  - `allow_mutations=true`
-  - `30` `deterministic_row`
-  - `25` `mutation_fixed`
-  - `5` `mutation_failure`
+- Starter baseline runtime: `dc729b9ec5574972b551e92bfc452c80` with `allow_mutations=false`, `30` `deterministic_row`, and `57` `requires_mutation_playbook`
+- Successful full runtime: `bcbafd7446364124808b4280c7865c36` with `allow_mutations=true`, `30` `deterministic_row`, `48` `mutation_fixed`, and `9` `mutation_failure`
 - Latest loop run: `1da2e0c0a3b741d4a4940beb8eaf248a`
   - `max_iterations=2`
   - `candidate_count=3`
@@ -49,7 +42,7 @@ python util.py autonomy --rounds 5
 $ python util.py evaluate
 Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
     CleanLoop Evaluation: 13/14
-    [FAIL] matches_reference_output: matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55
+    [FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
 
 $ python util.py loop --max-iterations 1
 [CURRENT_SCORE] Score 13/14
@@ -129,13 +122,13 @@ sequenceDiagram
         end
     end
 
-    Note over RT: Baseline trace run dc729 produced 30 deterministic rows and 30 mutation-needed rows.
+    Note over RT: Baseline trace run dc729 produced 30 deterministic rows and 57 mutation-needed rows.
     RT-->>G: write finance_master.csv = 30 rows
     RT-->>G: write finance_mutation_success.csv = 0 rows
-    RT-->>G: write finance_mutation_failures.csv = 30 rows
+    RT-->>G: write finance_mutation_failures.csv = 57 rows
     G->>J: prepare.evaluate(finance_master.csv)
     J-->>R: score 13 of 14, failed = matches_reference_output
-    Note over J: finance_eval_history.json recorded matched=30, missing=25, unexpected=0, output_rows=30, reference_rows=55.
+    Note over J: finance_eval_history.json recorded matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78.
 
     R->>R: build metacognition snapshot
     R->>P: build_user_prompt with current genome, failures, history, and focus_area=row_reconciliation
@@ -165,7 +158,7 @@ sequenceDiagram
                 RR-->>MP: resolution_amount rule
                 MP->>MP: normalize_resolution_amount(record)
             else strategy == zero_value
-                RR-->>MP: zero_value rule
+                RR-->>MP: blank-cancelled-or-void zero rule
                 MP->>MP: repaired_value = 0.0
             end
             MP->>MP: build_normalized_row(record, repaired_value)
@@ -177,10 +170,10 @@ sequenceDiagram
                 RT-->>RT: trace mutation_failure
             end
         end
-        Note over RT: Successful run bcbafd produced 30 deterministic_row, 25 mutation_fixed, 5 mutation_failure.
-        RT-->>G: write finance_master.csv = 55 rows
-        RT-->>G: write finance_mutation_success.csv = 25 rows
-        RT-->>G: write finance_mutation_failures.csv = 5 rows
+        Note over RT: Successful run bcbafd produced 30 deterministic_row, 48 mutation_fixed, 9 mutation_failure.
+        RT-->>G: write finance_master.csv = 78 rows
+        RT-->>G: write finance_mutation_success.csv = 48 rows
+        RT-->>G: write finance_mutation_failures.csv = 9 rows
         G->>J: prepare.evaluate(finance_master.csv)
         J-->>U: fixed referee decides pass or fail against .gold/finance_expected.csv
     end
@@ -199,11 +192,11 @@ flowchart TD
     normalize[normalize_numeric_amount]
     deterministic[30 deterministic_row]
     playbook[apply_mutation_playbook]
-    fixed[25 mutation_fixed]
-    failed[5 mutation_failure]
-    master[finance_master.csv 55 rows]
-    success[finance_mutation_success.csv 25 rows]
-    failure[finance_mutation_failures.csv 5 rows]
+    fixed[48 mutation_fixed]
+    failed[9 mutation_failure]
+    master[finance_master.csv 78 rows]
+    success[finance_mutation_success.csv 48 rows]
+    failure[finance_mutation_failures.csv 9 rows]
 
     input --> read --> normalize
     normalize -->|numeric-like| deterministic
@@ -392,20 +385,20 @@ it.
 
 - input files scanned: `5`
 - deterministic rows exported: `30`
-- rows stopped for mutation work: `30`
+- rows stopped for mutation work: `57`
 - master rows written: `30`
 - fixed referee score before mutation: `13/14`
 - failing assertion: `matches_reference_output`
-- missing rows against reference: `25`
+- missing rows against reference: `48`
 
 ### Full Mutation-Capable Runtime
 
 - deterministic rows: `30`
-- mutation-fixed rows: `25`
-- mutation-failure rows: `5`
-- master rows written: `55`
-- mutation-success export rows: `25`
-- mutation-failure export rows: `5`
+- mutation-fixed rows: `48`
+- mutation-failure rows: `9`
+- master rows written: `78`
+- mutation-success export rows: `48`
+- mutation-failure export rows: `9`
 
 ## Why The Current Loop Reverts
 

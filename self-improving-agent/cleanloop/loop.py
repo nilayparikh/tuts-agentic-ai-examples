@@ -53,11 +53,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from cleanloop import autogen_runtime
-from cleanloop import util as cleanloop_util
-from cleanloop import dashboard_metrics
-from cleanloop import datasets as cleanloop_datasets
-from cleanloop.tracing import TraceRecorder
+from cleanloop import autogen_runtime  # noqa: E402
+from cleanloop import util as cleanloop_util  # noqa: E402
+from cleanloop import dashboard_metrics  # noqa: E402
+from cleanloop import datasets as cleanloop_datasets  # noqa: E402
+from cleanloop.tracing import TraceRecorder  # noqa: E402
 
 # Preserve the historical module alias used by tests and older call sites.
 util = cleanloop_util
@@ -333,6 +333,7 @@ def _write_exported_logs(
     output_dir: Path,
     history: list[dict],
     dataset_name: str | None = None,
+    trace_recorder: TraceRecorder | None = None,
 ) -> Path:
     """Export structured round logs to JSONL for the dashboard."""
     logs_path = cleanloop_datasets.get_exported_logs_path(output_dir, dataset_name)
@@ -364,8 +365,145 @@ def _write_exported_logs(
                     "total_tokens": log.get("total_tokens"),
                 }
                 handle.write(json.dumps(payload, sort_keys=True) + "\n")
+                if trace_recorder is not None:
+                    trace_recorder.record_log(
+                        stage=str(log.get("tag") or "round-log").lower(),
+                        message=str(log.get("message") or ""),
+                        dataset=history_entry.get("dataset"),
+                        round=history_entry.get("round"),
+                        action=history_entry.get("action"),
+                        score=history_entry.get("score"),
+                        total=history_entry.get("total"),
+                        prompt_tokens=log.get("prompt_tokens"),
+                        completion_tokens=log.get("completion_tokens"),
+                        total_tokens=log.get("total_tokens"),
+                    )
 
     return logs_path
+
+
+def _copy_if_exists(source: Path, target: Path) -> None:
+    """Copy one generated artifact into a run-instance snapshot when present."""
+    if not source.exists():
+        return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+
+
+def _snapshot_run_artifacts(
+    output_dir: Path,
+    run_instance: str,
+    dataset_name: str | None = None,
+) -> None:
+    """Copy current dataset artifacts into the selected run-instance folder."""
+    _copy_if_exists(
+        cleanloop_datasets.get_history_path(output_dir, dataset_name),
+        cleanloop_datasets.get_run_history_path(output_dir, run_instance, dataset_name),
+    )
+    _copy_if_exists(
+        cleanloop_datasets.get_strategy_path(output_dir, dataset_name),
+        cleanloop_datasets.get_run_strategy_path(
+            output_dir, run_instance, dataset_name
+        ),
+    )
+    _copy_if_exists(
+        cleanloop_datasets.get_output_path(output_dir, dataset_name),
+        cleanloop_datasets.get_run_output_path(output_dir, run_instance, dataset_name),
+    )
+    _copy_if_exists(
+        cleanloop_datasets.get_mutation_success_path(output_dir, dataset_name),
+        cleanloop_datasets.get_run_mutation_success_path(
+            output_dir,
+            run_instance,
+            dataset_name,
+        ),
+    )
+    _copy_if_exists(
+        cleanloop_datasets.get_mutation_failures_path(output_dir, dataset_name),
+        cleanloop_datasets.get_run_mutation_failures_path(
+            output_dir,
+            run_instance,
+            dataset_name,
+        ),
+    )
+    _copy_if_exists(
+        cleanloop_datasets.get_exported_logs_path(output_dir, dataset_name),
+        cleanloop_datasets.get_exported_logs_path(
+            output_dir,
+            dataset_name,
+            run_instance=run_instance,
+        ),
+    )
+
+
+def _latest_history_score(history: list[dict]) -> str:
+    """Return a compact score label for the latest history row."""
+    if not history:
+        return "0/0"
+    latest = history[-1]
+    return f"{latest.get('score', 0)}/{latest.get('total', 0)}"
+
+
+def _write_run_diagnostics(
+    output_dir: Path,
+    trace_recorder: TraceRecorder,
+    history: list[dict],
+    *,
+    dataset_name: str,
+    model: str,
+    started_at: str,
+    finished_at: str,
+    accepted_improvement: bool,
+    max_iterations: int,
+    use_reranker: bool,
+    n_candidates: int,
+) -> None:
+    """Write run manifest and diagnostics for dashboard run selection."""
+    run_instance = str(trace_recorder.run_instance)
+    run_dir = cleanloop_datasets.get_run_instance_dir(output_dir, run_instance)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    manifest = {
+        "run_instance": run_instance,
+        "run_id": trace_recorder.run_id,
+        "trace_id": trace_recorder.trace_id,
+        "dataset": dataset_name,
+        "model": model,
+        "started_at": started_at,
+        "finished_at": finished_at,
+        "rounds": len(history),
+        "latest_score": _latest_history_score(history),
+        "status": "accepted" if accepted_improvement else "review",
+    }
+    diagnostics = {
+        **manifest,
+        "accepted_improvement": accepted_improvement,
+        "max_iterations": max_iterations,
+        "use_reranker": use_reranker,
+        "candidate_count": n_candidates,
+        "actions": [entry.get("action") for entry in history],
+        "history_path": str(
+            cleanloop_datasets.get_run_history_path(
+                output_dir, run_instance, dataset_name
+            )
+        ),
+        "otel_spans_path": str(
+            cleanloop_datasets.get_otel_spans_path(output_dir, run_instance)
+        ),
+        "otel_events_path": str(
+            cleanloop_datasets.get_otel_events_path(output_dir, run_instance)
+        ),
+        "otel_logs_path": str(
+            cleanloop_datasets.get_otel_logs_path(output_dir, run_instance)
+        ),
+    }
+    cleanloop_datasets.get_run_manifest_path(output_dir, run_instance).write_text(
+        json.dumps(manifest, indent=2),
+        encoding="utf-8",
+    )
+    cleanloop_datasets.get_run_diagnostics_path(output_dir, run_instance).write_text(
+        json.dumps(diagnostics, indent=2),
+        encoding="utf-8",
+    )
 
 
 def _append_log(
@@ -461,6 +599,35 @@ def _restore_output_snapshot(output_dir: Path, snapshot: dict[str, str | None]) 
 def _restore_genome_snapshot(genome_path: Path, snapshot: str) -> None:
     """Restore the last known-good genome source after a rejected mutation."""
     genome_path.write_text(snapshot, encoding="utf-8")
+
+
+def _restore_pre_run_outputs(
+    clean_data_module,
+    input_dir: Path,
+    output_path: Path,
+    snapshot: dict[str, str | None],
+    restored_genome: str,
+    starter_genome: str,
+) -> None:
+    """Restore sidecars from snapshot or rebuild them from the restored genome."""
+    if restored_genome == starter_genome:
+        _restore_output_snapshot(output_path.parent, snapshot)
+        return
+
+    try:
+        clean_data_module.clean(input_dir, output_path)
+    except (
+        AttributeError,
+        ImportError,
+        KeyError,
+        OSError,
+        RuntimeError,
+        SyntaxError,
+        TimeoutError,
+        TypeError,
+        ValueError,
+    ):
+        _restore_output_snapshot(output_path.parent, snapshot)
 
 
 def _validate_candidate_code(source: str, genome_path: Path) -> None:
@@ -674,6 +841,7 @@ def run_loop(
     max_iterations: int = 5,
     use_reranker: bool = False,
     n_candidates: int = 3,
+    named_instance: str | None = None,
 ) -> list[dict]:  # pylint: disable=too-many-locals,too-many-statements
     """Execute the self-improving loop.
 
@@ -693,6 +861,7 @@ def run_loop(
     system_prompt = build_system_prompt(config.name)
     history: list[dict] = []
     accepted_improvement = False
+    run_started_at = _iso_now()
 
     pre_run_genome_snapshot = _read_utf8_text(GENOME_PATH)
     pre_run_output_snapshot = _capture_output_snapshot(output_path.parent)
@@ -700,11 +869,17 @@ def run_loop(
     final_output_snapshot = dict(pre_run_output_snapshot)
 
     OUTPUT_DIR.mkdir(exist_ok=True)
-    trace = TraceRecorder(output_dir=OUTPUT_DIR, component="loop")
+    trace = TraceRecorder(
+        output_dir=OUTPUT_DIR,
+        component="loop",
+        run_instance=named_instance,
+    )
+    previous_trace_env = trace.install_context()
     trace.record_run_event(
         stage="loop-start",
         decision="begin",
         dataset=config.name,
+        run_instance=trace.run_instance,
         max_iterations=max_iterations,
         use_reranker=use_reranker,
         candidate_count=n_candidates,
@@ -712,7 +887,7 @@ def run_loop(
     pre_run_logs = _prepare_fresh_run(config, output_path, history_path)
 
     # Import genome module for reloading
-    from cleanloop import (  # pylint: disable=import-outside-toplevel
+    from cleanloop import (
         clean_data,
         prepare,
     )
@@ -778,6 +953,7 @@ def run_loop(
                 {
                     "round": i,
                     "dataset": config.name,
+                    "run_instance": trace.run_instance,
                     "model": model,
                     "score": score,
                     "total": total,
@@ -821,7 +997,7 @@ def run_loop(
             # Test-time search widens one proposal into a small candidate set,
             # then lets the deterministic judge decide which survivor is worth
             # the expensive commit-or-revert step.
-            from cleanloop import reranker  # pylint: disable=import-outside-toplevel
+            from cleanloop import reranker
 
             new_code, hypothesis, llm_diagnostics = reranker.propose(
                 client,
@@ -872,6 +1048,7 @@ def run_loop(
                     {
                         "round": i,
                         "dataset": config.name,
+                        "run_instance": trace.run_instance,
                         "model": model,
                         "score": score,
                         "total": total,
@@ -929,6 +1106,7 @@ def run_loop(
                 {
                     "round": i,
                     "dataset": config.name,
+                    "run_instance": trace.run_instance,
                     "model": model,
                     "score": score,
                     "total": total,
@@ -1029,8 +1207,6 @@ def run_loop(
             _restore_genome_snapshot(GENOME_PATH, genome_before)
             _restore_output_snapshot(output_path.parent, baseline_output_snapshot)
             importlib.reload(clean_data)
-            final_genome_snapshot = genome_before
-            final_output_snapshot = dict(baseline_output_snapshot)
             action = "revert"
             print(f"  Reverted: no improvement ({new_score}/{new_total})")
             _append_log(
@@ -1051,6 +1227,7 @@ def run_loop(
             {
                 "round": i,
                 "dataset": config.name,
+                "run_instance": trace.run_instance,
                 "model": model,
                 "score": new_score,
                 "total": new_total,
@@ -1077,11 +1254,20 @@ def run_loop(
 
     # Save history for dashboard
     history_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
-    _write_exported_logs(output_path.parent, history, config.name)
+    _write_exported_logs(output_path.parent, history, config.name, trace)
 
     if not accepted_improvement:
         _restore_genome_snapshot(GENOME_PATH, final_genome_snapshot)
-        _restore_output_snapshot(output_path.parent, final_output_snapshot)
+        starter_genome_snapshot = _read_utf8_text(STARTER_GENOME_PATH)
+        importlib.reload(clean_data)
+        _restore_pre_run_outputs(
+            clean_data,
+            INPUT_DIR,
+            output_path,
+            final_output_snapshot,
+            final_genome_snapshot,
+            starter_genome_snapshot,
+        )
 
     trace.record_run_event(
         stage="loop-finish",
@@ -1089,6 +1275,22 @@ def run_loop(
         accepted_improvement=accepted_improvement,
         rounds=len(history),
     )
+    run_finished_at = _iso_now()
+    _snapshot_run_artifacts(output_path.parent, str(trace.run_instance), config.name)
+    _write_run_diagnostics(
+        output_path.parent,
+        trace,
+        history,
+        dataset_name=config.name,
+        model=model,
+        started_at=run_started_at,
+        finished_at=run_finished_at,
+        accepted_improvement=accepted_improvement,
+        max_iterations=max_iterations,
+        use_reranker=use_reranker,
+        n_candidates=n_candidates,
+    )
+    trace.restore_context(previous_trace_env)
 
     print(f"\nHistory saved to {history_path}")
     return history
@@ -1271,11 +1473,17 @@ def main() -> None:
         default=3,
         help="Number of reranker candidates (default: 3)",
     )
+    parser.add_argument(
+        "--named-instance",
+        default=None,
+        help="Optional run-instance name for per-run logs, traces, and diagnostics",
+    )
     args = parser.parse_args()
     run_loop(
         max_iterations=args.max_iterations,
         use_reranker=args.use_reranker,
         n_candidates=args.candidates,
+        named_instance=args.named_instance,
     )
 
 

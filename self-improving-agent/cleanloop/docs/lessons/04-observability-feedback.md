@@ -9,6 +9,9 @@ For the artifact-focused slice that maps runtime events to the stored files, see
 strategy, and trace artifacts so the learner can inspect not only whether a run
 improved, but also why specific rows and proposals took the paths they did.
 
+For the operator-facing read side that turns those artifacts into a review
+workflow, continue to [Lesson 08](./08-dashboard-human-oversight.md).
+
 ## Feedback Diagram
 
 ![Lesson 04 canonical diagram](./diagrams/04-observability-feedback-map.png)
@@ -65,18 +68,32 @@ When two runs have the same score, they can still teach different lessons.
 - One trace file can reveal whether the pipeline is deterministic, repairable,
   or still routing rows into failure.
 
+## What Learners Follow
+
+- compare score movement with row-level traces instead of trusting one number
+- inspect the strategy snapshot to see what the loop thought mattered most
+- connect one invoice id to one row-decision path
+- compare run events, row decisions, and proposal events as separate signals
+- use the dashboard only after you know which files it is reading
+
 ## What To Inspect
 
 - `.output/finance_eval_history.json`
 - `.output/finance_strategy.json`
 - `.output/traces/run-events.jsonl`
 - `.output/traces/row-decisions.jsonl`
+- `.output/traces/proposal-events.jsonl`
+- `.output/logs/finance_round_logs.jsonl`
 
 ## Code Anchors
 
-- [Dashboard history loader](../../dashboard.py#L58)
-- [Shared history store](../../history_store.py#L10)
+- [Dashboard history loader](../../dashboard.py#L66)
+- [Dashboard launcher](../../util.py#L458)
 - [Trace recorder](../../tracing.py#L19)
+- [Run-event writer](../../tracing.py#L68)
+- [Row-decision writer](../../tracing.py#L75)
+- [Proposal-event writer](../../tracing.py#L96)
+- [Exported round logs](../../loop.py#L332)
 
 ## Feedback Signal
 
@@ -94,6 +111,13 @@ trace.record_row_decision(
 ```
 
 That trace call is what turns one hidden row decision into a durable teaching artifact.
+
+## Read This In Order
+
+1. Read [tracing.py#L19](../../tracing.py#L19) to see the shared recorder surface.
+2. Step into [tracing.py#L75](../../tracing.py#L75) because row decisions are the most useful trace when you are following one invoice.
+3. Read [loop.py#L332](../../loop.py#L332) to see how round history becomes exported logs.
+4. Finish with [dashboard.py#L66](../../dashboard.py#L66) and [util.py#L458](../../util.py#L458) so you know exactly how the dashboard reads and launches those artifacts.
 
 ## Run
 
@@ -126,8 +150,8 @@ $ python util.py dashboard
 ### Explanation
 
 1. `python util.py loop --max-iterations 1` is the artifact-producing step for this lesson. Validate that it finishes with `History saved to ...finance_eval_history.json` because that file feeds the dashboard and history views.
-2. `python util.py dashboard` does not mutate the genome. It launches the observability surface. Validate that Streamlit prints a local URL, then inspect the history and trace tabs in the browser.
-3. If the dashboard opens but tables are empty, the loop likely did not write the expected artifacts yet. That absence is itself the feedback signal Lesson 04 is teaching.
+2. `python util.py dashboard` does not mutate the genome. It launches the observability surface. Validate that Streamlit prints a local URL, then inspect the history, strategy, and trace tabs in the browser.
+3. If the dashboard opens but tables are empty, check whether `finance_strategy.json`, `finance_round_logs.jsonl`, and the trace files exist beside `finance_eval_history.json`. That absence is itself the feedback signal Lesson 04 is teaching.
 
 ## Hands-On Exercises
 
