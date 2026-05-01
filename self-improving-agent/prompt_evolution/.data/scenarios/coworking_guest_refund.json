@@ -1,0 +1,37 @@
+{
+  "slug": "coworking_guest_refund",
+  "label": "Coworking Guest Booking Refund",
+  "context_slug": "coworking_membership",
+  "customer_problem": "A member says their guest booking vanished before tonight's workshop and asks for an instant day-pass refund.",
+  "default_preferences": {
+    "tone": "warm",
+    "structure": "bullets",
+    "initiative": "next_step",
+    "evidence": "case_anchor",
+    "closing": "staff_handoff"
+  },
+  "customer_facts": [
+    "The member had a guest booking for a workshop tonight.",
+    "The booking disappeared before the event.",
+    "The member asks for an instant refund."
+  ],
+  "risk_flags": [
+    "Do not say the refund is approved immediately.",
+    "Do not say the guest pass is restored automatically.",
+    "Keep the attendance check visible before refund language."
+  ],
+  "expected_policy_slugs": [
+    "guest_hold",
+    "refund_review",
+    "access_reissue"
+  ],
+  "success_criteria": [
+    "Acknowledge the missing guest booking.",
+    "Explain the 15-minute guest hold and attendance check.",
+    "Name front desk or support as the access reissue path."
+  ],
+  "operator_notes": [
+    "Good for showing how user feedback can correct stale timing details.",
+    "The loop should avoid overpromising on refunds."
+  ]
+}

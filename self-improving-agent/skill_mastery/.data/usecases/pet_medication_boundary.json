@@ -1,0 +1,39 @@
+{
+  "slug": "pet_medication_boundary",
+  "label": "Pet Boarding Medication Boundary",
+  "context_slug": "pet_boarding",
+  "customer_problem": "A pet parent forgot a medication update before tomorrow's stay and asks if the team can mark it approved now.",
+  "customer_facts": [
+    "The medication change applies to tomorrow's boarding stay.",
+    "The signed note has not been confirmed yet.",
+    "The customer asks for immediate approval."
+  ],
+  "risk_flags": [
+    "Do not say medication has already been updated.",
+    "Do not claim the care lead already approved the exception.",
+    "Keep the signed-note requirement easy to find."
+  ],
+  "expected_habit_slugs": [
+    "mirror_issue",
+    "cite_policy_gate",
+    "offer_checkpoint",
+    "name_owner",
+    "preserve_boundary"
+  ],
+  "expected_policy_slugs": [
+    "medication_review"
+  ],
+  "success_criteria": [
+    "Mirror the medication update and boarding-stay timing.",
+    "Mention the signed note before the stay is updated.",
+    "Route review to the care lead without promising approval."
+  ],
+  "source_demonstration_ids": [
+    "boarding-medication-update",
+    "boarding-pickup-shift"
+  ],
+  "operator_notes": [
+    "Best demo for safety-sensitive habit composition.",
+    "The boundary habit matters more than sounding overly reassuring."
+  ]
+}

@@ -50,11 +50,13 @@ List the available contexts and preference axes:
 
 ```bash
 python util.py -e prompt_evolution catalog
+python util.py -e prompt_evolution scenarios
 ```
 
 Run the loop:
 
 ```bash
+python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
 python util.py -e prompt_evolution loop --context coworking_membership \
   --preference tone=warm \
   --preference structure=bullets \
@@ -66,6 +68,8 @@ python util.py -e prompt_evolution reset
 
 Prompt Evolution now ships a broader support mix, including coworking,
 makerspace, hotel, pet boarding, community garden, and language school desks.
+It also ships named scenario cases with default preferences, risk flags, and
+success criteria for repeatable demos.
 
 In a normal terminal session, Prompt Evolution now shows the best intermediate
 reply and asks for more input until you accept it:
@@ -87,6 +91,7 @@ Verbose trace additions:
 - per-round LLM request lines are printed while the loop runs
 - the saved session now includes `logs` and `llm` metadata per round
 - `prompt_evolution/.output/latest_mutation.diff` shows the latest instruction diff
+- `prompt_evolution/.output/traces/` stores JSONL and OTEL-shaped trace files
 - `python util.py -e prompt_evolution dashboard` opens a Streamlit view of the trace
 
 ## Skill Mastery
@@ -98,11 +103,15 @@ List the available contexts and habit seeds:
 
 ```bash
 python util.py -e skill_mastery catalog
+python util.py -e skill_mastery usecases
 ```
 
 Run the loop:
 
 ```bash
+python util.py -e skill_mastery loop --usecase makerspace_access_checkpoint
+python util.py -e skill_mastery loop --usecase language_transfer_recovery \
+  --named-instance school-transfer-demo
 python util.py -e skill_mastery loop --context makerspace_frontdesk \
   --problem "A member's laser cutter booking disappeared before open lab tonight."
 python util.py -e skill_mastery dashboard
@@ -128,7 +137,9 @@ Verbose trace additions:
 
 - per-round LLM request lines are printed while the loop runs
 - the saved session now includes `logs` and `llm` metadata per round
+- named runs include `usecase` and `trace` metadata in `latest_session.json`
 - `skill_mastery/.output/latest_mutation.diff` shows the latest reply diff
+- `skill_mastery/.output/traces/` stores run, habit, LLM, evaluator, and OTEL JSONL files
 - `python util.py -e skill_mastery dashboard` opens a Streamlit view of the trace
 
 What reset does:

@@ -1,0 +1,36 @@
+{
+  "slug": "makerspace_missing_booking",
+  "label": "Makerspace Missing Laser Booking",
+  "context_slug": "makerspace_frontdesk",
+  "customer_problem": "A member says their laser cutter booking vanished before open lab tonight and asks if staff can restore the bench immediately.",
+  "default_preferences": {
+    "tone": "direct",
+    "structure": "bullets",
+    "initiative": "next_step",
+    "evidence": "policy_first",
+    "closing": "confirm_back"
+  },
+  "customer_facts": [
+    "The customer needs the laser cutter during tonight's open lab.",
+    "The booking is not visible to the customer anymore.",
+    "The customer expects an immediate restoration."
+  ],
+  "risk_flags": [
+    "Do not promise that the bench is restored automatically.",
+    "Do not bypass the active tool certification gate.",
+    "Do not approve after-hours access inside the reply."
+  ],
+  "expected_policy_slugs": [
+    "booking_window",
+    "certification_gate"
+  ],
+  "success_criteria": [
+    "Mention the 24-hour booking window.",
+    "Mention active tool certification before access is confirmed.",
+    "Ask for the tool name or certification badge as the next step."
+  ],
+  "operator_notes": [
+    "Good for showing policy-first evidence and a clear confirmation question.",
+    "The strongest replies avoid promising a restored bench."
+  ]
+}

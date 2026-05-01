@@ -1,5 +1,6 @@
 """Regression and behavior tests for the Prompt Evolution example."""
 
+import json
 import os
 import subprocess
 import sys
@@ -52,6 +53,26 @@ class PromptEvolutionParserTests(unittest.TestCase):
         )
         self.assertIn("guest booking vanished", args.problem)
 
+    def test_parser_accepts_prompt_evolution_scenario_argument(self) -> None:
+        """Parse a predefined Prompt Evolution support-desk scenario."""
+        parser = util.build_parser()
+
+        args = parser.parse_args(
+            [
+                "-e",
+                "prompt_evolution",
+                "loop",
+                "--scenario",
+                "makerspace_missing_booking",
+                "--preference",
+                "tone=direct",
+            ]
+        )
+
+        self.assertEqual(args.example, "prompt_evolution")
+        self.assertEqual(args.scenario, "makerspace_missing_booking")
+        self.assertEqual(args.preference, ["tone=direct"])
+
 
 class PromptEvolutionCatalogTests(unittest.TestCase):
     """Verify the shipped prompt evolution example exposes real selection data."""
@@ -78,6 +99,36 @@ class PromptEvolutionCatalogTests(unittest.TestCase):
         self.assertIn("pet_boarding", catalog.contexts)
         self.assertIn("evidence", catalog.preference_axes)
         self.assertIn("closing", catalog.preference_axes)
+
+    def test_catalog_loads_named_support_desk_scenarios(self) -> None:
+        """Load scenario cases with default preferences and success criteria."""
+        config = import_module("prompt_evolution.config")
+
+        catalog = config.load_catalog(PROJECT_ROOT / "prompt_evolution" / ".data")
+        scenario = catalog.scenarios["makerspace_missing_booking"]
+
+        self.assertEqual(scenario.context_slug, "makerspace_frontdesk")
+        self.assertIn("laser cutter", scenario.customer_problem.lower())
+        self.assertEqual(scenario.default_preferences["structure"], "bullets")
+        self.assertIn("certification_gate", scenario.expected_policy_slugs)
+        self.assertTrue(scenario.success_criteria)
+
+    def test_scenario_profile_uses_defaults_and_cli_overrides(self) -> None:
+        """Build a runnable selection profile from a named scenario."""
+        config = import_module("prompt_evolution.config")
+
+        catalog = config.load_catalog(PROJECT_ROOT / "prompt_evolution" / ".data")
+        profile = config.resolve_scenario_profile(
+            catalog,
+            scenario_slug="makerspace_missing_booking",
+            preference_pairs=["tone=warm", "closing=confirm_back"],
+        )
+
+        self.assertEqual(profile.scenario.slug, "makerspace_missing_booking")
+        self.assertEqual(profile.context.slug, "makerspace_frontdesk")
+        self.assertEqual(profile.selected_preferences["tone"], "warm")
+        self.assertEqual(profile.selected_preferences["structure"], "bullets")
+        self.assertEqual(profile.selected_preferences["closing"], "confirm_back")
 
 
 class PromptEvolutionEvaluatorTests(unittest.TestCase):
@@ -252,7 +303,9 @@ class PromptEvolutionFeedbackTests(unittest.TestCase):
         self.assertIn("tool certification earlier", runner.calls[0][1].lower())
         self.assertIn("certification", updated["response"].lower())
 
-    def test_feedback_refinement_overrides_stale_policy_values_in_next_draft(self) -> None:
+    def test_feedback_refinement_overrides_stale_policy_values_in_next_draft(
+        self,
+    ) -> None:
         """Use corrected policy details instead of the original context value."""
         config = import_module("prompt_evolution.config")
         loop_module = import_module("prompt_evolution.loop")
@@ -331,9 +384,7 @@ class PromptEvolutionFeedbackTests(unittest.TestCase):
         follow_up_system_prompt = runner.calls[1][0]
         self.assertIn("2 hours", follow_up_system_prompt)
         self.assertNotIn("15 minutes", follow_up_system_prompt)
-        self.assertFalse(
-            any("15 minutes" in issue for issue in updated["issues"])
-        )
+        self.assertFalse(any("15 minutes" in issue for issue in updated["issues"]))
         self.assertTrue(any("2 hours" in item for item in updated["strengths"]))
 
 
@@ -438,6 +489,82 @@ class PromptEvolutionTraceTests(unittest.TestCase):
         self.assertIn("REQUESTING_LLM_MUTATION", joined_logs)
         self.assertIn("INSTRUCTION_DIFF", joined_logs)
 
+    def test_loop_writes_scenario_metadata_and_jsonl_trace_artifacts(self) -> None:
+        """Persist scenario context plus structured trace files for observability."""
+        config = import_module("prompt_evolution.config")
+        loop_module = import_module("prompt_evolution.loop")
+
+        class FakeRunner:
+            """Return one complete response and expose simple request metadata."""
+
+            model = "demo-model"
+            provider = "custom"
+            base_url = "http://localhost:5272/v1"
+
+            def __init__(self) -> None:
+                self.last_call: tuple[str, str, str] | None = None
+
+            def run_text(self, *, system_prompt: str, user_prompt: str, task_id: str):
+                """Return a fake response that satisfies the makerspace scenario."""
+                self.last_call = (system_prompt, user_prompt, task_id)
+                return type(
+                    "Response",
+                    (),
+                    {
+                        "text": (
+                            "- Here's what I found.\n"
+                            "- Bench bookings open 24 hours before the slot and "
+                            "require active tool certification.\n"
+                            "- Next step: please reply with the tool name and "
+                            "your certification badge so I can confirm the booking."
+                        )
+                    },
+                )()
+
+        catalog = config.load_catalog(PROJECT_ROOT / "prompt_evolution" / ".data")
+        profile = config.resolve_scenario_profile(
+            catalog,
+            scenario_slug="makerspace_missing_booking",
+            preference_pairs=["tone=direct"],
+        )
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with mock.patch.object(loop_module, "OUTPUT_DIR", Path(tmp_dir)):
+                with mock.patch.object(
+                    loop_module,
+                    "load_mutable_instructions",
+                    return_value="Keep replies direct.",
+                ):
+                    loop_module.run_prompt_evolution(
+                        catalog,
+                        profile,
+                        max_iterations=1,
+                        runner=FakeRunner(),
+                        run_instance="scenario-smoke",
+                    )
+
+                session_payload = json.loads(
+                    (Path(tmp_dir) / "latest_session.json").read_text(encoding="utf-8")
+                )
+                trace_dir = Path(tmp_dir) / "traces"
+
+                self.assertEqual(
+                    session_payload["scenario"]["slug"],
+                    "makerspace_missing_booking",
+                )
+                self.assertEqual(
+                    session_payload["trace"]["run_instance"],
+                    "scenario-smoke",
+                )
+                self.assertTrue((trace_dir / "run_events.jsonl").exists())
+                self.assertTrue((trace_dir / "llm_requests.jsonl").exists())
+                self.assertTrue((trace_dir / "evaluator_events.jsonl").exists())
+                self.assertTrue(
+                    (
+                        trace_dir / "runs" / "scenario-smoke" / "run_events.jsonl"
+                    ).exists()
+                )
+
     def test_dashboard_helpers_expose_round_diffs(self) -> None:
         """Provide a dashboard helper that renders the mutable instruction diff."""
         dashboard = import_module("prompt_evolution.dashboard")
@@ -450,7 +577,9 @@ class PromptEvolutionTraceTests(unittest.TestCase):
         self.assertIn("-Keep replies short.", diff_text)
         self.assertIn("+Keep replies direct.", diff_text)
 
-    def test_dashboard_script_runs_without_project_root_already_on_sys_path(self) -> None:
+    def test_dashboard_script_runs_without_project_root_already_on_sys_path(
+        self,
+    ) -> None:
         """Allow the dashboard script to run outside the repo root."""
         dashboard_dir = PROJECT_ROOT / "prompt_evolution"
         result = subprocess.run(
@@ -464,14 +593,11 @@ class PromptEvolutionTraceTests(unittest.TestCase):
             text=True,
             check=False,
             env={
-                key: value
-                for key, value in os.environ.items()
-                if key != "PYTHONPATH"
+                key: value for key, value in os.environ.items() if key != "PYTHONPATH"
             },
         )
 
         self.assertEqual(result.returncode, 0, msg=result.stderr or result.stdout)
-
 
 
 class CleanLoopAgendaTests(unittest.TestCase):

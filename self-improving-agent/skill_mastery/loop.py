@@ -14,8 +14,11 @@ import util
 from prompt_evolution.hermes_client import HermesAgentRunner
 from skill_mastery.config import SkillMasteryCatalog, SkillMasteryProfile
 from skill_mastery.evaluator import SkillEvaluationResult, evaluate_response
+from skill_mastery.history_store import HistoryStore
 from skill_mastery.learner import LearnedHabit, learn_reusable_habits
+from skill_mastery.mutation_playbook import render_brief, select_strategies
 from skill_mastery.selector import select_habits
+from skill_mastery.tracing import TraceRecorder  # type: ignore[import-not-found]
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXAMPLE_ROOT = PROJECT_ROOT / "skill_mastery"
@@ -116,6 +119,44 @@ def _latest_mutation_diff(history: list[dict[str, Any]]) -> str | None:
     return None
 
 
+def _existing_trace_metadata() -> dict[str, Any] | None:
+    """Load previous trace metadata when interactive review rewrites outputs."""
+    session_path = OUTPUT_DIR / "latest_session.json"
+    if not session_path.exists():
+        return None
+    try:
+        payload = json.loads(session_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    trace_payload = payload.get("trace")
+    return trace_payload if isinstance(trace_payload, dict) else None
+
+
+def _usecase_slug(profile: SkillMasteryProfile) -> str | None:
+    """Return the active use case slug when the run came from a use case."""
+    if profile.usecase is None:
+        return None
+    return profile.usecase.slug
+
+
+def _usecase_brief(profile: SkillMasteryProfile) -> str:
+    """Render use case facts for the generation prompt when available."""
+    if profile.usecase is None:
+        return ""
+    usecase = profile.usecase
+    facts = "\n".join(f"- {item}" for item in usecase.customer_facts)
+    risk_flags = "\n".join(f"- {item}" for item in usecase.risk_flags)
+    criteria = "\n".join(f"- {item}" for item in usecase.success_criteria)
+    expected_habits = ", ".join(usecase.expected_habit_slugs)
+    return (
+        f"Use Case: {usecase.label}\n"
+        f"Expected Habit Slugs: {expected_habits}\n"
+        f"Customer Facts\n{facts}\n\n"
+        f"Risk Flags\n{risk_flags}\n\n"
+        f"Success Criteria\n{criteria}\n\n"
+    )
+
+
 def build_generation_system_prompt(
     profile: SkillMasteryProfile,
     selected_habits: list[LearnedHabit],
@@ -133,6 +174,7 @@ def build_generation_system_prompt(
         "You are composing one customer-ready support reply with a small set of "
         "reusable habit cards. Apply each selected habit once, keep the response "
         "natural, and do not expose the habit framework.\n\n"
+        f"{_usecase_brief(profile)}"
         f"Context: {profile.context.label}\n"
         f"Service Summary: {profile.context.service_summary}\n"
         f"Escalation Path: {profile.context.escalation_path}\n\n"
@@ -240,18 +282,23 @@ def _write_outputs(
     learned_habits: list[LearnedHabit],
     selected_habits: list[LearnedHabit],
     history: list[dict[str, Any]],
+    trace_metadata: dict[str, Any] | None = None,
 ) -> None:
     """Persist the latest session, learned habits, selected habits, and best reply."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     best = _best_round(history)
+    active_trace_metadata = trace_metadata or _existing_trace_metadata()
     session_payload = {
         "generated_at": _iso_now(),
         "problem": profile.problem,
+        "usecase": asdict(profile.usecase) if profile.usecase else None,
         "context": asdict(profile.context),
         "selected_habits": [habit.slug for habit in selected_habits],
         "rounds": history,
         "best_round": best["round"],
     }
+    if active_trace_metadata is not None:
+        session_payload["trace"] = active_trace_metadata
     (OUTPUT_DIR / "latest_session.json").write_text(
         json.dumps(session_payload, indent=2),
         encoding="utf-8",
@@ -290,24 +337,125 @@ def reset_outputs() -> None:
     """Delete the Skill Mastery output directory if it exists."""
     if not OUTPUT_DIR.exists():
         return
-    import shutil  # pylint: disable=import-outside-toplevel
+    import shutil
 
     shutil.rmtree(OUTPUT_DIR)
 
 
-def run_skill_mastery(  # pylint: disable=too-many-locals
+def _draft_with_reranker(  # pylint: disable=too-many-arguments
+    *,
+    profile: SkillMasteryProfile,
+    selected_habits: list[LearnedHabit],
+    system_prompt: str,
+    user_prompt: str,
+    candidate_count: int,
+    runner: HermesAgentRunner,
+    task_id: str,
+) -> tuple[Any, list[dict[str, Any]]]:
+    """Run a best-of-N rerank pass and return the winning response + per-call records."""
+    from skill_mastery.reranker import rerank_drafts  # local import for cycle safety
+
+    captured_responses: list[Any] = []
+
+    def _draft(system_text: str, user_text: str, draft_task_id: str) -> Any:
+        response = runner.run_text(
+            system_prompt=system_text,
+            user_prompt=user_text,
+            task_id=draft_task_id,
+        )
+        captured_responses.append(response)
+        return response
+
+    rerank_result = rerank_drafts(
+        profile=profile,
+        selected_habits=selected_habits,
+        system_prompt=system_prompt,
+        user_prompt=user_prompt,
+        candidate_count=candidate_count,
+        runner=runner,
+        draft_function=_draft,
+        base_task_id=task_id,
+    )
+    request_records: list[dict[str, Any]] = []
+    for index, candidate in enumerate(rerank_result.candidates):
+        # Pair each captured response with its candidate.
+        if index < len(captured_responses):
+            response = captured_responses[index]
+        else:
+            response = type(
+                "R", (), {"text": candidate.response_text, "messages": []}
+            )()
+        request_records.append(
+            _build_llm_request_record(
+                runner,
+                request_kind="draft_rerank_candidate",
+                task_id=candidate.task_id,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                response=response,
+            )
+        )
+    if rerank_result.best_index < len(captured_responses):
+        winning_response = captured_responses[rerank_result.best_index]
+    else:
+        winning_response = type(
+            "R", (), {"text": rerank_result.best.response_text, "messages": []}
+        )()
+    return winning_response, request_records
+
+
+def run_skill_mastery(  # pylint: disable=too-many-locals,too-many-arguments
     catalog: SkillMasteryCatalog,
     profile: SkillMasteryProfile,
     *,
     max_iterations: int = 2,
     runner: HermesAgentRunner | None = None,
     log_sink: LogSink | None = None,
+    run_instance: str | None = None,
+    use_reranker: bool = False,
+    candidate_count: int = 3,
+    history_store: HistoryStore | None = None,
+    session_id: str | None = None,
 ) -> list[dict[str, Any]]:
-    """Learn reusable habits, select a small set, and compose a reply."""
+    """Learn reusable habits, select a small set, and compose a reply.
+
+    When `use_reranker` is True the first round samples ``candidate_count``
+    drafts from Hermes against the same habit selection and keeps the
+    highest-scoring candidate. Revisions still use a single Hermes call.
+    Each round record is also appended to ``history_store`` when supplied
+    so external dashboards can read the durable JSONL trail.
+    """
     active_runner = runner or HermesAgentRunner.from_env()
+    trace_recorder = TraceRecorder(output_dir=OUTPUT_DIR, run_instance=run_instance)
+    usecase_slug = _usecase_slug(profile)
     learned_habits = learn_reusable_habits(catalog)
     selected_habits = select_habits(profile, learned_habits)
     history: list[dict[str, Any]] = []
+    durable_store = history_store
+    active_session_id = session_id or _iso_now()
+
+    trace_recorder.record_event(
+        "loop",
+        "started",
+        usecase_slug=usecase_slug,
+        context_slug=profile.context.slug,
+        max_iterations=max_iterations,
+    )
+    trace_recorder.record_habits(
+        stage="habit_learning",
+        decision="promoted",
+        habit_slugs=[habit.slug for habit in learned_habits],
+        usecase_slug=usecase_slug,
+    )
+    trace_recorder.record_habits(
+        stage="habit_selection",
+        decision="selected",
+        habit_slugs=[habit.slug for habit in selected_habits],
+        usecase_slug=usecase_slug,
+        expected_habits=(
+            list(profile.usecase.expected_habit_slugs) if profile.usecase else []
+        ),
+    )
 
     response_text = ""
     evaluation: SkillEvaluationResult | None = None
@@ -325,23 +473,56 @@ def run_skill_mastery(  # pylint: disable=too-many-locals
                 "ROUND_START",
                 f"Skill Mastery round {round_number}/{max_iterations}.",
             )
-            _emit_log(
-                round_logs,
-                log_sink,
-                "REQUESTING_LLM_DRAFT",
-                "provider="
-                f"{getattr(active_runner, 'provider', None)} "
-                "model="
-                f"{getattr(active_runner, 'model', None)} "
-                f"task={task_id}",
+            trace_recorder.record_event(
+                "round",
+                "started",
+                round=round_number,
+                usecase_slug=usecase_slug,
             )
-            result = active_runner.run_text(
-                system_prompt=system_prompt,
-                user_prompt=user_prompt,
-                task_id=task_id,
-            )
-            llm_requests.append(
-                _build_llm_request_record(
+            if use_reranker and candidate_count > 1:
+                _emit_log(
+                    round_logs,
+                    log_sink,
+                    "REQUESTING_LLM_DRAFT_RERANK",
+                    "provider="
+                    f"{getattr(active_runner, 'provider', None)} "
+                    "model="
+                    f"{getattr(active_runner, 'model', None)} "
+                    f"task={task_id} candidates={candidate_count}",
+                )
+                result, rerank_records = _draft_with_reranker(
+                    profile=profile,
+                    selected_habits=selected_habits,
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    candidate_count=candidate_count,
+                    runner=active_runner,
+                    task_id=task_id,
+                )
+                llm_requests.extend(rerank_records)
+                for record in rerank_records:
+                    trace_recorder.record_llm_request(
+                        round_number=round_number,
+                        request=record,
+                        usecase_slug=usecase_slug,
+                    )
+            else:
+                _emit_log(
+                    round_logs,
+                    log_sink,
+                    "REQUESTING_LLM_DRAFT",
+                    "provider="
+                    f"{getattr(active_runner, 'provider', None)} "
+                    "model="
+                    f"{getattr(active_runner, 'model', None)} "
+                    f"task={task_id}",
+                )
+                result = active_runner.run_text(
+                    system_prompt=system_prompt,
+                    user_prompt=user_prompt,
+                    task_id=task_id,
+                )
+                request_record = _build_llm_request_record(
                     active_runner,
                     request_kind="draft",
                     task_id=task_id,
@@ -349,22 +530,36 @@ def run_skill_mastery(  # pylint: disable=too-many-locals
                     user_prompt=user_prompt,
                     response=result,
                 )
-            )
+                llm_requests.append(request_record)
+                trace_recorder.record_llm_request(
+                    round_number=round_number,
+                    request=request_record,
+                    usecase_slug=usecase_slug,
+                )
         else:
             assert evaluation is not None
             task_id = f"skill-mastery-revision-{round_number}"
             system_prompt = REVISION_SYSTEM_PROMPT
+            mutation_strategies = select_strategies(evaluation)
+            mutation_brief = render_brief(mutation_strategies, profile, selected_habits)
             user_prompt = build_revision_user_prompt(
                 profile,
                 selected_habits,
                 response_text,
                 evaluation,
+                user_feedback=mutation_brief,
             )
             _emit_log(
                 round_logs,
                 log_sink,
                 "ROUND_START",
                 f"Skill Mastery round {round_number}/{max_iterations}.",
+            )
+            trace_recorder.record_event(
+                "round",
+                "started",
+                round=round_number,
+                usecase_slug=usecase_slug,
             )
             _emit_log(
                 round_logs,
@@ -381,15 +576,19 @@ def run_skill_mastery(  # pylint: disable=too-many-locals
                 user_prompt=user_prompt,
                 task_id=task_id,
             )
-            llm_requests.append(
-                _build_llm_request_record(
-                    active_runner,
-                    request_kind="revision",
-                    task_id=task_id,
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    response=result,
-                )
+            request_record = _build_llm_request_record(
+                active_runner,
+                request_kind="revision",
+                task_id=task_id,
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                response=result,
+            )
+            llm_requests.append(request_record)
+            trace_recorder.record_llm_request(
+                round_number=round_number,
+                request=request_record,
+                usecase_slug=usecase_slug,
             )
 
         response_text = result.text
@@ -400,6 +599,14 @@ def run_skill_mastery(  # pylint: disable=too-many-locals
             "ROUND_SCORE",
             f"Score {evaluation.total_score}/{evaluation.max_score}.",
         )
+        trace_recorder.record_evaluation(
+            round_number=round_number,
+            score=evaluation.total_score,
+            total=evaluation.max_score,
+            issues=evaluation.issues,
+            strengths=evaluation.strengths,
+            usecase_slug=usecase_slug,
+        )
         entry = _serialize_round(round_number, response_text, evaluation)
         if previous_response is not None:
             mutation_diff = build_round_diff(previous_response, response_text)
@@ -408,11 +615,32 @@ def run_skill_mastery(  # pylint: disable=too-many-locals
         entry["logs"] = round_logs
         entry["llm"] = _build_llm_summary(active_runner, llm_requests)
         history.append(entry)
+        if durable_store is not None:
+            persisted = dict(entry)
+            persisted["session_id"] = active_session_id
+            persisted["usecase_slug"] = usecase_slug
+            durable_store.append(persisted)
         previous_response = response_text
         if evaluation.total_score >= evaluation.max_score:
             break
 
-    _write_outputs(profile, learned_habits, selected_habits, history)
+    best = _best_round(history)
+    trace_recorder.record_event(
+        "loop",
+        "completed",
+        usecase_slug=usecase_slug,
+        rounds=len(history),
+        best_round=best["round"],
+        best_score=best["score"],
+        best_total=best["total"],
+    )
+    _write_outputs(
+        profile,
+        learned_habits,
+        selected_habits,
+        history,
+        trace_metadata=trace_recorder.metadata(),
+    )
     return history
 
 

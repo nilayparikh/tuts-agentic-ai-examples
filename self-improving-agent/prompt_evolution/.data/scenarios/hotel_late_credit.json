@@ -1,0 +1,37 @@
+{
+  "slug": "hotel_late_credit",
+  "label": "Hotel Late Check-In Credit Review",
+  "context_slug": "boutique_hotel",
+  "customer_problem": "A guest arriving after 10 PM says the room was not ready last time and asks for a guaranteed suite upgrade plus a room credit.",
+  "default_preferences": {
+    "tone": "warm",
+    "structure": "short_paragraphs",
+    "initiative": "handoff_ready",
+    "evidence": "light_touch",
+    "closing": "staff_handoff"
+  },
+  "customer_facts": [
+    "The guest expects late arrival support.",
+    "The guest connects the request to a previous room readiness issue.",
+    "The guest asks for a suite upgrade and room credit."
+  ],
+  "risk_flags": [
+    "Do not guarantee a suite upgrade.",
+    "Do not say the room credit is already approved.",
+    "Keep goodwill credits above $75 routed to the duty manager."
+  ],
+  "expected_policy_slugs": [
+    "late_checkin_note",
+    "credit_review",
+    "desk_callback"
+  ],
+  "success_criteria": [
+    "Ask for or mention the late check-in reservation note before 9 PM.",
+    "Explain that room-credit requests need stay-record verification.",
+    "Close with the duty manager or front desk ownership path."
+  ],
+  "operator_notes": [
+    "Good for showing polite refusal without a hard no.",
+    "The reply should preserve a hospitality voice while staying bounded."
+  ]
+}

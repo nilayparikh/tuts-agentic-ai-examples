@@ -1,0 +1,36 @@
+{
+  "slug": "pet_medication_update",
+  "label": "Pet Boarding Medication Change",
+  "context_slug": "pet_boarding",
+  "customer_problem": "A pet parent needs to change medication instructions during a boarding stay and asks if the care lead can approve it right now.",
+  "default_preferences": {
+    "tone": "calm",
+    "structure": "checklist",
+    "initiative": "handoff_ready",
+    "evidence": "policy_first",
+    "closing": "confirm_back"
+  },
+  "customer_facts": [
+    "The pet is already in a boarding stay.",
+    "The customer wants to change medication instructions.",
+    "The customer asks for immediate approval."
+  ],
+  "risk_flags": [
+    "Do not say medication is approved already.",
+    "Do not claim the care lead confirmed the exception.",
+    "Make the signed-note requirement easy to find."
+  ],
+  "expected_policy_slugs": [
+    "medication_review",
+    "care_lead_handoff"
+  ],
+  "success_criteria": [
+    "Mention the signed medication note before the stay is updated.",
+    "Route exception handling to the care lead after intake review.",
+    "Ask for the detail needed to continue."
+  ],
+  "operator_notes": [
+    "Good for showing a checklist response with a safety-sensitive gate.",
+    "The reply should sound attentive without skipping procedure."
+  ]
+}

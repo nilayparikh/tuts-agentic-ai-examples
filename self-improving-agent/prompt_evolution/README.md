@@ -20,12 +20,53 @@ flowchart LR
     J --> E
 ```
 
-## Scenario
+## Start Here
+
+Run from `_examples/self-improving-agent/`:
+
+```bash
+python util.py -e prompt_evolution scenarios
+python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
+python util.py -e prompt_evolution dashboard
+```
+
+Use `--named-instance` when you want a stable trace folder for a demo run:
+
+```bash
+python util.py -e prompt_evolution loop --scenario makerspace_missing_booking \
+  --named-instance workshop-demo
+```
+
+## Docs Map
+
+All deeper notes now live under `docs/`.
+
+- architecture: `docs/architecture/system-overview.md`
+- scenarios: `docs/data/scenario-catalog.md`
+- tracing: `docs/operations/tracing.md`
+- tests: `docs/testing/test-map.md`
+- code map: `docs/reference/code-map.md`
+
+## Data Scenarios
 
 Prompt Evolution Studio simulates a small support desk for experience-led
 businesses. Each context pack contains brand voice, policy points, forbidden
 promises, and reference terms. The mutable artifact is the instruction prompt
 that tells the model how to answer.
+
+Named scenario files live in `.data/scenarios/`. A scenario adds a customer
+problem, default preferences, customer facts, risk flags, expected policy slugs,
+and success criteria. That makes the support desk feel like a real exercise,
+not just a free-form prompt box.
+
+Shipped scenarios:
+
+| Scenario                     | Context                   | What It Exercises                                    |
+| ---------------------------- | ------------------------- | ---------------------------------------------------- |
+| `makerspace_missing_booking` | Makerspace front desk     | Booking window, certification gate, direct next step |
+| `coworking_guest_refund`     | Coworking membership desk | Guest hold, attendance check, refund restraint       |
+| `hotel_late_credit`          | Boutique hotel guest desk | Late check-in note, credit review, staff handoff     |
+| `pet_medication_update`      | Pet boarding guest desk   | Signed note, care lead handoff, checklist structure  |
 
 ## Mutable Instructions
 
@@ -48,6 +89,16 @@ The loop writes these runtime files to `.output/`:
 - `best_instructions.md` — the highest-scoring instruction prompt
 - `best_response.md` — the highest-scoring customer reply
 - `latest_mutation.diff` — unified diff showing how the instruction artifact changed
+
+The trace layer writes these additional files:
+
+- `traces/run_events.jsonl` — loop, round, mutation, and completion events
+- `traces/llm_requests.jsonl` — draft and mutation request summaries
+- `traces/evaluator_events.jsonl` — deterministic score events
+- `traces/otel_spans.jsonl` — OTEL-shaped spans
+- `traces/otel_events.jsonl` — OTEL-shaped events
+- `traces/otel_logs.jsonl` — OTEL-shaped logs
+- `traces/runs/<run-instance>/` — per-run copies for named or generated runs
 
 If you keep iterating in the terminal review flow, later rounds also record the
 exact `user_feedback` string that caused the revision.
@@ -79,6 +130,8 @@ python util.py -e prompt_evolution dashboard
 The dashboard shows:
 
 - per-round scores and user feedback
+- scenario facts, risk flags, and success criteria
+- run events and evaluator trace rows
 - raw response text and instructions for each round
 - logged LLM request metadata
 - the latest unified diff for the instruction mutation
@@ -116,6 +169,8 @@ You can also provide feedback on this line: "Keep the same direct tone, but add 
 
 ```bash
 python util.py -e prompt_evolution catalog
+python util.py -e prompt_evolution scenarios
+python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
 python util.py -e prompt_evolution loop --context coworking_membership \
   --preference tone=warm \
   --preference structure=bullets \

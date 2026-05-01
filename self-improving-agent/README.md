@@ -4,11 +4,11 @@ This repo now ships three runnable demos for the
 <a href="https://tuts.localm.dev/self-improving-agents" target="_blank" rel="noopener noreferrer">Self-Improving Agents</a>
 course.
 
-| Example              | Domain                    | What It Teaches                                                          | Video                                                                                                               |
-| -------------------- | ------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
-| **CleanLoop**        | Data engineering          | The core bounded mutation loop on one finance invoice arena              | [Lesson 01](https://www.youtube.com/watch?v=yx6aB5heI9o) · [Lesson 02](https://www.youtube.com/watch?v=8Y7MEbEw8wc) |
-| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                                                                                   |
-| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                                                                                   |
+| Example              | Domain                    | What It Teaches                                                          | Video                                                                                                                                                                          |
+| -------------------- | ------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **CleanLoop**        | Data engineering          | The core bounded mutation loop on one finance invoice arena              | [Lesson 01](https://www.youtube.com/watch?v=yx6aB5heI9o) · [Lesson 02](https://www.youtube.com/watch?v=8Y7MEbEw8wc) · [Lesson 03](https://www.youtube.com/watch?v=--mpnJ8f4Sg) |
+| **Prompt Evolution** | Customer support strategy | Prompt mutation with contexts, preferences, and Hermes                   | Not yet published                                                                                                                                                              |
+| **Skill Mastery**    | Service operations        | MaestroMotif-style reusable habits, selection, and zero-shot composition | Not yet published                                                                                                                                                              |
 
 CleanLoop is the teaching path. It uses one finance-only arena, one gold
 reference, one output file, and one reset path. Every fresh run copies
@@ -28,15 +28,16 @@ from shipped demonstration traces, selects the habits that fit a new issue, and
 uses Hermes to compose a fresh reply with those habits. In a normal terminal
 session, it also shows the intermediate best reply and keeps collecting user
 feedback until the user accepts the output. It now also prints verbose round
-logs, records LLM request metadata, and ships a dashboard for inspecting reply
-diffs.
+logs, records LLM request metadata, ships named use cases, and provides a
+dashboard for inspecting habit traces and reply diffs.
 
 ## Videos
 
-| Lesson | Thumbnail                                                               | Watch                                                                                                                    | Example                                                                                                                             |
-| ------ | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| 01     | [![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/yx6aB5heI9o/maxresdefault.jpg)](https://www.youtube.com/watch?v=yx6aB5heI9o) | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o) | [cleanloop](cleanloop/) |
-| 02     | [![Watch: One File to Rule the Loop: Engineering the Pipeline Genome    | Lesson 02 of 07](https://img.youtube.com/vi/8Y7MEbEw8wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=8Y7MEbEw8wc) | [One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07](https://www.youtube.com/watch?v=8Y7MEbEw8wc)    | [cleanloop](cleanloop/) |
+| Lesson | Thumbnail                                                                   | Watch                                                                                                                    | Example                                                                                                                                 |
+| ------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| 01     | [![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer     | Lesson 01 of 07](https://img.youtube.com/vi/yx6aB5heI9o/maxresdefault.jpg)](https://www.youtube.com/watch?v=yx6aB5heI9o) | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o)     | [cleanloop](cleanloop/) |
+| 02     | [![Watch: One File to Rule the Loop: Engineering the Pipeline Genome        | Lesson 02 of 07](https://img.youtube.com/vi/8Y7MEbEw8wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=8Y7MEbEw8wc) | [One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07](https://www.youtube.com/watch?v=8Y7MEbEw8wc)        | [cleanloop](cleanloop/) |
+| 03     | [![Watch: Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 04 of 07](https://img.youtube.com/vi/--mpnJ8f4Sg/maxresdefault.jpg)](https://www.youtube.com/watch?v=--mpnJ8f4Sg) | [Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 04 of 07](https://www.youtube.com/watch?v=--mpnJ8f4Sg) | [cleanloop](cleanloop/) |
 
 ## Quick Start
 
@@ -49,6 +50,8 @@ python util.py -e cleanloop loop
 python util.py -e cleanloop dashboard
 
 python util.py -e prompt_evolution catalog
+python util.py -e prompt_evolution scenarios
+python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
 python util.py -e prompt_evolution loop --context coworking_membership \
   --preference tone=warm \
   --preference structure=bullets \
@@ -57,6 +60,8 @@ python util.py -e prompt_evolution loop --context coworking_membership \
 python util.py -e prompt_evolution dashboard
 
 python util.py -e skill_mastery catalog
+python util.py -e skill_mastery usecases
+python util.py -e skill_mastery loop --usecase makerspace_access_checkpoint
 python util.py -e skill_mastery loop --context makerspace_frontdesk \
   --problem "A member's laser cutter booking disappeared before open lab tonight."
 python util.py -e skill_mastery dashboard
@@ -100,24 +105,29 @@ self-improving-agent/
 
   prompt_evolution/
     README.md               ← Mutable instruction agenda + Mermaid architecture
+    docs/                   ← Architecture, scenario, tracing, test, and code maps
     .data/
       contexts/             ← Predefined service context packs
       preferences/          ← Preference axes and options
-    .output/                ← latest_session.json, best_response.md, best_instructions.md, latest_mutation.diff
+      scenarios/            ← Named support-desk cases for repeatable demos
+    .output/                ← session, response, instructions, diff, traces
     config.py               ← Catalog and selection-profile loader
     dashboard.py            ← Streamlit trace dashboard
     evaluator.py            ← Deterministic scoring rules
     hermes_client.py        ← Hermes AIAgent adapter
+    tracing.py              ← JSONL and OTEL-shaped trace writer
     loop.py                 ← Prompt mutation loop
 
   skill_mastery/
     README.md               ← MaestroMotif-style habit-learning walkthrough
+    docs/                   ← Architecture, use case, tracing, test, and code maps
     .data/
       contexts/             ← Shared service contexts
+      usecases/             ← Named habit-composition demos
       habits.json           ← Reusable habit seeds
       demonstrations.json   ← Successful and weak example traces
-    .output/                ← latest_session.json, learned_habits.json, selected_habits.md, best_response.md, latest_mutation.diff
-    config.py               ← Context, habit, and trace loader
+    .output/                ← session, habits, response, diff, traces
+    config.py               ← Context, habit, use case, and trace loader
     dashboard.py            ← Streamlit trace dashboard
     learner.py              ← Reusable habit promotion logic
     selector.py             ← Habit-selection policy for new issues
@@ -193,6 +203,7 @@ CleanLoop commands:
 Prompt Evolution commands:
 
 - `python util.py -e prompt_evolution catalog`
+- `python util.py -e prompt_evolution scenarios`
 - `python util.py -e prompt_evolution loop`
 - `python util.py -e prompt_evolution dashboard`
 - `python util.py -e prompt_evolution reset`
@@ -200,6 +211,7 @@ Prompt Evolution commands:
 Skill Mastery commands:
 
 - `python util.py -e skill_mastery catalog`
+- `python util.py -e skill_mastery usecases`
 - `python util.py -e skill_mastery loop`
 - `python util.py -e skill_mastery dashboard`
 - `python util.py -e skill_mastery reset`

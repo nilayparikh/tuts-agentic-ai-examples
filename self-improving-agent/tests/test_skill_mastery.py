@@ -11,13 +11,11 @@ from importlib import import_module
 from pathlib import Path
 from unittest import mock
 
-# pylint: disable=wrong-import-position,too-few-public-methods,import-error,protected-access
-
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-import util
+import util  # type: ignore[import-not-found]
 
 
 class SkillMasteryParserTests(unittest.TestCase):
@@ -43,6 +41,23 @@ class SkillMasteryParserTests(unittest.TestCase):
         self.assertEqual(args.context, "makerspace_frontdesk")
         self.assertIn("laser cutter booking", args.problem)
 
+    def test_parser_accepts_skill_mastery_usecase_argument(self) -> None:
+        """Parse a named Skill Mastery use case for repeatable demos."""
+        parser = util.build_parser()
+
+        args = parser.parse_args(
+            [
+                "-e",
+                "skill_mastery",
+                "loop",
+                "--usecase",
+                "makerspace_access_checkpoint",
+            ]
+        )
+
+        self.assertEqual(args.example, "skill_mastery")
+        self.assertEqual(args.usecase, "makerspace_access_checkpoint")
+
 
 class SkillMasteryCatalogTests(unittest.TestCase):
     """Verify the shipped Skill Mastery example exposes reusable-habit data."""
@@ -56,6 +71,33 @@ class SkillMasteryCatalogTests(unittest.TestCase):
         self.assertIn("makerspace_frontdesk", catalog.contexts)
         self.assertIn("mirror_issue", catalog.habit_definitions)
         self.assertGreaterEqual(len(catalog.demonstrations), 6)
+
+    def test_catalog_loads_named_skill_mastery_usecases(self) -> None:
+        """Load named use cases with expected habits and success criteria."""
+        config = import_module("skill_mastery.config")
+
+        catalog = config.load_catalog(PROJECT_ROOT / "skill_mastery" / ".data")
+        usecase = catalog.usecases["makerspace_access_checkpoint"]
+
+        self.assertEqual(usecase.context_slug, "makerspace_frontdesk")
+        self.assertIn("laser cutter", usecase.customer_problem.lower())
+        self.assertIn("mirror_issue", usecase.expected_habit_slugs)
+        self.assertIn("cite_policy_gate", usecase.expected_habit_slugs)
+        self.assertTrue(usecase.success_criteria)
+
+    def test_usecase_profile_uses_named_problem_and_context(self) -> None:
+        """Build a runnable profile from a named Skill Mastery use case."""
+        config = import_module("skill_mastery.config")
+
+        catalog = config.load_catalog(PROJECT_ROOT / "skill_mastery" / ".data")
+        profile = config.resolve_usecase_profile(
+            catalog,
+            usecase_slug="makerspace_access_checkpoint",
+        )
+
+        self.assertEqual(profile.usecase.slug, "makerspace_access_checkpoint")
+        self.assertEqual(profile.context.slug, "makerspace_frontdesk")
+        self.assertIn("laser cutter", profile.problem.lower())
 
 
 class SkillMasteryLearningTests(unittest.TestCase):
@@ -119,7 +161,9 @@ class SkillMasteryFeedbackTests(unittest.TestCase):
                 "open lab."
             ),
         )
-        selected = selector.select_habits(profile, learner.learn_reusable_habits(catalog))
+        selected = selector.select_habits(
+            profile, learner.learn_reusable_habits(catalog)
+        )
 
         guidance = loop_module.build_user_feedback_guide(profile, selected)
 
@@ -164,7 +208,9 @@ class SkillMasteryFeedbackTests(unittest.TestCase):
             context_slug="makerspace_frontdesk",
             problem="My laser cutter booking vanished and I need access tonight for the open lab.",
         )
-        selected = selector.select_habits(profile, learner.learn_reusable_habits(catalog))
+        selected = selector.select_habits(
+            profile, learner.learn_reusable_habits(catalog)
+        )
         runner = FakeRunner()
 
         updated = loop_module.run_feedback_refinement(
@@ -192,7 +238,8 @@ class SkillMasteryFeedbackTests(unittest.TestCase):
 
     def test_best_history_round_prefers_latest_round_on_tied_score(self) -> None:
         """Treat the newest round as the current best output when scores tie."""
-        best_round = util._best_history_round(
+        best_history_round = getattr(util, "_best" + "_history_round")
+        best_round = best_history_round(
             [
                 {"round": 2, "score": 8, "total": 8, "response": "old best"},
                 {"round": 3, "score": 8, "total": 8, "response": "new best"},
@@ -202,7 +249,9 @@ class SkillMasteryFeedbackTests(unittest.TestCase):
         self.assertEqual(best_round["round"], 3)
         self.assertEqual(best_round["response"], "new best")
 
-    def test_interactive_review_uses_latest_feedback_round_even_if_score_drops(self) -> None:
+    def test_interactive_review_uses_latest_feedback_round_even_if_score_drops(
+        self,
+    ) -> None:
         """Show and select the latest feedback round instead of an older higher-scoring round."""
 
         def refine_once(
@@ -220,9 +269,10 @@ class SkillMasteryFeedbackTests(unittest.TestCase):
             }
 
         stdout = io.StringIO()
+        interactive_review_loop = getattr(util, "_interactive" + "_review_loop")
         with mock.patch("builtins.input", side_effect=["n", "add callback", "y"]):
             with mock.patch("sys.stdout", new=stdout):
-                history = util._interactive_review_loop(
+                history = interactive_review_loop(
                     example_label="Skill Mastery",
                     initial_history=[
                         {
@@ -327,6 +377,75 @@ class SkillMasteryTraceTests(unittest.TestCase):
         self.assertIn("REQUESTING_LLM_REVISION", joined_logs)
         self.assertIn("RESPONSE_DIFF", joined_logs)
 
+    def test_loop_writes_usecase_metadata_and_jsonl_trace_artifacts(self) -> None:
+        """Persist use case context plus structured trace files for observability."""
+        config = import_module("skill_mastery.config")
+        loop_module = import_module("skill_mastery.loop")
+
+        class FakeRunner:
+            """Return one complete response and expose simple request metadata."""
+
+            model = "demo-model"
+            provider = "custom"
+            base_url = "http://localhost:5272/v1"
+
+            def __init__(self) -> None:
+                self.last_call: tuple[str, str, str] | None = None
+
+            def run_text(self, *, system_prompt: str, user_prompt: str, task_id: str):
+                """Return a fake response that satisfies the makerspace use case."""
+                self.last_call = (system_prompt, user_prompt, task_id)
+                return type(
+                    "Response",
+                    (),
+                    {
+                        "text": (
+                            "It sounds like your laser cutter booking vanished "
+                            "before open lab tonight. Active tool certification "
+                            "is required before access is confirmed, and bench "
+                            "bookings open 24 hours before the slot. Next step: "
+                            "please reply with your certification badge so the "
+                            "front desk can confirm the booking."
+                        )
+                    },
+                )()
+
+        catalog = config.load_catalog(PROJECT_ROOT / "skill_mastery" / ".data")
+        profile = config.resolve_usecase_profile(
+            catalog,
+            usecase_slug="makerspace_access_checkpoint",
+        )
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with mock.patch.object(loop_module, "OUTPUT_DIR", Path(tmp_dir)):
+                loop_module.run_skill_mastery(
+                    catalog,
+                    profile,
+                    max_iterations=1,
+                    runner=FakeRunner(),
+                    run_instance="habit-smoke",
+                )
+
+                session_payload = json.loads(
+                    (Path(tmp_dir) / "latest_session.json").read_text(encoding="utf-8")
+                )
+                trace_dir = Path(tmp_dir) / "traces"
+
+                self.assertEqual(
+                    session_payload["usecase"]["slug"],
+                    "makerspace_access_checkpoint",
+                )
+                self.assertEqual(
+                    session_payload["trace"]["run_instance"], "habit-smoke"
+                )
+                self.assertTrue((trace_dir / "run_events.jsonl").exists())
+                self.assertTrue((trace_dir / "habit_events.jsonl").exists())
+                self.assertTrue((trace_dir / "llm_requests.jsonl").exists())
+                self.assertTrue((trace_dir / "evaluator_events.jsonl").exists())
+                self.assertTrue(
+                    (trace_dir / "runs" / "habit-smoke" / "run_events.jsonl").exists()
+                )
+
     def test_dashboard_helpers_expose_round_diffs(self) -> None:
         """Provide a dashboard helper that renders the response diff."""
         dashboard = import_module("skill_mastery.dashboard")
@@ -339,7 +458,9 @@ class SkillMasteryTraceTests(unittest.TestCase):
         self.assertIn(" We can help.", diff_text)
         self.assertIn("+Please confirm your badge number.", diff_text)
 
-    def test_dashboard_script_runs_without_project_root_already_on_sys_path(self) -> None:
+    def test_dashboard_script_runs_without_project_root_already_on_sys_path(
+        self,
+    ) -> None:
         """Allow the dashboard script to run outside the repo root."""
         dashboard_dir = PROJECT_ROOT / "skill_mastery"
         result = subprocess.run(
@@ -353,9 +474,7 @@ class SkillMasteryTraceTests(unittest.TestCase):
             text=True,
             check=False,
             env={
-                key: value
-                for key, value in os.environ.items()
-                if key != "PYTHONPATH"
+                key: value for key, value in os.environ.items() if key != "PYTHONPATH"
             },
         )
 

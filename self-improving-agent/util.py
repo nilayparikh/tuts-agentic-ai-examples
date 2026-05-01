@@ -16,7 +16,17 @@ route per-demo commands:
     python util.py --example cleanloop sandbox         Subprocess isolation
     python util.py --example cleanloop autonomy        Trust ladder sim
     python util.py --example prompt_evolution catalog  Show contexts
+    python util.py --example prompt_evolution scenarios Show demo cases
     python util.py --example prompt_evolution loop     Evolve instructions
+    python util.py --example skill_mastery usecases    Show habit demos
+    python util.py --example skill_mastery loop        Compose with habits
+    python util.py --example skill_mastery loop --rerank --candidates 3
+    python util.py --example skill_mastery sandbox     Single isolated round
+    python util.py --example skill_mastery autonomy    Trust ladder sim
+    python util.py --example skill_mastery challenge   Adversarial variants
+    python util.py --example skill_mastery evaluate --candidate <path>
+    python util.py --example skill_mastery verify      Env health checks
+    python util.py --example skill_mastery status      Project snapshot
 
 Short form:  python util.py -e cleanloop loop --rerank
 
@@ -550,9 +560,19 @@ def _skill_mastery_catalog():
 def _prompt_evolution_profile(args: argparse.Namespace):
     """Resolve CLI or interactive input into one prompt evolution profile."""
     config_module, catalog = _prompt_evolution_catalog()
+    scenario = getattr(args, "scenario", None)
     context = getattr(args, "context", None)
     problem = getattr(args, "problem", None)
     preference_pairs = list(getattr(args, "preference", []) or [])
+
+    if scenario:
+        return catalog, config_module.resolve_scenario_profile(
+            catalog,
+            scenario_slug=scenario,
+            preference_pairs=preference_pairs,
+            problem=problem,
+            context_slug=context,
+        )
 
     if not context:
         print("\nAvailable contexts:")
@@ -582,8 +602,17 @@ def _prompt_evolution_profile(args: argparse.Namespace):
 def _skill_mastery_profile(args: argparse.Namespace):
     """Resolve CLI or interactive input into one Skill Mastery profile."""
     config_module, catalog = _skill_mastery_catalog()
+    usecase = getattr(args, "usecase", None)
     context = getattr(args, "context", None)
     problem = getattr(args, "problem", None)
+
+    if usecase:
+        return catalog, config_module.resolve_usecase_profile(
+            catalog,
+            usecase_slug=usecase,
+            context_slug=context,
+            problem=problem,
+        )
 
     if not context:
         print("\nAvailable contexts:")
@@ -692,11 +721,29 @@ def cmd_prompt_evolution_catalog(_args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_prompt_evolution_scenarios(_args: argparse.Namespace) -> int:
+    """List the shipped Prompt Evolution scenario cases."""
+    config_module, catalog = _prompt_evolution_catalog()
+    log_header("Prompt Evolution — Scenarios")
+    print(config_module.describe_scenarios(catalog))
+    print()
+    return 0
+
+
 def cmd_skill_mastery_catalog(_args: argparse.Namespace) -> int:
     """List the shipped Skill Mastery contexts and habit seeds."""
     config_module, catalog = _skill_mastery_catalog()
     log_header("Skill Mastery — Catalog")
     print(config_module.describe_catalog(catalog))
+    print()
+    return 0
+
+
+def cmd_skill_mastery_usecases(_args: argparse.Namespace) -> int:
+    """List the shipped Skill Mastery use cases."""
+    config_module, catalog = _skill_mastery_catalog()
+    log_header("Skill Mastery — Use Cases")
+    print(config_module.describe_usecases(catalog))
     print()
     return 0
 
@@ -714,6 +761,8 @@ def cmd_prompt_evolution_loop(args: argparse.Namespace) -> int:
         return 1
 
     log_info(f"Context: {profile.context.label}")
+    if profile.scenario is not None:
+        log_info(f"Scenario: {profile.scenario.label}")
     log_info(
         f"Preferences: {', '.join(f'{k}={v}' for k, v in profile.selected_preferences.items())}"
     )
@@ -725,6 +774,9 @@ def cmd_prompt_evolution_loop(args: argparse.Namespace) -> int:
         profile,
         max_iterations=getattr(args, "max_iterations", 3),
         log_sink=log_info,
+        run_instance=getattr(args, "named_instance", None),
+        use_reranker=bool(getattr(args, "rerank", False)),
+        candidate_count=int(getattr(args, "candidates", 3)),
     )
 
     if _should_offer_interactive_review():
@@ -778,6 +830,8 @@ def cmd_skill_mastery_loop(args: argparse.Namespace) -> int:
         return 1
 
     log_info(f"Context: {profile.context.label}")
+    if profile.usecase is not None:
+        log_info(f"Use case: {profile.usecase.label}")
     log_info(f"Max iterations: {getattr(args, 'max_iterations', 2)}")
 
     loop_module = importlib.import_module("skill_mastery.loop")
@@ -786,6 +840,9 @@ def cmd_skill_mastery_loop(args: argparse.Namespace) -> int:
         profile,
         max_iterations=min(getattr(args, "max_iterations", 2), 3),
         log_sink=log_info,
+        run_instance=getattr(args, "named_instance", None),
+        use_reranker=bool(getattr(args, "rerank", False)),
+        candidate_count=int(getattr(args, "candidates", 3) or 3),
     )
 
     if _should_offer_interactive_review():
@@ -945,6 +1002,121 @@ def cmd_prompt_evolution_dashboard(_args: argparse.Namespace) -> int:
     )
 
 
+def cmd_prompt_evolution_status(_args: argparse.Namespace) -> int:
+    """Render a prompt evolution project status snapshot."""
+    log_header("Prompt Evolution — Status")
+    status_module = importlib.import_module("prompt_evolution.status_snapshot")
+    status = status_module.collect_status()
+    print(status_module.render_status(status))
+    return 0
+
+
+def cmd_prompt_evolution_verify(_args: argparse.Namespace) -> int:
+    """Run the prompt evolution environment verification checks."""
+    log_header("Prompt Evolution — Verify")
+    _ensure_in_venv()
+    _load_env()
+    verify_module = importlib.import_module("prompt_evolution.verify")
+    return int(verify_module.main())
+
+
+def cmd_prompt_evolution_evaluate(args: argparse.Namespace) -> int:
+    """Score a candidate reply against a scenario gold target."""
+    log_header("Prompt Evolution — Evaluate Candidate")
+    scenario = getattr(args, "scenario", None)
+    candidate_path = getattr(args, "candidate", None)
+    if not scenario or not candidate_path:
+        log_fail("evaluate requires --scenario and --candidate")
+        return 1
+    prepare_module = importlib.import_module("prompt_evolution.prepare")
+    _config_module, catalog = _prompt_evolution_catalog()
+    candidate_text = Path(candidate_path).read_text(encoding="utf-8")
+    result = prepare_module.evaluate_candidate(
+        catalog,
+        scenario_slug=scenario,
+        candidate_text=candidate_text,
+    )
+    print(prepare_module.render_result(result))
+    return 0
+
+
+def cmd_prompt_evolution_sandbox(args: argparse.Namespace) -> int:
+    """Run a single isolated prompt-evolution round (no mutation, no persistence)."""
+    log_header("Prompt Evolution — Sandbox Round")
+    _ensure_in_venv()
+    _load_env()
+    try:
+        catalog, profile = _prompt_evolution_profile(args)
+    except ValueError as exc:
+        log_fail(str(exc))
+        return 1
+    sandbox_module = importlib.import_module("prompt_evolution.sandbox")
+    result = sandbox_module.run_one_round(
+        catalog=catalog,
+        profile=profile,
+        timeout_seconds=float(getattr(args, "timeout", 30)),
+        max_iterations=1,
+    )
+    print(sandbox_module.render_result(result))
+    return 0
+
+
+def cmd_prompt_evolution_autonomy(args: argparse.Namespace) -> int:
+    """Run multiple sandbox rounds and grade trust on the autonomy ladder."""
+    log_header("Prompt Evolution — Autonomy Ladder")
+    _ensure_in_venv()
+    _load_env()
+    try:
+        catalog, profile = _prompt_evolution_profile(args)
+    except ValueError as exc:
+        log_fail(str(exc))
+        return 1
+    sandbox_module = importlib.import_module("prompt_evolution.sandbox")
+    autonomy_module = importlib.import_module("prompt_evolution.autonomy")
+    rounds = int(getattr(args, "rounds", 5))
+    snapshots = []
+    for index in range(1, rounds + 1):
+        log_info(f"sandbox round {index}/{rounds}")
+        outcome = sandbox_module.run_one_round(
+            catalog=catalog,
+            profile=profile,
+            timeout_seconds=float(getattr(args, "timeout", 30)),
+            max_iterations=1,
+        )
+        snapshots.append(
+            autonomy_module.RoundSnapshot(
+                score=outcome.evaluation.total_score,
+                total=outcome.evaluation.max_score,
+            )
+        )
+    decision = autonomy_module.evaluate_ladder(snapshots)
+    log_header(f"Autonomy Tier: {decision.level}")
+    print(autonomy_module.render_decision(decision))
+    return 0
+
+
+def cmd_prompt_evolution_challenge(args: argparse.Namespace) -> int:
+    """Generate adversarial scenario variants for prompt evolution."""
+    log_header("Prompt Evolution — Adversarial Variants")
+    _config_module, catalog = _prompt_evolution_catalog()
+    challenger_module = importlib.import_module("prompt_evolution.challenger")
+    levels = list(getattr(args, "levels", [1, 2, 3]) or [1, 2, 3])
+    scenario_slug = getattr(args, "scenario", None)
+    if scenario_slug:
+        case = catalog.scenarios.get(scenario_slug)
+        if case is None:
+            log_fail(f"unknown scenario slug: {scenario_slug}")
+            return 1
+        variants = challenger_module.generate_variants(case, tiers=levels)
+        print(challenger_module.render_variant_summary(variants))
+        return 0
+    for case in catalog.scenarios.values():
+        log_info(case.label)
+        variants = challenger_module.generate_variants(case, tiers=levels)
+        print(challenger_module.render_variant_summary(variants))
+    return 0
+
+
 def cmd_skill_mastery_dashboard(_args: argparse.Namespace) -> int:
     """Launch the Skill Mastery dashboard."""
     return _run_example_dashboard(
@@ -1083,15 +1255,12 @@ def cmd_reset_cleanloop(_args: argparse.Namespace) -> int:
 
 
 def cmd_reset_prompt_evolution(_args: argparse.Namespace) -> int:
-    """Reset Prompt Evolution outputs."""
+    """Reset Prompt Evolution outputs while preserving gold targets."""
     log_header("Prompt Evolution — Reset")
-    loop_module = importlib.import_module("prompt_evolution.loop")
+    reset_module = importlib.import_module("prompt_evolution.reset_workflow")
     out_dir = _output_dir("prompt_evolution")
-    if out_dir.exists():
-        loop_module.reset_outputs()
-        log_ok(f"Deleted {out_dir.relative_to(ROOT)}")
-    else:
-        log_info("No .output/ directory to delete")
+    report = reset_module.reset(output_dir=out_dir)
+    print(reset_module.render_report(report))
     print(
         f"\n  Ready to re-run: {C.BOLD}python util.py -e prompt_evolution loop"
         f"{C.RESET}\n"
@@ -1100,19 +1269,130 @@ def cmd_reset_prompt_evolution(_args: argparse.Namespace) -> int:
 
 
 def cmd_reset_skill_mastery(_args: argparse.Namespace) -> int:
-    """Reset Skill Mastery outputs."""
+    """Reset Skill Mastery outputs while preserving gold reference replies."""
     log_header("Skill Mastery — Reset")
-    loop_module = importlib.import_module("skill_mastery.loop")
-    out_dir = _output_dir("skill_mastery")
-    if out_dir.exists():
-        loop_module.reset_outputs()
-        log_ok(f"Deleted {out_dir.relative_to(ROOT)}")
-    else:
-        log_info("No .output/ directory to delete")
+    reset_module = importlib.import_module("skill_mastery.reset_workflow")
+    report = reset_module.reset()
+    print(reset_module.render_report(report))
     print(
         f"\n  Ready to re-run: {C.BOLD}python util.py -e skill_mastery loop"
         f"{C.RESET}\n"
     )
+    return 0
+
+
+def cmd_skill_mastery_status(_args: argparse.Namespace) -> int:
+    """Render a Skill Mastery project status snapshot."""
+    log_header("Skill Mastery — Status")
+    status_module = importlib.import_module("skill_mastery.status_snapshot")
+    status = status_module.collect_status()
+    print(status_module.render_status(status))
+    return 0
+
+
+def cmd_skill_mastery_verify(_args: argparse.Namespace) -> int:
+    """Run the Skill Mastery environment verification checks."""
+    log_header("Skill Mastery — Verify")
+    _ensure_in_venv()
+    _load_env()
+    verify_module = importlib.import_module("skill_mastery.verify")
+    return int(verify_module.main())
+
+
+def cmd_skill_mastery_evaluate(args: argparse.Namespace) -> int:
+    """Score a candidate reply against a use case gold target."""
+    log_header("Skill Mastery — Evaluate Candidate")
+    usecase = getattr(args, "usecase", None)
+    candidate_path = getattr(args, "candidate", None)
+    if not usecase or not candidate_path:
+        log_fail("evaluate requires --usecase and --candidate")
+        return 1
+    prepare_module = importlib.import_module("skill_mastery.prepare")
+    _config_module, catalog = _skill_mastery_catalog()
+    candidate_text = Path(candidate_path).read_text(encoding="utf-8")
+    result = prepare_module.evaluate_candidate(
+        catalog,
+        usecase_slug=usecase,
+        candidate_text=candidate_text,
+    )
+    print(prepare_module.render_result(result))
+    return 0
+
+
+def cmd_skill_mastery_sandbox(args: argparse.Namespace) -> int:
+    """Run a single isolated Skill Mastery round (no mutation, no persistence)."""
+    log_header("Skill Mastery — Sandbox Round")
+    _ensure_in_venv()
+    _load_env()
+    try:
+        catalog, profile = _skill_mastery_profile(args)
+    except ValueError as exc:
+        log_fail(str(exc))
+        return 1
+    sandbox_module = importlib.import_module("skill_mastery.sandbox")
+    result = sandbox_module.run_one_round(
+        catalog=catalog,
+        profile=profile,
+        timeout_seconds=float(getattr(args, "timeout", 30) or 30),
+        max_iterations=1,
+    )
+    print(sandbox_module.render_result(result))
+    return 0
+
+
+def cmd_skill_mastery_autonomy(args: argparse.Namespace) -> int:
+    """Run multiple sandbox rounds and grade trust on the autonomy ladder."""
+    log_header("Skill Mastery — Autonomy Ladder")
+    _ensure_in_venv()
+    _load_env()
+    try:
+        catalog, profile = _skill_mastery_profile(args)
+    except ValueError as exc:
+        log_fail(str(exc))
+        return 1
+    sandbox_module = importlib.import_module("skill_mastery.sandbox")
+    autonomy_module = importlib.import_module("skill_mastery.autonomy")
+    rounds = int(getattr(args, "rounds", 5) or 5)
+    snapshots = []
+    for index in range(1, rounds + 1):
+        log_info(f"sandbox round {index}/{rounds}")
+        outcome = sandbox_module.run_one_round(
+            catalog=catalog,
+            profile=profile,
+            timeout_seconds=float(getattr(args, "timeout", 30) or 30),
+            max_iterations=1,
+        )
+        snapshots.append(
+            autonomy_module.RoundSnapshot(
+                score=outcome.evaluation.total_score,
+                total=outcome.evaluation.max_score,
+            )
+        )
+    decision = autonomy_module.evaluate_ladder(snapshots)
+    log_header(f"Autonomy Tier: {decision.level}")
+    print(autonomy_module.render_decision(decision))
+    return 0
+
+
+def cmd_skill_mastery_challenge(args: argparse.Namespace) -> int:
+    """Generate adversarial use case variants for Skill Mastery."""
+    log_header("Skill Mastery — Adversarial Variants")
+    _config_module, catalog = _skill_mastery_catalog()
+    challenger_module = importlib.import_module("skill_mastery.challenger")
+    levels = list(getattr(args, "levels", [1, 2, 3]) or [1, 2, 3])
+    usecase_slug = getattr(args, "usecase", None)
+    if usecase_slug:
+        case = catalog.usecases.get(usecase_slug)
+        if case is None:
+            log_fail(f"unknown use case slug: {usecase_slug}")
+            return 1
+        variants = challenger_module.generate_variants(case, tiers=levels)
+        print(challenger_module.render_variant_summary(variants))
+        return 0
+    for case in catalog.usecases.values():
+        log_info(case.label)
+        variants = challenger_module.generate_variants(case, tiers=levels)
+        print(challenger_module.render_variant_summary(variants))
     return 0
 
 
@@ -1182,6 +1462,23 @@ def cmd_status(_args: argparse.Namespace) -> int:
         )
     else:
         print(f"    {C.DIM}●{C.RESET} No prompt evolution session history")
+    try:
+        _, prompt_catalog = _prompt_evolution_catalog()
+        print(
+            f"    {C.GREEN}●{C.RESET} "
+            f"{len(prompt_catalog.scenarios)} prompt evolution scenarios"
+        )
+    except (ImportError, OSError, ValueError, KeyError, AttributeError) as exc:
+        print(f"    {C.YELLOW}●{C.RESET} Scenario catalog unavailable: {exc}")
+    trace_dir = prompt_out / "traces"
+    if trace_dir.exists():
+        trace_files = sorted(trace_dir.glob("*.jsonl"))
+        print(
+            f"    {C.GREEN}●{C.RESET} traces/  "
+            f"({len(trace_files)} top-level JSONL files)"
+        )
+    else:
+        print(f"    {C.DIM}●{C.RESET} No prompt evolution traces yet")
 
     print(f"\n  {C.BOLD}Skill Mastery:{C.RESET}")
     mastery_out = _output_dir("skill_mastery")
@@ -1209,6 +1506,23 @@ def cmd_status(_args: argparse.Namespace) -> int:
         )
     else:
         print(f"    {C.DIM}●{C.RESET} No Skill Mastery session history")
+    try:
+        _, mastery_catalog = _skill_mastery_catalog()
+        print(
+            f"    {C.GREEN}●{C.RESET} "
+            f"{len(mastery_catalog.usecases)} Skill Mastery use cases"
+        )
+    except (ImportError, OSError, ValueError, KeyError, AttributeError) as exc:
+        print(f"    {C.YELLOW}●{C.RESET} Use case catalog unavailable: {exc}")
+    mastery_trace_dir = mastery_out / "traces"
+    if mastery_trace_dir.exists():
+        trace_files = sorted(mastery_trace_dir.glob("*.jsonl"))
+        print(
+            f"    {C.GREEN}●{C.RESET} traces/  "
+            f"({len(trace_files)} top-level JSONL files)"
+        )
+    else:
+        print(f"    {C.DIM}●{C.RESET} No Skill Mastery traces yet")
 
     # Environment
     print(f"\n  {C.BOLD}Environment:{C.RESET}")
@@ -1390,9 +1704,7 @@ def _create_chat_completion_with_backoff(
     for attempt in range(1, max_attempts + 1):
         try:
             return client.chat.completions.create(**kwargs)
-        except (
-            Exception
-        ) as exc:  # pylint: disable=broad-exception-caught  # noqa: BLE001
+        except Exception as exc:  # pylint: disable=W0718  # noqa: BLE001
             last_exc = exc
             if not _is_capacity_error(exc) or attempt >= max_attempts:
                 raise
@@ -1560,10 +1872,12 @@ Per-example commands (--example / -e required):
   python util.py -e cleanloop autonomy          Trust ladder sim
   python util.py -e cleanloop reset             Clear output & restore genome
     python util.py -e prompt_evolution catalog    List contexts and preferences
+    python util.py -e prompt_evolution scenarios  List scenario cases
     python util.py -e prompt_evolution loop       Mutate instructions with Hermes + guided review
     python util.py -e prompt_evolution dashboard  Inspect trace, diffs, and LLM requests
     python util.py -e prompt_evolution reset      Clear prompt evolution outputs
     python util.py -e skill_mastery catalog       List contexts and habit seeds
+    python util.py -e skill_mastery usecases      List repeatable habit demos
     python util.py -e skill_mastery loop          Learn habits + guided review
     python util.py -e skill_mastery dashboard     Inspect trace, diffs, and LLM requests
     python util.py -e skill_mastery reset         Clear Skill Mastery outputs
@@ -1586,7 +1900,19 @@ Per-example commands (--example / -e required):
 
     # --- Unified per-example commands ---
     sub.add_parser("catalog", help="List example contexts, preferences, or habit seeds")
-    sub.add_parser("evaluate", help="Run the referee/evaluator")
+    p_evaluate = sub.add_parser("evaluate", help="Run the referee/evaluator")
+    p_evaluate.add_argument(
+        "--scenario",
+        help="Prompt Evolution scenario slug to evaluate against",
+    )
+    p_evaluate.add_argument(
+        "--usecase",
+        help="Skill Mastery use case slug to evaluate against",
+    )
+    p_evaluate.add_argument(
+        "--candidate",
+        help="Path to a candidate reply file (markdown or text)",
+    )
 
     p_loop = sub.add_parser("loop", help="Run the self-improving loop")
     p_loop.add_argument("--max-iterations", type=int, default=5)
@@ -1598,6 +1924,8 @@ Per-example commands (--example / -e required):
         help="Optional CleanLoop run-instance name for saved logs, traces, and diagnostics",
     )
     p_loop.add_argument("--context", help="Example context slug")
+    p_loop.add_argument("--scenario", help="Prompt Evolution scenario slug")
+    p_loop.add_argument("--usecase", help="Skill Mastery use case slug")
     p_loop.add_argument(
         "--preference",
         action="append",
@@ -1609,6 +1937,8 @@ Per-example commands (--example / -e required):
     )
 
     sub.add_parser("dashboard", help="Launch Streamlit monitoring")
+    sub.add_parser("scenarios", help="List Prompt Evolution scenario cases")
+    sub.add_parser("usecases", help="List Skill Mastery use cases")
 
     p_challenge = sub.add_parser(
         "challenge",
@@ -1621,18 +1951,71 @@ Per-example commands (--example / -e required):
         default=[1, 2, 3],
         help="Difficulty levels for CleanLoop challenger runs",
     )
+    p_challenge.add_argument(
+        "--usecase",
+        help="Skill Mastery use case slug (limits variants to one use case)",
+    )
+    p_challenge.add_argument(
+        "--scenario",
+        help="Prompt Evolution scenario slug (limits variants to one scenario)",
+    )
 
     p_sandbox = sub.add_parser(
         "sandbox",
         help="Run genome in isolated subprocess",
     )
     p_sandbox.add_argument("--timeout", type=int, default=30)
+    p_sandbox.add_argument(
+        "--scenario",
+        help="Prompt Evolution scenario slug for sandbox round",
+    )
+    p_sandbox.add_argument(
+        "--usecase",
+        help="Skill Mastery use case slug for sandbox round",
+    )
+    p_sandbox.add_argument(
+        "--context",
+        help="Prompt Evolution context slug",
+    )
+    p_sandbox.add_argument(
+        "--problem",
+        help="Override customer problem text",
+    )
+    p_sandbox.add_argument(
+        "--preference",
+        action="append",
+        default=[],
+        help="Preference axis=value (repeat for multiple)",
+    )
 
     p_autonomy = sub.add_parser(
         "autonomy",
         help="Simulate graduated trust ladder",
     )
     p_autonomy.add_argument("--rounds", type=int, default=10)
+    p_autonomy.add_argument("--timeout", type=int, default=30)
+    p_autonomy.add_argument(
+        "--scenario",
+        help="Prompt Evolution scenario slug for autonomy rounds",
+    )
+    p_autonomy.add_argument(
+        "--usecase",
+        help="Skill Mastery use case slug for autonomy rounds",
+    )
+    p_autonomy.add_argument(
+        "--context",
+        help="Prompt Evolution context slug",
+    )
+    p_autonomy.add_argument(
+        "--problem",
+        help="Override customer problem text",
+    )
+    p_autonomy.add_argument(
+        "--preference",
+        action="append",
+        default=[],
+        help="Preference axis=value (repeat for multiple)",
+    )
 
     sub.add_parser("reset", help="Clear .output/ and restore genome")
 
@@ -1661,14 +2044,28 @@ EXAMPLE_COMMANDS: dict[str, dict[str, CommandHandler]] = {
     },
     "prompt_evolution": {
         "catalog": cmd_prompt_evolution_catalog,
+        "scenarios": cmd_prompt_evolution_scenarios,
         "loop": cmd_prompt_evolution_loop,
         "dashboard": cmd_prompt_evolution_dashboard,
+        "status": cmd_prompt_evolution_status,
+        "verify": cmd_prompt_evolution_verify,
+        "evaluate": cmd_prompt_evolution_evaluate,
+        "sandbox": cmd_prompt_evolution_sandbox,
+        "autonomy": cmd_prompt_evolution_autonomy,
+        "challenge": cmd_prompt_evolution_challenge,
         "reset": cmd_reset_prompt_evolution,
     },
     "skill_mastery": {
         "catalog": cmd_skill_mastery_catalog,
+        "usecases": cmd_skill_mastery_usecases,
         "loop": cmd_skill_mastery_loop,
         "dashboard": cmd_skill_mastery_dashboard,
+        "evaluate": cmd_skill_mastery_evaluate,
+        "sandbox": cmd_skill_mastery_sandbox,
+        "autonomy": cmd_skill_mastery_autonomy,
+        "challenge": cmd_skill_mastery_challenge,
+        "verify": cmd_skill_mastery_verify,
+        "status": cmd_skill_mastery_status,
         "reset": cmd_reset_skill_mastery,
     },
 }
@@ -1697,13 +2094,17 @@ def main() -> None:
         print("    python util.py -e cleanloop loop\n")
         sys.exit(0)
 
+    # Per-example commands (preferred when --example is supplied and command is registered)
+    example = getattr(args, "example", None)
+    if example and args.command in EXAMPLE_COMMANDS.get(example, {}):
+        sys.exit(EXAMPLE_COMMANDS[example][args.command](args))
+
     # Shared commands (no --example needed)
     if args.command in SHARED_COMMANDS:
         shared_handler = SHARED_COMMANDS[args.command]
         sys.exit(shared_handler(args))
 
     # Per-example commands
-    example = getattr(args, "example", None)
     if not example:
         print(
             f"\n  {C.RED}ERROR:{C.RESET} " f"'{args.command}' requires --example / -e\n"

@@ -1,0 +1,40 @@
+{
+  "slug": "makerspace_access_checkpoint",
+  "label": "Makerspace Access Checkpoint",
+  "context_slug": "makerspace_frontdesk",
+  "customer_problem": "A member says their laser cutter booking vanished before open lab tonight and asks if staff can unlock the bench anyway.",
+  "customer_facts": [
+    "The booking is missing before open lab tonight.",
+    "The member wants immediate bench access.",
+    "The access request depends on certification and booking policy."
+  ],
+  "risk_flags": [
+    "Do not promise automatic access restoration.",
+    "Do not bypass active tool certification.",
+    "Do not approve an after-hours exception in the reply."
+  ],
+  "expected_habit_slugs": [
+    "mirror_issue",
+    "cite_policy_gate",
+    "offer_checkpoint",
+    "name_owner",
+    "preserve_boundary"
+  ],
+  "expected_policy_slugs": [
+    "booking_window",
+    "certification_gate"
+  ],
+  "success_criteria": [
+    "Mirror the missing booking in the first sentence.",
+    "Name the certification or 24-hour booking gate before the next step.",
+    "Give one checkpoint that asks for the badge or tool detail."
+  ],
+  "source_demonstration_ids": [
+    "makerspace-booking-restore",
+    "makerspace-afterhours-escalation"
+  ],
+  "operator_notes": [
+    "Best demo for showing habit selection on booking and access language.",
+    "The reply should combine confidence with a clear policy boundary."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "language_transfer_recovery",
+  "label": "Language School Transfer Recovery",
+  "context_slug": "language_school",
+  "customer_problem": "A student missed the first class and wants an immediate move to an evening section without waiting for review.",
+  "customer_facts": [
+    "The student missed the first class.",
+    "The student wants an evening-section transfer.",
+    "The student expects an immediate transfer."
+  ],
+  "risk_flags": [
+    "Do not say the transfer is approved automatically.",
+    "Do not promise a level override.",
+    "Keep the first-two-meetings review rule visible."
+  ],
+  "expected_habit_slugs": [
+    "mirror_issue",
+    "cite_policy_gate",
+    "offer_checkpoint",
+    "name_owner",
+    "preserve_boundary"
+  ],
+  "expected_policy_slugs": [
+    "transfer_window"
+  ],
+  "success_criteria": [
+    "Mirror the missed class and requested evening transfer.",
+    "Explain that transfers are reviewed during the first two class meetings.",
+    "Ask for the current section and target evening option."
+  ],
+  "source_demonstration_ids": [
+    "school-transfer-review",
+    "school-makeup-window"
+  ],
+  "operator_notes": [
+    "Best demo for zero-shot habit transfer from makerspace access to school operations.",
+    "The selected habits should stay stable while the policy language changes."
+  ]
+}

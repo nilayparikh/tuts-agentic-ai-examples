@@ -18,7 +18,10 @@ from prompt_evolution.config import (
     SelectionProfile,
 )
 from prompt_evolution.evaluator import EvaluationResult, evaluate_response
-from prompt_evolution.hermes_client import HermesAgentRunner
+from prompt_evolution.hermes_client import HermesAgentRunner, HermesResponse
+from prompt_evolution.mutation_playbook import render_brief, select_strategies
+from prompt_evolution.reranker import rerank_drafts
+from prompt_evolution.tracing import TraceRecorder
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXAMPLE_ROOT = PROJECT_ROOT / "prompt_evolution"
@@ -284,6 +287,19 @@ def _latest_mutation_diff(history: list[dict[str, Any]]) -> str | None:
     return None
 
 
+def _existing_trace_metadata() -> dict[str, Any] | None:
+    """Load previous trace metadata when interactive review rewrites outputs."""
+    session_path = OUTPUT_DIR / "latest_session.json"
+    if not session_path.exists():
+        return None
+    try:
+        payload = json.loads(session_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    trace_payload = payload.get("trace")
+    return trace_payload if isinstance(trace_payload, dict) else None
+
+
 def load_mutable_instructions(readme_path: Path = README_PATH) -> str:
     """Extract the mutable instruction block from the example README."""
     lines = _read_utf8_text(readme_path).splitlines()
@@ -319,6 +335,30 @@ def _preference_brief(
     return "\n".join(profile.preference_lines(catalog))
 
 
+def _scenario_slug(profile: SelectionProfile) -> str | None:
+    """Return the active scenario slug when the run came from a scenario."""
+    if profile.scenario is None:
+        return None
+    return profile.scenario.slug
+
+
+def _scenario_brief(profile: SelectionProfile) -> str:
+    """Render scenario facts for the generation prompt when available."""
+    if profile.scenario is None:
+        return ""
+    scenario = profile.scenario
+    facts = "\n".join(f"- {item}" for item in scenario.customer_facts)
+    risk_flags = "\n".join(f"- {item}" for item in scenario.risk_flags)
+    criteria = "\n".join(f"- {item}" for item in scenario.success_criteria)
+    return (
+        f"## Scenario Case\n"
+        f"Case: {scenario.label}\n"
+        f"Customer Facts\n{facts}\n\n"
+        f"Risk Flags\n{risk_flags}\n\n"
+        f"Success Criteria\n{criteria}\n\n"
+    )
+
+
 def build_generation_system_prompt(
     instructions: str,
     catalog: PromptEvolutionCatalog,
@@ -335,6 +375,7 @@ def build_generation_system_prompt(
     )
     return (
         f"{instructions}\n\n"
+        f"{_scenario_brief(effective_profile)}"
         f"## Context Pack\n"
         f"Context: {effective_profile.context.label}\n"
         f"Service Summary: {effective_profile.context.service_summary}\n"
@@ -403,6 +444,8 @@ def build_mutation_user_prompt(
     feedback_block = ""
     if user_feedback:
         feedback_block = f"User feedback for the next draft:\n- {user_feedback}\n\n"
+    strategies = select_strategies(evaluation)
+    playbook_brief = render_brief(strategies, profile)
     return (
         f"Current instructions:\n```text\n{current_instructions}\n```\n\n"
         f"Context: {profile.context.label}\n"
@@ -412,6 +455,7 @@ def build_mutation_user_prompt(
         f"{feedback_block}"
         f"Strengths:\n{strengths}\n\n"
         f"Issues to fix:\n{issues}\n\n"
+        f"Mutation playbook brief:\n{playbook_brief}\n\n"
         "Revise the instructions so the next draft is more policy-grounded and closer "
         "to the chosen preferences."
     )
@@ -457,18 +501,26 @@ def _best_round(history: list[dict[str, Any]]) -> dict[str, Any]:
     return max(history, key=lambda item: (item["score"], item["round"]))
 
 
-def _write_outputs(profile: SelectionProfile, history: list[dict[str, Any]]) -> None:
+def _write_outputs(
+    profile: SelectionProfile,
+    history: list[dict[str, Any]],
+    trace_metadata: dict[str, Any] | None = None,
+) -> None:
     """Persist the latest session, best instructions, and best response."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     best = _best_round(history)
+    active_trace_metadata = trace_metadata or _existing_trace_metadata()
     session_payload = {
         "generated_at": _iso_now(),
         "problem": profile.problem,
+        "scenario": asdict(profile.scenario) if profile.scenario else None,
         "context": asdict(profile.context),
         "selected_preferences": profile.selected_preferences,
         "rounds": history,
         "best_round": best["round"],
     }
+    if active_trace_metadata is not None:
+        session_payload["trace"] = active_trace_metadata
     (OUTPUT_DIR / "latest_session.json").write_text(
         json.dumps(session_payload, indent=2),
         encoding="utf-8",
@@ -503,19 +555,33 @@ def reset_outputs() -> None:
     shutil.rmtree(OUTPUT_DIR)
 
 
-def run_prompt_evolution(  # pylint: disable=too-many-locals
+def run_prompt_evolution(  # pylint: disable=too-many-locals,too-many-arguments,too-many-statements
     catalog: PromptEvolutionCatalog,
     profile: SelectionProfile,
     *,
     max_iterations: int = 3,
     runner: HermesAgentRunner | None = None,
     log_sink: LogSink | None = None,
+    run_instance: str | None = None,
+    use_reranker: bool = False,
+    candidate_count: int = 3,
 ) -> list[dict[str, Any]]:
     """Run the instruction-mutation loop until the score stops improving or maxes out."""
     active_runner = runner or HermesAgentRunner.from_env()
+    trace_recorder = TraceRecorder(output_dir=OUTPUT_DIR, run_instance=run_instance)
+    scenario_slug = _scenario_slug(profile)
     current_instructions = load_mutable_instructions()
     history: list[dict[str, Any]] = []
     pending_mutation_diff: str | None = None
+
+    trace_recorder.record_event(
+        "loop",
+        "started",
+        scenario_slug=scenario_slug,
+        context_slug=profile.context.slug,
+        max_iterations=max_iterations,
+        preference_count=len(profile.selected_preferences),
+    )
 
     for round_number in range(1, max_iterations + 1):
         round_logs: list[str] = []
@@ -538,6 +604,12 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
             "ROUND_START",
             f"Prompt Evolution round {round_number}/{max_iterations}.",
         )
+        trace_recorder.record_event(
+            "round",
+            "started",
+            round=round_number,
+            scenario_slug=scenario_slug,
+        )
         if pending_mutation_diff is not None:
             _emit_log(round_logs, log_sink, "INSTRUCTION_DIFF", pending_mutation_diff)
         _emit_log(
@@ -550,20 +622,63 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
             f"{getattr(active_runner, 'model', None)} "
             f"task={round_task_id}",
         )
-        draft_result = active_runner.run_text(
-            system_prompt=system_prompt,
-            user_prompt=user_prompt,
-            task_id=round_task_id,
-        )
-        llm_requests.append(
-            _build_llm_request_record(
-                active_runner,
-                request_kind="draft",
-                task_id=round_task_id,
+        if use_reranker and candidate_count > 1:
+            rerank_result = rerank_drafts(
+                catalog=catalog,
+                profile=effective_profile,
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
-                response=draft_result,
+                candidate_count=candidate_count,
+                runner=active_runner,
+                base_task_id=f"prompt-evolution-rerank-{round_number}",
             )
+            best_candidate = rerank_result.best
+            draft_result = HermesResponse(
+                text=best_candidate.response_text,
+                messages=[],
+                task_id=best_candidate.task_id,
+                raw_output="",
+            )
+            entry_extra_rerank: dict[str, Any] | None = {
+                "candidate_count": len(rerank_result.candidates),
+                "best_candidate_index": rerank_result.best_index,
+                "candidate_scores": [
+                    {
+                        "index": candidate.candidate_index,
+                        "score": candidate.evaluation.total_score,
+                        "total": candidate.evaluation.max_score,
+                        "task_id": candidate.task_id,
+                    }
+                    for candidate in rerank_result.candidates
+                ],
+            }
+            _emit_log(
+                round_logs,
+                log_sink,
+                "RERANK_SELECTED",
+                f"best candidate {rerank_result.best_index + 1}"
+                f"/{len(rerank_result.candidates)}",
+            )
+        else:
+            draft_result = active_runner.run_text(
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                task_id=round_task_id,
+            )
+            entry_extra_rerank = None
+        draft_request_record = _build_llm_request_record(
+            active_runner,
+            request_kind="draft",
+            task_id=round_task_id,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            response=draft_result,
+        )
+        llm_requests.append(draft_request_record)
+        trace_recorder.record_llm_request(
+            round_number=round_number,
+            request=draft_request_record,
+            scenario_slug=scenario_slug,
         )
         _emit_log(
             round_logs,
@@ -580,6 +695,8 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
         )
         entry["logs"] = round_logs
         entry["llm"] = _build_llm_summary(active_runner, llm_requests)
+        if entry_extra_rerank is not None:
+            entry["rerank"] = entry_extra_rerank
         if pending_mutation_diff is not None:
             entry["mutation_diff"] = pending_mutation_diff
             pending_mutation_diff = None
@@ -589,6 +706,14 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
             log_sink,
             "ROUND_SCORE",
             f"Score {evaluation.total_score}/{evaluation.max_score}.",
+        )
+        trace_recorder.record_evaluation(
+            round_number=round_number,
+            score=evaluation.total_score,
+            total=evaluation.max_score,
+            issues=evaluation.issues,
+            strengths=evaluation.strengths,
+            scenario_slug=scenario_slug,
         )
         if evaluation.total_score >= evaluation.max_score:
             break
@@ -614,15 +739,19 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
             user_prompt=mutation_user_prompt,
             task_id=mutation_task_id,
         )
-        llm_requests.append(
-            _build_llm_request_record(
-                active_runner,
-                request_kind="mutation",
-                task_id=mutation_task_id,
-                system_prompt=MUTATION_SYSTEM_PROMPT,
-                user_prompt=mutation_user_prompt,
-                response=mutation_result,
-            )
+        mutation_request_record = _build_llm_request_record(
+            active_runner,
+            request_kind="mutation",
+            task_id=mutation_task_id,
+            system_prompt=MUTATION_SYSTEM_PROMPT,
+            user_prompt=mutation_user_prompt,
+            response=mutation_result,
+        )
+        llm_requests.append(mutation_request_record)
+        trace_recorder.record_llm_request(
+            round_number=round_number,
+            request=mutation_request_record,
+            scenario_slug=scenario_slug,
         )
         entry["llm"] = _build_llm_summary(active_runner, llm_requests)
         updated_instructions = _extract_text_fence(mutation_result.text)
@@ -636,9 +765,27 @@ def run_prompt_evolution(  # pylint: disable=too-many-locals
             "INSTRUCTION_DIFF",
             pending_mutation_diff,
         )
+        trace_recorder.record_event(
+            "instruction_mutation",
+            "prepared",
+            round=round_number,
+            scenario_slug=scenario_slug,
+            changed=current_instructions != updated_instructions,
+            diff_chars=len(pending_mutation_diff),
+        )
         current_instructions = updated_instructions
 
-    _write_outputs(profile, history)
+    best = _best_round(history)
+    trace_recorder.record_event(
+        "loop",
+        "completed",
+        scenario_slug=scenario_slug,
+        rounds=len(history),
+        best_round=best["round"],
+        best_score=best["score"],
+        best_total=best["total"],
+    )
+    _write_outputs(profile, history, trace_metadata=trace_recorder.metadata())
     return history
 
 
