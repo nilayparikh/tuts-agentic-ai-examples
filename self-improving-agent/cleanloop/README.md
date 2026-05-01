@@ -86,9 +86,26 @@ python util.py loop --max-iterations 5
 python util.py challenge --levels 1 2 3
 python util.py sandbox --timeout 10
 python util.py autonomy --rounds 10
+python util.py autonomy --from-history
+python util.py observe
 python util.py dashboard
 python util.py reset
 ```
+
+## Lesson 05-09 Capability Map
+
+| Lesson              | Command                                                | Visible Artifacts                                              | What It Validates                                                            |
+| ------------------- | ------------------------------------------------------ | -------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 05 self-challenge   | `python util.py challenge --levels 1 2 3`              | `.input/adversarial_d*.csv`, `.output/challenge_manifest.json` | Generated files match the finance invoice schema before they enter the arena |
+| 06 test-time search | `python util.py loop --rerank --candidates 3`          | `.output/rerank_scoreboard.json`, per-round scoreboards        | Candidate repairs are scored and the selected repair is visible              |
+| 07 safety           | `python util.py sandbox --timeout 10`                  | `.output/sandbox_runs.jsonl`                                   | Genome execution is isolated and audited before evaluation                   |
+| 08 observability    | `python util.py observe` or `python util.py dashboard` | `.output/traces/`, `.output/runs/`, artifact health rows       | Operators can see scores, missing rows, unexpected rows, and artifact health |
+| 09 autonomy         | `python util.py autonomy --from-history`               | latest loop history plus trust decision text                   | Trust level is derived from judged history, not only synthetic simulation    |
+
+Challenge files are active inputs. Once `adversarial_d*.csv` files exist in
+`.input/`, `evaluate`, `loop`, and `sandbox` read them together with the shipped
+finance fixtures. Use `python util.py status` to see shipped row counts,
+challenge row counts, and whether the challenge manifest exists.
 
 ## Validation
 

@@ -26,6 +26,22 @@ Skill Mastery Studio models a shared service desk across several real-world
 operations contexts. Instead of mutating one large instruction prompt, it learns
 small reusable habits that appear again and again in strong responses.
 
+## Start Here
+
+Run from inside `skill_mastery/`:
+
+```bash
+python util.py catalog
+python util.py usecases
+python util.py status
+python util.py loop --usecase makerspace_access_checkpoint
+python util.py dashboard
+```
+
+The local runner loads `skill_mastery/.env` first and then falls back to the
+shared parent `../.env`. It also reuses the shared parent `.venv` when that
+virtual environment exists, so the project stays runnable from this folder.
+
 The shipped use cases make the demo repeatable. Each use case names the context,
 customer problem, expected habit cards, risk flags, and success criteria. You can
 still pass a live `--context` and `--problem`, but `--usecase` gives the loop a
@@ -91,7 +107,7 @@ skill_mastery/.output/traces/
 Launch the dashboard with:
 
 ```bash
-python util.py -e skill_mastery dashboard
+python util.py dashboard
 ```
 
 The dashboard shows:
@@ -111,6 +127,7 @@ The dashboard shows:
 - [Tracing guide](docs/operations/tracing.md)
 - [Test map](docs/testing/test-map.md)
 - [Code map](docs/reference/code-map.md)
+- [Lesson-by-lesson commands](docs/lessons/)
 
 ## Interactive Review
 
@@ -144,13 +161,14 @@ You can also provide feedback on this line: "Keep the same structure, but make t
 ## Command Flow
 
 ```bash
-python util.py -e skill_mastery catalog
-python util.py -e skill_mastery usecases
-python util.py -e skill_mastery loop --usecase makerspace_access_checkpoint
-python util.py -e skill_mastery loop --context makerspace_frontdesk \
+python util.py catalog
+python util.py usecases
+python util.py status
+python util.py loop --usecase makerspace_access_checkpoint
+python util.py loop --context makerspace_frontdesk \
   --problem "A member's laser cutter booking disappeared before open lab tonight."
-python util.py -e skill_mastery dashboard
-python util.py -e skill_mastery reset
+python util.py dashboard
+python util.py reset
 ```
 
 ### Advanced Commands (CleanLoop Parity)
@@ -161,34 +179,34 @@ keeping Skill Mastery's habit composition semantics intact.
 ```bash
 # Sandbox: run one habit-composition round in an isolated subprocess
 # with a hard wall-clock cap and clamped Hermes iterations.
-python util.py -e skill_mastery sandbox --usecase makerspace_access_checkpoint \
+python util.py sandbox --usecase makerspace_access_checkpoint \
   --timeout 30
 
 # Autonomy: simulate a graduated trust ladder across N sandbox rounds and
 # decide SUPERVISED / HUMAN_GATED / AUTONOMOUS based on score and stability.
-python util.py -e skill_mastery autonomy --usecase makerspace_access_checkpoint \
+python util.py autonomy --usecase makerspace_access_checkpoint \
   --rounds 5 --timeout 30
 
 # Challenge: generate adversarial use case variants in three escalation tiers
 # (urgency, financial stakes, safety sensitive).
-python util.py -e skill_mastery challenge --levels 1 2 3 \
+python util.py challenge --levels 1 2 3 \
   --usecase makerspace_access_checkpoint
 
 # Evaluate: deterministic-score a candidate reply file against one use case
 # and compare against the gold reference reply when available.
-python util.py -e skill_mastery evaluate \
+python util.py evaluate \
   --usecase makerspace_access_checkpoint \
-  --candidate skill_mastery/.gold/makerspace_access_checkpoint.md
+  --candidate .gold/makerspace_access_checkpoint.md
 
 # Verify: pre-flight check (Python, packages, env, catalog).
-python util.py -e skill_mastery verify
+python util.py verify
 
 # Status: catalog, environment, output, and trace summary.
-python util.py -e skill_mastery status
+python util.py status
 
 # Loop with reranker: draft N candidates and keep the best by deterministic
 # score (tie-break favours the earliest candidate).
-python util.py -e skill_mastery loop \
+python util.py loop \
   --usecase makerspace_access_checkpoint \
   --rerank --candidates 3
 ```

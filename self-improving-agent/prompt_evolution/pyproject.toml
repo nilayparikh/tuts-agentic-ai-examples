@@ -1,0 +1,38 @@
+[project]
+name = "localm-prompt-evolution"
+version = "0.1.0"
+description = "Self-contained Prompt Evolution tutorial example"
+requires-python = ">=3.11"
+dependencies = [
+  "hermes-agent>=0.1.0",
+  "openai>=1.86.0",
+  "pandas>=2.2.0",
+  "python-dotenv>=1.0.1",
+  "streamlit>=1.45.0",
+]
+
+[project.scripts]
+prompt-evolution = "util:main"
+
+[tool.setuptools]
+py-modules = [
+  "autonomy",
+  "challenger",
+  "config",
+  "dashboard",
+  "dashboard_artifacts",
+  "dashboard_metrics",
+  "evaluator",
+  "hermes_client",
+  "history_store",
+  "loop",
+  "mutation_playbook",
+  "prepare",
+  "reranker",
+  "reset_workflow",
+  "sandbox",
+  "status_snapshot",
+  "tracing",
+  "util",
+  "verify",
+]

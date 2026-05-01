@@ -22,18 +22,23 @@ flowchart LR
 
 ## Start Here
 
-Run from `_examples/self-improving-agent/`:
+Run from inside `prompt_evolution/`:
 
 ```bash
-python util.py -e prompt_evolution scenarios
-python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
-python util.py -e prompt_evolution dashboard
+python util.py scenarios
+python util.py status
+python util.py loop --scenario makerspace_missing_booking
+python util.py dashboard
 ```
+
+The local runner loads `prompt_evolution/.env` first and then falls back to the
+shared parent `../.env`. It also reuses the shared parent `.venv` when that
+virtual environment exists, so the project stays runnable from this folder.
 
 Use `--named-instance` when you want a stable trace folder for a demo run:
 
 ```bash
-python util.py -e prompt_evolution loop --scenario makerspace_missing_booking \
+python util.py loop --scenario makerspace_missing_booking \
   --named-instance workshop-demo
 ```
 
@@ -46,6 +51,7 @@ All deeper notes now live under `docs/`.
 - tracing: `docs/operations/tracing.md`
 - tests: `docs/testing/test-map.md`
 - code map: `docs/reference/code-map.md`
+- lesson layout: `docs/lessons/`
 
 ## Data Scenarios
 
@@ -124,7 +130,7 @@ instruction artifact changed between rounds.
 Launch the dashboard with:
 
 ```bash
-python util.py -e prompt_evolution dashboard
+python util.py dashboard
 ```
 
 The dashboard shows:
@@ -168,16 +174,22 @@ You can also provide feedback on this line: "Keep the same direct tone, but add 
 ## Command Flow
 
 ```bash
-python util.py -e prompt_evolution catalog
-python util.py -e prompt_evolution scenarios
-python util.py -e prompt_evolution loop --scenario makerspace_missing_booking
-python util.py -e prompt_evolution loop --context coworking_membership \
+python util.py catalog
+python util.py scenarios
+python util.py status
+python util.py loop --scenario makerspace_missing_booking
+python util.py loop --context coworking_membership \
   --preference tone=warm \
   --preference structure=bullets \
   --preference initiative=next_step \
   --problem "A member says their guest booking vanished before tonight's workshop."
-python util.py -e prompt_evolution dashboard
-python util.py -e prompt_evolution reset
+python util.py challenge --scenario makerspace_missing_booking --levels 1 2 3
+python util.py sandbox --scenario makerspace_missing_booking --timeout 30
+python util.py autonomy --scenario makerspace_missing_booking --rounds 3
+python util.py evaluate --scenario makerspace_missing_booking \
+  --candidate .output/best_response.md
+python util.py dashboard
+python util.py reset
 ```
 
 Suggested demo path:

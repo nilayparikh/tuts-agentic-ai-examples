@@ -25,6 +25,7 @@ OTEL_LOGS_FILENAME = "otel-logs.jsonl"
 RUN_MANIFEST_FILENAME = "run-manifest.json"
 RUN_DIAGNOSTICS_FILENAME = "run-diagnostics.json"
 STRATEGY_FILENAME = "finance_strategy.json"
+CHALLENGE_MANIFEST_FILENAME = "challenge_manifest.json"
 
 FINANCE_COLUMNS = ("date", "entity", "currency", "value", "category")
 FAILURE_COLUMNS = (
@@ -258,7 +259,27 @@ def detect_dataset_from_output_path(output_path: Path) -> str:
 def get_input_paths(input_dir: Path, dataset_name: str | None = None) -> list[Path]:
     """Return the ordered finance input files."""
     config = get_dataset_config(dataset_name)
+    shipped_paths = [input_dir / filename for filename in config.input_filenames]
+    return [*shipped_paths, *get_challenge_input_paths(input_dir)]
+
+
+def get_shipped_input_paths(
+    input_dir: Path,
+    dataset_name: str | None = None,
+) -> list[Path]:
+    """Return only the fixed course input CSV files."""
+    config = get_dataset_config(dataset_name)
     return [input_dir / filename for filename in config.input_filenames]
+
+
+def get_challenge_input_paths(input_dir: Path) -> list[Path]:
+    """Return generated adversarial CSV files that are active in the arena."""
+    return sorted(input_dir.glob("adversarial_d*.csv"))
+
+
+def get_challenge_manifest_path(output_dir: Path) -> Path:
+    """Return the generated challenge manifest artifact path."""
+    return output_dir / CHALLENGE_MANIFEST_FILENAME
 
 
 def get_output_path(output_dir: Path, dataset_name: str | None = None) -> Path:

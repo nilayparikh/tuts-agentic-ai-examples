@@ -146,6 +146,20 @@ Ready to re-run: python util.py loop
 2. `python util.py autonomy --rounds 5` demonstrates the ladder. Validate the mode labels and the final rolling score rather than reading only the action text.
 3. `python util.py reset` closes the loop by restoring a known baseline while keeping the evidence that explained the last trust outcome.
 
+### Current Implementation Notes
+
+The trust state now tracks `last_transition_reason`, so a run can explain why
+it held, promoted, or demoted. You can also run the trust policy against saved
+loop history:
+
+```powershell
+python util.py loop --max-iterations 1
+python util.py autonomy --from-history
+```
+
+That mode turns the latest `finance_eval_history.json` rows into a review,
+notify, or auto decision.
+
 ## Hands-On Exercises
 
 ### Exercise 1 - Explain trust transitions

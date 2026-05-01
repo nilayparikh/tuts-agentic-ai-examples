@@ -156,6 +156,16 @@ Ready to re-run: python util.py loop
 3. Finish with `python util.py reset`. Validate that recovery restores the starter genome while preserving `.output`. Lesson 07 is complete only when you can both inspect the evidence and return to a known safe baseline.
 4. After reset, verify both `clean_data.py` and the three exported CSVs. Safe recovery is not only a console message. It is a file-system state you can inspect.
 
+### Current Implementation Notes
+
+Sandbox runs now append an audit row to `.output/sandbox_runs.jsonl`. Each row
+records timeout, output path, success, timeout state, return code, and a short
+stderr preview.
+
+The autonomy simulation also prints a transition reason. Use
+`python util.py autonomy --from-history` after a loop run to derive the trust
+mode from saved judged history instead of synthetic pass rates.
+
 ## Hands-On Exercises
 
 ### Exercise 1 - Persist sandbox outcomes

@@ -21,9 +21,11 @@ No environment variables required.
 """
 
 import argparse
+import json
 import subprocess
 import sys
 import textwrap
+from datetime import datetime, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -35,6 +37,12 @@ from cleanloop import datasets as cleanloop_datasets  # noqa: E402
 GENOME_PATH = PROJECT_ROOT / "cleanloop" / "clean_data.py"
 INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
+SANDBOX_AUDIT_FILENAME = "sandbox_runs.jsonl"
+
+
+def _utc_now() -> str:
+    """Return the current UTC timestamp for audit records."""
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
 # =====================================================================
@@ -117,6 +125,30 @@ def run_sandboxed(
         }
 
 
+def append_sandbox_audit(
+    output_dir: Path,
+    *,
+    timeout: int,
+    output_path: Path,
+    result: dict,
+) -> Path:
+    """Append one sandbox outcome to an audit JSONL artifact."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    audit_path = output_dir / SANDBOX_AUDIT_FILENAME
+    payload = {
+        "timestamp": _utc_now(),
+        "timeout_seconds": timeout,
+        "output_path": str(output_path),
+        "success": result.get("success", False),
+        "timed_out": result.get("timed_out", False),
+        "return_code": result.get("return_code"),
+        "stderr_preview": str(result.get("stderr", ""))[:300],
+    }
+    with audit_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(payload, sort_keys=True) + "\n")
+    return audit_path
+
+
 # =====================================================================
 # SECTION: Standalone Demo
 # Run the sandbox directly to demonstrate the safety shell end to end:
@@ -145,6 +177,12 @@ def main() -> None:
 
     print(f"Running genome in sandbox for {config.name} (timeout={args.timeout}s)...")
     result = run_sandboxed(GENOME_PATH, INPUT_DIR, output_path, args.timeout)
+    audit_path = append_sandbox_audit(
+        OUTPUT_DIR,
+        timeout=args.timeout,
+        output_path=output_path,
+        result=result,
+    )
 
     if result["success"]:
         print("  [OK] Genome completed successfully")
@@ -155,6 +193,7 @@ def main() -> None:
 
     if result["stderr"]:
         print(f"  stderr: {result['stderr'][:300]}")
+    print(f"  Audit: {audit_path}")
 
     # Evaluate if output was produced
     if result["success"] and output_path.exists():

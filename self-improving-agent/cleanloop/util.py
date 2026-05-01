@@ -384,12 +384,57 @@ def _cmd_status(_args: argparse.Namespace) -> int:
     for name, row_count in input_rows.items():
         print(f"  {name:<32} {int(row_count):>4} rows")
 
+    challenge_rows = cast(dict[str, int], snapshot.get("challenge_input_rows", {}))
+    print("\nChallenge Files:")
+    if challenge_rows:
+        for name, row_count in challenge_rows.items():
+            print(f"  {name:<32} {int(row_count):>4} rows")
+        print("  NOTE: challenge files are active inputs for evaluate and loop runs")
+    else:
+        print("  none active")
+
     print("\nEnvironment:")
     print(f"  Python:   {snapshot['python']}")
     print(f"  .env:     {'exists' if snapshot['env_exists'] else 'missing'}")
     print(f"  Model:    {snapshot['model']}")
     print(f"  Output:   {'exists' if snapshot['output_exists'] else 'missing'}")
     print(f"  Dataset:  {snapshot['dataset']}")
+    print(
+        "  Challenge manifest: "
+        f"{'exists' if snapshot['challenge_manifest_exists'] else 'missing'}"
+    )
+    return 0
+
+
+def _cmd_observe(_args: argparse.Namespace) -> int:
+    """Print a non-UI artifact health and observability summary."""
+    from cleanloop import dashboard_artifacts, dashboard_metrics
+    from cleanloop.history_store import load_history
+
+    paths = dashboard_artifacts.get_dashboard_artifact_paths(OUTPUT_DIR)
+    history_path = paths["history"]
+    history = load_history(history_path)
+    artifact_rows = dashboard_artifacts.build_artifact_health_rows(OUTPUT_DIR)
+    present = sum(1 for row in artifact_rows if row.get("Status") == "present")
+    missing = sum(1 for row in artifact_rows if row.get("Status") == "missing")
+    latest_metrics = dashboard_metrics.latest_judge_metrics(history)
+
+    print("CleanLoop — Observability Summary")
+    print(f"  History:   {history_path}")
+    print(f"  Rounds:    {len(history)}")
+    if history:
+        latest = history[-1]
+        print(f"  Score:     {latest.get('score', '?')}/{latest.get('total', '?')}")
+        print(f"  Action:    {latest.get('action', 'unknown')}")
+    if latest_metrics:
+        print(f"  Missing:   {int(latest_metrics.get('missing_rows', 0))}")
+        print(f"  Unexpected:{int(latest_metrics.get('unexpected_rows', 0))}")
+    print(f"  Artifacts: {present} present, {missing} missing")
+    if missing:
+        print("\nMissing artifacts:")
+        for row in artifact_rows:
+            if row.get("Status") == "missing":
+                print(f"  - {row.get('Artifact')}: {row.get('Regenerate')}")
     return 0
 
 
@@ -453,6 +498,20 @@ def _cmd_sandbox(args: argparse.Namespace) -> int:
 def _cmd_autonomy(args: argparse.Namespace) -> int:
     """Run the local autonomy simulation."""
     from cleanloop import autonomy
+
+    if getattr(args, "from_history", False):
+        import json
+
+        from cleanloop import datasets
+
+        history_path = datasets.get_history_path(OUTPUT_DIR)
+        if not history_path.exists():
+            print(f"No history found at {history_path}")
+            print("Run `python util.py loop --max-iterations 1` first.")
+            return 1
+        history = json.loads(history_path.read_text(encoding="utf-8"))
+        print(autonomy.render_history_decision(history))
+        return 0
 
     autonomy.simulate(n_rounds=args.rounds)
     return 0
@@ -610,9 +669,17 @@ def build_parser() -> argparse.ArgumentParser:
         default=10,
         help="Number of autonomy rounds (default: 10)",
     )
+    autonomy_parser.add_argument(
+        "--from-history",
+        action="store_true",
+        help="Derive trust mode from the latest saved loop history",
+    )
 
     subparsers.add_parser("dashboard", help="Launch the Streamlit dashboard")
-    subparsers.add_parser("reset", help="Delete .output and restore the starter genome")
+    subparsers.add_parser("observe", help="Summarize artifacts without Streamlit")
+    subparsers.add_parser(
+        "reset", help="Preserve .output and restore the starter genome"
+    )
     return parser
 
 
@@ -638,6 +705,7 @@ def main(argv: list[str] | None = None) -> int:
         "sandbox": _cmd_sandbox,
         "autonomy": _cmd_autonomy,
         "dashboard": _cmd_dashboard,
+        "observe": _cmd_observe,
         "reset": _cmd_reset,
     }
     return handlers[args.command](args)

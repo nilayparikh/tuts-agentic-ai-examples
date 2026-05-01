@@ -72,6 +72,7 @@ OUTPUT_DIR = PROJECT_ROOT / "cleanloop" / ".output"
 PROPOSAL_MAX_TOKENS = 2200
 COMPACT_RETRY_MAX_TOKENS = 1200
 STRATEGY_FILENAME = "finance_strategy.json"
+RERANK_SCOREBOARD_FILENAME = "rerank_scoreboard.json"
 DEFAULT_LLM_TIMEOUT_SECONDS = 90
 
 
@@ -194,6 +195,7 @@ def _artifact_manifest(
         output_path.parent,
         config.name,
     )
+    rerank_scoreboard_path = output_path.parent / RERANK_SCOREBOARD_FILENAME
     return {
         "dataset": config.name,
         "input_files": list(config.input_filenames),
@@ -207,6 +209,7 @@ def _artifact_manifest(
         "row_decisions_jsonl": _path_for_history(row_decisions_path),
         "proposal_events_jsonl": _path_for_history(proposal_events_path),
         "exported_logs_jsonl": _path_for_history(exported_logs_path),
+        "rerank_scoreboard_json": _path_for_history(rerank_scoreboard_path),
     }
 
 
@@ -504,6 +507,46 @@ def _write_run_diagnostics(
         json.dumps(diagnostics, indent=2),
         encoding="utf-8",
     )
+
+
+def _write_rerank_scoreboard(
+    output_dir: Path,
+    *,
+    round_number: int,
+    diagnostics: dict[str, object],
+) -> Path:
+    """Persist per-candidate reranker scores as a learner-facing artifact."""
+    attempts = diagnostics.get("attempts")
+    candidates: list[dict[str, object]] = []
+    if isinstance(attempts, list):
+        for attempt in attempts:
+            if not isinstance(attempt, dict) or "candidate_index" not in attempt:
+                continue
+            candidates.append(
+                {
+                    "index": attempt.get("candidate_index"),
+                    "style": attempt.get("candidate_style"),
+                    "label": attempt.get("label"),
+                    "score": attempt.get("candidate_score"),
+                    "total": attempt.get("candidate_total"),
+                    "code_found": attempt.get("code_found"),
+                    "hypothesis": attempt.get("hypothesis"),
+                }
+            )
+
+    payload = {
+        "round": round_number,
+        "selected_attempt": diagnostics.get("selected_attempt", "none"),
+        "judge": diagnostics.get("judge"),
+        "candidates": candidates,
+    }
+    output_dir.mkdir(parents=True, exist_ok=True)
+    scoreboard_path = output_dir / RERANK_SCOREBOARD_FILENAME
+    round_path = output_dir / f"rerank_scoreboard_round_{round_number:02d}.json"
+    text = json.dumps(payload, indent=2)
+    scoreboard_path.write_text(text, encoding="utf-8")
+    round_path.write_text(text, encoding="utf-8")
+    return scoreboard_path
 
 
 def _append_log(
@@ -1006,6 +1049,16 @@ def run_loop(
                 results["failed"],
                 n_candidates,
                 timeout_seconds=timeout_seconds,
+            )
+            scoreboard_path = _write_rerank_scoreboard(
+                output_path.parent,
+                round_number=i,
+                diagnostics=llm_diagnostics,
+            )
+            _append_log(
+                round_logs,
+                "RERANK_SCOREBOARD",
+                f"Saved candidate scoreboard to {scoreboard_path}",
             )
             _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
         else:

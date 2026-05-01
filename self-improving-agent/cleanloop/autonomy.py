@@ -80,6 +80,7 @@ class TrustState:
     level: int = 0
     history: list[float] = field(default_factory=list)
     rounds_at_level: int = 0
+    last_transition_reason: str = "No rounds recorded yet."
 
     @property
     def level_name(self) -> str:
@@ -107,6 +108,7 @@ class TrustState:
             old = self.level_name
             self.level = 0
             self.rounds_at_level = 0
+            self.last_transition_reason = "critical failure forced supervised review"
             return f"DEMOTED: {old} -> SUPERVISED (critical failure)"
 
         # Check for promotion
@@ -119,8 +121,15 @@ class TrustState:
             old = self.level_name
             self.level += 1
             self.rounds_at_level = 0
+            self.last_transition_reason = (
+                f"rolling score {self.rolling_score:.2f} met threshold {threshold:.2f}"
+            )
             return f"PROMOTED: {old} -> {self.level_name}"
 
+        self.last_transition_reason = (
+            f"rolling score {self.rolling_score:.2f}; "
+            f"rounds at level {self.rounds_at_level}"
+        )
         return "HOLD"
 
     def should_auto_approve(self) -> bool:
@@ -179,6 +188,43 @@ def simulate(n_rounds: int = 10) -> None:
 
     print("-" * 65)
     print(f"\nFinal: {trust.level_name} (score: {trust.rolling_score:.2f})")
+    print(f"Reason: {trust.last_transition_reason}")
+
+
+def evaluate_history(history_rows: list[dict]) -> TrustState:
+    """Replay saved judged loop history through the trust policy."""
+    trust = TrustState()
+    for row in history_rows:
+        total = row.get("total", 0)
+        score = row.get("score", 0)
+        if not isinstance(total, int) or total <= 0 or not isinstance(score, int):
+            trust.record_round(0.0)
+            continue
+        trust.record_round(max(0.0, min(1.0, score / total)))
+    return trust
+
+
+def render_history_decision(history_rows: list[dict]) -> str:
+    """Render a concise autonomy decision from saved loop history."""
+    trust = evaluate_history(history_rows)
+    if trust.needs_human_review():
+        mode = "[REVIEW]"
+    elif trust.needs_notification():
+        mode = "[NOTIFY]"
+    elif trust.should_auto_approve():
+        mode = "[AUTO]"
+    else:
+        mode = "[REVIEW]"
+    return "\n".join(
+        [
+            "CleanLoop Autonomy From History",
+            f"Rounds: {len(history_rows)}",
+            f"Level: {trust.level_name}",
+            f"Mode: {mode}",
+            f"Rolling score: {trust.rolling_score:.2f}",
+            f"Reason: {trust.last_transition_reason}",
+        ]
+    )
 
 
 def main() -> None:

@@ -151,6 +151,20 @@ $ Remove-Item ".input\adversarial_d1_01.csv"
 3. The model-mismatch warning is diagnostic noise from client metadata, not a failed challenge generation. The useful signal is the created CSV.
 4. Remove the generated adversarial file before Lesson 06 if you want the reranker transcript to stay on the original shipped finance fixture and keep the reference comparison stable.
 
+### Current Implementation Notes
+
+Challenge generation is finance-aware. `challenger.py` validates the required
+invoice columns before saving a generated file, and the accepted files become
+active inputs for `evaluate`, `loop`, and `sandbox`.
+
+Artifacts to inspect:
+
+- `.input/adversarial_d*.csv`
+- `.output/challenge_manifest.json`
+
+Use `python util.py status` after a challenge run to see shipped input rows,
+challenge input rows, and whether the challenge manifest exists.
+
 ## Hands-On Exercises
 
 ### Exercise 1 - Add a judge rule for failure quality

@@ -153,6 +153,21 @@ History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\
 3. The important result is that the selected candidate still scored only `13/14`, so the loop reverted it. That is the test-time search lesson: more candidates can improve odds, but they still have to beat the same fixed judge.
 4. After the run, inspect `finance_eval_history.json` or `finance_round_logs.jsonl` so you can see which attempt label won and how wide the search really was.
 
+### Current Implementation Notes
+
+Reranked loop runs now write a first-class scoreboard artifact. The latest
+scoreboard is saved to `.output/rerank_scoreboard.json`, and each reranked
+round also gets `.output/rerank_scoreboard_round_NN.json`.
+
+Use this command to create the artifact:
+
+```powershell
+python util.py loop --max-iterations 1 --rerank --candidates 3
+```
+
+Then inspect `candidates`, `selected_attempt`, and `judge` in the scoreboard to
+see why the loop kept one candidate and rejected the rest.
+
 ## Hands-On Exercises
 
 ### Exercise 1 - Save candidate scoreboards

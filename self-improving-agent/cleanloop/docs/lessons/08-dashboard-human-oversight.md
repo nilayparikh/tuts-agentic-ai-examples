@@ -131,6 +131,16 @@ $ python util.py dashboard
 2. `python util.py dashboard` is the read-only oversight step. Validate that Streamlit prints a local URL and then inspect the score, blueprint, and diagnostics tabs together.
 3. If the dashboard opens with sparse tables, check whether the exported logs and trace files exist beside the history file. Missing files are a real operator signal.
 
+### Current Implementation Notes
+
+Use `python util.py observe` when you need a non-UI artifact summary. It prints
+history path, round count, latest score, latest action, missing rows,
+unexpected rows, and artifact health counts. Missing artifacts include the
+command that regenerates each file.
+
+The Streamlit dashboard remains the rich read-only view. The CLI `observe`
+command is the fast terminal view for the same operator workflow.
+
 ## Hands-On Exercises
 
 ### Exercise 1 - Add a stalled-focus badge
