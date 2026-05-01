@@ -4,11 +4,11 @@
 
 [![Watch: One File to Rule the Loop: Engineering the Pipeline Genome | Lesson 02 of 07](https://img.youtube.com/vi/8Y7MEbEw8wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=8Y7MEbEw8wc)
 
-[![Watch: Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 04 of 07](https://img.youtube.com/vi/--mpnJ8f4Sg/maxresdefault.jpg)](https://www.youtube.com/watch?v=--mpnJ8f4Sg)
+[![Watch: Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07](https://img.youtube.com/vi/--mpnJ8f4Sg/maxresdefault.jpg)](https://www.youtube.com/watch?v=--mpnJ8f4Sg)
 
 > <strong>Watch Lesson 01:</strong> <a href="https://www.youtube.com/watch?v=yx6aB5heI9o" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
 > <strong>Watch Lesson 02:</strong> <a href="https://www.youtube.com/watch?v=8Y7MEbEw8wc" target="_blank" rel="noopener noreferrer">One File to Rule the Loop: Engineering the Pipeline Genome | Lesson 02 of 07</a>
-> <strong>Watch Lesson 03:</strong> <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 04 of 07</a>
+> <strong>Watch Lesson 03:</strong> <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
@@ -135,4 +135,4 @@ code.
 | ------ | --------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
 | 01     | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o)     | [cleanloop](./) |
 | 02     | [One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07](https://www.youtube.com/watch?v=8Y7MEbEw8wc)        | [cleanloop](./) |
-| 03     | [Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 04 of 07](https://www.youtube.com/watch?v=--mpnJ8f4Sg) | [cleanloop](./) |
+| 03     | [Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 03 of 07](https://www.youtube.com/watch?v=--mpnJ8f4Sg) | [cleanloop](./) |
