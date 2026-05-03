@@ -161,6 +161,7 @@ $ python util.py dashboard
 - Files: `dashboard.py`, `loop.py`
 - Task: Add `focus_area` and `repeated_failure_count` to the main dashboard history rows so each round explains what it was trying to fix.
 - Hints: Normalize `history_entry["metacognition"]` the same way the dashboard already normalizes LLM diagnostics.
+
 - Done when: The history table shows strategy context, not only score movement.
 - Stretch: Add a simple severity label when the repeated count is high.
 
