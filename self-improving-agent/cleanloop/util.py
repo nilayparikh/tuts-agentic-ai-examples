@@ -830,6 +830,8 @@ def _streamlit_env() -> dict[str, str]:
     """Return environment variables for non-interactive Streamlit launch."""
     streamlit_env = dict(os.environ)
     streamlit_env["STREAMLIT_SERVER_HEADLESS"] = "true"
+    streamlit_env["STREAMLIT_SERVER_ADDRESS"] = "127.0.0.1"
+    streamlit_env["STREAMLIT_BROWSER_SERVER_ADDRESS"] = "localhost"
     streamlit_env["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
     streamlit_env["STREAMLIT_CLIENT_TOOLBAR_MODE"] = "minimal"
     return streamlit_env
@@ -841,6 +843,8 @@ def _streamlit_run_args(dashboard_path: Path) -> list[str]:
         "run",
         str(dashboard_path),
         "--server.headless=true",
+        "--server.address=127.0.0.1",
+        "--browser.serverAddress=localhost",
         "--browser.gatherUsageStats=false",
         "--client.toolbarMode=minimal",
     ]

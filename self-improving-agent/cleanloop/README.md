@@ -8,10 +8,13 @@
 
 [![Watch: Stop Guessing: Build a Feedback Loop That Actually Learns | Lesson 04 of 07](https://img.youtube.com/vi/0loLP30v0qM/maxresdefault.jpg)](https://www.youtube.com/watch?v=0loLP30v0qM)
 
+[![Watch: Self-Challenging AI: Designing Adversarial Loops for LLMs | Lesson 05 of 07](https://img.youtube.com/vi/vx9Lpm67RZk/maxresdefault.jpg)](https://www.youtube.com/watch?v=vx9Lpm67RZk)
+
 > <strong>Watch Lesson 01:</strong> <a href="https://www.youtube.com/watch?v=yx6aB5heI9o" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
 > <strong>Watch Lesson 02:</strong> <a href="https://www.youtube.com/watch?v=8Y7MEbEw8wc" target="_blank" rel="noopener noreferrer">One File to Rule the Loop: Engineering the Pipeline Genome | Lesson 02 of 07</a>
 > <strong>Watch Lesson 03:</strong> <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07</a>
 > <strong>Watch Lesson 04:</strong> <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns | Lesson 04 of 07</a>
+> <strong>Watch Lesson 05:</strong> <a href="https://www.youtube.com/watch?v=vx9Lpm67RZk" target="_blank" rel="noopener noreferrer">Self-Challenging AI: Designing Adversarial Loops for LLMs | Lesson 05 of 07</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
@@ -183,3 +186,4 @@ code.
 | 02     | <a href="https://www.youtube.com/watch?v=8Y7MEbEw8wc" target="_blank" rel="noopener noreferrer">One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07</a>        | [cleanloop](./) |
 | 03     | <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 03 of 07</a> | [cleanloop](./) |
 | 04     | <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns &#124; Lesson 04 of 07</a>         | [cleanloop](./) |
+| 05     | <a href="https://www.youtube.com/watch?v=vx9Lpm67RZk" target="_blank" rel="noopener noreferrer">Self-Challenging AI: Designing Adversarial Loops for LLMs &#124; Lesson 05 of 07</a>         | [cleanloop](./) |
