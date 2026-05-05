@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import shutil
 from typing import cast
 
 CLEANLOOP_DATASET_ENV = "CLEANLOOP_DATASET"
@@ -256,10 +257,30 @@ def detect_dataset_from_output_path(output_path: Path) -> str:
     return FINANCE_CONFIG.name
 
 
+def _restore_shipped_inputs_from_backup(
+    input_dir: Path,
+    config: DatasetConfig,
+) -> list[Path]:
+    """Restore missing shipped finance fixtures from .input/.bak when available."""
+    backup_dir = input_dir / ".bak"
+    shipped_paths: list[Path] = []
+
+    for filename in config.input_filenames:
+        shipped_path = input_dir / filename
+        if not shipped_path.exists():
+            backup_path = backup_dir / filename
+            if backup_path.exists():
+                input_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(backup_path, shipped_path)
+        shipped_paths.append(shipped_path)
+
+    return shipped_paths
+
+
 def get_input_paths(input_dir: Path, dataset_name: str | None = None) -> list[Path]:
     """Return the ordered finance input files."""
     config = get_dataset_config(dataset_name)
-    shipped_paths = [input_dir / filename for filename in config.input_filenames]
+    shipped_paths = _restore_shipped_inputs_from_backup(input_dir, config)
     return [*shipped_paths, *get_challenge_input_paths(input_dir)]
 
 
@@ -269,7 +290,7 @@ def get_shipped_input_paths(
 ) -> list[Path]:
     """Return only the fixed course input CSV files."""
     config = get_dataset_config(dataset_name)
-    return [input_dir / filename for filename in config.input_filenames]
+    return _restore_shipped_inputs_from_backup(input_dir, config)
 
 
 def get_challenge_input_paths(input_dir: Path) -> list[Path]:

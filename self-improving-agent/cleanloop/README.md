@@ -6,19 +6,27 @@
 
 [![Watch: Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07](https://img.youtube.com/vi/--mpnJ8f4Sg/maxresdefault.jpg)](https://www.youtube.com/watch?v=--mpnJ8f4Sg)
 
+[![Watch: Stop Guessing: Build a Feedback Loop That Actually Learns | Lesson 04 of 07](https://img.youtube.com/vi/0loLP30v0qM/maxresdefault.jpg)](https://www.youtube.com/watch?v=0loLP30v0qM)
+
 > <strong>Watch Lesson 01:</strong> <a href="https://www.youtube.com/watch?v=yx6aB5heI9o" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07</a>
 > <strong>Watch Lesson 02:</strong> <a href="https://www.youtube.com/watch?v=8Y7MEbEw8wc" target="_blank" rel="noopener noreferrer">One File to Rule the Loop: Engineering the Pipeline Genome | Lesson 02 of 07</a>
 > <strong>Watch Lesson 03:</strong> <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07</a>
+> <strong>Watch Lesson 04:</strong> <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns | Lesson 04 of 07</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
 
 It teaches one bounded self-improving loop over a finance data-cleaning pipeline.
-The shipped fixture contains 87 rows across five CSV files and currently produces:
+The shipped full mutation runtime contains 87 rows across five CSV files and produces:
 
 - 78 rows in `finance_master.csv`
 - 48 rows in `finance_mutation_success.csv`
 - 9 rows in `finance_mutation_failures.csv`
+
+The mutable genome in `clean_data.py` starts as the Lesson 02 starter genome. That
+starter path only runs the deterministic stage, so `python util.py loop` or
+`python util.py evaluate` will not show mutation-success rows until a stronger
+candidate survives the referee.
 
 ## Start Here
 
@@ -28,8 +36,19 @@ Run from inside `cleanloop/`:
 pip install -e .
 python util.py status
 python util.py verify
+python util.py challenge --levels 1 2 3
 python util.py evaluate
+python util.py loop --max-iterations 1
 ```
+
+Level 3 challenge runs now auto-include one curated demo CSV so the normal flow
+contains rows that clearly need mutation. `evaluate`, `loop`, and `observe`
+print a `Mutation Summary` section that says what was fixed, what still needs
+mutation, and what is still unresolved.
+
+If you want to show the shipped playbook repairing those rows immediately,
+`python util.py evaluate --use-shipped-mutation-runtime` is still available as
+an optional instructor demo path.
 
 The local runtime uses `cleanloop/.env` first. That keeps the example self-sufficient.
 
@@ -105,7 +124,17 @@ python util.py reset
 Challenge files are active inputs. Once `adversarial_d*.csv` files exist in
 `.input/`, `evaluate`, `loop`, and `sandbox` read them together with the shipped
 finance fixtures. Use `python util.py status` to see shipped row counts,
-challenge row counts, and whether the challenge manifest exists.
+challenge row counts, whether the challenge manifest exists, and which files
+are active. When your challenge levels include 3 or higher, the generator also
+adds one curated demo CSV with FREE TRIAL, COMPLIMENTARY, DISCOUNTED, FX HOLD,
+blank-void, and unresolved TBD examples. After that, the normal `evaluate`,
+`loop`, and `observe` commands print a `Mutation Summary` section so the learner
+can see which invoice rows were fixed and which ones still need work.
+
+For an instructor-led demonstration of the shipped mutation playbook, run
+`python util.py evaluate --use-shipped-mutation-runtime` to see repaired rows in
+`finance_mutation_success.csv` and unresolved rows in
+`finance_mutation_failures.csv` without waiting for a loop mutation to survive.
 
 ## Validation
 
@@ -148,8 +177,9 @@ code.
 
 ## Series Navigation
 
-| Lesson | Video                                                                                                                                   | Example Folder  |
-| ------ | --------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
-| 01     | [Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07](https://www.youtube.com/watch?v=yx6aB5heI9o)     | [cleanloop](./) |
-| 02     | [One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07](https://www.youtube.com/watch?v=8Y7MEbEw8wc)        | [cleanloop](./) |
-| 03     | [Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 03 of 07](https://www.youtube.com/watch?v=--mpnJ8f4Sg) | [cleanloop](./) |
+| Lesson | Video                                                                                                                                                                                        | Example Folder  |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| 01     | <a href="https://www.youtube.com/watch?v=yx6aB5heI9o" target="_blank" rel="noopener noreferrer">Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer &#124; Lesson 01 of 07</a>     | [cleanloop](./) |
+| 02     | <a href="https://www.youtube.com/watch?v=8Y7MEbEw8wc" target="_blank" rel="noopener noreferrer">One File to Rule the Loop: Engineering the Pipeline Genome &#124; Lesson 02 of 07</a>        | [cleanloop](./) |
+| 03     | <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 03 of 07</a> | [cleanloop](./) |
+| 04     | <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns &#124; Lesson 04 of 07</a>         | [cleanloop](./) |

@@ -43,6 +43,7 @@ import argparse
 import importlib
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -240,6 +241,34 @@ def _result_metrics_snapshot(results: dict) -> dict[str, object]:
     if isinstance(metrics, dict):
         return dict(metrics)
     return {}
+
+
+def _candidate_execution_failure(results: dict) -> str | None:
+    """Return the candidate execution failure when the genome never reaches scoring."""
+    for failure in results.get("failed", []):
+        text = str(failure)
+        if text.startswith("can_run_genome:"):
+            return text
+    return None
+
+
+def _candidate_execution_hint(failure: str) -> str | None:
+    """Translate common candidate runtime failures into a short operator hint."""
+    detail = failure.partition(":")[2].strip()
+    if re.fullmatch(r"'[A-Za-z_][A-Za-z0-9_]*'", detail):
+        field_name = detail[1:-1]
+        if field_name in {"date", "entity", "currency", "value", "category"}:
+            return (
+                f"Candidate referenced canonical field '{field_name}' before normalization. "
+                "Raw finance inputs expose invoice_id/customer/raw_date/raw_amount-style "
+                "records. Reuse clean_data_runtime or read_finance_records before indexing "
+                "exported fields."
+            )
+        return (
+            f"Candidate referenced missing field '{field_name}'. Inspect the finance fixture "
+            "schema and runtime helpers before indexing new columns."
+        )
+    return None
 
 
 def _focus_area_for_failure(failure: str) -> str:
@@ -1229,6 +1258,24 @@ def run_loop(
                 "score": 0,
                 "total": 1,
             }
+        for failure in new_results.get("failed", []):
+            if str(failure).startswith("can_run_genome"):
+                _append_log(round_logs, "MUTATION_EXECUTION_FAILED", str(failure))
+            else:
+                _append_log(round_logs, "MUTATION_FAILED_ASSERTION", str(failure))
+        execution_failure = _candidate_execution_failure(new_results)
+        if execution_failure is not None:
+            _append_log(
+                round_logs,
+                "MUTATION_FAILURE_SUMMARY",
+                (
+                    "Candidate never reached referee scoring. Baseline stays "
+                    f"{score}/{total} until a mutation runs and beats it."
+                ),
+            )
+            execution_hint = _candidate_execution_hint(execution_failure)
+            if execution_hint is not None:
+                _append_log(round_logs, "MUTATION_HINT", execution_hint)
         new_score = new_results["score"]
         new_total = new_results["total"]
         _append_log(
@@ -1261,12 +1308,25 @@ def run_loop(
             _restore_output_snapshot(output_path.parent, baseline_output_snapshot)
             importlib.reload(clean_data)
             action = "revert"
-            print(f"  Reverted: no improvement ({new_score}/{new_total})")
-            _append_log(
-                round_logs,
-                "REVERT_MUTATION",
-                f"Reverted mutation with score {new_score}/{new_total}",
-            )
+            if execution_failure is not None:
+                print(
+                    "  Reverted: candidate crashed before referee scoring; "
+                    f"kept baseline {score}/{total}"
+                )
+                revert_message = (
+                    "Reverted crashed candidate; kept baseline "
+                    f"{score}/{total} over {new_score}/{new_total}"
+                )
+            else:
+                print(
+                    f"  Reverted: no improvement over baseline {score}/{total} "
+                    f"({new_score}/{new_total})"
+                )
+                revert_message = (
+                    f"Reverted mutation with score {new_score}/{new_total} "
+                    f"against baseline {score}/{total}"
+                )
+            _append_log(round_logs, "REVERT_MUTATION", revert_message)
         trace.record_proposal_event(
             stage="round-result",
             decision=action,

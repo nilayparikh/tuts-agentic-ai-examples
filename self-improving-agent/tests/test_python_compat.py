@@ -190,6 +190,17 @@ class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
 
         self.assertEqual(args.command, "verify")
 
+    def test_cleanloop_local_cli_accepts_demo_playbook_challenge_flag(self) -> None:
+        """Expose a deterministic playbook-demo challenge mode from cleanloop/util.py."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        args = cleanloop_local_util.build_parser().parse_args(
+            ["challenge", "--demo-playbook"]
+        )
+
+        self.assertEqual(args.command, "challenge")
+        self.assertTrue(args.demo_playbook)
+
     def test_cleanloop_local_cli_bootstraps_to_parent_venv(self) -> None:
         """Reuse the shared example venv when launched from the cleanloop folder."""
         cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
@@ -559,13 +570,161 @@ class CleanLoopAutoGenRuntimeTests(unittest.TestCase):
                     ) as evaluate_mock:
                         with mock.patch.object(prepare, "print_results") as print_mock:
                             exit_code = cleanloop_local_util._cmd_evaluate(
-                                argparse.Namespace(output_csv=None)
+                                argparse.Namespace(
+                                    output_csv=None,
+                                    use_shipped_mutation_runtime=False,
+                                )
                             )
 
         self.assertEqual(exit_code, 0)
         clean_mock.assert_called_once_with(cleanloop_local_util.INPUT_DIR, target)
         evaluate_mock.assert_called_once_with(target)
         print_mock.assert_called_once_with(fake_results)
+
+    def test_cleanloop_local_evaluate_can_use_shipped_mutation_runtime(self) -> None:
+        """Allow evaluate to run the shipped mutation playbook for a visible demo."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+        clean_data = cast(Any, import_module("cleanloop.clean_data"))
+        clean_data_runtime = cast(Any, import_module("cleanloop.clean_data_runtime"))
+        prepare = cast(Any, import_module("cleanloop.prepare"))
+        datasets = cast(Any, import_module("cleanloop.datasets"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            temp_root = Path(tmp_dir)
+            output_dir = temp_root / ".output"
+            output_dir.mkdir(parents=True)
+            target = datasets.get_output_path(output_dir)
+
+            fake_results = {
+                "passed": ["can_read_output"],
+                "failed": [],
+                "metrics": {},
+                "score": 1,
+                "total": 1,
+            }
+
+            with mock.patch.object(cleanloop_local_util, "OUTPUT_DIR", output_dir):
+                with mock.patch.object(clean_data, "clean") as genome_clean_mock:
+                    with mock.patch.object(
+                        clean_data_runtime,
+                        "clean",
+                    ) as runtime_clean_mock:
+                        with mock.patch.object(
+                            prepare,
+                            "evaluate",
+                            return_value=fake_results,
+                        ) as evaluate_mock:
+                            with mock.patch.object(
+                                prepare, "print_results"
+                            ) as print_mock:
+                                exit_code = cleanloop_local_util._cmd_evaluate(
+                                    argparse.Namespace(
+                                        output_csv=None,
+                                        use_shipped_mutation_runtime=True,
+                                    )
+                                )
+
+        self.assertEqual(exit_code, 0)
+        genome_clean_mock.assert_not_called()
+        runtime_clean_mock.assert_called_once_with(
+            cleanloop_local_util.INPUT_DIR, target
+        )
+        evaluate_mock.assert_called_once_with(target)
+        print_mock.assert_called_once_with(fake_results)
+
+    def test_cleanloop_local_challenge_forwards_demo_playbook_flag(self) -> None:
+        """Forward the deterministic challenge-demo flag to the challenger module."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+
+        with mock.patch.object(
+            cleanloop_local_util,
+            "_run_module_main",
+            return_value=0,
+        ) as run_module_main:
+            exit_code = cleanloop_local_util._cmd_challenge(
+                argparse.Namespace(
+                    levels=None,
+                    difficulty=2,
+                    count=2,
+                    demo_playbook=True,
+                )
+            )
+
+        self.assertEqual(exit_code, 0)
+        run_module_main.assert_called_once_with(
+            "cleanloop.challenger", ["--demo-playbook"]
+        )
+
+    def test_print_mutation_summary_reports_fixed_and_pending_rows(self) -> None:
+        """Summarize what mutation fixed and what still needs mutation from the latest trace."""
+        cleanloop_local_util = cast(Any, import_module("cleanloop.util"))
+        cleanloop_datasets_local = cast(Any, import_module("cleanloop.datasets"))
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_dir = Path(tmp_dir) / ".output"
+            row_decisions_path = cleanloop_datasets_local.get_row_decisions_path(
+                output_dir
+            )
+            row_decisions_path.parent.mkdir(parents=True, exist_ok=True)
+            row_decisions_path.write_text(
+                "\n".join(
+                    [
+                        json.dumps(
+                            {
+                                "run_instance": "older-run",
+                                "invoice_id": "INV-OLD-001",
+                                "decision": "mutation_fixed",
+                                "source_file": "older.csv",
+                                "value": "999.0",
+                                "category": "paid",
+                            }
+                        ),
+                        json.dumps(
+                            {
+                                "run_instance": "latest-run",
+                                "invoice_id": "INV-DEMO-001",
+                                "decision": "mutation_fixed",
+                                "source_file": "adversarial_d3_demo_playbook.csv",
+                                "value": "1299.0",
+                                "category": "active",
+                            }
+                        ),
+                        json.dumps(
+                            {
+                                "run_instance": "latest-run",
+                                "invoice_id": "INV-DEMO-006",
+                                "decision": "mutation_failure",
+                                "source_file": "adversarial_d3_demo_playbook.csv",
+                                "anomaly_reason": "unmapped_amount_token",
+                            }
+                        ),
+                        json.dumps(
+                            {
+                                "run_instance": "latest-run",
+                                "invoice_id": "INV-105",
+                                "decision": "requires_mutation_playbook",
+                                "source_file": "finance_invoices.csv",
+                                "anomaly_reason": "requires_mutation_playbook",
+                            }
+                        ),
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            stream = io.StringIO()
+            with redirect_stdout(stream):
+                cleanloop_local_util._print_mutation_summary(output_dir)
+
+        rendered = stream.getvalue()
+        self.assertIn("Mutation Summary", rendered)
+        self.assertIn("Fixed rows: 1", rendered)
+        self.assertIn("INV-DEMO-001", rendered)
+        self.assertIn("Still needing mutation: 1", rendered)
+        self.assertIn("INV-105", rendered)
+        self.assertIn("Still unresolved after mutation: 1", rendered)
+        self.assertIn("INV-DEMO-006", rendered)
 
 
 class ExampleDashboardRoutingTests(unittest.TestCase):
@@ -1172,7 +1331,7 @@ class LoopResilienceTests(unittest.TestCase):
         }
         rejected = {
             "passed": [],
-            "failed": ["can_run_genome: broken candidate"],
+            "failed": ["can_run_genome: 'value'"],
             "score": 0,
             "total": 1,
             "metrics": {},
@@ -1275,9 +1434,13 @@ class LoopResilienceTests(unittest.TestCase):
                                                                 loop_module,
                                                                 "_git_revert",
                                                             ):
-                                                                history = loop_module.run_loop(
-                                                                    max_iterations=1
-                                                                )
+                                                                stream = io.StringIO()
+                                                                with redirect_stdout(
+                                                                    stream
+                                                                ):
+                                                                    history = loop_module.run_loop(
+                                                                        max_iterations=1
+                                                                    )
 
             self.assertEqual(len(history), 1)
             self.assertEqual(history[0]["action"], "revert")
@@ -1289,6 +1452,28 @@ class LoopResilienceTests(unittest.TestCase):
             self.assertEqual(
                 failure_path.read_text(encoding="utf-8"), "rebuilt-failure"
             )
+            self.assertIn("can_run_genome: 'value'", stream.getvalue())
+            self.assertIn(
+                "Candidate never reached referee scoring",
+                stream.getvalue(),
+            )
+            self.assertIn("kept baseline 13/14", stream.getvalue())
+            self.assertIn("Raw finance inputs expose", stream.getvalue())
+
+    def test_candidate_execution_hint_targets_bare_canonical_field_names(self) -> None:
+        """Offer schema hints only for bare canonical output-field lookups like 'value'."""
+        self.assertIn(
+            "canonical field 'value'",
+            cleanloop_loop._candidate_execution_hint("can_run_genome: 'value'"),
+        )
+
+    def test_candidate_execution_hint_ignores_general_attribute_errors(self) -> None:
+        """Avoid misclassifying generic attribute errors as missing finance schema fields."""
+        self.assertIsNone(
+            cleanloop_loop._candidate_execution_hint(
+                "can_run_genome: 'function' object has no attribute 'load_data'"
+            )
+        )
 
     def test_extract_usage_stats_reads_response_token_counts(self) -> None:
         """Capture prompt, completion, and total token counts from an LLM response."""
@@ -1443,6 +1628,51 @@ class LoopResilienceTests(unittest.TestCase):
 
 class CleanLoopDatasetTests(unittest.TestCase):
     """Verify CleanLoop now operates as a single finance arena."""
+
+    def test_challenge_levels_trigger_playbook_demo_at_level_three(self) -> None:
+        """Include the deterministic playbook demo when normal challenge levels reach mutation-heavy data."""
+        challenger = cast(Any, import_module("cleanloop.challenger"))
+
+        self.assertFalse(challenger.should_include_playbook_demo([1, 2]))
+        self.assertTrue(challenger.should_include_playbook_demo([1, 2, 3]))
+        self.assertTrue(challenger.should_include_playbook_demo([4]))
+
+    def test_playbook_demo_challenge_csv_matches_finance_contract(self) -> None:
+        """Build a deterministic adversarial CSV that targets the shipped mutation playbook."""
+        challenger = cast(Any, import_module("cleanloop.challenger"))
+
+        content = challenger.build_playbook_demo_csv()
+        validation = challenger.validate_finance_csv(content)
+
+        self.assertTrue(validation["valid"])
+        self.assertEqual(validation["row_count"], 6)
+        self.assertIn("FREE TRIAL", content)
+        self.assertIn("COMPLIMENTARY", content)
+        self.assertIn("DISCOUNTED", content)
+        self.assertIn("FX HOLD", content)
+
+    def test_get_shipped_input_paths_restores_missing_inputs_from_backup(self) -> None:
+        """Restore shipped finance fixtures from .input/.bak when active files vanish."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            input_dir = Path(tmp_dir) / ".input"
+            backup_dir = input_dir / ".bak"
+            backup_dir.mkdir(parents=True)
+
+            for filename in cleanloop_datasets.get_dataset_config().input_filenames:
+                (backup_dir / filename).write_text(
+                    "invoice_id,amount\nINV-001,100\n",
+                    encoding="utf-8",
+                )
+
+            shipped_paths = cleanloop_datasets.get_shipped_input_paths(input_dir)
+
+            self.assertTrue(all(path.exists() for path in shipped_paths))
+            self.assertTrue(
+                all(
+                    path.read_text(encoding="utf-8").startswith("invoice_id,amount")
+                    for path in shipped_paths
+                )
+            )
 
     def _copy_reference_output(self, dataset_name: str, target_path: Path) -> None:
         """Copy the canonical master output and regenerate matching sidecars."""

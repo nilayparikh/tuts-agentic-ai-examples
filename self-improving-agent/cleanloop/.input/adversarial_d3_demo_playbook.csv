@@ -1,0 +1,7 @@
+invoice_id,customer,issued,amount,currency,status,adjusted_amount,approval_flag,resolution_amount,resolution_flag
+INV-DEMO-001,Trial Foods,2024-11-01,FREE TRIAL,USD,active,,,1299.00,approved
+INV-DEMO-002,Complimentary Labs,2024-11-02,COMPLIMENTARY,EUR,active,,,2350.00,approved
+INV-DEMO-003,Discount Retail,03/11/2024,DISCOUNTED,GBP,review,875.50,approved,,
+INV-DEMO-004,FX Imports,2024-11-04,FX HOLD,CHF,active,4100.00,approved,,
+INV-DEMO-005,Void Logistics,2024-11-05,,USD,void,,,,
+INV-DEMO-006,Escalation Works,2024-11-06,TBD // analyst review,USD,pending,,,,

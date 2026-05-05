@@ -36,6 +36,7 @@ import csv
 import json
 import sys
 from datetime import datetime, timezone
+from io import StringIO
 from pathlib import Path
 from typing import Any, cast
 
@@ -62,6 +63,7 @@ FINANCE_CHALLENGE_COLUMNS = (
     "resolution_amount",
     "resolution_flag",
 )
+PLAYBOOK_DEMO_FILENAME = "adversarial_d3_demo_playbook.csv"
 
 SYSTEM_PROMPT = """\
 You are an adversarial finance data quality tester. Generate messy invoice CSV
@@ -172,6 +174,95 @@ def validate_finance_csv(content: str) -> dict[str, object]:
     return {"valid": not errors, "row_count": len(body), "errors": errors}
 
 
+def build_playbook_demo_csv() -> str:
+    """Build one deterministic adversarial CSV that exercises shipped mutation rules."""
+    rows = [
+        {
+            "invoice_id": "INV-DEMO-001",
+            "customer": "Trial Foods",
+            "issued": "2024-11-01",
+            "amount": "FREE TRIAL",
+            "currency": "USD",
+            "status": "active",
+            "adjusted_amount": "",
+            "approval_flag": "",
+            "resolution_amount": "1299.00",
+            "resolution_flag": "approved",
+        },
+        {
+            "invoice_id": "INV-DEMO-002",
+            "customer": "Complimentary Labs",
+            "issued": "2024-11-02",
+            "amount": "COMPLIMENTARY",
+            "currency": "EUR",
+            "status": "active",
+            "adjusted_amount": "",
+            "approval_flag": "",
+            "resolution_amount": "2350.00",
+            "resolution_flag": "approved",
+        },
+        {
+            "invoice_id": "INV-DEMO-003",
+            "customer": "Discount Retail",
+            "issued": "03/11/2024",
+            "amount": "DISCOUNTED",
+            "currency": "GBP",
+            "status": "review",
+            "adjusted_amount": "875.50",
+            "approval_flag": "approved",
+            "resolution_amount": "",
+            "resolution_flag": "",
+        },
+        {
+            "invoice_id": "INV-DEMO-004",
+            "customer": "FX Imports",
+            "issued": "2024-11-04",
+            "amount": "FX HOLD",
+            "currency": "CHF",
+            "status": "active",
+            "adjusted_amount": "4100.00",
+            "approval_flag": "approved",
+            "resolution_amount": "",
+            "resolution_flag": "",
+        },
+        {
+            "invoice_id": "INV-DEMO-005",
+            "customer": "Void Logistics",
+            "issued": "2024-11-05",
+            "amount": "",
+            "currency": "USD",
+            "status": "void",
+            "adjusted_amount": "",
+            "approval_flag": "",
+            "resolution_amount": "",
+            "resolution_flag": "",
+        },
+        {
+            "invoice_id": "INV-DEMO-006",
+            "customer": "Escalation Works",
+            "issued": "2024-11-06",
+            "amount": "TBD // analyst review",
+            "currency": "USD",
+            "status": "pending",
+            "adjusted_amount": "",
+            "approval_flag": "",
+            "resolution_amount": "",
+            "resolution_flag": "",
+        },
+    ]
+
+    buffer = StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=FINANCE_CHALLENGE_COLUMNS)
+    writer.writeheader()
+    writer.writerows(rows)
+    return buffer.getvalue().strip() + "\n"
+
+
+def should_include_playbook_demo(levels: list[int]) -> bool:
+    """Return whether a normal challenge run should include the curated demo file."""
+    return any(level >= 3 for level in levels)
+
+
 def _write_challenge_manifest(records: list[dict[str, object]]) -> Path:
     """Persist the current active challenge-file manifest."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -245,7 +336,28 @@ def main() -> None:
         default=2,
         help="Number of files to generate (default: 2)",
     )
+    parser.add_argument(
+        "--demo-playbook",
+        action="store_true",
+        help="Create one deterministic adversarial CSV that exercises shipped mutation rules",
+    )
     args = parser.parse_args()
+
+    INPUT_DIR.mkdir(exist_ok=True)
+    records: list[dict[str, object]] = []
+
+    if args.demo_playbook:
+        print("Generating deterministic playbook demo CSV")
+        records.append(
+            _save_challenge_file(
+                filename=PLAYBOOK_DEMO_FILENAME,
+                level=3,
+                content=build_playbook_demo_csv(),
+            )
+        )
+        manifest_path = _write_challenge_manifest(records)
+        print(f"Challenge manifest: {manifest_path}")
+        return
 
     llm_config = util.resolve_llm_env()
     client = util.build_llm_client(
@@ -253,10 +365,7 @@ def main() -> None:
         llm_config["api_key"],
         llm_config["api_version"],
     )
-
-    INPUT_DIR.mkdir(exist_ok=True)
     levels = [max(1, min(5, level)) for level in (args.levels or [args.difficulty])]
-    records: list[dict[str, object]] = []
 
     if args.levels:
         print(f"Generating {len(levels)} adversarial CSVs across levels: {levels}")
@@ -291,6 +400,16 @@ def main() -> None:
                     content=csv_content,
                 )
             )
+
+    if should_include_playbook_demo(levels):
+        print("Adding deterministic playbook demo CSV")
+        records.append(
+            _save_challenge_file(
+                filename=PLAYBOOK_DEMO_FILENAME,
+                level=3,
+                content=build_playbook_demo_csv(),
+            )
+        )
 
     manifest_path = _write_challenge_manifest(records)
     print(f"\nManifest: {manifest_path}")

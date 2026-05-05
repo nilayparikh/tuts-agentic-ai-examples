@@ -25,15 +25,20 @@ Environment variables (from .env):
     AZURE_API_KEY   — Legacy fallback
 """
 
+# pylint: disable=wrong-import-position,cyclic-import
+
 import sys
 import warnings
 from pathlib import Path
+from typing import cast
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from cleanloop import util
+
+ENV_SOURCES = {"cleanloop/.env", "_examples/.env"}
 
 util.load_env()
 
@@ -79,13 +84,42 @@ def check_packages() -> bool:
     return True
 
 
-def _safe_resolve_llm_env() -> dict[str, str] | None:
+def _safe_resolve_llm_env() -> util.ResolvedLlmEnv | None:
     """Resolve LLM config without crashing the learner-facing verify flow."""
     try:
         return util.resolve_llm_env()
     except RuntimeError as exc:
         print(f"  [FAIL] {exc}")
         return None
+
+
+def check_config_provenance() -> bool:
+    """Verify that runtime config comes from dotenv files instead of code defaults."""
+    config = _safe_resolve_llm_env()
+    if config is None:
+        return False
+
+    failures: list[str] = []
+    checks = [
+        ("endpoint", config["endpoint_var"], config["endpoint_source"]),
+        ("api_key", config["api_key_var"], config["api_key_source"]),
+        ("model", config["model_var"], config["model_source"]),
+        ("api_version", config["api_version_var"], config["api_version_source"]),
+    ]
+
+    for label, variable_name, source in checks:
+        if source not in ENV_SOURCES:
+            failures.append(
+                f"{label} resolved from {source} via {variable_name}; move it into cleanloop/.env"
+            )
+
+    if failures:
+        for failure in failures:
+            print(f"  [FAIL] {failure}")
+        return False
+
+    print("  [OK] endpoint, api_key, model, and api_version all resolve from .env")
+    return True
 
 
 def check_credentials() -> bool:
@@ -100,6 +134,14 @@ def check_credentials() -> bool:
     if endpoint and api_key:
         masked = endpoint[:35] + "..." if len(endpoint) > 35 else endpoint
         print(f"  [OK] Endpoint: {masked}")
+        print(
+            "  [OK] Sources: "
+            f"endpoint={config['endpoint_source']}, "
+            f"model={config['model_source']}, "
+            f"api_version={config['api_version_source']}"
+        )
+        for advisory in cast(list[str], config["advisories"]):
+            print(f"  [OK] Note: {advisory}")
         return True
 
     env_path = util.ENV_FILE
@@ -172,6 +214,7 @@ def main() -> None:
     checks = [
         ("Python version", check_python_version),
         ("Required packages", check_packages),
+        ("Config provenance", check_config_provenance),
         ("API credentials", check_credentials),
         ("LLM connectivity", check_llm_call),
     ]

@@ -1,17 +1,25 @@
-"""Example-local environment, AutoGen helpers, and local CLI for CleanLoop."""
+"""CleanLoop local CLI and LLM configuration helpers.
+
+Environment variables loaded from ``cleanloop/.env`` or the shared examples root:
+    LLM_ENDPOINT / AZURE_OPENAI_ENDPOINT / OPENAI_BASE_URL / AZURE_ENDPOINT
+    LLM_API_KEY / AZURE_OPENAI_API_KEY / OPENAI_API_KEY / AZURE_API_KEY
+    MODEL_NAME / AZURE_OPENAI_DEPLOY_NAME
+    LLM_API_VERSION / AZURE_OPENAI_API_VERSION / AZURE_API_VERSION
+"""
 
 from __future__ import annotations
 
 import argparse
 import importlib
 import importlib.util
+import json
 import os
 import platform
 import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, TypedDict, cast
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 EXAMPLE_ROOT = Path(__file__).resolve().parent
@@ -28,6 +36,25 @@ ENV_FILE = EXAMPLE_ROOT / ".env"
 FALLBACK_ENV_FILE = PROJECT_ROOT / ".env"
 DEFAULT_MODEL = "gpt-4.1-mini"
 DEFAULT_API_VERSION = "2024-06-01"
+
+
+class ResolvedLlmEnv(TypedDict):
+    """Resolved LLM config plus provenance for learner-facing checks."""
+
+    endpoint: str
+    api_key: str
+    model: str
+    api_version: str
+    endpoint_var: str
+    api_key_var: str
+    model_var: str
+    api_version_var: str
+    endpoint_source: str
+    api_key_source: str
+    model_source: str
+    api_version_source: str
+    defaulted_fields: list[str]
+    advisories: list[str]
 
 
 def _load_dotenv_file(path: Path) -> bool:
@@ -51,30 +78,109 @@ def load_env() -> None:
     _load_dotenv_file(FALLBACK_ENV_FILE)
 
 
-def _resolve_llm_env() -> dict[str, str]:
-    """Resolve the provider-agnostic LLM configuration for CleanLoop."""
-    azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT") or ""
-    generic_endpoint = os.getenv("LLM_ENDPOINT") or ""
+def _read_env_file_values(path: Path) -> dict[str, str]:
+    """Parse simple KEY=VALUE pairs from one dotenv file."""
+    if not path.exists():
+        return {}
+
+    values: dict[str, str] = {}
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        stripped = raw_line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        key, raw_value = stripped.split("=", maxsplit=1)
+        env_key = key.removeprefix("export ").strip()
+        env_value = raw_value.strip()
+        if (
+            len(env_value) >= 2
+            and env_value[0] == env_value[-1]
+            and env_value[0] in {"'", '"'}
+        ):
+            env_value = env_value[1:-1]
+        values[env_key] = env_value
+
+    return values
+
+
+def _describe_env_source(name: str) -> str:
+    """Return whether a resolved env var came from local .env, shared .env, or the shell."""
+    current_value = (os.getenv(name) or "").strip()
+    if not current_value:
+        return "unset"
+
+    if _read_env_file_values(ENV_FILE).get(name, "").strip() == current_value:
+        return "cleanloop/.env"
+    if _read_env_file_values(FALLBACK_ENV_FILE).get(name, "").strip() == current_value:
+        return "_examples/.env"
+    return "shell environment"
+
+
+def _first_nonempty_env_value(*names: str) -> tuple[str, str | None]:
+    """Return the first non-empty environment value and its source variable."""
+    for name in names:
+        value = (os.getenv(name) or "").strip()
+        if value:
+            return value, name
+    return "", None
+
+
+def _build_llm_env_advisories(endpoint: str, model: str) -> list[str]:
+    """Return learner-facing notes about the resolved endpoint/model pair."""
+    normalized_model = model.strip().lower()
+    advisories: list[str] = []
+
+    if _is_github_models_endpoint(endpoint) and normalized_model in {
+        "microsoft/phi-4",
+        "microsoft/phi4",
+    }:
+        advisories.append(
+            "GitHub Models often expects the canonical Phi-4 alias `phi4` in "
+            "MODEL_NAME, not `microsoft/Phi-4`."
+        )
+
+    return advisories
+
+
+def inspect_llm_env() -> ResolvedLlmEnv:
+    """Inspect the resolved LLM config and record whether defaults were used."""
+    azure_endpoint, _ = _first_nonempty_env_value("AZURE_OPENAI_ENDPOINT")
+    generic_endpoint, _ = _first_nonempty_env_value("LLM_ENDPOINT")
+    openai_base_url, _ = _first_nonempty_env_value("OPENAI_BASE_URL")
+    legacy_azure_endpoint, _ = _first_nonempty_env_value("AZURE_ENDPOINT")
 
     if azure_endpoint:
         endpoint_var = "AZURE_OPENAI_ENDPOINT"
     elif generic_endpoint:
         endpoint_var = "LLM_ENDPOINT"
-    elif os.getenv("OPENAI_BASE_URL"):
+    elif openai_base_url:
         endpoint_var = "OPENAI_BASE_URL"
     else:
         endpoint_var = "AZURE_ENDPOINT"
 
-    azure_api_key = os.getenv("AZURE_OPENAI_API_KEY") or ""
-    generic_api_key = os.getenv("LLM_API_KEY") or ""
+    azure_api_key, _ = _first_nonempty_env_value("AZURE_OPENAI_API_KEY")
+    generic_api_key, _ = _first_nonempty_env_value("LLM_API_KEY")
+    openai_api_key, _ = _first_nonempty_env_value("OPENAI_API_KEY")
+    legacy_azure_api_key, _ = _first_nonempty_env_value("AZURE_API_KEY")
+    github_token, _ = _first_nonempty_env_value("GITHUB_TOKEN")
+    azure_deploy_name, azure_deploy_var = _first_nonempty_env_value(
+        "AZURE_OPENAI_DEPLOY_NAME"
+    )
+    model_name, model_name_var = _first_nonempty_env_value("MODEL_NAME")
+    api_version, api_version_var = _first_nonempty_env_value(
+        "LLM_API_VERSION",
+        "AZURE_OPENAI_API_VERSION",
+        "AZURE_API_VERSION",
+    )
+
+    defaulted_fields: list[str] = []
 
     if azure_endpoint and azure_api_key:
         api_key_var = "AZURE_OPENAI_API_KEY"
     elif generic_api_key:
         api_key_var = "LLM_API_KEY"
-    elif os.getenv("OPENAI_API_KEY"):
+    elif openai_api_key:
         api_key_var = "OPENAI_API_KEY"
-    elif os.getenv("GITHUB_TOKEN"):
+    elif github_token:
         api_key_var = "GITHUB_TOKEN"
     else:
         api_key_var = "AZURE_API_KEY"
@@ -82,53 +188,86 @@ def _resolve_llm_env() -> dict[str, str]:
     endpoint = (
         azure_endpoint
         or generic_endpoint
-        or os.getenv("OPENAI_BASE_URL")
-        or os.getenv("AZURE_ENDPOINT")
+        or openai_base_url
+        or legacy_azure_endpoint
         or ""
     )
     api_key = (
         (azure_api_key if azure_endpoint else "")
         or generic_api_key
-        or os.getenv("OPENAI_API_KEY")
-        or os.getenv("AZURE_API_KEY")
-        or os.getenv("GITHUB_TOKEN")
+        or openai_api_key
+        or legacy_azure_api_key
+        or github_token
         or ""
     )
-    if azure_endpoint and os.getenv("AZURE_OPENAI_DEPLOY_NAME"):
-        model = os.getenv("AZURE_OPENAI_DEPLOY_NAME") or DEFAULT_MODEL
-    else:
-        model = (
-            os.getenv("MODEL_NAME")
-            or os.getenv("AZURE_OPENAI_DEPLOY_NAME")
-            or DEFAULT_MODEL
-        )
-    api_version = (
-        os.getenv("LLM_API_VERSION")
-        or os.getenv("AZURE_OPENAI_API_VERSION")
-        or os.getenv("AZURE_API_VERSION")
-        or DEFAULT_API_VERSION
-    )
 
-    if not endpoint:
-        raise RuntimeError(
-            "Missing LLM endpoint. Set LLM_ENDPOINT in cleanloop/.env or the example root .env."
-        )
-    if not api_key:
-        raise RuntimeError(
-            "Missing LLM API key. Set LLM_API_KEY in cleanloop/.env or the example root .env."
-        )
+    if azure_endpoint and azure_deploy_name:
+        model = azure_deploy_name
+        model_var = azure_deploy_var or "AZURE_OPENAI_DEPLOY_NAME"
+    elif model_name:
+        model = model_name
+        model_var = model_name_var or "MODEL_NAME"
+    elif azure_deploy_name:
+        model = azure_deploy_name
+        model_var = azure_deploy_var or "AZURE_OPENAI_DEPLOY_NAME"
+    else:
+        model = DEFAULT_MODEL
+        model_var = "DEFAULT_MODEL"
+        defaulted_fields.append("model")
+
+    if api_version:
+        resolved_api_version = api_version
+        resolved_api_version_var = api_version_var or "LLM_API_VERSION"
+    else:
+        resolved_api_version = DEFAULT_API_VERSION
+        resolved_api_version_var = "DEFAULT_API_VERSION"
+        defaulted_fields.append("api_version")
 
     return {
         "endpoint": endpoint.rstrip("/"),
         "api_key": api_key,
         "model": model,
-        "api_version": api_version,
+        "api_version": resolved_api_version,
         "endpoint_var": endpoint_var,
         "api_key_var": api_key_var,
+        "model_var": model_var,
+        "api_version_var": resolved_api_version_var,
+        "endpoint_source": _describe_env_source(endpoint_var),
+        "api_key_source": _describe_env_source(api_key_var),
+        "model_source": (
+            "code default"
+            if model_var == "DEFAULT_MODEL"
+            else _describe_env_source(model_var)
+        ),
+        "api_version_source": (
+            "code default"
+            if resolved_api_version_var == "DEFAULT_API_VERSION"
+            else _describe_env_source(resolved_api_version_var)
+        ),
+        "defaulted_fields": defaulted_fields,
+        "advisories": _build_llm_env_advisories(endpoint, model),
     }
 
 
-def resolve_llm_env() -> dict[str, str]:
+def _resolve_llm_env() -> ResolvedLlmEnv:
+    """Resolve the provider-agnostic LLM configuration for CleanLoop."""
+    config = inspect_llm_env()
+
+    if not config["endpoint"]:
+        raise RuntimeError(
+            "Missing LLM endpoint. Set LLM_ENDPOINT in cleanloop/.env or the "
+            "example root .env."
+        )
+    if not config["api_key"]:
+        raise RuntimeError(
+            "Missing LLM API key. Set LLM_API_KEY in cleanloop/.env or the "
+            "example root .env."
+        )
+
+    return config
+
+
+def resolve_llm_env() -> ResolvedLlmEnv:
     """Return the resolved CleanLoop LLM configuration."""
     return _resolve_llm_env()
 
@@ -397,12 +536,26 @@ def _cmd_status(_args: argparse.Namespace) -> int:
     print(f"  Python:   {snapshot['python']}")
     print(f"  .env:     {'exists' if snapshot['env_exists'] else 'missing'}")
     print(f"  Model:    {snapshot['model']}")
+    print(
+        "  Endpoint: " f"{snapshot['endpoint_var']} from {snapshot['endpoint_source']}"
+    )
+    print("  Model cfg:" f" {snapshot['model_var']} from {snapshot['model_source']}")
+    print(
+        "  API ver:  "
+        f"{snapshot['api_version']} via {snapshot['api_version_var']} "
+        f"from {snapshot['api_version_source']}"
+    )
     print(f"  Output:   {'exists' if snapshot['output_exists'] else 'missing'}")
     print(f"  Dataset:  {snapshot['dataset']}")
     print(
         "  Challenge manifest: "
         f"{'exists' if snapshot['challenge_manifest_exists'] else 'missing'}"
     )
+    defaulted_fields = cast(list[str], snapshot.get("defaulted_fields", []))
+    if defaulted_fields:
+        print(f"  NOTE: code defaults active for {', '.join(defaulted_fields)}")
+    for advisory in cast(list[str], snapshot.get("advisories", [])):
+        print(f"  NOTE: {advisory}")
     return 0
 
 
@@ -435,7 +588,127 @@ def _cmd_observe(_args: argparse.Namespace) -> int:
         for row in artifact_rows:
             if row.get("Status") == "missing":
                 print(f"  - {row.get('Artifact')}: {row.get('Regenerate')}")
+    _print_mutation_summary(OUTPUT_DIR)
     return 0
+
+
+def _load_jsonl_records(path: Path) -> list[dict[str, object]]:
+    """Load JSONL records and skip blank lines."""
+    if not path.exists():
+        return []
+
+    records: list[dict[str, object]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        text = line.strip()
+        if not text:
+            continue
+        payload = json.loads(text)
+        if isinstance(payload, dict):
+            records.append(payload)
+    return records
+
+
+def _latest_run_row_decisions(
+    output_dir: Path,
+    *,
+    run_instance: str | None = None,
+) -> list[dict[str, object]]:
+    """Return row decisions for the requested run or the latest observed run."""
+    from cleanloop import datasets as cleanloop_datasets
+
+    path = cleanloop_datasets.get_row_decisions_path(output_dir)
+    records = _load_jsonl_records(path)
+    if not records:
+        return []
+
+    selected_run_instance = (
+        run_instance or str(records[-1].get("run_instance", "")).strip()
+    )
+    if not selected_run_instance:
+        return records
+    return [
+        record
+        for record in records
+        if str(record.get("run_instance", "")).strip() == selected_run_instance
+    ]
+
+
+def _sample_row_decisions(
+    records: list[dict[str, object]],
+    decision: str,
+    *,
+    limit: int = 3,
+) -> list[dict[str, object]]:
+    """Return a small de-duplicated sample for one row-decision type."""
+    sample: list[dict[str, object]] = []
+    seen: set[tuple[str, str]] = set()
+    for record in records:
+        if str(record.get("decision", "")) != decision:
+            continue
+        key = (
+            str(record.get("invoice_id", "")).strip(),
+            str(record.get("source_file", "")).strip(),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        sample.append(record)
+        if len(sample) >= limit:
+            break
+    return sample
+
+
+def _print_mutation_summary(
+    output_dir: Path,
+    *,
+    run_instance: str | None = None,
+) -> None:
+    """Print what mutation fixed and what still needs help for the latest run."""
+    row_decisions = _latest_run_row_decisions(output_dir, run_instance=run_instance)
+    if not row_decisions:
+        return
+
+    fixed_rows = [
+        row for row in row_decisions if str(row.get("decision", "")) == "mutation_fixed"
+    ]
+    pending_rows = [
+        row
+        for row in row_decisions
+        if str(row.get("decision", "")) == "requires_mutation_playbook"
+    ]
+    unresolved_rows = [
+        row
+        for row in row_decisions
+        if str(row.get("decision", "")) == "mutation_failure"
+    ]
+
+    if not fixed_rows and not pending_rows and not unresolved_rows:
+        return
+
+    print("\nMutation Summary:")
+    print(f"  Fixed rows: {len(fixed_rows)}")
+    for row in _sample_row_decisions(row_decisions, "mutation_fixed"):
+        print(
+            "  - "
+            f"{row.get('invoice_id', '?')} from {row.get('source_file', '?')} "
+            f"-> value={row.get('value', '?')}, category={row.get('category', '?')}"
+        )
+
+    print(f"  Still needing mutation: {len(pending_rows)}")
+    for row in _sample_row_decisions(row_decisions, "requires_mutation_playbook"):
+        print(
+            "  - "
+            f"{row.get('invoice_id', '?')} from {row.get('source_file', '?')} "
+            f"-> {row.get('anomaly_reason', 'needs mutation')}"
+        )
+
+    print(f"  Still unresolved after mutation: {len(unresolved_rows)}")
+    for row in _sample_row_decisions(row_decisions, "mutation_failure"):
+        print(
+            "  - "
+            f"{row.get('invoice_id', '?')} from {row.get('source_file', '?')} "
+            f"-> {row.get('anomaly_reason', 'unresolved')}"
+        )
 
 
 def _cmd_verify(_args: argparse.Namespace) -> int:
@@ -447,6 +720,7 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
     """Evaluate the current genome output against the fixed referee."""
     from cleanloop import (
         clean_data,
+        clean_data_runtime,
         datasets,
         prepare,
     )
@@ -459,11 +733,22 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
     should_refresh_output = args.output_csv is None
     if should_refresh_output or not target.exists():
         OUTPUT_DIR.mkdir(exist_ok=True)
-        clean_data.clean(INPUT_DIR, target)
+        runtime_clean = (
+            clean_data_runtime.clean
+            if getattr(args, "use_shipped_mutation_runtime", False)
+            else clean_data.clean
+        )
+        runtime_clean(INPUT_DIR, target)
         print(f"Ran genome. Output: {target}")
+        if getattr(args, "use_shipped_mutation_runtime", False):
+            print(
+                "NOTE: Used shipped mutation runtime to demonstrate repaired adversarial rows."
+            )
 
     results = prepare.evaluate(target)
     prepare.print_results(results)
+    if should_refresh_output:
+        _print_mutation_summary(OUTPUT_DIR)
     return 0
 
 
@@ -471,17 +756,25 @@ def _cmd_loop(args: argparse.Namespace) -> int:
     """Run the local self-improving loop."""
     from cleanloop import loop
 
-    loop.run_loop(
+    history = loop.run_loop(
         max_iterations=args.max_iterations,
         use_reranker=args.rerank,
         n_candidates=args.candidates,
         named_instance=args.named_instance,
     )
+    if history:
+        _print_mutation_summary(
+            OUTPUT_DIR,
+            run_instance=str(history[-1].get("run_instance", "")).strip() or None,
+        )
     return 0
 
 
 def _cmd_challenge(args: argparse.Namespace) -> int:
     """Generate adversarial CSV files from the local CleanLoop folder."""
+    if getattr(args, "demo_playbook", False):
+        return _run_module_main("cleanloop.challenger", ["--demo-playbook"])
+
     argv: list[str] = []
     if args.levels:
         argv.extend(["--levels", *[str(level) for level in args.levels]])
@@ -500,8 +793,6 @@ def _cmd_autonomy(args: argparse.Namespace) -> int:
     from cleanloop import autonomy
 
     if getattr(args, "from_history", False):
-        import json
-
         from cleanloop import datasets
 
         history_path = datasets.get_history_path(OUTPUT_DIR)
@@ -603,6 +894,11 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate_parser.add_argument(
         "output_csv", nargs="?", help="Optional output CSV to evaluate"
     )
+    evaluate_parser.add_argument(
+        "--use-shipped-mutation-runtime",
+        action="store_true",
+        help="Run the shipped mutation playbook instead of the current mutable genome",
+    )
 
     loop_parser = subparsers.add_parser("loop", help="Run the bounded mutation loop")
     loop_parser.add_argument(
@@ -648,6 +944,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=2,
         help="Number of files to generate when --levels is not used",
+    )
+    challenge_parser.add_argument(
+        "--demo-playbook",
+        action="store_true",
+        help="Create one deterministic adversarial CSV that exercises shipped mutation rules",
     )
 
     sandbox_parser = subparsers.add_parser(
