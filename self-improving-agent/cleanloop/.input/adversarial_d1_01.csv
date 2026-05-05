@@ -1,0 +1,6 @@
+invoice_id,customer,issued,amount,currency,status,adjusted_amount,approval_flag,resolution_amount,resolution_flag
+INV-001,John Doe,2023-10-01,100€,USD,Pending,,Y,,N
+INV-002,Jane Smith,2023-10-02,,EUR,Cancelled,0.00,N,0.00,Y
+INV-003,Acme Corp,2023-09-28,45.50,USD,Approved,45.50,Y,,N
+INV-004,Widget Inc,2023-10-05,30$,GBP,Void,,N,0.00,Y
+INV-005,Bob Brown,2023-10-03,200 GBP,GBP,Pending,200.00,Y,,N

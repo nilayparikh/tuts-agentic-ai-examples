@@ -1,0 +1,6 @@
+invoice_id,customer,issued,amount,currency,status,adjusted_amount,approval_flag,resolution_amount,resolution_flag
+INV001,Acme Corp,"2023-09-15",1000.00,"USD",Pending,1000.00,Approved,,No-Flag
+INV002,Beta Solutions,"15/09/2023",€800.0e2,EUR,Completed,,,"€82000.00",Resolved
+INV003,Gamma Inc,2023/09/16,1,000.00," USD " ,Open,,"",No-Flag
+INV004,Delta LLC,17-09-2023,£500,"GBP",Pending,,,"£530",Resolved
+INV005,Epsilon Co,09/18/2023, 2 000,00,USD,Completed,,"",No-Flag

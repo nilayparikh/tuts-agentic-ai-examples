@@ -71,15 +71,18 @@ separate facts.
 - re-run the fixed judge before making the arena harder
 - separate judge logic from challenger logic instead of treating both as one surface
 - inspect which assertion fails first on the harder arena
-- remove temporary adversarial files when you want to return to the shipped fixture
+- remove old adversarial files when you want one isolated judge pass
 - compare harder input pressure against the same reference contract
 
 ## Actual Files To Trace
 
 - `.gold/finance_expected.csv`
 - `.input/finance_*.csv`
-- `.input/adversarial_d1_01.csv`
+- `.input/adversarial_d*.csv`
+- `.input/adversarial_d3_demo_playbook.csv`
+- `.output/challenge_manifest.json`
 - `.output/finance_master.csv`
+- `.output/finance_mutation_success.csv`
 - `.output/finance_mutation_failures.csv`
 
 ## Judge Rule
@@ -92,12 +95,102 @@ The challenger generates harder anomaly inputs when the loop becomes too comfort
 
 ## Code Anchors
 
-- [Fixed referee](../../prepare.py#L327)
-- [Reference metrics](../../prepare.py#L212)
-- [Binary checks registry](../../prepare.py#L239)
-- [Difficulty ladder](../../challenger.py#L69)
-- [Challenger generator](../../challenger.py#L106)
-- [Challenger CLI](../../challenger.py#L137)
+- [Fixed referee entrypoint](../../prepare.py#L326)
+- [Reference metrics](../../prepare.py#L211)
+- [Binary checks registry](../../prepare.py#L238)
+- [Difficulty ladder](../../challenger.py#L90)
+- [Challenge CSV validator](../../challenger.py#L153)
+- [Challenger generator](../../challenger.py#L124)
+- [Auto demo inclusion rule](../../challenger.py#L261)
+- [Challenger CLI](../../challenger.py#L316)
+- [Status command](../../util.py#L510)
+- [Evaluate command](../../util.py#L719)
+
+## Judge Evaluation Across Adversarial Levels
+
+The judge lives in [prepare.py](../../prepare.py#L326). It is fixed and
+immutable. `challenge` changes the inputs. `evaluate` reruns the current genome
+against the active input set. That means you evaluate the judge by widening the
+arena, not by changing the judge itself.
+
+One important detail: adversarial files stay active once they exist in
+`.input/`. `python util.py reset` restores the starter genome, but it does not
+remove those challenge files. If you want a clean, isolated judge pass for one
+level, clear the old adversarial files first.
+
+### Difficulty Ladder
+
+| Level | What It Adds                                                           | What You Should Watch                                                |
+| ----- | ---------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1     | currency symbols, one blank amount, clean ISO dates                    | basic numeric coercion and no-NaN checks                             |
+| 2     | mixed date formats, whitespace, currency codes, adjusted amounts       | parseable dates and canonical normalization                          |
+| 3     | FREE TRIAL, COMPLIMENTARY, disputed rows, resolution fields            | rows that need mutation playbook routing                             |
+| 4     | negative reversals, FX HOLD, blank cancelled rows, quoted commas       | row classification under harder finance edge cases                   |
+| 5     | null-like tokens, scientific notation, embedded notes, unresolved rows | whether the judge keeps true failures visible instead of hiding them |
+
+When you include level 3 or higher, CleanLoop also adds a deterministic demo
+CSV. That gives you stable rows such as `INV-DEMO-001` and `INV-DEMO-006` for
+repeatable judge and runtime comparisons.
+
+### Isolated Judge Pass By Level
+
+Run these commands from inside `cleanloop/`.
+
+```powershell
+Remove-Item .input\adversarial_d*.csv -ErrorAction SilentlyContinue
+Remove-Item .output\challenge_manifest.json -ErrorAction SilentlyContinue
+python util.py challenge --levels 1
+python util.py status
+python util.py evaluate
+```
+
+Use that same pattern again for `--levels 2`, `--levels 3`, or `--levels 5`.
+
+What to look for:
+
+- `status` shows which adversarial files are active.
+- `evaluate` shows the immutable referee result.
+- `Mutation Summary` shows whether rows only need mutation, were fixed, or are
+  still unresolved.
+
+### Mixed-Level Arena Pass
+
+This is the best Lesson 05 demo because it widens the arena in a visible way.
+
+```powershell
+Remove-Item .input\adversarial_d*.csv -ErrorAction SilentlyContinue
+Remove-Item .output\challenge_manifest.json -ErrorAction SilentlyContinue
+python util.py challenge --levels 1 2 3
+python util.py status
+python util.py evaluate
+```
+
+What this teaches:
+
+- `challenge --levels 1 2 3` widens the arena across easy, moderate, and hard
+  cases.
+- Level 3 automatically adds the deterministic playbook demo CSV.
+- `evaluate` tells you how the current genome performs against that wider
+  arena while the judge contract stays fixed.
+
+### Compare Starter Genome vs Shipped Mutation Runtime
+
+If you want to evaluate the same judge and the same adversarial set with two
+different runtimes, compare these commands back to back:
+
+```powershell
+python util.py evaluate
+python util.py evaluate --use-shipped-mutation-runtime
+```
+
+Read them this way:
+
+- The first command shows how the current mutable genome behaves.
+- The second shows how the shipped mutation runtime repairs known cases.
+- The judge stays the same in both runs. Only the runtime changes.
+
+That makes it easy to explain whether the limitation is in the judge, in the
+starter genome, or in the missing mutation logic.
 
 ## Inline Coding
 
@@ -109,10 +202,17 @@ That line matters because the loop never grades itself. The scorer stays fixed, 
 
 ## Read This In Order
 
-1. Read [prepare.py#L327](../../prepare.py#L327) to see the fixed evaluation entrypoint.
-2. Step into [prepare.py#L239](../../prepare.py#L239) so you can see the exact assertions the genome cannot move.
-3. Read [challenger.py#L69](../../challenger.py#L69) to understand the difficulty ladder before you generate new files.
-4. Finish with [challenger.py#L106](../../challenger.py#L106) and [challenger.py#L137](../../challenger.py#L137) so you can connect the prompt surface to the generated CSVs.
+1. Read [prepare.py#L326](../../prepare.py#L326) to see the fixed evaluation
+   entrypoint.
+2. Read [prepare.py#L238](../../prepare.py#L238) so you can see the assertions
+   the genome cannot move.
+3. Read [challenger.py#L90](../../challenger.py#L90) to understand the
+   difficulty ladder.
+4. Read [challenger.py#L153](../../challenger.py#L153) to see how generated CSV
+   files are validated before they become active inputs.
+5. Finish with [challenger.py#L316](../../challenger.py#L316) and
+   [util.py#L719](../../util.py#L719) so you can connect arena generation to
+   referee evaluation.
 
 ## Run
 
@@ -120,36 +220,46 @@ That line matters because the loop never grades itself. The scorer stays fixed, 
 
 ```powershell
 python util.py status
-python util.py verify
-python util.py reset
+Remove-Item .input\adversarial_d*.csv -ErrorAction SilentlyContinue
+Remove-Item .output\challenge_manifest.json -ErrorAction SilentlyContinue
+python util.py challenge --levels 1 2 3
+python util.py status
 python util.py evaluate
-python util.py challenge --difficulty 1 --count 1
-Remove-Item ".input\adversarial_d1_01.csv"
+python util.py evaluate --use-shipped-mutation-runtime
 ```
 
-### Output
+### Output Traits
 
 ```text
+$ python util.py challenge --levels 1 2 3
+Generating 3 adversarial CSVs across levels: [1, 2, 3]
+Adding deterministic playbook demo CSV
+Manifest: ...\.output\challenge_manifest.json
+Done. Run `python util.py evaluate` or `python util.py loop` to test the wider arena.
+
 $ python util.py evaluate
-Ran genome. Output: Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\cleanloop\.output\finance_master.csv
-	CleanLoop Evaluation: 13/14
-	[FAIL] matches_reference_output: matched=30, missing=48, unexpected=0, output_rows=30, reference_rows=78
-
-$ python util.py challenge --difficulty 1 --count 1
-Generating 1 adversarial CSVs at difficulty 1
-C:\Program Files\Python311\Lib\asyncio\events.py:84: UserWarning: Resolved model mismatch: microsoft/Phi-4 != phi4. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to phi4 to enhance token/cost estimation and suppress this warning.
-	Created: adversarial_d1_01.csv
-Done. Run `python util.py loop` to test the genome against new data.
-
-$ Remove-Item ".input\adversarial_d1_01.csv"
+Ran genome. Output: ...\.output\finance_master.csv
+...
+Mutation Summary:
+  Fixed rows: 0
+  Still needing mutation: ...
+  Still unresolved after mutation: ...
 ```
+
+Your exact counts may vary because generated adversarial files vary, but the
+shape of the result should stay the same: harder inputs, same judge.
 
 ### Explanation
 
-1. Re-run the baseline judge first. Validate that the starter genome still scores `13/14` against the unchanged referee before you make the arena harder.
-2. `python util.py challenge --difficulty 1 --count 1` exercises the challenger without changing the judge. Validate that it creates `adversarial_d1_01.csv` and notice that the output recommends the next step: run the loop against the harder arena.
-3. The model-mismatch warning is diagnostic noise from client metadata, not a failed challenge generation. The useful signal is the created CSV.
-4. Remove the generated adversarial file before Lesson 06 if you want the reranker transcript to stay on the original shipped finance fixture and keep the reference comparison stable.
+1. Clean up old adversarial files first so you know which arena you are
+   testing.
+2. `challenge --levels 1 2 3` widens the arena and writes a manifest that makes
+   the active challenge set explicit.
+3. `status` confirms the active files before you evaluate.
+4. `evaluate` runs the current genome against the fixed judge on that wider
+   arena.
+5. `evaluate --use-shipped-mutation-runtime` is the control comparison. It uses
+   the same judge and the same inputs, but a stronger runtime.
 
 ### Current Implementation Notes
 
@@ -160,10 +270,12 @@ active inputs for `evaluate`, `loop`, and `sandbox`.
 Artifacts to inspect:
 
 - `.input/adversarial_d*.csv`
+- `.input/adversarial_d3_demo_playbook.csv`
 - `.output/challenge_manifest.json`
 
 Use `python util.py status` after a challenge run to see shipped input rows,
-challenge input rows, and whether the challenge manifest exists.
+challenge input rows, whether the challenge manifest exists, and which files
+are active.
 
 ## Hands-On Exercises
 

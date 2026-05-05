@@ -1,6 +1,0 @@
-invoice_id,customer,issued,amount,currency,status,adjusted_amount,approval_flag,resolution_amount,resolution_flag
-INV-1023,Acme Corp,2023-10-10,0.00,USD,Disputed,150.00,Pending,100.00,Resolved
-INV-1045,Widget Inc,2023-05-15,250.00,EUR,Approved,250.00,Approved,0.00,Not Applicable
-INV-1067,Free Trial,BEGINNING OF FREE TRIAL,0.00,USD,Completed,0.00,Not Applicable,0.00,Not Applicable
-INV-1090,Service Unlimited,2023-06-20,-50.00,USD,Complimentary,0.00,Rejected,0.00,Not Applicable
-INV-1123,Acme Corp,2023-07-18,300.00,USD,Disputed,300.00,Pending,200.00,Unresolved
