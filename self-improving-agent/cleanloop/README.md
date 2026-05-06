@@ -1,5 +1,7 @@
 # CleanLoop
 
+[![Watch: Test-Time Reranking: How to Guarantee High-Quality AI Outputs | Lesson 06 of 07](https://img.youtube.com/vi/bsfxRJGhzYM/maxresdefault.jpg)](https://www.youtube.com/watch?v=bsfxRJGhzYM)
+
 [![Watch: Stop Fixing Pipelines: Build a Self-Evolving AI Data Engineer | Lesson 01 of 07](https://img.youtube.com/vi/yx6aB5heI9o/maxresdefault.jpg)](https://www.youtube.com/watch?v=yx6aB5heI9o)
 
 [![Watch: One File to Rule the Loop: Engineering the Pipeline Genome | Lesson 02 of 07](https://img.youtube.com/vi/8Y7MEbEw8wc/maxresdefault.jpg)](https://www.youtube.com/watch?v=8Y7MEbEw8wc)
@@ -15,6 +17,7 @@
 > <strong>Watch Lesson 03:</strong> <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen | Lesson 03 of 07</a>
 > <strong>Watch Lesson 04:</strong> <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns | Lesson 04 of 07</a>
 > <strong>Watch Lesson 05:</strong> <a href="https://www.youtube.com/watch?v=vx9Lpm67RZk" target="_blank" rel="noopener noreferrer">Self-Challenging AI: Designing Adversarial Loops for LLMs | Lesson 05 of 07</a>
+> <strong>Watch Lesson 06:</strong> <a href="https://www.youtube.com/watch?v=bsfxRJGhzYM" target="_blank" rel="noopener noreferrer">Test-Time Reranking: How to Guarantee High-Quality AI Outputs | Lesson 06 of 07</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
 
 CleanLoop is the runnable example for the course `Building the Self-Evolving Data Engineer`.
@@ -74,9 +77,10 @@ Each lesson note under `docs/lessons/` now ends with a hands-on exercise block.
 Those exercises point at real files, include hints, and give a clear done state
 so the learner can move from reading to changing the example.
 
-The core course notes run from Lesson 01 through Lesson 07. Lesson 08 and
-Lesson 09 are companion deep dives for dashboard oversight and the autonomy
-ladder.
+The core course notes run from Lesson 01 through Lesson 07.
+
+Lesson 07 is the conclusion lesson. It folds production safety, dashboard
+oversight, and the autonomy ladder into one operator workflow.
 
 Recommended reading order:
 
@@ -191,3 +195,4 @@ code.
 | 03     | <a href="https://www.youtube.com/watch?v=--mpnJ8f4Sg" target="_blank" rel="noopener noreferrer">Stop Fixing Data Pipelines: Build an AI Orchestrator with AutoGen &#124; Lesson 03 of 07</a> | [cleanloop](./) |
 | 04     | <a href="https://www.youtube.com/watch?v=0loLP30v0qM" target="_blank" rel="noopener noreferrer">Stop Guessing: Build a Feedback Loop That Actually Learns &#124; Lesson 04 of 07</a>         | [cleanloop](./) |
 | 05     | <a href="https://www.youtube.com/watch?v=vx9Lpm67RZk" target="_blank" rel="noopener noreferrer">Self-Challenging AI: Designing Adversarial Loops for LLMs &#124; Lesson 05 of 07</a>         | [cleanloop](./) |
+| 06     | <a href="https://www.youtube.com/watch?v=bsfxRJGhzYM" target="_blank" rel="noopener noreferrer">Test-Time Reranking: How to Guarantee High-Quality AI Outputs &#124; Lesson 06 of 07</a>     | [cleanloop](./) |

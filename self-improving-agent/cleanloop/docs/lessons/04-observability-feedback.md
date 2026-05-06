@@ -9,7 +9,7 @@ which row or proposal caused the next decision.
 For the artifact path that maps runtime events to files on disk, see
 [execution-flow.md](../architecture/execution-flow.md). For the operator view
 that reads those files back, continue to
-[Lesson 08](./08-dashboard-human-oversight.md).
+[Lesson 07](./07-production-safety.md).
 
 If you want to widen the arena with adversarial levels or compare the judge
 against harder data, that belongs in

@@ -6,8 +6,8 @@ The loop does not need a better trained model to search better. It can spend
 more inference-time budget on the same round by generating several bounded
 candidates, scoring each one, and selecting the best survivor.
 
-After you run reranked rounds, use [Lesson 08](./08-dashboard-human-oversight.md)
-to inspect candidate width, token cost, and selected-attempt diagnostics from
+After you run reranked rounds, use [Lesson 07](./07-production-safety.md)
+to inspect candidate width, token cost, operator review, and trust policy from
 the saved artifacts.
 
 ## Search Diagram
