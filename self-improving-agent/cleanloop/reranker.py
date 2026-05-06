@@ -40,6 +40,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from cleanloop import autogen_runtime, util  # noqa: E402
 from cleanloop import datasets as cleanloop_datasets  # noqa: E402
+from cleanloop.genome_contract import validate_candidate_module  # noqa: E402
 
 util.load_env()
 
@@ -49,7 +50,7 @@ INPUT_DIR = PROJECT_ROOT / "cleanloop" / ".input"
 
 def _expected_total_assertions() -> int:
     """Return the current finance referee assertion count."""
-    return len(cleanloop_datasets.build_assertion_registry()) + 1
+    return len(cleanloop_datasets.build_assertion_registry())
 
 
 # =====================================================================
@@ -118,11 +119,20 @@ def propose(
 def _evaluate_candidate(candidate_code: str) -> tuple[int, int]:
     """Evaluate a candidate genome in an isolated temp directory."""
     config = cleanloop_datasets.get_dataset_config()
+    baseline_source = GENOME_PATH.read_text(encoding="utf-8")
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
 
         # Write candidate genome
         genome_file = tmp / "clean_data.py"
+        try:
+            validate_candidate_module(
+                candidate_code,
+                baseline_source=baseline_source,
+                genome_path=GENOME_PATH,
+            )
+        except ValueError:
+            return 0, 1
         genome_file.write_text(candidate_code, encoding="utf-8")
         output_file = tmp / config.output_filename
 

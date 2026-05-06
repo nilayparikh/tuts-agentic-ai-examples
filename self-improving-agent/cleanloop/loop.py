@@ -58,6 +58,7 @@ from cleanloop import autogen_runtime  # noqa: E402
 from cleanloop import util as cleanloop_util  # noqa: E402
 from cleanloop import dashboard_metrics  # noqa: E402
 from cleanloop import datasets as cleanloop_datasets  # noqa: E402
+from cleanloop.genome_contract import validate_candidate_module  # noqa: E402
 from cleanloop.tracing import TraceRecorder  # noqa: E402
 
 # Preserve the historical module alias used by tests and older call sites.
@@ -255,6 +256,21 @@ def _candidate_execution_failure(results: dict) -> str | None:
 def _candidate_execution_hint(failure: str) -> str | None:
     """Translate common candidate runtime failures into a short operator hint."""
     detail = failure.partition(":")[2].strip()
+    if detail == "candidate must preserve module imports; mutate clean() only":
+        return (
+            "The starter genome is a thin wrapper. Keep the top-level imports intact "
+            "and upgrade clean() instead of adding pandas or new module helpers."
+        )
+    if (
+        detail
+        == "candidate must keep the same top-level functions; mutate clean() only"
+    ):
+        return (
+            "Do not add new top-level helpers or classes. Keep one clean() entrypoint "
+            "and move any extra logic inside that function or the existing runtime."
+        )
+    if detail == "candidate must preserve the clean(input_dir, output_path) signature":
+        return "Keep the clean(input_dir, output_path) signature unchanged."
     if re.fullmatch(r"'[A-Za-z_][A-Za-z0-9_]*'", detail):
         field_name = detail[1:-1]
         if field_name in {"date", "entity", "currency", "value", "category"}:
@@ -643,6 +659,14 @@ def _prepare_fresh_run(
         "RESTORE_STARTER_GENOME",
         f"Restored {genome_path.name} from {starter_genome_path.name}",
     )
+    challenge_inputs = cleanloop_datasets.get_challenge_input_paths(INPUT_DIR)
+    if challenge_inputs:
+        challenge_names = ", ".join(path.name for path in challenge_inputs)
+        _append_log(
+            logs,
+            "ACTIVE_CHALLENGES",
+            "Challenge files are active for this run: " f"{challenge_names}",
+        )
     return logs
 
 
@@ -703,8 +727,13 @@ def _restore_pre_run_outputs(
 
 
 def _validate_candidate_code(source: str, genome_path: Path) -> None:
-    """Raise immediately if a candidate mutation is not valid Python."""
-    compile(source, str(genome_path), "exec")
+    """Raise immediately if a candidate mutation violates the bounded contract."""
+    baseline_source = genome_path.read_text(encoding="utf-8")
+    validate_candidate_module(
+        source,
+        baseline_source=baseline_source,
+        genome_path=genome_path,
+    )
 
 
 def _attempt_usage_value(attempt: dict[str, object], key: str) -> int | None:
@@ -716,6 +745,37 @@ def _attempt_usage_value(attempt: dict[str, object], key: str) -> int | None:
     if isinstance(value, int):
         return value
     return None
+
+
+def _best_rerank_candidate_score(
+    llm_diagnostics: dict[str, object],
+) -> tuple[int | None, int | None]:
+    """Return the best reranker candidate score visible in diagnostics."""
+    scored_candidates: list[tuple[int, int]] = []
+
+    candidates = llm_diagnostics.get("candidates")
+    if isinstance(candidates, list):
+        for candidate in candidates:
+            if not isinstance(candidate, dict):
+                continue
+            candidate_score = candidate.get("score")
+            candidate_total = candidate.get("total")
+            if isinstance(candidate_score, int) and isinstance(candidate_total, int):
+                scored_candidates.append((candidate_score, candidate_total))
+
+    attempts = llm_diagnostics.get("attempts")
+    if isinstance(attempts, list):
+        for attempt in attempts:
+            if not isinstance(attempt, dict):
+                continue
+            candidate_score = attempt.get("candidate_score")
+            candidate_total = attempt.get("candidate_total")
+            if isinstance(candidate_score, int) and isinstance(candidate_total, int):
+                scored_candidates.append((candidate_score, candidate_total))
+
+    if not scored_candidates:
+        return None, None
+    return max(scored_candidates, key=lambda item: (item[0], item[1]))
 
 
 def _print_llm_attempt_trace(llm_diagnostics: dict[str, object]) -> None:
@@ -824,6 +884,15 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         "- Route rows with enough business context into finance_mutation_success.csv; "
         "leave truly unresolved rows in finance_mutation_failures.csv with diagnostics.\n"
     )
+    starter_wrapper_guardrail = (
+        "- The starter genome is intentionally a thin wrapper around "
+        "cleanloop.clean_data_runtime.clean_starter.\n"
+        "- The safest high-leverage mutation is to keep the module imports intact and "
+        "upgrade clean() rather than reimplementing CSV parsing from scratch.\n"
+        "- The one safe import swap is replacing clean_starter with clean from "
+        "cleanloop.clean_data_runtime when the wrapper is ready to use the shipped runtime.\n"
+        "- Do NOT add pandas, new top-level helpers, or alternate module entrypoints.\n"
+    )
 
     return (
         "You are a self-improving data engineer agent.\n\n"
@@ -842,6 +911,7 @@ def build_system_prompt(dataset_name: str | None = None) -> str:
         "- Do NOT modify prepare.py, datasets.py, or README.md.\n"
         f"{finance_scalar_guardrail}"
         f"{multi_step_repair_guardrail}"
+        f"{starter_wrapper_guardrail}"
         "- Return ONLY the complete file content for clean_data.py.\n"
         "- Wrap your response in a ```python code block.\n"
         "- Before the code block, write a ONE-LINE hypothesis.\n"
@@ -881,10 +951,21 @@ def build_user_prompt(
             f"Guidance: {guidance}\n"
         )
 
+    starter_reminder_block = ""
+    if "clean_starter as _runtime_clean" in genome_code:
+        starter_reminder_block = (
+            "\n## Starter Reminder\n"
+            "- This genome is the starter wrapper, not the shipped full cleaner.\n"
+            "- Upgrade clean() only. The one safe top-level import swap is clean_starter -> clean from cleanloop.clean_data_runtime.\n"
+            "- Prefer reusing cleanloop.clean_data_runtime from inside clean() instead of "
+            "inventing a new pandas pipeline.\n"
+        )
+
     return (
         f"## Target Dataset\n{config.label} (`{config.name}`)\n\n"
         "## Current clean_data.py\n"
         f"```python\n{genome_code}\n```\n\n"
+        f"{starter_reminder_block}\n"
         f"## Failed Assertions\n{failed}\n\n"
         f"## Passed Assertions\n{passed}\n"
         f"{history_block}\n"
@@ -1090,6 +1171,31 @@ def run_loop(
                 f"Saved candidate scoreboard to {scoreboard_path}",
             )
             _print_llm_attempt_trace_to_logs(round_logs, llm_diagnostics)
+            best_candidate_score, best_candidate_total = _best_rerank_candidate_score(
+                llm_diagnostics
+            )
+            if (
+                best_candidate_score is not None
+                and best_candidate_total is not None
+                and best_candidate_score <= score
+            ):
+                llm_diagnostics["baseline_score"] = score
+                llm_diagnostics["baseline_total"] = total
+                llm_diagnostics["best_candidate_score"] = best_candidate_score
+                llm_diagnostics["best_candidate_total"] = best_candidate_total
+                llm_diagnostics["rejected_below_baseline"] = True
+                llm_diagnostics["selected_attempt"] = "none"
+                new_code = None
+                hypothesis = "no reranked candidate beat the current baseline"
+                _append_log(
+                    round_logs,
+                    "RERANK_NO_IMPROVEMENT",
+                    (
+                        "Best reranker candidate scored "
+                        f"{best_candidate_score}/{best_candidate_total}; "
+                        f"baseline stays {score}/{total}"
+                    ),
+                )
         else:
             # Standard single-shot proposal
             try:
@@ -1172,10 +1278,40 @@ def run_loop(
                 else []
             )
             attempt_count = len(attempts) if isinstance(attempts, list) else 0
-            warning_message = (
-                f"No candidate code returned after {attempt_count} attempts. "
-                "Skipping round."
-            )
+            if (
+                isinstance(llm_diagnostics, dict)
+                and llm_diagnostics.get("rejected_below_baseline") is True
+            ):
+                best_candidate_score_obj = llm_diagnostics.get("best_candidate_score")
+                best_candidate_total_obj = llm_diagnostics.get("best_candidate_total")
+                baseline_score_obj = llm_diagnostics.get("baseline_score")
+                baseline_total_obj = llm_diagnostics.get("baseline_total")
+                best_candidate_score_text = (
+                    best_candidate_score_obj
+                    if isinstance(best_candidate_score_obj, int)
+                    else "?"
+                )
+                best_candidate_total_text = (
+                    best_candidate_total_obj
+                    if isinstance(best_candidate_total_obj, int)
+                    else "?"
+                )
+                baseline_score_text = (
+                    baseline_score_obj if isinstance(baseline_score_obj, int) else "?"
+                )
+                baseline_total_text = (
+                    baseline_total_obj if isinstance(baseline_total_obj, int) else "?"
+                )
+                warning_message = (
+                    "No candidate beat baseline "
+                    f"{baseline_score_text}/{baseline_total_text}; best reranker candidate was "
+                    f"{best_candidate_score_text}/{best_candidate_total_text}. Skipping round."
+                )
+            else:
+                warning_message = (
+                    f"No candidate code returned after {attempt_count} attempts. "
+                    "Skipping round."
+                )
             print(f"WARNING: {warning_message}")
             trace.record_proposal_event(
                 stage="proposal-empty",
@@ -1420,17 +1556,7 @@ def _run_and_evaluate(
     """Run the genome and convert execution errors into structured failures."""
     try:
         clean_data_module.clean(input_dir, output_path)
-    except (
-        AttributeError,
-        ImportError,
-        KeyError,
-        OSError,
-        RuntimeError,
-        SyntaxError,
-        TimeoutError,
-        TypeError,
-        ValueError,
-    ) as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
         return {
             "passed": [],
             "failed": [f"can_run_genome: {exc}"],

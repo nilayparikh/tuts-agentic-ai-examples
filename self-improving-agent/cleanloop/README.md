@@ -26,10 +26,14 @@ The shipped full mutation runtime contains 87 rows across five CSV files and pro
 - 48 rows in `finance_mutation_success.csv`
 - 9 rows in `finance_mutation_failures.csv`
 
-The mutable genome in `clean_data.py` starts as the Lesson 02 starter genome. That
-starter path only runs the deterministic stage, so `python util.py loop` or
-`python util.py evaluate` will not show mutation-success rows until a stronger
-candidate survives the referee.
+The shipped `clean_data.py` points at the full runtime so the repo stays runnable
+and the reference contract passes out of the box.
+
+When you run `python util.py loop`, the loop snapshots that shipped genome,
+swaps in `clean_data_starter.py` for the bounded mutation round, and restores
+the pre-run genome again if no candidate survives the referee. That means the
+lesson still starts from the incomplete starter path, but your working tree does
+not get stranded on the starter genome after a revert-only demo run.
 
 ## Start Here
 

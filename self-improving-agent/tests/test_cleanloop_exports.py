@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import csv
+import shutil
 import sys
 import tempfile
 import unittest
@@ -26,6 +27,15 @@ def _read_rows(csv_path: Path) -> tuple[list[str], list[dict[str, str]]]:
         return list(reader.fieldnames or []), rows
 
 
+def _copy_shipped_inputs(target_dir: Path) -> Path:
+    """Copy only the fixed course finance fixtures into an isolated input dir."""
+    source_dir = PROJECT_ROOT / "cleanloop" / ".input"
+    target_dir.mkdir(parents=True, exist_ok=True)
+    for csv_path in cleanloop_datasets.get_shipped_input_paths(source_dir):
+        shutil.copy2(csv_path, target_dir / csv_path.name)
+    return target_dir
+
+
 class CleanLoopExportContractTests(unittest.TestCase):
     """Verify the finance cleaner emits deterministic and mutation artifacts."""
 
@@ -33,10 +43,10 @@ class CleanLoopExportContractTests(unittest.TestCase):
         """Ship the full cleaner, not the starter genome, in clean_data.py."""
         clean_data = import_module("cleanloop.clean_data")
         prepare = import_module("cleanloop.prepare")
-        input_dir = PROJECT_ROOT / "cleanloop" / ".input"
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_dir = Path(tmp_dir)
+            input_dir = _copy_shipped_inputs(output_dir / "input")
             master_path = cleanloop_datasets.get_output_path(output_dir)
 
             clean_data.clean(input_dir, master_path)
@@ -83,10 +93,10 @@ class CleanLoopExportContractTests(unittest.TestCase):
     def test_clean_pipeline_writes_master_success_and_failure_exports(self) -> None:
         """Write three exports and partition fixed versus failed anomalies."""
         clean_data_runtime = import_module("cleanloop.clean_data_runtime")
-        input_dir = PROJECT_ROOT / "cleanloop" / ".input"
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_dir = Path(tmp_dir)
+            input_dir = _copy_shipped_inputs(output_dir / "input")
             master_path = cleanloop_datasets.get_output_path(output_dir)
             success_path = output_dir / "finance_mutation_success.csv"
             failure_path = output_dir / "finance_mutation_failures.csv"
@@ -309,10 +319,10 @@ class CleanLoopExportContractTests(unittest.TestCase):
         clean_data_runtime = import_module("cleanloop.clean_data_runtime")
         input_loader = import_module("cleanloop.input_loader")
         mutation_playbook = import_module("cleanloop.mutation_playbook")
-        input_dir = PROJECT_ROOT / "cleanloop" / ".input"
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_dir = Path(tmp_dir)
+            input_dir = _copy_shipped_inputs(output_dir / "input")
             master_path = cleanloop_datasets.get_output_path(output_dir)
             success_path = cleanloop_datasets.get_mutation_success_path(output_dir)
 
@@ -366,10 +376,10 @@ class CleanLoopExportContractTests(unittest.TestCase):
         clean_data_runtime = import_module("cleanloop.clean_data_runtime")
         input_loader = import_module("cleanloop.input_loader")
         mutation_playbook = import_module("cleanloop.mutation_playbook")
-        input_dir = PROJECT_ROOT / "cleanloop" / ".input"
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             output_dir = Path(tmp_dir)
+            input_dir = _copy_shipped_inputs(output_dir / "input")
             master_path = cleanloop_datasets.get_output_path(output_dir)
 
             clean_data_runtime.clean(input_dir, master_path)
@@ -478,6 +488,137 @@ class CleanLoopExportContractTests(unittest.TestCase):
         self.assertIn("CREDIT SWAP", system_prompt)
         self.assertIn("BLANK_CANCELLED_OR_VOID", system_prompt)
         self.assertIn("Prefer a two-stage repair strategy", system_prompt)
+        self.assertIn(
+            "thin wrapper around cleanloop.clean_data_runtime.clean_starter",
+            system_prompt,
+        )
+        self.assertIn("Do NOT add pandas", system_prompt)
+
+    def test_validate_candidate_code_rejects_top_level_refactors(self) -> None:
+        """Reject candidates that ignore the bounded clean()-only mutation surface."""
+        genome_contract = import_module("cleanloop.genome_contract")
+
+        bad_candidate = '''"""candidate"""
+
+from __future__ import annotations
+
+from pathlib import Path
+import pandas as pd
+
+from cleanloop.clean_data_runtime import clean_starter as _runtime_clean
+
+
+def helper() -> None:
+    """Do extra work."""
+
+
+def clean(input_dir: Path, output_path: Path) -> None:
+    """Run a replacement pipeline."""
+    _ = pd
+    _runtime_clean(input_dir, output_path)
+'''
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "preserve module imports",
+        ):
+            genome_contract.validate_candidate_module(
+                bad_candidate,
+                baseline_source=(
+                    PROJECT_ROOT / "cleanloop" / "clean_data_starter.py"
+                ).read_text(encoding="utf-8"),
+                genome_path=PROJECT_ROOT / "cleanloop" / "clean_data_starter.py",
+            )
+
+    def test_validate_candidate_code_accepts_local_runtime_upgrade(self) -> None:
+        """Allow the safe starter-to-shipped runtime wrapper swap."""
+        genome_contract = import_module("cleanloop.genome_contract")
+
+        good_candidate = '''"""clean_data_starter.py — Starter genome for the CleanLoop finance cleaner."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+from cleanloop.clean_data_runtime import clean as _runtime_clean
+
+
+def clean(input_dir: Path, output_path: Path) -> None:
+    """Run the shipped runtime through the bounded wrapper surface."""
+    _runtime_clean(input_dir, output_path)
+'''
+
+        genome_contract.validate_candidate_module(
+            good_candidate,
+            baseline_source=(
+                PROJECT_ROOT / "cleanloop" / "clean_data_starter.py"
+            ).read_text(encoding="utf-8"),
+            genome_path=PROJECT_ROOT / "cleanloop" / "clean_data_starter.py",
+        )
+
+    def test_run_and_evaluate_converts_name_error_into_execution_failure(self) -> None:
+        """Treat candidate NameError crashes as structured genome failures."""
+        cleanloop_loop = import_module("cleanloop.loop")
+        run_and_evaluate = getattr(cleanloop_loop, "_run_and_evaluate")
+
+        class BrokenGenome:
+            """Minimal broken genome surface for the regression."""
+
+            @staticmethod
+            def clean(_input_dir: Path, _output_path: Path) -> None:
+                """Raise the same kind of runtime failure produced by bad candidates."""
+                raise NameError("reference_rows")
+
+        class DummyPrepare:
+            """Stub prepare module that should never be reached."""
+
+            @staticmethod
+            def evaluate(_output_path: Path) -> dict[str, object]:
+                """Return a sentinel result when evaluation is reached unexpectedly."""
+                return {"passed": ["unexpected"], "failed": [], "score": 1, "total": 1}
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            result = run_and_evaluate(
+                BrokenGenome,
+                DummyPrepare,
+                Path(tmp_dir),
+                Path(tmp_dir) / "finance_master.csv",
+            )
+
+        self.assertEqual(result["score"], 0)
+        self.assertEqual(result["total"], 1)
+        self.assertEqual(result["passed"], [])
+        self.assertEqual(result["failed"], ["can_run_genome: reference_rows"])
+
+    def test_best_rerank_candidate_score_uses_highest_candidate_score(self) -> None:
+        """Use the best generated candidate score for the baseline gate."""
+        cleanloop_loop = import_module("cleanloop.loop")
+        best_rerank_candidate_score = getattr(
+            cleanloop_loop,
+            "_best_rerank_candidate_score",
+        )
+
+        score, total = best_rerank_candidate_score(
+            {
+                "candidates": [
+                    {"score": 9, "total": 14},
+                    {"score": 0, "total": 1},
+                    {"score": 13, "total": 14},
+                ]
+            }
+        )
+
+        self.assertEqual((score, total), (13, 14))
+
+    def test_reranker_expected_total_matches_referee_assertion_count(self) -> None:
+        """Keep reranker fallback totals aligned with the immutable referee."""
+        reranker = import_module("cleanloop.reranker")
+        expected_total_assertions = getattr(reranker, "_expected_total_assertions")
+
+        self.assertEqual(
+            expected_total_assertions(),
+            len(cleanloop_datasets.build_assertion_registry()),
+        )
 
     def test_prepare_evaluate_rejects_failure_sidecar_schema_drift(self) -> None:
         """Fail evaluation when the mutation-failure dump loses required columns."""

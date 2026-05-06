@@ -148,10 +148,16 @@ History saved to Y:\.sources\localm-tuts\courses\_examples\self-improving-agent\
 
 ### Explanation
 
-1. The preflight, reset, and evaluate steps recreate the same baseline that Lesson 03 used. That keeps the search comparison fair.
+1. The preflight, reset, and evaluate steps recreate the same starter baseline that Lesson 03 used. That keeps the search comparison fair even when the repo ships with the full runtime in `clean_data.py`.
 2. `python util.py loop --max-iterations 1 --rerank --candidates 2` spends extra inference budget on two candidates in the same round. Validate that the output explicitly says `Reranker: generating 2 candidates...` and shows both attempt labels.
-3. The important result is that the selected candidate still scored only `13/14`, so the loop reverted it. That is the test-time search lesson: more candidates can improve odds, but they still have to beat the same fixed judge.
-4. After the run, inspect `finance_eval_history.json` or `finance_round_logs.jsonl` so you can see which attempt label won and how wide the search really was.
+3. A revert is still the expected lesson outcome when the winner does not beat the fixed judge. In the latest runs, weak candidates often fail earlier because they violate the bounded mutation contract by replacing the wrapper with ad hoc pandas logic. The loop now surfaces that failure as a candidate-contract problem instead of leaving the reason implicit.
+4. After the run, inspect `finance_eval_history.json` or `finance_round_logs.jsonl` so you can see which attempt label won, how wide the search really was, and whether the winner failed scoring or only tied the baseline.
+
+### Recording Note
+
+The reranked loop still starts from `clean_data_starter.py` for the lesson, but
+after a no-improvement run it restores the pre-run shipped genome. That keeps
+the demo honest without leaving the repo in a reverted starter state between takes.
 
 ### Current Implementation Notes
 
