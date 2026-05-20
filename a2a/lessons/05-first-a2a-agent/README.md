@@ -5,8 +5,8 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/first-a2a-agent" target="_blank" rel="noopener noreferrer">Companion page</a>
-- Previous lesson: <a href="https://tuts.localm.dev/a2a/setup-resources" target="_blank" rel="noopener noreferrer">Setup & Resources</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/first-a2a-agent" target="_blank" rel="noopener noreferrer">Companion page</a>
+- Previous lesson: <a href="https://tuts.localm.dev/agent-to-agent-protocol/setup-resources" target="_blank" rel="noopener noreferrer">Setup & Resources</a>
 - Next lesson: [Wrapping Agents as A2A Servers](../06-a2a-server/)
 
 Build a standalone QA agent powered by **GitHub Phi-4** that answers questions about insurance policies.

@@ -220,7 +220,7 @@ Full framework details: [`docs/ASSESSMENT_GUIDE.md`](../../docs/ASSESSMENT_GUIDE
 
 ```mermaid
 graph TD
-    A["ctx-sdlc/"] --> B["apps/"]
+    A["context-engineering/"] --> B["apps/"]
     A --> C["lessons/"]
     B --> D["complex/ — Loan Workbench API"]
     B --> E["simple/ — Task Tracker API"]
@@ -251,4 +251,4 @@ graph TD
 | 08  | [![Lesson 08](https://img.youtube.com/vi/7XBVtDGi87I/maxresdefault.jpg)](https://www.youtube.com/watch?v=7XBVtDGi87I) | Beyond Vibe Coding: Context Operating Model                               | [Watch](https://www.youtube.com/watch?v=7XBVtDGi87I) |
 | 09  | [![Lesson 09](https://img.youtube.com/vi/AQEzRSVYf0c/maxresdefault.jpg)](https://www.youtube.com/watch?v=AQEzRSVYf0c) | The GitHub Copilot Capstone: Putting Every Lesson Into Practice           | [Watch](https://www.youtube.com/watch?v=AQEzRSVYf0c) |
 
-Full Course: <https://tuts.localm.dev/ctx-sdlc>
+Full Course: <https://tuts.localm.dev/context-engineering>

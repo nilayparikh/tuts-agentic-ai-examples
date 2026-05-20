@@ -11,7 +11,7 @@
 2026-04-14T21:00:35.472Z [INFO] Session indexing debug: showSessionSyncPrompt=false
 2026-04-14T21:00:35.472Z [INFO] Starting Copilot CLI: 1.0.26
 2026-04-14T21:00:35.472Z [INFO] Node.js version: v24.11.1
-2026-04-14T21:00:35.472Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context, featureFlagEnabled=false
+2026-04-14T21:00:35.472Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context, featureFlagEnabled=false
 2026-04-14T21:00:35.472Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-04-14T21:00:35.483Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: exp_context_fetch)
 2026-04-14T21:00:35.970Z [INFO] No update needed, current version is 1.0.26, fetched latest release is v1.0.26
@@ -138,7 +138,7 @@ cwd: undefined
   "truncateBasedOn": "tokenCount",
   "truncateStyle": "middle"
 }
-2026-04-14T21:00:43.483Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context, skipping
+2026-04-14T21:00:43.483Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context, skipping
 2026-04-14T21:00:43.841Z [INFO] Memory enablement check: enabled
 2026-04-14T21:00:44.302Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
 2026-04-14T21:00:44.302Z [DEBUG] str_replace_editor: default options: {
@@ -292,7 +292,7 @@ cwd: undefined
   "version": "claude-haiku-4.5"
 }
 2026-04-14T21:00:44.740Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
-2026-04-14T21:00:44.741Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context, skipping
+2026-04-14T21:00:44.741Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context, skipping
 2026-04-14T21:00:44.742Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-04-14T21:00:44.743Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
 2026-04-14T21:00:44.743Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
@@ -2530,7 +2530,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01NieHgjs9pkYGdDKJ25WgvQ",
@@ -2546,7 +2546,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"**/*.md\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\"}",
+              "arguments": "{\"pattern\":\"**/*.md\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01T78V7c9cCbcD71aUCdqhFk",
@@ -2572,7 +2572,7 @@ cwd: undefined
 2026-04-14T21:00:51.991Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:00:52.043Z [DEBUG] Tool calls count: 3
 2026-04-14T21:00:52.043Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:00:52.044Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context
+2026-04-14T21:00:52.044Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context
 2026-04-14T21:00:52.049Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:00:52.050Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-14T21:00:52.177Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2609,7 +2609,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\README.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\README.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01JyqdWHrWsWtb6zoCLFfKRF",
@@ -2625,7 +2625,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\api-conventions.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\api-conventions.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Us1WvyH7L1HbBWRGfDttXq",
@@ -2641,7 +2641,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\preference-management-example.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\preference-management-example.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01J62d18ZbZhw8yoGifxm7yk",
@@ -2657,7 +2657,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\architecture.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\docs\\\\architecture.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_017Qc9zuDf2ttNZguuwBVPL6",
@@ -2683,10 +2683,10 @@ cwd: undefined
 2026-04-14T21:00:55.908Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:00:55.920Z [DEBUG] Tool calls count: 4
 2026-04-14T21:00:55.920Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:00:55.920Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\README.md
-2026-04-14T21:00:55.920Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
-2026-04-14T21:00:55.921Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
-2026-04-14T21:00:55.921Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
+2026-04-14T21:00:55.920Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\README.md
+2026-04-14T21:00:55.920Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
+2026-04-14T21:00:55.921Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
+2026-04-14T21:00:55.921Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
 2026-04-14T21:00:55.925Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:00:55.925Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-14T21:00:55.936Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2723,7 +2723,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EwMstrzWbDsDhGCp5iXVjG",
@@ -2749,7 +2749,7 @@ cwd: undefined
 2026-04-14T21:00:59.069Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:00:59.085Z [DEBUG] Tool calls count: 1
 2026-04-14T21:00:59.085Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:00:59.085Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src
+2026-04-14T21:00:59.085Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src
 2026-04-14T21:00:59.087Z [DEBUG] [telemetry-queue] Flushing 50 events (177183 B → 9008 B gzipped)
 2026-04-14T21:00:59.090Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:00:59.090Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2774,7 +2774,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_013HMK5vpPssUKi6C78CqR5K",
@@ -2790,7 +2790,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\middleware\\\\error-handler.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\middleware\\\\error-handler.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01XFncyhnFzzuncfpdyUmxoS",
@@ -2806,7 +2806,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_019KSwam9Do25smLh7yWKkyt",
@@ -2832,9 +2832,9 @@ cwd: undefined
 2026-04-14T21:01:02.659Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:01:02.659Z [DEBUG] Tool calls count: 3
 2026-04-14T21:01:02.659Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:01:02.659Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
-2026-04-14T21:01:02.659Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
-2026-04-14T21:01:02.660Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src
+2026-04-14T21:01:02.659Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:02.659Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
+2026-04-14T21:01:02.660Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src
 2026-04-14T21:01:02.663Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:02.663Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-14T21:01:02.675Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2870,7 +2870,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\",\"old_str\":\"function firstParam(value: string | string[]): string {\\n  return Array.isArray(value) ? value[0] : value;\\n}\",\"new_str\":\"function firstParam(value: string | string[]): string {\\n  return Array.isArray(value) ? value[0] : value;\\n}\\n\\n/**\\n * Check authorization for preference write operations.\\n * Throws FORBIDDEN error if:\\n * - Session is delegated (x-delegated-for header)\\n * - Actor does not have write permission\\n * - Actor is not the owner (targetUserId must match session.actor.id)\\n */\\nfunction checkWriteAuthorization(\\n  session: SessionContext,\\n  targetUserId: string,\\n): void {\\n  if (session.delegatedFor) {\\n    throw new Error(\\n      \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n    );\\n  }\\n\\n  if (session.actor.id !== targetUserId) {\\n    throw new Error(\\n      \\\"FORBIDDEN: Users can only modify their own notification preferences.\\\",\\n    );\\n  }\\n\\n  if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n    throw new Error(\\n      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n    );\\n  }\\n}\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\",\"old_str\":\"function firstParam(value: string | string[]): string {\\n  return Array.isArray(value) ? value[0] : value;\\n}\",\"new_str\":\"function firstParam(value: string | string[]): string {\\n  return Array.isArray(value) ? value[0] : value;\\n}\\n\\n/**\\n * Check authorization for preference write operations.\\n * Throws FORBIDDEN error if:\\n * - Session is delegated (x-delegated-for header)\\n * - Actor does not have write permission\\n * - Actor is not the owner (targetUserId must match session.actor.id)\\n */\\nfunction checkWriteAuthorization(\\n  session: SessionContext,\\n  targetUserId: string,\\n): void {\\n  if (session.delegatedFor) {\\n    throw new Error(\\n      \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n    );\\n  }\\n\\n  if (session.actor.id !== targetUserId) {\\n    throw new Error(\\n      \\\"FORBIDDEN: Users can only modify their own notification preferences.\\\",\\n    );\\n  }\\n\\n  if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n    throw new Error(\\n      `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n    );\\n  }\\n}\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01BCthCLwTuvp2S3bpgTCamD",
@@ -2898,7 +2898,7 @@ cwd: undefined
 2026-04-14T21:01:11.334Z [DEBUG] Running tool calls in parallel
 2026-04-14T21:01:11.335Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-14T21:01:11.335Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-14T21:01:11.335Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:11.335Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 2026-04-14T21:01:11.350Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-14T21:01:11.352Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:11.353Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2931,7 +2931,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"/** PUT /api/notifications/preferences — set a notification preference. */\\nnotificationRoutes.put(\\n  \\\"/preferences\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"userId\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"event\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"channel\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const { userId, event, channel, enabled } = req.body;\\n\\n      checkWriteAuthorization(session, userId);\\n\\n      const now = new Date().toISOString();\\n\\n      const previous = prefRepo.findPreference(userId, event, channel);\\n\\n      const pref: NotificationPreference = {\\n        userId,\\n        event,\\n        channel,\\n        enabled,\\n        updatedAt: now,\\n        updatedBy: session.actor.id,\\n      };\\n\\n      prefRepo.setPreference(pref);\\n\\n      // Audit the preference change\\n      auditAction(\\n        session,\\n        \\\"preference.updated\\\",\\n        previous ?? null,\\n        pref,\\n        \\\"notification-routes\\\",\\n      );\\n\\n      res.json(pref);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/** PUT /api/notifications/preferences — set a notification preference. */\\nnotificationRoutes.put(\\n  \\\"/preferences\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"userId\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"event\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"channel\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Additional permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { userId, event, channel, enabled } = req.body;\\n      const now = new Date().toISOString();\\n\\n      const previous = prefRepo.findPreference(userId, event, channel);\\n\\n      const pref: NotificationPreference = {\\n        userId,\\n        event,\\n        channel,\\n        enabled,\\n        updatedAt: now,\\n        updatedBy: session.actor.id,\\n      };\\n\\n      prefRepo.setPreference(pref);\\n\\n      // Audit the preference change\\n      auditAction(\\n        session,\\n        \\\"preference.updated\\\",\\n        previous ?? null,\\n        pref,\\n        \\\"notification-routes\\\",\\n      );\\n\\n      res.json(pref);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
+              "arguments": "{\"new_str\":\"/** PUT /api/notifications/preferences — set a notification preference. */\\nnotificationRoutes.put(\\n  \\\"/preferences\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"userId\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"event\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"channel\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const { userId, event, channel, enabled } = req.body;\\n\\n      checkWriteAuthorization(session, userId);\\n\\n      const now = new Date().toISOString();\\n\\n      const previous = prefRepo.findPreference(userId, event, channel);\\n\\n      const pref: NotificationPreference = {\\n        userId,\\n        event,\\n        channel,\\n        enabled,\\n        updatedAt: now,\\n        updatedBy: session.actor.id,\\n      };\\n\\n      prefRepo.setPreference(pref);\\n\\n      // Audit the preference change\\n      auditAction(\\n        session,\\n        \\\"preference.updated\\\",\\n        previous ?? null,\\n        pref,\\n        \\\"notification-routes\\\",\\n      );\\n\\n      res.json(pref);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/** PUT /api/notifications/preferences — set a notification preference. */\\nnotificationRoutes.put(\\n  \\\"/preferences\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"userId\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"event\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"channel\\\", type: \\\"string\\\", required: true },\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Additional permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { userId, event, channel, enabled } = req.body;\\n      const now = new Date().toISOString();\\n\\n      const previous = prefRepo.findPreference(userId, event, channel);\\n\\n      const pref: NotificationPreference = {\\n        userId,\\n        event,\\n        channel,\\n        enabled,\\n        updatedAt: now,\\n        updatedBy: session.actor.id,\\n      };\\n\\n      prefRepo.setPreference(pref);\\n\\n      // Audit the preference change\\n      auditAction(\\n        session,\\n        \\\"preference.updated\\\",\\n        previous ?? null,\\n        pref,\\n        \\\"notification-routes\\\",\\n      );\\n\\n      res.json(pref);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01FCCtGB9W1GJUVZoRhhD3DG",
@@ -2959,7 +2959,7 @@ cwd: undefined
 2026-04-14T21:01:17.889Z [DEBUG] Running tool calls in parallel
 2026-04-14T21:01:17.889Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-14T21:01:17.889Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-14T21:01:17.889Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:17.889Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 2026-04-14T21:01:17.904Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-14T21:01:17.905Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:17.905Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2992,7 +2992,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.\\n * Updates the enabled flag for all notification events on the email channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/email\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      checkWriteAuthorization(session, targetUserId);\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"email\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"email\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.\\n * Updates the enabled flag for all notification events on the email channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/email\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Enforce owner-only writes\\n      if (session.actor.id !== targetUserId) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      // Permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"email\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"email\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
+              "arguments": "{\"new_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.\\n * Updates the enabled flag for all notification events on the email channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/email\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      checkWriteAuthorization(session, targetUserId);\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"email\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"email\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/email — set email notification preferences for all events.\\n * Updates the enabled flag for all notification events on the email channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/email\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Enforce owner-only writes\\n      if (session.actor.id !== targetUserId) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      // Permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"email\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"email\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_016xrYQfrw5C1Yy7e6ZAX6J4",
@@ -3020,7 +3020,7 @@ cwd: undefined
 2026-04-14T21:01:26.167Z [DEBUG] Running tool calls in parallel
 2026-04-14T21:01:26.167Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-14T21:01:26.168Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-14T21:01:26.168Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:26.168Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 2026-04-14T21:01:26.179Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-14T21:01:26.180Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:26.181Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3053,7 +3053,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.\\n * Updates the enabled flag for all notification events on the SMS channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/sms\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      checkWriteAuthorization(session, targetUserId);\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"sms\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"sms\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.\\n * Updates the enabled flag for all notification events on the SMS channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/sms\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Enforce owner-only writes\\n      if (session.actor.id !== targetUserId) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      // Permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"sms\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"sms\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
+              "arguments": "{\"new_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.\\n * Updates the enabled flag for all notification events on the SMS channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/sms\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      checkWriteAuthorization(session, targetUserId);\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"sms\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"sms\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PUT /api/notifications/preferences/:userId/sms — set SMS notification preferences for all events.\\n * Updates the enabled flag for all notification events on the SMS channel.\\n * Only the owner can modify their own preferences. Delegated sessions are blocked.\\n */\\nnotificationRoutes.put(\\n  \\\"/preferences/:userId/sms\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([\\n    { field: \\\"enabled\\\", type: \\\"boolean\\\", required: true },\\n  ]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const targetUserId = firstParam(req.params.userId);\\n\\n      // Block writes in delegated sessions\\n      if (session.delegatedFor) {\\n        res.status(403).json({\\n          error: \\\"FORBIDDEN: Delegated sessions cannot modify notification preferences.\\\",\\n        });\\n        return;\\n      }\\n\\n      // Enforce owner-only writes\\n      if (session.actor.id !== targetUserId) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Users can only modify their own notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      // Permission check\\n      if (!hasPermission(session.actor.role, \\\"notification-pref:write\\\")) {\\n        res.status(403).json({\\n          error: `FORBIDDEN: Role '${session.actor.role}' cannot modify notification preferences.`,\\n        });\\n        return;\\n      }\\n\\n      const { enabled } = req.body;\\n      const now = new Date().toISOString();\\n      const events: Array<\\\"approval\\\" | \\\"decline\\\" | \\\"document-request\\\" | \\\"manual-review-escalation\\\"> = [\\n        \\\"approval\\\",\\n        \\\"decline\\\",\\n        \\\"document-request\\\",\\n        \\\"manual-review-escalation\\\",\\n      ];\\n\\n      const updates: NotificationPreference[] = [];\\n\\n      for (const event of events) {\\n        const previous = prefRepo.findPreference(targetUserId, event, \\\"sms\\\");\\n\\n        const pref: NotificationPreference = {\\n          userId: targetUserId,\\n          event,\\n          channel: \\\"sms\\\",\\n          enabled,\\n          updatedAt: now,\\n          updatedBy: session.actor.id,\\n        };\\n\\n        prefRepo.setPreference(pref);\\n        updates.push(pref);\\n\\n        // Audit each preference change\\n        auditAction(\\n          session,\\n          \\\"preference.updated\\\",\\n          previous ?? null,\\n          pref,\\n          \\\"notification-routes\\\",\\n        );\\n      }\\n\\n      res.json(updates);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_015y75fyerv4v3Rrq4buX1yh",
@@ -3081,7 +3081,7 @@ cwd: undefined
 2026-04-14T21:01:32.886Z [DEBUG] Running tool calls in parallel
 2026-04-14T21:01:32.886Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-14T21:01:32.886Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-14T21:01:32.886Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:32.886Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 2026-04-14T21:01:32.938Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-14T21:01:32.939Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:32.939Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3114,7 +3114,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\src\\\\backend\\\\src\\\\routes\\\\notifications.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Fnzqo2oDMTPoiGDfs4t8Qj",
@@ -3140,7 +3140,7 @@ cwd: undefined
 2026-04-14T21:01:35.071Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:01:35.075Z [DEBUG] Tool calls count: 1
 2026-04-14T21:01:35.075Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:01:35.075Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+2026-04-14T21:01:35.075Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 2026-04-14T21:01:35.078Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:35.078Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-14T21:01:35.086Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3172,7 +3172,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\ASSESSMENT.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\02-curate-project-context\\\\ASSESSMENT.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_017AHW2yNXEWqvMTt6Hgb2pu",
@@ -3198,7 +3198,7 @@ cwd: undefined
 2026-04-14T21:01:38.171Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-14T21:01:38.175Z [DEBUG] Tool calls count: 1
 2026-04-14T21:01:38.175Z [DEBUG] Running tool calls in parallel
-2026-04-14T21:01:38.175Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
+2026-04-14T21:01:38.175Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
 2026-04-14T21:01:38.177Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-14T21:01:38.177Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-14T21:01:38.184Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3421,4 +3421,4 @@ cwd: undefined
 Changes   +34 -62
 Requests  0.33 Premium (1m 9s)
 Tokens    ↑ 370.6k • ↓ 6.1k • 323.6k (cached)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\.output\logs\session.md

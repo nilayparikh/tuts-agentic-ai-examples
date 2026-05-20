@@ -9,16 +9,16 @@ and a React dashboard.
 
 | Lesson | Topic                                                                                                                                                  | Video                                                                                                     | Example                                                                                   |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| 05     | <a href="https://tuts.localm.dev/a2a/first-a2a-agent" target="_blank" rel="noopener noreferrer">Building Your First A2A Agent</a>                      | <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/05-first-a2a-agent/`](lessons/05-first-a2a-agent/README.md)                     |
-| 06     | <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Wrapping Agents as A2A Servers</a>                          | <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/06-a2a-server/`](lessons/06-a2a-server/README.md)                               |
-| 07     | <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">A2A Client Fundamentals</a>                                 | <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/07-a2a-client/`](lessons/07-a2a-client/README.md)                               |
-| 08     | <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">A2A with Microsoft Agent Framework</a>       | <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/08-microsoft-agent-framework/`](lessons/08-microsoft-agent-framework/README.md) |
-| 09     | <a href="https://tuts.localm.dev/a2a/google-adk" target="_blank" rel="noopener noreferrer">A2A with Google ADK</a>                                     | <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/09-google-adk/`](lessons/09-google-adk/README.md)                               |
-| 10     | <a href="https://tuts.localm.dev/a2a/langgraph" target="_blank" rel="noopener noreferrer">A2A with LangGraph</a>                                       | <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/10-langgraph/`](lessons/10-langgraph/README.md)                                 |
-| 11     | <a href="https://tuts.localm.dev/a2a/crewai" target="_blank" rel="noopener noreferrer">A2A with CrewAI</a>                                             | <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/11-crewai/`](lessons/11-crewai/README.md)                                       |
-| 12     | <a href="https://tuts.localm.dev/a2a/openai-agents-sdk" target="_blank" rel="noopener noreferrer">A2A with OpenAI Agents SDK</a>                       | <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/12-openai-agents-sdk/`](lessons/12-openai-agents-sdk/README.md)                 |
-| 13     | <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">A2A with Claude Style Agents</a>                      | <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/13-claude-agent-sdk/`](lessons/13-claude-agent-sdk/README.md)                   |
-| 14     | <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Multi-Agent System Deep Dive - Loan Approval</a> | <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/14-multi-agent-deep-dive/`](lessons/14-multi-agent-deep-dive/README.md)         |
+| 05     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/first-a2a-agent" target="_blank" rel="noopener noreferrer">Building Your First A2A Agent</a>                      | <a href="https://www.youtube.com/watch?v=xD606KkVkoA" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/05-first-a2a-agent/`](lessons/05-first-a2a-agent/README.md)                     |
+| 06     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/a2a-server" target="_blank" rel="noopener noreferrer">Wrapping Agents as A2A Servers</a>                          | <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/06-a2a-server/`](lessons/06-a2a-server/README.md)                               |
+| 07     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/a2a-client" target="_blank" rel="noopener noreferrer">A2A Client Fundamentals</a>                                 | <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/07-a2a-client/`](lessons/07-a2a-client/README.md)                               |
+| 08     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">A2A with Microsoft Agent Framework</a>       | <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/08-microsoft-agent-framework/`](lessons/08-microsoft-agent-framework/README.md) |
+| 09     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/google-adk" target="_blank" rel="noopener noreferrer">A2A with Google ADK</a>                                     | <a href="https://www.youtube.com/watch?v=6pIgKOY16IE" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/09-google-adk/`](lessons/09-google-adk/README.md)                               |
+| 10     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/langgraph" target="_blank" rel="noopener noreferrer">A2A with LangGraph</a>                                       | <a href="https://www.youtube.com/watch?v=Nt9eENHhGX8" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/10-langgraph/`](lessons/10-langgraph/README.md)                                 |
+| 11     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/crewai" target="_blank" rel="noopener noreferrer">A2A with CrewAI</a>                                             | <a href="https://www.youtube.com/watch?v=JSa8Vd9kpFM" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/11-crewai/`](lessons/11-crewai/README.md)                                       |
+| 12     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/openai-agents-sdk" target="_blank" rel="noopener noreferrer">A2A with OpenAI Agents SDK</a>                       | <a href="https://www.youtube.com/watch?v=I0C8xFZpJdQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/12-openai-agents-sdk/`](lessons/12-openai-agents-sdk/README.md)                 |
+| 13     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/claude-agent-sdk" target="_blank" rel="noopener noreferrer">A2A with Claude Style Agents</a>                      | <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/13-claude-agent-sdk/`](lessons/13-claude-agent-sdk/README.md)                   |
+| 14     | <a href="https://tuts.localm.dev/agent-to-agent-protocol/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Multi-Agent System Deep Dive - Loan Approval</a> | <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch</a> | [`lessons/14-multi-agent-deep-dive/`](lessons/14-multi-agent-deep-dive/README.md)         |
 
 ## Lesson Map
 
@@ -101,8 +101,8 @@ client = OpenAI(
 ## Quick Start — Full Lesson Scripts
 
 ```powershell
-# Windows — from _examples/a2a/
-cd _examples/a2a
+# Windows — from _examples/agent-to-agent-protocol/
+cd _examples/agent-to-agent-protocol
 .\.venv\Scripts\Activate.ps1
 
 python scripts/lesson_05.py   # standalone agent
@@ -114,7 +114,7 @@ python scripts/lesson_09.py   # ADK to_a2a() + A2A demo
 
 ```bash
 # macOS / Linux
-cd _examples/a2a
+cd _examples/agent-to-agent-protocol
 source .venv/bin/activate
 
 python scripts/lesson_05.py
@@ -137,7 +137,7 @@ python scripts/lesson_09.py
 
 ```powershell
 # Windows
-cd _examples/a2a
+cd _examples/agent-to-agent-protocol
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -145,7 +145,7 @@ pip install -r requirements.txt
 
 ```bash
 # macOS / Linux
-cd _examples/a2a
+cd _examples/agent-to-agent-protocol
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -154,7 +154,7 @@ pip install -r requirements.txt
 Or with `uv`:
 
 ```bash
-cd _examples/a2a
+cd _examples/agent-to-agent-protocol
 uv venv
 uv pip install -r requirements.txt
 ```

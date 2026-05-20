@@ -11,7 +11,7 @@
 2026-04-13T18:11:39.527Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: first_launch)
 2026-04-13T18:11:39.527Z [INFO] Starting Copilot CLI: 1.0.24
 2026-04-13T18:11:39.527Z [INFO] Node.js version: v24.11.1
-2026-04-13T18:11:39.527Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context, featureFlagEnabled=false
+2026-04-13T18:11:39.527Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context, featureFlagEnabled=false
 2026-04-13T18:11:39.527Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-04-13T18:11:39.646Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: exp_context_fetch)
 2026-04-13T18:11:40.546Z [DEBUG] No MCP config loaded from ODR (ODR unavailable or returned no usable servers)
@@ -134,7 +134,7 @@ cwd: undefined
   "truncateBasedOn": "tokenCount",
   "truncateStyle": "middle"
 }
-2026-04-13T18:11:46.788Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context, skipping
+2026-04-13T18:11:46.788Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context, skipping
 2026-04-13T18:11:46.789Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: pending_messages_modified)
 2026-04-13T18:11:46.790Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: pending_messages_modified)
 2026-04-13T18:11:46.794Z [DEBUG] Embedding retrieval skipped: DYNAMIC_INSTRUCTIONS_RETRIEVAL not enabled.
@@ -292,7 +292,7 @@ cwd: undefined
 }
 2026-04-13T18:11:47.859Z [INFO] Successfully downloaded package, restart to update to version 1.0.25
 2026-04-13T18:11:48.143Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
-2026-04-13T18:11:48.144Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context, skipping
+2026-04-13T18:11:48.144Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context, skipping
 2026-04-13T18:11:48.145Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-04-13T18:11:48.147Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
 2026-04-13T18:11:48.147Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
@@ -2523,7 +2523,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01ESmRp3Cus62pvD5YKkrbaB",
@@ -2549,7 +2549,7 @@ cwd: undefined
 2026-04-13T18:11:52.024Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:11:52.028Z [DEBUG] Tool calls count: 2
 2026-04-13T18:11:52.028Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:11:52.029Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context
+2026-04-13T18:11:52.029Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context
 2026-04-13T18:11:52.032Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:11:52.033Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:11:52.041Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2583,7 +2583,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\README.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\README.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01TAF74GVhMdDD1HiBUdHf83",
@@ -2599,7 +2599,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\IMPLEMENTATION_SUMMARY.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\IMPLEMENTATION_SUMMARY.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Er4ANq2ScErt2cViBeWmc8",
@@ -2615,7 +2615,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\ESCALATION_IMPLEMENTATION.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\ESCALATION_IMPLEMENTATION.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01GsuKidc76vKPTSMn7rCNXR",
@@ -2631,7 +2631,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01FEw7WCN58HoxJ5HE3r99S5",
@@ -2657,10 +2657,10 @@ cwd: undefined
 2026-04-13T18:11:54.925Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:11:54.946Z [DEBUG] Tool calls count: 4
 2026-04-13T18:11:54.946Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:11:54.946Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md
-2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md
-2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md
-2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src
+2026-04-13T18:11:54.946Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md
+2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md
+2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md
+2026-04-13T18:11:54.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src
 2026-04-13T18:11:54.966Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:11:54.966Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:11:54.980Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2699,7 +2699,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\util.py\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\util.py\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_012KqMVy9e8pmuhEDeeVC876",
@@ -2715,7 +2715,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"src/**/*\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\"}",
+              "arguments": "{\"pattern\":\"src/**/*\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01SrkoLYJWkcvvBYTxeCaTKg",
@@ -2741,7 +2741,7 @@ cwd: undefined
 2026-04-13T18:11:58.430Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:11:58.442Z [DEBUG] Tool calls count: 2
 2026-04-13T18:11:58.442Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:11:58.442Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py
+2026-04-13T18:11:58.442Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py
 2026-04-13T18:11:58.444Z [DEBUG] [telemetry-queue] Flushing 50 events (171266 B → 8969 B gzipped)
 2026-04-13T18:11:58.522Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:11:58.522Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2775,7 +2775,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\app\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\app\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01MEhJ8yDQ4X59ZYDzF7dpBR",
@@ -2801,7 +2801,7 @@ cwd: undefined
 2026-04-13T18:12:01.994Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:12:02.023Z [DEBUG] Tool calls count: 1
 2026-04-13T18:12:02.023Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:12:02.024Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\app
+2026-04-13T18:12:02.024Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\app
 2026-04-13T18:12:02.028Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:02.029Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:12:02.039Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -2832,7 +2832,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\**\\\\*\"}",
+              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\**\\\\*\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01GGTwj9arBunC8FqMN5jLwd",
@@ -2888,7 +2888,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01VmqBnxfbTTQrYwo5cQcbry",
@@ -2914,7 +2914,7 @@ cwd: undefined
 2026-04-13T18:12:06.420Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:12:06.429Z [DEBUG] Tool calls count: 1
 2026-04-13T18:12:06.429Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:12:06.430Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut
+2026-04-13T18:12:06.430Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut
 2026-04-13T18:12:06.431Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:06.432Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:12:06.438Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -2946,7 +2946,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\escalation-repository.ts\",\"file_text\":\"import { Database } from \\\"sqlite\\\";\\nimport { Escalation } from \\\"./types\\\";\\n\\nexport async function findEscalationById(\\n  db: Database,\\n  id: string\\n): Promise<Escalation | null> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE id = ?\\\"\\n  );\\n  const row = stmt.get(id) as any;\\n  return row || null;\\n}\\n\\nexport async function findEscalationsByApplication(\\n  db: Database,\\n  applicationId: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE application_id = ? ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(applicationId) as any[];\\n  return rows || [];\\n}\\n\\nexport async function findEscalationsByStatus(\\n  db: Database,\\n  status: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE status = ? ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(status) as any[];\\n  return rows || [];\\n}\\n\\nexport async function findEscalationsByRecipient(\\n  db: Database,\\n  userId: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE escalated_to = ? AND status = 'pending' ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(userId) as any[];\\n  return rows || [];\\n}\\n\\nexport async function createEscalation(\\n  db: Database,\\n  data: {\\n    id: string;\\n    applicationId: string;\\n    escalatedBy: string;\\n    escalatedTo: string;\\n    reason: string;\\n  }\\n): Promise<Escalation> {\\n  const stmt = db.prepare(\\n    \\\"INSERT INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))\\\"\\n  );\\n  stmt.run(\\n    data.id,\\n    data.applicationId,\\n    data.escalatedBy,\\n    data.escalatedTo,\\n    data.reason\\n  );\\n  const result = await findEscalationById(db, data.id);\\n  if (!result) throw new Error(\\\"Failed to create escalation\\\");\\n  return result;\\n}\\n\\nexport async function updateEscalationStatus(\\n  db: Database,\\n  id: string,\\n  status: string\\n): Promise<Escalation> {\\n  const stmt = db.prepare(\\n    \\\"UPDATE escalations SET status = ?, updated_at = datetime('now') WHERE id = ?\\\"\\n  );\\n  stmt.run(status, id);\\n  const result = await findEscalationById(db, id);\\n  if (!result) throw new Error(\\\"Failed to update escalation\\\");\\n  return result;\\n}\\n\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\escalation-repository.ts\",\"file_text\":\"import { Database } from \\\"sqlite\\\";\\nimport { Escalation } from \\\"./types\\\";\\n\\nexport async function findEscalationById(\\n  db: Database,\\n  id: string\\n): Promise<Escalation | null> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE id = ?\\\"\\n  );\\n  const row = stmt.get(id) as any;\\n  return row || null;\\n}\\n\\nexport async function findEscalationsByApplication(\\n  db: Database,\\n  applicationId: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE application_id = ? ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(applicationId) as any[];\\n  return rows || [];\\n}\\n\\nexport async function findEscalationsByStatus(\\n  db: Database,\\n  status: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE status = ? ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(status) as any[];\\n  return rows || [];\\n}\\n\\nexport async function findEscalationsByRecipient(\\n  db: Database,\\n  userId: string\\n): Promise<Escalation[]> {\\n  const stmt = db.prepare(\\n    \\\"SELECT id, application_id AS applicationId, escalated_by AS escalatedBy, escalated_to AS escalatedTo, reason, status, created_at AS createdAt, updated_at AS updatedAt FROM escalations WHERE escalated_to = ? AND status = 'pending' ORDER BY created_at DESC\\\"\\n  );\\n  const rows = stmt.all(userId) as any[];\\n  return rows || [];\\n}\\n\\nexport async function createEscalation(\\n  db: Database,\\n  data: {\\n    id: string;\\n    applicationId: string;\\n    escalatedBy: string;\\n    escalatedTo: string;\\n    reason: string;\\n  }\\n): Promise<Escalation> {\\n  const stmt = db.prepare(\\n    \\\"INSERT INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'pending', datetime('now'), datetime('now'))\\\"\\n  );\\n  stmt.run(\\n    data.id,\\n    data.applicationId,\\n    data.escalatedBy,\\n    data.escalatedTo,\\n    data.reason\\n  );\\n  const result = await findEscalationById(db, data.id);\\n  if (!result) throw new Error(\\\"Failed to create escalation\\\");\\n  return result;\\n}\\n\\nexport async function updateEscalationStatus(\\n  db: Database,\\n  id: string,\\n  status: string\\n): Promise<Escalation> {\\n  const stmt = db.prepare(\\n    \\\"UPDATE escalations SET status = ?, updated_at = datetime('now') WHERE id = ?\\\"\\n  );\\n  stmt.run(status, id);\\n  const result = await findEscalationById(db, id);\\n  if (!result) throw new Error(\\\"Failed to update escalation\\\");\\n  return result;\\n}\\n\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01A5jynwCJbAXcdnNaN3Qb1M",
@@ -2974,7 +2974,7 @@ cwd: undefined
 2026-04-13T18:12:14.188Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:14.188Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:14.189Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:14.189Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
+2026-04-13T18:12:14.189Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
 2026-04-13T18:12:14.204Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:14.205Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:14.205Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3000,7 +3000,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"file_text\":\"import { Database } from \\\"sqlite\\\";\\nimport { BrokerClient } from \\\"../broker\\\";\\nimport {\\n  findEscalationById,\\n  findEscalationsByApplication,\\n  findEscalationsByRecipient,\\n  createEscalation as createEscalationDb,\\n  updateEscalationStatus,\\n} from \\\"../models/escalation-repository\\\";\\nimport { findApplicationById } from \\\"../models/loan-repository\\\";\\nimport { findUserById } from \\\"../models/user-repository\\\";\\nimport { Escalation, Session } from \\\"../models/types\\\";\\nimport { nanoid } from \\\"nanoid\\\";\\n\\nexport async function escalateReview(\\n  db: Database,\\n  broker: BrokerClient,\\n  session: Session,\\n  applicationId: string,\\n  escalatedToUserId: string,\\n  reason: string\\n): Promise<Escalation> {\\n  // Validate: delegated sessions cannot create escalations\\n  if (session.delegated) {\\n    throw new Error(\\\"Delegated sessions cannot create escalations\\\");\\n  }\\n\\n  // Validate: application exists and is in valid state\\n  const application = await findApplicationById(db, applicationId);\\n  if (!application) {\\n    throw new Error(\\\"Application not found\\\");\\n  }\\n  if (![\\\"underwriting\\\", \\\"decision\\\"].includes(application.state)) {\\n    throw new Error(\\n      `Cannot escalate application in '${application.state}' state. Must be in 'underwriting' or 'decision' state`\\n    );\\n  }\\n\\n  // Validate: recipient exists\\n  const recipient = await findUserById(db, escalatedToUserId);\\n  if (!recipient) {\\n    throw new Error(\\\"Escalation recipient not found\\\");\\n  }\\n\\n  // Validate: reason not empty\\n  if (!reason || reason.trim().length === 0) {\\n    throw new Error(\\\"Escalation reason cannot be empty\\\");\\n  }\\n\\n  const escalationId = nanoid();\\n  const escalation = await createEscalationDb(db, {\\n    id: escalationId,\\n    applicationId,\\n    escalatedBy: session.userId,\\n    escalatedTo: escalatedToUserId,\\n    reason: reason.trim(),\\n  });\\n\\n  // Emit events\\n  broker.emit({\\n    type: \\\"audit.requested\\\",\\n    payload: {\\n      userId: session.userId,\\n      action: \\\"escalation.created\\\",\\n      resourceType: \\\"escalation\\\",\\n      resourceId: escalationId,\\n      details: {\\n        applicationId,\\n        escalatedTo: escalatedToUserId,\\n        reason: reason.trim(),\\n      },\\n    },\\n  });\\n\\n  broker.emit({\\n    type: \\\"notification.requested\\\",\\n    payload: {\\n      userId: escalatedToUserId,\\n      type: \\\"escalation_assigned\\\",\\n      message: `You have been assigned an escalation for application ${applicationId}`,\\n      details: {\\n        escalationId,\\n        applicationId,\\n        reason: reason.trim(),\\n      },\\n    },\\n  });\\n\\n  broker.emit({\\n    type: \\\"escalation.requested\\\",\\n    payload: {\\n      escalationId,\\n      applicationId,\\n      escalatedBy: session.userId,\\n      escalatedTo: escalatedToUserId,\\n      reason: reason.trim(),\\n    },\\n  });\\n\\n  return escalation;\\n}\\n\\nexport async function resolveEscalation(\\n  db: Database,\\n  broker: BrokerClient,\\n  session: Session,\\n  escalationId: string\\n): Promise<Escalation> {\\n  const escalation = await findEscalationById(db, escalationId);\\n  if (!escalation) {\\n    throw new Error(\\\"Escalation not found\\\");\\n  }\\n\\n  if (escalation.status !== \\\"pending\\\") {\\n    throw new Error(`Cannot resolve escalation in '${escalation.status}' status`);\\n  }\\n\\n  // Validate: only recipient can resolve\\n  if (escalation.escalatedTo !== session.userId) {\\n    throw new Error(\\\"Only the escalation recipient can resolve it\\\");\\n  }\\n\\n  const updated = await updateEscalationStatus(db, escalationId, \\\"resolved\\\");\\n\\n  broker.emit({\\n    type: \\\"audit.requested\\\",\\n    payload: {\\n      userId: session.userId,\\n      action: \\\"escalation.resolved\\\",\\n      resourceType: \\\"escalation\\\",\\n      resourceId: escalationId,\\n      details: {\\n        applicationId: escalation.applicationId,\\n      },\\n    },\\n  });\\n\\n  return updated;\\n}\\n\\nexport async function getEscalationsForApplication(\\n  db: Database,\\n  applicationId: string\\n): Promise<Escalation[]> {\\n  return findEscalationsByApplication(db, applicationId);\\n}\\n\\nexport async function getPendingEscalationsForUser(\\n  db: Database,\\n  userId: string\\n): Promise<Escalation[]> {\\n  return findEscalationsByRecipient(db, userId);\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\services\\\\escalation-service.ts\"}",
+              "arguments": "{\"file_text\":\"import { Database } from \\\"sqlite\\\";\\nimport { BrokerClient } from \\\"../broker\\\";\\nimport {\\n  findEscalationById,\\n  findEscalationsByApplication,\\n  findEscalationsByRecipient,\\n  createEscalation as createEscalationDb,\\n  updateEscalationStatus,\\n} from \\\"../models/escalation-repository\\\";\\nimport { findApplicationById } from \\\"../models/loan-repository\\\";\\nimport { findUserById } from \\\"../models/user-repository\\\";\\nimport { Escalation, Session } from \\\"../models/types\\\";\\nimport { nanoid } from \\\"nanoid\\\";\\n\\nexport async function escalateReview(\\n  db: Database,\\n  broker: BrokerClient,\\n  session: Session,\\n  applicationId: string,\\n  escalatedToUserId: string,\\n  reason: string\\n): Promise<Escalation> {\\n  // Validate: delegated sessions cannot create escalations\\n  if (session.delegated) {\\n    throw new Error(\\\"Delegated sessions cannot create escalations\\\");\\n  }\\n\\n  // Validate: application exists and is in valid state\\n  const application = await findApplicationById(db, applicationId);\\n  if (!application) {\\n    throw new Error(\\\"Application not found\\\");\\n  }\\n  if (![\\\"underwriting\\\", \\\"decision\\\"].includes(application.state)) {\\n    throw new Error(\\n      `Cannot escalate application in '${application.state}' state. Must be in 'underwriting' or 'decision' state`\\n    );\\n  }\\n\\n  // Validate: recipient exists\\n  const recipient = await findUserById(db, escalatedToUserId);\\n  if (!recipient) {\\n    throw new Error(\\\"Escalation recipient not found\\\");\\n  }\\n\\n  // Validate: reason not empty\\n  if (!reason || reason.trim().length === 0) {\\n    throw new Error(\\\"Escalation reason cannot be empty\\\");\\n  }\\n\\n  const escalationId = nanoid();\\n  const escalation = await createEscalationDb(db, {\\n    id: escalationId,\\n    applicationId,\\n    escalatedBy: session.userId,\\n    escalatedTo: escalatedToUserId,\\n    reason: reason.trim(),\\n  });\\n\\n  // Emit events\\n  broker.emit({\\n    type: \\\"audit.requested\\\",\\n    payload: {\\n      userId: session.userId,\\n      action: \\\"escalation.created\\\",\\n      resourceType: \\\"escalation\\\",\\n      resourceId: escalationId,\\n      details: {\\n        applicationId,\\n        escalatedTo: escalatedToUserId,\\n        reason: reason.trim(),\\n      },\\n    },\\n  });\\n\\n  broker.emit({\\n    type: \\\"notification.requested\\\",\\n    payload: {\\n      userId: escalatedToUserId,\\n      type: \\\"escalation_assigned\\\",\\n      message: `You have been assigned an escalation for application ${applicationId}`,\\n      details: {\\n        escalationId,\\n        applicationId,\\n        reason: reason.trim(),\\n      },\\n    },\\n  });\\n\\n  broker.emit({\\n    type: \\\"escalation.requested\\\",\\n    payload: {\\n      escalationId,\\n      applicationId,\\n      escalatedBy: session.userId,\\n      escalatedTo: escalatedToUserId,\\n      reason: reason.trim(),\\n    },\\n  });\\n\\n  return escalation;\\n}\\n\\nexport async function resolveEscalation(\\n  db: Database,\\n  broker: BrokerClient,\\n  session: Session,\\n  escalationId: string\\n): Promise<Escalation> {\\n  const escalation = await findEscalationById(db, escalationId);\\n  if (!escalation) {\\n    throw new Error(\\\"Escalation not found\\\");\\n  }\\n\\n  if (escalation.status !== \\\"pending\\\") {\\n    throw new Error(`Cannot resolve escalation in '${escalation.status}' status`);\\n  }\\n\\n  // Validate: only recipient can resolve\\n  if (escalation.escalatedTo !== session.userId) {\\n    throw new Error(\\\"Only the escalation recipient can resolve it\\\");\\n  }\\n\\n  const updated = await updateEscalationStatus(db, escalationId, \\\"resolved\\\");\\n\\n  broker.emit({\\n    type: \\\"audit.requested\\\",\\n    payload: {\\n      userId: session.userId,\\n      action: \\\"escalation.resolved\\\",\\n      resourceType: \\\"escalation\\\",\\n      resourceId: escalationId,\\n      details: {\\n        applicationId: escalation.applicationId,\\n      },\\n    },\\n  });\\n\\n  return updated;\\n}\\n\\nexport async function getEscalationsForApplication(\\n  db: Database,\\n  applicationId: string\\n): Promise<Escalation[]> {\\n  return findEscalationsByApplication(db, applicationId);\\n}\\n\\nexport async function getPendingEscalationsForUser(\\n  db: Database,\\n  userId: string\\n): Promise<Escalation[]> {\\n  return findEscalationsByRecipient(db, userId);\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\services\\\\escalation-service.ts\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01XaCzaSCEYTfTed5tbuE4F3",
@@ -3028,7 +3028,7 @@ cwd: undefined
 2026-04-13T18:12:22.233Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:22.233Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:22.233Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:22.233Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
+2026-04-13T18:12:22.233Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
 2026-04-13T18:12:22.260Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:22.261Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:22.261Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3054,7 +3054,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"file_text\":\"import { Router, Response } from \\\"express\\\";\\nimport { Database } from \\\"sqlite\\\";\\nimport { BrokerClient } from \\\"../broker\\\";\\nimport {\\n  escalateReview,\\n  resolveEscalation,\\n  getEscalationsForApplication,\\n  getPendingEscalationsForUser,\\n} from \\\"../services/escalation-service\\\";\\nimport { requireRole } from \\\"../middleware/auth\\\";\\nimport { AuthenticatedRequest } from \\\"../middleware/types\\\";\\n\\nexport function createEscalationRoutes(\\n  db: Database,\\n  broker: BrokerClient\\n): Router {\\n  const router = Router();\\n\\n  // GET /api/escalations/application/:applicationId\\n  router.get(\\n    \\\"/application/:applicationId\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { applicationId } = req.params;\\n        const escalations = await getEscalationsForApplication(db, applicationId);\\n        res.json(escalations);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to get escalations\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // GET /api/escalations/pending\\n  router.get(\\n    \\\"/pending\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const escalations = await getPendingEscalationsForUser(\\n          db,\\n          req.user!.id\\n        );\\n        res.json(escalations);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to get escalations\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // POST /api/escalations\\n  router.post(\\n    \\\"/\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { applicationId, escalatedToUserId, reason } = req.body;\\n\\n        if (!applicationId || !escalatedToUserId || !reason) {\\n          res.status(400).json({\\n            error:\\n              \\\"Missing required fields: applicationId, escalatedToUserId, reason\\\",\\n          });\\n          return;\\n        }\\n\\n        const escalation = await escalateReview(\\n          db,\\n          broker,\\n          req.session!,\\n          applicationId,\\n          escalatedToUserId,\\n          reason\\n        );\\n\\n        res.status(201).json(escalation);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to create escalation\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // PATCH /api/escalations/:id/resolve\\n  router.patch(\\n    \\\"/:id/resolve\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { id } = req.params;\\n\\n        const escalation = await resolveEscalation(\\n          db,\\n          broker,\\n          req.session!,\\n          id\\n        );\\n\\n        res.json(escalation);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to resolve escalation\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  return router;\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\routes\\\\escalation.ts\"}",
+              "arguments": "{\"file_text\":\"import { Router, Response } from \\\"express\\\";\\nimport { Database } from \\\"sqlite\\\";\\nimport { BrokerClient } from \\\"../broker\\\";\\nimport {\\n  escalateReview,\\n  resolveEscalation,\\n  getEscalationsForApplication,\\n  getPendingEscalationsForUser,\\n} from \\\"../services/escalation-service\\\";\\nimport { requireRole } from \\\"../middleware/auth\\\";\\nimport { AuthenticatedRequest } from \\\"../middleware/types\\\";\\n\\nexport function createEscalationRoutes(\\n  db: Database,\\n  broker: BrokerClient\\n): Router {\\n  const router = Router();\\n\\n  // GET /api/escalations/application/:applicationId\\n  router.get(\\n    \\\"/application/:applicationId\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { applicationId } = req.params;\\n        const escalations = await getEscalationsForApplication(db, applicationId);\\n        res.json(escalations);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to get escalations\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // GET /api/escalations/pending\\n  router.get(\\n    \\\"/pending\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const escalations = await getPendingEscalationsForUser(\\n          db,\\n          req.user!.id\\n        );\\n        res.json(escalations);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to get escalations\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // POST /api/escalations\\n  router.post(\\n    \\\"/\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { applicationId, escalatedToUserId, reason } = req.body;\\n\\n        if (!applicationId || !escalatedToUserId || !reason) {\\n          res.status(400).json({\\n            error:\\n              \\\"Missing required fields: applicationId, escalatedToUserId, reason\\\",\\n          });\\n          return;\\n        }\\n\\n        const escalation = await escalateReview(\\n          db,\\n          broker,\\n          req.session!,\\n          applicationId,\\n          escalatedToUserId,\\n          reason\\n        );\\n\\n        res.status(201).json(escalation);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to create escalation\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  // PATCH /api/escalations/:id/resolve\\n  router.patch(\\n    \\\"/:id/resolve\\\",\\n    requireRole([\\\"underwriter\\\", \\\"analyst-manager\\\", \\\"compliance-reviewer\\\"]),\\n    async (req: AuthenticatedRequest, res: Response) => {\\n      try {\\n        const { id } = req.params;\\n\\n        const escalation = await resolveEscalation(\\n          db,\\n          broker,\\n          req.session!,\\n          id\\n        );\\n\\n        res.json(escalation);\\n      } catch (error) {\\n        res.status(400).json({\\n          error:\\n            error instanceof Error ? error.message : \\\"Failed to resolve escalation\\\",\\n        });\\n      }\\n    }\\n  );\\n\\n  return router;\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\routes\\\\escalation.ts\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01SvmP4TekUgLjtaZVtrB4Bb",
@@ -3082,7 +3082,7 @@ cwd: undefined
 2026-04-13T18:12:28.555Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:28.555Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:28.555Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:28.555Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
+2026-04-13T18:12:28.555Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
 2026-04-13T18:12:28.576Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:28.577Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:28.577Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3108,7 +3108,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"file_text\":\"import { BrokerClient, BrokerEvent } from \\\"../broker\\\";\\n\\nexport async function registerEscalationHandler(\\n  broker: BrokerClient\\n): Promise<void> {\\n  broker.on(\\\"escalation.requested\\\", async (event: BrokerEvent) => {\\n    if (event.type !== \\\"escalation.requested\\\") return;\\n    const payload = (event as any).payload;\\n    console.log(`[escalation-handler] Escalation requested:`, {\\n      escalationId: payload.escalationId,\\n      applicationId: payload.applicationId,\\n      escalatedBy: payload.escalatedBy,\\n      escalatedTo: payload.escalatedTo,\\n      reason: payload.reason,\\n      timestamp: new Date().toISOString(),\\n    });\\n  });\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\handlers\\\\escalation-handler.ts\"}",
+              "arguments": "{\"file_text\":\"import { BrokerClient, BrokerEvent } from \\\"../broker\\\";\\n\\nexport async function registerEscalationHandler(\\n  broker: BrokerClient\\n): Promise<void> {\\n  broker.on(\\\"escalation.requested\\\", async (event: BrokerEvent) => {\\n    if (event.type !== \\\"escalation.requested\\\") return;\\n    const payload = (event as any).payload;\\n    console.log(`[escalation-handler] Escalation requested:`, {\\n      escalationId: payload.escalationId,\\n      applicationId: payload.applicationId,\\n      escalatedBy: payload.escalatedBy,\\n      escalatedTo: payload.escalatedTo,\\n      reason: payload.reason,\\n      timestamp: new Date().toISOString(),\\n    });\\n  });\\n}\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\handlers\\\\escalation-handler.ts\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01JbpvHNVBMdZTkLkQk9UBsh",
@@ -3136,7 +3136,7 @@ cwd: undefined
 2026-04-13T18:12:32.204Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:32.204Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:32.204Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:32.204Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
+2026-04-13T18:12:32.204Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
 2026-04-13T18:12:32.218Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:32.219Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:32.219Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3169,7 +3169,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01CZgLTWAoX59UK1uod3z3Ch",
@@ -3195,7 +3195,7 @@ cwd: undefined
 2026-04-13T18:12:34.900Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:12:34.906Z [DEBUG] Tool calls count: 1
 2026-04-13T18:12:34.906Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:12:34.907Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
+2026-04-13T18:12:34.907Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
 2026-04-13T18:12:34.910Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:34.911Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:12:34.918Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3227,7 +3227,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\",\"old_str\":\"export interface AuditEntry {\\n  id: string;\\n  action: string;\\n  actor: string;\\n  delegatedFor: string | null;\\n  timestamp: string;\\n  previousValue: string | null;\\n  newValue: string | null;\\n  source: string;\\n}\",\"new_str\":\"export interface AuditEntry {\\n  id: string;\\n  action: string;\\n  actor: string;\\n  delegatedFor: string | null;\\n  timestamp: string;\\n  previousValue: string | null;\\n  newValue: string | null;\\n  source: string;\\n}\\n\\nexport interface Escalation {\\n  id: string;\\n  applicationId: string;\\n  escalatedBy: string;\\n  escalatedTo: string;\\n  reason: string;\\n  status: \\\"pending\\\" | \\\"resolved\\\" | \\\"cancelled\\\";\\n  createdAt: string;\\n  updatedAt: string;\\n}\\n\\nexport interface Session {\\n  userId: string;\\n  delegated?: boolean;\\n}\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\",\"old_str\":\"export interface AuditEntry {\\n  id: string;\\n  action: string;\\n  actor: string;\\n  delegatedFor: string | null;\\n  timestamp: string;\\n  previousValue: string | null;\\n  newValue: string | null;\\n  source: string;\\n}\",\"new_str\":\"export interface AuditEntry {\\n  id: string;\\n  action: string;\\n  actor: string;\\n  delegatedFor: string | null;\\n  timestamp: string;\\n  previousValue: string | null;\\n  newValue: string | null;\\n  source: string;\\n}\\n\\nexport interface Escalation {\\n  id: string;\\n  applicationId: string;\\n  escalatedBy: string;\\n  escalatedTo: string;\\n  reason: string;\\n  status: \\\"pending\\\" | \\\"resolved\\\" | \\\"cancelled\\\";\\n  createdAt: string;\\n  updatedAt: string;\\n}\\n\\nexport interface Session {\\n  userId: string;\\n  delegated?: boolean;\\n}\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01HPxxLejwjZ8bjSFWMnmRrc",
@@ -3255,7 +3255,7 @@ cwd: undefined
 2026-04-13T18:12:40.434Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:40.434Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:40.434Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:40.434Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
+2026-04-13T18:12:40.434Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
 2026-04-13T18:12:40.470Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:40.473Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:40.473Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3288,7 +3288,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Poh51n73jqRKkoeFvVcP4p",
@@ -3314,7 +3314,7 @@ cwd: undefined
 2026-04-13T18:12:45.480Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:12:45.493Z [DEBUG] Tool calls count: 1
 2026-04-13T18:12:45.493Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:12:45.493Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
+2026-04-13T18:12:45.493Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
 2026-04-13T18:12:45.519Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:45.519Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:12:45.528Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3345,7 +3345,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"/** Emitted when a loan application changes state. */\\nexport interface LoanStateChangedEvent extends BaseEvent {\\n  type: \\\"loan.state-changed\\\";\\n  payload: {\\n    applicationId: string;\\n    previousStatus: string;\\n    newStatus: string;\\n    changedBy: string;\\n  };\\n}\\n\\n/** Emitted when a review escalation is requested. */\\nexport interface EscalationRequestedEvent extends BaseEvent {\\n  type: \\\"escalation.requested\\\";\\n  payload: {\\n    escalationId: string;\\n    applicationId: string;\\n    escalatedBy: string;\\n    escalatedTo: string;\\n    reason: string;\\n  };\\n}\\n\\n/** Union of all event types the broker can handle. */\\nexport type BrokerEvent =\\n  | NotificationRequestedEvent\\n  | AuditRequestedEvent\\n  | LoanStateChangedEvent\\n  | EscalationRequestedEvent;\\n\\nexport type EventType = BrokerEvent[\\\"type\\\"];\",\"old_str\":\"/** Emitted when a loan application changes state. */\\nexport interface LoanStateChangedEvent extends BaseEvent {\\n  type: \\\"loan.state-changed\\\";\\n  payload: {\\n    applicationId: string;\\n    previousStatus: string;\\n    newStatus: string;\\n    changedBy: string;\\n  };\\n}\\n\\n/** Union of all event types the broker can handle. */\\nexport type BrokerEvent =\\n  | NotificationRequestedEvent\\n  | AuditRequestedEvent\\n  | LoanStateChangedEvent;\\n\\nexport type EventType = BrokerEvent[\\\"type\\\"];\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
+              "arguments": "{\"new_str\":\"/** Emitted when a loan application changes state. */\\nexport interface LoanStateChangedEvent extends BaseEvent {\\n  type: \\\"loan.state-changed\\\";\\n  payload: {\\n    applicationId: string;\\n    previousStatus: string;\\n    newStatus: string;\\n    changedBy: string;\\n  };\\n}\\n\\n/** Emitted when a review escalation is requested. */\\nexport interface EscalationRequestedEvent extends BaseEvent {\\n  type: \\\"escalation.requested\\\";\\n  payload: {\\n    escalationId: string;\\n    applicationId: string;\\n    escalatedBy: string;\\n    escalatedTo: string;\\n    reason: string;\\n  };\\n}\\n\\n/** Union of all event types the broker can handle. */\\nexport type BrokerEvent =\\n  | NotificationRequestedEvent\\n  | AuditRequestedEvent\\n  | LoanStateChangedEvent\\n  | EscalationRequestedEvent;\\n\\nexport type EventType = BrokerEvent[\\\"type\\\"];\",\"old_str\":\"/** Emitted when a loan application changes state. */\\nexport interface LoanStateChangedEvent extends BaseEvent {\\n  type: \\\"loan.state-changed\\\";\\n  payload: {\\n    applicationId: string;\\n    previousStatus: string;\\n    newStatus: string;\\n    changedBy: string;\\n  };\\n}\\n\\n/** Union of all event types the broker can handle. */\\nexport type BrokerEvent =\\n  | NotificationRequestedEvent\\n  | AuditRequestedEvent\\n  | LoanStateChangedEvent;\\n\\nexport type EventType = BrokerEvent[\\\"type\\\"];\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01Mh6xuiuHZmbeHXrBgDkiD6",
@@ -3373,7 +3373,7 @@ cwd: undefined
 2026-04-13T18:12:50.152Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:50.152Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:50.152Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:50.152Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
+2026-04-13T18:12:50.152Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
 2026-04-13T18:12:50.164Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:50.164Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:50.164Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3406,7 +3406,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01QGi3BDxsFwtdRrhJpoXk43",
@@ -3432,7 +3432,7 @@ cwd: undefined
 2026-04-13T18:12:52.959Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:12:52.975Z [DEBUG] Tool calls count: 1
 2026-04-13T18:12:52.975Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:12:52.975Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
+2026-04-13T18:12:52.975Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
 2026-04-13T18:12:52.978Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:52.978Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:12:52.985Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3463,7 +3463,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"CREATE TABLE IF NOT EXISTS audit_entries (\\n    id              TEXT PRIMARY KEY,\\n    action          TEXT NOT NULL,\\n    actor           TEXT NOT NULL,\\n    delegated_for   TEXT,\\n    timestamp       TEXT NOT NULL DEFAULT (datetime('now')),\\n    previous_value  TEXT,  -- JSON\\n    new_value       TEXT,  -- JSON\\n    source          TEXT NOT NULL\\n);\\n\\nCREATE TABLE IF NOT EXISTS escalations (\\n    id              TEXT PRIMARY KEY,\\n    application_id  TEXT NOT NULL REFERENCES loan_applications(id),\\n    escalated_by    TEXT NOT NULL REFERENCES users(id),\\n    escalated_to    TEXT NOT NULL REFERENCES users(id),\\n    reason          TEXT NOT NULL,\\n    status          TEXT NOT NULL DEFAULT 'pending'\\n                    CHECK (status IN ('pending', 'resolved', 'cancelled')),\\n    created_at      TEXT NOT NULL DEFAULT (datetime('now')),\\n    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))\\n);\\n\\n-- Indexes for common queries\\nCREATE INDEX IF NOT EXISTS idx_applications_status ON loan_applications(status);\\nCREATE INDEX IF NOT EXISTS idx_applications_underwriter ON loan_applications(assigned_underwriter);\\nCREATE INDEX IF NOT EXISTS idx_decisions_application ON decisions(application_id);\\nCREATE INDEX IF NOT EXISTS idx_preferences_user ON notification_preferences(user_id);\\nCREATE INDEX IF NOT EXISTS idx_audit_actor ON audit_entries(actor);\\nCREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_entries(timestamp);\\nCREATE INDEX IF NOT EXISTS idx_escalations_application ON escalations(application_id);\\nCREATE INDEX IF NOT EXISTS idx_escalations_status ON escalations(status);\\nCREATE INDEX IF NOT EXISTS idx_escalations_recipient ON escalations(escalated_to);\",\"old_str\":\"CREATE TABLE IF NOT EXISTS audit_entries (\\n    id              TEXT PRIMARY KEY,\\n    action          TEXT NOT NULL,\\n    actor           TEXT NOT NULL,\\n    delegated_for   TEXT,\\n    timestamp       TEXT NOT NULL DEFAULT (datetime('now')),\\n    previous_value  TEXT,  -- JSON\\n    new_value       TEXT,  -- JSON\\n    source          TEXT NOT NULL\\n);\\n\\n-- Indexes for common queries\\nCREATE INDEX IF NOT EXISTS idx_applications_status ON loan_applications(status);\\nCREATE INDEX IF NOT EXISTS idx_applications_underwriter ON loan_applications(assigned_underwriter);\\nCREATE INDEX IF NOT EXISTS idx_decisions_application ON decisions(application_id);\\nCREATE INDEX IF NOT EXISTS idx_preferences_user ON notification_preferences(user_id);\\nCREATE INDEX IF NOT EXISTS idx_audit_actor ON audit_entries(actor);\\nCREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_entries(timestamp);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\"}",
+              "arguments": "{\"new_str\":\"CREATE TABLE IF NOT EXISTS audit_entries (\\n    id              TEXT PRIMARY KEY,\\n    action          TEXT NOT NULL,\\n    actor           TEXT NOT NULL,\\n    delegated_for   TEXT,\\n    timestamp       TEXT NOT NULL DEFAULT (datetime('now')),\\n    previous_value  TEXT,  -- JSON\\n    new_value       TEXT,  -- JSON\\n    source          TEXT NOT NULL\\n);\\n\\nCREATE TABLE IF NOT EXISTS escalations (\\n    id              TEXT PRIMARY KEY,\\n    application_id  TEXT NOT NULL REFERENCES loan_applications(id),\\n    escalated_by    TEXT NOT NULL REFERENCES users(id),\\n    escalated_to    TEXT NOT NULL REFERENCES users(id),\\n    reason          TEXT NOT NULL,\\n    status          TEXT NOT NULL DEFAULT 'pending'\\n                    CHECK (status IN ('pending', 'resolved', 'cancelled')),\\n    created_at      TEXT NOT NULL DEFAULT (datetime('now')),\\n    updated_at      TEXT NOT NULL DEFAULT (datetime('now'))\\n);\\n\\n-- Indexes for common queries\\nCREATE INDEX IF NOT EXISTS idx_applications_status ON loan_applications(status);\\nCREATE INDEX IF NOT EXISTS idx_applications_underwriter ON loan_applications(assigned_underwriter);\\nCREATE INDEX IF NOT EXISTS idx_decisions_application ON decisions(application_id);\\nCREATE INDEX IF NOT EXISTS idx_preferences_user ON notification_preferences(user_id);\\nCREATE INDEX IF NOT EXISTS idx_audit_actor ON audit_entries(actor);\\nCREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_entries(timestamp);\\nCREATE INDEX IF NOT EXISTS idx_escalations_application ON escalations(application_id);\\nCREATE INDEX IF NOT EXISTS idx_escalations_status ON escalations(status);\\nCREATE INDEX IF NOT EXISTS idx_escalations_recipient ON escalations(escalated_to);\",\"old_str\":\"CREATE TABLE IF NOT EXISTS audit_entries (\\n    id              TEXT PRIMARY KEY,\\n    action          TEXT NOT NULL,\\n    actor           TEXT NOT NULL,\\n    delegated_for   TEXT,\\n    timestamp       TEXT NOT NULL DEFAULT (datetime('now')),\\n    previous_value  TEXT,  -- JSON\\n    new_value       TEXT,  -- JSON\\n    source          TEXT NOT NULL\\n);\\n\\n-- Indexes for common queries\\nCREATE INDEX IF NOT EXISTS idx_applications_status ON loan_applications(status);\\nCREATE INDEX IF NOT EXISTS idx_applications_underwriter ON loan_applications(assigned_underwriter);\\nCREATE INDEX IF NOT EXISTS idx_decisions_application ON decisions(application_id);\\nCREATE INDEX IF NOT EXISTS idx_preferences_user ON notification_preferences(user_id);\\nCREATE INDEX IF NOT EXISTS idx_audit_actor ON audit_entries(actor);\\nCREATE INDEX IF NOT EXISTS idx_audit_timestamp ON audit_entries(timestamp);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01Dd9m74SKMG7QqGJE67FrQA",
@@ -3491,7 +3491,7 @@ cwd: undefined
 2026-04-13T18:12:59.140Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:12:59.140Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:12:59.140Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:12:59.140Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
+2026-04-13T18:12:59.140Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
 2026-04-13T18:12:59.168Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:12:59.169Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:12:59.169Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3524,7 +3524,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01LkgtLFZ7aYm1Urnm97boBE",
@@ -3550,7 +3550,7 @@ cwd: undefined
 2026-04-13T18:13:02.102Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:02.145Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:02.145Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:02.145Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+2026-04-13T18:13:02.145Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 2026-04-13T18:13:02.147Z [DEBUG] [telemetry-queue] Flushing 50 events (159622 B → 7212 B gzipped)
 2026-04-13T18:13:02.149Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:02.149Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3582,7 +3582,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"  const insertAudit = db.prepare(\\n    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\\n\\n  const insertEscalation = db.prepare(\\n    `INSERT OR IGNORE INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\",\"old_str\":\"  const insertAudit = db.prepare(\\n    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
+              "arguments": "{\"new_str\":\"  const insertAudit = db.prepare(\\n    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\\n\\n  const insertEscalation = db.prepare(\\n    `INSERT OR IGNORE INTO escalations (id, application_id, escalated_by, escalated_to, reason, status, created_at, updated_at)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\",\"old_str\":\"  const insertAudit = db.prepare(\\n    `INSERT OR IGNORE INTO audit_entries (id, action, actor, delegated_for, timestamp, previous_value, new_value, source)\\n     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,\\n  );\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_0194dQZagfXJgxvK14sfZB4w",
@@ -3610,7 +3610,7 @@ cwd: undefined
 2026-04-13T18:13:07.183Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:07.183Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:07.183Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:07.183Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+2026-04-13T18:13:07.183Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 2026-04-13T18:13:07.200Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:07.200Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:07.201Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3637,7 +3637,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"    // ── Audit Trail ──\\n    insertAudit.run(\\n      \\\"aud-1\\\",\\n      \\\"application.created\\\",\\n      \\\"u-1\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-1\\\", status: \\\"underwriting\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n    insertAudit.run(\\n      \\\"aud-2\\\",\\n      \\\"decision.recorded\\\",\\n      \\\"u-2\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-4\\\", type: \\\"approved\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n\\n    // ── Escalations ──\\n    insertEscalation.run(\\n      \\\"esc-1\\\",\\n      \\\"app-1\\\",\\n      \\\"u-1\\\",\\n      \\\"u-2\\\",\\n      \\\"Unusual loan structure requires higher-level review before proceeding to decision\\\",\\n      \\\"pending\\\",\\n      now,\\n      now,\\n    );\\n    insertEscalation.run(\\n      \\\"esc-2\\\",\\n      \\\"app-3\\\",\\n      \\\"u-2\\\",\\n      \\\"u-3\\\",\\n      \\\"High-value loan ($2M) requires compliance review sign-off\\\",\\n      \\\"pending\\\",\\n      now,\\n      now,\\n    );\",\"old_str\":\"    // ── Audit Trail ──\\n    insertAudit.run(\\n      \\\"aud-1\\\",\\n      \\\"application.created\\\",\\n      \\\"u-1\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-1\\\", status: \\\"underwriting\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n    insertAudit.run(\\n      \\\"aud-2\\\",\\n      \\\"decision.recorded\\\",\\n      \\\"u-2\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-4\\\", type: \\\"approved\\\" }),\\n      \\\"seed-script\\\",\\n    );\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
+              "arguments": "{\"new_str\":\"    // ── Audit Trail ──\\n    insertAudit.run(\\n      \\\"aud-1\\\",\\n      \\\"application.created\\\",\\n      \\\"u-1\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-1\\\", status: \\\"underwriting\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n    insertAudit.run(\\n      \\\"aud-2\\\",\\n      \\\"decision.recorded\\\",\\n      \\\"u-2\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-4\\\", type: \\\"approved\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n\\n    // ── Escalations ──\\n    insertEscalation.run(\\n      \\\"esc-1\\\",\\n      \\\"app-1\\\",\\n      \\\"u-1\\\",\\n      \\\"u-2\\\",\\n      \\\"Unusual loan structure requires higher-level review before proceeding to decision\\\",\\n      \\\"pending\\\",\\n      now,\\n      now,\\n    );\\n    insertEscalation.run(\\n      \\\"esc-2\\\",\\n      \\\"app-3\\\",\\n      \\\"u-2\\\",\\n      \\\"u-3\\\",\\n      \\\"High-value loan ($2M) requires compliance review sign-off\\\",\\n      \\\"pending\\\",\\n      now,\\n      now,\\n    );\",\"old_str\":\"    // ── Audit Trail ──\\n    insertAudit.run(\\n      \\\"aud-1\\\",\\n      \\\"application.created\\\",\\n      \\\"u-1\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-1\\\", status: \\\"underwriting\\\" }),\\n      \\\"seed-script\\\",\\n    );\\n    insertAudit.run(\\n      \\\"aud-2\\\",\\n      \\\"decision.recorded\\\",\\n      \\\"u-2\\\",\\n      null,\\n      now,\\n      null,\\n      JSON.stringify({ applicationId: \\\"app-4\\\", type: \\\"approved\\\" }),\\n      \\\"seed-script\\\",\\n    );\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01TQeoV1nJBT7szsAcaZwb1W",
@@ -3665,7 +3665,7 @@ cwd: undefined
 2026-04-13T18:13:11.895Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:11.895Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:11.895Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:11.895Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+2026-04-13T18:13:11.895Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 2026-04-13T18:13:11.909Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:11.910Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:11.911Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3698,7 +3698,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_016iPfVjQxDq4RaZaZwohNqB",
@@ -3724,7 +3724,7 @@ cwd: undefined
 2026-04-13T18:13:14.618Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:14.645Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:14.645Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:14.645Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:14.645Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:14.659Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:14.659Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:14.665Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3755,7 +3755,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"import { applicationRoutes } from \\\"./routes/applications.js\\\";\\nimport { decisionRoutes } from \\\"./routes/decisions.js\\\";\\nimport { notificationRoutes } from \\\"./routes/notifications.js\\\";\\nimport { auditRoutes } from \\\"./routes/audit.js\\\";\\nimport { queueStatusRoutes } from \\\"./routes/queue-status.js\\\";\\nimport { createEscalationRoutes } from \\\"./routes/escalation.js\\\";\\nimport { registerNotificationHandler } from \\\"./queue/handlers/notification-handler.js\\\";\\nimport { registerAuditHandler } from \\\"./queue/handlers/audit-handler.js\\\";\\nimport { registerEscalationHandler } from \\\"./queue/handlers/escalation-handler.js\\\";\",\"old_str\":\"import { applicationRoutes } from \\\"./routes/applications.js\\\";\\nimport { decisionRoutes } from \\\"./routes/decisions.js\\\";\\nimport { notificationRoutes } from \\\"./routes/notifications.js\\\";\\nimport { auditRoutes } from \\\"./routes/audit.js\\\";\\nimport { queueStatusRoutes } from \\\"./routes/queue-status.js\\\";\\nimport { registerNotificationHandler } from \\\"./queue/handlers/notification-handler.js\\\";\\nimport { registerAuditHandler } from \\\"./queue/handlers/audit-handler.js\\\";\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
+              "arguments": "{\"new_str\":\"import { applicationRoutes } from \\\"./routes/applications.js\\\";\\nimport { decisionRoutes } from \\\"./routes/decisions.js\\\";\\nimport { notificationRoutes } from \\\"./routes/notifications.js\\\";\\nimport { auditRoutes } from \\\"./routes/audit.js\\\";\\nimport { queueStatusRoutes } from \\\"./routes/queue-status.js\\\";\\nimport { createEscalationRoutes } from \\\"./routes/escalation.js\\\";\\nimport { registerNotificationHandler } from \\\"./queue/handlers/notification-handler.js\\\";\\nimport { registerAuditHandler } from \\\"./queue/handlers/audit-handler.js\\\";\\nimport { registerEscalationHandler } from \\\"./queue/handlers/escalation-handler.js\\\";\",\"old_str\":\"import { applicationRoutes } from \\\"./routes/applications.js\\\";\\nimport { decisionRoutes } from \\\"./routes/decisions.js\\\";\\nimport { notificationRoutes } from \\\"./routes/notifications.js\\\";\\nimport { auditRoutes } from \\\"./routes/audit.js\\\";\\nimport { queueStatusRoutes } from \\\"./routes/queue-status.js\\\";\\nimport { registerNotificationHandler } from \\\"./queue/handlers/notification-handler.js\\\";\\nimport { registerAuditHandler } from \\\"./queue/handlers/audit-handler.js\\\";\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01MhzdsAxi5jACecyhV8wNBP",
@@ -3783,7 +3783,7 @@ cwd: undefined
 2026-04-13T18:13:20.317Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:20.317Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:20.317Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:20.317Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:20.317Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:20.329Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:20.330Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:20.330Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3810,7 +3810,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"// ── Register queue handlers ──\\nregisterNotificationHandler();\\nregisterAuditHandler();\\nregisterEscalationHandler(broker);\",\"old_str\":\"// ── Register queue handlers ──\\nregisterNotificationHandler();\\nregisterAuditHandler();\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
+              "arguments": "{\"new_str\":\"// ── Register queue handlers ──\\nregisterNotificationHandler();\\nregisterAuditHandler();\\nregisterEscalationHandler(broker);\",\"old_str\":\"// ── Register queue handlers ──\\nregisterNotificationHandler();\\nregisterAuditHandler();\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01UwhJMAUTqMxBEtu6wYVdht",
@@ -3838,7 +3838,7 @@ cwd: undefined
 2026-04-13T18:13:23.547Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:23.548Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:23.548Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:23.548Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:23.548Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:23.572Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:23.572Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:23.573Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3864,7 +3864,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"// ── API Routes ──\\napp.use(\\\"/api/applications\\\", applicationRoutes);\\napp.use(\\\"/api/decisions\\\", decisionRoutes);\\napp.use(\\\"/api/notifications\\\", notificationRoutes);\\napp.use(\\\"/api/audit\\\", auditRoutes);\\napp.use(\\\"/api/queue\\\", queueStatusRoutes);\\napp.use(\\\"/api/escalations\\\", createEscalationRoutes(getDb(), broker));\",\"old_str\":\"// ── API Routes ──\\napp.use(\\\"/api/applications\\\", applicationRoutes);\\napp.use(\\\"/api/decisions\\\", decisionRoutes);\\napp.use(\\\"/api/notifications\\\", notificationRoutes);\\napp.use(\\\"/api/audit\\\", auditRoutes);\\napp.use(\\\"/api/queue\\\", queueStatusRoutes);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
+              "arguments": "{\"new_str\":\"// ── API Routes ──\\napp.use(\\\"/api/applications\\\", applicationRoutes);\\napp.use(\\\"/api/decisions\\\", decisionRoutes);\\napp.use(\\\"/api/notifications\\\", notificationRoutes);\\napp.use(\\\"/api/audit\\\", auditRoutes);\\napp.use(\\\"/api/queue\\\", queueStatusRoutes);\\napp.use(\\\"/api/escalations\\\", createEscalationRoutes(getDb(), broker));\",\"old_str\":\"// ── API Routes ──\\napp.use(\\\"/api/applications\\\", applicationRoutes);\\napp.use(\\\"/api/decisions\\\", decisionRoutes);\\napp.use(\\\"/api/notifications\\\", notificationRoutes);\\napp.use(\\\"/api/audit\\\", auditRoutes);\\napp.use(\\\"/api/queue\\\", queueStatusRoutes);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01U6GqDi33Yuz4Xf5YpW1Ere",
@@ -3892,7 +3892,7 @@ cwd: undefined
 2026-04-13T18:13:27.533Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:27.533Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:27.533Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:27.533Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:27.533Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:27.560Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:27.560Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:27.560Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3926,7 +3926,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01TvQZgkaHEMT239kXax62uj",
@@ -3952,7 +3952,7 @@ cwd: undefined
 2026-04-13T18:13:30.450Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:30.455Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:30.455Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:30.455Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+2026-04-13T18:13:30.455Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 2026-04-13T18:13:30.459Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:30.459Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:30.466Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3983,7 +3983,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"export type Permission =\\n  | \\\"loan:read\\\"\\n  | \\\"loan:create\\\"\\n  | \\\"loan:transition\\\"\\n  | \\\"decision:read\\\"\\n  | \\\"decision:create\\\"\\n  | \\\"notification-pref:read\\\"\\n  | \\\"notification-pref:write\\\"\\n  | \\\"audit:read\\\"\\n  | \\\"compliance:sign-off\\\"\\n  | \\\"escalation:create\\\"\\n  | \\\"escalation:read\\\"\\n  | \\\"escalation:resolve\\\";\",\"old_str\":\"export type Permission =\\n  | \\\"loan:read\\\"\\n  | \\\"loan:create\\\"\\n  | \\\"loan:transition\\\"\\n  | \\\"decision:read\\\"\\n  | \\\"decision:create\\\"\\n  | \\\"notification-pref:read\\\"\\n  | \\\"notification-pref:write\\\"\\n  | \\\"audit:read\\\"\\n  | \\\"compliance:sign-off\\\";\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
+              "arguments": "{\"new_str\":\"export type Permission =\\n  | \\\"loan:read\\\"\\n  | \\\"loan:create\\\"\\n  | \\\"loan:transition\\\"\\n  | \\\"decision:read\\\"\\n  | \\\"decision:create\\\"\\n  | \\\"notification-pref:read\\\"\\n  | \\\"notification-pref:write\\\"\\n  | \\\"audit:read\\\"\\n  | \\\"compliance:sign-off\\\"\\n  | \\\"escalation:create\\\"\\n  | \\\"escalation:read\\\"\\n  | \\\"escalation:resolve\\\";\",\"old_str\":\"export type Permission =\\n  | \\\"loan:read\\\"\\n  | \\\"loan:create\\\"\\n  | \\\"loan:transition\\\"\\n  | \\\"decision:read\\\"\\n  | \\\"decision:create\\\"\\n  | \\\"notification-pref:read\\\"\\n  | \\\"notification-pref:write\\\"\\n  | \\\"audit:read\\\"\\n  | \\\"compliance:sign-off\\\";\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01Pzp9RCHUAvSwmHEBCaKTUt",
@@ -4011,7 +4011,7 @@ cwd: undefined
 2026-04-13T18:13:34.575Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:34.575Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:34.575Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:34.575Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+2026-04-13T18:13:34.575Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 2026-04-13T18:13:34.588Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:34.589Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:34.589Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -4038,7 +4038,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {\\n  underwriter: new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n    \\\"escalation:create\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n  \\\"analyst-manager\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n    \\\"escalation:create\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n  \\\"compliance-reviewer\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"decision:read\\\",\\n    \\\"notification-pref:read\\\", // READ only — no write\\n    \\\"audit:read\\\",\\n    \\\"compliance:sign-off\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n};\",\"old_str\":\"const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {\\n  underwriter: new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n  ]),\\n  \\\"analyst-manager\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n  ]),\\n  \\\"compliance-reviewer\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"decision:read\\\",\\n    \\\"notification-pref:read\\\", // READ only — no write\\n    \\\"audit:read\\\",\\n    \\\"compliance:sign-off\\\",\\n  ]),\\n};\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
+              "arguments": "{\"new_str\":\"const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {\\n  underwriter: new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n    \\\"escalation:create\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n  \\\"analyst-manager\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n    \\\"escalation:create\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n  \\\"compliance-reviewer\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"decision:read\\\",\\n    \\\"notification-pref:read\\\", // READ only — no write\\n    \\\"audit:read\\\",\\n    \\\"compliance:sign-off\\\",\\n    \\\"escalation:read\\\",\\n    \\\"escalation:resolve\\\",\\n  ]),\\n};\",\"old_str\":\"const ROLE_PERMISSIONS: Record<UserRole, Set<Permission>> = {\\n  underwriter: new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n  ]),\\n  \\\"analyst-manager\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"loan:create\\\",\\n    \\\"loan:transition\\\",\\n    \\\"decision:read\\\",\\n    \\\"decision:create\\\",\\n    \\\"notification-pref:read\\\",\\n    \\\"notification-pref:write\\\",\\n    \\\"audit:read\\\",\\n  ]),\\n  \\\"compliance-reviewer\\\": new Set([\\n    \\\"loan:read\\\",\\n    \\\"decision:read\\\",\\n    \\\"notification-pref:read\\\", // READ only — no write\\n    \\\"audit:read\\\",\\n    \\\"compliance:sign-off\\\",\\n  ]),\\n};\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01KqdfCAVpVc5DmgNqPmmDkC",
@@ -4066,7 +4066,7 @@ cwd: undefined
 2026-04-13T18:13:39.452Z [DEBUG] Running tool calls in parallel
 2026-04-13T18:13:39.452Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T18:13:39.452Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T18:13:39.452Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+2026-04-13T18:13:39.452Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 2026-04-13T18:13:39.463Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T18:13:39.463Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:39.463Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -4099,7 +4099,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\",\"view_range\":[100,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\",\"view_range\":[100,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_019HLV3yvrvxNDpc6wFL8U82",
@@ -4125,7 +4125,7 @@ cwd: undefined
 2026-04-13T18:13:43.454Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:43.466Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:43.466Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:43.466Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
+2026-04-13T18:13:43.466Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
 2026-04-13T18:13:43.469Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:43.469Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:43.477Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4156,7 +4156,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\",\"view_range\":[54,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\schema.sql\",\"view_range\":[54,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01F7sf9xzmJLQ4Ntbi1hVvqD",
@@ -4182,7 +4182,7 @@ cwd: undefined
 2026-04-13T18:13:46.717Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:46.732Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:46.732Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:46.734Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
+2026-04-13T18:13:46.734Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
 2026-04-13T18:13:46.749Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:46.749Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:46.757Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4213,7 +4213,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\",\"view_range\":[138,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\db\\\\seed.ts\",\"view_range\":[138,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01KQyKcf6HpSP933v5QsFhAE",
@@ -4239,7 +4239,7 @@ cwd: undefined
 2026-04-13T18:13:49.634Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:49.643Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:49.643Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:49.643Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+2026-04-13T18:13:49.643Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 2026-04-13T18:13:49.646Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:49.646Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:49.651Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4270,7 +4270,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\",\"view_range\":[26,60]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\",\"view_range\":[26,60]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Q8VHiR85Kwwty4ZeKuFqPg",
@@ -4296,7 +4296,7 @@ cwd: undefined
 2026-04-13T18:13:52.879Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:52.885Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:52.885Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:52.885Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:52.885Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:52.888Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:52.888Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:52.896Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4320,7 +4320,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\",\"view_range\":[60,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\app.ts\",\"view_range\":[60,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01RTLztpTiyoqNw2ueNx16bV",
@@ -4346,7 +4346,7 @@ cwd: undefined
 2026-04-13T18:13:56.217Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:56.217Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:56.217Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:56.217Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+2026-04-13T18:13:56.217Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 2026-04-13T18:13:56.218Z [DEBUG] [telemetry-queue] Flushing 50 events (161784 B → 6853 B gzipped)
 2026-04-13T18:13:56.220Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:56.221Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -4378,7 +4378,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\rules\\\\role-permissions.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Loy5hVx4m5eyAXG5zRD8wB",
@@ -4404,7 +4404,7 @@ cwd: undefined
 2026-04-13T18:13:59.220Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:13:59.227Z [DEBUG] Tool calls count: 1
 2026-04-13T18:13:59.227Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:13:59.227Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+2026-04-13T18:13:59.227Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 2026-04-13T18:13:59.229Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:13:59.230Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:13:59.237Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4435,7 +4435,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\",\"view_range\":[55,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\",\"view_range\":[55,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_018jbHu7pyuEhoUHc9Ax6afR",
@@ -4461,7 +4461,7 @@ cwd: undefined
 2026-04-13T18:14:02.312Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:14:02.318Z [DEBUG] Tool calls count: 1
 2026-04-13T18:14:02.319Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:14:02.319Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
+2026-04-13T18:14:02.319Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
 2026-04-13T18:14:02.321Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:14:02.321Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:14:02.329Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4492,7 +4492,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\routes\\\\escalation.ts\",\"view_range\":[1,30]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\routes\\\\escalation.ts\",\"view_range\":[1,30]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EfoyYc3RbTKr6oBGPTuApG",
@@ -4518,7 +4518,7 @@ cwd: undefined
 2026-04-13T18:14:05.549Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:14:05.558Z [DEBUG] Tool calls count: 1
 2026-04-13T18:14:05.558Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:14:05.558Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
+2026-04-13T18:14:05.558Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
 2026-04-13T18:14:05.560Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:14:05.561Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:14:05.567Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4550,7 +4550,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\services\\\\escalation-service.ts\",\"view_range\":[1,50]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\services\\\\escalation-service.ts\",\"view_range\":[1,50]}",
               "name": "view"
             },
             "id": "toolu_vrtx_019upJVQGJdjTHvGX8s3AqL5",
@@ -4576,7 +4576,7 @@ cwd: undefined
 2026-04-13T18:14:10.045Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:14:10.050Z [DEBUG] Tool calls count: 1
 2026-04-13T18:14:10.050Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:14:10.050Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
+2026-04-13T18:14:10.050Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
 2026-04-13T18:14:10.052Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:14:10.053Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:14:10.063Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4607,7 +4607,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\escalation-repository.ts\",\"view_range\":[1,40]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\models\\\\escalation-repository.ts\",\"view_range\":[1,40]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01T2zLYeATmUsghDS5NtTadB",
@@ -4633,7 +4633,7 @@ cwd: undefined
 2026-04-13T18:14:13.559Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:14:13.563Z [DEBUG] Tool calls count: 1
 2026-04-13T18:14:13.563Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:14:13.563Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
+2026-04-13T18:14:13.563Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
 2026-04-13T18:14:13.565Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:14:13.566Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:14:13.578Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4664,7 +4664,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\handlers\\\\escalation-handler.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\01-why-context-engineering\\\\without-context\\\\src\\\\backend\\\\src\\\\queue\\\\handlers\\\\escalation-handler.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01R6zWUJZQnae6zgxm7kQRfB",
@@ -4690,7 +4690,7 @@ cwd: undefined
 2026-04-13T18:14:16.771Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T18:14:16.781Z [DEBUG] Tool calls count: 1
 2026-04-13T18:14:16.781Z [DEBUG] Running tool calls in parallel
-2026-04-13T18:14:16.781Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
+2026-04-13T18:14:16.781Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
 2026-04-13T18:14:16.784Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T18:14:16.784Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T18:14:16.790Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4800,21 +4800,21 @@ cwd: undefined
   directory to understand the actual source structure:
 
 ✗ Read app
-  │ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\app
+  │ Y:\.sources\localm-tuts\courses\_examples\context-engineering\app
   └ Permission denied and could not request permission from user
 
 ● Let me check if there's a src directory already populated in the
   without-context folder that we need to work with:
 
 ● Search (glob)
-  │ "Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering
+  │ "Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering
   │ \without-context\**\*"
   └ No matches found
 
 ● Let me look at what's in the parent directory to better understand the
   project structure:
 
-✗ List directory Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut
+✗ List directory Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut
   └ Permission denied and could not request permission from user
 
 ● Based on the documentation files and the util.py file, I understand that:
@@ -5061,4 +5061,4 @@ cwd: undefined
 Changes   +466 -2
 Requests  0.33 Premium (2m 47s)
 Tokens    ↑ 1.7m • ↓ 12.6k • 1.7m (cached)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\.output\logs\session.md

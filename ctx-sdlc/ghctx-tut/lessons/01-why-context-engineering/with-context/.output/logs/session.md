@@ -20,9 +20,9 @@ Implement the manual review escalation workflow for this repository. Follow exis
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context
 
 <details>
 <summary>6 lines</summary>
@@ -45,9 +45,9 @@ util.py
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs
 
 ```
 architecture.md
@@ -62,9 +62,9 @@ manual-review-escalation.md
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md
 
 <details>
 <summary>71 lines</summary>
@@ -152,9 +152,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\architecture.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\architecture.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\architecture.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\architecture.md
 
 <details>
 <summary>48 lines</summary>
@@ -219,9 +219,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src
 
 <details>
 <summary>6 lines</summary>
@@ -244,9 +244,9 @@ tsconfig.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend
 
 ```
 dist
@@ -262,9 +262,9 @@ tsconfig.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src
 
 <details>
 <summary>9 lines</summary>
@@ -298,9 +298,9 @@ Now let me examine the key files for understanding existing patterns:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts
 
 <details>
 <summary>112 lines</summary>
@@ -429,9 +429,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts
 
 <details>
 <summary>73 lines</summary>
@@ -521,9 +521,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 
 <details>
 <summary>94 lines</summary>
@@ -634,9 +634,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts
 
 <details>
 <summary>98 lines</summary>
@@ -751,9 +751,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 
 <details>
 <summary>121 lines</summary>
@@ -891,9 +891,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts
 
 <details>
 <summary>47 lines</summary>
@@ -957,9 +957,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts
 
 <details>
 <summary>28 lines</summary>
@@ -1012,9 +1012,9 @@ Now let me check the middleware for delegated session handling:
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts
 
 ```
 Path does not exist
@@ -1027,9 +1027,9 @@ Path does not exist
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware
 
 ```
 audit-logger.ts
@@ -1054,9 +1054,9 @@ Let me check the middleware/error-handler to see the error pattern:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts
 
 <details>
 <summary>37 lines</summary>
@@ -1118,9 +1118,9 @@ Now let me see app.ts to understand where routes are registered:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts
 
 <details>
 <summary>82 lines</summary>
@@ -1243,12 +1243,12 @@ Let me now implement these changes:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts updated with changes.
 ```
 
 
@@ -1258,12 +1258,12 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-e
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts updated with changes.
 ```
 
 
@@ -1281,12 +1281,12 @@ Now let me add the route to applications.ts:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts updated with changes.
 ```
 
 
@@ -1304,9 +1304,9 @@ Perfect! Now let me verify my changes by viewing the updated files:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 
 <details>
 <summary>185 lines</summary>
@@ -1508,9 +1508,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engine
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 
 <details>
 <summary>112 lines</summary>

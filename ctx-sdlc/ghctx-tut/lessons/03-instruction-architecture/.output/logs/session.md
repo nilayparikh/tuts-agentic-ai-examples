@@ -20,9 +20,9 @@ Create a pure business-rule module at src/backend/src/rules/notification-channel
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules
 
 ```
 business-rules.ts
@@ -38,9 +38,9 @@ state-machine.ts
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit
 
 ```
 business-rules.test.ts
@@ -63,9 +63,9 @@ Now let me examine the existing rules to understand the patterns and conventions
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts
 
 <details>
 <summary>84 lines</summary>
@@ -166,9 +166,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts
 
 <details>
 <summary>38 lines</summary>
@@ -223,9 +223,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts
 
 <details>
 <summary>72 lines</summary>
@@ -322,9 +322,9 @@ Let me also check the types to understand the structures:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts
 
 <details>
 <summary>112 lines</summary>
@@ -461,9 +461,9 @@ Now let me check the instruction files to understand the patterns better:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md
 
 <details>
 <summary>44 lines</summary>
@@ -524,9 +524,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md
 
 <details>
 <summary>43 lines</summary>
@@ -594,12 +594,12 @@ Now I have enough context. Let me create the notification-channel-rules.ts modul
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts with 2486 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts with 2486 characters
 ```
 
 
@@ -617,12 +617,12 @@ Now let me create the comprehensive test file:
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts with 7540 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts with 7540 characters
 ```
 
 
@@ -640,9 +640,9 @@ Perfect! Now let me verify the code is syntactically correct by checking the fil
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
 
 <details>
 <summary>70 lines</summary>
@@ -729,9 +729,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 1-50)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 1-50)
 
 <details>
 <summary>50 lines</summary>
@@ -806,9 +806,9 @@ Let me verify the complete test file and ensure there are no issues:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 80-160)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 80-160)
 
 <details>
 <summary>81 lines</summary>
@@ -914,9 +914,9 @@ Excellent! The code is in place. Let me verify the complete structure is correct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 200--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts (lines 200--1)
 
 <details>
 <summary>36 lines</summary>

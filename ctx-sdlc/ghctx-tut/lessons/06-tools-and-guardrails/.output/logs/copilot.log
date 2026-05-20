@@ -13,7 +13,7 @@
 2026-04-16T18:30:16.752Z [INFO] Session indexing debug: showSessionSyncPrompt=false
 2026-04-16T18:30:16.752Z [INFO] Starting Copilot CLI: 1.0.29
 2026-04-16T18:30:16.752Z [INFO] Node.js version: v24.11.1
-2026-04-16T18:30:16.753Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails, featureFlagEnabled=false
+2026-04-16T18:30:16.753Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails, featureFlagEnabled=false
 2026-04-16T18:30:16.753Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-04-16T18:30:17.115Z [INFO] No update needed, current version is 1.0.29, fetched latest release is v1.0.29
 2026-04-16T18:30:17.765Z [DEBUG] No MCP config loaded from ODR (ODR unavailable or returned no usable servers)
@@ -294,8 +294,8 @@ cwd: undefined
   "vendor": "Anthropic",
   "version": "claude-haiku-4.5"
 }
-2026-04-16T18:30:26.635Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails, skipping
-2026-04-16T18:30:26.635Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails, skipping
+2026-04-16T18:30:26.635Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails, skipping
+2026-04-16T18:30:26.635Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails, skipping
 2026-04-16T18:30:26.637Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-04-16T18:30:26.640Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
 2026-04-16T18:30:26.641Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
@@ -2680,7 +2680,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01LhcCBzeTttFdMhsVB4DSC8",
@@ -2706,7 +2706,7 @@ cwd: undefined
 2026-04-16T18:30:32.725Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:32.800Z [DEBUG] Tool calls count: 2
 2026-04-16T18:30:32.800Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:32.802Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails
+2026-04-16T18:30:32.802Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails
 2026-04-16T18:30:32.807Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:32.808Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:32.820Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2740,7 +2740,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Du5aGLn3K2LnxnVmMak8Hz",
@@ -2766,7 +2766,7 @@ cwd: undefined
 2026-04-16T18:30:34.348Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:34.359Z [DEBUG] Tool calls count: 1
 2026-04-16T18:30:34.359Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:34.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github
+2026-04-16T18:30:34.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github
 2026-04-16T18:30:34.362Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:34.363Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:34.367Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -2797,7 +2797,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\**\"}",
+              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\**\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01NRtF9tqDptrtc3jAXh747r",
@@ -2813,7 +2813,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\**\"}",
+              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\**\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01CrFRSvx9M9omfpu5VBJWcS",
@@ -2872,7 +2872,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01WkLiqsL1WugaDKwKzo7PFk",
@@ -2888,7 +2888,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01HdpwyhF29FAjv3ahWkAV4i",
@@ -2914,8 +2914,8 @@ cwd: undefined
 2026-04-16T18:30:37.871Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:37.883Z [DEBUG] Tool calls count: 2
 2026-04-16T18:30:37.883Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:37.883Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
-2026-04-16T18:30:37.883Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
+2026-04-16T18:30:37.883Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
+2026-04-16T18:30:37.883Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
 2026-04-16T18:30:37.888Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:37.889Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:37.893Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2948,7 +2948,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\pre-commit-validate.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\pre-commit-validate.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_0192FetED2bmyFDxoAa3aRaB",
@@ -2964,7 +2964,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\post-save-format.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\post-save-format.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01V8rtDvz2i6aPQZBugKNaFQ",
@@ -2980,7 +2980,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\file-protection.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\file-protection.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01CVTw8bKCh1gUmxSJCa5oS1",
@@ -3006,9 +3006,9 @@ cwd: undefined
 2026-04-16T18:30:40.133Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:40.139Z [DEBUG] Tool calls count: 3
 2026-04-16T18:30:40.139Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:40.139Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
-2026-04-16T18:30:40.139Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
-2026-04-16T18:30:40.140Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
+2026-04-16T18:30:40.139Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
+2026-04-16T18:30:40.139Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
+2026-04-16T18:30:40.140Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
 2026-04-16T18:30:40.144Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:40.144Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:40.150Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3043,7 +3043,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_commit.py\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_commit.py\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_012ZtG6uvp1adhFBKuJhw7ob",
@@ -3059,7 +3059,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\check_protected_files.py\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\check_protected_files.py\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01H8q3GyDsB5Jhj1YW1WQ67h",
@@ -3075,7 +3075,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\mcp.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\mcp.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EydcBAe4j3tvCmEPwy3dao",
@@ -3101,9 +3101,9 @@ cwd: undefined
 2026-04-16T18:30:42.424Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:42.429Z [DEBUG] Tool calls count: 3
 2026-04-16T18:30:42.429Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:42.430Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
-2026-04-16T18:30:42.431Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
-2026-04-16T18:30:42.431Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json
+2026-04-16T18:30:42.430Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
+2026-04-16T18:30:42.431Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
+2026-04-16T18:30:42.431Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json
 2026-04-16T18:30:42.435Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:42.435Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:42.443Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3138,7 +3138,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\copilot-instructions.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\copilot-instructions.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01C8BdZLqHqedKrvTVfmnetA",
@@ -3154,7 +3154,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01MT28n92Q18nzzfuBHtX66t",
@@ -3180,8 +3180,8 @@ cwd: undefined
 2026-04-16T18:30:45.659Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:45.667Z [DEBUG] Tool calls count: 2
 2026-04-16T18:30:45.667Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:45.667Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
-2026-04-16T18:30:45.668Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs
+2026-04-16T18:30:45.667Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
+2026-04-16T18:30:45.668Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs
 2026-04-16T18:30:45.672Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:45.673Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:45.681Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3215,7 +3215,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\\\\guardrail-audit-example.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\\\\guardrail-audit-example.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01MnmfyHxpZn9CAfUh4V3xVD",
@@ -3231,7 +3231,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\\\\security-policy.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\docs\\\\security-policy.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01XZp94Khj61ayCTPmgXvQw6",
@@ -3257,8 +3257,8 @@ cwd: undefined
 2026-04-16T18:30:48.069Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:48.072Z [DEBUG] Tool calls count: 2
 2026-04-16T18:30:48.072Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:48.073Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
-2026-04-16T18:30:48.073Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md
+2026-04-16T18:30:48.073Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
+2026-04-16T18:30:48.073Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md
 2026-04-16T18:30:48.075Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:48.076Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:48.086Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3291,7 +3291,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_0165suabS9D8x667QpUDTWQY",
@@ -3317,7 +3317,7 @@ cwd: undefined
 2026-04-16T18:30:50.806Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:50.813Z [DEBUG] Tool calls count: 1
 2026-04-16T18:30:50.813Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:50.813Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src
+2026-04-16T18:30:50.813Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src
 2026-04-16T18:30:50.817Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:50.817Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:50.822Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3348,7 +3348,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_011bxEF2wJFW15AXzNXvw5K1",
@@ -3374,7 +3374,7 @@ cwd: undefined
 2026-04-16T18:30:53.759Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:53.765Z [DEBUG] Tool calls count: 1
 2026-04-16T18:30:53.765Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:53.765Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend
+2026-04-16T18:30:53.765Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend
 2026-04-16T18:30:53.768Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:53.768Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:53.774Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3398,7 +3398,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01VHvUnt3JeQubqrSXcWnPq6",
@@ -3424,7 +3424,7 @@ cwd: undefined
 2026-04-16T18:30:56.500Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:30:56.500Z [DEBUG] Tool calls count: 1
 2026-04-16T18:30:56.500Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:30:56.500Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src
+2026-04-16T18:30:56.500Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src
 2026-04-16T18:30:56.503Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:30:56.503Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:30:56.507Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3455,7 +3455,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\*\\\\index.ts\"}",
+              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\*\\\\index.ts\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01J1fNDurz2FwUQivkNqQtcf",
@@ -3511,7 +3511,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\rules\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\rules\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01JayDAo532ZhKC9Kv7aPNjc",
@@ -3537,7 +3537,7 @@ cwd: undefined
 2026-04-16T18:31:00.944Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:00.948Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:00.948Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:00.949Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules
+2026-04-16T18:31:00.949Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules
 2026-04-16T18:31:00.950Z [DEBUG] [telemetry-queue] Flushing 50 events (177371 B → 7161 B gzipped)
 2026-04-16T18:31:00.953Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:00.954Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3569,7 +3569,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\services\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\services\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01UyM3LuZxZLDPjw2w6D9gXP",
@@ -3595,7 +3595,7 @@ cwd: undefined
 2026-04-16T18:31:02.993Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:02.996Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:02.996Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:02.996Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services
+2026-04-16T18:31:02.996Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services
 2026-04-16T18:31:02.998Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:02.998Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:03.001Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3626,7 +3626,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\routes\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\routes\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EffFViD1bqBBor65CinSFm",
@@ -3652,7 +3652,7 @@ cwd: undefined
 2026-04-16T18:31:05.019Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:05.024Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:05.024Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:05.024Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes
+2026-04-16T18:31:05.024Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes
 2026-04-16T18:31:05.026Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:05.026Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:05.029Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3683,7 +3683,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\routes\\\\decisions.ts\",\"view_range\":[1,50]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\src\\\\backend\\\\src\\\\routes\\\\decisions.ts\",\"view_range\":[1,50]}",
               "name": "view"
             },
             "id": "toolu_vrtx_012oc8xt6q8ki5rNv5biPcVu",
@@ -3709,7 +3709,7 @@ cwd: undefined
 2026-04-16T18:31:07.130Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:07.133Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:07.133Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:07.133Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts
+2026-04-16T18:31:07.133Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts
 2026-04-16T18:31:07.137Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:07.137Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:07.143Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3740,7 +3740,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\**\\\\index.ts\"}",
+              "arguments": "{\"pattern\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\**\\\\index.ts\"}",
               "name": "glob"
             },
             "id": "toolu_vrtx_01LeYbKCxub4jVymKTyKgVbi",
@@ -3796,7 +3796,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\README.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\README.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01LdFFVBX51J6YQqeANU7sWL",
@@ -3822,7 +3822,7 @@ cwd: undefined
 2026-04-16T18:31:13.520Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:13.523Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:13.523Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:13.523Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\README.md
+2026-04-16T18:31:13.523Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\README.md
 2026-04-16T18:31:13.524Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:13.525Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:13.529Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3855,7 +3855,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01SkH3qhx6JRjjkrDCXcUVWb",
@@ -3881,7 +3881,7 @@ cwd: undefined
 2026-04-16T18:31:16.407Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:16.414Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:16.414Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:16.414Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests
+2026-04-16T18:31:16.414Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests
 2026-04-16T18:31:16.416Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:16.417Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:16.422Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3905,7 +3905,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[1,100]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[1,100]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01A7TwfY64Dm7juWu1YZNABS",
@@ -3931,7 +3931,7 @@ cwd: undefined
 2026-04-16T18:31:18.762Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:18.762Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:18.762Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:18.762Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
+2026-04-16T18:31:18.762Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
 2026-04-16T18:31:18.764Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:18.764Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:18.773Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3962,7 +3962,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"pattern\":\"test_import_validation|\\\"direct.*import|\\\"barrel|deny.*case|allow.*case\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"output_mode\":\"content\",\"head_limit\":100}",
+              "arguments": "{\"pattern\":\"test_import_validation|\\\"direct.*import|\\\"barrel|deny.*case|allow.*case\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"output_mode\":\"content\",\"head_limit\":100}",
               "name": "grep"
             },
             "id": "toolu_vrtx_014TFx594qL1mu4XL52nK7WG",
@@ -4019,7 +4019,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[100,250]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[100,250]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01CriyfBz4JdpfgqUPPzyfvs",
@@ -4045,7 +4045,7 @@ cwd: undefined
 2026-04-16T18:31:24.791Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:24.794Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:24.794Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:24.794Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
+2026-04-16T18:31:24.794Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
 2026-04-16T18:31:24.796Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:24.796Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:24.800Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4076,7 +4076,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[250,400]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\tests\\\\test_guardrails.py\",\"view_range\":[250,400]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01XPAekc8QMCXvJiPe7J4EUr",
@@ -4102,7 +4102,7 @@ cwd: undefined
 2026-04-16T18:31:28.050Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:28.054Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:28.054Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:28.054Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
+2026-04-16T18:31:28.054Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py
 2026-04-16T18:31:28.057Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:28.057Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:28.062Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4133,7 +4133,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_018S14MnSFf3RssA1JZmNQ2v",
@@ -4159,7 +4159,7 @@ cwd: undefined
 2026-04-16T18:31:39.419Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:39.426Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:39.426Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:39.426Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output
+2026-04-16T18:31:39.426Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output
 2026-04-16T18:31:39.427Z [DEBUG] [telemetry-queue] Flushing 50 events (178041 B → 7797 B gzipped)
 2026-04-16T18:31:39.429Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:39.429Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -4184,7 +4184,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01TjoNDUsUDhtkhbweuRdXg7",
@@ -4210,7 +4210,7 @@ cwd: undefined
 2026-04-16T18:31:41.696Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:41.697Z [DEBUG] Tool calls count: 1
 2026-04-16T18:31:41.697Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:41.697Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change
+2026-04-16T18:31:41.697Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change
 2026-04-16T18:31:41.699Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:41.699Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:41.705Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4234,7 +4234,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\\\\expected-files.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\\\\expected-files.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Dj5F6QnvRotN4FH9Zbjygm",
@@ -4250,7 +4250,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\\\\expected-patterns.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.output\\\\change\\\\expected-patterns.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01V1cdfv3kYf1gewUXnPXRXA",
@@ -4276,8 +4276,8 @@ cwd: undefined
 2026-04-16T18:31:44.395Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:31:44.395Z [DEBUG] Tool calls count: 2
 2026-04-16T18:31:44.395Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:31:44.396Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json
-2026-04-16T18:31:44.396Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json
+2026-04-16T18:31:44.396Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json
+2026-04-16T18:31:44.396Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json
 2026-04-16T18:31:44.402Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:44.403Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:44.411Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -4327,7 +4327,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\import-validation.json\",\"file_text\":\"{\\n  \\\"hooks\\\": {\\n    \\\"PreToolUse\\\": [\\n      {\\n        \\\"type\\\": \\\"command\\\",\\n        \\\"command\\\": \\\"python .github/scripts/validate_imports.py\\\",\\n        \\\"timeout\\\": 10\\n      }\\n    ]\\n  }\\n}\\n\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\import-validation.json\",\"file_text\":\"{\\n  \\\"hooks\\\": {\\n    \\\"PreToolUse\\\": [\\n      {\\n        \\\"type\\\": \\\"command\\\",\\n        \\\"command\\\": \\\"python .github/scripts/validate_imports.py\\\",\\n        \\\"timeout\\\": 10\\n      }\\n    ]\\n  }\\n}\\n\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01GHSEsYWhGgqKV4aUS6rXDt",
@@ -4355,7 +4355,7 @@ cwd: undefined
 2026-04-16T18:31:47.653Z [DEBUG] Running tool calls in parallel
 2026-04-16T18:31:47.654Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-16T18:31:47.654Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-16T18:31:47.654Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
+2026-04-16T18:31:47.654Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
 2026-04-16T18:31:47.655Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:47.656Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:31:47.673Z [DEBUG] Operation completed. Remaining queue length: 0
@@ -4390,7 +4390,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"file_text\":\"#!/usr/bin/env python3\\n\\\"\\\"\\\"PreToolUse hook: enforce barrel-file import convention.\\n\\nReads JSON from stdin (VS Code hook input) and checks if TypeScript files\\nin src/backend/src/ are importing directly from internal module paths\\ninstead of going through barrel files (index.ts).\\n\\nThe barrel-file convention requires:\\n  - Imports from sibling directories use the directory name (e.g., '../rules')\\n  - Do not import directly from specific files (e.g., '../rules/business-rules')\\n  - Exception: package imports (e.g., 'express') and non-src files are allowed\\n\\\"\\\"\\\"\\nimport json\\nimport re\\nimport sys\\nfrom pathlib import PurePosixPath\\n\\n\\ndef is_src_backend_file(filepath: str) -> bool:\\n    \\\"\\\"\\\"Check if file is in src/backend/src/.\\\"\\\"\\\"\\n    p = PurePosixPath(filepath)\\n    parts = p.parts\\n    if len(parts) >= 3:\\n        return parts[0] == \\\"src\\\" and parts[1] == \\\"backend\\\" and parts[2] == \\\"src\\\"\\n    return False\\n\\n\\ndef extract_imports(content: str) -> list[str]:\\n    \\\"\\\"\\\"Extract import paths from TypeScript/JavaScript content.\\n    \\n    Returns list of import paths (e.g., ['../rules/business-rules', 'express']).\\n    \\\"\\\"\\\"\\n    # Match both ES6 import and CommonJS require patterns\\n    # Captures: import ... from \\\"path\\\" or import ... from 'path'\\n    import_pattern = r'(?:import|from)\\\\s+[\\\"\\\\']([^\\\"\\\\']+)[\\\"\\\\']'\\n    matches = re.findall(import_pattern, content)\\n    return matches\\n\\n\\ndef is_relative_import(path: str) -> bool:\\n    \\\"\\\"\\\"Check if path is a relative import (starts with . or ..).\\\"\\\"\\\"\\n    return path.startswith(\\\".\\\") or path.startswith(\\\"..\\\")\\n\\n\\ndef is_package_import(path: str) -> bool:\\n    \\\"\\\"\\\"Check if path is a package import (no / in path, doesn't start with .).\\\"\\\"\\\"\\n    return \\\"/\\\" not in path and not is_relative_import(path)\\n\\n\\ndef violates_barrel_convention(import_path: str) -> bool:\\n    \\\"\\\"\\\"Check if import violates barrel-file convention.\\n    \\n    Violation: relative import that targets a specific file (contains hyphen\\n    or filename.ts pattern) rather than a directory.\\n    \\n    Examples of violations:\\n      - '../rules/business-rules' (hyphenated filename)\\n      - '../services/audit-service' (hyphenated filename)\\n      - '../models/state-machine' (hyphenated filename)\\n    \\n    Examples of allowed imports:\\n      - '../rules' (barrel directory)\\n      - '../services' (barrel directory)\\n      - 'express' (package import)\\n    \\\"\\\"\\\"\\n    if not is_relative_import(import_path):\\n        return False\\n    \\n    # Extract the last component of the path\\n    parts = import_path.split(\\\"/\\\")\\n    last_part = parts[-1]\\n    \\n    # If the last part contains a hyphen, it's a specific file import (violation)\\n    # Example: 'business-rules', 'audit-service', 'state-machine'\\n    if \\\"-\\\" in last_part:\\n        return True\\n    \\n    return False\\n\\n\\ndef main() -> None:\\n    data = json.load(sys.stdin)\\n    tool_name = data.get(\\\"tool_name\\\", \\\"\\\")\\n    tool_input = data.get(\\\"tool_input\\\", {})\\n    \\n    # Only check file-creating/editing tools that have content\\n    if tool_name not in (\\\"createFile\\\", \\\"editFiles\\\"):\\n        sys.exit(0)\\n    \\n    # Get file path and content\\n    file_path = tool_input.get(\\\"filePath\\\", \\\"\\\")\\n    file_text = tool_input.get(\\\"file_text\\\", \\\"\\\")\\n    \\n    # Only validate TypeScript/JavaScript files in src/backend/src/\\n    if not file_path or not (file_path.endswith(\\\".ts\\\") or file_path.endswith(\\\".tsx\\\")):\\n        sys.exit(0)\\n    \\n    if not is_src_backend_file(file_path):\\n        sys.exit(0)\\n    \\n    # Extract imports and check for violations\\n    imports = extract_imports(file_text)\\n    for import_path in imports:\\n        if violates_barrel_convention(import_path):\\n            result = {\\n                \\\"hookSpecificOutput\\\": {\\n                    \\\"hookEventName\\\": \\\"PreToolUse\\\",\\n                    \\\"permissionDecision\\\": \\\"deny\\\",\\n                    \\\"permissionDecisionReason\\\": (\\n                        f\\\"Import blocked: '{import_path}' violates barrel-file convention. \\\"\\n                        f\\\"Import from the parent directory instead (e.g., \\\"\\n                        f\\\"'from \\\\\\\"../{import_path.split('/')[1]}\\\\\\\"'). \\\"\\n                        f\\\"Barrel files (index.ts) should re-export internal module contents.\\\"\\n                    ),\\n                }\\n            }\\n            json.dump(result, sys.stdout)\\n            sys.exit(0)\\n    \\n    sys.exit(0)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"file_text\":\"#!/usr/bin/env python3\\n\\\"\\\"\\\"PreToolUse hook: enforce barrel-file import convention.\\n\\nReads JSON from stdin (VS Code hook input) and checks if TypeScript files\\nin src/backend/src/ are importing directly from internal module paths\\ninstead of going through barrel files (index.ts).\\n\\nThe barrel-file convention requires:\\n  - Imports from sibling directories use the directory name (e.g., '../rules')\\n  - Do not import directly from specific files (e.g., '../rules/business-rules')\\n  - Exception: package imports (e.g., 'express') and non-src files are allowed\\n\\\"\\\"\\\"\\nimport json\\nimport re\\nimport sys\\nfrom pathlib import PurePosixPath\\n\\n\\ndef is_src_backend_file(filepath: str) -> bool:\\n    \\\"\\\"\\\"Check if file is in src/backend/src/.\\\"\\\"\\\"\\n    p = PurePosixPath(filepath)\\n    parts = p.parts\\n    if len(parts) >= 3:\\n        return parts[0] == \\\"src\\\" and parts[1] == \\\"backend\\\" and parts[2] == \\\"src\\\"\\n    return False\\n\\n\\ndef extract_imports(content: str) -> list[str]:\\n    \\\"\\\"\\\"Extract import paths from TypeScript/JavaScript content.\\n    \\n    Returns list of import paths (e.g., ['../rules/business-rules', 'express']).\\n    \\\"\\\"\\\"\\n    # Match both ES6 import and CommonJS require patterns\\n    # Captures: import ... from \\\"path\\\" or import ... from 'path'\\n    import_pattern = r'(?:import|from)\\\\s+[\\\"\\\\']([^\\\"\\\\']+)[\\\"\\\\']'\\n    matches = re.findall(import_pattern, content)\\n    return matches\\n\\n\\ndef is_relative_import(path: str) -> bool:\\n    \\\"\\\"\\\"Check if path is a relative import (starts with . or ..).\\\"\\\"\\\"\\n    return path.startswith(\\\".\\\") or path.startswith(\\\"..\\\")\\n\\n\\ndef is_package_import(path: str) -> bool:\\n    \\\"\\\"\\\"Check if path is a package import (no / in path, doesn't start with .).\\\"\\\"\\\"\\n    return \\\"/\\\" not in path and not is_relative_import(path)\\n\\n\\ndef violates_barrel_convention(import_path: str) -> bool:\\n    \\\"\\\"\\\"Check if import violates barrel-file convention.\\n    \\n    Violation: relative import that targets a specific file (contains hyphen\\n    or filename.ts pattern) rather than a directory.\\n    \\n    Examples of violations:\\n      - '../rules/business-rules' (hyphenated filename)\\n      - '../services/audit-service' (hyphenated filename)\\n      - '../models/state-machine' (hyphenated filename)\\n    \\n    Examples of allowed imports:\\n      - '../rules' (barrel directory)\\n      - '../services' (barrel directory)\\n      - 'express' (package import)\\n    \\\"\\\"\\\"\\n    if not is_relative_import(import_path):\\n        return False\\n    \\n    # Extract the last component of the path\\n    parts = import_path.split(\\\"/\\\")\\n    last_part = parts[-1]\\n    \\n    # If the last part contains a hyphen, it's a specific file import (violation)\\n    # Example: 'business-rules', 'audit-service', 'state-machine'\\n    if \\\"-\\\" in last_part:\\n        return True\\n    \\n    return False\\n\\n\\ndef main() -> None:\\n    data = json.load(sys.stdin)\\n    tool_name = data.get(\\\"tool_name\\\", \\\"\\\")\\n    tool_input = data.get(\\\"tool_input\\\", {})\\n    \\n    # Only check file-creating/editing tools that have content\\n    if tool_name not in (\\\"createFile\\\", \\\"editFiles\\\"):\\n        sys.exit(0)\\n    \\n    # Get file path and content\\n    file_path = tool_input.get(\\\"filePath\\\", \\\"\\\")\\n    file_text = tool_input.get(\\\"file_text\\\", \\\"\\\")\\n    \\n    # Only validate TypeScript/JavaScript files in src/backend/src/\\n    if not file_path or not (file_path.endswith(\\\".ts\\\") or file_path.endswith(\\\".tsx\\\")):\\n        sys.exit(0)\\n    \\n    if not is_src_backend_file(file_path):\\n        sys.exit(0)\\n    \\n    # Extract imports and check for violations\\n    imports = extract_imports(file_text)\\n    for import_path in imports:\\n        if violates_barrel_convention(import_path):\\n            result = {\\n                \\\"hookSpecificOutput\\\": {\\n                    \\\"hookEventName\\\": \\\"PreToolUse\\\",\\n                    \\\"permissionDecision\\\": \\\"deny\\\",\\n                    \\\"permissionDecisionReason\\\": (\\n                        f\\\"Import blocked: '{import_path}' violates barrel-file convention. \\\"\\n                        f\\\"Import from the parent directory instead (e.g., \\\"\\n                        f\\\"'from \\\\\\\"../{import_path.split('/')[1]}\\\\\\\"'). \\\"\\n                        f\\\"Barrel files (index.ts) should re-export internal module contents.\\\"\\n                    ),\\n                }\\n            }\\n            json.dump(result, sys.stdout)\\n            sys.exit(0)\\n    \\n    sys.exit(0)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\\n\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01AzSGidw1mCLziVn8MSd4K4",
@@ -4418,7 +4418,7 @@ cwd: undefined
 2026-04-16T18:31:59.975Z [DEBUG] Running tool calls in parallel
 2026-04-16T18:31:59.975Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-16T18:31:59.975Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-16T18:31:59.975Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+2026-04-16T18:31:59.975Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
 2026-04-16T18:31:59.990Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-16T18:31:59.991Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:31:59.991Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -4451,7 +4451,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\import-validation.json\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\\\\import-validation.json\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01ETB8gzFMBxRepCdmUi2mZq",
@@ -4467,7 +4467,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"view_range\":[1,50]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"view_range\":[1,50]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01TqRqNgqXbA9vLkm2HBFien",
@@ -4493,8 +4493,8 @@ cwd: undefined
 2026-04-16T18:32:03.397Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:32:03.401Z [DEBUG] Tool calls count: 2
 2026-04-16T18:32:03.401Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:32:03.401Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
-2026-04-16T18:32:03.401Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+2026-04-16T18:32:03.401Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
+2026-04-16T18:32:03.401Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
 2026-04-16T18:32:03.404Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:32:03.404Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:32:03.409Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -4527,7 +4527,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\hooks\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01LN6SLC57BWXnzGwW2vwUiC",
@@ -4543,7 +4543,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Nh57hCkYtWo5pDr37tZJnb",
@@ -4569,8 +4569,8 @@ cwd: undefined
 2026-04-16T18:32:06.641Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:32:06.647Z [DEBUG] Tool calls count: 2
 2026-04-16T18:32:06.647Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:32:06.647Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
-2026-04-16T18:32:06.647Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
+2026-04-16T18:32:06.647Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
+2026-04-16T18:32:06.647Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
 2026-04-16T18:32:06.649Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:32:06.649Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:32:06.656Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -4603,7 +4603,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"view_range\":[50,150]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\06-tools-and-guardrails\\\\.github\\\\scripts\\\\validate_imports.py\",\"view_range\":[50,150]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01XzoTCkA6LhjngS7d6DR46R",
@@ -4629,7 +4629,7 @@ cwd: undefined
 2026-04-16T18:32:09.594Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-16T18:32:09.598Z [DEBUG] Tool calls count: 1
 2026-04-16T18:32:09.599Z [DEBUG] Running tool calls in parallel
-2026-04-16T18:32:09.599Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+2026-04-16T18:32:09.599Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
 2026-04-16T18:32:09.601Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-16T18:32:09.602Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-16T18:32:09.608Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -4725,12 +4725,12 @@ cwd: undefined
 ● Let me explore the existing hooks and scripts:
 
 ● Search (glob)
-  │ "Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-too
+  │ "Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-too
   │ ls-and-guardrails\.github\hooks\**"
   └ No matches found
 
 ● Search (glob)
-  │ "Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-too
+  │ "Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-too
   │ ls-and-guardrails\.github\scripts\**"
   └ No matches found
 
@@ -4808,7 +4808,7 @@ cwd: undefined
 ● Let me check if there are any index.ts files that serve as barrel files:
 
 ● Search (glob)
-  │ "Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-too
+  │ "Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-too
   │ ls-and-guardrails\src\backend\src\*\index.ts"
   └ No matches found
 
@@ -4844,7 +4844,7 @@ cwd: undefined
   to understand the intended structure:
 
 ● Search (glob)
-  │ "Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-too
+  │ "Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-too
   │ ls-and-guardrails\**\index.ts"
   └ No matches found
 
@@ -4999,4 +4999,4 @@ cwd: undefined
 Changes   +137 -0
 Requests  0.33 Premium (2m 0s)
 Tokens    ↑ 1.2m • ↓ 6.9k • 1.2m (cached)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\logs\session.md

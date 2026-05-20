@@ -33,7 +33,7 @@ There is nothing to run for this lesson folder.
 Use the video and the course lesson assets to review the operating model:
 
 1. Watch the published lesson for the final framing.
-2. Read the course lesson metadata in `content/sdlc/ctx-sdlc/course/08-operating-model/`.
+2. Read the course lesson metadata in `content/developer-experience/context-engineering/course/08-operating-model/`.
 3. Compare your own repository against the measure → review → update → validate cycle.
 
 ## Series Navigation

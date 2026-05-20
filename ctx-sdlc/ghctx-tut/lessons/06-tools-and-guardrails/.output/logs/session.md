@@ -28,9 +28,9 @@ I'll help you implement the import-validation guardrail. Let me start by explori
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails
 
 <details>
 <summary>11 lines</summary>
@@ -66,9 +66,9 @@ Now let me explore the .github directory structure:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github
 
 ```
 copilot-instructions.md
@@ -92,9 +92,9 @@ Let me explore the existing hooks and scripts:
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\****
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\****
 
-"Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\**"
+"Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\**"
 
 ```
 No files matched the pattern.
@@ -107,9 +107,9 @@ No files matched the pattern.
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\****
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\****
 
-"Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\**"
+"Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\**"
 
 ```
 No files matched the pattern.
@@ -130,9 +130,9 @@ Let me check if those directories exist:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
 
 ```
 file-protection.json
@@ -147,9 +147,9 @@ pre-commit-validate.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
 
 ```
 __pycache__
@@ -173,9 +173,9 @@ Good! Now let me read the existing hook configs and scripts to understand the pa
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\pre-commit-validate.json
 
 <details>
 <summary>11 lines</summary>
@@ -203,9 +203,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\post-save-format.json
 
 <details>
 <summary>11 lines</summary>
@@ -233,9 +233,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\file-protection.json
 
 <details>
 <summary>11 lines</summary>
@@ -271,9 +271,9 @@ Now let me read the existing validation scripts to understand the pattern:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_commit.py
 
 <details>
 <summary>52 lines</summary>
@@ -342,9 +342,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\check_protected_files.py
 
 <details>
 <summary>64 lines</summary>
@@ -425,9 +425,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\mcp.json
 
 <details>
 <summary>33 lines</summary>
@@ -485,9 +485,9 @@ Now let me check the copilot-instructions.md and docs to understand the policy a
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\copilot-instructions.md
 
 <details>
 <summary>50 lines</summary>
@@ -554,9 +554,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs
 
 ```
 guardrail-audit-example.md
@@ -579,9 +579,9 @@ Let me check the policy docs to understand barrel-file conventions:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\guardrail-audit-example.md
 
 <details>
 <summary>46 lines</summary>
@@ -644,9 +644,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\docs\security-policy.md
 
 <details>
 <summary>95 lines</summary>
@@ -766,9 +766,9 @@ Let me also check the src directory structure to understand the barrel-file patt
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src
 
 <details>
 <summary>6 lines</summary>
@@ -799,9 +799,9 @@ Let me check the backend structure:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend
 
 ```
 dist
@@ -817,9 +817,9 @@ tsconfig.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src
 
 <details>
 <summary>9 lines</summary>
@@ -853,9 +853,9 @@ Let me check if there are any index.ts files that serve as barrel files:
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\*\index.ts**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\*\index.ts**
 
-"Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\*\index.ts"
+"Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\*\index.ts"
 
 ```
 No files matched the pattern.
@@ -876,9 +876,9 @@ Let me check the rules directory to understand the structure better:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\rules
 
 ```
 business-rules.ts
@@ -902,9 +902,9 @@ Let me check services:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\services
 
 ```
 audit-service.ts
@@ -928,9 +928,9 @@ Now let me check the routes directory:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes
 
 ```
 applications.ts
@@ -955,9 +955,9 @@ Now let me look at a sample TypeScript file to see what the imports look like:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts (lines 1-50)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\src\backend\src\routes\decisions.ts (lines 1-50)
 
 <details>
 <summary>50 lines</summary>
@@ -1034,9 +1034,9 @@ Let me check if there are any example index.ts files elsewhere or if I need to u
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\**\index.ts**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\**\index.ts**
 
-"Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\**\index.ts"
+"Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\**\index.ts"
 
 ```
 No files matched the pattern.
@@ -1057,9 +1057,9 @@ Let me check the README to understand the project structure better:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\README.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\README.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\README.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\README.md
 
 <details>
 <summary>127 lines</summary>
@@ -1211,9 +1211,9 @@ Perfect! Now I understand the task. Let me check what "changed .ts/.tsx files" m
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests
 
 ```
 __pycache__
@@ -1227,9 +1227,9 @@ test_guardrails.py
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 1-100)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 1-100)
 
 <details>
 <summary>100 lines</summary>
@@ -1354,9 +1354,9 @@ Let me continue reading the test file to understand the import-validation test c
 
 ### ✅ `grep`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py**
 
-"test_import_validation|"direct.*import|"barrel|deny.*case|allow.*case" (Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py)
+"test_import_validation|"direct.*import|"barrel|deny.*case|allow.*case" (Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py)
 
 ```
 No matches found.
@@ -1377,9 +1377,9 @@ Let me view more of the test file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 100-250)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 100-250)
 
 <details>
 <summary>151 lines</summary>
@@ -1555,9 +1555,9 @@ Let me continue viewing to find the import validation test cases:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 250-400)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\tests\test_guardrails.py (lines 250-400)
 
 <details>
 <summary>151 lines</summary>
@@ -1740,9 +1740,9 @@ Now let me check the expected output to understand what files are expected:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output
 
 ```
 change
@@ -1758,9 +1758,9 @@ test-results.xml
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change
 
 ```
 expected-files.json
@@ -1774,9 +1774,9 @@ expected-patterns.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-files.json
 
 <details>
 <summary>9 lines</summary>
@@ -1802,9 +1802,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.output\change\expected-patterns.json
 
 <details>
 <summary>19 lines</summary>
@@ -1848,12 +1848,12 @@ Perfect! Now I have all the information I need. Let me create both files. First,
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json with 188 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json with 188 characters
 ```
 
 
@@ -1871,12 +1871,12 @@ Now let me create the validation script:
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py with 4418 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py with 4418 characters
 ```
 
 
@@ -1894,9 +1894,9 @@ Perfect! Now let me verify that both files exist and check their content:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks\import-validation.json
 
 <details>
 <summary>12 lines</summary>
@@ -1925,9 +1925,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-an
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py (lines 1-50)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py (lines 1-50)
 
 <details>
 <summary>50 lines</summary>
@@ -2002,9 +2002,9 @@ Excellent! Both files have been created successfully. Let me verify the complete
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\hooks
 
 ```
 file-protection.json
@@ -2020,9 +2020,9 @@ pre-commit-validate.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts
 
 ```
 __pycache__
@@ -2047,9 +2047,9 @@ Perfect! Let me verify the complete validation script to ensure it handles all t
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py (lines 50-150)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\06-tools-and-guardrails\.github\scripts\validate_imports.py (lines 50-150)
 
 <details>
 <summary>76 lines</summary>

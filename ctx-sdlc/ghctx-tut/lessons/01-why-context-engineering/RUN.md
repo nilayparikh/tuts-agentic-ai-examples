@@ -79,7 +79,7 @@ Do not run npm install, npm test, or any shell commands. Inspect and edit files 
 | Phase | Time | Tool | Target | Purpose |
 |---|---|---|---|---|
 | Discovery | 10s | ❌ view | `Y:\` | Tried to list root — permission denied |
-| Discovery | 10s | ❌ view | `ctx-sdlc/` | Tried parent dir — permission denied |
+| Discovery | 10s | ❌ view | `context-engineering/` | Tried parent dir — permission denied |
 | Discovery | 11s | ✅ view | `with-context/` | Listed workspace root — found `.github/`, `docs/`, `src/` |
 | Context | 13s | ✅ view | `docs/` | Found 3 docs |
 | Context | 13s | ✅ view | `src/` | Found app structure |

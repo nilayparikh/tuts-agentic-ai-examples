@@ -1,5 +1,5 @@
 [project]
-name = "ctx-sdlc-examples"
+name = "context-engineering-examples"
 version = "0.1.0"
 description = "Runnable examples for the Context Engineering for GitHub Copilot course"
 requires-python = ">=3.11"

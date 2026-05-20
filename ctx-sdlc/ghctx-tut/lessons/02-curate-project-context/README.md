@@ -4,7 +4,7 @@
 
 > <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=1B90MkDnmhs" target="_blank" rel="noopener noreferrer">GitHub Copilot: Mastering .github/ and /docs/ | Lesson 02 of 09</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
-> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
+> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/context-engineering" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
 
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Building the shared context layer: `.github/` for behavior and `docs/` for knowledge.
@@ -115,4 +115,4 @@ python util.py --clean
 | 08  | Operating Model           | _Coming soon_                                        | [08-operating-model](../08-operating-model)                     |
 | 09  | AI-Assisted SDLC Capstone | _Coming soon_                                        | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
 
-Full Course: <https://tuts.localm.dev/ctx-sdlc>
+Full Course: <https://tuts.localm.dev/context-engineering>

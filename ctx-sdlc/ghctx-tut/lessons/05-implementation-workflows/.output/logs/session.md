@@ -20,9 +20,9 @@ Inspect docs/, specs/, and the relevant notification-preference write surfaces y
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs
 
 ```
 architecture.md
@@ -38,9 +38,9 @@ notification-preferences-plan.md
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs
 
 ```
 non-functional-requirements.md
@@ -54,7 +54,7 @@ product-spec-notification-preferences.md
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs**
 
 <details>
 <summary>Arguments</summary>
@@ -62,7 +62,7 @@ product-spec-notification-preferences.md
 ```json
 {
   "pattern": "notification-preference|notification preference|LEGAL-218|manual-review-escalation|decline",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\docs",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\docs",
   "output_mode": "content",
   "-n": true,
   "head_limit": 200
@@ -75,76 +75,76 @@ product-spec-notification-preferences.md
 <summary>70 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:12:This plan outlines the implementation of user-configurable notification preferences for the Loan Workbench platform. The feature addresses alert fatigue by allowing underwriters and analyst managers to control which notifications they receive (approval, decline, document-request, manual-review-escalation) across email and SMS channels.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:15:- Mandatory notification events (manual-review-escalation) must always have at least one enabled channel.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:16:- California loans have a temporary SMS restriction for decline notifications (LEGAL-218).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:22:**Canonical Source:** Product Specification (specs/product-spec-notification-preferences.md) is the primary authority. NFRs provide constraints and safety rails. Architecture and ADRs guide implementation pattern choices.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:32:| FR1 | Preference matrix: email/SMS independent per event type      | product-spec-notification-preferences.md § Functional Requirements § FR-1 |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:33:| FR2 | Mandatory event rule: ≥1 channel for manual-review-escalation | product-spec-notification-preferences.md § FR-2 (explicit hard negative pattern) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:34:| FR3 | Role-based defaults on first access (no migration required)   | product-spec-notification-preferences.md § FR-3 § User-based defaults table |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:35:| FR4 | California SMS restriction for decline (LEGAL-218)          | product-spec-notification-preferences.md § FR-4 (explicit: loan_state based) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:36:| FR5 | Degraded delivery fallback: SMS→email, no pref modification  | product-spec-notification-preferences.md § FR-5 (explicit false positive pattern) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:37:| FR6 | Audit all preference changes (actor, timestamp, old/new values) | product-spec-notification-preferences.md § FR-6 (complete audit trail) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:43:| SC-1 | Locked applications: prefs change globally, UI clarifies no retroactive effect | product-spec-notification-preferences.md § SC-1 |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:44:| SC-2 | Delegated sessions: read-only (no modify), visually indicated | product-spec-notification-preferences.md § SC-2 (explicit hard negative pattern) |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:45:| SC-3 | Multi-state portfolio: conditional rules, not blanket disable | product-spec-notification-preferences.md § SC-3 |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:75:   - **Reference**: product-spec-notification-preferences.md § Open Questions #1
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:79:   - **Reference**: product-spec-notification-preferences.md § Open Questions #3
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:101:   - **Why**: Enables AI-safety testing for edge cases (e.g., CA decline SMS, zero-channel scenarios).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:135:   - Users may not disable all channels for `manual-review-escalation`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:138:   - **Source**: product-spec-notification-preferences.md § FR-2 § HARD NEGATIVE pattern.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:140:2. **California SMS Restriction (LEGAL-218)**  
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:141:   - SMS for `decline` notifications must remain unavailable when `loanState = "CA"`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:144:   - **Source**: product-spec-notification-preferences.md § FR-4; non-functional-requirements.md § NFR-6.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:155:   - **Source**: product-spec-notification-preferences.md § SC-2 § HARD NEGATIVE pattern (optimistic UI update without server rejection).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:168:   - **Source**: product-spec-notification-preferences.md § FR-5 § FALSE POSITIVE pattern.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:171:   - User disables SMS for `manual-review-escalation` while email is enabled.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:173:   - **Source**: product-spec-notification-preferences.md § FR-2 § FALSE POSITIVE pattern.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:197:  - Rejects SMS disable for decline on CA loans (if `loanState = "CA"` and `event = "decline"` and `channel = "sms"`).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:203:  - Hard negative: disable SMS for decline on CA loan → rejected.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:204:  - Hard negative: disable SMS for decline on non-CA loan → allowed.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:205:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-4; rules/business-rules.ts pattern.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:218:- **Source Reference**: product-spec-notification-preferences.md § FR-3; preference-repository.ts pattern.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:233:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-6, SC-2; notifications.ts lines 45–105, 112–188, 195–271; NFR-2.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:247:- **Source Reference**: product-spec-notification-preferences.md § FR-5; non-functional-requirements.md § NFR-5.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:254:  - Wrap notification preference routes with flag check that returns 404 (not 403) for non-pilot users.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:276:- **Source Reference**: product-spec-notification-preferences.md § FR-6, SC-2; NFR-3 (privacy), NFR-2 (fail-closed); audit-repository.ts and audit-service.ts patterns.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:315:- **Source Reference**: ADR-003 (AR1); product-spec-notification-preferences.md § SC-2.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:320:  - Render matrix: rows = events (approval, decline, document-request, manual-review-escalation), columns = channels (email, sms).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:322:  - Mandatory events (manual-review-escalation) have **persistent helper text** (not tooltip): "At least one channel must be enabled for escalation notifications."
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:323:  - CA decline SMS disabled control with explanation: "SMS for decline notifications is unavailable for California loans (legal review LEGAL-218 in progress)."
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:332:  - Attempting to toggle CA decline SMS → toggle stays disabled, tooltip/helper text shown.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:335:- **Source Reference**: product-spec-notification-preferences.md § FR-1 through FR-6, SC-1 through SC-3, UX Notes; NFR-4 (accessibility), NFR-6.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:362:- **Source Reference**: product-spec-notification-preferences.md § User Roles § Compliance Reviewer, SC-2 (audit trail); non-functional-requirements.md § NFR-7.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:374:  - Hard negative tests: disabling all channels (rejected), CA decline SMS (rejected).
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:377:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § pattern examples; .github/instructions/testing.instructions.md.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:388:- **Source Reference**: non-functional-requirements.md § NFR-6, NFR-2; product-spec-notification-preferences.md § FR-1–FR-6.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:401:- **Source Reference**: ADR-003, product-spec-notification-preferences.md § UX Notes, § SC-2.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:416:  - **Hard Negative 1**: Attempt to disable all channels for manual-review-escalation → fails with 400, preference unchanged.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:417:  - **Hard Negative 2**: Enable decline SMS on CA loan → fails with 400, preference unchanged.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:426:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § patterns, § SC-2, § Open Questions; non-functional-requirements.md § NFR-2 § patterns.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:437:   - [ ] CA LEGAL-218 restriction verified with legal team.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:499:| **California LEGAL-218 Regulatory Compliance** (FR-4, LEGAL-218) | Critical | Coordinate with legal team before pilot rollout; document LEGAL-218 case number in code and audit trail. Update feature-flag documentation with compliance expiration date (when LEGAL-218 resolves). |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:512:1. **Legal Review LEGAL-218 Completion**: California decline SMS restriction tied to external legal milestone. Plan CA restriction removal as separate rollout once LEGAL-218 resolves.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:523:| **Mandatory Event Rule (FR-2)**         | Confirmed  | ≥1 channel for manual-review-escalation; hard negatives explicit. |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:525:| **CA SMS Restriction (FR-4, LEGAL-218)** | Confirmed  | loan_state-based, explicit hard negative.                       |
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:542:**Primary Authority:** `specs/product-spec-notification-preferences.md`  
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:570:- **LEGAL-218**: Legal review tracking regulatory compliance for decline SMS in California; temporary restriction applies to loans with `loanState = "CA"`.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:590:- [ ] CA LEGAL-218 restriction confirmed with legal team.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:7:This lesson consumes `docs/notification-preferences-plan.md`, the structured
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:10:notification-preferences feature. Lesson 05 implements only **one focused slice**
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:11:of that plan — hardening the notification-preference write path.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:15:Show that a constrained implementation workflow can make a focused production change with matching tests instead of attempting the entire notification-preferences feature at once.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:31:4. The implementation must cover a mandatory-event rule and the California `LEGAL-218` restriction.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:37:10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:43:Harden notification preference writes so the existing route cannot:
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:45:- disable the last available channel for `manual-review-escalation`
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:46:- enable decline SMS for California loan context
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:52:Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:78:- prefer checking stable business terms like `manual-review-escalation`,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:79:  `at least one`, or `LEGAL-218`
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:87:The `LEGAL-218` checks may assert the literal token `LEGAL-218`, because that
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md:37:3. Document the legal or business source in a comment (e.g., `// LEGAL-218`).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:12:This plan outlines the implementation of user-configurable notification preferences for the Loan Workbench platform. The feature addresses alert fatigue by allowing underwriters and analyst managers to control which notifications they receive (approval, decline, document-request, manual-review-escalation) across email and SMS channels.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:15:- Mandatory notification events (manual-review-escalation) must always have at least one enabled channel.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:16:- California loans have a temporary SMS restriction for decline notifications (LEGAL-218).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:22:**Canonical Source:** Product Specification (specs/product-spec-notification-preferences.md) is the primary authority. NFRs provide constraints and safety rails. Architecture and ADRs guide implementation pattern choices.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:32:| FR1 | Preference matrix: email/SMS independent per event type      | product-spec-notification-preferences.md § Functional Requirements § FR-1 |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:33:| FR2 | Mandatory event rule: ≥1 channel for manual-review-escalation | product-spec-notification-preferences.md § FR-2 (explicit hard negative pattern) |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:34:| FR3 | Role-based defaults on first access (no migration required)   | product-spec-notification-preferences.md § FR-3 § User-based defaults table |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:35:| FR4 | California SMS restriction for decline (LEGAL-218)          | product-spec-notification-preferences.md § FR-4 (explicit: loan_state based) |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:36:| FR5 | Degraded delivery fallback: SMS→email, no pref modification  | product-spec-notification-preferences.md § FR-5 (explicit false positive pattern) |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:37:| FR6 | Audit all preference changes (actor, timestamp, old/new values) | product-spec-notification-preferences.md § FR-6 (complete audit trail) |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:43:| SC-1 | Locked applications: prefs change globally, UI clarifies no retroactive effect | product-spec-notification-preferences.md § SC-1 |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:44:| SC-2 | Delegated sessions: read-only (no modify), visually indicated | product-spec-notification-preferences.md § SC-2 (explicit hard negative pattern) |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:45:| SC-3 | Multi-state portfolio: conditional rules, not blanket disable | product-spec-notification-preferences.md § SC-3 |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:75:   - **Reference**: product-spec-notification-preferences.md § Open Questions #1
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:79:   - **Reference**: product-spec-notification-preferences.md § Open Questions #3
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:101:   - **Why**: Enables AI-safety testing for edge cases (e.g., CA decline SMS, zero-channel scenarios).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:135:   - Users may not disable all channels for `manual-review-escalation`.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:138:   - **Source**: product-spec-notification-preferences.md § FR-2 § HARD NEGATIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:140:2. **California SMS Restriction (LEGAL-218)**  
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:141:   - SMS for `decline` notifications must remain unavailable when `loanState = "CA"`.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:144:   - **Source**: product-spec-notification-preferences.md § FR-4; non-functional-requirements.md § NFR-6.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:155:   - **Source**: product-spec-notification-preferences.md § SC-2 § HARD NEGATIVE pattern (optimistic UI update without server rejection).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:168:   - **Source**: product-spec-notification-preferences.md § FR-5 § FALSE POSITIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:171:   - User disables SMS for `manual-review-escalation` while email is enabled.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:173:   - **Source**: product-spec-notification-preferences.md § FR-2 § FALSE POSITIVE pattern.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:197:  - Rejects SMS disable for decline on CA loans (if `loanState = "CA"` and `event = "decline"` and `channel = "sms"`).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:203:  - Hard negative: disable SMS for decline on CA loan → rejected.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:204:  - Hard negative: disable SMS for decline on non-CA loan → allowed.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:205:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-4; rules/business-rules.ts pattern.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:218:- **Source Reference**: product-spec-notification-preferences.md § FR-3; preference-repository.ts pattern.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:233:- **Source Reference**: product-spec-notification-preferences.md § FR-2, FR-6, SC-2; notifications.ts lines 45–105, 112–188, 195–271; NFR-2.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:247:- **Source Reference**: product-spec-notification-preferences.md § FR-5; non-functional-requirements.md § NFR-5.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:254:  - Wrap notification preference routes with flag check that returns 404 (not 403) for non-pilot users.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:276:- **Source Reference**: product-spec-notification-preferences.md § FR-6, SC-2; NFR-3 (privacy), NFR-2 (fail-closed); audit-repository.ts and audit-service.ts patterns.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:315:- **Source Reference**: ADR-003 (AR1); product-spec-notification-preferences.md § SC-2.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:320:  - Render matrix: rows = events (approval, decline, document-request, manual-review-escalation), columns = channels (email, sms).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:322:  - Mandatory events (manual-review-escalation) have **persistent helper text** (not tooltip): "At least one channel must be enabled for escalation notifications."
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:323:  - CA decline SMS disabled control with explanation: "SMS for decline notifications is unavailable for California loans (legal review LEGAL-218 in progress)."
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:332:  - Attempting to toggle CA decline SMS → toggle stays disabled, tooltip/helper text shown.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:335:- **Source Reference**: product-spec-notification-preferences.md § FR-1 through FR-6, SC-1 through SC-3, UX Notes; NFR-4 (accessibility), NFR-6.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:362:- **Source Reference**: product-spec-notification-preferences.md § User Roles § Compliance Reviewer, SC-2 (audit trail); non-functional-requirements.md § NFR-7.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:374:  - Hard negative tests: disabling all channels (rejected), CA decline SMS (rejected).
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:377:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § pattern examples; .github/instructions/testing.instructions.md.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:388:- **Source Reference**: non-functional-requirements.md § NFR-6, NFR-2; product-spec-notification-preferences.md § FR-1–FR-6.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:401:- **Source Reference**: ADR-003, product-spec-notification-preferences.md § UX Notes, § SC-2.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:416:  - **Hard Negative 1**: Attempt to disable all channels for manual-review-escalation → fails with 400, preference unchanged.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:417:  - **Hard Negative 2**: Enable decline SMS on CA loan → fails with 400, preference unchanged.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:426:- **Source Reference**: product-spec-notification-preferences.md § FR-2 § patterns, § SC-2, § Open Questions; non-functional-requirements.md § NFR-2 § patterns.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:437:   - [ ] CA LEGAL-218 restriction verified with legal team.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:499:| **California LEGAL-218 Regulatory Compliance** (FR-4, LEGAL-218) | Critical | Coordinate with legal team before pilot rollout; document LEGAL-218 case number in code and audit trail. Update feature-flag documentation with compliance expiration date (when LEGAL-218 resolves). |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:512:1. **Legal Review LEGAL-218 Completion**: California decline SMS restriction tied to external legal milestone. Plan CA restriction removal as separate rollout once LEGAL-218 resolves.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:523:| **Mandatory Event Rule (FR-2)**         | Confirmed  | ≥1 channel for manual-review-escalation; hard negatives explicit. |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:525:| **CA SMS Restriction (FR-4, LEGAL-218)** | Confirmed  | loan_state-based, explicit hard negative.                       |
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:542:**Primary Authority:** `specs/product-spec-notification-preferences.md`  
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:570:- **LEGAL-218**: Legal review tracking regulatory compliance for decline SMS in California; temporary restriction applies to loans with `loanState = "CA"`.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\notification-preferences-plan.md:590:- [ ] CA LEGAL-218 restriction confirmed with legal team.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:7:This lesson consumes `docs/notification-preferences-plan.md`, the structured
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:10:notification-preferences feature. Lesson 05 implements only **one focused slice**
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:11:of that plan — hardening the notification-preference write path.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:15:Show that a constrained implementation workflow can make a focused production change with matching tests instead of attempting the entire notification-preferences feature at once.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:31:4. The implementation must cover a mandatory-event rule and the California `LEGAL-218` restriction.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:37:10. The workflow should discover the current notification-preference write surfaces before editing and make the chosen slice boundary explicit.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:43:Harden notification preference writes so the existing route cannot:
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:45:- disable the last available channel for `manual-review-escalation`
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:46:- enable decline SMS for California loan context
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:52:Good output should explicitly name the deferred write surfaces in the handoff instead of silently implying that the whole notification-preferences domain is now complete.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:78:- prefer checking stable business terms like `manual-review-escalation`,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:79:  `at least one`, or `LEGAL-218`
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md:87:The `LEGAL-218` checks may assert the literal token `LEGAL-218`, because that
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md:37:3. Document the legal or business source in a comment (e.g., `// LEGAL-218`).
 ```
 
 </details>
@@ -156,7 +156,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs**
 
 <details>
 <summary>Arguments</summary>
@@ -164,7 +164,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "notification-preference|notification preference|LEGAL-218|manual-review-escalation|decline",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\specs",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\specs",
   "output_mode": "content",
   "-n": true,
   "head_limit": 200
@@ -177,18 +177,18 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 <summary>12 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:22:Allow authorized users to configure notification preferences by channel and
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:30:- Settings UI for notification preferences in `apps/web/`
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:34:- Event-specific preferences for: approval, decline, document-request,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:35:  manual-review-escalation
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:50:- Can edit their own notification preferences
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:51:- **Cannot suppress mandatory manual-review-escalation notifications**
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:55:- Can edit their own notification preferences
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:107:SMS for decline decisions must remain **disabled for California loans** until
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:108:the legal review tracked in `LEGAL-218` is complete.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:117:> **HARD NEGATIVE pattern:** Enabling decline SMS on a CA loan looks like normal
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:157:- They may **view** the delegate's notification preferences.
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:191:2. Is the California decline SMS restriction loan-state based or borrower-state
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:22:Allow authorized users to configure notification preferences by channel and
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:30:- Settings UI for notification preferences in `apps/web/`
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:34:- Event-specific preferences for: approval, decline, document-request,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:35:  manual-review-escalation
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:50:- Can edit their own notification preferences
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:51:- **Cannot suppress mandatory manual-review-escalation notifications**
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:55:- Can edit their own notification preferences
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:107:SMS for decline decisions must remain **disabled for California loans** until
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:108:the legal review tracked in `LEGAL-218` is complete.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:117:> **HARD NEGATIVE pattern:** Enabling decline SMS on a CA loan looks like normal
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:157:- They may **view** the delegate's notification preferences.
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md:191:2. Is the California decline SMS restriction loan-state based or borrower-state
 ```
 
 </details>
@@ -200,7 +200,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src**
 
 <details>
 <summary>Arguments</summary>
@@ -208,7 +208,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "notification.*preference|preferences|LEGAL-218|manual-review-escalation|decline",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src",
   "output_mode": "content",
   "glob": "**/*.{ts,tsx}",
   "-n": true,
@@ -229,7 +229,7 @@ No matches found.
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\tests**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\tests**
 
 <details>
 <summary>Arguments</summary>
@@ -237,7 +237,7 @@ No matches found.
 ```json
 {
   "pattern": "notification.*preference|preferences|LEGAL-218|manual-review-escalation|decline",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\tests",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\tests",
   "output_mode": "content",
   "glob": "**/*.{ts,tsx}",
   "-n": true,
@@ -266,9 +266,9 @@ I found the lesson guidance and the current write path. Next I’m reading the s
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-playbook.md (lines 1-220)
 
 <details>
 <summary>115 lines</summary>
@@ -400,9 +400,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\docs\implementation-workflow-example.md (lines 1-220)
 
 <details>
 <summary>100 lines</summary>
@@ -519,9 +519,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 40-140)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 40-140)
 
 <details>
 <summary>101 lines</summary>
@@ -639,9 +639,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 140-210)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\product-spec-notification-preferences.md (lines 140-210)
 
 <details>
 <summary>55 lines</summary>
@@ -713,9 +713,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md (lines 1-180)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\specs\non-functional-requirements.md (lines 1-180)
 
 <details>
 <summary>109 lines</summary>
@@ -841,9 +841,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-260)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-260)
 
 <details>
 <summary>260 lines</summary>
@@ -1120,24 +1120,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts (lines 1-220)
-
-```
-Path does not exist
-```
-
-
----
-
-<sub>⏱️ 35s</sub>
-
-### ❌ `view`
-
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts.**
-
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts (lines 1-260)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-channel-rules.ts (lines 1-220)
 
 ```
 Path does not exist
@@ -1150,9 +1135,24 @@ Path does not exist
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts (lines 1-260)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-channel-rules.test.ts (lines 1-260)
+
+```
+Path does not exist
+```
+
+
+---
+
+<sub>⏱️ 35s</sub>
+
+### ❌ `view`
+
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts.**
+
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\types.ts (lines 1-260)
 
 ```
 Path does not exist
@@ -1165,12 +1165,12 @@ Path does not exist
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
 
-"**\types.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src
+"**\types.ts" in Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts
 ```
 
 
@@ -1180,16 +1180,16 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
 
-"**\*.test.ts" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests
+"**\*.test.ts" in Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\state-machine.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-service.test.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\state-machine.test.ts
 ```
 
 
@@ -1199,9 +1199,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 261-420)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 261-420)
 
 <details>
 <summary>12 lines</summary>
@@ -1230,7 +1230,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
 
 <details>
 <summary>Arguments</summary>
@@ -1238,7 +1238,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "NotificationPreference|type Notification|interface Notification|loanState",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
   "output_mode": "content",
   "glob": "**/*.{ts,tsx}",
   "-n": true,
@@ -1252,32 +1252,32 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 <summary>26 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:19:  loan_state AS loanState,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:66:  loanState: string;
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:80:    data.loanState.toUpperCase(),
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:38:export type NotificationEvent =
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:45:export type NotificationChannel = "email" | "sms";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:75:  loanState: string;
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:93:export interface NotificationPreference {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:31:  data: { borrowerName: string; amount: number; loanState: string },
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:40:    loanState: data.loanState.toUpperCase(),
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:52:    loanState: data.loanState,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\applications.ts:56:    { field: "loanState", type: "string", required: true },
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts:46:  if (featureFlags.californiaRules && loan.loanState === "CA") {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\queue\contracts.ts:31:export interface NotificationRequestedEvent extends BaseEvent {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:24:  NotificationPreference,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:80:      const pref: NotificationPreference = {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:156:      const updates: NotificationPreference[] = [];
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:161:        const pref: NotificationPreference = {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:239:      const updates: NotificationPreference[] = [];
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:244:        const pref: NotificationPreference = {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:15:  NotificationPreference,
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:29:type PreferenceRow = NotificationPreference & { enabled: number | boolean };
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:33:): NotificationPreference[] {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:44:    })) as NotificationPreference[];
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:51:): NotificationPreference | undefined {
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:58:    | (NotificationPreference & { enabled: number | boolean })
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:64:export function setPreference(pref: NotificationPreference): void {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:19:  loan_state AS loanState,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:66:  loanState: string;
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\loan-repository.ts:80:    data.loanState.toUpperCase(),
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:38:export type NotificationEvent =
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:45:export type NotificationChannel = "email" | "sms";
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:75:  loanState: string;
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:93:export interface NotificationPreference {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:31:  data: { borrowerName: string; amount: number; loanState: string },
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:40:    loanState: data.loanState.toUpperCase(),
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:52:    loanState: data.loanState,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\applications.ts:56:    { field: "loanState", type: "string", required: true },
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts:46:  if (featureFlags.californiaRules && loan.loanState === "CA") {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\queue\contracts.ts:31:export interface NotificationRequestedEvent extends BaseEvent {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:24:  NotificationPreference,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:80:      const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:156:      const updates: NotificationPreference[] = [];
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:161:        const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:239:      const updates: NotificationPreference[] = [];
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:244:        const pref: NotificationPreference = {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:15:  NotificationPreference,
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:29:type PreferenceRow = NotificationPreference & { enabled: number | boolean };
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:33:): NotificationPreference[] {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:44:    })) as NotificationPreference[];
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:51:): NotificationPreference | undefined {
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:58:    | (NotificationPreference & { enabled: number | boolean })
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts:64:export function setPreference(pref: NotificationPreference): void {
 ```
 
 </details>
@@ -1289,7 +1289,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
 
 <details>
 <summary>Arguments</summary>
@@ -1297,7 +1297,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "request-validator|requireRole|supertest|express",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
   "output_mode": "content",
   "glob": "**/*.test.ts",
   "-n": true,
@@ -1308,7 +1308,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 </details>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
 ```
 
 
@@ -1326,9 +1326,9 @@ The route surface is smaller than the plan: one single-item write endpoint plus 
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts (lines 1-220)
 
 <details>
 <summary>112 lines</summary>
@@ -1457,9 +1457,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\preference-repository.ts (lines 1-220)
 
 <details>
 <summary>86 lines</summary>
@@ -1562,9 +1562,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\business-rules.ts (lines 1-220)
 
 <details>
 <summary>84 lines</summary>
@@ -1665,9 +1665,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts (lines 1-260)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\business-rules.test.ts (lines 1-260)
 
 <details>
 <summary>72 lines</summary>
@@ -1756,9 +1756,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\request-validator.ts (lines 1-220)
 
 <details>
 <summary>51 lines</summary>
@@ -1826,9 +1826,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts (lines 1-240)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\middleware\auth.ts (lines 1-240)
 
 <details>
 <summary>98 lines</summary>
@@ -1943,9 +1943,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts (lines 1-240)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\app.ts (lines 1-240)
 
 <details>
 <summary>82 lines</summary>
@@ -2044,7 +2044,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests**
 
 <details>
 <summary>Arguments</summary>
@@ -2052,7 +2052,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "notificationRoutes|app\\.use\\(\"/api/notifications|supertest|request\\(",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests",
   "output_mode": "content",
   "glob": "**/*.test.ts",
   "-n": true,
@@ -2063,7 +2063,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 </details>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts:12:    // To run: set up test DB, import app, use supertest
 ```
 
 
@@ -2073,9 +2073,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts (lines 1-260)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\decisions.test.ts (lines 1-260)
 
 <details>
 <summary>16 lines</summary>
@@ -2108,9 +2108,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\package.json (lines 1-220)
 
 ```
 Path does not exist
@@ -2123,9 +2123,9 @@ Path does not exist
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows**
 
-"**\package.json" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows
+"**\package.json" in Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows
 
 ```
 No files matched the pattern.
@@ -2138,9 +2138,9 @@ No files matched the pattern.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\integration\applications.test.ts (lines 1-220)
 
 <details>
 <summary>24 lines</summary>
@@ -2181,7 +2181,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
 
 <details>
 <summary>Arguments</summary>
@@ -2189,7 +2189,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "MANDATORY_EVENTS|getMandatoryEvents|mandatory-events",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
   "output_mode": "content",
   "glob": "**/*.ts",
   "-n": true,
@@ -2200,11 +2200,11 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 </details>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:13:import { getMandatoryEvents } from "../rules/mandatory-events.js";
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:101:  const mandatoryEvents = getMandatoryEvents(previousStatus, newStatus);
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:20:export const MANDATORY_EVENTS: Partial<
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:31:export function getMandatoryEvents(
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:36:  return MANDATORY_EVENTS[key] ?? [];
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:13:import { getMandatoryEvents } from "../rules/mandatory-events.js";
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts:101:  const mandatoryEvents = getMandatoryEvents(previousStatus, newStatus);
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:20:export const MANDATORY_EVENTS: Partial<
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:31:export function getMandatoryEvents(
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:36:  return MANDATORY_EVENTS[key] ?? [];
 ```
 
 
@@ -2214,7 +2214,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src**
 
 <details>
 <summary>Arguments</summary>
@@ -2222,7 +2222,7 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 ```json
 {
   "pattern": "manual-review-escalation",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src",
   "output_mode": "content",
   "glob": "**/*.ts",
   "-n": true,
@@ -2236,13 +2236,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 <summary>7 lines</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\db\seed.ts:116:    insertPref.run("u-2", "manual-review-escalation", "sms", 1, now, "u-2");
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:149:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:153:        "manual-review-escalation",
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:232:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:236:        "manual-review-escalation",
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:24:  "underwriting->decision": ["manual-review-escalation"],
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:42:  | "manual-review-escalation";
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\db\seed.ts:116:    insertPref.run("u-2", "manual-review-escalation", "sms", 1, now, "u-2");
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:149:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:153:        "manual-review-escalation",
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:232:      const events: Array<"approval" | "decline" | "document-request" | "manual-review-escalation"> = [
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts:236:        "manual-review-escalation",
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts:24:  "underwriting->decision": ["manual-review-escalation"],
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\models\types.ts:42:  | "manual-review-escalation";
 ```
 
 </details>
@@ -2254,9 +2254,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts (lines 1-200)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\mandatory-events.ts (lines 1-200)
 
 <details>
 <summary>38 lines</summary>
@@ -2311,9 +2311,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts (lines 1-160)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\services\loan-service.ts (lines 1-160)
 
 <details>
 <summary>121 lines</summary>
@@ -2455,13 +2455,13 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests\\unit\\notification-preference-write-rules.test.ts\n+import { beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+vi.mock(\"../../src/models/preference-repository.js\", () => ({\n+  findPreference: vi.fn(),\n+  findPreferencesForUser: vi.fn(),\n+  setPreference: vi.fn(),\n+}));\n+\n+vi.mock(\"../../src/services/audit-service.js\", () => ({\n+  auditAction: vi.fn(),\n+}));\n+\n+import { notificationRoutes } from \"../../src/routes/notifications.js\";\n+import * as prefRepo from \"../../src/models/preference-repository.js\";\n+import { validateNotificationPreferenceWrite } from \"../../src/rules/notification-preference-write-rules.js\";\n+import type {\n+  NotificationPreference,\n+  SessionContext,\n+} from \"../../src/models/types.js\";\n+\n+function buildPreference(\n+  overrides: Partial<NotificationPreference>,\n+): NotificationPreference {\n+  return {\n+    userId: \"u-1\",\n+    event: \"approval\",\n+    channel: \"email\",\n+    enabled: true,\n+    updatedAt: \"2026-04-16T00:00:00.000Z\",\n+    updatedBy: \"u-1\",\n+    ...overrides,\n+  };\n+}\n+\n+function createSession(\n+  overrides: Partial<SessionContext> = {},\n+): SessionContext {\n+  return {\n+    actor: {\n+      id: \"u-1\",\n+      role: \"underwriter\",\n+      name: \"Under Writer\",\n+      email: \"uw@example.com\",\n+    },\n+    ...overrides,\n+  };\n+}\n+\n+function normalize(value: unknown): string {\n+  return String(value ?? \"\").toLowerCase();\n+}\n+\n+function createMockResponse() {\n+  return {\n+    statusCode: 200,\n+    body: undefined as unknown,\n+    status(code: number) {\n+      this.statusCode = code;\n+      return this;\n+    },\n+    json(payload: unknown) {\n+      this.body = payload;\n+      return this;\n+    },\n+  };\n+}\n+\n+function invokePutPreferenceRoute(args: {\n+  body: Record<string, unknown>;\n+  session?: SessionContext;\n+}) {\n+  const routeLayer = (notificationRoutes as any).stack.find(\n+    (layer: any) =>\n+      layer.route?.path === \"/preferences\" && layer.route?.methods?.put,\n+  );\n+\n+  if (!routeLayer?.route) {\n+    throw new Error(\"PUT /preferences route not found.\");\n+  }\n+\n+  const handlers = routeLayer.route.stack.map((layer: any) => layer.handle);\n+  const req = {\n+    body: args.body,\n+    params: {},\n+    path: \"/preferences\",\n+    session: args.session,\n+  } as any;\n+  const res = createMockResponse();\n+  let forwardedError: unknown;\n+\n+  const run = (index: number): void => {\n+    const handler = handlers[index];\n+    if (!handler) {\n+      return;\n+    }\n+\n+    handler(req, res, (err?: unknown) => {\n+      if (err) {\n+        forwardedError = err;\n+        return;\n+      }\n+\n+      run(index + 1);\n+    });\n+  };\n+\n+  run(0);\n+\n+  return { res, forwardedError };\n+}\n+\n+beforeEach(() => {\n+  vi.clearAllMocks();\n+  vi.mocked(prefRepo.findPreference).mockReturnValue(undefined);\n+  vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([]);\n+});\n+\n+describe(\"validateNotificationPreferenceWrite\", () => {\n+  describe(\"Happy path\", () => {\n+    it(\"allows ordinary preference updates\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"approval\",\n+            channel: \"email\",\n+            enabled: false,\n+          },\n+          existingPreferences: [],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"False positive\", () => {\n+    it(\"allows disabling escalation SMS when escalation email stays enabled\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: false,\n+          },\n+          existingPreferences: [\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"email\",\n+              enabled: true,\n+            }),\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"sms\",\n+              enabled: true,\n+            }),\n+          ],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+        existingPreferences: [\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"email\",\n+            enabled: false,\n+          }),\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: true,\n+          }),\n+        ],\n+        loanState: \"NY\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+          ),\n+        }),\n+      );\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects enabling decline SMS for CA loan context\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+        },\n+        existingPreferences: [],\n+        loanState: \"CA\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+          ),\n+        }),\n+      );\n+    });\n+\n+    it(\"treats California as the same restricted loan state\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"decline\",\n+            channel: \"sms\",\n+            enabled: true,\n+          },\n+          existingPreferences: [],\n+          loanState: \"California\",\n+        }).allowed,\n+      ).toBe(false);\n+    });\n+  });\n+});\n+\n+describe(\"PUT /preferences\", () => {\n+  describe(\"False positive\", () => {\n+    it(\"keeps allowing escalation SMS disable when email remains enabled\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        body: res.body,\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 200,\n+        body: expect.objectContaining({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+        persisted: 1,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel with a business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: false,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects California decline SMS enable with a clear business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+          loanState: \"California\",\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+});\n*** End Patch\n"
+"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\tests\\unit\\notification-preference-write-rules.test.ts\n+import { beforeEach, describe, expect, it, vi } from \"vitest\";\n+\n+vi.mock(\"../../src/models/preference-repository.js\", () => ({\n+  findPreference: vi.fn(),\n+  findPreferencesForUser: vi.fn(),\n+  setPreference: vi.fn(),\n+}));\n+\n+vi.mock(\"../../src/services/audit-service.js\", () => ({\n+  auditAction: vi.fn(),\n+}));\n+\n+import { notificationRoutes } from \"../../src/routes/notifications.js\";\n+import * as prefRepo from \"../../src/models/preference-repository.js\";\n+import { validateNotificationPreferenceWrite } from \"../../src/rules/notification-preference-write-rules.js\";\n+import type {\n+  NotificationPreference,\n+  SessionContext,\n+} from \"../../src/models/types.js\";\n+\n+function buildPreference(\n+  overrides: Partial<NotificationPreference>,\n+): NotificationPreference {\n+  return {\n+    userId: \"u-1\",\n+    event: \"approval\",\n+    channel: \"email\",\n+    enabled: true,\n+    updatedAt: \"2026-04-16T00:00:00.000Z\",\n+    updatedBy: \"u-1\",\n+    ...overrides,\n+  };\n+}\n+\n+function createSession(\n+  overrides: Partial<SessionContext> = {},\n+): SessionContext {\n+  return {\n+    actor: {\n+      id: \"u-1\",\n+      role: \"underwriter\",\n+      name: \"Under Writer\",\n+      email: \"uw@example.com\",\n+    },\n+    ...overrides,\n+  };\n+}\n+\n+function normalize(value: unknown): string {\n+  return String(value ?? \"\").toLowerCase();\n+}\n+\n+function createMockResponse() {\n+  return {\n+    statusCode: 200,\n+    body: undefined as unknown,\n+    status(code: number) {\n+      this.statusCode = code;\n+      return this;\n+    },\n+    json(payload: unknown) {\n+      this.body = payload;\n+      return this;\n+    },\n+  };\n+}\n+\n+function invokePutPreferenceRoute(args: {\n+  body: Record<string, unknown>;\n+  session?: SessionContext;\n+}) {\n+  const routeLayer = (notificationRoutes as any).stack.find(\n+    (layer: any) =>\n+      layer.route?.path === \"/preferences\" && layer.route?.methods?.put,\n+  );\n+\n+  if (!routeLayer?.route) {\n+    throw new Error(\"PUT /preferences route not found.\");\n+  }\n+\n+  const handlers = routeLayer.route.stack.map((layer: any) => layer.handle);\n+  const req = {\n+    body: args.body,\n+    params: {},\n+    path: \"/preferences\",\n+    session: args.session,\n+  } as any;\n+  const res = createMockResponse();\n+  let forwardedError: unknown;\n+\n+  const run = (index: number): void => {\n+    const handler = handlers[index];\n+    if (!handler) {\n+      return;\n+    }\n+\n+    handler(req, res, (err?: unknown) => {\n+      if (err) {\n+        forwardedError = err;\n+        return;\n+      }\n+\n+      run(index + 1);\n+    });\n+  };\n+\n+  run(0);\n+\n+  return { res, forwardedError };\n+}\n+\n+beforeEach(() => {\n+  vi.clearAllMocks();\n+  vi.mocked(prefRepo.findPreference).mockReturnValue(undefined);\n+  vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([]);\n+});\n+\n+describe(\"validateNotificationPreferenceWrite\", () => {\n+  describe(\"Happy path\", () => {\n+    it(\"allows ordinary preference updates\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"approval\",\n+            channel: \"email\",\n+            enabled: false,\n+          },\n+          existingPreferences: [],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"False positive\", () => {\n+    it(\"allows disabling escalation SMS when escalation email stays enabled\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: false,\n+          },\n+          existingPreferences: [\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"email\",\n+              enabled: true,\n+            }),\n+            buildPreference({\n+              event: \"manual-review-escalation\",\n+              channel: \"sms\",\n+              enabled: true,\n+            }),\n+          ],\n+          loanState: \"NY\",\n+        }),\n+      ).toEqual({ allowed: true });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+        existingPreferences: [\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"email\",\n+            enabled: false,\n+          }),\n+          buildPreference({\n+            event: \"manual-review-escalation\",\n+            channel: \"sms\",\n+            enabled: true,\n+          }),\n+        ],\n+        loanState: \"NY\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+          ),\n+        }),\n+      );\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects enabling decline SMS for CA loan context\", () => {\n+      const result = validateNotificationPreferenceWrite({\n+        nextPreference: {\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+        },\n+        existingPreferences: [],\n+        loanState: \"CA\",\n+      });\n+\n+      expect({\n+        allowed: result.allowed,\n+        reason: normalize(result.reason),\n+      }).toEqual(\n+        expect.objectContaining({\n+          allowed: false,\n+          reason: expect.stringMatching(\n+            /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+          ),\n+        }),\n+      );\n+    });\n+\n+    it(\"treats California as the same restricted loan state\", () => {\n+      expect(\n+        validateNotificationPreferenceWrite({\n+          nextPreference: {\n+            event: \"decline\",\n+            channel: \"sms\",\n+            enabled: true,\n+          },\n+          existingPreferences: [],\n+          loanState: \"California\",\n+        }).allowed,\n+      ).toBe(false);\n+    });\n+  });\n+});\n+\n+describe(\"PUT /preferences\", () => {\n+  describe(\"False positive\", () => {\n+    it(\"keeps allowing escalation SMS disable when email remains enabled\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        body: res.body,\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 200,\n+        body: expect.objectContaining({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+        persisted: 1,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"Hard negative\", () => {\n+    it(\"rejects disabling the last escalation channel with a business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"email\",\n+          enabled: false,\n+        }),\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: true,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"manual-review-escalation\",\n+          channel: \"sms\",\n+          enabled: false,\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(manual-review-escalation|escalation).*(at least one)|(at least one).*(manual-review-escalation|escalation)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+\n+  describe(\"LEGAL-218\", () => {\n+    it(\"rejects California decline SMS enable with a clear business invariant message\", () => {\n+      vi.mocked(prefRepo.findPreferencesForUser).mockReturnValue([\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"email\",\n+          enabled: true,\n+        }),\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      ]);\n+      vi.mocked(prefRepo.findPreference).mockReturnValue(\n+        buildPreference({\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: false,\n+        }),\n+      );\n+\n+      const { res, forwardedError } = invokePutPreferenceRoute({\n+        session: createSession(),\n+        body: {\n+          userId: \"u-1\",\n+          event: \"decline\",\n+          channel: \"sms\",\n+          enabled: true,\n+          loanState: \"California\",\n+        },\n+      });\n+\n+      expect({\n+        statusCode: res.statusCode,\n+        error: normalize((res.body as { error?: string } | undefined)?.error),\n+        persisted: vi.mocked(prefRepo.setPreference).mock.calls.length,\n+        forwardedError,\n+      }).toEqual({\n+        statusCode: 400,\n+        error: expect.stringMatching(\n+          /(decline.*sms.*legal-218)|(legal-218.*decline.*sms)/,\n+        ),\n+        persisted: 0,\n+        forwardedError: undefined,\n+      });\n+    });\n+  });\n+});\n*** End Patch\n"
 ```
 
 </details>
 
 ```
-Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts
+Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts
 ```
 
 
@@ -2483,13 +2483,13 @@ I’ve got the test shape in place. Now I’m adding the pure rule module the ro
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\rules\\notification-preference-write-rules.ts\n+// ---------------------------------------------------------------------------\n+// Notification Preference Write Rules\n+// ---------------------------------------------------------------------------\n+// FALSE POSITIVE: Disabling manual-review-escalation SMS is allowed when the\n+// email channel stays enabled. The violation is zero enabled channels, not a\n+// specific channel being turned off.\n+//\n+// HARD NEGATIVE: Reject writes that leave manual-review-escalation with no\n+// enabled channels, and reject enabling decline SMS for California loan\n+// context while LEGAL-218 remains in effect.\n+// ---------------------------------------------------------------------------\n+\n+import type {\n+  LoanApplication,\n+  NotificationChannel,\n+  NotificationPreference,\n+} from \"../models/types.js\";\n+\n+export interface NotificationPreferenceWriteRule {\n+  allowed: boolean;\n+  reason?: string;\n+}\n+\n+export interface NotificationPreferenceWriteInput {\n+  nextPreference: Pick<\n+    NotificationPreference,\n+    \"event\" | \"channel\" | \"enabled\"\n+  >;\n+  existingPreferences: NotificationPreference[];\n+  loanState?: LoanApplication[\"loanState\"];\n+}\n+\n+const ESCALATION_CHANNELS: NotificationChannel[] = [\"email\", \"sms\"];\n+\n+function isCaliforniaLoanState(\n+  loanState?: LoanApplication[\"loanState\"],\n+): boolean {\n+  const normalized = loanState?.trim().toLowerCase();\n+  return normalized === \"ca\" || normalized === \"california\";\n+}\n+\n+function isChannelEnabledAfterWrite(\n+  input: NotificationPreferenceWriteInput,\n+  channel: NotificationChannel,\n+): boolean {\n+  if (\n+    input.nextPreference.event === \"manual-review-escalation\" &&\n+    input.nextPreference.channel === channel\n+  ) {\n+    return input.nextPreference.enabled;\n+  }\n+\n+  return Boolean(\n+    input.existingPreferences.find(\n+      (preference) =>\n+        preference.event === \"manual-review-escalation\" &&\n+        preference.channel === channel,\n+    )?.enabled,\n+  );\n+}\n+\n+export function validateNotificationPreferenceWrite(\n+  input: NotificationPreferenceWriteInput,\n+): NotificationPreferenceWriteRule {\n+  if (\n+    input.nextPreference.event === \"decline\" &&\n+    input.nextPreference.channel === \"sms\" &&\n+    input.nextPreference.enabled &&\n+    isCaliforniaLoanState(input.loanState)\n+  ) {\n+    // LEGAL-218: California decline SMS must remain disabled.\n+    return {\n+      allowed: false,\n+      reason:\n+        \"LEGAL-218 prevents enabling decline SMS for California loan context.\",\n+    };\n+  }\n+\n+  if (input.nextPreference.event === \"manual-review-escalation\") {\n+    const hasEnabledEscalationChannel = ESCALATION_CHANNELS.some((channel) =>\n+      isChannelEnabledAfterWrite(input, channel),\n+    );\n+\n+    if (!hasEnabledEscalationChannel) {\n+      return {\n+        allowed: false,\n+        reason:\n+          \"manual-review-escalation must keep at least one notification channel enabled.\",\n+      };\n+    }\n+  }\n+\n+  return { allowed: true };\n+}\n*** End Patch\n"
+"*** Begin Patch\n*** Add File: Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\rules\\notification-preference-write-rules.ts\n+// ---------------------------------------------------------------------------\n+// Notification Preference Write Rules\n+// ---------------------------------------------------------------------------\n+// FALSE POSITIVE: Disabling manual-review-escalation SMS is allowed when the\n+// email channel stays enabled. The violation is zero enabled channels, not a\n+// specific channel being turned off.\n+//\n+// HARD NEGATIVE: Reject writes that leave manual-review-escalation with no\n+// enabled channels, and reject enabling decline SMS for California loan\n+// context while LEGAL-218 remains in effect.\n+// ---------------------------------------------------------------------------\n+\n+import type {\n+  LoanApplication,\n+  NotificationChannel,\n+  NotificationPreference,\n+} from \"../models/types.js\";\n+\n+export interface NotificationPreferenceWriteRule {\n+  allowed: boolean;\n+  reason?: string;\n+}\n+\n+export interface NotificationPreferenceWriteInput {\n+  nextPreference: Pick<\n+    NotificationPreference,\n+    \"event\" | \"channel\" | \"enabled\"\n+  >;\n+  existingPreferences: NotificationPreference[];\n+  loanState?: LoanApplication[\"loanState\"];\n+}\n+\n+const ESCALATION_CHANNELS: NotificationChannel[] = [\"email\", \"sms\"];\n+\n+function isCaliforniaLoanState(\n+  loanState?: LoanApplication[\"loanState\"],\n+): boolean {\n+  const normalized = loanState?.trim().toLowerCase();\n+  return normalized === \"ca\" || normalized === \"california\";\n+}\n+\n+function isChannelEnabledAfterWrite(\n+  input: NotificationPreferenceWriteInput,\n+  channel: NotificationChannel,\n+): boolean {\n+  if (\n+    input.nextPreference.event === \"manual-review-escalation\" &&\n+    input.nextPreference.channel === channel\n+  ) {\n+    return input.nextPreference.enabled;\n+  }\n+\n+  return Boolean(\n+    input.existingPreferences.find(\n+      (preference) =>\n+        preference.event === \"manual-review-escalation\" &&\n+        preference.channel === channel,\n+    )?.enabled,\n+  );\n+}\n+\n+export function validateNotificationPreferenceWrite(\n+  input: NotificationPreferenceWriteInput,\n+): NotificationPreferenceWriteRule {\n+  if (\n+    input.nextPreference.event === \"decline\" &&\n+    input.nextPreference.channel === \"sms\" &&\n+    input.nextPreference.enabled &&\n+    isCaliforniaLoanState(input.loanState)\n+  ) {\n+    // LEGAL-218: California decline SMS must remain disabled.\n+    return {\n+      allowed: false,\n+      reason:\n+        \"LEGAL-218 prevents enabling decline SMS for California loan context.\",\n+    };\n+  }\n+\n+  if (input.nextPreference.event === \"manual-review-escalation\") {\n+    const hasEnabledEscalationChannel = ESCALATION_CHANNELS.some((channel) =>\n+      isChannelEnabledAfterWrite(input, channel),\n+    );\n+\n+    if (!hasEnabledEscalationChannel) {\n+      return {\n+        allowed: false,\n+        reason:\n+          \"manual-review-escalation must keep at least one notification channel enabled.\",\n+      };\n+    }\n+  }\n+\n+  return { allowed: true };\n+}\n*** End Patch\n"
 ```
 
 </details>
 
 ```
-Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts
+Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts
 ```
 
 
@@ -2503,13 +2503,13 @@ Added 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\le
 <summary>Arguments</summary>
 
 ```json
-"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\routes\\notifications.ts\n@@\n import { Router } from \"express\";\n import { requireRole } from \"../middleware/auth.js\";\n import { validateBody } from \"../middleware/request-validator.js\";\n+import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n import { hasPermission } from \"../rules/role-permissions.js\";\n import { auditAction } from \"../services/audit-service.js\";\n import * as prefRepo from \"../models/preference-repository.js\";\n@@\n   validateBody([\n     { field: \"userId\", type: \"string\", required: true },\n     { field: \"event\", type: \"string\", required: true },\n     { field: \"channel\", type: \"string\", required: true },\n     { field: \"enabled\", type: \"boolean\", required: true },\n+    { field: \"loanState\", type: \"string\", required: false },\n   ]),\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n@@\n-      const { userId, event, channel, enabled } = req.body;\n+      const { userId, event, channel, enabled, loanState } = req.body;\n       const now = new Date().toISOString();\n-\n-      const previous = prefRepo.findPreference(userId, event, channel);\n+      const existingPreferences = prefRepo.findPreferencesForUser(userId);\n+      const previous = existingPreferences.find(\n+        (preference) =>\n+          preference.event === event && preference.channel === channel,\n+      );\n+      const ruleDecision = validateNotificationPreferenceWrite({\n+        nextPreference: { event, channel, enabled },\n+        existingPreferences,\n+        loanState,\n+      });\n+\n+      if (!ruleDecision.allowed) {\n+        res.status(400).json({\n+          error: ruleDecision.reason,\n+        });\n+        return;\n+      }\n \n       const pref: NotificationPreference = {\n         userId,\n*** End Patch\n"
+"*** Begin Patch\n*** Update File: Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\ghctx-tut\\lessons\\05-implementation-workflows\\src\\backend\\src\\routes\\notifications.ts\n@@\n import { Router } from \"express\";\n import { requireRole } from \"../middleware/auth.js\";\n import { validateBody } from \"../middleware/request-validator.js\";\n+import { validateNotificationPreferenceWrite } from \"../rules/notification-preference-write-rules.js\";\n import { hasPermission } from \"../rules/role-permissions.js\";\n import { auditAction } from \"../services/audit-service.js\";\n import * as prefRepo from \"../models/preference-repository.js\";\n@@\n   validateBody([\n     { field: \"userId\", type: \"string\", required: true },\n     { field: \"event\", type: \"string\", required: true },\n     { field: \"channel\", type: \"string\", required: true },\n     { field: \"enabled\", type: \"boolean\", required: true },\n+    { field: \"loanState\", type: \"string\", required: false },\n   ]),\n   (req, res, next) => {\n     try {\n       const session = req.session as SessionContext;\n@@\n-      const { userId, event, channel, enabled } = req.body;\n+      const { userId, event, channel, enabled, loanState } = req.body;\n       const now = new Date().toISOString();\n-\n-      const previous = prefRepo.findPreference(userId, event, channel);\n+      const existingPreferences = prefRepo.findPreferencesForUser(userId);\n+      const previous = existingPreferences.find(\n+        (preference) =>\n+          preference.event === event && preference.channel === channel,\n+      );\n+      const ruleDecision = validateNotificationPreferenceWrite({\n+        nextPreference: { event, channel, enabled },\n+        existingPreferences,\n+        loanState,\n+      });\n+\n+      if (!ruleDecision.allowed) {\n+        res.status(400).json({\n+          error: ruleDecision.reason,\n+        });\n+        return;\n+      }\n \n       const pref: NotificationPreference = {\n         userId,\n*** End Patch\n"
 ```
 
 </details>
 
 ```
-Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts
+Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts
 ```
 
 
@@ -2519,9 +2519,9 @@ Modified 1 file(s): Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-140)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\routes\notifications.ts (lines 1-140)
 
 <details>
 <summary>140 lines</summary>
@@ -2678,9 +2678,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts (lines 1-220)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\src\rules\notification-preference-write-rules.ts (lines 1-220)
 
 <details>
 <summary>95 lines</summary>
@@ -2792,9 +2792,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 1-320)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 1-320)
 
 <details>
 <summary>320 lines</summary>
@@ -3131,9 +3131,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implemen
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 321-420)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\05-implementation-workflows\src\backend\tests\unit\notification-preference-write-rules.test.ts (lines 321-420)
 
 <details>
 <summary>68 lines</summary>

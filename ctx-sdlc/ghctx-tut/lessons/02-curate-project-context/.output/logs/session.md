@@ -28,9 +28,9 @@ I'll help you refactor the notification preference write handlers. Let me start 
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context
 
 <details>
 <summary>10 lines</summary>
@@ -57,21 +57,21 @@ util.py
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context**
 
-"**/*.md" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context
+"**/*.md" in Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context
 
 <details>
 <summary>7 matches</summary>
 
 ```
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\RUN.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\README.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\.github\copilot-instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\RUN.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\README.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\.github\copilot-instructions.md
 ```
 
 </details>
@@ -91,9 +91,9 @@ Now let me read the key documentation files and the notification routes:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\README.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\README.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\README.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\README.md
 
 <details>
 <summary>95 lines</summary>
@@ -205,9 +205,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-p
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\api-conventions.md
 
 <details>
 <summary>54 lines</summary>
@@ -278,9 +278,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-p
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\preference-management-example.md
 
 <details>
 <summary>57 lines</summary>
@@ -354,9 +354,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-p
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\docs\architecture.md
 
 <details>
 <summary>62 lines</summary>
@@ -443,9 +443,9 @@ Now let me look at the notifications route file and understand the current imple
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src
 
 <details>
 <summary>6 lines</summary>
@@ -468,9 +468,9 @@ tsconfig.json
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 <details>
 <summary>272 lines</summary>
@@ -759,9 +759,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-p
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\middleware\error-handler.ts
 
 <details>
 <summary>37 lines</summary>
@@ -815,9 +815,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-p
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src
 
 <details>
 <summary>9 lines</summary>
@@ -868,12 +868,12 @@ Let me refactor the notifications.ts file:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
 ```
 
 
@@ -891,12 +891,12 @@ Now let me update the generic PUT route to use the new helper and enforce owner-
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
 ```
 
 
@@ -914,12 +914,12 @@ Now let me update the email route to use the new helper function:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
 ```
 
 
@@ -937,12 +937,12 @@ Now let me update the SMS route as well:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts updated with changes.
 ```
 
 
@@ -960,9 +960,9 @@ Let me verify the refactored file looks correct:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\src\backend\src\routes\notifications.ts
 
 <details>
 <summary>244 lines</summary>
@@ -1231,9 +1231,9 @@ Perfect! Let me verify the refactoring is complete by checking the ASSESSMENT.md
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\02-curate-project-context\ASSESSMENT.md
 
 <details>
 <summary>276 lines</summary>

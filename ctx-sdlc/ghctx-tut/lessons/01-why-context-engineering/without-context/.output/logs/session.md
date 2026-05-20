@@ -20,9 +20,9 @@ Implement the manual review escalation workflow for this repository. Follow exis
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context
 
 <details>
 <summary>6 lines</summary>
@@ -53,9 +53,9 @@ Let me examine the existing files to understand the current architecture:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\README.md
 
 <details>
 <summary>14 lines</summary>
@@ -86,9 +86,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-cont
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\IMPLEMENTATION_SUMMARY.md
 
 <details>
 <summary>157 lines</summary>
@@ -262,9 +262,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-cont
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\ESCALATION_IMPLEMENTATION.md
 
 <details>
 <summary>241 lines</summary>
@@ -522,9 +522,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-cont
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src
 
 <details>
 <summary>6 lines</summary>
@@ -555,9 +555,9 @@ Let me check the util.py file and look at the actual src structure:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\util.py
 
 <details>
 <summary>389 lines</summary>
@@ -963,9 +963,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-cont
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context**
 
-"src/**/*" in Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context
+"src/**/*" in Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context
 
 ```
 No files matched the pattern.
@@ -986,9 +986,9 @@ Now I understand the task. Looking at the documentation in IMPLEMENTATION_SUMMAR
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\app.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\app.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\app
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\app
 
 ```
 Permission denied and could not request permission from user
@@ -1009,9 +1009,9 @@ Let me check if there's a src directory already populated in the without-context
 
 ### ✅ `glob`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\**\***
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\**\***
 
-"Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\**\*"
+"Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\**\*"
 
 ```
 No files matched the pattern.
@@ -1032,9 +1032,9 @@ Let me look at what's in the parent directory to better understand the project s
 
 ### ❌ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut
 
 ```
 Permission denied and could not request permission from user
@@ -1061,12 +1061,12 @@ Since the actual src/ doesn't exist yet in this working directory (it's created 
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts with 2997 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts with 2997 characters
 ```
 
 
@@ -1076,12 +1076,12 @@ Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lesson
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts with 4191 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts with 4191 characters
 ```
 
 
@@ -1091,12 +1091,12 @@ Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lesson
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts with 3289 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts with 3289 characters
 ```
 
 
@@ -1106,12 +1106,12 @@ Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lesson
 
 ### ✅ `create`
 
-**create a new file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts.**
+**create a new file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
 
 ```
-Created file Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts with 651 characters
+Created file Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts with 651 characters
 ```
 
 
@@ -1129,9 +1129,9 @@ Now I need to modify existing files. Let me first check what's in the types.ts f
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
 
 <details>
 <summary>112 lines</summary>
@@ -1268,12 +1268,12 @@ Now I need to add the Escalation interface to the types.ts file:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts updated with changes.
 ```
 
 
@@ -1291,9 +1291,9 @@ Now let me check and update the contracts.ts file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
 
 <details>
 <summary>73 lines</summary>
@@ -1391,12 +1391,12 @@ Now I'll add the EscalationRequestedEvent to the contracts:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts updated with changes.
 ```
 
 
@@ -1414,9 +1414,9 @@ Now let me check and update the schema.sql file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
 
 <details>
 <summary>72 lines</summary>
@@ -1513,12 +1513,12 @@ Now I'll add the escalations table to the schema:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql updated with changes.
 ```
 
 
@@ -1536,9 +1536,9 @@ Now let me check the seed.ts file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 
 <details>
 <summary>171 lines</summary>
@@ -1734,12 +1734,12 @@ Now I'll add the escalation seed data:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts updated with changes.
 ```
 
 
@@ -1749,12 +1749,12 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts updated with changes.
 ```
 
 
@@ -1772,9 +1772,9 @@ Now let me check the app.ts file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 
 <details>
 <summary>82 lines</summary>
@@ -1881,12 +1881,12 @@ Now I'll update the app.ts to import and register the escalation routes and hand
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
 ```
 
 
@@ -1896,12 +1896,12 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
 ```
 
 
@@ -1911,12 +1911,12 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts updated with changes.
 ```
 
 
@@ -1934,9 +1934,9 @@ Now let me check the role-permissions.ts file:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 
 <details>
 <summary>64 lines</summary>
@@ -2025,12 +2025,12 @@ Now I'll update the role-permissions.ts to add escalation permissions:
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts updated with changes.
 ```
 
 
@@ -2040,12 +2040,12 @@ File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why
 
 ### ✅ `edit`
 
-**edit the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
+**edit the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 
 ```
-File Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts updated with changes.
+File Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts updated with changes.
 ```
 
 
@@ -2063,9 +2063,9 @@ Now let me verify the changes by looking at one of the modified files to ensure 
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts (lines 100--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\types.ts (lines 100--1)
 
 <details>
 <summary>29 lines</summary>
@@ -2119,9 +2119,9 @@ Perfect! Let me verify the database schema was updated correctly:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql (lines 54--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\schema.sql (lines 54--1)
 
 <details>
 <summary>34 lines</summary>
@@ -2180,9 +2180,9 @@ Great! Now let me verify the seed data was added:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts (lines 138--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\db\seed.ts (lines 138--1)
 
 <details>
 <summary>61 lines</summary>
@@ -2268,9 +2268,9 @@ Perfect! Now let me verify the app.ts changes:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts (lines 26-60)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts (lines 26-60)
 
 <details>
 <summary>35 lines</summary>
@@ -2322,9 +2322,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-cont
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts (lines 60--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\app.ts (lines 60--1)
 
 <details>
 <summary>27 lines</summary>
@@ -2376,9 +2376,9 @@ Perfect! Now let me verify the role permissions were updated:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\rules\role-permissions.ts
 
 <details>
 <summary>75 lines</summary>
@@ -2478,9 +2478,9 @@ Perfect! Let me verify the queue contracts update:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts (lines 55--1)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\contracts.ts (lines 55--1)
 
 <details>
 <summary>32 lines</summary>
@@ -2537,9 +2537,9 @@ Excellent! Let me create a summary document listing all the files I've changed:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts (lines 1-30)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\routes\escalation.ts (lines 1-30)
 
 <details>
 <summary>30 lines</summary>
@@ -2594,9 +2594,9 @@ Perfect! Let me verify the escalation service was created properly:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts (lines 1-50)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\services\escalation-service.ts (lines 1-50)
 
 <details>
 <summary>50 lines</summary>
@@ -2671,9 +2671,9 @@ Perfect! Now let me verify the escalation repository:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts (lines 1-40)
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\models\escalation-repository.ts (lines 1-40)
 
 <details>
 <summary>40 lines</summary>
@@ -2738,9 +2738,9 @@ Perfect! Let me verify the escalation handler:
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\01-why-context-engineering\without-context\src\backend\src\queue\handlers\escalation-handler.ts
 
 <details>
 <summary>19 lines</summary>

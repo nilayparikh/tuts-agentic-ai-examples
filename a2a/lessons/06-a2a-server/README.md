@@ -5,7 +5,7 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=mXEXEy53UTk" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/a2a-server" target="_blank" rel="noopener noreferrer">Companion page</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/a2a-server" target="_blank" rel="noopener noreferrer">Companion page</a>
 - Previous lesson: [Building Your First A2A Agent](../05-first-a2a-agent/)
 - Next lesson: [A2A Client Fundamentals](../07-a2a-client/)
 

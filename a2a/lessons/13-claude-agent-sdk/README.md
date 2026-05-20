@@ -5,7 +5,7 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=e5E-iN2lFvg" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/claude-agent-sdk" target="_blank" rel="noopener noreferrer">Companion page</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/claude-agent-sdk" target="_blank" rel="noopener noreferrer">Companion page</a>
 - Previous lesson: [A2A with OpenAI Agents SDK](../12-openai-agents-sdk/)
 - Next lesson: [Multi-Agent System Deep Dive](../14-multi-agent-deep-dive/)
 

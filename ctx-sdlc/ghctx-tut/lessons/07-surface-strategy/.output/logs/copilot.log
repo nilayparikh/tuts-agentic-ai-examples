@@ -8,7 +8,7 @@
 2026-03-14T17:09:20.594Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_usage)
 2026-03-14T17:09:20.594Z [INFO] Starting Copilot CLI: 1.0.5
 2026-03-14T17:09:20.594Z [INFO] Node.js version: v24.11.1
-2026-03-14T17:09:20.594Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy, featureFlagEnabled=false
+2026-03-14T17:09:20.594Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy, featureFlagEnabled=false
 2026-03-14T17:09:20.594Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-03-14T17:09:20.825Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: exp_context_fetch)
 2026-03-14T17:09:20.825Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: first_launch)
@@ -233,7 +233,7 @@ cwd: undefined
   "vendor": "OpenAI",
   "version": "gpt-5.4"
 }
-2026-03-14T17:09:27.155Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy, skipping
+2026-03-14T17:09:27.155Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy, skipping
 2026-03-14T17:09:27.156Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-03-14T17:09:27.157Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
 2026-03-14T17:09:27.157Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
@@ -2622,7 +2622,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "rg",
-              "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}"
+              "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}"
             }
           }
         ]
@@ -2726,7 +2726,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "name": "rg",
-    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
+    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA"
   },
   {
@@ -2757,7 +2757,7 @@ cwd: undefined
     "type": "function_call_output",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA",
-    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\README.md:19:| Agent "
+    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\README.md:19:| Agent "
   }
 ]
 2026-03-14T17:09:41.334Z [DEBUG] Flushed 13 events to session b5e6470b-0e11-4a17-a3d3-f8859a8d4e54
@@ -2794,7 +2794,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}"
             }
           }
         ]
@@ -2814,7 +2814,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}"
             }
           }
         ]
@@ -2834,7 +2834,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}"
             }
           }
         ]
@@ -2854,7 +2854,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\README.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\README.md\"}"
             }
           }
         ]
@@ -2874,7 +2874,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}"
             }
           }
         ]
@@ -2894,7 +2894,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}"
             }
           }
         ]
@@ -2914,7 +2914,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}"
             }
           }
         ]
@@ -2943,13 +2943,13 @@ cwd: undefined
 2026-03-14T17:09:49.314Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-03-14T17:09:49.332Z [DEBUG] Tool calls count: 7
 2026-03-14T17:09:49.332Z [DEBUG] Running tool calls in parallel
-2026-03-14T17:09:49.333Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\copilot-instructions.md
-2026-03-14T17:09:49.333Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\api.instructions.md
-2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\agents\reviewer.agent.md
-2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\README.md
-2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\portability-matrix.md
-2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\cli-guide.md
-2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-strategy-example.md
+2026-03-14T17:09:49.333Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\copilot-instructions.md
+2026-03-14T17:09:49.333Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\api.instructions.md
+2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\agents\reviewer.agent.md
+2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\README.md
+2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\portability-matrix.md
+2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\cli-guide.md
+2026-03-14T17:09:49.334Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-strategy-example.md
 2026-03-14T17:09:49.337Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-03-14T17:09:49.337Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-03-14T17:09:49.341Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3027,7 +3027,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "name": "rg",
-    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
+    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA"
   },
   {
@@ -3058,7 +3058,7 @@ cwd: undefined
     "type": "function_call_output",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA",
-    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\README.md:19:| Agent "
+    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\README.md:19:| Agent "
   },
   {
     "id": "iCBl7cwVj0J66DNyHYJbryK6K7sLzndppl8q+XFRsrW0yIW1GFGo6/Mz51UtnnSducR7yPTIw/bWOEK1Xjo+Bnu6kxwOnfIIsb6/6TJfAxVrt+VCJtX0/CwLuSOwxstVAW8Qh/o6XtrneB1FW1FD4o9H2PVrGuk2EVpJS/XfHuADXlgH9WBVgf5Vy3PpJM9/wskY2MrlJl5rfsSHvf0hAruWBDZok/YDQBMkS8zJhyJm1+EVzJUYGUlOrrTMBBkFzYcXlFPpXSpBL3Qlz4PI6S96HFkz4pT18bfWAYyCROmJWhai8DjqEMIsrwnei2/c7JTg7stztEdpMzWqP03S6u0I+VrBaFIkpwYRQfnrSU4tHM+FN0UxVCOkBNXhlx48m8tFNTGUg7aisVelSg8D3g==",
@@ -3089,49 +3089,49 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_5jkPK2UgFXaSCnN07qKKjVCj",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
     "call_id": "call_5jkPK2UgFXaSCnN07qKKjVCj"
   },
   {
     "type": "function_call",
     "id": "fc_call_PND6wNJ8l8YhMnAPCP4vNrBP",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
     "call_id": "call_PND6wNJ8l8YhMnAPCP4vNrBP"
   },
   {
     "type": "function_call",
     "id": "fc_call_nPnhjQ3hZyIlqJeWoymAA5eJ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
     "call_id": "call_nPnhjQ3hZyIlqJeWoymAA5eJ"
   },
   {
     "type": "function_call",
     "id": "fc_call_D7ZvHFHLFF2VBEyjTp6hjARX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
     "call_id": "call_D7ZvHFHLFF2VBEyjTp6hjARX"
   },
   {
     "type": "function_call",
     "id": "fc_call_Vh8fmVOm27Q1aE54GIz4lY3S",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
     "call_id": "call_Vh8fmVOm27Q1aE54GIz4lY3S"
   },
   {
     "type": "function_call",
     "id": "fc_call_41pwPRNpYTfenpnocXiDVuzt",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
     "call_id": "call_41pwPRNpYTfenpnocXiDVuzt"
   },
   {
     "type": "function_call",
     "id": "fc_call_6P86zUCFee4ByS64A19HTQJZ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
     "call_id": "call_6P86zUCFee4ByS64A19HTQJZ"
   },
   {
@@ -3293,7 +3293,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}"
             }
           }
         ]
@@ -3322,7 +3322,7 @@ cwd: undefined
 2026-03-14T17:09:59.121Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-03-14T17:09:59.127Z [DEBUG] Tool calls count: 5
 2026-03-14T17:09:59.127Z [DEBUG] Running tool calls in parallel
-2026-03-14T17:09:59.127Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\ASSESSMENT.md
+2026-03-14T17:09:59.127Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\ASSESSMENT.md
 2026-03-14T17:09:59.127Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-03-14T17:09:59.127Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-03-14T17:09:59.139Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3396,7 +3396,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "name": "rg",
-    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
+    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA"
   },
   {
@@ -3427,7 +3427,7 @@ cwd: undefined
     "type": "function_call_output",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA",
-    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\README.md:19:| Agent "
+    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\README.md:19:| Agent "
   },
   {
     "id": "iCBl7cwVj0J66DNyHYJbryK6K7sLzndppl8q+XFRsrW0yIW1GFGo6/Mz51UtnnSducR7yPTIw/bWOEK1Xjo+Bnu6kxwOnfIIsb6/6TJfAxVrt+VCJtX0/CwLuSOwxstVAW8Qh/o6XtrneB1FW1FD4o9H2PVrGuk2EVpJS/XfHuADXlgH9WBVgf5Vy3PpJM9/wskY2MrlJl5rfsSHvf0hAruWBDZok/YDQBMkS8zJhyJm1+EVzJUYGUlOrrTMBBkFzYcXlFPpXSpBL3Qlz4PI6S96HFkz4pT18bfWAYyCROmJWhai8DjqEMIsrwnei2/c7JTg7stztEdpMzWqP03S6u0I+VrBaFIkpwYRQfnrSU4tHM+FN0UxVCOkBNXhlx48m8tFNTGUg7aisVelSg8D3g==",
@@ -3458,49 +3458,49 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_5jkPK2UgFXaSCnN07qKKjVCj",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
     "call_id": "call_5jkPK2UgFXaSCnN07qKKjVCj"
   },
   {
     "type": "function_call",
     "id": "fc_call_PND6wNJ8l8YhMnAPCP4vNrBP",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
     "call_id": "call_PND6wNJ8l8YhMnAPCP4vNrBP"
   },
   {
     "type": "function_call",
     "id": "fc_call_nPnhjQ3hZyIlqJeWoymAA5eJ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
     "call_id": "call_nPnhjQ3hZyIlqJeWoymAA5eJ"
   },
   {
     "type": "function_call",
     "id": "fc_call_D7ZvHFHLFF2VBEyjTp6hjARX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
     "call_id": "call_D7ZvHFHLFF2VBEyjTp6hjARX"
   },
   {
     "type": "function_call",
     "id": "fc_call_Vh8fmVOm27Q1aE54GIz4lY3S",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
     "call_id": "call_Vh8fmVOm27Q1aE54GIz4lY3S"
   },
   {
     "type": "function_call",
     "id": "fc_call_41pwPRNpYTfenpnocXiDVuzt",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
     "call_id": "call_41pwPRNpYTfenpnocXiDVuzt"
   },
   {
     "type": "function_call",
     "id": "fc_call_6P86zUCFee4ByS64A19HTQJZ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
     "call_id": "call_6P86zUCFee4ByS64A19HTQJZ"
   },
   {
@@ -3591,7 +3591,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_obPHeTdSYyN1MiOwWaiO8SJX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
     "call_id": "call_obPHeTdSYyN1MiOwWaiO8SJX"
   },
   {
@@ -3755,7 +3755,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "name": "rg",
-    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
+    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA"
   },
   {
@@ -3786,7 +3786,7 @@ cwd: undefined
     "type": "function_call_output",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA",
-    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\README.md:19:| Agent "
+    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\README.md:19:| Agent "
   },
   {
     "id": "iCBl7cwVj0J66DNyHYJbryK6K7sLzndppl8q+XFRsrW0yIW1GFGo6/Mz51UtnnSducR7yPTIw/bWOEK1Xjo+Bnu6kxwOnfIIsb6/6TJfAxVrt+VCJtX0/CwLuSOwxstVAW8Qh/o6XtrneB1FW1FD4o9H2PVrGuk2EVpJS/XfHuADXlgH9WBVgf5Vy3PpJM9/wskY2MrlJl5rfsSHvf0hAruWBDZok/YDQBMkS8zJhyJm1+EVzJUYGUlOrrTMBBkFzYcXlFPpXSpBL3Qlz4PI6S96HFkz4pT18bfWAYyCROmJWhai8DjqEMIsrwnei2/c7JTg7stztEdpMzWqP03S6u0I+VrBaFIkpwYRQfnrSU4tHM+FN0UxVCOkBNXhlx48m8tFNTGUg7aisVelSg8D3g==",
@@ -3817,49 +3817,49 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_5jkPK2UgFXaSCnN07qKKjVCj",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
     "call_id": "call_5jkPK2UgFXaSCnN07qKKjVCj"
   },
   {
     "type": "function_call",
     "id": "fc_call_PND6wNJ8l8YhMnAPCP4vNrBP",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
     "call_id": "call_PND6wNJ8l8YhMnAPCP4vNrBP"
   },
   {
     "type": "function_call",
     "id": "fc_call_nPnhjQ3hZyIlqJeWoymAA5eJ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
     "call_id": "call_nPnhjQ3hZyIlqJeWoymAA5eJ"
   },
   {
     "type": "function_call",
     "id": "fc_call_D7ZvHFHLFF2VBEyjTp6hjARX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
     "call_id": "call_D7ZvHFHLFF2VBEyjTp6hjARX"
   },
   {
     "type": "function_call",
     "id": "fc_call_Vh8fmVOm27Q1aE54GIz4lY3S",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
     "call_id": "call_Vh8fmVOm27Q1aE54GIz4lY3S"
   },
   {
     "type": "function_call",
     "id": "fc_call_41pwPRNpYTfenpnocXiDVuzt",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
     "call_id": "call_41pwPRNpYTfenpnocXiDVuzt"
   },
   {
     "type": "function_call",
     "id": "fc_call_6P86zUCFee4ByS64A19HTQJZ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
     "call_id": "call_6P86zUCFee4ByS64A19HTQJZ"
   },
   {
@@ -3950,7 +3950,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_obPHeTdSYyN1MiOwWaiO8SJX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
     "call_id": "call_obPHeTdSYyN1MiOwWaiO8SJX"
   },
   {
@@ -4018,7 +4018,7 @@ cwd: undefined
   {
     "type": "custom_tool_call_output",
     "call_id": "call_dXk1glCOk5M4zKd08H4wVqDA",
-    "output": "Added 3 file(s): C:\\Users\\nilay\\.copilot\\session-state\\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\\plan.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\.github\\instructions\\portable-baseline.instructions.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\docs\\surface-portability-notes.md"
+    "output": "Added 3 file(s): C:\\Users\\nilay\\.copilot\\session-state\\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\\plan.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\.github\\instructions\\portable-baseline.instructions.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\docs\\surface-portability-notes.md"
   }
 ]
 2026-03-14T17:11:00.504Z [DEBUG] Flushed 6 events to session b5e6470b-0e11-4a17-a3d3-f8859a8d4e54
@@ -4075,7 +4075,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\portable-baseline.instructions.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\portable-baseline.instructions.md\"}"
             }
           }
         ]
@@ -4095,7 +4095,7 @@ cwd: undefined
             "type": "function",
             "function": {
               "name": "view",
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-portability-notes.md\"}"
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-portability-notes.md\"}"
             }
           }
         ]
@@ -4124,8 +4124,8 @@ cwd: undefined
 2026-03-14T17:11:06.786Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-03-14T17:11:06.789Z [DEBUG] Tool calls count: 3
 2026-03-14T17:11:06.789Z [DEBUG] Running tool calls in parallel
-2026-03-14T17:11:06.789Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md
-2026-03-14T17:11:06.789Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-portability-notes.md
+2026-03-14T17:11:06.789Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md
+2026-03-14T17:11:06.789Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-portability-notes.md
 2026-03-14T17:11:06.790Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-03-14T17:11:06.790Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-03-14T17:11:06.792Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -4195,7 +4195,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "name": "rg",
-    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
+    "arguments": "{\"pattern\":\"applyTo:|copilot|prompt|agent|mcp|hook|instruction\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\",\"output_mode\":\"content\",\"glob\":\"*.{md,json,yml,yaml}\",\"-n\":true,\"head_limit\":300}",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA"
   },
   {
@@ -4226,7 +4226,7 @@ cwd: undefined
     "type": "function_call_output",
     "id": "fc_call_cqBs5paXr44bioLDMprKIBmA",
     "call_id": "call_cqBs5paXr44bioLDMprKIBmA",
-    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\README.md:19:| Agent "
+    "output": "Output too large to read at once (20.4 KB). Saved to: C:\\Users\\nilay\\AppData\\Local\\Temp\\copilot-tool-output-1773508181204-z851ju.txt\nConsider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.\n\nPreview (first 500 chars):\nY:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\README.md:19:| Agent "
   },
   {
     "id": "iCBl7cwVj0J66DNyHYJbryK6K7sLzndppl8q+XFRsrW0yIW1GFGo6/Mz51UtnnSducR7yPTIw/bWOEK1Xjo+Bnu6kxwOnfIIsb6/6TJfAxVrt+VCJtX0/CwLuSOwxstVAW8Qh/o6XtrneB1FW1FD4o9H2PVrGuk2EVpJS/XfHuADXlgH9WBVgf5Vy3PpJM9/wskY2MrlJl5rfsSHvf0hAruWBDZok/YDQBMkS8zJhyJm1+EVzJUYGUlOrrTMBBkFzYcXlFPpXSpBL3Qlz4PI6S96HFkz4pT18bfWAYyCROmJWhai8DjqEMIsrwnei2/c7JTg7stztEdpMzWqP03S6u0I+VrBaFIkpwYRQfnrSU4tHM+FN0UxVCOkBNXhlx48m8tFNTGUg7aisVelSg8D3g==",
@@ -4257,49 +4257,49 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_5jkPK2UgFXaSCnN07qKKjVCj",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\copilot-instructions.md\"}",
     "call_id": "call_5jkPK2UgFXaSCnN07qKKjVCj"
   },
   {
     "type": "function_call",
     "id": "fc_call_PND6wNJ8l8YhMnAPCP4vNrBP",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\api.instructions.md\"}",
     "call_id": "call_PND6wNJ8l8YhMnAPCP4vNrBP"
   },
   {
     "type": "function_call",
     "id": "fc_call_nPnhjQ3hZyIlqJeWoymAA5eJ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\agents\\\\reviewer.agent.md\"}",
     "call_id": "call_nPnhjQ3hZyIlqJeWoymAA5eJ"
   },
   {
     "type": "function_call",
     "id": "fc_call_D7ZvHFHLFF2VBEyjTp6hjARX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\README.md\"}",
     "call_id": "call_D7ZvHFHLFF2VBEyjTp6hjARX"
   },
   {
     "type": "function_call",
     "id": "fc_call_Vh8fmVOm27Q1aE54GIz4lY3S",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\portability-matrix.md\"}",
     "call_id": "call_Vh8fmVOm27Q1aE54GIz4lY3S"
   },
   {
     "type": "function_call",
     "id": "fc_call_41pwPRNpYTfenpnocXiDVuzt",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\cli-guide.md\"}",
     "call_id": "call_41pwPRNpYTfenpnocXiDVuzt"
   },
   {
     "type": "function_call",
     "id": "fc_call_6P86zUCFee4ByS64A19HTQJZ",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-strategy-example.md\"}",
     "call_id": "call_6P86zUCFee4ByS64A19HTQJZ"
   },
   {
@@ -4390,7 +4390,7 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_obPHeTdSYyN1MiOwWaiO8SJX",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\ASSESSMENT.md\"}",
     "call_id": "call_obPHeTdSYyN1MiOwWaiO8SJX"
   },
   {
@@ -4458,7 +4458,7 @@ cwd: undefined
   {
     "type": "custom_tool_call_output",
     "call_id": "call_dXk1glCOk5M4zKd08H4wVqDA",
-    "output": "Added 3 file(s): C:\\Users\\nilay\\.copilot\\session-state\\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\\plan.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\.github\\instructions\\portable-baseline.instructions.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy\\docs\\surface-portability-notes.md"
+    "output": "Added 3 file(s): C:\\Users\\nilay\\.copilot\\session-state\\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\\plan.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\.github\\instructions\\portable-baseline.instructions.md, Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy\\docs\\surface-portability-notes.md"
   },
   {
     "type": "message",
@@ -4485,14 +4485,14 @@ cwd: undefined
     "type": "function_call",
     "id": "fc_call_GDIHSg8FreHPlvGz0B31jRMe",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\portable-baseline.instructions.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\.github\\\\instructions\\\\portable-baseline.instructions.md\"}",
     "call_id": "call_GDIHSg8FreHPlvGz0B31jRMe"
   },
   {
     "type": "function_call",
     "id": "fc_call_7lJElf6rVaJj6HNjkqUfCfPA",
     "name": "view",
-    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-portability-notes.md\"}",
+    "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\07-surface-strategy\\\\docs\\\\surface-portability-notes.md\"}",
     "call_id": "call_7lJElf6rVaJj6HNjkqUfCfPA"
   },
   {
@@ -4608,7 +4608,7 @@ cwd: undefined
   └ 3 files found
 
 ● Grep "applyTo:|copilot|prompt|agent|mcp|hook|instruction" in *.{md,json,yml,yaml}
-(Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy)
+(Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy)
   └ 5 lines found
 
 ● I found the lesson’s actual surfaces: baseline instructions, a scoped
@@ -4696,4 +4696,4 @@ Total session time:     1m 53s
 Total code changes:     +182 -0
 Breakdown by AI model:
  gpt-5.4                 165.0k in, 5.6k out, 143.9k cached (Est. 1 Premium request)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.output\logs\session.md

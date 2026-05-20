@@ -5,7 +5,7 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=oGwg0VwGyY8" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">Companion page</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/microsoft-agent-framework" target="_blank" rel="noopener noreferrer">Companion page</a>
 - Previous lesson: [A2A Client Fundamentals](../07-a2a-client/)
 - Next lesson: [A2A with Google ADK](../09-google-adk/)
 
@@ -63,7 +63,7 @@ src/
 ### 1. Install dependencies
 
 ```bash
-cd _examples/a2a
+cd _examples/agent-to-agent-protocol
 pip install -r requirements.txt
 ```
 

@@ -89,7 +89,7 @@ I’m mapping the lesson’s actual instruction surfaces first so the new files 
 
 ### ✅ `rg`
 
-**Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy**
+**Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy**
 
 <details>
 <summary>Arguments</summary>
@@ -97,7 +97,7 @@ I’m mapping the lesson’s actual instruction surfaces first so the new files 
 ```json
 {
   "pattern": "applyTo:|copilot|prompt|agent|mcp|hook|instruction",
-  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\ctx-sdlc\\lessons\\07-surface-strategy",
+  "path": "Y:\\.sources\\localm-tuts\\courses\\_examples\\context-engineering\\lessons\\07-surface-strategy",
   "output_mode": "content",
   "glob": "*.{md,json,yml,yaml}",
   "-n": true,
@@ -112,7 +112,7 @@ Output too large to read at once (20.4 KB). Saved to: C:\Users\nilay\AppData\Loc
 Consider using tools like grep (for searching), head/tail (for viewing start/end), view with view_range (for specific sections), or jq (for JSON) to examine portions of the output.
 
 Preview (first 500 chars):
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\README.md:19:| Agent 
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\README.md:19:| Agent 
 ```
 
 
@@ -130,9 +130,9 @@ I found the lesson’s actual surfaces: baseline instructions, a scoped instruct
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\copilot-instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\copilot-instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\copilot-instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\copilot-instructions.md
 
 <details>
 <summary>52 lines</summary>
@@ -201,9 +201,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\api.instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\api.instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\api.instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\api.instructions.md
 
 <details>
 <summary>43 lines</summary>
@@ -263,9 +263,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\agents\reviewer.agent.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\agents\reviewer.agent.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\agents\reviewer.agent.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\agents\reviewer.agent.md
 
 <details>
 <summary>63 lines</summary>
@@ -345,9 +345,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\README.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\README.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\README.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\README.md
 
 <details>
 <summary>82 lines</summary>
@@ -446,9 +446,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\R
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\portability-matrix.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\portability-matrix.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\portability-matrix.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\portability-matrix.md
 
 <details>
 <summary>120 lines</summary>
@@ -585,9 +585,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\d
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\cli-guide.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\cli-guide.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\cli-guide.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\cli-guide.md
 
 <details>
 <summary>157 lines</summary>
@@ -761,9 +761,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\d
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-strategy-example.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-strategy-example.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-strategy-example.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-strategy-example.md
 
 <details>
 <summary>48 lines</summary>
@@ -881,9 +881,9 @@ No files matched the pattern.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\ASSESSMENT.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\ASSESSMENT.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\ASSESSMENT.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\ASSESSMENT.md
 
 <details>
 <summary>51 lines</summary>
@@ -969,7 +969,7 @@ I’ve got enough context now: the portable baseline should come from `.github/c
 </details>
 
 ```
-Added 3 file(s): C:\Users\nilay\.copilot\session-state\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\plan.md, Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md, Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-portability-notes.md
+Added 3 file(s): C:\Users\nilay\.copilot\session-state\b5e6470b-0e11-4a17-a3d3-f8859a8d4e54\plan.md, Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md, Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-portability-notes.md
 ```
 
 
@@ -987,9 +987,9 @@ The files are written. I’m doing a quick read-back now to verify they match th
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\.github\instructions\portable-baseline.instructions.md
 
 <details>
 <summary>63 lines</summary>
@@ -1069,9 +1069,9 @@ Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\.
 
 ### ✅ `view`
 
-**view the file at Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-portability-notes.md.**
+**view the file at Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-portability-notes.md.**
 
-Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\07-surface-strategy\docs\surface-portability-notes.md
+Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\07-surface-strategy\docs\surface-portability-notes.md
 
 <details>
 <summary>113 lines</summary>

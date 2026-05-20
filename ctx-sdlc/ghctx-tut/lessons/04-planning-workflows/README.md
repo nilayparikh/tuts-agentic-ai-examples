@@ -111,4 +111,4 @@ python util.py --clean
 | 08  | Operating Model           | _Coming soon_                                        | [08-operating-model](../08-operating-model)                     |
 | 09  | AI-Assisted SDLC Capstone | _Coming soon_                                        | [09-ai-assisted-sdlc-capstone](../09-ai-assisted-sdlc-capstone) |
 
-Full Course: <https://tuts.localm.dev/ctx-sdlc>
+Full Course: <https://tuts.localm.dev/context-engineering>

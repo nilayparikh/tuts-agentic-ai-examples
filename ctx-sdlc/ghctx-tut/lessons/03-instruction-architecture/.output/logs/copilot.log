@@ -11,7 +11,7 @@
 2026-04-15T15:31:22.489Z [INFO] Session indexing debug: showSessionSyncPrompt=false
 2026-04-15T15:31:22.489Z [INFO] Starting Copilot CLI: 1.0.27
 2026-04-15T15:31:22.489Z [INFO] Node.js version: v24.11.1
-2026-04-15T15:31:22.489Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture, featureFlagEnabled=false
+2026-04-15T15:31:22.489Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture, featureFlagEnabled=false
 2026-04-15T15:31:22.490Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-04-15T15:31:22.582Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: exp_context_fetch)
 2026-04-15T15:31:23.072Z [INFO] No update needed, current version is 1.0.27, fetched latest release is v1.0.27
@@ -135,7 +135,7 @@ cwd: undefined
   "truncateBasedOn": "tokenCount",
   "truncateStyle": "middle"
 }
-2026-04-15T15:31:29.960Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture, skipping
+2026-04-15T15:31:29.960Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture, skipping
 2026-04-15T15:31:29.961Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: pending_messages_modified)
 2026-04-15T15:31:29.961Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: pending_messages_modified)
 2026-04-15T15:31:29.964Z [DEBUG] Embedding retrieval skipped: DYNAMIC_INSTRUCTIONS_RETRIEVAL not enabled.
@@ -294,7 +294,7 @@ cwd: undefined
   "version": "claude-haiku-4.5"
 }
 2026-04-15T15:31:31.205Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
-2026-04-15T15:31:31.206Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture, skipping
+2026-04-15T15:31:31.206Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture, skipping
 2026-04-15T15:31:31.207Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-04-15T15:31:31.208Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
 2026-04-15T15:31:31.209Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
@@ -2537,7 +2537,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01VCb9A2h9BWrN1AURAte8xX",
@@ -2553,7 +2553,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_012KQtQu7Gj1K6xV4c1vosWC",
@@ -2579,8 +2579,8 @@ cwd: undefined
 2026-04-15T15:31:36.639Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:31:36.640Z [DEBUG] Tool calls count: 3
 2026-04-15T15:31:36.640Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:31:36.641Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules
-2026-04-15T15:31:36.642Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit
+2026-04-15T15:31:36.641Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules
+2026-04-15T15:31:36.642Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit
 2026-04-15T15:31:36.643Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:31:36.644Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:31:36.649Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2616,7 +2616,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\business-rules.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\business-rules.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01BQ2Vjtnj1eegXtF3kfvMws",
@@ -2632,7 +2632,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\mandatory-events.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\mandatory-events.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Xpp84Gv4LN15kmt5ZWwuRf",
@@ -2648,7 +2648,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\business-rules.test.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\business-rules.test.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01MvWESiZko2QiZpcFhRtP2n",
@@ -2674,9 +2674,9 @@ cwd: undefined
 2026-04-15T15:31:38.926Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:31:38.942Z [DEBUG] Tool calls count: 3
 2026-04-15T15:31:38.942Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts
-2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts
-2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts
+2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\business-rules.ts
+2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\mandatory-events.ts
+2026-04-15T15:31:38.943Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\business-rules.test.ts
 2026-04-15T15:31:38.949Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:31:38.949Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:31:38.959Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2711,7 +2711,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_012b3x8UCQkMMjDwazMwpi6T",
@@ -2737,7 +2737,7 @@ cwd: undefined
 2026-04-15T15:31:41.225Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:31:41.236Z [DEBUG] Tool calls count: 1
 2026-04-15T15:31:41.237Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:31:41.237Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts
+2026-04-15T15:31:41.237Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\models\types.ts
 2026-04-15T15:31:41.239Z [DEBUG] [telemetry-queue] Flushing 50 events (180828 B → 9177 B gzipped)
 2026-04-15T15:31:41.242Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:31:41.242Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2769,7 +2769,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\.github\\\\instructions\\\\business-rules.instructions.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\.github\\\\instructions\\\\business-rules.instructions.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_018HDmrd4FkqvozXBrbsZkSL",
@@ -2785,7 +2785,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\.github\\\\instructions\\\\testing.instructions.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\.github\\\\instructions\\\\testing.instructions.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01G3y5aGMPwWjsd22JAzMFZk",
@@ -2811,8 +2811,8 @@ cwd: undefined
 2026-04-15T15:31:44.011Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:31:44.015Z [DEBUG] Tool calls count: 2
 2026-04-15T15:31:44.015Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:31:44.015Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md
-2026-04-15T15:31:44.016Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md
+2026-04-15T15:31:44.015Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\business-rules.instructions.md
+2026-04-15T15:31:44.016Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.github\instructions\testing.instructions.md
 2026-04-15T15:31:44.019Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:31:44.019Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:31:44.026Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2845,7 +2845,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\notification-channel-rules.ts\",\"file_text\":\"// ---------------------------------------------------------------------------\\n// Notification Channel Disable Rules\\n// ---------------------------------------------------------------------------\\n// Validates when disabling a notification channel is allowed for a user event.\\n// This is a pure validation rule — it returns structured results without side effects.\\n//\\n// FALSE POSITIVE:\\n//   Disabling SMS for a mandatory event looks like a violation, but is valid\\n//   when email remains enabled (ensures the event still notifies the user via\\n//   an enabled channel).\\n//\\n// HARD NEGATIVE:\\n//   Disabling SMS for decline events on a California loan looks like a normal\\n//   toggle, but actually violates regulatory requirement LEGAL-218 (decline\\n//   notifications must reach the user via SMS on CA loans).\\n// ---------------------------------------------------------------------------\\n\\nimport type { LoanApplication, NotificationEvent } from \\\"../models/types.js\\\";\\n\\n/**\\n * Result of checking whether a notification channel can be disabled.\\n * Includes the decision and a human-readable reason for the UI.\\n */\\nexport interface ChannelDisableRule {\\n  allowed: boolean;\\n  reason: string;\\n}\\n\\n/**\\n * Determine whether disabling a notification channel is allowed.\\n *\\n * @param event - The notification event type\\n * @param channel - The channel being disabled\\n * @param loan - The loan application this affects\\n * @param mandatoryEvents - List of mandatory events for the current state transition\\n * @returns Structured result with decision and reason\\n */\\nexport function canDisableChannel(\\n  event: NotificationEvent,\\n  channel: string,\\n  loan: LoanApplication,\\n  mandatoryEvents: NotificationEvent[],\\n): ChannelDisableRule {\\n  // California LEGAL-218: SMS for decline events cannot be disabled on CA loans\\n  if (\\n    event === \\\"decline\\\" &&\\n    channel === \\\"sms\\\" &&\\n    loan.loanState.toUpperCase() === \\\"CA\\\"\\n  ) {\\n    return {\\n      allowed: false,\\n      reason:\\n        \\\"Cannot disable SMS for decline events on California loans (LEGAL-218 compliance requirement).\\\",\\n    };\\n  }\\n\\n  // Mandatory events cannot have all channels disabled\\n  if (mandatoryEvents.includes(event)) {\\n    return {\\n      allowed: false,\\n      reason: `Cannot disable notifications for mandatory event '${event}' — at least one channel must remain enabled.`,\\n    };\\n  }\\n\\n  return {\\n    allowed: true,\\n    reason: \\\"Channel can be disabled.\\\",\\n  };\\n}\\n\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\notification-channel-rules.ts\",\"file_text\":\"// ---------------------------------------------------------------------------\\n// Notification Channel Disable Rules\\n// ---------------------------------------------------------------------------\\n// Validates when disabling a notification channel is allowed for a user event.\\n// This is a pure validation rule — it returns structured results without side effects.\\n//\\n// FALSE POSITIVE:\\n//   Disabling SMS for a mandatory event looks like a violation, but is valid\\n//   when email remains enabled (ensures the event still notifies the user via\\n//   an enabled channel).\\n//\\n// HARD NEGATIVE:\\n//   Disabling SMS for decline events on a California loan looks like a normal\\n//   toggle, but actually violates regulatory requirement LEGAL-218 (decline\\n//   notifications must reach the user via SMS on CA loans).\\n// ---------------------------------------------------------------------------\\n\\nimport type { LoanApplication, NotificationEvent } from \\\"../models/types.js\\\";\\n\\n/**\\n * Result of checking whether a notification channel can be disabled.\\n * Includes the decision and a human-readable reason for the UI.\\n */\\nexport interface ChannelDisableRule {\\n  allowed: boolean;\\n  reason: string;\\n}\\n\\n/**\\n * Determine whether disabling a notification channel is allowed.\\n *\\n * @param event - The notification event type\\n * @param channel - The channel being disabled\\n * @param loan - The loan application this affects\\n * @param mandatoryEvents - List of mandatory events for the current state transition\\n * @returns Structured result with decision and reason\\n */\\nexport function canDisableChannel(\\n  event: NotificationEvent,\\n  channel: string,\\n  loan: LoanApplication,\\n  mandatoryEvents: NotificationEvent[],\\n): ChannelDisableRule {\\n  // California LEGAL-218: SMS for decline events cannot be disabled on CA loans\\n  if (\\n    event === \\\"decline\\\" &&\\n    channel === \\\"sms\\\" &&\\n    loan.loanState.toUpperCase() === \\\"CA\\\"\\n  ) {\\n    return {\\n      allowed: false,\\n      reason:\\n        \\\"Cannot disable SMS for decline events on California loans (LEGAL-218 compliance requirement).\\\",\\n    };\\n  }\\n\\n  // Mandatory events cannot have all channels disabled\\n  if (mandatoryEvents.includes(event)) {\\n    return {\\n      allowed: false,\\n      reason: `Cannot disable notifications for mandatory event '${event}' — at least one channel must remain enabled.`,\\n    };\\n  }\\n\\n  return {\\n    allowed: true,\\n    reason: \\\"Channel can be disabled.\\\",\\n  };\\n}\\n\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01Vx3MkiaeAXYdymN1FNccpE",
@@ -2873,7 +2873,7 @@ cwd: undefined
 2026-04-15T15:31:51.476Z [DEBUG] Running tool calls in parallel
 2026-04-15T15:31:51.476Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-15T15:31:51.477Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-15T15:31:51.477Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
+2026-04-15T15:31:51.477Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
 2026-04-15T15:31:51.490Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-15T15:31:51.491Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:31:51.491Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2907,7 +2907,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"file_text\":\"// ---------------------------------------------------------------------------\\n// Notification Channel Rules Tests\\n// ---------------------------------------------------------------------------\\n\\nimport { describe, it, expect } from \\\"vitest\\\";\\nimport { canDisableChannel } from \\\"../../src/rules/notification-channel-rules.js\\\";\\nimport type { LoanApplication, NotificationEvent } from \\\"../../src/models/types.js\\\";\\n\\nconst baseLoan: LoanApplication = {\\n  id: \\\"loan-1\\\",\\n  borrowerName: \\\"Test Corp\\\",\\n  amount: 100000,\\n  loanState: \\\"NY\\\",\\n  status: \\\"intake\\\",\\n  assignedUnderwriter: \\\"u-1\\\",\\n  riskScore: null,\\n  createdAt: new Date().toISOString(),\\n  updatedAt: new Date().toISOString(),\\n};\\n\\ndescribe(\\\"Notification Channel Rules\\\", () => {\\n  describe(\\\"Happy path\\\", () => {\\n    it(\\\"allows disabling email for optional events on non-CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n      expect(result.reason).toContain(\\\"can be disabled\\\");\\n    });\\n\\n    it(\\\"allows disabling SMS for approval events on CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"allows disabling email for approval events on CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n  });\\n\\n  describe(\\\"Hard negative: California LEGAL-218 decline SMS restriction\\\", () => {\\n    it(\\\"blocks disabling SMS for decline events on CA loans\\\", () => {\\n      // Hard negative: looks like a normal toggle, violates LEGAL-218\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n      expect(result.reason).toContain(\\\"SMS\\\");\\n      expect(result.reason).toContain(\\\"decline\\\");\\n    });\\n\\n    it(\\\"applies LEGAL-218 regardless of other enabled channels\\\", () => {\\n      // Hard negative: even with email enabled, SMS cannot be disabled\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n    });\\n\\n    it(\\\"allows disabling email for decline events on CA loans (only SMS protected)\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"does not restrict decline SMS on non-CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"TX\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"handles case-insensitive state code for CA restriction\\\", () => {\\n      const resultLower = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"ca\\\" },\\n        [],\\n      );\\n      expect(resultLower.allowed).toBe(false);\\n\\n      const resultMixed = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"Ca\\\" },\\n        [],\\n      );\\n      expect(resultMixed.allowed).toBe(false);\\n    });\\n  });\\n\\n  describe(\\\"Boundary: mandatory events\\\", () => {\\n    it(\\\"blocks disabling any channel for mandatory approval event\\\", () => {\\n      // Boundary case: mandatory event set explicitly\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"approval\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n      expect(result.reason).toContain(\\\"approval\\\");\\n    });\\n\\n    it(\\\"blocks disabling any channel for mandatory decline event\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"blocks disabling email for mandatory document-request event\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"document-request\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [\\\"document-request\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"allows disabling optional events even when others are mandatory\\\", () => {\\n      // Boundary: one event mandatory, another optional\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n  });\\n\\n  describe(\\\"False positive: mandatory event with alternative channel enabled\\\", () => {\\n    it(\\\"correctly rejects SMS disable for mandatory event (even with email enabled)\\\", () => {\\n      // False positive scenario: disabling SMS looks okay when email is enabled,\\n      // but mandatory events require at least one channel. The caller must check\\n      // other preferences to determine if email is actually enabled.\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"approval\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"requires caller to verify other channels before allowing mandatory event disable\\\", () => {\\n      // This test documents that this rule function does not check if other\\n      // channels are enabled — it simply rejects disable for mandatory events.\\n      // The service layer (caller) must verify email is enabled before allowing\\n      // SMS to be disabled.\\n      const result = canDisableChannel(\\n        \\\"manual-review-escalation\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"manual-review-escalation\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n    });\\n  });\\n\\n  describe(\\\"Combined scenarios\\\", () => {\\n    it(\\\"prioritizes LEGAL-218 over mandatory event check on CA decline SMS\\\", () => {\\n      // When a user disables decline SMS on a CA loan, the rejection reason\\n      // should cite LEGAL-218, not the mandatory event rule.\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n    });\\n\\n    it(\\\"allows disabling optional decline event when it is not mandatory\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"NY\\\" },\\n        [\\\"approval\\\"], // decline is not mandatory\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"blocks disabling mandatory document-request on any state\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"document-request\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"document-request\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n  });\\n});\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\"}",
+              "arguments": "{\"file_text\":\"// ---------------------------------------------------------------------------\\n// Notification Channel Rules Tests\\n// ---------------------------------------------------------------------------\\n\\nimport { describe, it, expect } from \\\"vitest\\\";\\nimport { canDisableChannel } from \\\"../../src/rules/notification-channel-rules.js\\\";\\nimport type { LoanApplication, NotificationEvent } from \\\"../../src/models/types.js\\\";\\n\\nconst baseLoan: LoanApplication = {\\n  id: \\\"loan-1\\\",\\n  borrowerName: \\\"Test Corp\\\",\\n  amount: 100000,\\n  loanState: \\\"NY\\\",\\n  status: \\\"intake\\\",\\n  assignedUnderwriter: \\\"u-1\\\",\\n  riskScore: null,\\n  createdAt: new Date().toISOString(),\\n  updatedAt: new Date().toISOString(),\\n};\\n\\ndescribe(\\\"Notification Channel Rules\\\", () => {\\n  describe(\\\"Happy path\\\", () => {\\n    it(\\\"allows disabling email for optional events on non-CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n      expect(result.reason).toContain(\\\"can be disabled\\\");\\n    });\\n\\n    it(\\\"allows disabling SMS for approval events on CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"allows disabling email for approval events on CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n  });\\n\\n  describe(\\\"Hard negative: California LEGAL-218 decline SMS restriction\\\", () => {\\n    it(\\\"blocks disabling SMS for decline events on CA loans\\\", () => {\\n      // Hard negative: looks like a normal toggle, violates LEGAL-218\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n      expect(result.reason).toContain(\\\"SMS\\\");\\n      expect(result.reason).toContain(\\\"decline\\\");\\n    });\\n\\n    it(\\\"applies LEGAL-218 regardless of other enabled channels\\\", () => {\\n      // Hard negative: even with email enabled, SMS cannot be disabled\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n    });\\n\\n    it(\\\"allows disabling email for decline events on CA loans (only SMS protected)\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"does not restrict decline SMS on non-CA loans\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"TX\\\" },\\n        [],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"handles case-insensitive state code for CA restriction\\\", () => {\\n      const resultLower = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"ca\\\" },\\n        [],\\n      );\\n      expect(resultLower.allowed).toBe(false);\\n\\n      const resultMixed = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"Ca\\\" },\\n        [],\\n      );\\n      expect(resultMixed.allowed).toBe(false);\\n    });\\n  });\\n\\n  describe(\\\"Boundary: mandatory events\\\", () => {\\n    it(\\\"blocks disabling any channel for mandatory approval event\\\", () => {\\n      // Boundary case: mandatory event set explicitly\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"approval\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n      expect(result.reason).toContain(\\\"approval\\\");\\n    });\\n\\n    it(\\\"blocks disabling any channel for mandatory decline event\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"blocks disabling email for mandatory document-request event\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"document-request\\\",\\n        \\\"email\\\",\\n        baseLoan,\\n        [\\\"document-request\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"allows disabling optional events even when others are mandatory\\\", () => {\\n      // Boundary: one event mandatory, another optional\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n  });\\n\\n  describe(\\\"False positive: mandatory event with alternative channel enabled\\\", () => {\\n    it(\\\"correctly rejects SMS disable for mandatory event (even with email enabled)\\\", () => {\\n      // False positive scenario: disabling SMS looks okay when email is enabled,\\n      // but mandatory events require at least one channel. The caller must check\\n      // other preferences to determine if email is actually enabled.\\n      const result = canDisableChannel(\\n        \\\"approval\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"approval\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n\\n    it(\\\"requires caller to verify other channels before allowing mandatory event disable\\\", () => {\\n      // This test documents that this rule function does not check if other\\n      // channels are enabled — it simply rejects disable for mandatory events.\\n      // The service layer (caller) must verify email is enabled before allowing\\n      // SMS to be disabled.\\n      const result = canDisableChannel(\\n        \\\"manual-review-escalation\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"manual-review-escalation\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n    });\\n  });\\n\\n  describe(\\\"Combined scenarios\\\", () => {\\n    it(\\\"prioritizes LEGAL-218 over mandatory event check on CA decline SMS\\\", () => {\\n      // When a user disables decline SMS on a CA loan, the rejection reason\\n      // should cite LEGAL-218, not the mandatory event rule.\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"sms\\\",\\n        { ...baseLoan, loanState: \\\"CA\\\" },\\n        [\\\"decline\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"LEGAL-218\\\");\\n    });\\n\\n    it(\\\"allows disabling optional decline event when it is not mandatory\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"decline\\\",\\n        \\\"email\\\",\\n        { ...baseLoan, loanState: \\\"NY\\\" },\\n        [\\\"approval\\\"], // decline is not mandatory\\n      );\\n      expect(result.allowed).toBe(true);\\n    });\\n\\n    it(\\\"blocks disabling mandatory document-request on any state\\\", () => {\\n      const result = canDisableChannel(\\n        \\\"document-request\\\",\\n        \\\"sms\\\",\\n        baseLoan,\\n        [\\\"document-request\\\"],\\n      );\\n      expect(result.allowed).toBe(false);\\n      expect(result.reason).toContain(\\\"mandatory\\\");\\n    });\\n  });\\n});\\n\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\"}",
               "name": "create"
             },
             "id": "toolu_vrtx_01QLbWW91hCdNHjt6PrytkEd",
@@ -2935,7 +2935,7 @@ cwd: undefined
 2026-04-15T15:32:04.309Z [DEBUG] Running tool calls in parallel
 2026-04-15T15:32:04.309Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-15T15:32:04.309Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-15T15:32:04.309Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
+2026-04-15T15:32:04.309Z [DEBUG] create: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
 2026-04-15T15:32:04.320Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-15T15:32:04.320Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:32:04.320Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2968,7 +2968,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\notification-channel-rules.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\src\\\\rules\\\\notification-channel-rules.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01KcAkH5mR4h8qdXKWkw5P3F",
@@ -2984,7 +2984,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[1,50]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[1,50]}",
               "name": "view"
             },
             "id": "toolu_vrtx_018sQGH4yFL6EWdezb6KwnUY",
@@ -3010,8 +3010,8 @@ cwd: undefined
 2026-04-15T15:32:06.354Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:32:06.359Z [DEBUG] Tool calls count: 2
 2026-04-15T15:32:06.359Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:32:06.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
-2026-04-15T15:32:06.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
+2026-04-15T15:32:06.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\src\rules\notification-channel-rules.ts
+2026-04-15T15:32:06.359Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
 2026-04-15T15:32:06.362Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:32:06.362Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:32:06.367Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -3044,7 +3044,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[80,160]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[80,160]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Ar1zqNihHyivqGeUThrYa8",
@@ -3070,7 +3070,7 @@ cwd: undefined
 2026-04-15T15:32:09.157Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:32:09.160Z [DEBUG] Tool calls count: 1
 2026-04-15T15:32:09.160Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:32:09.160Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
+2026-04-15T15:32:09.160Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
 2026-04-15T15:32:09.162Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:32:09.162Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:32:09.168Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3101,7 +3101,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[200,-1]}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\ghctx-tut\\\\lessons\\\\03-instruction-architecture\\\\src\\\\backend\\\\tests\\\\unit\\\\notification-channel-rules.test.ts\",\"view_range\":[200,-1]}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Bi9ADLHk7FyfN3CdFNM5Zm",
@@ -3127,7 +3127,7 @@ cwd: undefined
 2026-04-15T15:32:11.305Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-15T15:32:11.310Z [DEBUG] Tool calls count: 1
 2026-04-15T15:32:11.310Z [DEBUG] Running tool calls in parallel
-2026-04-15T15:32:11.310Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
+2026-04-15T15:32:11.310Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\src\backend\tests\unit\notification-channel-rules.test.ts
 2026-04-15T15:32:11.311Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-15T15:32:11.311Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-15T15:32:11.316Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3392,4 +3392,4 @@ cwd: undefined
 Changes   +305 -0
 Requests  0.33 Premium (1m 6s)
 Tokens    ↑ 383.2k • ↓ 5.1k • 343.0k (cached)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\ghctx-tut\lessons\03-instruction-architecture\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\ghctx-tut\lessons\03-instruction-architecture\.output\logs\session.md

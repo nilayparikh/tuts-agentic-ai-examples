@@ -12,7 +12,7 @@
 2026-04-13T13:10:15.096Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: first_launch)
 2026-04-13T13:10:15.096Z [INFO] Starting Copilot CLI: 1.0.24
 2026-04-13T13:10:15.096Z [INFO] Node.js version: v24.11.1
-2026-04-13T13:10:15.097Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context, featureFlagEnabled=false
+2026-04-13T13:10:15.097Z [DEBUG] [remoteHosts] Starting remote host detection for cwd=Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context, featureFlagEnabled=false
 2026-04-13T13:10:15.097Z [DEBUG] [remoteHosts] Feature flag ADO_DETECTION is disabled, skipping detection
 2026-04-13T13:10:15.521Z [INFO] No update needed, current version is 1.0.24, fetched latest release is v1.0.24
 2026-04-13T13:10:16.044Z [DEBUG] No MCP config loaded from ODR (ODR unavailable or returned no usable servers)
@@ -138,7 +138,7 @@ cwd: undefined
   "truncateBasedOn": "tokenCount",
   "truncateStyle": "middle"
 }
-2026-04-13T13:10:23.421Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context, skipping
+2026-04-13T13:10:23.421Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context, skipping
 2026-04-13T13:10:23.721Z [INFO] Memory enablement check: enabled
 2026-04-13T13:10:24.170Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
 2026-04-13T13:10:24.170Z [DEBUG] str_replace_editor: default options: {
@@ -292,7 +292,7 @@ cwd: undefined
   "version": "claude-haiku-4.5"
 }
 2026-04-13T13:10:24.588Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: memory_retrieval)
-2026-04-13T13:10:24.590Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context, skipping
+2026-04-13T13:10:24.590Z [DEBUG] LSP configs already initialized for Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context, skipping
 2026-04-13T13:10:24.591Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tools_available)
 2026-04-13T13:10:24.593Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: term_info)
 2026-04-13T13:10:24.594Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: user_message)
@@ -2523,7 +2523,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Ha3MMr14MrVbqJXcnw3Dgj",
@@ -2539,7 +2539,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_018wyunBoTtXmD5kSxR7JUR3",
@@ -2565,8 +2565,8 @@ cwd: undefined
 2026-04-13T13:10:31.087Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:31.088Z [DEBUG] Tool calls count: 3
 2026-04-13T13:10:31.088Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:31.090Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context
-2026-04-13T13:10:31.090Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs
+2026-04-13T13:10:31.090Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context
+2026-04-13T13:10:31.090Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs
 2026-04-13T13:10:31.092Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:31.092Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:31.097Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2595,7 +2595,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\\\\manual-review-escalation.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\\\\manual-review-escalation.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01TBDghdvWaXdoCFCpYXe8Qg",
@@ -2611,7 +2611,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\\\\architecture.md\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\docs\\\\architecture.md\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EHU3pFr2Xa1QfiKasc6sZW",
@@ -2627,7 +2627,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_012sCj9bx6KpdD3QH53MnNKx",
@@ -2653,9 +2653,9 @@ cwd: undefined
 2026-04-13T13:10:33.530Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:33.530Z [DEBUG] Tool calls count: 3
 2026-04-13T13:10:33.530Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:33.530Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md
-2026-04-13T13:10:33.531Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\docs\architecture.md
-2026-04-13T13:10:33.531Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src
+2026-04-13T13:10:33.530Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\manual-review-escalation.md
+2026-04-13T13:10:33.531Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\docs\architecture.md
+2026-04-13T13:10:33.531Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src
 2026-04-13T13:10:33.537Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:33.538Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:33.546Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2683,7 +2683,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Faxa9REzf1hBfQkWXAbjqq",
@@ -2709,7 +2709,7 @@ cwd: undefined
 2026-04-13T13:10:35.897Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:35.898Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:35.898Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:35.898Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend
+2026-04-13T13:10:35.898Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend
 2026-04-13T13:10:35.901Z [DEBUG] [telemetry-queue] Flushing 50 events (171992 B → 8992 B gzipped)
 2026-04-13T13:10:35.907Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:35.908Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -2734,7 +2734,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01T5d2kFco5x2EDHzsZFoVpg",
@@ -2760,7 +2760,7 @@ cwd: undefined
 2026-04-13T13:10:37.838Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:37.839Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:37.839Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:37.839Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src
+2026-04-13T13:10:37.839Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src
 2026-04-13T13:10:37.843Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:37.843Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:37.855Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -2791,7 +2791,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\models\\\\types.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_013bHQiP3nfc7U9csLpkTAZ7",
@@ -2807,7 +2807,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\queue\\\\contracts.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_019wsMUghsseXCetxwCWthxk",
@@ -2823,7 +2823,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01XFMH9CgVTPoQ43orwqvRyP",
@@ -2849,9 +2849,9 @@ cwd: undefined
 2026-04-13T13:10:40.930Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:40.946Z [DEBUG] Tool calls count: 3
 2026-04-13T13:10:40.946Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts
-2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts
-2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\models\types.ts
+2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\queue\contracts.ts
+2026-04-13T13:10:40.947Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 2026-04-13T13:10:40.951Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:40.951Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:40.959Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2879,7 +2879,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\auth.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\auth.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01NsYZsXwgLsktU5qTK4VfiQ",
@@ -2905,7 +2905,7 @@ cwd: undefined
 2026-04-13T13:10:44.183Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:44.184Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:44.184Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:44.185Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts
+2026-04-13T13:10:44.185Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\auth.ts
 2026-04-13T13:10:44.191Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:44.191Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:44.205Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -2930,7 +2930,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Ag8kwL9siCGBDhb34w8X3e",
@@ -2946,7 +2946,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\audit-service.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\audit-service.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01EK3rMhGkhh72JQMfhHE5fL",
@@ -2972,8 +2972,8 @@ cwd: undefined
 2026-04-13T13:10:47.705Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:47.705Z [DEBUG] Tool calls count: 2
 2026-04-13T13:10:47.705Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:47.705Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
-2026-04-13T13:10:47.705Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts
+2026-04-13T13:10:47.705Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+2026-04-13T13:10:47.705Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\audit-service.ts
 2026-04-13T13:10:47.708Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:47.709Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:47.720Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
@@ -2999,7 +2999,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\config\\\\feature-flags.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\config\\\\feature-flags.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_019iMFCDJ4Rb74RGiWXBie4i",
@@ -3025,7 +3025,7 @@ cwd: undefined
 2026-04-13T13:10:51.517Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:51.517Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:51.517Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:51.517Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts
+2026-04-13T13:10:51.517Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\config\feature-flags.ts
 2026-04-13T13:10:51.522Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:51.522Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:51.534Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3056,7 +3056,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\delegated-session.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\delegated-session.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01P3vgY3PyryK5UqgUVEP15n",
@@ -3082,7 +3082,7 @@ cwd: undefined
 2026-04-13T13:10:54.101Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:54.110Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:54.110Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:54.110Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts
+2026-04-13T13:10:54.110Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\delegated-session.ts
 2026-04-13T13:10:54.113Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:54.113Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:54.124Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3106,7 +3106,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_011Z2vMp5SS9fGuUiyT9UuK3",
@@ -3132,7 +3132,7 @@ cwd: undefined
 2026-04-13T13:10:56.473Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:56.473Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:56.473Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:56.473Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware
+2026-04-13T13:10:56.473Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware
 2026-04-13T13:10:56.475Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:56.475Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:56.484Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3163,7 +3163,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\error-handler.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\middleware\\\\error-handler.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01Bk6nZLkmyLcKAKAGz7Gbpv",
@@ -3189,7 +3189,7 @@ cwd: undefined
 2026-04-13T13:10:59.569Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:10:59.577Z [DEBUG] Tool calls count: 1
 2026-04-13T13:10:59.577Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:10:59.577Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts
+2026-04-13T13:10:59.577Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\middleware\error-handler.ts
 2026-04-13T13:10:59.581Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:10:59.581Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:10:59.591Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3220,7 +3220,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\app.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01HJkByFXDqVvuwo4N2Gokud",
@@ -3246,7 +3246,7 @@ cwd: undefined
 2026-04-13T13:11:02.042Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:11:02.049Z [DEBUG] Tool calls count: 1
 2026-04-13T13:11:02.049Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:11:02.049Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts
+2026-04-13T13:11:02.049Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\app.ts
 2026-04-13T13:11:02.051Z [DEBUG] [telemetry-queue] Flushing 50 events (163834 B → 6870 B gzipped)
 2026-04-13T13:11:02.055Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:02.055Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3278,7 +3278,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\",\"old_str\":\"import { v4 as uuid } from \\\"uuid\\\";\\nimport * as loanRepo from \\\"../models/loan-repository.js\\\";\\nimport { assertTransition } from \\\"../rules/state-machine.js\\\";\\nimport { validateLoanRules, canApprove } from \\\"../rules/business-rules.js\\\";\\nimport { getMandatoryEvents } from \\\"../rules/mandatory-events.js\\\";\\nimport { broker } from \\\"../queue/broker.js\\\";\\nimport type {\\n  LoanApplication,\\n  SessionContext,\\n  ApplicationState,\\n} from \\\"../models/types.js\\\";\\nimport type {\\n  LoanStateChangedEvent,\\n  NotificationRequestedEvent,\\n} from \\\"../queue/contracts.js\\\";\",\"new_str\":\"import { v4 as uuid } from \\\"uuid\\\";\\nimport * as loanRepo from \\\"../models/loan-repository.js\\\";\\nimport { assertTransition } from \\\"../rules/state-machine.js\\\";\\nimport { validateLoanRules, canApprove } from \\\"../rules/business-rules.js\\\";\\nimport { getMandatoryEvents } from \\\"../rules/mandatory-events.js\\\";\\nimport { broker } from \\\"../queue/broker.js\\\";\\nimport { auditAction } from \\\"./audit-service.js\\\";\\nimport { featureFlags } from \\\"../config/feature-flags.js\\\";\\nimport type {\\n  LoanApplication,\\n  SessionContext,\\n  ApplicationState,\\n} from \\\"../models/types.js\\\";\\nimport type {\\n  LoanStateChangedEvent,\\n  NotificationRequestedEvent,\\n} from \\\"../queue/contracts.js\\\";\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\",\"old_str\":\"import { v4 as uuid } from \\\"uuid\\\";\\nimport * as loanRepo from \\\"../models/loan-repository.js\\\";\\nimport { assertTransition } from \\\"../rules/state-machine.js\\\";\\nimport { validateLoanRules, canApprove } from \\\"../rules/business-rules.js\\\";\\nimport { getMandatoryEvents } from \\\"../rules/mandatory-events.js\\\";\\nimport { broker } from \\\"../queue/broker.js\\\";\\nimport type {\\n  LoanApplication,\\n  SessionContext,\\n  ApplicationState,\\n} from \\\"../models/types.js\\\";\\nimport type {\\n  LoanStateChangedEvent,\\n  NotificationRequestedEvent,\\n} from \\\"../queue/contracts.js\\\";\",\"new_str\":\"import { v4 as uuid } from \\\"uuid\\\";\\nimport * as loanRepo from \\\"../models/loan-repository.js\\\";\\nimport { assertTransition } from \\\"../rules/state-machine.js\\\";\\nimport { validateLoanRules, canApprove } from \\\"../rules/business-rules.js\\\";\\nimport { getMandatoryEvents } from \\\"../rules/mandatory-events.js\\\";\\nimport { broker } from \\\"../queue/broker.js\\\";\\nimport { auditAction } from \\\"./audit-service.js\\\";\\nimport { featureFlags } from \\\"../config/feature-flags.js\\\";\\nimport type {\\n  LoanApplication,\\n  SessionContext,\\n  ApplicationState,\\n} from \\\"../models/types.js\\\";\\nimport type {\\n  LoanStateChangedEvent,\\n  NotificationRequestedEvent,\\n} from \\\"../queue/contracts.js\\\";\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01UkBqiBzNobYATFQ3SH7X1N",
@@ -3306,7 +3306,7 @@ cwd: undefined
 2026-04-13T13:11:10.687Z [DEBUG] Running tool calls in parallel
 2026-04-13T13:11:10.688Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T13:11:10.689Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T13:11:10.689Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+2026-04-13T13:11:10.689Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 2026-04-13T13:11:10.702Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T13:11:10.702Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:10.703Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3333,7 +3333,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"  return updated;\\n}\\n\\n/**\\n * Request manual review escalation for a loan application.\\n * Emits a notification.requested event and audits the action.\\n * Does not change the loan's lifecycle status.\\n */\\nexport function requestManualReview(\\n  session: SessionContext,\\n  applicationId: string,\\n): { ok: boolean; applicationId: string; notificationEventId: string } {\\n  if (session.delegatedFor) {\\n    throw new Error(\\\"FORBIDDEN: Delegated sessions cannot request manual review.\\\");\\n  }\\n\\n  const loan = loanRepo.findLoanById(applicationId);\\n  if (!loan) {\\n    throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);\\n  }\\n\\n  const eventId = uuid();\\n\\n  // Build notification subject with California high-risk prefix if applicable\\n  let subject = \\\"Manual Review Escalation Requested\\\";\\n  if (\\n    featureFlags.californiaRules &&\\n    loan.loanState === \\\"CA\\\" &&\\n    loan.amount >= 1000000\\n  ) {\\n    subject = \\\"[CA-HighRisk] \\\" + subject;\\n  }\\n\\n  // Emit notification event\\n  const notifEvent: NotificationRequestedEvent = {\\n    eventId,\\n    timestamp: new Date().toISOString(),\\n    source: \\\"loan-service\\\",\\n    type: \\\"notification.requested\\\",\\n    payload: {\\n      userId: loan.assignedUnderwriter,\\n      event: \\\"manual-review-escalation\\\",\\n      subject,\\n      body: `Manual review has been requested for loan application ${applicationId} (${loan.borrowerName}, $${loan.amount.toLocaleString()}).`,\\n      preferredChannel: \\\"email\\\",\\n    },\\n  };\\n  broker.emit(notifEvent);\\n\\n  // Audit the action\\n  auditAction(\\n    session,\\n    \\\"loan.manual-review-requested\\\",\\n    null,\\n    { applicationId, initiatedBy: session.actor.id },\\n    \\\"loan-service\\\",\\n  );\\n\\n  return {\\n    ok: true,\\n    applicationId,\\n    notificationEventId: eventId,\\n  };\\n}\",\"old_str\":\"  return updated;\\n}\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
+              "arguments": "{\"new_str\":\"  return updated;\\n}\\n\\n/**\\n * Request manual review escalation for a loan application.\\n * Emits a notification.requested event and audits the action.\\n * Does not change the loan's lifecycle status.\\n */\\nexport function requestManualReview(\\n  session: SessionContext,\\n  applicationId: string,\\n): { ok: boolean; applicationId: string; notificationEventId: string } {\\n  if (session.delegatedFor) {\\n    throw new Error(\\\"FORBIDDEN: Delegated sessions cannot request manual review.\\\");\\n  }\\n\\n  const loan = loanRepo.findLoanById(applicationId);\\n  if (!loan) {\\n    throw new Error(`NOT_FOUND: Application '${applicationId}' not found.`);\\n  }\\n\\n  const eventId = uuid();\\n\\n  // Build notification subject with California high-risk prefix if applicable\\n  let subject = \\\"Manual Review Escalation Requested\\\";\\n  if (\\n    featureFlags.californiaRules &&\\n    loan.loanState === \\\"CA\\\" &&\\n    loan.amount >= 1000000\\n  ) {\\n    subject = \\\"[CA-HighRisk] \\\" + subject;\\n  }\\n\\n  // Emit notification event\\n  const notifEvent: NotificationRequestedEvent = {\\n    eventId,\\n    timestamp: new Date().toISOString(),\\n    source: \\\"loan-service\\\",\\n    type: \\\"notification.requested\\\",\\n    payload: {\\n      userId: loan.assignedUnderwriter,\\n      event: \\\"manual-review-escalation\\\",\\n      subject,\\n      body: `Manual review has been requested for loan application ${applicationId} (${loan.borrowerName}, $${loan.amount.toLocaleString()}).`,\\n      preferredChannel: \\\"email\\\",\\n    },\\n  };\\n  broker.emit(notifEvent);\\n\\n  // Audit the action\\n  auditAction(\\n    session,\\n    \\\"loan.manual-review-requested\\\",\\n    null,\\n    { applicationId, initiatedBy: session.actor.id },\\n    \\\"loan-service\\\",\\n  );\\n\\n  return {\\n    ok: true,\\n    applicationId,\\n    notificationEventId: eventId,\\n  };\\n}\",\"old_str\":\"  return updated;\\n}\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01Drvx7g4Ly3U2fdtNJfA7XX",
@@ -3361,7 +3361,7 @@ cwd: undefined
 2026-04-13T13:11:17.340Z [DEBUG] Running tool calls in parallel
 2026-04-13T13:11:17.340Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T13:11:17.340Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T13:11:17.340Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+2026-04-13T13:11:17.340Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 2026-04-13T13:11:17.353Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T13:11:17.354Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:17.354Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3394,7 +3394,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"new_str\":\"/**\\n * PATCH /api/applications/:id/status — transition application state.\\n *\\n * The request body must include `{ status: ApplicationState }`.\\n * Only legal transitions (per VALID_TRANSITIONS) are allowed.\\n * Finalized applications cannot be transitioned at all.\\n */\\napplicationRoutes.patch(\\n  \\\"/:id/status\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([{ field: \\\"status\\\", type: \\\"string\\\", required: true }]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const updated = loanService.transitionLoan(\\n        session,\\n        firstParam(req.params.id),\\n        req.body.status,\\n      );\\n      res.json(updated);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\\n\\n/** POST /api/applications/:id/manual-review — request manual review escalation. */\\napplicationRoutes.post(\\n  \\\"/:id/manual-review\\\",\\n  requireRole(\\\"analyst-manager\\\"),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const result = loanService.requestManualReview(\\n        session,\\n        firstParam(req.params.id),\\n      );\\n      res.json(result);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PATCH /api/applications/:id/status — transition application state.\\n *\\n * The request body must include `{ status: ApplicationState }`.\\n * Only legal transitions (per VALID_TRANSITIONS) are allowed.\\n * Finalized applications cannot be transitioned at all.\\n */\\napplicationRoutes.patch(\\n  \\\"/:id/status\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([{ field: \\\"status\\\", type: \\\"string\\\", required: true }]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const updated = loanService.transitionLoan(\\n        session,\\n        firstParam(req.params.id),\\n        req.body.status,\\n      );\\n      res.json(updated);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
+              "arguments": "{\"new_str\":\"/**\\n * PATCH /api/applications/:id/status — transition application state.\\n *\\n * The request body must include `{ status: ApplicationState }`.\\n * Only legal transitions (per VALID_TRANSITIONS) are allowed.\\n * Finalized applications cannot be transitioned at all.\\n */\\napplicationRoutes.patch(\\n  \\\"/:id/status\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([{ field: \\\"status\\\", type: \\\"string\\\", required: true }]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const updated = loanService.transitionLoan(\\n        session,\\n        firstParam(req.params.id),\\n        req.body.status,\\n      );\\n      res.json(updated);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\\n\\n/** POST /api/applications/:id/manual-review — request manual review escalation. */\\napplicationRoutes.post(\\n  \\\"/:id/manual-review\\\",\\n  requireRole(\\\"analyst-manager\\\"),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const result = loanService.requestManualReview(\\n        session,\\n        firstParam(req.params.id),\\n      );\\n      res.json(result);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"old_str\":\"/**\\n * PATCH /api/applications/:id/status — transition application state.\\n *\\n * The request body must include `{ status: ApplicationState }`.\\n * Only legal transitions (per VALID_TRANSITIONS) are allowed.\\n * Finalized applications cannot be transitioned at all.\\n */\\napplicationRoutes.patch(\\n  \\\"/:id/status\\\",\\n  requireRole(\\\"underwriter\\\", \\\"analyst-manager\\\"),\\n  validateBody([{ field: \\\"status\\\", type: \\\"string\\\", required: true }]),\\n  (req, res, next) => {\\n    try {\\n      const session = req.session as SessionContext;\\n      const updated = loanService.transitionLoan(\\n        session,\\n        firstParam(req.params.id),\\n        req.body.status,\\n      );\\n      res.json(updated);\\n    } catch (err) {\\n      next(err);\\n    }\\n  },\\n);\",\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
               "name": "edit"
             },
             "id": "toolu_vrtx_01Jm9ckTUvtTjo6tBX64ebti",
@@ -3422,7 +3422,7 @@ cwd: undefined
 2026-04-13T13:11:23.491Z [DEBUG] Running tool calls in parallel
 2026-04-13T13:11:23.491Z [DEBUG] Adding operation to queue. Current queue length: 0
 2026-04-13T13:11:23.492Z [DEBUG] Processing operation. Remaining queue length: 0
-2026-04-13T13:11:23.492Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+2026-04-13T13:11:23.492Z [DEBUG] edit: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 2026-04-13T13:11:23.502Z [DEBUG] Operation completed. Remaining queue length: 0
 2026-04-13T13:11:23.503Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:23.503Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
@@ -3455,7 +3455,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\services\\\\loan-service.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_013FMJw7au5xW4UmfUAA1bHL",
@@ -3481,7 +3481,7 @@ cwd: undefined
 2026-04-13T13:11:26.065Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:11:26.071Z [DEBUG] Tool calls count: 1
 2026-04-13T13:11:26.071Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:11:26.071Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
+2026-04-13T13:11:26.071Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\services\loan-service.ts
 2026-04-13T13:11:26.073Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:26.074Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:11:26.080Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3505,7 +3505,7 @@ cwd: undefined
         "tool_calls": [
           {
             "function": {
-              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\ctx-sdlc\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
+              "arguments": "{\"path\":\"Y:\\\\.sources\\\\localm-tuts\\\\courses\\\\_examples\\\\context-engineering\\\\lessons\\\\01-why-context-engineering\\\\with-context\\\\src\\\\backend\\\\src\\\\routes\\\\applications.ts\"}",
               "name": "view"
             },
             "id": "toolu_vrtx_01D3BHWZ2PkErbHZM7RWWM8Z",
@@ -3531,7 +3531,7 @@ cwd: undefined
 2026-04-13T13:11:29.598Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_message)
 2026-04-13T13:11:29.598Z [DEBUG] Tool calls count: 1
 2026-04-13T13:11:29.598Z [DEBUG] Running tool calls in parallel
-2026-04-13T13:11:29.598Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
+2026-04-13T13:11:29.598Z [DEBUG] view: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\src\backend\src\routes\applications.ts
 2026-04-13T13:11:29.600Z [DEBUG] Sending telemetry event: copilot-cli/cli.tool_call
 2026-04-13T13:11:29.600Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: tool_call_executed)
 2026-04-13T13:11:29.604Z [DEBUG] Sending telemetry event: copilot-cli/cli.telemetry (kind: assistant_turn_end)
@@ -3832,4 +3832,4 @@ cwd: undefined
 Changes   +152 -0
 Requests  0.33 Premium (1m 34s)
 Tokens    ↑ 636.1k • ↓ 5.5k • 609.0k (cached)
-Session exported to: Y:\.sources\localm-tuts\courses\_examples\ctx-sdlc\lessons\01-why-context-engineering\with-context\.output\logs\session.md
+Session exported to: Y:\.sources\localm-tuts\courses\_examples\context-engineering\lessons\01-why-context-engineering\with-context\.output\logs\session.md

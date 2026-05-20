@@ -4,7 +4,7 @@
 
 > <strong>Watch the video:</strong> <a href="https://www.youtube.com/watch?v=AQEzRSVYf0c" target="_blank" rel="noopener noreferrer">The GitHub Copilot Capstone: Putting Every Lesson Into Practice</a>
 > <strong>Website:</strong> <a href="https://tuts.localm.dev/" target="_blank" rel="noopener noreferrer">LocalM Tuts</a>
-> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/ctx-sdlc" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
+> <strong>Course Page:</strong> <a href="https://tuts.localm.dev/context-engineering" target="_blank" rel="noopener noreferrer">Context Engineering for GitHub Copilot</a>
 
 > **App:** Loan Workbench (TypeScript Express API + SQLite)
 > **Topic:** Hands-on capstone applying context-engineering techniques from Lessons 01–08.

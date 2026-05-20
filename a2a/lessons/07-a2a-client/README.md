@@ -5,7 +5,7 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=aTqo4ssrz4U" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/a2a-client" target="_blank" rel="noopener noreferrer">Companion page</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/a2a-client" target="_blank" rel="noopener noreferrer">Companion page</a>
 - Previous lesson: [Wrapping Agents as A2A Servers](../06-a2a-server/)
 - Next lesson: [A2A with Microsoft Agent Framework](../08-microsoft-agent-framework/)
 

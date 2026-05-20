@@ -5,9 +5,9 @@
 ## Quick Links
 
 - <a href="https://www.youtube.com/watch?v=ONhelxVH1SQ" target="_blank" rel="noopener noreferrer">Watch the lesson</a>
-- <a href="https://tuts.localm.dev/a2a/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Companion page</a>
+- <a href="https://tuts.localm.dev/agent-to-agent-protocol/multi-agent-deep-dive" target="_blank" rel="noopener noreferrer">Companion page</a>
 - Previous lesson: [A2A with Claude Style Agents](../13-claude-agent-sdk/)
-- Next lesson: <a href="https://tuts.localm.dev/a2a/advanced-concepts" target="_blank" rel="noopener noreferrer">Advanced Concepts</a>
+- Next lesson: <a href="https://tuts.localm.dev/agent-to-agent-protocol/advanced-concepts" target="_blank" rel="noopener noreferrer">Advanced Concepts</a>
 
 A production-grade multi-agent loan approval pipeline built with the A2A protocol,
 featuring AI-driven decisioning (80%), human-in-the-loop escalation (20%),
@@ -82,10 +82,10 @@ graph TD
 
 | Requirement   | Notes                                                |
 | ------------- | ---------------------------------------------------- |
-| Python 3.11+  | Shared venv at `_examples/a2a/.venv`                 |
+| Python 3.11+  | Shared venv at `_examples/agent-to-agent-protocol/.venv`                 |
 | Node.js 18+   | For the React approval dashboard                     |
 | Shared `.env` | `_examples/.env` — already has `GITHUB_TOKEN`, creds |
-| Shared venv   | `_examples/a2a/.venv` — already has all deps         |
+| Shared venv   | `_examples/agent-to-agent-protocol/.venv` — already has all deps         |
 
 ---
 
@@ -112,7 +112,7 @@ PROVIDER=github          # ← switches the LLM provider
 
 ```powershell
 # From repo root:
-cd _examples\a2a
+cd _examples\agent-to-agent-protocol
 .venv\Scripts\activate       # activates the shared venv
 pip install -r requirements.txt   # lesson 14 deps are already listed
 ```
@@ -158,14 +158,14 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME=Kimi-K2-Thinking          # default
 ### Step 1 — Activate the shared venv
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a
+cd Y:\.sources\localm-tuts\a2a\_examples\agent-to-agent-protocol
 .venv\Scripts\activate
 ```
 
 ### Step 2 — Start all 6 A2A agent servers
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\agents\src
+cd Y:\.sources\localm-tuts\a2a\_examples\agent-to-agent-protocol\lessons\14-multi-agent-deep-dive\agents\src
 python start_all.py
 ```
 
@@ -201,7 +201,7 @@ Waiting for agents to become ready…
 ### Step 3 — Start the React UI (separate terminal)
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\ui
+cd Y:\.sources\localm-tuts\a2a\_examples\agent-to-agent-protocol\lessons\14-multi-agent-deep-dive\ui
 npm install
 npm run dev
 # Opens at http://localhost:3000
@@ -210,7 +210,7 @@ npm run dev
 ### Step 4 — Submit test applications
 
 ```powershell
-cd Y:\.sources\localm-tuts\a2a\_examples\a2a\lessons\14-multi-agent-deep-dive\agents\src
+cd Y:\.sources\localm-tuts\a2a\_examples\agent-to-agent-protocol\lessons\14-multi-agent-deep-dive\agents\src
 python submit_test_batch.py
 ```
 
@@ -428,7 +428,7 @@ The React UI at http://localhost:3000 includes:
 
 | Problem                        | Solution                                                             |
 | ------------------------------ | -------------------------------------------------------------------- |
-| `ModuleNotFoundError`          | Activate shared venv: `_examples\a2a\.venv\Scripts\activate`         |
+| `ModuleNotFoundError`          | Activate shared venv: `_examples\agent-to-agent-protocol\.venv\Scripts\activate`         |
 | Agent fails to start           | Check if the port is already in use: `netstat -ano \| findstr 10101` |
 | Orchestrator can't find agents | Start specialist agents before the orchestrator                      |
 | No LLM response                | Check `PROVIDER` value and corresponding API key in `_examples/.env` |
