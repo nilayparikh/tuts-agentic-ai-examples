@@ -16,7 +16,7 @@
     "@mui/material": "^7.3.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.0",
+    "react-router-dom": "^7.16.0",
     "recharts": "^2.15.0"
   },
   "devDependencies": {
